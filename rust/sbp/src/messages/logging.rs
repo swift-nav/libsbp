@@ -14,16 +14,7 @@
 //****************************************************************************/
 //! Logging and debugging messages from the device.
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use super::lib::*;
 
 /// Wrapper for FWD a separate stream of information over SBP
 ///
@@ -36,87 +27,74 @@ use crate::SbpString;
 /// forwarded msg contains. Protocol 0 represents SBP and the remaining values
 /// are implementation defined.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgFwd {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// source identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "source")))]
     pub source: u8,
     /// protocol identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "protocol")))]
     pub protocol: u8,
     /// variable length wrapped binary message
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fwd_payload")))]
     pub fwd_payload: Vec<u8>,
 }
 
-impl MsgFwd {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, crate::Error> {
-        Ok( MsgFwd{
-            sender_id: None,
-            source: _buf.read_u8()?,
-            protocol: _buf.read_u8()?,
-            fwd_payload: crate::parser::read_u8_array(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgFwd {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_FWD"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        1026
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgFwd {
+impl ConcreteMessage for MsgFwd {
     const MESSAGE_TYPE: u16 = 1026;
     const MESSAGE_NAME: &'static str = "MSG_FWD";
 }
-impl TryFrom<super::SBP> for MsgFwd {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgFwd {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgFwd {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgFwd(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgFwd(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFwd {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.source.append_to_sbp_buffer(buf);
-        self.protocol.append_to_sbp_buffer(buf);
-        self.fwd_payload.append_to_sbp_buffer(buf);
+impl WireFormat for MsgFwd {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.source)
+            + WireFormat::encoded_len(&self.protocol)
+            + WireFormat::encoded_len(&self.fwd_payload)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.source.sbp_size();
-        size += self.protocol.sbp_size();
-        size += self.fwd_payload.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.source, buf);
+        WireFormat::write(&self.protocol, buf);
+        WireFormat::write(&self.fwd_payload, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgFwd {
+            sender_id: None,
+            source: WireFormat::parse_unchecked(buf),
+            protocol: WireFormat::parse_unchecked(buf),
+            fwd_payload: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -126,82 +104,66 @@ impl crate::serialize::SbpSerialize for MsgFwd {
 /// containing errors, warnings and informational messages at ERROR, WARNING,
 /// DEBUG, INFO logging levels.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLog {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Logging level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "level")))]
     pub level: u8,
     /// Human-readable string
-    pub text: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "text")))]
+    pub text: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLog {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, crate::Error> {
-        Ok( MsgLog{
-            sender_id: None,
-            level: _buf.read_u8()?,
-            text: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLog {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LOG"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        1025
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLog {
+impl ConcreteMessage for MsgLog {
     const MESSAGE_TYPE: u16 = 1025;
     const MESSAGE_NAME: &'static str = "MSG_LOG";
 }
-impl TryFrom<super::SBP> for MsgLog {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLog {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLog {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLog(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLog(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLog {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.level.append_to_sbp_buffer(buf);
-        self.text.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLog {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.level) + WireFormat::encoded_len(&self.text)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.level.sbp_size();
-        size += self.text.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.level, buf);
+        WireFormat::write(&self.text, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLog {
+            sender_id: None,
+            level: WireFormat::parse_unchecked(buf),
+            text: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -209,76 +171,60 @@ impl crate::serialize::SbpSerialize for MsgLog {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgPrintDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Human-readable string
-    pub text: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "text")))]
+    pub text: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgPrintDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, crate::Error> {
-        Ok( MsgPrintDep{
-            sender_id: None,
-            text: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPrintDep {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_PRINT_DEP"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        16
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgPrintDep {
+impl ConcreteMessage for MsgPrintDep {
     const MESSAGE_TYPE: u16 = 16;
     const MESSAGE_NAME: &'static str = "MSG_PRINT_DEP";
 }
-impl TryFrom<super::SBP> for MsgPrintDep {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPrintDep {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgPrintDep {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPrintDep(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPrintDep(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPrintDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.text.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPrintDep {
+    const MIN_ENCODED_LEN: usize =
+        <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.text)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.text.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.text, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPrintDep {
+            sender_id: None,
+            text: WireFormat::parse_unchecked(buf),
+        }
     }
 }

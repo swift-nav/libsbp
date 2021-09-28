@@ -14,16 +14,7 @@
 //****************************************************************************/
 //! Various structs shared between modules
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use super::lib::*;
 
 /// GNSS carrier phase measurement
 ///
@@ -31,53 +22,32 @@ use crate::SbpString;
 /// number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
 /// fractional cycles. This phase has the same sign as the pseudorange.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct CarrierPhase {
     /// Carrier phase whole cycles
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
     pub i: i32,
     /// Carrier phase fractional part
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "f")))]
     pub f: u8,
 }
 
-impl CarrierPhase {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhase, crate::Error> {
-        Ok( CarrierPhase{
-            i: _buf.read_i32::<LittleEndian>()?,
-            f: _buf.read_u8()?,
-        } )
+impl WireFormat for CarrierPhase {
+    const MIN_ENCODED_LEN: usize =
+        <i32 as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.i) + WireFormat::encoded_len(&self.f)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhase>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(CarrierPhase::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.i, buf);
+        WireFormat::write(&self.f, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        CarrierPhase {
+            i: WireFormat::parse_unchecked(buf),
+            f: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CarrierPhase>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(CarrierPhase::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for CarrierPhase {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.i.append_to_sbp_buffer(buf);
-        self.f.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.i.sbp_size();
-        size += self.f.sbp_size();
-        size
     }
 }
 
@@ -87,59 +57,41 @@ impl crate::serialize::SbpSerialize for CarrierPhase {
 /// beginning of the week on the Saturday/Sunday transition. In most cases,
 /// observations are epoch aligned so ns field will be 0.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct GPSTime {
+pub struct GpsTime {
     /// Milliseconds since start of GPS week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     /// 500000)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
     pub ns_residual: i32,
     /// GPS week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
     pub wn: u16,
 }
 
-impl GPSTime {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTime, crate::Error> {
-        Ok( GPSTime{
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            wn: _buf.read_u16::<LittleEndian>()?,
-        } )
+impl WireFormat for GpsTime {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.ns_residual)
+            + WireFormat::encoded_len(&self.wn)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTime>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GPSTime::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.ns_residual, buf);
+        WireFormat::write(&self.wn, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        GpsTime {
+            tow: WireFormat::parse_unchecked(buf),
+            ns_residual: WireFormat::parse_unchecked(buf),
+            wn: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTime>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GPSTime::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GPSTime {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.ns_residual.append_to_sbp_buffer(buf);
-        self.wn.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.ns_residual.sbp_size();
-        size += self.wn.sbp_size();
-        size
     }
 }
 
@@ -148,53 +100,32 @@ impl crate::serialize::SbpSerialize for GPSTime {
 /// A wire-appropriate GPS time, defined as the number of milliseconds since
 /// beginning of the week on the Saturday/Sunday transition.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct GPSTimeDep {
+pub struct GpsTimeDep {
     /// Milliseconds since start of GPS week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// GPS week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
     pub wn: u16,
 }
 
-impl GPSTimeDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeDep, crate::Error> {
-        Ok( GPSTimeDep{
-            tow: _buf.read_u32::<LittleEndian>()?,
-            wn: _buf.read_u16::<LittleEndian>()?,
-        } )
+impl WireFormat for GpsTimeDep {
+    const MIN_ENCODED_LEN: usize =
+        <u32 as WireFormat>::MIN_ENCODED_LEN + <u16 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.wn)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GPSTimeDep::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.wn, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        GpsTimeDep {
+            tow: WireFormat::parse_unchecked(buf),
+            wn: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeDep>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GPSTimeDep::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GPSTimeDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.wn.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.wn.sbp_size();
-        size
     }
 }
 
@@ -203,53 +134,32 @@ impl crate::serialize::SbpSerialize for GPSTimeDep {
 /// A GPS time, defined as the number of seconds since beginning of the week
 /// on the Saturday/Sunday transition.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct GPSTimeSec {
+pub struct GpsTimeSec {
     /// Seconds since start of GPS week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// GPS week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
     pub wn: u16,
 }
 
-impl GPSTimeSec {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeSec, crate::Error> {
-        Ok( GPSTimeSec{
-            tow: _buf.read_u32::<LittleEndian>()?,
-            wn: _buf.read_u16::<LittleEndian>()?,
-        } )
+impl WireFormat for GpsTimeSec {
+    const MIN_ENCODED_LEN: usize =
+        <u32 as WireFormat>::MIN_ENCODED_LEN + <u16 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.wn)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeSec>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GPSTimeSec::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.wn, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        GpsTimeSec {
+            tow: WireFormat::parse_unchecked(buf),
+            wn: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeSec>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GPSTimeSec::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GPSTimeSec {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.wn.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.wn.sbp_size();
-        size
     }
 }
 
@@ -258,54 +168,33 @@ impl crate::serialize::SbpSerialize for GPSTimeSec {
 /// Signal identifier containing constellation, band, and satellite
 /// identifier.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct GnssSignal {
     /// Constellation-specific satellite identifier. This field for Glonass can
-    /// either be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
+    /// either be (100+FCN) where FCN is in \[-7,+6\] or the Slot ID in \[1,28\].
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sat")))]
     pub sat: u8,
     /// Signal constellation, band and code
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "code")))]
     pub code: u8,
 }
 
-impl GnssSignal {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignal, crate::Error> {
-        Ok( GnssSignal{
-            sat: _buf.read_u8()?,
-            code: _buf.read_u8()?,
-        } )
+impl WireFormat for GnssSignal {
+    const MIN_ENCODED_LEN: usize =
+        <u8 as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sat) + WireFormat::encoded_len(&self.code)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignal>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GnssSignal::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sat, buf);
+        WireFormat::write(&self.code, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        GnssSignal {
+            sat: WireFormat::parse_unchecked(buf),
+            code: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssSignal>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GnssSignal::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GnssSignal {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sat.append_to_sbp_buffer(buf);
-        self.code.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sat.sbp_size();
-        size += self.code.sbp_size();
-        size
     }
 }
 
@@ -313,64 +202,43 @@ impl crate::serialize::SbpSerialize for GnssSignal {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct GnssSignalDep {
     /// Constellation-specific satellite identifier.
     ///
     /// Note: unlike GnssSignal, GPS satellites are encoded as (PRN - 1). Other
     /// constellations do not have this offset.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sat")))]
     pub sat: u16,
     /// Signal constellation, band and code
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "code")))]
     pub code: u8,
     /// Reserved
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
     pub reserved: u8,
 }
 
-impl GnssSignalDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignalDep, crate::Error> {
-        Ok( GnssSignalDep{
-            sat: _buf.read_u16::<LittleEndian>()?,
-            code: _buf.read_u8()?,
-            reserved: _buf.read_u8()?,
-        } )
+impl WireFormat for GnssSignalDep {
+    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sat)
+            + WireFormat::encoded_len(&self.code)
+            + WireFormat::encoded_len(&self.reserved)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignalDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GnssSignalDep::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sat, buf);
+        WireFormat::write(&self.code, buf);
+        WireFormat::write(&self.reserved, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        GnssSignalDep {
+            sat: WireFormat::parse_unchecked(buf),
+            code: WireFormat::parse_unchecked(buf),
+            reserved: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GnssSignalDep>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GnssSignalDep::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GnssSignalDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sat.append_to_sbp_buffer(buf);
-        self.code.append_to_sbp_buffer(buf);
-        self.reserved.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sat.sbp_size();
-        size += self.code.sbp_size();
-        size += self.reserved.sbp_size();
-        size
     }
 }
 
@@ -379,52 +247,31 @@ impl crate::serialize::SbpSerialize for GnssSignalDep {
 /// A (Constellation ID, satellite ID) tuple that uniquely identifies a space
 /// vehicle.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct SvId {
     /// ID of the space vehicle within its constellation
-    pub satId: u8,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "satId")))]
+    pub sat_id: u8,
     /// Constellation ID to which the SV belongs
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "constellation")))]
     pub constellation: u8,
 }
 
-impl SvId {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<SvId, crate::Error> {
-        Ok( SvId{
-            satId: _buf.read_u8()?,
-            constellation: _buf.read_u8()?,
-        } )
+impl WireFormat for SvId {
+    const MIN_ENCODED_LEN: usize =
+        <u8 as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sat_id) + WireFormat::encoded_len(&self.constellation)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvId>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(SvId::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sat_id, buf);
+        WireFormat::write(&self.constellation, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        SvId {
+            sat_id: WireFormat::parse_unchecked(buf),
+            constellation: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvId>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(SvId::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for SvId {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.satId.append_to_sbp_buffer(buf);
-        self.constellation.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.satId.sbp_size();
-        size += self.constellation.sbp_size();
-        size
     }
 }

@@ -1,3 +1,5 @@
+//! Callback based message handler.
+
 use std::{
     borrow::{Borrow, Cow},
     convert::TryInto,
@@ -6,8 +8,9 @@ use std::{
 
 use slotmap::DenseSlotMap;
 
-use crate::messages::{ConcreteMessage, SBPMessage, SBP};
+use crate::messages::{ConcreteMessage, Sbp, SbpMessage};
 
+/// Used to send messages to callbacks registered via [Link]s created from this `LinkSource`.
 pub struct LinkSource<'link, S = ()> {
     link: Link<'link, S>,
     stateless_link: Link<'link, ()>,
@@ -17,6 +20,7 @@ impl<'link, S> LinkSource<'link, S>
 where
     S: 'link,
 {
+    /// Creates a new `LinkSource`.
     pub fn new() -> Self {
         Self {
             link: Link::new(),
@@ -24,17 +28,21 @@ where
         }
     }
 
+    /// Creates a new [Link] associated with this source.
     pub fn link(&self) -> Link<'link, S> {
         self.link.clone()
     }
 
+    /// Creates a new [Link] associated with this source. Handlers attached via this link
+    /// will not receive the shared state associated with this LinkSource.
     pub fn stateless_link(&self) -> Link<'link, ()> {
         self.stateless_link.clone()
     }
 
+    /// Send a message with state to all the links associated with this source.
     pub fn send_with_state<M>(&self, state: &S, msg: M) -> bool
     where
-        M: Borrow<SBP>,
+        M: Borrow<Sbp>,
     {
         let msg = msg.borrow();
         let mut sent = false;
@@ -61,14 +69,25 @@ where
 }
 
 impl<'link> LinkSource<'link, ()> {
+    /// Send a message to all the links associated with this source.
     pub fn send<M>(&self, msg: M) -> bool
     where
-        M: Borrow<SBP>,
+        M: Borrow<Sbp>,
     {
         self.send_with_state(&(), msg)
     }
 }
 
+impl<'link, S> Default for LinkSource<'link, S>
+where
+    S: 'link,
+{
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+/// Used to attach message handlers.
 pub struct Link<'link, S> {
     inner: Arc<LinkInner<'link, S>>,
 }
@@ -82,6 +101,7 @@ impl<'link, S> Link<'link, S> {
         }
     }
 
+    /// Register a new callback.
     pub fn register<E, F, HandlerKind>(&self, callback: F) -> Key
     where
         E: Event,
@@ -92,6 +112,7 @@ impl<'link, S> Link<'link, S> {
         Key { key }
     }
 
+    /// Register a new callback with manually specified message types.
     pub fn register_by_id<E, F, HandlerKind>(&self, msg_types: &[u16], callback: F) -> Key
     where
         E: Event,
@@ -102,6 +123,7 @@ impl<'link, S> Link<'link, S> {
         Key { key }
     }
 
+    /// Remove a previously registered callback.
     pub fn unregister(&self, key: Key) {
         self.inner.handlers.lock().unwrap().remove(key.key);
     }
@@ -119,18 +141,19 @@ struct LinkInner<'link, S> {
     handlers: Mutex<DenseSlotMap<KeyInner, Handler<'link, S>>>,
 }
 
+/// A message handler and the message ids it responds to.
 pub struct Handler<'link, S> {
-    func: Box<dyn FnMut(&S, SBP) + Send + 'link>,
+    func: Box<dyn FnMut(&S, Sbp) + Send + 'link>,
     msg_types: Cow<'static, [u16]>,
 }
 
 impl<'link, S> Handler<'link, S> {
-    fn run(&mut self, state: &S, msg: SBP) {
+    fn run(&mut self, state: &S, msg: Sbp) {
         (self.func)(state, msg);
     }
 
-    fn can_run(&self, msg: &SBP) -> bool {
-        self.msg_types.contains(&msg.get_message_type()) || self.msg_types.is_empty()
+    fn can_run(&self, msg: &Sbp) -> bool {
+        self.msg_types.contains(&msg.message_type()) || self.msg_types.is_empty()
     }
 }
 
@@ -139,6 +162,7 @@ pub trait IntoHandler<'link, S, E, HandlerKind = WithState> {
     fn into_handler_with_ids(self, msg_types: &[u16]) -> Handler<'link, S>;
 }
 
+/// Marker type for handlers that receive the [LinkSource]'s shared state.
 pub struct WithState;
 
 impl<'link, S, E, F> IntoHandler<'link, S, E, WithState> for F
@@ -167,6 +191,7 @@ where
     }
 }
 
+/// Marker type for handlers that do not receive the [LinkSource]'s shared state.
 pub struct WithoutState;
 
 impl<'link, S, E, F> IntoHandler<'link, S, E, WithoutState> for F
@@ -199,21 +224,26 @@ slotmap::new_key_type! {
     struct KeyInner;
 }
 
+/// Returned when registering a callback. Can be used to unregister the callback.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Key {
     key: KeyInner,
 }
 
+/// Something derived from an SBP message.
 pub trait Event {
+    /// The message types that correspond to this event. An empty slice means all messages.
     const MESSAGE_TYPES: &'static [u16];
 
-    fn from_sbp(msg: SBP) -> Self;
+    /// Create an instance of this event from an SBP message. This message will only be called
+    /// if the message type is in `Event::MESSAGE_TYPES`.
+    fn from_sbp(msg: Sbp) -> Self;
 }
 
-impl Event for SBP {
+impl Event for Sbp {
     const MESSAGE_TYPES: &'static [u16] = &[];
 
-    fn from_sbp(msg: SBP) -> Self {
+    fn from_sbp(msg: Sbp) -> Self {
         msg
     }
 }
@@ -224,7 +254,7 @@ where
 {
     const MESSAGE_TYPES: &'static [u16] = &[T::MESSAGE_TYPE];
 
-    fn from_sbp(msg: SBP) -> Self {
+    fn from_sbp(msg: Sbp) -> Self {
         match msg.try_into() {
             Ok(event) => event,
             Err(_) => {
@@ -253,10 +283,10 @@ mod tests {
         let source = LinkSource::new();
         let link = source.link();
         let triggered = RefCell::new(false);
-        link.register(|triggered: &RefCell<bool>, _: SBP| {
+        link.register(|triggered: &RefCell<bool>, _: Sbp| {
             *triggered.borrow_mut() = true;
         });
-        source.send_with_state(&triggered, SBP::from(make_msg_obs()));
+        source.send_with_state(&triggered, Sbp::from(make_msg_obs()));
         assert!(*triggered.borrow());
     }
 
@@ -269,14 +299,14 @@ mod tests {
         let triggered = RefCell::new(false);
 
         let handle = thread::spawn(move || {
-            link.register(|triggered: &RefCell<bool>, _: SBP| {
+            link.register(|triggered: &RefCell<bool>, _: Sbp| {
                 *triggered.borrow_mut() = true;
             });
             s.send(()).unwrap();
         });
         r.recv_timeout(Duration::from_secs(1)).unwrap();
 
-        source.send_with_state(&triggered, SBP::from(make_msg_obs()));
+        source.send_with_state(&triggered, Sbp::from(make_msg_obs()));
 
         handle.join().unwrap();
 
@@ -289,10 +319,10 @@ mod tests {
         {
             let source = LinkSource::new();
             let link = source.link();
-            link.register(|_: SBP| {
+            link.register(|_: Sbp| {
                 triggered = true;
             });
-            source.send(SBP::from(make_msg_obs()));
+            source.send(Sbp::from(make_msg_obs()));
         }
         assert!(triggered);
     }
@@ -303,11 +333,11 @@ mod tests {
         let link = source.link();
         let count = RefCell::new(0);
 
-        let key = link.register(|count: &RefCell<usize>, _: SBP| {
+        let key = link.register(|count: &RefCell<usize>, _: Sbp| {
             *count.borrow_mut() += 1;
         });
 
-        let msg = SBP::from(make_msg_obs());
+        let msg = Sbp::from(make_msg_obs());
         source.send_with_state(&count, &msg);
         assert_eq!(*count.borrow(), 1);
 
@@ -325,10 +355,10 @@ mod tests {
 
         impl Event for ObsMsg {
             const MESSAGE_TYPES: &'static [u16] = &[MsgObs::MESSAGE_TYPE, MsgObsDepA::MESSAGE_TYPE];
-            fn from_sbp(msg: SBP) -> Self {
+            fn from_sbp(msg: Sbp) -> Self {
                 match msg {
-                    SBP::MsgObs(m) => ObsMsg::Obs(m),
-                    SBP::MsgObsDepA(m) => ObsMsg::DepA(m),
+                    Sbp::MsgObs(m) => ObsMsg::Obs(m),
+                    Sbp::MsgObsDepA(m) => ObsMsg::DepA(m),
                     _ => unreachable!("wrong event keys"),
                 }
             }
@@ -342,10 +372,10 @@ mod tests {
             *count.borrow_mut() += 1;
         });
 
-        source.send_with_state(&count, SBP::from(make_msg_obs()));
+        source.send_with_state(&count, Sbp::from(make_msg_obs()));
         assert_eq!(*count.borrow(), 1);
 
-        source.send_with_state(&count, SBP::from(make_msg_obs_dep_a()));
+        source.send_with_state(&count, Sbp::from(make_msg_obs_dep_a()));
         assert_eq!(*count.borrow(), 2);
     }
 
@@ -353,7 +383,7 @@ mod tests {
         MsgObs {
             sender_id: Some(1),
             header: ObservationHeader {
-                t: messages::gnss::GPSTime {
+                t: messages::gnss::GpsTime {
                     tow: 1,
                     ns_residual: 1,
                     wn: 1,
@@ -368,7 +398,7 @@ mod tests {
         MsgObsDepA {
             sender_id: Some(1),
             header: ObservationHeaderDep {
-                t: messages::gnss::GPSTimeDep { tow: 1, wn: 1 },
+                t: messages::gnss::GpsTimeDep { tow: 1, wn: 1 },
                 n_obs: 1,
             },
             obs: vec![],

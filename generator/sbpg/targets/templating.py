@@ -30,6 +30,7 @@ JENV = jinja2.Environment(block_start_string = '((*',
                           )
 
 ACRONYMS = ['GPS', 'ECEF', 'LLH', 'NED', 'IO']
+LOWER_ACRONYMS = ['Gps', 'Ecef', 'Llh', 'Ned', 'Io']
 INCLUDE_MAP = {
     "gnss": [
         "CarrierPhase",

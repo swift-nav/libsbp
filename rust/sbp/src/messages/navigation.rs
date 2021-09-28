@@ -37,77 +37,46 @@
 //! system timestamp, irrespective of the time reference (GPS Week or else),
 //! but not a Time of Measurement.
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
+use super::lib::*;
 
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
-
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+/// Horizontal estimated error ellipse
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct EstimatedHorizontalErrorEllipse {
     /// The semi major axis of the estimated horizontal error ellipse at the
     /// user-configured confidence level; zero implies invalid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "semi_major")))]
     pub semi_major: f32,
     /// The semi minor axis of the estimated horizontal error ellipse at the
     /// user-configured confidence level; zero implies invalid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "semi_minor")))]
     pub semi_minor: f32,
     /// The orientation of the semi major axis of the estimated horizontal error
     /// ellipse with respect to North.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "orientation")))]
     pub orientation: f32,
 }
 
-impl EstimatedHorizontalErrorEllipse {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<EstimatedHorizontalErrorEllipse, crate::Error> {
-        Ok( EstimatedHorizontalErrorEllipse{
-            semi_major: _buf.read_f32::<LittleEndian>()?,
-            semi_minor: _buf.read_f32::<LittleEndian>()?,
-            orientation: _buf.read_f32::<LittleEndian>()?,
-        } )
+impl WireFormat for EstimatedHorizontalErrorEllipse {
+    const MIN_ENCODED_LEN: usize = <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.semi_major)
+            + WireFormat::encoded_len(&self.semi_minor)
+            + WireFormat::encoded_len(&self.orientation)
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.semi_major, buf);
+        WireFormat::write(&self.semi_minor, buf);
+        WireFormat::write(&self.orientation, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        EstimatedHorizontalErrorEllipse {
+            semi_major: WireFormat::parse_unchecked(buf),
+            semi_minor: WireFormat::parse_unchecked(buf),
+            orientation: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<EstimatedHorizontalErrorEllipse>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(EstimatedHorizontalErrorEllipse::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for EstimatedHorizontalErrorEllipse {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.semi_major.append_to_sbp_buffer(buf);
-        self.semi_minor.append_to_sbp_buffer(buf);
-        self.orientation.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.semi_major.sbp_size();
-        size += self.semi_minor.sbp_size();
-        size += self.orientation.sbp_size();
-        size
     }
 }
 
@@ -116,94 +85,75 @@ impl crate::serialize::SbpSerialize for EstimatedHorizontalErrorEllipse {
 /// This message reports the Age of the corrections used for the current
 /// Differential solution.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgAgeCorrections {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Age of the corrections (0xFFFF indicates invalid)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "age")))]
     pub age: u16,
 }
 
-impl MsgAgeCorrections {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, crate::Error> {
-        Ok( MsgAgeCorrections{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            age: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgAgeCorrections {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_AGE_CORRECTIONS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        528
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgAgeCorrections {
+impl ConcreteMessage for MsgAgeCorrections {
     const MESSAGE_TYPE: u16 = 528;
     const MESSAGE_NAME: &'static str = "MSG_AGE_CORRECTIONS";
 }
-impl TryFrom<super::SBP> for MsgAgeCorrections {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgAgeCorrections {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgAgeCorrections {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgAgeCorrections(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgAgeCorrections(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAgeCorrections {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.age.append_to_sbp_buffer(buf);
+impl WireFormat for MsgAgeCorrections {
+    const MIN_ENCODED_LEN: usize =
+        <u32 as WireFormat>::MIN_ENCODED_LEN + <u16 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.age)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.age.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.age, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgAgeCorrections {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            age: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -214,119 +164,111 @@ impl crate::serialize::SbpSerialize for MsgAgeCorrections {
 /// base station to the rover receiver. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgBaselineECEF {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgBaselineEcef {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Baseline ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Baseline ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Baseline ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgBaselineECEF {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, crate::Error> {
-        Ok( MsgBaselineECEF{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgBaselineECEF {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BASELINE_ECEF"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        523
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgBaselineECEF {
+impl ConcreteMessage for MsgBaselineEcef {
     const MESSAGE_TYPE: u16 = 523;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF";
 }
-impl TryFrom<super::SBP> for MsgBaselineECEF {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgBaselineEcef {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgBaselineEcef {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineECEF(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgBaselineEcef(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineECEF {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgBaselineEcef {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgBaselineEcef {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -337,119 +279,111 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEF {
 /// base station to the rover receiver. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgBaselineECEFDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgBaselineEcefDepA {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Baseline ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Baseline ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Baseline ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Position accuracy estimate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgBaselineECEFDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, crate::Error> {
-        Ok( MsgBaselineECEFDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgBaselineECEFDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BASELINE_ECEF_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        514
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgBaselineECEFDepA {
+impl ConcreteMessage for MsgBaselineEcefDepA {
     const MESSAGE_TYPE: u16 = 514;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgBaselineECEFDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgBaselineEcefDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgBaselineEcefDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineECEFDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgBaselineEcefDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgBaselineEcefDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgBaselineEcefDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -459,104 +393,90 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
 /// to the rover relative to True North. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgBaselineHeadingDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Heading
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "heading")))]
     pub heading: u32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgBaselineHeadingDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, crate::Error> {
-        Ok( MsgBaselineHeadingDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            heading: _buf.read_u32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgBaselineHeadingDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BASELINE_HEADING_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        519
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgBaselineHeadingDepA {
+impl ConcreteMessage for MsgBaselineHeadingDepA {
     const MESSAGE_TYPE: u16 = 519;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_HEADING_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgBaselineHeadingDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgBaselineHeadingDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgBaselineHeadingDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineHeadingDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgBaselineHeadingDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.heading.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgBaselineHeadingDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.heading)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.heading.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.heading, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgBaselineHeadingDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            heading: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -569,124 +489,118 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
 /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
 /// week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgBaselineNED {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgBaselineNed {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Baseline North coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
     pub n: i32,
     /// Baseline East coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
     pub e: i32,
     /// Baseline Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
     pub d: i32,
     /// Horizontal position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgBaselineNED {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, crate::Error> {
-        Ok( MsgBaselineNED{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgBaselineNED {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BASELINE_NED"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        524
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgBaselineNED {
+impl ConcreteMessage for MsgBaselineNed {
     const MESSAGE_TYPE: u16 = 524;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED";
 }
-impl TryFrom<super::SBP> for MsgBaselineNED {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgBaselineNed {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgBaselineNed {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineNED(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgBaselineNed(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineNED {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.n.append_to_sbp_buffer(buf);
-        self.e.append_to_sbp_buffer(buf);
-        self.d.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgBaselineNed {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.n)
+            + WireFormat::encoded_len(&self.e)
+            + WireFormat::encoded_len(&self.d)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.n.sbp_size();
-        size += self.e.sbp_size();
-        size += self.d.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.n, buf);
+        WireFormat::write(&self.e, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgBaselineNed {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            n: WireFormat::parse_unchecked(buf),
+            e: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -699,124 +613,118 @@ impl crate::serialize::SbpSerialize for MsgBaselineNED {
 /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
 /// week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgBaselineNEDDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgBaselineNedDepA {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Baseline North coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
     pub n: i32,
     /// Baseline East coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
     pub e: i32,
     /// Baseline Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
     pub d: i32,
     /// Horizontal position accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical position accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgBaselineNEDDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, crate::Error> {
-        Ok( MsgBaselineNEDDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgBaselineNEDDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BASELINE_NED_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        515
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgBaselineNEDDepA {
+impl ConcreteMessage for MsgBaselineNedDepA {
     const MESSAGE_TYPE: u16 = 515;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_NED_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgBaselineNEDDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgBaselineNedDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgBaselineNedDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgBaselineNEDDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgBaselineNedDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.n.append_to_sbp_buffer(buf);
-        self.e.append_to_sbp_buffer(buf);
-        self.d.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgBaselineNedDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.n)
+            + WireFormat::encoded_len(&self.e)
+            + WireFormat::encoded_len(&self.d)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.n.sbp_size();
-        size += self.e.sbp_size();
-        size += self.d.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.n, buf);
+        WireFormat::write(&self.e, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgBaselineNedDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            n: WireFormat::parse_unchecked(buf),
+            e: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -827,119 +735,111 @@ impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
 /// flags field indicated whether the DOP reported corresponds to differential
 /// or SPP solution.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgDops {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Geometric Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gdop")))]
     pub gdop: u16,
     /// Position Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
     pub pdop: u16,
     /// Time Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tdop")))]
     pub tdop: u16,
     /// Horizontal Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
     pub hdop: u16,
     /// Vertical Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
     pub vdop: u16,
     /// Indicates the position solution with which the DOPS message corresponds
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgDops {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, crate::Error> {
-        Ok( MsgDops{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            gdop: _buf.read_u16::<LittleEndian>()?,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            tdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgDops {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_DOPS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        520
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgDops {
+impl ConcreteMessage for MsgDops {
     const MESSAGE_TYPE: u16 = 520;
     const MESSAGE_NAME: &'static str = "MSG_DOPS";
 }
-impl TryFrom<super::SBP> for MsgDops {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgDops {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgDops {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgDops(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgDops(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgDops {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.gdop.append_to_sbp_buffer(buf);
-        self.pdop.append_to_sbp_buffer(buf);
-        self.tdop.append_to_sbp_buffer(buf);
-        self.hdop.append_to_sbp_buffer(buf);
-        self.vdop.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgDops {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.gdop)
+            + WireFormat::encoded_len(&self.pdop)
+            + WireFormat::encoded_len(&self.tdop)
+            + WireFormat::encoded_len(&self.hdop)
+            + WireFormat::encoded_len(&self.vdop)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.gdop.sbp_size();
-        size += self.pdop.sbp_size();
-        size += self.tdop.sbp_size();
-        size += self.hdop.sbp_size();
-        size += self.vdop.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.gdop, buf);
+        WireFormat::write(&self.pdop, buf);
+        WireFormat::write(&self.tdop, buf);
+        WireFormat::write(&self.hdop, buf);
+        WireFormat::write(&self.vdop, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgDops {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            gdop: WireFormat::parse_unchecked(buf),
+            pdop: WireFormat::parse_unchecked(buf),
+            tdop: WireFormat::parse_unchecked(buf),
+            hdop: WireFormat::parse_unchecked(buf),
+            vdop: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -948,114 +848,104 @@ impl crate::serialize::SbpSerialize for MsgDops {
 /// This dilution of precision (DOP) message describes the effect of
 /// navigation satellite geometry on positional measurement precision.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgDopsDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Geometric Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gdop")))]
     pub gdop: u16,
     /// Position Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
     pub pdop: u16,
     /// Time Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tdop")))]
     pub tdop: u16,
     /// Horizontal Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
     pub hdop: u16,
     /// Vertical Dilution of Precision
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
     pub vdop: u16,
 }
 
-impl MsgDopsDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, crate::Error> {
-        Ok( MsgDopsDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            gdop: _buf.read_u16::<LittleEndian>()?,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            tdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgDopsDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_DOPS_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        518
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgDopsDepA {
+impl ConcreteMessage for MsgDopsDepA {
     const MESSAGE_TYPE: u16 = 518;
     const MESSAGE_NAME: &'static str = "MSG_DOPS_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgDopsDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgDopsDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgDopsDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgDopsDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgDopsDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgDopsDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.gdop.append_to_sbp_buffer(buf);
-        self.pdop.append_to_sbp_buffer(buf);
-        self.tdop.append_to_sbp_buffer(buf);
-        self.hdop.append_to_sbp_buffer(buf);
-        self.vdop.append_to_sbp_buffer(buf);
+impl WireFormat for MsgDopsDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.gdop)
+            + WireFormat::encoded_len(&self.pdop)
+            + WireFormat::encoded_len(&self.tdop)
+            + WireFormat::encoded_len(&self.hdop)
+            + WireFormat::encoded_len(&self.vdop)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.gdop.sbp_size();
-        size += self.pdop.sbp_size();
-        size += self.tdop.sbp_size();
-        size += self.hdop.sbp_size();
-        size += self.vdop.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.gdop, buf);
+        WireFormat::write(&self.pdop, buf);
+        WireFormat::write(&self.tdop, buf);
+        WireFormat::write(&self.hdop, buf);
+        WireFormat::write(&self.vdop, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgDopsDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            gdop: WireFormat::parse_unchecked(buf),
+            pdop: WireFormat::parse_unchecked(buf),
+            tdop: WireFormat::parse_unchecked(buf),
+            hdop: WireFormat::parse_unchecked(buf),
+            vdop: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1073,109 +963,96 @@ impl crate::serialize::SbpSerialize for MsgDopsDepA {
 /// same time (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgGPSTime {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgGpsTime {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
     pub wn: u16,
     /// GPS time of week rounded to the nearest millisecond
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     /// 500000)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
     pub ns_residual: i32,
     /// Status flags (reserved)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgGPSTime {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, crate::Error> {
-        Ok( MsgGPSTime{
-            sender_id: None,
-            wn: _buf.read_u16::<LittleEndian>()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgGPSTime {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GPS_TIME"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        258
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let wn = match i16::try_from(self.wn) {
-            Ok(wn) => wn,
-            Err(e) => return Some(Err(e.into())),
-        };
-        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
-            Ok(gps_time) => gps_time,
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgGPSTime {
+impl ConcreteMessage for MsgGpsTime {
     const MESSAGE_TYPE: u16 = 258;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME";
 }
-impl TryFrom<super::SBP> for MsgGPSTime {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgGpsTime {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        #[allow(clippy::useless_conversion)]
+        let wn: i16 = match self.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgGpsTime {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgGPSTime(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgGpsTime(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGPSTime {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.wn.append_to_sbp_buffer(buf);
-        self.tow.append_to_sbp_buffer(buf);
-        self.ns_residual.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgGpsTime {
+    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.wn)
+            + WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.ns_residual)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.wn.sbp_size();
-        size += self.tow.sbp_size();
-        size += self.ns_residual.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.wn, buf);
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.ns_residual, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgGpsTime {
+            sender_id: None,
+            wn: WireFormat::parse_unchecked(buf),
+            tow: WireFormat::parse_unchecked(buf),
+            ns_residual: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1193,109 +1070,96 @@ impl crate::serialize::SbpSerialize for MsgGPSTime {
 /// same time (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgGPSTimeDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgGpsTimeDepA {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
     pub wn: u16,
     /// GPS time of week rounded to the nearest millisecond
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     /// 500000)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
     pub ns_residual: i32,
     /// Status flags (reserved)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgGPSTimeDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, crate::Error> {
-        Ok( MsgGPSTimeDepA{
-            sender_id: None,
-            wn: _buf.read_u16::<LittleEndian>()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgGPSTimeDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GPS_TIME_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        256
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let wn = match i16::try_from(self.wn) {
-            Ok(wn) => wn,
-            Err(e) => return Some(Err(e.into())),
-        };
-        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
-            Ok(gps_time) => gps_time,
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgGPSTimeDepA {
+impl ConcreteMessage for MsgGpsTimeDepA {
     const MESSAGE_TYPE: u16 = 256;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgGPSTimeDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgGpsTimeDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        #[allow(clippy::useless_conversion)]
+        let wn: i16 = match self.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgGpsTimeDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgGPSTimeDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgGpsTimeDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.wn.append_to_sbp_buffer(buf);
-        self.tow.append_to_sbp_buffer(buf);
-        self.ns_residual.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgGpsTimeDepA {
+    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.wn)
+            + WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.ns_residual)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.wn.sbp_size();
-        size += self.tow.sbp_size();
-        size += self.ns_residual.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.wn, buf);
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.ns_residual, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgGpsTimeDepA {
+            sender_id: None,
+            wn: WireFormat::parse_unchecked(buf),
+            tow: WireFormat::parse_unchecked(buf),
+            ns_residual: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1313,109 +1177,96 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
 /// same time (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgGPSTimeGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgGpsTimeGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
     pub wn: u16,
     /// GPS time of week rounded to the nearest millisecond
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
     /// 500000)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
     pub ns_residual: i32,
     /// Status flags (reserved)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgGPSTimeGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeGnss, crate::Error> {
-        Ok( MsgGPSTimeGnss{
-            sender_id: None,
-            wn: _buf.read_u16::<LittleEndian>()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgGPSTimeGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GPS_TIME_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        260
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let wn = match i16::try_from(self.wn) {
-            Ok(wn) => wn,
-            Err(e) => return Some(Err(e.into())),
-        };
-        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
-            Ok(gps_time) => gps_time,
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgGPSTimeGnss {
+impl ConcreteMessage for MsgGpsTimeGnss {
     const MESSAGE_TYPE: u16 = 260;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_GNSS";
 }
-impl TryFrom<super::SBP> for MsgGPSTimeGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgGpsTimeGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        #[allow(clippy::useless_conversion)]
+        let wn: i16 = match self.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgGpsTimeGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgGPSTimeGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgGpsTimeGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.wn.append_to_sbp_buffer(buf);
-        self.tow.append_to_sbp_buffer(buf);
-        self.ns_residual.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgGpsTimeGnss {
+    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.wn)
+            + WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.ns_residual)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.wn.sbp_size();
-        size += self.tow.sbp_size();
-        size += self.ns_residual.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.wn, buf);
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.ns_residual, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgGpsTimeGnss {
+            sender_id: None,
+            wn: WireFormat::parse_unchecked(buf),
+            tow: WireFormat::parse_unchecked(buf),
+            ns_residual: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1429,119 +1280,111 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
 /// RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosECEF {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosEcef {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: f64,
     /// ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: f64,
     /// ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: f64,
     /// Position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosECEF {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, crate::Error> {
-        Ok( MsgPosECEF{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosECEF {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_ECEF"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        521
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosECEF {
+impl ConcreteMessage for MsgPosEcef {
     const MESSAGE_TYPE: u16 = 521;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF";
 }
-impl TryFrom<super::SBP> for MsgPosECEF {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosEcef {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosEcef {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEF(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosEcef(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEF {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosEcef {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosEcef {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1556,144 +1399,146 @@ impl crate::serialize::SbpSerialize for MsgPosECEF {
 /// rover's RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosECEFCov {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosEcefCov {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: f64,
     /// ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: f64,
     /// ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: f64,
     /// Estimated variance of x
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
     pub cov_x_x: f32,
     /// Estimated covariance of x and y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
     pub cov_x_y: f32,
     /// Estimated covariance of x and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
     pub cov_x_z: f32,
     /// Estimated variance of y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
     pub cov_y_y: f32,
     /// Estimated covariance of y and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
     pub cov_y_z: f32,
     /// Estimated variance of z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
     pub cov_z_z: f32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosECEFCov {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, crate::Error> {
-        Ok( MsgPosECEFCov{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosECEFCov {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_COV"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        532
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosECEFCov {
+impl ConcreteMessage for MsgPosEcefCov {
     const MESSAGE_TYPE: u16 = 532;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV";
 }
-impl TryFrom<super::SBP> for MsgPosECEFCov {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosEcefCov {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosEcefCov {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosEcefCov(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFCov {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.cov_x_x.append_to_sbp_buffer(buf);
-        self.cov_x_y.append_to_sbp_buffer(buf);
-        self.cov_x_z.append_to_sbp_buffer(buf);
-        self.cov_y_y.append_to_sbp_buffer(buf);
-        self.cov_y_z.append_to_sbp_buffer(buf);
-        self.cov_z_z.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosEcefCov {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.cov_x_x)
+            + WireFormat::encoded_len(&self.cov_x_y)
+            + WireFormat::encoded_len(&self.cov_x_z)
+            + WireFormat::encoded_len(&self.cov_y_y)
+            + WireFormat::encoded_len(&self.cov_y_z)
+            + WireFormat::encoded_len(&self.cov_z_z)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.cov_x_x.sbp_size();
-        size += self.cov_x_y.sbp_size();
-        size += self.cov_x_z.sbp_size();
-        size += self.cov_y_y.sbp_size();
-        size += self.cov_y_z.sbp_size();
-        size += self.cov_z_z.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.cov_x_x, buf);
+        WireFormat::write(&self.cov_x_y, buf);
+        WireFormat::write(&self.cov_x_z, buf);
+        WireFormat::write(&self.cov_y_y, buf);
+        WireFormat::write(&self.cov_y_z, buf);
+        WireFormat::write(&self.cov_z_z, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosEcefCov {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            cov_x_x: WireFormat::parse_unchecked(buf),
+            cov_x_y: WireFormat::parse_unchecked(buf),
+            cov_x_z: WireFormat::parse_unchecked(buf),
+            cov_y_y: WireFormat::parse_unchecked(buf),
+            cov_y_z: WireFormat::parse_unchecked(buf),
+            cov_z_z: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1708,144 +1553,146 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
 /// rover's RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosECEFCovGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosEcefCovGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: f64,
     /// ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: f64,
     /// ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: f64,
     /// Estimated variance of x
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
     pub cov_x_x: f32,
     /// Estimated covariance of x and y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
     pub cov_x_y: f32,
     /// Estimated covariance of x and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
     pub cov_x_z: f32,
     /// Estimated variance of y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
     pub cov_y_y: f32,
     /// Estimated covariance of y and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
     pub cov_y_z: f32,
     /// Estimated variance of z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
     pub cov_z_z: f32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosECEFCovGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCovGnss, crate::Error> {
-        Ok( MsgPosECEFCovGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosECEFCovGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_COV_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        564
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosECEFCovGnss {
+impl ConcreteMessage for MsgPosEcefCovGnss {
     const MESSAGE_TYPE: u16 = 564;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosECEFCovGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosEcefCovGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosEcefCovGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosEcefCovGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.cov_x_x.append_to_sbp_buffer(buf);
-        self.cov_x_y.append_to_sbp_buffer(buf);
-        self.cov_x_z.append_to_sbp_buffer(buf);
-        self.cov_y_y.append_to_sbp_buffer(buf);
-        self.cov_y_z.append_to_sbp_buffer(buf);
-        self.cov_z_z.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosEcefCovGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.cov_x_x)
+            + WireFormat::encoded_len(&self.cov_x_y)
+            + WireFormat::encoded_len(&self.cov_x_z)
+            + WireFormat::encoded_len(&self.cov_y_y)
+            + WireFormat::encoded_len(&self.cov_y_z)
+            + WireFormat::encoded_len(&self.cov_z_z)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.cov_x_x.sbp_size();
-        size += self.cov_x_y.sbp_size();
-        size += self.cov_x_z.sbp_size();
-        size += self.cov_y_y.sbp_size();
-        size += self.cov_y_z.sbp_size();
-        size += self.cov_z_z.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.cov_x_x, buf);
+        WireFormat::write(&self.cov_x_y, buf);
+        WireFormat::write(&self.cov_x_z, buf);
+        WireFormat::write(&self.cov_y_y, buf);
+        WireFormat::write(&self.cov_y_z, buf);
+        WireFormat::write(&self.cov_z_z, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosEcefCovGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            cov_x_x: WireFormat::parse_unchecked(buf),
+            cov_x_y: WireFormat::parse_unchecked(buf),
+            cov_x_z: WireFormat::parse_unchecked(buf),
+            cov_y_y: WireFormat::parse_unchecked(buf),
+            cov_y_z: WireFormat::parse_unchecked(buf),
+            cov_z_z: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1859,119 +1706,111 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
 /// RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosECEFDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosEcefDepA {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: f64,
     /// ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: f64,
     /// ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: f64,
     /// Position accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosECEFDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, crate::Error> {
-        Ok( MsgPosECEFDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosECEFDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        512
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosECEFDepA {
+impl ConcreteMessage for MsgPosEcefDepA {
     const MESSAGE_TYPE: u16 = 512;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgPosECEFDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosEcefDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosEcefDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosEcefDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosEcefDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosEcefDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1985,119 +1824,111 @@ impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
 /// RTK baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosECEFGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosEcefGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: f64,
     /// ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: f64,
     /// ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: f64,
     /// Position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosECEFGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFGnss, crate::Error> {
-        Ok( MsgPosECEFGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosECEFGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_ECEF_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        553
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosECEFGnss {
+impl ConcreteMessage for MsgPosEcefGnss {
     const MESSAGE_TYPE: u16 = 553;
     const MESSAGE_NAME: &'static str = "MSG_POS_ECEF_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosECEFGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosEcefGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosEcefGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosECEFGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosEcefGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosEcefGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosEcefGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -2111,124 +1942,118 @@ impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
 /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosLLH {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosLlh {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height above WGS84 ellipsoid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Horizontal position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosLLH {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, crate::Error> {
-        Ok( MsgPosLLH{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosLLH {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_LLH"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        522
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosLLH {
+impl ConcreteMessage for MsgPosLlh {
     const MESSAGE_TYPE: u16 = 522;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH";
 }
-impl TryFrom<super::SBP> for MsgPosLLH {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosLlh {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosLlh {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLH(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosLlh(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLH {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosLlh {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosLlh {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -2245,157 +2070,161 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
 /// The estimated errors are reported at a user-configurable confidence level.
 /// The user-configured percentile is encoded in the percentile field.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosLLHAcc {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosLlhAcc {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height above WGS84 ellipsoid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Height above the geoid (i.e. height above mean sea level). See
     /// confidence_and_geoid for geoid model used.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "orthometric_height")))]
     pub orthometric_height: f64,
     /// Estimated horizontal error at the user-configured confidence level; zero
     /// implies invalid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: f32,
     /// Estimated vertical error at the user-configured confidence level; zero
     /// implies invalid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: f32,
     /// Estimated cross-track error at the user-configured confidence level;
     /// zero implies invalid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ct_accuracy")))]
     pub ct_accuracy: f32,
     /// Estimated along-track error at the user-configured confidence level;
     /// zero implies invalid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "at_accuracy")))]
     pub at_accuracy: f32,
     /// The estimated horizontal error ellipse at the user-configured confidence
     /// level.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_ellipse")))]
     pub h_ellipse: EstimatedHorizontalErrorEllipse,
     /// The lower bits describe the configured confidence level for the
     /// estimated position error. The middle bits describe the geoid model used
     /// to calculate the orthometric height.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "confidence_and_geoid")))]
     pub confidence_and_geoid: u8,
     /// Number of satellites used in solution.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosLLHAcc {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHAcc, crate::Error> {
-        Ok( MsgPosLLHAcc{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            orthometric_height: _buf.read_f64::<LittleEndian>()?,
-            h_accuracy: _buf.read_f32::<LittleEndian>()?,
-            v_accuracy: _buf.read_f32::<LittleEndian>()?,
-            ct_accuracy: _buf.read_f32::<LittleEndian>()?,
-            at_accuracy: _buf.read_f32::<LittleEndian>()?,
-            h_ellipse: EstimatedHorizontalErrorEllipse::parse(_buf)?,
-            confidence_and_geoid: _buf.read_u8()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosLLHAcc {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_LLH_ACC"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        536
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosLLHAcc {
+impl ConcreteMessage for MsgPosLlhAcc {
     const MESSAGE_TYPE: u16 = 536;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_ACC";
 }
-impl TryFrom<super::SBP> for MsgPosLLHAcc {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosLlhAcc {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosLlhAcc {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHAcc(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosLlhAcc(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.orthometric_height.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.ct_accuracy.append_to_sbp_buffer(buf);
-        self.at_accuracy.append_to_sbp_buffer(buf);
-        self.h_ellipse.append_to_sbp_buffer(buf);
-        self.confidence_and_geoid.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosLlhAcc {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <EstimatedHorizontalErrorEllipse as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.orthometric_height)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.ct_accuracy)
+            + WireFormat::encoded_len(&self.at_accuracy)
+            + WireFormat::encoded_len(&self.h_ellipse)
+            + WireFormat::encoded_len(&self.confidence_and_geoid)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.orthometric_height.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.ct_accuracy.sbp_size();
-        size += self.at_accuracy.sbp_size();
-        size += self.h_ellipse.sbp_size();
-        size += self.confidence_and_geoid.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.orthometric_height, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.ct_accuracy, buf);
+        WireFormat::write(&self.at_accuracy, buf);
+        WireFormat::write(&self.h_ellipse, buf);
+        WireFormat::write(&self.confidence_and_geoid, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosLlhAcc {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            orthometric_height: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            ct_accuracy: WireFormat::parse_unchecked(buf),
+            at_accuracy: WireFormat::parse_unchecked(buf),
+            h_ellipse: WireFormat::parse_unchecked(buf),
+            confidence_and_geoid: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -2410,144 +2239,146 @@ impl crate::serialize::SbpSerialize for MsgPosLLHAcc {
 /// are reported against the "downward" measurement and care should be taken
 /// with the sign convention.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosLLHCov {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosLlhCov {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height above WGS84 ellipsoid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Estimated variance of northing
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
     pub cov_n_n: f32,
     /// Covariance of northing and easting
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
     pub cov_n_e: f32,
     /// Covariance of northing and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
     pub cov_n_d: f32,
     /// Estimated variance of easting
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
     pub cov_e_e: f32,
     /// Covariance of easting and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
     pub cov_e_d: f32,
     /// Estimated variance of downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
     pub cov_d_d: f32,
     /// Number of satellites used in solution.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosLLHCov {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, crate::Error> {
-        Ok( MsgPosLLHCov{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosLLHCov {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_LLH_COV"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        529
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosLLHCov {
+impl ConcreteMessage for MsgPosLlhCov {
     const MESSAGE_TYPE: u16 = 529;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV";
 }
-impl TryFrom<super::SBP> for MsgPosLLHCov {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosLlhCov {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosLlhCov {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosLlhCov(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHCov {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.cov_n_n.append_to_sbp_buffer(buf);
-        self.cov_n_e.append_to_sbp_buffer(buf);
-        self.cov_n_d.append_to_sbp_buffer(buf);
-        self.cov_e_e.append_to_sbp_buffer(buf);
-        self.cov_e_d.append_to_sbp_buffer(buf);
-        self.cov_d_d.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosLlhCov {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.cov_n_n)
+            + WireFormat::encoded_len(&self.cov_n_e)
+            + WireFormat::encoded_len(&self.cov_n_d)
+            + WireFormat::encoded_len(&self.cov_e_e)
+            + WireFormat::encoded_len(&self.cov_e_d)
+            + WireFormat::encoded_len(&self.cov_d_d)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.cov_n_n.sbp_size();
-        size += self.cov_n_e.sbp_size();
-        size += self.cov_n_d.sbp_size();
-        size += self.cov_e_e.sbp_size();
-        size += self.cov_e_d.sbp_size();
-        size += self.cov_d_d.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.cov_n_n, buf);
+        WireFormat::write(&self.cov_n_e, buf);
+        WireFormat::write(&self.cov_n_d, buf);
+        WireFormat::write(&self.cov_e_e, buf);
+        WireFormat::write(&self.cov_e_d, buf);
+        WireFormat::write(&self.cov_d_d, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosLlhCov {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            cov_n_n: WireFormat::parse_unchecked(buf),
+            cov_n_e: WireFormat::parse_unchecked(buf),
+            cov_n_d: WireFormat::parse_unchecked(buf),
+            cov_e_e: WireFormat::parse_unchecked(buf),
+            cov_e_d: WireFormat::parse_unchecked(buf),
+            cov_d_d: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -2562,144 +2393,146 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCov {
 /// Thus, covariances are reported against the "downward" measurement and care
 /// should be taken with the sign convention.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosLLHCovGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosLlhCovGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height above WGS84 ellipsoid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Estimated variance of northing
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
     pub cov_n_n: f32,
     /// Covariance of northing and easting
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
     pub cov_n_e: f32,
     /// Covariance of northing and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
     pub cov_n_d: f32,
     /// Estimated variance of easting
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
     pub cov_e_e: f32,
     /// Covariance of easting and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
     pub cov_e_d: f32,
     /// Estimated variance of downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
     pub cov_d_d: f32,
     /// Number of satellites used in solution.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosLLHCovGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCovGnss, crate::Error> {
-        Ok( MsgPosLLHCovGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosLLHCovGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_LLH_COV_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        561
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosLLHCovGnss {
+impl ConcreteMessage for MsgPosLlhCovGnss {
     const MESSAGE_TYPE: u16 = 561;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosLLHCovGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosLlhCovGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosLlhCovGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosLlhCovGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.cov_n_n.append_to_sbp_buffer(buf);
-        self.cov_n_e.append_to_sbp_buffer(buf);
-        self.cov_n_d.append_to_sbp_buffer(buf);
-        self.cov_e_e.append_to_sbp_buffer(buf);
-        self.cov_e_d.append_to_sbp_buffer(buf);
-        self.cov_d_d.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosLlhCovGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.cov_n_n)
+            + WireFormat::encoded_len(&self.cov_n_e)
+            + WireFormat::encoded_len(&self.cov_n_d)
+            + WireFormat::encoded_len(&self.cov_e_e)
+            + WireFormat::encoded_len(&self.cov_e_d)
+            + WireFormat::encoded_len(&self.cov_d_d)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.cov_n_n.sbp_size();
-        size += self.cov_n_e.sbp_size();
-        size += self.cov_n_d.sbp_size();
-        size += self.cov_e_e.sbp_size();
-        size += self.cov_e_d.sbp_size();
-        size += self.cov_d_d.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.cov_n_n, buf);
+        WireFormat::write(&self.cov_n_e, buf);
+        WireFormat::write(&self.cov_n_d, buf);
+        WireFormat::write(&self.cov_e_e, buf);
+        WireFormat::write(&self.cov_e_d, buf);
+        WireFormat::write(&self.cov_d_d, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosLlhCovGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            cov_n_n: WireFormat::parse_unchecked(buf),
+            cov_n_e: WireFormat::parse_unchecked(buf),
+            cov_n_d: WireFormat::parse_unchecked(buf),
+            cov_e_e: WireFormat::parse_unchecked(buf),
+            cov_e_d: WireFormat::parse_unchecked(buf),
+            cov_d_d: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -2713,124 +2546,118 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
 /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosLLHDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosLlhDepA {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Horizontal position accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical position accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosLLHDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, crate::Error> {
-        Ok( MsgPosLLHDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosLLHDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_LLH_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        513
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosLLHDepA {
+impl ConcreteMessage for MsgPosLlhDepA {
     const MESSAGE_TYPE: u16 = 513;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgPosLLHDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosLlhDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosLlhDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosLlhDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosLlhDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosLlhDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -2844,124 +2671,118 @@ impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
 /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgPosLLHGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgPosLlhGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height above WGS84 ellipsoid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Horizontal position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical position estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgPosLLHGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHGnss, crate::Error> {
-        Ok( MsgPosLLHGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgPosLLHGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_POS_LLH_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        554
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgPosLLHGnss {
+impl ConcreteMessage for MsgPosLlhGnss {
     const MESSAGE_TYPE: u16 = 554;
     const MESSAGE_NAME: &'static str = "MSG_POS_LLH_GNSS";
 }
-impl TryFrom<super::SBP> for MsgPosLLHGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgPosLlhGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgPosLlhGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgPosLLHGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgPosLlhGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgPosLlhGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgPosLlhGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -2971,195 +2792,216 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
 /// estimate. The full GPS time is given by the preceding MSG_GPS_TIME with
 /// the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgProtectionLevel {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// GPS week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
     pub wn: i16,
     /// Horizontal protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hpl")))]
     pub hpl: u16,
     /// Vertical protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vpl")))]
     pub vpl: u16,
     /// Along-track position error protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "atpl")))]
     pub atpl: u16,
     /// Cross-track position error protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ctpl")))]
     pub ctpl: u16,
     /// Protection level for the error vector between estimated and true
     /// along/cross track velocity vector
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hvpl")))]
     pub hvpl: u16,
     /// Protection level for the velocity in vehicle upright direction
     /// (different from vertical direction if on a slope)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vvpl")))]
     pub vvpl: u16,
     /// Heading orientation protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hopl")))]
     pub hopl: u16,
     /// Pitch orientation protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "popl")))]
     pub popl: u16,
     /// Roll orientation protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ropl")))]
     pub ropl: u16,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Velocity in vehicle x direction
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_x")))]
     pub v_x: i32,
     /// Velocity in vehicle y direction
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_y")))]
     pub v_y: i32,
     /// Velocity in vehicle z direction
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_z")))]
     pub v_z: i32,
     /// Roll angle
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "roll")))]
     pub roll: i32,
     /// Pitch angle
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pitch")))]
     pub pitch: i32,
     /// Heading angle
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "heading")))]
     pub heading: i32,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u32,
 }
 
-impl MsgProtectionLevel {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, crate::Error> {
-        Ok( MsgProtectionLevel{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            wn: _buf.read_i16::<LittleEndian>()?,
-            hpl: _buf.read_u16::<LittleEndian>()?,
-            vpl: _buf.read_u16::<LittleEndian>()?,
-            atpl: _buf.read_u16::<LittleEndian>()?,
-            ctpl: _buf.read_u16::<LittleEndian>()?,
-            hvpl: _buf.read_u16::<LittleEndian>()?,
-            vvpl: _buf.read_u16::<LittleEndian>()?,
-            hopl: _buf.read_u16::<LittleEndian>()?,
-            popl: _buf.read_u16::<LittleEndian>()?,
-            ropl: _buf.read_u16::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            v_x: _buf.read_i32::<LittleEndian>()?,
-            v_y: _buf.read_i32::<LittleEndian>()?,
-            v_z: _buf.read_i32::<LittleEndian>()?,
-            roll: _buf.read_i32::<LittleEndian>()?,
-            pitch: _buf.read_i32::<LittleEndian>()?,
-            heading: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgProtectionLevel {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_PROTECTION_LEVEL"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        535
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let wn = match i16::try_from(self.wn) {
-            Ok(wn) => wn,
-            Err(e) => return Some(Err(e.into())),
-        };
-        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
-            Ok(gps_time) => gps_time,
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgProtectionLevel {
+impl ConcreteMessage for MsgProtectionLevel {
     const MESSAGE_TYPE: u16 = 535;
     const MESSAGE_NAME: &'static str = "MSG_PROTECTION_LEVEL";
 }
-impl TryFrom<super::SBP> for MsgProtectionLevel {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgProtectionLevel {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        #[allow(clippy::useless_conversion)]
+        let wn: i16 = match self.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgProtectionLevel {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgProtectionLevel(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgProtectionLevel(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgProtectionLevel {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.wn.append_to_sbp_buffer(buf);
-        self.hpl.append_to_sbp_buffer(buf);
-        self.vpl.append_to_sbp_buffer(buf);
-        self.atpl.append_to_sbp_buffer(buf);
-        self.ctpl.append_to_sbp_buffer(buf);
-        self.hvpl.append_to_sbp_buffer(buf);
-        self.vvpl.append_to_sbp_buffer(buf);
-        self.hopl.append_to_sbp_buffer(buf);
-        self.popl.append_to_sbp_buffer(buf);
-        self.ropl.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.v_x.append_to_sbp_buffer(buf);
-        self.v_y.append_to_sbp_buffer(buf);
-        self.v_z.append_to_sbp_buffer(buf);
-        self.roll.append_to_sbp_buffer(buf);
-        self.pitch.append_to_sbp_buffer(buf);
-        self.heading.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgProtectionLevel {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.wn)
+            + WireFormat::encoded_len(&self.hpl)
+            + WireFormat::encoded_len(&self.vpl)
+            + WireFormat::encoded_len(&self.atpl)
+            + WireFormat::encoded_len(&self.ctpl)
+            + WireFormat::encoded_len(&self.hvpl)
+            + WireFormat::encoded_len(&self.vvpl)
+            + WireFormat::encoded_len(&self.hopl)
+            + WireFormat::encoded_len(&self.popl)
+            + WireFormat::encoded_len(&self.ropl)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.v_x)
+            + WireFormat::encoded_len(&self.v_y)
+            + WireFormat::encoded_len(&self.v_z)
+            + WireFormat::encoded_len(&self.roll)
+            + WireFormat::encoded_len(&self.pitch)
+            + WireFormat::encoded_len(&self.heading)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.wn.sbp_size();
-        size += self.hpl.sbp_size();
-        size += self.vpl.sbp_size();
-        size += self.atpl.sbp_size();
-        size += self.ctpl.sbp_size();
-        size += self.hvpl.sbp_size();
-        size += self.vvpl.sbp_size();
-        size += self.hopl.sbp_size();
-        size += self.popl.sbp_size();
-        size += self.ropl.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.v_x.sbp_size();
-        size += self.v_y.sbp_size();
-        size += self.v_z.sbp_size();
-        size += self.roll.sbp_size();
-        size += self.pitch.sbp_size();
-        size += self.heading.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.wn, buf);
+        WireFormat::write(&self.hpl, buf);
+        WireFormat::write(&self.vpl, buf);
+        WireFormat::write(&self.atpl, buf);
+        WireFormat::write(&self.ctpl, buf);
+        WireFormat::write(&self.hvpl, buf);
+        WireFormat::write(&self.vvpl, buf);
+        WireFormat::write(&self.hopl, buf);
+        WireFormat::write(&self.popl, buf);
+        WireFormat::write(&self.ropl, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.v_x, buf);
+        WireFormat::write(&self.v_y, buf);
+        WireFormat::write(&self.v_z, buf);
+        WireFormat::write(&self.roll, buf);
+        WireFormat::write(&self.pitch, buf);
+        WireFormat::write(&self.heading, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgProtectionLevel {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            wn: WireFormat::parse_unchecked(buf),
+            hpl: WireFormat::parse_unchecked(buf),
+            vpl: WireFormat::parse_unchecked(buf),
+            atpl: WireFormat::parse_unchecked(buf),
+            ctpl: WireFormat::parse_unchecked(buf),
+            hvpl: WireFormat::parse_unchecked(buf),
+            vvpl: WireFormat::parse_unchecked(buf),
+            hopl: WireFormat::parse_unchecked(buf),
+            popl: WireFormat::parse_unchecked(buf),
+            ropl: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            v_x: WireFormat::parse_unchecked(buf),
+            v_y: WireFormat::parse_unchecked(buf),
+            v_z: WireFormat::parse_unchecked(buf),
+            roll: WireFormat::parse_unchecked(buf),
+            pitch: WireFormat::parse_unchecked(buf),
+            heading: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -3169,119 +3011,111 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
 /// associated with a given LLH position solution. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgProtectionLevelDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Vertical protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vpl")))]
     pub vpl: u16,
     /// Horizontal protection level
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hpl")))]
     pub hpl: u16,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgProtectionLevelDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevelDepA, crate::Error> {
-        Ok( MsgProtectionLevelDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            vpl: _buf.read_u16::<LittleEndian>()?,
-            hpl: _buf.read_u16::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgProtectionLevelDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_PROTECTION_LEVEL_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        534
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgProtectionLevelDepA {
+impl ConcreteMessage for MsgProtectionLevelDepA {
     const MESSAGE_TYPE: u16 = 534;
     const MESSAGE_NAME: &'static str = "MSG_PROTECTION_LEVEL_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgProtectionLevelDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgProtectionLevelDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgProtectionLevelDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgProtectionLevelDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgProtectionLevelDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgProtectionLevelDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.vpl.append_to_sbp_buffer(buf);
-        self.hpl.append_to_sbp_buffer(buf);
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgProtectionLevelDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <f64 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.vpl)
+            + WireFormat::encoded_len(&self.hpl)
+            + WireFormat::encoded_len(&self.lat)
+            + WireFormat::encoded_len(&self.lon)
+            + WireFormat::encoded_len(&self.height)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.vpl.sbp_size();
-        size += self.hpl.sbp_size();
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.vpl, buf);
+        WireFormat::write(&self.hpl, buf);
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgProtectionLevelDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            vpl: WireFormat::parse_unchecked(buf),
+            hpl: WireFormat::parse_unchecked(buf),
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -3291,129 +3125,125 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevelDepA {
 /// which indicate the source of the UTC offset value and source of the time
 /// fix.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgUtcTime {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Indicates source and time validity
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
     /// GPS time of week rounded to the nearest millisecond
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Year
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "year")))]
     pub year: u16,
     /// Month (range 1 .. 12)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "month")))]
     pub month: u8,
     /// days in the month (range 1-31)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "day")))]
     pub day: u8,
     /// hours of day (range 0-23)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hours")))]
     pub hours: u8,
     /// minutes of hour (range 0-59)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "minutes")))]
     pub minutes: u8,
     /// seconds of minute (range 0-60) rounded down
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "seconds")))]
     pub seconds: u8,
     /// nanoseconds of second (range 0-999999999)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ns")))]
     pub ns: u32,
 }
 
-impl MsgUtcTime {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, crate::Error> {
-        Ok( MsgUtcTime{
-            sender_id: None,
-            flags: _buf.read_u8()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            year: _buf.read_u16::<LittleEndian>()?,
-            month: _buf.read_u8()?,
-            day: _buf.read_u8()?,
-            hours: _buf.read_u8()?,
-            minutes: _buf.read_u8()?,
-            seconds: _buf.read_u8()?,
-            ns: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgUtcTime {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_UTC_TIME"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        259
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgUtcTime {
+impl ConcreteMessage for MsgUtcTime {
     const MESSAGE_TYPE: u16 = 259;
     const MESSAGE_NAME: &'static str = "MSG_UTC_TIME";
 }
-impl TryFrom<super::SBP> for MsgUtcTime {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgUtcTime {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgUtcTime {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgUtcTime(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgUtcTime(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgUtcTime {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.flags.append_to_sbp_buffer(buf);
-        self.tow.append_to_sbp_buffer(buf);
-        self.year.append_to_sbp_buffer(buf);
-        self.month.append_to_sbp_buffer(buf);
-        self.day.append_to_sbp_buffer(buf);
-        self.hours.append_to_sbp_buffer(buf);
-        self.minutes.append_to_sbp_buffer(buf);
-        self.seconds.append_to_sbp_buffer(buf);
-        self.ns.append_to_sbp_buffer(buf);
+impl WireFormat for MsgUtcTime {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.flags)
+            + WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.year)
+            + WireFormat::encoded_len(&self.month)
+            + WireFormat::encoded_len(&self.day)
+            + WireFormat::encoded_len(&self.hours)
+            + WireFormat::encoded_len(&self.minutes)
+            + WireFormat::encoded_len(&self.seconds)
+            + WireFormat::encoded_len(&self.ns)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.flags.sbp_size();
-        size += self.tow.sbp_size();
-        size += self.year.sbp_size();
-        size += self.month.sbp_size();
-        size += self.day.sbp_size();
-        size += self.hours.sbp_size();
-        size += self.minutes.sbp_size();
-        size += self.seconds.sbp_size();
-        size += self.ns.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.flags, buf);
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.year, buf);
+        WireFormat::write(&self.month, buf);
+        WireFormat::write(&self.day, buf);
+        WireFormat::write(&self.hours, buf);
+        WireFormat::write(&self.minutes, buf);
+        WireFormat::write(&self.seconds, buf);
+        WireFormat::write(&self.ns, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgUtcTime {
+            sender_id: None,
+            flags: WireFormat::parse_unchecked(buf),
+            tow: WireFormat::parse_unchecked(buf),
+            year: WireFormat::parse_unchecked(buf),
+            month: WireFormat::parse_unchecked(buf),
+            day: WireFormat::parse_unchecked(buf),
+            hours: WireFormat::parse_unchecked(buf),
+            minutes: WireFormat::parse_unchecked(buf),
+            seconds: WireFormat::parse_unchecked(buf),
+            ns: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -3423,129 +3253,125 @@ impl crate::serialize::SbpSerialize for MsgUtcTime {
 /// which indicate the source of the UTC offset value and source of the time
 /// fix.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgUtcTimeGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Indicates source and time validity
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
     /// GPS time of week rounded to the nearest millisecond
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Year
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "year")))]
     pub year: u16,
     /// Month (range 1 .. 12)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "month")))]
     pub month: u8,
     /// days in the month (range 1-31)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "day")))]
     pub day: u8,
     /// hours of day (range 0-23)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "hours")))]
     pub hours: u8,
     /// minutes of hour (range 0-59)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "minutes")))]
     pub minutes: u8,
     /// seconds of minute (range 0-60) rounded down
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "seconds")))]
     pub seconds: u8,
     /// nanoseconds of second (range 0-999999999)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ns")))]
     pub ns: u32,
 }
 
-impl MsgUtcTimeGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTimeGnss, crate::Error> {
-        Ok( MsgUtcTimeGnss{
-            sender_id: None,
-            flags: _buf.read_u8()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            year: _buf.read_u16::<LittleEndian>()?,
-            month: _buf.read_u8()?,
-            day: _buf.read_u8()?,
-            hours: _buf.read_u8()?,
-            minutes: _buf.read_u8()?,
-            seconds: _buf.read_u8()?,
-            ns: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgUtcTimeGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_UTC_TIME_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        261
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgUtcTimeGnss {
+impl ConcreteMessage for MsgUtcTimeGnss {
     const MESSAGE_TYPE: u16 = 261;
     const MESSAGE_NAME: &'static str = "MSG_UTC_TIME_GNSS";
 }
-impl TryFrom<super::SBP> for MsgUtcTimeGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgUtcTimeGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgUtcTimeGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgUtcTimeGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgUtcTimeGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgUtcTimeGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.flags.append_to_sbp_buffer(buf);
-        self.tow.append_to_sbp_buffer(buf);
-        self.year.append_to_sbp_buffer(buf);
-        self.month.append_to_sbp_buffer(buf);
-        self.day.append_to_sbp_buffer(buf);
-        self.hours.append_to_sbp_buffer(buf);
-        self.minutes.append_to_sbp_buffer(buf);
-        self.seconds.append_to_sbp_buffer(buf);
-        self.ns.append_to_sbp_buffer(buf);
+impl WireFormat for MsgUtcTimeGnss {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.flags)
+            + WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.year)
+            + WireFormat::encoded_len(&self.month)
+            + WireFormat::encoded_len(&self.day)
+            + WireFormat::encoded_len(&self.hours)
+            + WireFormat::encoded_len(&self.minutes)
+            + WireFormat::encoded_len(&self.seconds)
+            + WireFormat::encoded_len(&self.ns)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.flags.sbp_size();
-        size += self.tow.sbp_size();
-        size += self.year.sbp_size();
-        size += self.month.sbp_size();
-        size += self.day.sbp_size();
-        size += self.hours.sbp_size();
-        size += self.minutes.sbp_size();
-        size += self.seconds.sbp_size();
-        size += self.ns.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.flags, buf);
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.year, buf);
+        WireFormat::write(&self.month, buf);
+        WireFormat::write(&self.day, buf);
+        WireFormat::write(&self.hours, buf);
+        WireFormat::write(&self.minutes, buf);
+        WireFormat::write(&self.seconds, buf);
+        WireFormat::write(&self.ns, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgUtcTimeGnss {
+            sender_id: None,
+            flags: WireFormat::parse_unchecked(buf),
+            tow: WireFormat::parse_unchecked(buf),
+            year: WireFormat::parse_unchecked(buf),
+            month: WireFormat::parse_unchecked(buf),
+            day: WireFormat::parse_unchecked(buf),
+            hours: WireFormat::parse_unchecked(buf),
+            minutes: WireFormat::parse_unchecked(buf),
+            seconds: WireFormat::parse_unchecked(buf),
+            ns: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -3561,144 +3387,146 @@ impl crate::serialize::SbpSerialize for MsgUtcTimeGnss {
 /// (tow). This message is only produced by inertial versions of Swift
 /// products and is not available from Piksi Multi or Duro.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgVelBody {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity in x direction
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Velocity in y direction
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Velocity in z direction
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Estimated variance of x
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
     pub cov_x_x: f32,
     /// Covariance of x and y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
     pub cov_x_y: f32,
     /// Covariance of x and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
     pub cov_x_z: f32,
     /// Estimated variance of y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
     pub cov_y_y: f32,
     /// Covariance of y and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
     pub cov_y_z: f32,
     /// Estimated variance of z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
     pub cov_z_z: f32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelBody {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, crate::Error> {
-        Ok( MsgVelBody{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelBody {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_BODY"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        531
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelBody {
+impl ConcreteMessage for MsgVelBody {
     const MESSAGE_TYPE: u16 = 531;
     const MESSAGE_NAME: &'static str = "MSG_VEL_BODY";
 }
-impl TryFrom<super::SBP> for MsgVelBody {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelBody {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelBody {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelBody(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelBody(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelBody {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.cov_x_x.append_to_sbp_buffer(buf);
-        self.cov_x_y.append_to_sbp_buffer(buf);
-        self.cov_x_z.append_to_sbp_buffer(buf);
-        self.cov_y_y.append_to_sbp_buffer(buf);
-        self.cov_y_z.append_to_sbp_buffer(buf);
-        self.cov_z_z.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelBody {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.cov_x_x)
+            + WireFormat::encoded_len(&self.cov_x_y)
+            + WireFormat::encoded_len(&self.cov_x_z)
+            + WireFormat::encoded_len(&self.cov_y_y)
+            + WireFormat::encoded_len(&self.cov_y_z)
+            + WireFormat::encoded_len(&self.cov_z_z)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.cov_x_x.sbp_size();
-        size += self.cov_x_y.sbp_size();
-        size += self.cov_x_z.sbp_size();
-        size += self.cov_y_y.sbp_size();
-        size += self.cov_y_z.sbp_size();
-        size += self.cov_z_z.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.cov_x_x, buf);
+        WireFormat::write(&self.cov_x_y, buf);
+        WireFormat::write(&self.cov_x_z, buf);
+        WireFormat::write(&self.cov_y_y, buf);
+        WireFormat::write(&self.cov_y_z, buf);
+        WireFormat::write(&self.cov_z_z, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelBody {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            cov_x_x: WireFormat::parse_unchecked(buf),
+            cov_x_y: WireFormat::parse_unchecked(buf),
+            cov_x_z: WireFormat::parse_unchecked(buf),
+            cov_y_y: WireFormat::parse_unchecked(buf),
+            cov_y_z: WireFormat::parse_unchecked(buf),
+            cov_z_z: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -3708,119 +3536,111 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
 /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 /// the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelECEF {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelEcef {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Velocity ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Velocity ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Velocity estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelECEF {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, crate::Error> {
-        Ok( MsgVelECEF{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelECEF {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        525
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelECEF {
+impl ConcreteMessage for MsgVelEcef {
     const MESSAGE_TYPE: u16 = 525;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF";
 }
-impl TryFrom<super::SBP> for MsgVelECEF {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelEcef {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelEcef {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEF(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelEcef(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEF {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelEcef {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelEcef {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -3830,144 +3650,146 @@ impl crate::serialize::SbpSerialize for MsgVelECEF {
 /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 /// the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelECEFCov {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelEcefCov {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Velocity ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Velocity ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Estimated variance of x
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
     pub cov_x_x: f32,
     /// Estimated covariance of x and y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
     pub cov_x_y: f32,
     /// Estimated covariance of x and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
     pub cov_x_z: f32,
     /// Estimated variance of y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
     pub cov_y_y: f32,
     /// Estimated covariance of y and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
     pub cov_y_z: f32,
     /// Estimated variance of z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
     pub cov_z_z: f32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelECEFCov {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, crate::Error> {
-        Ok( MsgVelECEFCov{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelECEFCov {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_COV"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        533
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelECEFCov {
+impl ConcreteMessage for MsgVelEcefCov {
     const MESSAGE_TYPE: u16 = 533;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV";
 }
-impl TryFrom<super::SBP> for MsgVelECEFCov {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelEcefCov {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelEcefCov {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelEcefCov(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFCov {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.cov_x_x.append_to_sbp_buffer(buf);
-        self.cov_x_y.append_to_sbp_buffer(buf);
-        self.cov_x_z.append_to_sbp_buffer(buf);
-        self.cov_y_y.append_to_sbp_buffer(buf);
-        self.cov_y_z.append_to_sbp_buffer(buf);
-        self.cov_z_z.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelEcefCov {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.cov_x_x)
+            + WireFormat::encoded_len(&self.cov_x_y)
+            + WireFormat::encoded_len(&self.cov_x_z)
+            + WireFormat::encoded_len(&self.cov_y_y)
+            + WireFormat::encoded_len(&self.cov_y_z)
+            + WireFormat::encoded_len(&self.cov_z_z)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.cov_x_x.sbp_size();
-        size += self.cov_x_y.sbp_size();
-        size += self.cov_x_z.sbp_size();
-        size += self.cov_y_y.sbp_size();
-        size += self.cov_y_z.sbp_size();
-        size += self.cov_z_z.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.cov_x_x, buf);
+        WireFormat::write(&self.cov_x_y, buf);
+        WireFormat::write(&self.cov_x_z, buf);
+        WireFormat::write(&self.cov_y_y, buf);
+        WireFormat::write(&self.cov_y_z, buf);
+        WireFormat::write(&self.cov_z_z, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelEcefCov {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            cov_x_x: WireFormat::parse_unchecked(buf),
+            cov_x_y: WireFormat::parse_unchecked(buf),
+            cov_x_z: WireFormat::parse_unchecked(buf),
+            cov_y_y: WireFormat::parse_unchecked(buf),
+            cov_y_z: WireFormat::parse_unchecked(buf),
+            cov_z_z: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -3977,144 +3799,146 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCov {
 /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 /// the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelECEFCovGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelEcefCovGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Velocity ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Velocity ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Estimated variance of x
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
     pub cov_x_x: f32,
     /// Estimated covariance of x and y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
     pub cov_x_y: f32,
     /// Estimated covariance of x and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
     pub cov_x_z: f32,
     /// Estimated variance of y
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
     pub cov_y_y: f32,
     /// Estimated covariance of y and z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
     pub cov_y_z: f32,
     /// Estimated variance of z
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
     pub cov_z_z: f32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelECEFCovGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCovGnss, crate::Error> {
-        Ok( MsgVelECEFCovGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelECEFCovGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_COV_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        565
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelECEFCovGnss {
+impl ConcreteMessage for MsgVelEcefCovGnss {
     const MESSAGE_TYPE: u16 = 565;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelECEFCovGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelEcefCovGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelEcefCovGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelEcefCovGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.cov_x_x.append_to_sbp_buffer(buf);
-        self.cov_x_y.append_to_sbp_buffer(buf);
-        self.cov_x_z.append_to_sbp_buffer(buf);
-        self.cov_y_y.append_to_sbp_buffer(buf);
-        self.cov_y_z.append_to_sbp_buffer(buf);
-        self.cov_z_z.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelEcefCovGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.cov_x_x)
+            + WireFormat::encoded_len(&self.cov_x_y)
+            + WireFormat::encoded_len(&self.cov_x_z)
+            + WireFormat::encoded_len(&self.cov_y_y)
+            + WireFormat::encoded_len(&self.cov_y_z)
+            + WireFormat::encoded_len(&self.cov_z_z)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.cov_x_x.sbp_size();
-        size += self.cov_x_y.sbp_size();
-        size += self.cov_x_z.sbp_size();
-        size += self.cov_y_y.sbp_size();
-        size += self.cov_y_z.sbp_size();
-        size += self.cov_z_z.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.cov_x_x, buf);
+        WireFormat::write(&self.cov_x_y, buf);
+        WireFormat::write(&self.cov_x_z, buf);
+        WireFormat::write(&self.cov_y_y, buf);
+        WireFormat::write(&self.cov_y_z, buf);
+        WireFormat::write(&self.cov_z_z, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelEcefCovGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            cov_x_x: WireFormat::parse_unchecked(buf),
+            cov_x_y: WireFormat::parse_unchecked(buf),
+            cov_x_z: WireFormat::parse_unchecked(buf),
+            cov_y_y: WireFormat::parse_unchecked(buf),
+            cov_y_z: WireFormat::parse_unchecked(buf),
+            cov_z_z: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4124,119 +3948,111 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
 /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 /// the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelECEFDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelEcefDepA {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Velocity ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Velocity ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Velocity accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags (reserved)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelECEFDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, crate::Error> {
-        Ok( MsgVelECEFDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelECEFDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        516
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelECEFDepA {
+impl ConcreteMessage for MsgVelEcefDepA {
     const MESSAGE_TYPE: u16 = 516;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgVelECEFDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelEcefDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelEcefDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelEcefDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelEcefDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelEcefDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4246,119 +4062,111 @@ impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
 /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 /// the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelECEFGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelEcefGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: i32,
     /// Velocity ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: i32,
     /// Velocity ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: i32,
     /// Velocity estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
     pub accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelECEFGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFGnss, crate::Error> {
-        Ok( MsgVelECEFGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelECEFGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_ECEF_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        557
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelECEFGnss {
+impl ConcreteMessage for MsgVelEcefGnss {
     const MESSAGE_TYPE: u16 = 557;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelECEFGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelEcefGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelEcefGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelECEFGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelEcefGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
-        self.accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelEcefGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.x)
+            + WireFormat::encoded_len(&self.y)
+            + WireFormat::encoded_len(&self.z)
+            + WireFormat::encoded_len(&self.accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size += self.accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+        WireFormat::write(&self.accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelEcefGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+            accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4369,124 +4177,118 @@ impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
 /// tangent plane centered at the current position. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelNED {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelNed {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity North coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
     pub n: i32,
     /// Velocity East coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
     pub e: i32,
     /// Velocity Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
     pub d: i32,
     /// Horizontal velocity estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical velocity estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelNED {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, crate::Error> {
-        Ok( MsgVelNED{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelNED {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_NED"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        526
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelNED {
+impl ConcreteMessage for MsgVelNed {
     const MESSAGE_TYPE: u16 = 526;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED";
 }
-impl TryFrom<super::SBP> for MsgVelNED {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelNed {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelNed {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNED(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelNed(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNED {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.n.append_to_sbp_buffer(buf);
-        self.e.append_to_sbp_buffer(buf);
-        self.d.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelNed {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.n)
+            + WireFormat::encoded_len(&self.e)
+            + WireFormat::encoded_len(&self.d)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.n.sbp_size();
-        size += self.e.sbp_size();
-        size += self.d.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.n, buf);
+        WireFormat::write(&self.e, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelNed {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            n: WireFormat::parse_unchecked(buf),
+            e: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4499,144 +4301,146 @@ impl crate::serialize::SbpSerialize for MsgVelNED {
 /// message is similar to the MSG_VEL_NED, but it includes the upper
 /// triangular portion of the 3x3 covariance matrix.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelNEDCov {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelNedCov {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity North coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
     pub n: i32,
     /// Velocity East coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
     pub e: i32,
     /// Velocity Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
     pub d: i32,
     /// Estimated variance of northward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
     pub cov_n_n: f32,
     /// Covariance of northward and eastward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
     pub cov_n_e: f32,
     /// Covariance of northward and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
     pub cov_n_d: f32,
     /// Estimated variance of eastward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
     pub cov_e_e: f32,
     /// Covariance of eastward and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
     pub cov_e_d: f32,
     /// Estimated variance of downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
     pub cov_d_d: f32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelNEDCov {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, crate::Error> {
-        Ok( MsgVelNEDCov{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelNEDCov {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_NED_COV"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        530
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelNEDCov {
+impl ConcreteMessage for MsgVelNedCov {
     const MESSAGE_TYPE: u16 = 530;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV";
 }
-impl TryFrom<super::SBP> for MsgVelNEDCov {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelNedCov {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelNedCov {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDCov(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelNedCov(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDCov {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.n.append_to_sbp_buffer(buf);
-        self.e.append_to_sbp_buffer(buf);
-        self.d.append_to_sbp_buffer(buf);
-        self.cov_n_n.append_to_sbp_buffer(buf);
-        self.cov_n_e.append_to_sbp_buffer(buf);
-        self.cov_n_d.append_to_sbp_buffer(buf);
-        self.cov_e_e.append_to_sbp_buffer(buf);
-        self.cov_e_d.append_to_sbp_buffer(buf);
-        self.cov_d_d.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelNedCov {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.n)
+            + WireFormat::encoded_len(&self.e)
+            + WireFormat::encoded_len(&self.d)
+            + WireFormat::encoded_len(&self.cov_n_n)
+            + WireFormat::encoded_len(&self.cov_n_e)
+            + WireFormat::encoded_len(&self.cov_n_d)
+            + WireFormat::encoded_len(&self.cov_e_e)
+            + WireFormat::encoded_len(&self.cov_e_d)
+            + WireFormat::encoded_len(&self.cov_d_d)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.n.sbp_size();
-        size += self.e.sbp_size();
-        size += self.d.sbp_size();
-        size += self.cov_n_n.sbp_size();
-        size += self.cov_n_e.sbp_size();
-        size += self.cov_n_d.sbp_size();
-        size += self.cov_e_e.sbp_size();
-        size += self.cov_e_d.sbp_size();
-        size += self.cov_d_d.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.n, buf);
+        WireFormat::write(&self.e, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.cov_n_n, buf);
+        WireFormat::write(&self.cov_n_e, buf);
+        WireFormat::write(&self.cov_n_d, buf);
+        WireFormat::write(&self.cov_e_e, buf);
+        WireFormat::write(&self.cov_e_d, buf);
+        WireFormat::write(&self.cov_d_d, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelNedCov {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            n: WireFormat::parse_unchecked(buf),
+            e: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            cov_n_n: WireFormat::parse_unchecked(buf),
+            cov_n_e: WireFormat::parse_unchecked(buf),
+            cov_n_d: WireFormat::parse_unchecked(buf),
+            cov_e_e: WireFormat::parse_unchecked(buf),
+            cov_e_d: WireFormat::parse_unchecked(buf),
+            cov_d_d: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4649,144 +4453,146 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCov {
 /// message is similar to the MSG_VEL_NED, but it includes the upper
 /// triangular portion of the 3x3 covariance matrix.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelNEDCovGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelNedCovGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity North coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
     pub n: i32,
     /// Velocity East coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
     pub e: i32,
     /// Velocity Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
     pub d: i32,
     /// Estimated variance of northward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
     pub cov_n_n: f32,
     /// Covariance of northward and eastward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
     pub cov_n_e: f32,
     /// Covariance of northward and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
     pub cov_n_d: f32,
     /// Estimated variance of eastward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
     pub cov_e_e: f32,
     /// Covariance of eastward and downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
     pub cov_e_d: f32,
     /// Estimated variance of downward measurement
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
     pub cov_d_d: f32,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelNEDCovGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCovGnss, crate::Error> {
-        Ok( MsgVelNEDCovGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelNEDCovGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_NED_COV_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        562
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelNEDCovGnss {
+impl ConcreteMessage for MsgVelNedCovGnss {
     const MESSAGE_TYPE: u16 = 562;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_COV_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelNEDCovGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelNedCovGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelNedCovGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDCovGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelNedCovGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.n.append_to_sbp_buffer(buf);
-        self.e.append_to_sbp_buffer(buf);
-        self.d.append_to_sbp_buffer(buf);
-        self.cov_n_n.append_to_sbp_buffer(buf);
-        self.cov_n_e.append_to_sbp_buffer(buf);
-        self.cov_n_d.append_to_sbp_buffer(buf);
-        self.cov_e_e.append_to_sbp_buffer(buf);
-        self.cov_e_d.append_to_sbp_buffer(buf);
-        self.cov_d_d.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelNedCovGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <f32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.n)
+            + WireFormat::encoded_len(&self.e)
+            + WireFormat::encoded_len(&self.d)
+            + WireFormat::encoded_len(&self.cov_n_n)
+            + WireFormat::encoded_len(&self.cov_n_e)
+            + WireFormat::encoded_len(&self.cov_n_d)
+            + WireFormat::encoded_len(&self.cov_e_e)
+            + WireFormat::encoded_len(&self.cov_e_d)
+            + WireFormat::encoded_len(&self.cov_d_d)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.n.sbp_size();
-        size += self.e.sbp_size();
-        size += self.d.sbp_size();
-        size += self.cov_n_n.sbp_size();
-        size += self.cov_n_e.sbp_size();
-        size += self.cov_n_d.sbp_size();
-        size += self.cov_e_e.sbp_size();
-        size += self.cov_e_d.sbp_size();
-        size += self.cov_d_d.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.n, buf);
+        WireFormat::write(&self.e, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.cov_n_n, buf);
+        WireFormat::write(&self.cov_n_e, buf);
+        WireFormat::write(&self.cov_n_d, buf);
+        WireFormat::write(&self.cov_e_e, buf);
+        WireFormat::write(&self.cov_e_d, buf);
+        WireFormat::write(&self.cov_d_d, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelNedCovGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            n: WireFormat::parse_unchecked(buf),
+            e: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            cov_n_n: WireFormat::parse_unchecked(buf),
+            cov_n_e: WireFormat::parse_unchecked(buf),
+            cov_n_d: WireFormat::parse_unchecked(buf),
+            cov_e_e: WireFormat::parse_unchecked(buf),
+            cov_e_d: WireFormat::parse_unchecked(buf),
+            cov_d_d: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4797,124 +4603,118 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
 /// tangent plane centered at the current position. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelNEDDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelNedDepA {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity North coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
     pub n: i32,
     /// Velocity East coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
     pub e: i32,
     /// Velocity Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
     pub d: i32,
     /// Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical velocity accuracy estimate (not implemented). Defaults to 0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags (reserved)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelNEDDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, crate::Error> {
-        Ok( MsgVelNEDDepA{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelNEDDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_NED_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        517
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelNEDDepA {
+impl ConcreteMessage for MsgVelNedDepA {
     const MESSAGE_TYPE: u16 = 517;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgVelNEDDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelNedDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelNedDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelNedDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.n.append_to_sbp_buffer(buf);
-        self.e.append_to_sbp_buffer(buf);
-        self.d.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelNedDepA {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.n)
+            + WireFormat::encoded_len(&self.e)
+            + WireFormat::encoded_len(&self.d)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.n.sbp_size();
-        size += self.e.sbp_size();
-        size += self.d.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.n, buf);
+        WireFormat::write(&self.e, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelNedDepA {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            n: WireFormat::parse_unchecked(buf),
+            e: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4925,123 +4725,117 @@ impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
 /// tangent plane centered at the current position. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgVelNEDGnss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgVelNedGnss {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
     /// Velocity North coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
     pub n: i32,
     /// Velocity East coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
     pub e: i32,
     /// Velocity Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
     pub d: i32,
     /// Horizontal velocity estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
     pub h_accuracy: u16,
     /// Vertical velocity estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
     pub v_accuracy: u16,
     /// Number of satellites used in solution
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
     pub n_sats: u8,
     /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgVelNEDGnss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDGnss, crate::Error> {
-        Ok( MsgVelNEDGnss{
-            sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgVelNEDGnss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_VEL_NED_GNSS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        558
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
-        let tow_s = (self.tow as f64) / 1000.0;
-        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
-            Ok(gps_time) => gps_time.tow(),
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
-    }
-}
-impl super::ConcreteMessage for MsgVelNEDGnss {
+impl ConcreteMessage for MsgVelNedGnss {
     const MESSAGE_TYPE: u16 = 558;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_GNSS";
 }
-impl TryFrom<super::SBP> for MsgVelNEDGnss {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgVelNedGnss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelNedGnss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgVelNEDGnss(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgVelNedGnss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgVelNEDGnss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tow.append_to_sbp_buffer(buf);
-        self.n.append_to_sbp_buffer(buf);
-        self.e.append_to_sbp_buffer(buf);
-        self.d.append_to_sbp_buffer(buf);
-        self.h_accuracy.append_to_sbp_buffer(buf);
-        self.v_accuracy.append_to_sbp_buffer(buf);
-        self.n_sats.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgVelNedGnss {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <i32 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.tow)
+            + WireFormat::encoded_len(&self.n)
+            + WireFormat::encoded_len(&self.e)
+            + WireFormat::encoded_len(&self.d)
+            + WireFormat::encoded_len(&self.h_accuracy)
+            + WireFormat::encoded_len(&self.v_accuracy)
+            + WireFormat::encoded_len(&self.n_sats)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tow.sbp_size();
-        size += self.n.sbp_size();
-        size += self.e.sbp_size();
-        size += self.d.sbp_size();
-        size += self.h_accuracy.sbp_size();
-        size += self.v_accuracy.sbp_size();
-        size += self.n_sats.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.n, buf);
+        WireFormat::write(&self.e, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.h_accuracy, buf);
+        WireFormat::write(&self.v_accuracy, buf);
+        WireFormat::write(&self.n_sats, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgVelNedGnss {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            n: WireFormat::parse_unchecked(buf),
+            e: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            h_accuracy: WireFormat::parse_unchecked(buf),
+            v_accuracy: WireFormat::parse_unchecked(buf),
+            n_sats: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }

@@ -14,123 +14,109 @@
 //****************************************************************************/
 //! Linux state monitoring.
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use super::lib::*;
 
 /// List CPU state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest consumers
 /// of CPU on the system, including a timestamp.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxCpuState {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// sequence of this status message, values from 0-9
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u8,
     /// the PID of the process
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
     pub pid: u16,
     /// percent of CPU used, expressed as a fraction of 256
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
     pub pcpu: u8,
     /// timestamp of message, refer to flags field for how to interpret
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
     pub time: u32,
     /// flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
     /// fixed length string representing the thread name
-    pub tname: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+    pub tname: SbpString<[u8; 15], Unterminated>,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+    pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLinuxCpuState {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, crate::Error> {
-        Ok( MsgLinuxCpuState{
-            sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            pcpu: _buf.read_u8()?,
-            time: _buf.read_u32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-            tname: crate::parser::read_string_limit(_buf, 15)?,
-            cmdline: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxCpuState {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_CPU_STATE"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32520
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxCpuState {
+impl ConcreteMessage for MsgLinuxCpuState {
     const MESSAGE_TYPE: u16 = 32520;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_CPU_STATE";
 }
-impl TryFrom<super::SBP> for MsgLinuxCpuState {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxCpuState {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxCpuState {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxCpuState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxCpuState(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.pid.append_to_sbp_buffer(buf);
-        self.pcpu.append_to_sbp_buffer(buf);
-        self.time.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
-        self.tname.append_to_sbp_buffer(buf);
-        self.cmdline.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxCpuState {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.index)
+            + WireFormat::encoded_len(&self.pid)
+            + WireFormat::encoded_len(&self.pcpu)
+            + WireFormat::encoded_len(&self.time)
+            + WireFormat::encoded_len(&self.flags)
+            + WireFormat::encoded_len(&self.tname)
+            + WireFormat::encoded_len(&self.cmdline)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.pid.sbp_size();
-        size += self.pcpu.sbp_size();
-        size += self.time.sbp_size();
-        size += self.flags.sbp_size();
-        size += self.tname.sbp_size();
-        size += self.cmdline.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.pid, buf);
+        WireFormat::write(&self.pcpu, buf);
+        WireFormat::write(&self.time, buf);
+        WireFormat::write(&self.flags, buf);
+        WireFormat::write(&self.tname, buf);
+        WireFormat::write(&self.cmdline, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxCpuState {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            pid: WireFormat::parse_unchecked(buf),
+            pcpu: WireFormat::parse_unchecked(buf),
+            time: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+            tname: WireFormat::parse_unchecked(buf),
+            cmdline: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -139,97 +125,88 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
 /// This message indicates the process state of the top 10 heaviest consumers
 /// of CPU on the system.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxCpuStateDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// sequence of this status message, values from 0-9
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u8,
     /// the PID of the process
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
     pub pid: u16,
     /// percent of cpu used, expressed as a fraction of 256
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
     pub pcpu: u8,
     /// fixed length string representing the thread name
-    pub tname: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+    pub tname: SbpString<[u8; 15], Unterminated>,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+    pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLinuxCpuStateDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuStateDepA, crate::Error> {
-        Ok( MsgLinuxCpuStateDepA{
-            sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            pcpu: _buf.read_u8()?,
-            tname: crate::parser::read_string_limit(_buf, 15)?,
-            cmdline: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxCpuStateDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_CPU_STATE_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32512
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxCpuStateDepA {
+impl ConcreteMessage for MsgLinuxCpuStateDepA {
     const MESSAGE_TYPE: u16 = 32512;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_CPU_STATE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgLinuxCpuStateDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxCpuStateDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxCpuStateDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxCpuStateDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxCpuStateDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxCpuStateDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.pid.append_to_sbp_buffer(buf);
-        self.pcpu.append_to_sbp_buffer(buf);
-        self.tname.append_to_sbp_buffer(buf);
-        self.cmdline.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxCpuStateDepA {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.index)
+            + WireFormat::encoded_len(&self.pid)
+            + WireFormat::encoded_len(&self.pcpu)
+            + WireFormat::encoded_len(&self.tname)
+            + WireFormat::encoded_len(&self.cmdline)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.pid.sbp_size();
-        size += self.pcpu.sbp_size();
-        size += self.tname.sbp_size();
-        size += self.cmdline.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.pid, buf);
+        WireFormat::write(&self.pcpu, buf);
+        WireFormat::write(&self.tname, buf);
+        WireFormat::write(&self.cmdline, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxCpuStateDepA {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            pid: WireFormat::parse_unchecked(buf),
+            pcpu: WireFormat::parse_unchecked(buf),
+            tname: WireFormat::parse_unchecked(buf),
+            cmdline: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -238,107 +215,102 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuStateDepA {
 /// This message indicates the process state of the top 10 heaviest consumers
 /// of memory on the system, including a timestamp.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxMemState {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// sequence of this status message, values from 0-9
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u8,
     /// the PID of the process
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
     pub pid: u16,
     /// percent of memory used, expressed as a fraction of 256
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
     pub pmem: u8,
     /// timestamp of message, refer to flags field for how to interpret
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
     pub time: u32,
     /// flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
     /// fixed length string representing the thread name
-    pub tname: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+    pub tname: SbpString<[u8; 15], Unterminated>,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+    pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLinuxMemState {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, crate::Error> {
-        Ok( MsgLinuxMemState{
-            sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            pmem: _buf.read_u8()?,
-            time: _buf.read_u32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-            tname: crate::parser::read_string_limit(_buf, 15)?,
-            cmdline: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxMemState {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_MEM_STATE"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32521
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxMemState {
+impl ConcreteMessage for MsgLinuxMemState {
     const MESSAGE_TYPE: u16 = 32521;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_MEM_STATE";
 }
-impl TryFrom<super::SBP> for MsgLinuxMemState {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxMemState {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxMemState {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxMemState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxMemState(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxMemState {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.pid.append_to_sbp_buffer(buf);
-        self.pmem.append_to_sbp_buffer(buf);
-        self.time.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
-        self.tname.append_to_sbp_buffer(buf);
-        self.cmdline.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxMemState {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.index)
+            + WireFormat::encoded_len(&self.pid)
+            + WireFormat::encoded_len(&self.pmem)
+            + WireFormat::encoded_len(&self.time)
+            + WireFormat::encoded_len(&self.flags)
+            + WireFormat::encoded_len(&self.tname)
+            + WireFormat::encoded_len(&self.cmdline)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.pid.sbp_size();
-        size += self.pmem.sbp_size();
-        size += self.time.sbp_size();
-        size += self.flags.sbp_size();
-        size += self.tname.sbp_size();
-        size += self.cmdline.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.pid, buf);
+        WireFormat::write(&self.pmem, buf);
+        WireFormat::write(&self.time, buf);
+        WireFormat::write(&self.flags, buf);
+        WireFormat::write(&self.tname, buf);
+        WireFormat::write(&self.cmdline, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxMemState {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            pid: WireFormat::parse_unchecked(buf),
+            pmem: WireFormat::parse_unchecked(buf),
+            time: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+            tname: WireFormat::parse_unchecked(buf),
+            cmdline: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -347,97 +319,88 @@ impl crate::serialize::SbpSerialize for MsgLinuxMemState {
 /// This message indicates the process state of the top 10 heaviest consumers
 /// of memory on the system.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxMemStateDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// sequence of this status message, values from 0-9
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u8,
     /// the PID of the process
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
     pub pid: u16,
     /// percent of memory used, expressed as a fraction of 256
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
     pub pmem: u8,
     /// fixed length string representing the thread name
-    pub tname: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+    pub tname: SbpString<[u8; 15], Unterminated>,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+    pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLinuxMemStateDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemStateDepA, crate::Error> {
-        Ok( MsgLinuxMemStateDepA{
-            sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            pmem: _buf.read_u8()?,
-            tname: crate::parser::read_string_limit(_buf, 15)?,
-            cmdline: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxMemStateDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_MEM_STATE_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32513
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxMemStateDepA {
+impl ConcreteMessage for MsgLinuxMemStateDepA {
     const MESSAGE_TYPE: u16 = 32513;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_MEM_STATE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgLinuxMemStateDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxMemStateDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxMemStateDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxMemStateDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxMemStateDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxMemStateDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.pid.append_to_sbp_buffer(buf);
-        self.pmem.append_to_sbp_buffer(buf);
-        self.tname.append_to_sbp_buffer(buf);
-        self.cmdline.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxMemStateDepA {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.index)
+            + WireFormat::encoded_len(&self.pid)
+            + WireFormat::encoded_len(&self.pmem)
+            + WireFormat::encoded_len(&self.tname)
+            + WireFormat::encoded_len(&self.cmdline)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.pid.sbp_size();
-        size += self.pmem.sbp_size();
-        size += self.tname.sbp_size();
-        size += self.cmdline.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.pid, buf);
+        WireFormat::write(&self.pmem, buf);
+        WireFormat::write(&self.tname, buf);
+        WireFormat::write(&self.cmdline, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxMemStateDepA {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            pid: WireFormat::parse_unchecked(buf),
+            pmem: WireFormat::parse_unchecked(buf),
+            tname: WireFormat::parse_unchecked(buf),
+            cmdline: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -445,92 +408,81 @@ impl crate::serialize::SbpSerialize for MsgLinuxMemStateDepA {
 ///
 /// Top 10 list of processes with a large number of open file descriptors.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdCount {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// sequence of this status message, values from 0-9
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u8,
     /// the PID of the process in question
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
     pub pid: u16,
     /// a count of the number of file descriptors opened by the process
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fd_count")))]
     pub fd_count: u16,
     /// the command line of the process in question
-    pub cmdline: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+    pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLinuxProcessFdCount {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, crate::Error> {
-        Ok( MsgLinuxProcessFdCount{
-            sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            fd_count: _buf.read_u16::<LittleEndian>()?,
-            cmdline: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxProcessFdCount {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_FD_COUNT"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32518
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxProcessFdCount {
+impl ConcreteMessage for MsgLinuxProcessFdCount {
     const MESSAGE_TYPE: u16 = 32518;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_FD_COUNT";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessFdCount {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxProcessFdCount {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxProcessFdCount {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessFdCount(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxProcessFdCount(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.pid.append_to_sbp_buffer(buf);
-        self.fd_count.append_to_sbp_buffer(buf);
-        self.cmdline.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxProcessFdCount {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.index)
+            + WireFormat::encoded_len(&self.pid)
+            + WireFormat::encoded_len(&self.fd_count)
+            + WireFormat::encoded_len(&self.cmdline)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.pid.sbp_size();
-        size += self.fd_count.sbp_size();
-        size += self.cmdline.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.pid, buf);
+        WireFormat::write(&self.fd_count, buf);
+        WireFormat::write(&self.cmdline, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxProcessFdCount {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            pid: WireFormat::parse_unchecked(buf),
+            fd_count: WireFormat::parse_unchecked(buf),
+            cmdline: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -538,86 +490,70 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
 ///
 /// Summary of open file descriptors on the system.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdSummary {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// count of total FDs open on the system
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sys_fd_count")))]
     pub sys_fd_count: u32,
     /// A null delimited list of strings which alternates between a string
     /// representation of the process count and the file name whose count it
     /// being reported.  That is, in C string syntax
     /// "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
     /// NULL terminators in a row.
-    pub most_opened: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "most_opened")))]
+    pub most_opened: SbpString<Vec<u8>, DoubleNullTerminated>,
 }
 
-impl MsgLinuxProcessFdSummary {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, crate::Error> {
-        Ok( MsgLinuxProcessFdSummary{
-            sender_id: None,
-            sys_fd_count: _buf.read_u32::<LittleEndian>()?,
-            most_opened: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxProcessFdSummary {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_FD_SUMMARY"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32519
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxProcessFdSummary {
+impl ConcreteMessage for MsgLinuxProcessFdSummary {
     const MESSAGE_TYPE: u16 = 32519;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_FD_SUMMARY";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessFdSummary {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxProcessFdSummary {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxProcessFdSummary {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessFdSummary(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxProcessFdSummary(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxProcessFdSummary {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sys_fd_count.append_to_sbp_buffer(buf);
-        self.most_opened.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxProcessFdSummary {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, DoubleNullTerminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.sys_fd_count) + WireFormat::encoded_len(&self.most_opened)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sys_fd_count.sbp_size();
-        size += self.most_opened.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.sys_fd_count, buf);
+        WireFormat::write(&self.most_opened, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxProcessFdSummary {
+            sender_id: None,
+            sys_fd_count: WireFormat::parse_unchecked(buf),
+            most_opened: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -625,106 +561,99 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdSummary {
 ///
 /// Top 10 list of processes with high socket counts.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketCounts {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// sequence of this status message, values from 0-9
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u8,
     /// the PID of the process in question
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
     pub pid: u16,
     /// the number of sockets the process is using
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_count")))]
     pub socket_count: u16,
     /// A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
     /// (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_types")))]
     pub socket_types: u16,
     /// A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
     /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
     /// wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
     /// (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_states")))]
     pub socket_states: u16,
     /// the command line of the process in question
-    pub cmdline: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+    pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLinuxProcessSocketCounts {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, crate::Error> {
-        Ok( MsgLinuxProcessSocketCounts{
-            sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            socket_count: _buf.read_u16::<LittleEndian>()?,
-            socket_types: _buf.read_u16::<LittleEndian>()?,
-            socket_states: _buf.read_u16::<LittleEndian>()?,
-            cmdline: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxProcessSocketCounts {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_SOCKET_COUNTS"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32515
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxProcessSocketCounts {
+impl ConcreteMessage for MsgLinuxProcessSocketCounts {
     const MESSAGE_TYPE: u16 = 32515;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_SOCKET_COUNTS";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessSocketCounts {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxProcessSocketCounts {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxProcessSocketCounts {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessSocketCounts(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxProcessSocketCounts(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketCounts {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.pid.append_to_sbp_buffer(buf);
-        self.socket_count.append_to_sbp_buffer(buf);
-        self.socket_types.append_to_sbp_buffer(buf);
-        self.socket_states.append_to_sbp_buffer(buf);
-        self.cmdline.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxProcessSocketCounts {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.index)
+            + WireFormat::encoded_len(&self.pid)
+            + WireFormat::encoded_len(&self.socket_count)
+            + WireFormat::encoded_len(&self.socket_types)
+            + WireFormat::encoded_len(&self.socket_states)
+            + WireFormat::encoded_len(&self.cmdline)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.pid.sbp_size();
-        size += self.socket_count.sbp_size();
-        size += self.socket_types.sbp_size();
-        size += self.socket_states.sbp_size();
-        size += self.cmdline.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.pid, buf);
+        WireFormat::write(&self.socket_count, buf);
+        WireFormat::write(&self.socket_types, buf);
+        WireFormat::write(&self.socket_states, buf);
+        WireFormat::write(&self.cmdline, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxProcessSocketCounts {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            pid: WireFormat::parse_unchecked(buf),
+            socket_count: WireFormat::parse_unchecked(buf),
+            socket_types: WireFormat::parse_unchecked(buf),
+            socket_states: WireFormat::parse_unchecked(buf),
+            cmdline: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -732,117 +661,114 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketCounts {
 ///
 /// Top 10 list of sockets with deep queues.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketQueues {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// sequence of this status message, values from 0-9
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u8,
     /// the PID of the process in question
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
     pub pid: u16,
     /// the total amount of receive data queued for this process
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "recv_queued")))]
     pub recv_queued: u16,
     /// the total amount of send data queued for this process
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "send_queued")))]
     pub send_queued: u16,
     /// A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
     /// (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_types")))]
     pub socket_types: u16,
     /// A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
     /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
     /// wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
     /// (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_states")))]
     pub socket_states: u16,
     /// Address of the largest queue, remote or local depending on the
     /// directionality of the connection.
-    pub address_of_largest: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "address_of_largest")))]
+    pub address_of_largest: SbpString<[u8; 64], Unterminated>,
     /// the command line of the process in question
-    pub cmdline: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+    pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgLinuxProcessSocketQueues {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, crate::Error> {
-        Ok( MsgLinuxProcessSocketQueues{
-            sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            recv_queued: _buf.read_u16::<LittleEndian>()?,
-            send_queued: _buf.read_u16::<LittleEndian>()?,
-            socket_types: _buf.read_u16::<LittleEndian>()?,
-            socket_states: _buf.read_u16::<LittleEndian>()?,
-            address_of_largest: crate::parser::read_string_limit(_buf, 64)?,
-            cmdline: crate::parser::read_string(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxProcessSocketQueues {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_PROCESS_SOCKET_QUEUES"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32516
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxProcessSocketQueues {
+impl ConcreteMessage for MsgLinuxProcessSocketQueues {
     const MESSAGE_TYPE: u16 = 32516;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_PROCESS_SOCKET_QUEUES";
 }
-impl TryFrom<super::SBP> for MsgLinuxProcessSocketQueues {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxProcessSocketQueues {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxProcessSocketQueues {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxProcessSocketQueues(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxProcessSocketQueues(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.pid.append_to_sbp_buffer(buf);
-        self.recv_queued.append_to_sbp_buffer(buf);
-        self.send_queued.append_to_sbp_buffer(buf);
-        self.socket_types.append_to_sbp_buffer(buf);
-        self.socket_states.append_to_sbp_buffer(buf);
-        self.address_of_largest.append_to_sbp_buffer(buf);
-        self.cmdline.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxProcessSocketQueues {
+    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<[u8; 64], Unterminated> as WireFormat>::MIN_ENCODED_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.index)
+            + WireFormat::encoded_len(&self.pid)
+            + WireFormat::encoded_len(&self.recv_queued)
+            + WireFormat::encoded_len(&self.send_queued)
+            + WireFormat::encoded_len(&self.socket_types)
+            + WireFormat::encoded_len(&self.socket_states)
+            + WireFormat::encoded_len(&self.address_of_largest)
+            + WireFormat::encoded_len(&self.cmdline)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.pid.sbp_size();
-        size += self.recv_queued.sbp_size();
-        size += self.send_queued.sbp_size();
-        size += self.socket_types.sbp_size();
-        size += self.socket_states.sbp_size();
-        size += self.address_of_largest.sbp_size();
-        size += self.cmdline.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.pid, buf);
+        WireFormat::write(&self.recv_queued, buf);
+        WireFormat::write(&self.send_queued, buf);
+        WireFormat::write(&self.socket_types, buf);
+        WireFormat::write(&self.socket_states, buf);
+        WireFormat::write(&self.address_of_largest, buf);
+        WireFormat::write(&self.cmdline, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxProcessSocketQueues {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            pid: WireFormat::parse_unchecked(buf),
+            recv_queued: WireFormat::parse_unchecked(buf),
+            send_queued: WireFormat::parse_unchecked(buf),
+            socket_types: WireFormat::parse_unchecked(buf),
+            socket_states: WireFormat::parse_unchecked(buf),
+            address_of_largest: WireFormat::parse_unchecked(buf),
+            cmdline: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -850,96 +776,85 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
 ///
 /// Summaries the socket usage across the system.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxSocketUsage {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// average socket queue depths across all sockets on the system
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "avg_queue_depth")))]
     pub avg_queue_depth: u32,
     /// the max queue depth seen within the reporting period
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "max_queue_depth")))]
     pub max_queue_depth: u32,
     /// A count for each socket type reported in the `socket_types_reported`
     /// field, the first entry corresponds to the first enabled bit in
     /// `types_reported`.
-    pub socket_state_counts: Vec<u16>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_state_counts")))]
+    pub socket_state_counts: [u16; 16],
     /// A count for each socket type reported in the `socket_types_reported`
     /// field, the first entry corresponds to the first enabled bit in
     /// `types_reported`.
-    pub socket_type_counts: Vec<u16>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_type_counts")))]
+    pub socket_type_counts: [u16; 16],
 }
 
-impl MsgLinuxSocketUsage {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, crate::Error> {
-        Ok( MsgLinuxSocketUsage{
-            sender_id: None,
-            avg_queue_depth: _buf.read_u32::<LittleEndian>()?,
-            max_queue_depth: _buf.read_u32::<LittleEndian>()?,
-            socket_state_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
-            socket_type_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxSocketUsage {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_SOCKET_USAGE"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32517
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxSocketUsage {
+impl ConcreteMessage for MsgLinuxSocketUsage {
     const MESSAGE_TYPE: u16 = 32517;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_SOCKET_USAGE";
 }
-impl TryFrom<super::SBP> for MsgLinuxSocketUsage {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxSocketUsage {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxSocketUsage {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxSocketUsage(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxSocketUsage(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.avg_queue_depth.append_to_sbp_buffer(buf);
-        self.max_queue_depth.append_to_sbp_buffer(buf);
-        self.socket_state_counts.append_to_sbp_buffer(buf);
-        self.socket_type_counts.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxSocketUsage {
+    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <[u16; 16] as WireFormat>::MIN_ENCODED_LEN
+        + <[u16; 16] as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.avg_queue_depth)
+            + WireFormat::encoded_len(&self.max_queue_depth)
+            + WireFormat::encoded_len(&self.socket_state_counts)
+            + WireFormat::encoded_len(&self.socket_type_counts)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.avg_queue_depth.sbp_size();
-        size += self.max_queue_depth.sbp_size();
-        size += self.socket_state_counts.sbp_size();
-        size += self.socket_type_counts.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.avg_queue_depth, buf);
+        WireFormat::write(&self.max_queue_depth, buf);
+        WireFormat::write(&self.socket_state_counts, buf);
+        WireFormat::write(&self.socket_type_counts, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxSocketUsage {
+            sender_id: None,
+            avg_queue_depth: WireFormat::parse_unchecked(buf),
+            max_queue_depth: WireFormat::parse_unchecked(buf),
+            socket_state_counts: WireFormat::parse_unchecked(buf),
+            socket_type_counts: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -948,112 +863,109 @@ impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
 /// This presents a summary of CPU and memory utilization, including a
 /// timestamp.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxSysState {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// total system memory, in MiB
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "mem_total")))]
     pub mem_total: u16,
     /// percent of CPU used, expressed as a fraction of 256
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
     pub pcpu: u8,
     /// percent of memory used, expressed as a fraction of 256
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
     pub pmem: u8,
     /// number of processes that started during collection phase
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_starting")))]
     pub procs_starting: u16,
     /// number of processes that stopped during collection phase
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_stopping")))]
     pub procs_stopping: u16,
     /// the count of processes on the system
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid_count")))]
     pub pid_count: u16,
     /// timestamp of message, refer to flags field for how to interpret
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
     pub time: u32,
     /// flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
 }
 
-impl MsgLinuxSysState {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, crate::Error> {
-        Ok( MsgLinuxSysState{
-            sender_id: None,
-            mem_total: _buf.read_u16::<LittleEndian>()?,
-            pcpu: _buf.read_u8()?,
-            pmem: _buf.read_u8()?,
-            procs_starting: _buf.read_u16::<LittleEndian>()?,
-            procs_stopping: _buf.read_u16::<LittleEndian>()?,
-            pid_count: _buf.read_u16::<LittleEndian>()?,
-            time: _buf.read_u32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxSysState {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_SYS_STATE"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32522
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxSysState {
+impl ConcreteMessage for MsgLinuxSysState {
     const MESSAGE_TYPE: u16 = 32522;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_SYS_STATE";
 }
-impl TryFrom<super::SBP> for MsgLinuxSysState {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxSysState {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxSysState {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxSysState(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxSysState(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxSysState {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.mem_total.append_to_sbp_buffer(buf);
-        self.pcpu.append_to_sbp_buffer(buf);
-        self.pmem.append_to_sbp_buffer(buf);
-        self.procs_starting.append_to_sbp_buffer(buf);
-        self.procs_stopping.append_to_sbp_buffer(buf);
-        self.pid_count.append_to_sbp_buffer(buf);
-        self.time.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxSysState {
+    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u32 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.mem_total)
+            + WireFormat::encoded_len(&self.pcpu)
+            + WireFormat::encoded_len(&self.pmem)
+            + WireFormat::encoded_len(&self.procs_starting)
+            + WireFormat::encoded_len(&self.procs_stopping)
+            + WireFormat::encoded_len(&self.pid_count)
+            + WireFormat::encoded_len(&self.time)
+            + WireFormat::encoded_len(&self.flags)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.mem_total.sbp_size();
-        size += self.pcpu.sbp_size();
-        size += self.pmem.sbp_size();
-        size += self.procs_starting.sbp_size();
-        size += self.procs_stopping.sbp_size();
-        size += self.pid_count.sbp_size();
-        size += self.time.sbp_size();
-        size += self.flags.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.mem_total, buf);
+        WireFormat::write(&self.pcpu, buf);
+        WireFormat::write(&self.pmem, buf);
+        WireFormat::write(&self.procs_starting, buf);
+        WireFormat::write(&self.procs_stopping, buf);
+        WireFormat::write(&self.pid_count, buf);
+        WireFormat::write(&self.time, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxSysState {
+            sender_id: None,
+            mem_total: WireFormat::parse_unchecked(buf),
+            pcpu: WireFormat::parse_unchecked(buf),
+            pmem: WireFormat::parse_unchecked(buf),
+            procs_starting: WireFormat::parse_unchecked(buf),
+            procs_stopping: WireFormat::parse_unchecked(buf),
+            pid_count: WireFormat::parse_unchecked(buf),
+            time: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1061,101 +973,94 @@ impl crate::serialize::SbpSerialize for MsgLinuxSysState {
 ///
 /// This presents a summary of CPU and memory utilization.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgLinuxSysStateDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// total system memory
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "mem_total")))]
     pub mem_total: u16,
     /// percent of total cpu currently utilized
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
     pub pcpu: u8,
     /// percent of total memory currently utilized
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
     pub pmem: u8,
     /// number of processes that started during collection phase
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_starting")))]
     pub procs_starting: u16,
     /// number of processes that stopped during collection phase
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_stopping")))]
     pub procs_stopping: u16,
     /// the count of processes on the system
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pid_count")))]
     pub pid_count: u16,
 }
 
-impl MsgLinuxSysStateDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysStateDepA, crate::Error> {
-        Ok( MsgLinuxSysStateDepA{
-            sender_id: None,
-            mem_total: _buf.read_u16::<LittleEndian>()?,
-            pcpu: _buf.read_u8()?,
-            pmem: _buf.read_u8()?,
-            procs_starting: _buf.read_u16::<LittleEndian>()?,
-            procs_stopping: _buf.read_u16::<LittleEndian>()?,
-            pid_count: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgLinuxSysStateDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_LINUX_SYS_STATE_DEP_A"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        32514
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgLinuxSysStateDepA {
+impl ConcreteMessage for MsgLinuxSysStateDepA {
     const MESSAGE_TYPE: u16 = 32514;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_SYS_STATE_DEP_A";
 }
-impl TryFrom<super::SBP> for MsgLinuxSysStateDepA {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgLinuxSysStateDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgLinuxSysStateDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgLinuxSysStateDepA(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgLinuxSysStateDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxSysStateDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.mem_total.append_to_sbp_buffer(buf);
-        self.pcpu.append_to_sbp_buffer(buf);
-        self.pmem.append_to_sbp_buffer(buf);
-        self.procs_starting.append_to_sbp_buffer(buf);
-        self.procs_stopping.append_to_sbp_buffer(buf);
-        self.pid_count.append_to_sbp_buffer(buf);
+impl WireFormat for MsgLinuxSysStateDepA {
+    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u8 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN
+        + <u16 as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.mem_total)
+            + WireFormat::encoded_len(&self.pcpu)
+            + WireFormat::encoded_len(&self.pmem)
+            + WireFormat::encoded_len(&self.procs_starting)
+            + WireFormat::encoded_len(&self.procs_stopping)
+            + WireFormat::encoded_len(&self.pid_count)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.mem_total.sbp_size();
-        size += self.pcpu.sbp_size();
-        size += self.pmem.sbp_size();
-        size += self.procs_starting.sbp_size();
-        size += self.procs_stopping.sbp_size();
-        size += self.pid_count.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.mem_total, buf);
+        WireFormat::write(&self.pcpu, buf);
+        WireFormat::write(&self.pmem, buf);
+        WireFormat::write(&self.procs_starting, buf);
+        WireFormat::write(&self.procs_stopping, buf);
+        WireFormat::write(&self.pid_count, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgLinuxSysStateDepA {
+            sender_id: None,
+            mem_total: WireFormat::parse_unchecked(buf),
+            pcpu: WireFormat::parse_unchecked(buf),
+            pmem: WireFormat::parse_unchecked(buf),
+            procs_starting: WireFormat::parse_unchecked(buf),
+            procs_stopping: WireFormat::parse_unchecked(buf),
+            pid_count: WireFormat::parse_unchecked(buf),
+        }
     }
 }

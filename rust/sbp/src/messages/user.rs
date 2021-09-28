@@ -14,92 +14,66 @@
 //****************************************************************************/
 //! Messages reserved for use by the user.
 
-#[allow(unused_imports)]
-use std::convert::TryFrom;
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use super::lib::*;
 
 /// User data
 ///
 /// This message can contain any application specific user data up to a
 /// maximum length of 255 bytes per message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgUserData {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// User data payload
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
     pub contents: Vec<u8>,
 }
 
-impl MsgUserData {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, crate::Error> {
-        Ok( MsgUserData{
-            sender_id: None,
-            contents: crate::parser::read_u8_array(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgUserData {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_USER_DATA"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        2048
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-impl super::ConcreteMessage for MsgUserData {
+impl ConcreteMessage for MsgUserData {
     const MESSAGE_TYPE: u16 = 2048;
     const MESSAGE_NAME: &'static str = "MSG_USER_DATA";
 }
-impl TryFrom<super::SBP> for MsgUserData {
-    type Error = super::TryFromSBPError;
 
-    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+impl SbpMessage for MsgUserData {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+impl TryFrom<Sbp> for MsgUserData {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            super::SBP::MsgUserData(m) => Ok(m),
-            _ => Err(super::TryFromSBPError),
+            Sbp::MsgUserData(m) => Ok(m),
+            _ => Err(TryFromSbpError),
         }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgUserData {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.contents.append_to_sbp_buffer(buf);
+impl WireFormat for MsgUserData {
+    const MIN_ENCODED_LEN: usize = <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
+    fn encoded_len(&self) -> usize {
+        WireFormat::encoded_len(&self.contents)
     }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.contents.sbp_size();
-        size
+    fn write(&self, buf: &mut bytes::BytesMut) {
+        WireFormat::write(&self.contents, buf);
+    }
+    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+        MsgUserData {
+            sender_id: None,
+            contents: WireFormat::parse_unchecked(buf),
+        }
     }
 }

@@ -1,9 +1,9 @@
 use std::io;
 
-use sbp::codec::json::{CompactFormatter, HaskellishFloatFormatter};
+use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
 use structopt::StructOpt;
 
-use converters::json2json;
+use converters::{json2json, Result};
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
@@ -34,7 +34,7 @@ struct Options {
     fatal_errors: bool,
 }
 
-fn main() -> sbp::Result<()> {
+fn main() -> Result<()> {
     let options = Options::from_args();
 
     if options.debug {

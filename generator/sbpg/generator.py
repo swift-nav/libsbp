@@ -207,6 +207,10 @@ def main():
       elif args.test_c:
         test_c.render_check_suites(output_dir, all_specs)
         test_c.render_check_main(output_dir, all_specs)
+      if args.test_rust:
+        import sbpg.targets.test_rust as test_rs
+        test_rs.render_main(output_dir, all_specs)
+
 
   except KeyboardInterrupt:
     pass
