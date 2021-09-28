@@ -31,8 +31,7 @@ crc16 = "0.4"
 log = "0.4"
 
 [dependencies.swiftnav]
-git = "https://github.com/swift-nav/swiftnav-rs"
-tag = "v0.6.1"
+version = "0.7"
 optional = true
 
 [dependencies.slotmap]
