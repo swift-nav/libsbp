@@ -55,13 +55,13 @@ impl WireFormat for Latency {
             + WireFormat::encoded_len(&self.lmax)
             + WireFormat::encoded_len(&self.current)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.avg, buf);
         WireFormat::write(&self.lmin, buf);
         WireFormat::write(&self.lmax, buf);
         WireFormat::write(&self.current, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         Latency {
             avg: WireFormat::parse_unchecked(buf),
             lmin: WireFormat::parse_unchecked(buf),
@@ -119,8 +119,8 @@ impl WireFormat for MsgAlmanac {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgAlmanac { sender_id: None }
     }
 }
@@ -187,12 +187,12 @@ impl WireFormat for MsgCellModemStatus {
             + WireFormat::encoded_len(&self.signal_error_rate)
             + WireFormat::encoded_len(&self.reserved)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.signal_strength, buf);
         WireFormat::write(&self.signal_error_rate, buf);
         WireFormat::write(&self.reserved, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgCellModemStatus {
             sender_id: None,
             signal_strength: WireFormat::parse_unchecked(buf),
@@ -258,11 +258,11 @@ impl WireFormat for MsgCommandOutput {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.line)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.line, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgCommandOutput {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -327,11 +327,11 @@ impl WireFormat for MsgCommandReq {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.command)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.command, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgCommandReq {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -395,11 +395,11 @@ impl WireFormat for MsgCommandResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.code)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.code, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgCommandResp {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -457,8 +457,8 @@ impl WireFormat for MsgCwResults {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgCwResults { sender_id: None }
     }
 }
@@ -512,8 +512,8 @@ impl WireFormat for MsgCwStart {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgCwStart { sender_id: None }
     }
 }
@@ -590,14 +590,14 @@ impl WireFormat for MsgDeviceMonitor {
             + WireFormat::encoded_len(&self.cpu_temperature)
             + WireFormat::encoded_len(&self.fe_temperature)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.dev_vin, buf);
         WireFormat::write(&self.cpu_vint, buf);
         WireFormat::write(&self.cpu_vaux, buf);
         WireFormat::write(&self.cpu_temperature, buf);
         WireFormat::write(&self.fe_temperature, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgDeviceMonitor {
             sender_id: None,
             dev_vin: WireFormat::parse_unchecked(buf),
@@ -669,11 +669,11 @@ impl WireFormat for MsgFrontEndGain {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.rf_gain) + WireFormat::encoded_len(&self.if_gain)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.rf_gain, buf);
         WireFormat::write(&self.if_gain, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFrontEndGain {
             sender_id: None,
             rf_gain: WireFormat::parse_unchecked(buf),
@@ -734,10 +734,10 @@ impl WireFormat for MsgIarState {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.num_hyps)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.num_hyps, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgIarState {
             sender_id: None,
             num_hyps: WireFormat::parse_unchecked(buf),
@@ -792,8 +792,8 @@ impl WireFormat for MsgInitBaseDep {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgInitBaseDep { sender_id: None }
     }
 }
@@ -853,11 +853,11 @@ impl WireFormat for MsgMaskSatellite {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.mask) + WireFormat::encoded_len(&self.sid)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mask, buf);
         WireFormat::write(&self.sid, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgMaskSatellite {
             sender_id: None,
             mask: WireFormat::parse_unchecked(buf),
@@ -920,11 +920,11 @@ impl WireFormat for MsgMaskSatelliteDep {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.mask) + WireFormat::encoded_len(&self.sid)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mask, buf);
         WireFormat::write(&self.sid, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgMaskSatelliteDep {
             sender_id: None,
             mask: WireFormat::parse_unchecked(buf),
@@ -983,10 +983,10 @@ impl WireFormat for MsgNetworkBandwidthUsage {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.interfaces)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.interfaces, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgNetworkBandwidthUsage {
             sender_id: None,
             interfaces: WireFormat::parse_unchecked(buf),
@@ -1042,8 +1042,8 @@ impl WireFormat for MsgNetworkStateReq {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgNetworkStateReq { sender_id: None }
     }
 }
@@ -1134,7 +1134,7 @@ impl WireFormat for MsgNetworkStateResp {
             + WireFormat::encoded_len(&self.interface_name)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.ipv4_address, buf);
         WireFormat::write(&self.ipv4_mask_size, buf);
         WireFormat::write(&self.ipv6_address, buf);
@@ -1144,7 +1144,7 @@ impl WireFormat for MsgNetworkStateResp {
         WireFormat::write(&self.interface_name, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgNetworkStateResp {
             sender_id: None,
             ipv4_address: WireFormat::parse_unchecked(buf),
@@ -1209,10 +1209,10 @@ impl WireFormat for MsgReset {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgReset {
             sender_id: None,
             flags: WireFormat::parse_unchecked(buf),
@@ -1267,8 +1267,8 @@ impl WireFormat for MsgResetDep {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgResetDep { sender_id: None }
     }
 }
@@ -1324,10 +1324,10 @@ impl WireFormat for MsgResetFilters {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.filter)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.filter, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgResetFilters {
             sender_id: None,
             filter: WireFormat::parse_unchecked(buf),
@@ -1383,8 +1383,8 @@ impl WireFormat for MsgSetTime {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgSetTime { sender_id: None }
     }
 }
@@ -1469,7 +1469,7 @@ impl WireFormat for MsgSpecan {
             + WireFormat::encoded_len(&self.amplitude_unit)
             + WireFormat::encoded_len(&self.amplitude_value)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel_tag, buf);
         WireFormat::write(&self.t, buf);
         WireFormat::write(&self.freq_ref, buf);
@@ -1478,7 +1478,7 @@ impl WireFormat for MsgSpecan {
         WireFormat::write(&self.amplitude_unit, buf);
         WireFormat::write(&self.amplitude_value, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSpecan {
             sender_id: None,
             channel_tag: WireFormat::parse_unchecked(buf),
@@ -1572,7 +1572,7 @@ impl WireFormat for MsgSpecanDep {
             + WireFormat::encoded_len(&self.amplitude_unit)
             + WireFormat::encoded_len(&self.amplitude_value)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel_tag, buf);
         WireFormat::write(&self.t, buf);
         WireFormat::write(&self.freq_ref, buf);
@@ -1581,7 +1581,7 @@ impl WireFormat for MsgSpecanDep {
         WireFormat::write(&self.amplitude_unit, buf);
         WireFormat::write(&self.amplitude_value, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSpecanDep {
             sender_id: None,
             channel_tag: WireFormat::parse_unchecked(buf),
@@ -1659,12 +1659,12 @@ impl WireFormat for MsgThreadState {
             + WireFormat::encoded_len(&self.cpu)
             + WireFormat::encoded_len(&self.stack_free)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.name, buf);
         WireFormat::write(&self.cpu, buf);
         WireFormat::write(&self.stack_free, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgThreadState {
             sender_id: None,
             name: WireFormat::parse_unchecked(buf),
@@ -1751,14 +1751,14 @@ impl WireFormat for MsgUartState {
             + WireFormat::encoded_len(&self.latency)
             + WireFormat::encoded_len(&self.obs_period)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.uart_a, buf);
         WireFormat::write(&self.uart_b, buf);
         WireFormat::write(&self.uart_ftdi, buf);
         WireFormat::write(&self.latency, buf);
         WireFormat::write(&self.obs_period, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgUartState {
             sender_id: None,
             uart_a: WireFormat::parse_unchecked(buf),
@@ -1835,13 +1835,13 @@ impl WireFormat for MsgUartStateDepa {
             + WireFormat::encoded_len(&self.uart_ftdi)
             + WireFormat::encoded_len(&self.latency)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.uart_a, buf);
         WireFormat::write(&self.uart_b, buf);
         WireFormat::write(&self.uart_ftdi, buf);
         WireFormat::write(&self.latency, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgUartStateDepa {
             sender_id: None,
             uart_a: WireFormat::parse_unchecked(buf),
@@ -1893,14 +1893,14 @@ impl WireFormat for NetworkUsage {
             + WireFormat::encoded_len(&self.tx_bytes)
             + WireFormat::encoded_len(&self.interface_name)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.duration, buf);
         WireFormat::write(&self.total_bytes, buf);
         WireFormat::write(&self.rx_bytes, buf);
         WireFormat::write(&self.tx_bytes, buf);
         WireFormat::write(&self.interface_name, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         NetworkUsage {
             duration: WireFormat::parse_unchecked(buf),
             total_bytes: WireFormat::parse_unchecked(buf),
@@ -1948,13 +1948,13 @@ impl WireFormat for Period {
             + WireFormat::encoded_len(&self.pmax)
             + WireFormat::encoded_len(&self.current)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.avg, buf);
         WireFormat::write(&self.pmin, buf);
         WireFormat::write(&self.pmax, buf);
         WireFormat::write(&self.current, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         Period {
             avg: WireFormat::parse_unchecked(buf),
             pmin: WireFormat::parse_unchecked(buf),
@@ -2007,7 +2007,7 @@ impl WireFormat for UARTChannel {
             + WireFormat::encoded_len(&self.tx_buffer_level)
             + WireFormat::encoded_len(&self.rx_buffer_level)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tx_throughput, buf);
         WireFormat::write(&self.rx_throughput, buf);
         WireFormat::write(&self.crc_error_count, buf);
@@ -2015,7 +2015,7 @@ impl WireFormat for UARTChannel {
         WireFormat::write(&self.tx_buffer_level, buf);
         WireFormat::write(&self.rx_buffer_level, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         UARTChannel {
             tx_throughput: WireFormat::parse_unchecked(buf),
             rx_throughput: WireFormat::parse_unchecked(buf),

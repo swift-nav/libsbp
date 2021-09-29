@@ -15,7 +15,6 @@ pub enum MessageTime {
 }
 
 impl MessageTime {
-    /*  */
     /// If the `MessageTime` is from a rover return it. Otherwise return None.
     pub fn to_rover(self) -> Option<RoverTime> {
         if let Self::Rover(v) = self {

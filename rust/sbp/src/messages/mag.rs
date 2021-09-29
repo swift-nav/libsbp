@@ -96,14 +96,14 @@ impl WireFormat for MsgMagRaw {
             + WireFormat::encoded_len(&self.mag_y)
             + WireFormat::encoded_len(&self.mag_z)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.tow_f, buf);
         WireFormat::write(&self.mag_x, buf);
         WireFormat::write(&self.mag_y, buf);
         WireFormat::write(&self.mag_z, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgMagRaw {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),

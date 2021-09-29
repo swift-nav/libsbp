@@ -30,11 +30,12 @@ mod lib {
 
     pub use crate::wire_format::{WireFormat, PayloadParseError};
     pub use crate::sbp_string::{SbpString, Unterminated, NullTerminated, Multipart, DoubleNullTerminated};
-
     #[cfg(feature = "swiftnav")]
     pub use crate::time;
 
     pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError};
+
+    pub use bytes::{Buf, BufMut};
 }
 
 use lib::*;
@@ -91,7 +92,32 @@ pub enum Sbp {
 }
 
 impl Sbp {
-    pub(crate) fn from_frame(mut frame: crate::de::Frame) -> Result<Sbp, PayloadParseError> {
+    /// Parse a message from a [Frame](crate::Frame).
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use std::convert::TryInto;
+    ///
+    /// use sbp::messages::logging::MsgLog;
+    /// use sbp::{Frame, Sbp};
+    ///
+    /// fn main() -> Result<(), Box<dyn std::error::Error>> {
+    ///     // log level 1 and with "hello" as the message
+    ///     let payload: &[u8] = &[1, 104, 101, 108, 108, 111];
+    ///     let frame = Frame {
+    ///         msg_type: 1025,
+    ///         sender_id: 1,
+    ///         payload,
+    ///     };
+    ///     let msg: MsgLog = Sbp::from_frame(frame)?.try_into()?;
+    ///     assert_eq!(msg.sender_id, Some(1));
+    ///     assert_eq!(msg.level, 1);
+    ///     assert_eq!(msg.text.as_bytes(), "hello".as_bytes());
+    ///     Ok(())
+    /// }
+    /// ```
+    pub fn from_frame<B: Buf>(mut frame: crate::Frame<B>) -> Result<Sbp, PayloadParseError> {
         match frame.msg_type {
             ((*- for m in msgs *))
             (((m.identifier|camel_case)))::MESSAGE_TYPE => {
@@ -180,11 +206,11 @@ impl SbpMessage for Sbp {
 impl WireFormat for Sbp {
     const MIN_ENCODED_LEN: usize = crate::MAX_FRAME_LEN;
 
-    fn parse_unchecked(_: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(_: &mut B) -> Self {
         unimplemented!("Sbp must be parsed with Sbp::from_frame");
     }
 
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         match self {
             ((*- for m in msgs *))
             Sbp::(((m.identifier|camel_case)))(msg) => {

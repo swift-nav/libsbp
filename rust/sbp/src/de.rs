@@ -49,7 +49,7 @@ pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     SbpDecoder::framed(input)
 }
 
-pub fn parse_frame(buf: &mut BytesMut) -> Option<Result<Frame, CrcError>> {
+pub fn parse_frame(buf: &mut BytesMut) -> Option<Result<Frame<BytesMut>, CrcError>> {
     if buf.len() < HEADER_LEN {
         return None;
     }
@@ -89,11 +89,12 @@ fn check_crc(msg_type: u16, sender_id: u16, payload: &[u8], crc_in: u16) -> bool
     crc.get() == crc_in
 }
 
+/// The wire representation of an SBP message.
 #[derive(Debug)]
-pub struct Frame {
+pub struct Frame<B> {
     pub msg_type: u16,
     pub sender_id: u16,
-    pub payload: BytesMut,
+    pub payload: B,
 }
 
 /// All errors that can occur while reading messages.

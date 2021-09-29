@@ -70,10 +70,10 @@ impl WireFormat for MsgBootloaderHandshakeDepA {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.handshake)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.handshake, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBootloaderHandshakeDepA {
             sender_id: None,
             handshake: WireFormat::parse_unchecked(buf),
@@ -130,8 +130,8 @@ impl WireFormat for MsgBootloaderHandshakeReq {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgBootloaderHandshakeReq { sender_id: None }
     }
 }
@@ -193,11 +193,11 @@ impl WireFormat for MsgBootloaderHandshakeResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.flags) + WireFormat::encoded_len(&self.version)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
         WireFormat::write(&self.version, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBootloaderHandshakeResp {
             sender_id: None,
             flags: WireFormat::parse_unchecked(buf),
@@ -256,10 +256,10 @@ impl WireFormat for MsgBootloaderJumpToApp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.jump)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.jump, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBootloaderJumpToApp {
             sender_id: None,
             jump: WireFormat::parse_unchecked(buf),
@@ -319,8 +319,8 @@ impl WireFormat for MsgNapDeviceDnaReq {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgNapDeviceDnaReq { sender_id: None }
     }
 }
@@ -380,10 +380,10 @@ impl WireFormat for MsgNapDeviceDnaResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.dna)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.dna, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgNapDeviceDnaResp {
             sender_id: None,
             dna: WireFormat::parse_unchecked(buf),

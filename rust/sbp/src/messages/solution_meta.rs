@@ -35,10 +35,10 @@ impl WireFormat for GnssInputType {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GnssInputType {
             flags: WireFormat::parse_unchecked(buf),
         }
@@ -64,10 +64,10 @@ impl WireFormat for ImuInputType {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         ImuInputType {
             flags: WireFormat::parse_unchecked(buf),
         }
@@ -179,7 +179,7 @@ impl WireFormat for MsgSolnMeta {
             + WireFormat::encoded_len(&self.age_gnss)
             + WireFormat::encoded_len(&self.sol_in)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.pdop, buf);
         WireFormat::write(&self.hdop, buf);
@@ -188,7 +188,7 @@ impl WireFormat for MsgSolnMeta {
         WireFormat::write(&self.age_gnss, buf);
         WireFormat::write(&self.sol_in, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSolnMeta {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -304,7 +304,7 @@ impl WireFormat for MsgSolnMetaDepA {
             + WireFormat::encoded_len(&self.last_used_gnss_vel_tow)
             + WireFormat::encoded_len(&self.sol_in)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.pdop, buf);
         WireFormat::write(&self.hdop, buf);
         WireFormat::write(&self.vdop, buf);
@@ -315,7 +315,7 @@ impl WireFormat for MsgSolnMetaDepA {
         WireFormat::write(&self.last_used_gnss_vel_tow, buf);
         WireFormat::write(&self.sol_in, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSolnMetaDepA {
             sender_id: None,
             pdop: WireFormat::parse_unchecked(buf),
@@ -350,10 +350,10 @@ impl WireFormat for OdoInputType {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         OdoInputType {
             flags: WireFormat::parse_unchecked(buf),
         }
@@ -387,11 +387,11 @@ impl WireFormat for SolutionInputType {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sensor_type) + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sensor_type, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         SolutionInputType {
             sensor_type: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),

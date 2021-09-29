@@ -66,12 +66,12 @@ impl WireFormat for EstimatedHorizontalErrorEllipse {
             + WireFormat::encoded_len(&self.semi_minor)
             + WireFormat::encoded_len(&self.orientation)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.semi_major, buf);
         WireFormat::write(&self.semi_minor, buf);
         WireFormat::write(&self.orientation, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         EstimatedHorizontalErrorEllipse {
             semi_major: WireFormat::parse_unchecked(buf),
             semi_minor: WireFormat::parse_unchecked(buf),
@@ -144,11 +144,11 @@ impl WireFormat for MsgAgeCorrections {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.age)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.age, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAgeCorrections {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -249,7 +249,7 @@ impl WireFormat for MsgBaselineEcef {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -258,7 +258,7 @@ impl WireFormat for MsgBaselineEcef {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBaselineEcef {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -364,7 +364,7 @@ impl WireFormat for MsgBaselineEcefDepA {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -373,7 +373,7 @@ impl WireFormat for MsgBaselineEcefDepA {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBaselineEcefDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -463,13 +463,13 @@ impl WireFormat for MsgBaselineHeadingDepA {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.heading, buf);
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBaselineHeadingDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -579,7 +579,7 @@ impl WireFormat for MsgBaselineNed {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.n, buf);
         WireFormat::write(&self.e, buf);
@@ -589,7 +589,7 @@ impl WireFormat for MsgBaselineNed {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBaselineNed {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -703,7 +703,7 @@ impl WireFormat for MsgBaselineNedDepA {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.n, buf);
         WireFormat::write(&self.e, buf);
@@ -713,7 +713,7 @@ impl WireFormat for MsgBaselineNedDepA {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBaselineNedDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -820,7 +820,7 @@ impl WireFormat for MsgDops {
             + WireFormat::encoded_len(&self.vdop)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.gdop, buf);
         WireFormat::write(&self.pdop, buf);
@@ -829,7 +829,7 @@ impl WireFormat for MsgDops {
         WireFormat::write(&self.vdop, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgDops {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -928,7 +928,7 @@ impl WireFormat for MsgDopsDepA {
             + WireFormat::encoded_len(&self.hdop)
             + WireFormat::encoded_len(&self.vdop)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.gdop, buf);
         WireFormat::write(&self.pdop, buf);
@@ -936,7 +936,7 @@ impl WireFormat for MsgDopsDepA {
         WireFormat::write(&self.hdop, buf);
         WireFormat::write(&self.vdop, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgDopsDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -1039,13 +1039,13 @@ impl WireFormat for MsgGpsTime {
             + WireFormat::encoded_len(&self.ns_residual)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.ns_residual, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgGpsTime {
             sender_id: None,
             wn: WireFormat::parse_unchecked(buf),
@@ -1146,13 +1146,13 @@ impl WireFormat for MsgGpsTimeDepA {
             + WireFormat::encoded_len(&self.ns_residual)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.ns_residual, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgGpsTimeDepA {
             sender_id: None,
             wn: WireFormat::parse_unchecked(buf),
@@ -1253,13 +1253,13 @@ impl WireFormat for MsgGpsTimeGnss {
             + WireFormat::encoded_len(&self.ns_residual)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.ns_residual, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgGpsTimeGnss {
             sender_id: None,
             wn: WireFormat::parse_unchecked(buf),
@@ -1365,7 +1365,7 @@ impl WireFormat for MsgPosEcef {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -1374,7 +1374,7 @@ impl WireFormat for MsgPosEcef {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosEcef {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -1509,7 +1509,7 @@ impl WireFormat for MsgPosEcefCov {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -1523,7 +1523,7 @@ impl WireFormat for MsgPosEcefCov {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosEcefCov {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -1663,7 +1663,7 @@ impl WireFormat for MsgPosEcefCovGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -1677,7 +1677,7 @@ impl WireFormat for MsgPosEcefCovGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosEcefCovGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -1791,7 +1791,7 @@ impl WireFormat for MsgPosEcefDepA {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -1800,7 +1800,7 @@ impl WireFormat for MsgPosEcefDepA {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosEcefDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -1909,7 +1909,7 @@ impl WireFormat for MsgPosEcefGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -1918,7 +1918,7 @@ impl WireFormat for MsgPosEcefGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosEcefGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -2032,7 +2032,7 @@ impl WireFormat for MsgPosLlh {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.lat, buf);
         WireFormat::write(&self.lon, buf);
@@ -2042,7 +2042,7 @@ impl WireFormat for MsgPosLlh {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosLlh {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -2193,7 +2193,7 @@ impl WireFormat for MsgPosLlhAcc {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.lat, buf);
         WireFormat::write(&self.lon, buf);
@@ -2208,7 +2208,7 @@ impl WireFormat for MsgPosLlhAcc {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosLlhAcc {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -2349,7 +2349,7 @@ impl WireFormat for MsgPosLlhCov {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.lat, buf);
         WireFormat::write(&self.lon, buf);
@@ -2363,7 +2363,7 @@ impl WireFormat for MsgPosLlhCov {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosLlhCov {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -2503,7 +2503,7 @@ impl WireFormat for MsgPosLlhCovGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.lat, buf);
         WireFormat::write(&self.lon, buf);
@@ -2517,7 +2517,7 @@ impl WireFormat for MsgPosLlhCovGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosLlhCovGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -2636,7 +2636,7 @@ impl WireFormat for MsgPosLlhDepA {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.lat, buf);
         WireFormat::write(&self.lon, buf);
@@ -2646,7 +2646,7 @@ impl WireFormat for MsgPosLlhDepA {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosLlhDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -2761,7 +2761,7 @@ impl WireFormat for MsgPosLlhGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.lat, buf);
         WireFormat::write(&self.lon, buf);
@@ -2771,7 +2771,7 @@ impl WireFormat for MsgPosLlhGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPosLlhGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -2954,7 +2954,7 @@ impl WireFormat for MsgProtectionLevel {
             + WireFormat::encoded_len(&self.heading)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.wn, buf);
         WireFormat::write(&self.hpl, buf);
@@ -2977,7 +2977,7 @@ impl WireFormat for MsgProtectionLevel {
         WireFormat::write(&self.heading, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgProtectionLevel {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -3096,7 +3096,7 @@ impl WireFormat for MsgProtectionLevelDepA {
             + WireFormat::encoded_len(&self.height)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.vpl, buf);
         WireFormat::write(&self.hpl, buf);
@@ -3105,7 +3105,7 @@ impl WireFormat for MsgProtectionLevelDepA {
         WireFormat::write(&self.height, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgProtectionLevelDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -3220,7 +3220,7 @@ impl WireFormat for MsgUtcTime {
             + WireFormat::encoded_len(&self.seconds)
             + WireFormat::encoded_len(&self.ns)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.year, buf);
@@ -3231,7 +3231,7 @@ impl WireFormat for MsgUtcTime {
         WireFormat::write(&self.seconds, buf);
         WireFormat::write(&self.ns, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgUtcTime {
             sender_id: None,
             flags: WireFormat::parse_unchecked(buf),
@@ -3348,7 +3348,7 @@ impl WireFormat for MsgUtcTimeGnss {
             + WireFormat::encoded_len(&self.seconds)
             + WireFormat::encoded_len(&self.ns)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.year, buf);
@@ -3359,7 +3359,7 @@ impl WireFormat for MsgUtcTimeGnss {
         WireFormat::write(&self.seconds, buf);
         WireFormat::write(&self.ns, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgUtcTimeGnss {
             sender_id: None,
             flags: WireFormat::parse_unchecked(buf),
@@ -3497,7 +3497,7 @@ impl WireFormat for MsgVelBody {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -3511,7 +3511,7 @@ impl WireFormat for MsgVelBody {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelBody {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -3621,7 +3621,7 @@ impl WireFormat for MsgVelEcef {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -3630,7 +3630,7 @@ impl WireFormat for MsgVelEcef {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelEcef {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -3760,7 +3760,7 @@ impl WireFormat for MsgVelEcefCov {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -3774,7 +3774,7 @@ impl WireFormat for MsgVelEcefCov {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelEcefCov {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -3909,7 +3909,7 @@ impl WireFormat for MsgVelEcefCovGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -3923,7 +3923,7 @@ impl WireFormat for MsgVelEcefCovGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelEcefCovGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -4033,7 +4033,7 @@ impl WireFormat for MsgVelEcefDepA {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -4042,7 +4042,7 @@ impl WireFormat for MsgVelEcefDepA {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelEcefDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -4147,7 +4147,7 @@ impl WireFormat for MsgVelEcefGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
@@ -4156,7 +4156,7 @@ impl WireFormat for MsgVelEcefGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelEcefGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -4267,7 +4267,7 @@ impl WireFormat for MsgVelNed {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.n, buf);
         WireFormat::write(&self.e, buf);
@@ -4277,7 +4277,7 @@ impl WireFormat for MsgVelNed {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelNed {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -4411,7 +4411,7 @@ impl WireFormat for MsgVelNedCov {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.n, buf);
         WireFormat::write(&self.e, buf);
@@ -4425,7 +4425,7 @@ impl WireFormat for MsgVelNedCov {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelNedCov {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -4563,7 +4563,7 @@ impl WireFormat for MsgVelNedCovGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.n, buf);
         WireFormat::write(&self.e, buf);
@@ -4577,7 +4577,7 @@ impl WireFormat for MsgVelNedCovGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelNedCovGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -4693,7 +4693,7 @@ impl WireFormat for MsgVelNedDepA {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.n, buf);
         WireFormat::write(&self.e, buf);
@@ -4703,7 +4703,7 @@ impl WireFormat for MsgVelNedDepA {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelNedDepA {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -4815,7 +4815,7 @@ impl WireFormat for MsgVelNedGnss {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.n, buf);
         WireFormat::write(&self.e, buf);
@@ -4825,7 +4825,7 @@ impl WireFormat for MsgVelNedGnss {
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgVelNedGnss {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),

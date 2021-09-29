@@ -67,10 +67,10 @@ impl WireFormat for MsgUserData {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.contents)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.contents, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgUserData {
             sender_id: None,
             contents: WireFormat::parse_unchecked(buf),

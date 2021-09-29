@@ -97,7 +97,7 @@ impl WireFormat for MsgLinuxCpuState {
             + WireFormat::encoded_len(&self.tname)
             + WireFormat::encoded_len(&self.cmdline)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.pid, buf);
         WireFormat::write(&self.pcpu, buf);
@@ -106,7 +106,7 @@ impl WireFormat for MsgLinuxCpuState {
         WireFormat::write(&self.tname, buf);
         WireFormat::write(&self.cmdline, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxCpuState {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -191,14 +191,14 @@ impl WireFormat for MsgLinuxCpuStateDepA {
             + WireFormat::encoded_len(&self.tname)
             + WireFormat::encoded_len(&self.cmdline)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.pid, buf);
         WireFormat::write(&self.pcpu, buf);
         WireFormat::write(&self.tname, buf);
         WireFormat::write(&self.cmdline, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxCpuStateDepA {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -291,7 +291,7 @@ impl WireFormat for MsgLinuxMemState {
             + WireFormat::encoded_len(&self.tname)
             + WireFormat::encoded_len(&self.cmdline)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.pid, buf);
         WireFormat::write(&self.pmem, buf);
@@ -300,7 +300,7 @@ impl WireFormat for MsgLinuxMemState {
         WireFormat::write(&self.tname, buf);
         WireFormat::write(&self.cmdline, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxMemState {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -385,14 +385,14 @@ impl WireFormat for MsgLinuxMemStateDepA {
             + WireFormat::encoded_len(&self.tname)
             + WireFormat::encoded_len(&self.cmdline)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.pid, buf);
         WireFormat::write(&self.pmem, buf);
         WireFormat::write(&self.tname, buf);
         WireFormat::write(&self.cmdline, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxMemStateDepA {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -469,13 +469,13 @@ impl WireFormat for MsgLinuxProcessFdCount {
             + WireFormat::encoded_len(&self.fd_count)
             + WireFormat::encoded_len(&self.cmdline)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.pid, buf);
         WireFormat::write(&self.fd_count, buf);
         WireFormat::write(&self.cmdline, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxProcessFdCount {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -544,11 +544,11 @@ impl WireFormat for MsgLinuxProcessFdSummary {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sys_fd_count) + WireFormat::encoded_len(&self.most_opened)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sys_fd_count, buf);
         WireFormat::write(&self.most_opened, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxProcessFdSummary {
             sender_id: None,
             sys_fd_count: WireFormat::parse_unchecked(buf),
@@ -636,7 +636,7 @@ impl WireFormat for MsgLinuxProcessSocketCounts {
             + WireFormat::encoded_len(&self.socket_states)
             + WireFormat::encoded_len(&self.cmdline)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.pid, buf);
         WireFormat::write(&self.socket_count, buf);
@@ -644,7 +644,7 @@ impl WireFormat for MsgLinuxProcessSocketCounts {
         WireFormat::write(&self.socket_states, buf);
         WireFormat::write(&self.cmdline, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxProcessSocketCounts {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -747,7 +747,7 @@ impl WireFormat for MsgLinuxProcessSocketQueues {
             + WireFormat::encoded_len(&self.address_of_largest)
             + WireFormat::encoded_len(&self.cmdline)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.pid, buf);
         WireFormat::write(&self.recv_queued, buf);
@@ -757,7 +757,7 @@ impl WireFormat for MsgLinuxProcessSocketQueues {
         WireFormat::write(&self.address_of_largest, buf);
         WireFormat::write(&self.cmdline, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxProcessSocketQueues {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -841,13 +841,13 @@ impl WireFormat for MsgLinuxSocketUsage {
             + WireFormat::encoded_len(&self.socket_state_counts)
             + WireFormat::encoded_len(&self.socket_type_counts)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.avg_queue_depth, buf);
         WireFormat::write(&self.max_queue_depth, buf);
         WireFormat::write(&self.socket_state_counts, buf);
         WireFormat::write(&self.socket_type_counts, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxSocketUsage {
             sender_id: None,
             avg_queue_depth: WireFormat::parse_unchecked(buf),
@@ -944,7 +944,7 @@ impl WireFormat for MsgLinuxSysState {
             + WireFormat::encoded_len(&self.time)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mem_total, buf);
         WireFormat::write(&self.pcpu, buf);
         WireFormat::write(&self.pmem, buf);
@@ -954,7 +954,7 @@ impl WireFormat for MsgLinuxSysState {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxSysState {
             sender_id: None,
             mem_total: WireFormat::parse_unchecked(buf),
@@ -1044,7 +1044,7 @@ impl WireFormat for MsgLinuxSysStateDepA {
             + WireFormat::encoded_len(&self.procs_stopping)
             + WireFormat::encoded_len(&self.pid_count)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mem_total, buf);
         WireFormat::write(&self.pcpu, buf);
         WireFormat::write(&self.pmem, buf);
@@ -1052,7 +1052,7 @@ impl WireFormat for MsgLinuxSysStateDepA {
         WireFormat::write(&self.procs_stopping, buf);
         WireFormat::write(&self.pid_count, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLinuxSysStateDepA {
             sender_id: None,
             mem_total: WireFormat::parse_unchecked(buf),

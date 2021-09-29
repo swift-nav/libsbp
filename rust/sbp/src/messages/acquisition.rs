@@ -92,7 +92,7 @@ impl WireFormat for AcqSvProfile {
             + WireFormat::encoded_len(&self.cf)
             + WireFormat::encoded_len(&self.cp)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.job_type, buf);
         WireFormat::write(&self.status, buf);
         WireFormat::write(&self.cn0, buf);
@@ -106,7 +106,7 @@ impl WireFormat for AcqSvProfile {
         WireFormat::write(&self.cf, buf);
         WireFormat::write(&self.cp, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         AcqSvProfile {
             job_type: WireFormat::parse_unchecked(buf),
             status: WireFormat::parse_unchecked(buf),
@@ -196,7 +196,7 @@ impl WireFormat for AcqSvProfileDep {
             + WireFormat::encoded_len(&self.cf)
             + WireFormat::encoded_len(&self.cp)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.job_type, buf);
         WireFormat::write(&self.status, buf);
         WireFormat::write(&self.cn0, buf);
@@ -210,7 +210,7 @@ impl WireFormat for AcqSvProfileDep {
         WireFormat::write(&self.cf, buf);
         WireFormat::write(&self.cp, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         AcqSvProfileDep {
             job_type: WireFormat::parse_unchecked(buf),
             status: WireFormat::parse_unchecked(buf),
@@ -296,13 +296,13 @@ impl WireFormat for MsgAcqResult {
             + WireFormat::encoded_len(&self.cf)
             + WireFormat::encoded_len(&self.sid)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.cn0, buf);
         WireFormat::write(&self.cp, buf);
         WireFormat::write(&self.cf, buf);
         WireFormat::write(&self.sid, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAcqResult {
             sender_id: None,
             cn0: WireFormat::parse_unchecked(buf),
@@ -380,13 +380,13 @@ impl WireFormat for MsgAcqResultDepA {
             + WireFormat::encoded_len(&self.cf)
             + WireFormat::encoded_len(&self.prn)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.snr, buf);
         WireFormat::write(&self.cp, buf);
         WireFormat::write(&self.cf, buf);
         WireFormat::write(&self.prn, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAcqResultDepA {
             sender_id: None,
             snr: WireFormat::parse_unchecked(buf),
@@ -463,13 +463,13 @@ impl WireFormat for MsgAcqResultDepB {
             + WireFormat::encoded_len(&self.cf)
             + WireFormat::encoded_len(&self.sid)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.snr, buf);
         WireFormat::write(&self.cp, buf);
         WireFormat::write(&self.cf, buf);
         WireFormat::write(&self.sid, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAcqResultDepB {
             sender_id: None,
             snr: WireFormat::parse_unchecked(buf),
@@ -545,13 +545,13 @@ impl WireFormat for MsgAcqResultDepC {
             + WireFormat::encoded_len(&self.cf)
             + WireFormat::encoded_len(&self.sid)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.cn0, buf);
         WireFormat::write(&self.cp, buf);
         WireFormat::write(&self.cf, buf);
         WireFormat::write(&self.sid, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAcqResultDepC {
             sender_id: None,
             cn0: WireFormat::parse_unchecked(buf),
@@ -613,10 +613,10 @@ impl WireFormat for MsgAcqSvProfile {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.acq_sv_profile)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.acq_sv_profile, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAcqSvProfile {
             sender_id: None,
             acq_sv_profile: WireFormat::parse_unchecked(buf),
@@ -674,10 +674,10 @@ impl WireFormat for MsgAcqSvProfileDep {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.acq_sv_profile)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.acq_sv_profile, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAcqSvProfileDep {
             sender_id: None,
             acq_sv_profile: WireFormat::parse_unchecked(buf),

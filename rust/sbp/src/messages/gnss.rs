@@ -39,11 +39,11 @@ impl WireFormat for CarrierPhase {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.i) + WireFormat::encoded_len(&self.f)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.i, buf);
         WireFormat::write(&self.f, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         CarrierPhase {
             i: WireFormat::parse_unchecked(buf),
             f: WireFormat::parse_unchecked(buf),
@@ -81,12 +81,12 @@ impl WireFormat for GpsTime {
             + WireFormat::encoded_len(&self.ns_residual)
             + WireFormat::encoded_len(&self.wn)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.ns_residual, buf);
         WireFormat::write(&self.wn, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GpsTime {
             tow: WireFormat::parse_unchecked(buf),
             ns_residual: WireFormat::parse_unchecked(buf),
@@ -117,11 +117,11 @@ impl WireFormat for GpsTimeDep {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.wn)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.wn, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GpsTimeDep {
             tow: WireFormat::parse_unchecked(buf),
             wn: WireFormat::parse_unchecked(buf),
@@ -151,11 +151,11 @@ impl WireFormat for GpsTimeSec {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.wn)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.wn, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GpsTimeSec {
             tow: WireFormat::parse_unchecked(buf),
             wn: WireFormat::parse_unchecked(buf),
@@ -186,11 +186,11 @@ impl WireFormat for GnssSignal {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sat) + WireFormat::encoded_len(&self.code)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sat, buf);
         WireFormat::write(&self.code, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GnssSignal {
             sat: WireFormat::parse_unchecked(buf),
             code: WireFormat::parse_unchecked(buf),
@@ -228,12 +228,12 @@ impl WireFormat for GnssSignalDep {
             + WireFormat::encoded_len(&self.code)
             + WireFormat::encoded_len(&self.reserved)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sat, buf);
         WireFormat::write(&self.code, buf);
         WireFormat::write(&self.reserved, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GnssSignalDep {
             sat: WireFormat::parse_unchecked(buf),
             code: WireFormat::parse_unchecked(buf),
@@ -264,11 +264,11 @@ impl WireFormat for SvId {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sat_id) + WireFormat::encoded_len(&self.constellation)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sat_id, buf);
         WireFormat::write(&self.constellation, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         SvId {
             sat_id: WireFormat::parse_unchecked(buf),
             constellation: WireFormat::parse_unchecked(buf),

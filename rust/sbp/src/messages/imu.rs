@@ -78,12 +78,12 @@ impl WireFormat for MsgImuAux {
             + WireFormat::encoded_len(&self.temp)
             + WireFormat::encoded_len(&self.imu_conf)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.imu_type, buf);
         WireFormat::write(&self.temp, buf);
         WireFormat::write(&self.imu_conf, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgImuAux {
             sender_id: None,
             imu_type: WireFormat::parse_unchecked(buf),
@@ -200,7 +200,7 @@ impl WireFormat for MsgImuRaw {
             + WireFormat::encoded_len(&self.gyr_y)
             + WireFormat::encoded_len(&self.gyr_z)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.tow_f, buf);
         WireFormat::write(&self.acc_x, buf);
@@ -210,7 +210,7 @@ impl WireFormat for MsgImuRaw {
         WireFormat::write(&self.gyr_y, buf);
         WireFormat::write(&self.gyr_z, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgImuRaw {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),

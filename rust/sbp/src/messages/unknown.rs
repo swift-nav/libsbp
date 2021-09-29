@@ -1,6 +1,6 @@
 //! Unknown messages.
 
-use bytes::BytesMut;
+use bytes::{Buf, BufMut};
 
 use crate::{wire_format::WireFormat, SbpMessage};
 
@@ -39,11 +39,11 @@ impl WireFormat for Unknown {
         self.payload.encoded_len()
     }
 
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         self.payload.write(buf)
     }
 
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         Unknown {
             msg_id: 0,
             sender_id: None,

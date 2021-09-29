@@ -41,11 +41,11 @@ impl WireFormat for CodeBiasesContent {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.code) + WireFormat::encoded_len(&self.value)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.code, buf);
         WireFormat::write(&self.value, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         CodeBiasesContent {
             code: WireFormat::parse_unchecked(buf),
             value: WireFormat::parse_unchecked(buf),
@@ -98,7 +98,7 @@ impl WireFormat for GridDefinitionHeaderDepA {
             + WireFormat::encoded_len(&self.num_msgs)
             + WireFormat::encoded_len(&self.seq_num)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.region_size_inverse, buf);
         WireFormat::write(&self.area_width, buf);
         WireFormat::write(&self.lat_nw_corner_enc, buf);
@@ -106,7 +106,7 @@ impl WireFormat for GridDefinitionHeaderDepA {
         WireFormat::write(&self.num_msgs, buf);
         WireFormat::write(&self.seq_num, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GridDefinitionHeaderDepA {
             region_size_inverse: WireFormat::parse_unchecked(buf),
             area_width: WireFormat::parse_unchecked(buf),
@@ -176,7 +176,7 @@ impl WireFormat for GriddedCorrectionHeader {
             + WireFormat::encoded_len(&self.iod_atmo)
             + WireFormat::encoded_len(&self.tropo_quality_indicator)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tile_set_id, buf);
         WireFormat::write(&self.tile_id, buf);
         WireFormat::write(&self.time, buf);
@@ -186,7 +186,7 @@ impl WireFormat for GriddedCorrectionHeader {
         WireFormat::write(&self.iod_atmo, buf);
         WireFormat::write(&self.tropo_quality_indicator, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GriddedCorrectionHeader {
             tile_set_id: WireFormat::parse_unchecked(buf),
             tile_id: WireFormat::parse_unchecked(buf),
@@ -248,7 +248,7 @@ impl WireFormat for GriddedCorrectionHeaderDepA {
             + WireFormat::encoded_len(&self.iod_atmo)
             + WireFormat::encoded_len(&self.tropo_quality_indicator)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.num_msgs, buf);
         WireFormat::write(&self.seq_num, buf);
@@ -256,7 +256,7 @@ impl WireFormat for GriddedCorrectionHeaderDepA {
         WireFormat::write(&self.iod_atmo, buf);
         WireFormat::write(&self.tropo_quality_indicator, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GriddedCorrectionHeaderDepA {
             time: WireFormat::parse_unchecked(buf),
             num_msgs: WireFormat::parse_unchecked(buf),
@@ -342,14 +342,14 @@ impl WireFormat for MsgSsrCodeBiases {
             + WireFormat::encoded_len(&self.iod_ssr)
             + WireFormat::encoded_len(&self.biases)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.update_interval, buf);
         WireFormat::write(&self.iod_ssr, buf);
         WireFormat::write(&self.biases, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrCodeBiases {
             sender_id: None,
             time: WireFormat::parse_unchecked(buf),
@@ -428,13 +428,13 @@ impl WireFormat for MsgSsrGriddedCorrection {
             + WireFormat::encoded_len(&self.tropo_delay_correction)
             + WireFormat::encoded_len(&self.stec_residuals)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.header, buf);
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.tropo_delay_correction, buf);
         WireFormat::write(&self.stec_residuals, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrGriddedCorrection {
             sender_id: None,
             header: WireFormat::parse_unchecked(buf),
@@ -507,13 +507,13 @@ impl WireFormat for MsgSsrGriddedCorrectionDepA {
             + WireFormat::encoded_len(&self.tropo_delay_correction)
             + WireFormat::encoded_len(&self.stec_residuals)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.header, buf);
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.tropo_delay_correction, buf);
         WireFormat::write(&self.stec_residuals, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrGriddedCorrectionDepA {
             sender_id: None,
             header: WireFormat::parse_unchecked(buf),
@@ -586,13 +586,13 @@ impl WireFormat for MsgSsrGriddedCorrectionNoStdDepA {
             + WireFormat::encoded_len(&self.tropo_delay_correction)
             + WireFormat::encoded_len(&self.stec_residuals)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.header, buf);
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.tropo_delay_correction, buf);
         WireFormat::write(&self.stec_residuals, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrGriddedCorrectionNoStdDepA {
             sender_id: None,
             header: WireFormat::parse_unchecked(buf),
@@ -657,11 +657,11 @@ impl WireFormat for MsgSsrGridDefinitionDepA {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.header) + WireFormat::encoded_len(&self.rle_list)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.header, buf);
         WireFormat::write(&self.rle_list, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrGridDefinitionDepA {
             sender_id: None,
             header: WireFormat::parse_unchecked(buf),
@@ -789,7 +789,7 @@ impl WireFormat for MsgSsrOrbitClock {
             + WireFormat::encoded_len(&self.c1)
             + WireFormat::encoded_len(&self.c2)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.update_interval, buf);
@@ -805,7 +805,7 @@ impl WireFormat for MsgSsrOrbitClock {
         WireFormat::write(&self.c1, buf);
         WireFormat::write(&self.c2, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrOrbitClock {
             sender_id: None,
             time: WireFormat::parse_unchecked(buf),
@@ -940,7 +940,7 @@ impl WireFormat for MsgSsrOrbitClockDepA {
             + WireFormat::encoded_len(&self.c1)
             + WireFormat::encoded_len(&self.c2)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.update_interval, buf);
@@ -956,7 +956,7 @@ impl WireFormat for MsgSsrOrbitClockDepA {
         WireFormat::write(&self.c1, buf);
         WireFormat::write(&self.c2, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrOrbitClockDepA {
             sender_id: None,
             time: WireFormat::parse_unchecked(buf),
@@ -1073,7 +1073,7 @@ impl WireFormat for MsgSsrPhaseBiases {
             + WireFormat::encoded_len(&self.yaw_rate)
             + WireFormat::encoded_len(&self.biases)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.update_interval, buf);
@@ -1084,7 +1084,7 @@ impl WireFormat for MsgSsrPhaseBiases {
         WireFormat::write(&self.yaw_rate, buf);
         WireFormat::write(&self.biases, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrPhaseBiases {
             sender_id: None,
             time: WireFormat::parse_unchecked(buf),
@@ -1147,10 +1147,10 @@ impl WireFormat for MsgSsrSatelliteApc {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.apc)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.apc, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrSatelliteApc {
             sender_id: None,
             apc: WireFormat::parse_unchecked(buf),
@@ -1217,11 +1217,11 @@ impl WireFormat for MsgSsrStecCorrection {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.header) + WireFormat::encoded_len(&self.stec_sat_list)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.header, buf);
         WireFormat::write(&self.stec_sat_list, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrStecCorrection {
             sender_id: None,
             header: WireFormat::parse_unchecked(buf),
@@ -1281,11 +1281,11 @@ impl WireFormat for MsgSsrStecCorrectionDepA {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.header) + WireFormat::encoded_len(&self.stec_sat_list)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.header, buf);
         WireFormat::write(&self.stec_sat_list, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrStecCorrectionDepA {
             sender_id: None,
             header: WireFormat::parse_unchecked(buf),
@@ -1428,7 +1428,7 @@ impl WireFormat for MsgSsrTileDefinition {
             + WireFormat::encoded_len(&self.cols)
             + WireFormat::encoded_len(&self.bitmask)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tile_set_id, buf);
         WireFormat::write(&self.tile_id, buf);
         WireFormat::write(&self.corner_nw_lat, buf);
@@ -1439,7 +1439,7 @@ impl WireFormat for MsgSsrTileDefinition {
         WireFormat::write(&self.cols, buf);
         WireFormat::write(&self.bitmask, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSsrTileDefinition {
             sender_id: None,
             tile_set_id: WireFormat::parse_unchecked(buf),
@@ -1497,14 +1497,14 @@ impl WireFormat for PhaseBiasesContent {
             + WireFormat::encoded_len(&self.discontinuity_counter)
             + WireFormat::encoded_len(&self.bias)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.code, buf);
         WireFormat::write(&self.integer_indicator, buf);
         WireFormat::write(&self.widelane_integer_indicator, buf);
         WireFormat::write(&self.discontinuity_counter, buf);
         WireFormat::write(&self.bias, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         PhaseBiasesContent {
             code: WireFormat::parse_unchecked(buf),
             integer_indicator: WireFormat::parse_unchecked(buf),
@@ -1565,7 +1565,7 @@ impl WireFormat for STECHeader {
             + WireFormat::encoded_len(&self.update_interval)
             + WireFormat::encoded_len(&self.iod_atmo)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tile_set_id, buf);
         WireFormat::write(&self.tile_id, buf);
         WireFormat::write(&self.time, buf);
@@ -1574,7 +1574,7 @@ impl WireFormat for STECHeader {
         WireFormat::write(&self.update_interval, buf);
         WireFormat::write(&self.iod_atmo, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         STECHeader {
             tile_set_id: WireFormat::parse_unchecked(buf),
             tile_id: WireFormat::parse_unchecked(buf),
@@ -1627,14 +1627,14 @@ impl WireFormat for STECHeaderDepA {
             + WireFormat::encoded_len(&self.update_interval)
             + WireFormat::encoded_len(&self.iod_atmo)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.num_msgs, buf);
         WireFormat::write(&self.seq_num, buf);
         WireFormat::write(&self.update_interval, buf);
         WireFormat::write(&self.iod_atmo, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         STECHeaderDepA {
             time: WireFormat::parse_unchecked(buf),
             num_msgs: WireFormat::parse_unchecked(buf),
@@ -1673,12 +1673,12 @@ impl WireFormat for STECResidual {
             + WireFormat::encoded_len(&self.residual)
             + WireFormat::encoded_len(&self.stddev)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sv_id, buf);
         WireFormat::write(&self.residual, buf);
         WireFormat::write(&self.stddev, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         STECResidual {
             sv_id: WireFormat::parse_unchecked(buf),
             residual: WireFormat::parse_unchecked(buf),
@@ -1708,11 +1708,11 @@ impl WireFormat for STECResidualNoStd {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sv_id) + WireFormat::encoded_len(&self.residual)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sv_id, buf);
         WireFormat::write(&self.residual, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         STECResidualNoStd {
             sv_id: WireFormat::parse_unchecked(buf),
             residual: WireFormat::parse_unchecked(buf),
@@ -1748,12 +1748,12 @@ impl WireFormat for STECSatElement {
             + WireFormat::encoded_len(&self.stec_quality_indicator)
             + WireFormat::encoded_len(&self.stec_coeff)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sv_id, buf);
         WireFormat::write(&self.stec_quality_indicator, buf);
         WireFormat::write(&self.stec_coeff, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         STECSatElement {
             sv_id: WireFormat::parse_unchecked(buf),
             stec_quality_indicator: WireFormat::parse_unchecked(buf),
@@ -1803,14 +1803,14 @@ impl WireFormat for SatelliteAPC {
             + WireFormat::encoded_len(&self.pco)
             + WireFormat::encoded_len(&self.pcv)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.sat_info, buf);
         WireFormat::write(&self.svn, buf);
         WireFormat::write(&self.pco, buf);
         WireFormat::write(&self.pcv, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         SatelliteAPC {
             sid: WireFormat::parse_unchecked(buf),
             sat_info: WireFormat::parse_unchecked(buf),
@@ -1849,12 +1849,12 @@ impl WireFormat for TroposphericDelayCorrection {
             + WireFormat::encoded_len(&self.wet)
             + WireFormat::encoded_len(&self.stddev)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.hydro, buf);
         WireFormat::write(&self.wet, buf);
         WireFormat::write(&self.stddev, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         TroposphericDelayCorrection {
             hydro: WireFormat::parse_unchecked(buf),
             wet: WireFormat::parse_unchecked(buf),
@@ -1884,11 +1884,11 @@ impl WireFormat for TroposphericDelayCorrectionNoStd {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.hydro) + WireFormat::encoded_len(&self.wet)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.hydro, buf);
         WireFormat::write(&self.wet, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         TroposphericDelayCorrectionNoStd {
             hydro: WireFormat::parse_unchecked(buf),
             wet: WireFormat::parse_unchecked(buf),

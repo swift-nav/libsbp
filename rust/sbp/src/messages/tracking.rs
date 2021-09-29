@@ -70,10 +70,10 @@ impl WireFormat for MsgMeasurementState {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.states)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgMeasurementState {
             sender_id: None,
             states: WireFormat::parse_unchecked(buf),
@@ -142,12 +142,12 @@ impl WireFormat for MsgTrackingIq {
             + WireFormat::encoded_len(&self.sid)
             + WireFormat::encoded_len(&self.corrs)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.corrs, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingIq {
             sender_id: None,
             channel: WireFormat::parse_unchecked(buf),
@@ -217,12 +217,12 @@ impl WireFormat for MsgTrackingIqDepA {
             + WireFormat::encoded_len(&self.sid)
             + WireFormat::encoded_len(&self.corrs)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.corrs, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingIqDepA {
             sender_id: None,
             channel: WireFormat::parse_unchecked(buf),
@@ -293,12 +293,12 @@ impl WireFormat for MsgTrackingIqDepB {
             + WireFormat::encoded_len(&self.sid)
             + WireFormat::encoded_len(&self.corrs)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.corrs, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingIqDepB {
             sender_id: None,
             channel: WireFormat::parse_unchecked(buf),
@@ -360,10 +360,10 @@ impl WireFormat for MsgTrackingState {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.states)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingState {
             sender_id: None,
             states: WireFormat::parse_unchecked(buf),
@@ -421,10 +421,10 @@ impl WireFormat for MsgTrackingStateDepA {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.states)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingStateDepA {
             sender_id: None,
             states: WireFormat::parse_unchecked(buf),
@@ -482,10 +482,10 @@ impl WireFormat for MsgTrackingStateDepB {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.states)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingStateDepB {
             sender_id: None,
             states: WireFormat::parse_unchecked(buf),
@@ -649,7 +649,7 @@ impl WireFormat for MsgTrackingStateDetailedDep {
             + WireFormat::encoded_len(&self.pset_flags)
             + WireFormat::encoded_len(&self.misc_flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.recv_time, buf);
         WireFormat::write(&self.tot, buf);
         WireFormat::write(&self.p, buf);
@@ -672,7 +672,7 @@ impl WireFormat for MsgTrackingStateDetailedDep {
         WireFormat::write(&self.pset_flags, buf);
         WireFormat::write(&self.misc_flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingStateDetailedDep {
             sender_id: None,
             recv_time: WireFormat::parse_unchecked(buf),
@@ -857,7 +857,7 @@ impl WireFormat for MsgTrackingStateDetailedDepA {
             + WireFormat::encoded_len(&self.pset_flags)
             + WireFormat::encoded_len(&self.misc_flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.recv_time, buf);
         WireFormat::write(&self.tot, buf);
         WireFormat::write(&self.p, buf);
@@ -880,7 +880,7 @@ impl WireFormat for MsgTrackingStateDetailedDepA {
         WireFormat::write(&self.pset_flags, buf);
         WireFormat::write(&self.misc_flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgTrackingStateDetailedDepA {
             sender_id: None,
             recv_time: WireFormat::parse_unchecked(buf),
@@ -933,11 +933,11 @@ impl WireFormat for MeasurementState {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.mesid) + WireFormat::encoded_len(&self.cn0)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mesid, buf);
         WireFormat::write(&self.cn0, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MeasurementState {
             mesid: WireFormat::parse_unchecked(buf),
             cn0: WireFormat::parse_unchecked(buf),
@@ -966,11 +966,11 @@ impl WireFormat for TrackingChannelCorrelation {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.i) + WireFormat::encoded_len(&self.q)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.i, buf);
         WireFormat::write(&self.q, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         TrackingChannelCorrelation {
             i: WireFormat::parse_unchecked(buf),
             q: WireFormat::parse_unchecked(buf),
@@ -999,11 +999,11 @@ impl WireFormat for TrackingChannelCorrelationDep {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.i) + WireFormat::encoded_len(&self.q)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.i, buf);
         WireFormat::write(&self.q, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         TrackingChannelCorrelationDep {
             i: WireFormat::parse_unchecked(buf),
             q: WireFormat::parse_unchecked(buf),
@@ -1039,12 +1039,12 @@ impl WireFormat for TrackingChannelState {
             + WireFormat::encoded_len(&self.fcn)
             + WireFormat::encoded_len(&self.cn0)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.fcn, buf);
         WireFormat::write(&self.cn0, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         TrackingChannelState {
             sid: WireFormat::parse_unchecked(buf),
             fcn: WireFormat::parse_unchecked(buf),
@@ -1080,12 +1080,12 @@ impl WireFormat for TrackingChannelStateDepA {
             + WireFormat::encoded_len(&self.prn)
             + WireFormat::encoded_len(&self.cn0)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.state, buf);
         WireFormat::write(&self.prn, buf);
         WireFormat::write(&self.cn0, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         TrackingChannelStateDepA {
             state: WireFormat::parse_unchecked(buf),
             prn: WireFormat::parse_unchecked(buf),
@@ -1121,12 +1121,12 @@ impl WireFormat for TrackingChannelStateDepB {
             + WireFormat::encoded_len(&self.sid)
             + WireFormat::encoded_len(&self.cn0)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.state, buf);
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.cn0, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         TrackingChannelStateDepB {
             state: WireFormat::parse_unchecked(buf),
             sid: WireFormat::parse_unchecked(buf),
