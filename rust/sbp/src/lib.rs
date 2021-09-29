@@ -110,7 +110,7 @@ pub use crate::messages::SbpMessage;
 pub use ser::{to_vec, to_writer, Error as SerializeError, SbpEncoder};
 
 #[doc(inline)]
-pub use de::{iter_messages, Error as DeserializeError};
+pub use de::{iter_messages, Error as DeserializeError, Frame};
 
 #[cfg(feature = "async")]
 #[doc(inline)]

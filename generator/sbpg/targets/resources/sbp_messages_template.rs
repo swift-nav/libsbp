@@ -100,12 +100,12 @@ impl WireFormat for (((m.identifier|camel_case))) {
         ((*- endfor *))
         ((*- endif *))
     }
-    fn write(&self, ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut B) {
         ((*- for f in m.fields *))
         WireFormat::write( &self.(((f.identifier|snake_case))), buf);
         ((*- endfor *))
     }
-    fn parse_unchecked( ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>( ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut B) -> Self {
         (((m.identifier|camel_case))) {
         ((*- if m.is_real_message *))
         sender_id: None,

@@ -103,14 +103,14 @@ impl WireFormat for MsgAngularRate {
             + WireFormat::encoded_len(&self.z)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.x, buf);
         WireFormat::write(&self.y, buf);
         WireFormat::write(&self.z, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgAngularRate {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -200,13 +200,13 @@ impl WireFormat for MsgBaselineHeading {
             + WireFormat::encoded_len(&self.n_sats)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.heading, buf);
         WireFormat::write(&self.n_sats, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgBaselineHeading {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -316,7 +316,7 @@ impl WireFormat for MsgOrientEuler {
             + WireFormat::encoded_len(&self.yaw_accuracy)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.roll, buf);
         WireFormat::write(&self.pitch, buf);
@@ -326,7 +326,7 @@ impl WireFormat for MsgOrientEuler {
         WireFormat::write(&self.yaw_accuracy, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgOrientEuler {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -450,7 +450,7 @@ impl WireFormat for MsgOrientQuat {
             + WireFormat::encoded_len(&self.z_accuracy)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.w, buf);
         WireFormat::write(&self.x, buf);
@@ -462,7 +462,7 @@ impl WireFormat for MsgOrientQuat {
         WireFormat::write(&self.z_accuracy, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgOrientQuat {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),

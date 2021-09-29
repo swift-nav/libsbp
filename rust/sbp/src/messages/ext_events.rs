@@ -103,14 +103,14 @@ impl WireFormat for MsgExtEvent {
             + WireFormat::encoded_len(&self.flags)
             + WireFormat::encoded_len(&self.pin)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.ns_residual, buf);
         WireFormat::write(&self.flags, buf);
         WireFormat::write(&self.pin, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgExtEvent {
             sender_id: None,
             wn: WireFormat::parse_unchecked(buf),

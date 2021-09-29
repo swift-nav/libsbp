@@ -95,12 +95,12 @@ impl WireFormat for MsgOdometry {
             + WireFormat::encoded_len(&self.velocity)
             + WireFormat::encoded_len(&self.flags)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.velocity, buf);
         WireFormat::write(&self.flags, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgOdometry {
             sender_id: None,
             tow: WireFormat::parse_unchecked(buf),
@@ -203,13 +203,13 @@ impl WireFormat for MsgWheeltick {
             + WireFormat::encoded_len(&self.source)
             + WireFormat::encoded_len(&self.ticks)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.time, buf);
         WireFormat::write(&self.flags, buf);
         WireFormat::write(&self.source, buf);
         WireFormat::write(&self.ticks, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgWheeltick {
             sender_id: None,
             time: WireFormat::parse_unchecked(buf),

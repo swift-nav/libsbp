@@ -1,7 +1,7 @@
 use std::fmt;
 use std::marker::PhantomData;
 
-use bytes::BytesMut;
+use bytes::{Buf, BufMut};
 
 use crate::wire_format::WireFormat;
 
@@ -77,11 +77,11 @@ impl<E, const LEN: usize> WireFormat for SbpString<[u8; LEN], E> {
         LEN
     }
 
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         self.data.write(buf)
     }
 
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         let data: [u8; LEN] = WireFormat::parse_unchecked(buf);
         SbpString::new(data)
     }
@@ -96,11 +96,11 @@ macro_rules! forward_payload_vec {
                 self.data.encoded_len()
             }
 
-            fn write(&self, buf: &mut BytesMut) {
+            fn write<B: BufMut>(&self, buf: &mut B) {
                 self.data.write(buf)
             }
 
-            fn parse_unchecked(buf: &mut BytesMut) -> Self {
+            fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
                 let data: Vec<u8> = WireFormat::parse_unchecked(buf);
                 SbpString::new(data)
             }
@@ -181,6 +181,8 @@ forward_payload_vec!(DoubleNullTerminated, 2);
 
 #[cfg(test)]
 mod tests {
+    use bytes::BytesMut;
+
     use super::*;
 
     #[test]

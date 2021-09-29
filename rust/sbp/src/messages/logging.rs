@@ -83,12 +83,12 @@ impl WireFormat for MsgFwd {
             + WireFormat::encoded_len(&self.protocol)
             + WireFormat::encoded_len(&self.fwd_payload)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.source, buf);
         WireFormat::write(&self.protocol, buf);
         WireFormat::write(&self.fwd_payload, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFwd {
             sender_id: None,
             source: WireFormat::parse_unchecked(buf),
@@ -154,11 +154,11 @@ impl WireFormat for MsgLog {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.level) + WireFormat::encoded_len(&self.text)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.level, buf);
         WireFormat::write(&self.text, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgLog {
             sender_id: None,
             level: WireFormat::parse_unchecked(buf),
@@ -218,10 +218,10 @@ impl WireFormat for MsgPrintDep {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.text)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.text, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgPrintDep {
             sender_id: None,
             text: WireFormat::parse_unchecked(buf),

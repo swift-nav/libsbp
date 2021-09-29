@@ -76,10 +76,10 @@ impl WireFormat for MsgFileioConfigReq {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sequence)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioConfigReq {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -156,13 +156,13 @@ impl WireFormat for MsgFileioConfigResp {
             + WireFormat::encoded_len(&self.batch_size)
             + WireFormat::encoded_len(&self.fileio_version)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.window_size, buf);
         WireFormat::write(&self.batch_size, buf);
         WireFormat::write(&self.fileio_version, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioConfigResp {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -241,12 +241,12 @@ impl WireFormat for MsgFileioReadDirReq {
             + WireFormat::encoded_len(&self.offset)
             + WireFormat::encoded_len(&self.dirname)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.offset, buf);
         WireFormat::write(&self.dirname, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioReadDirReq {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -314,11 +314,11 @@ impl WireFormat for MsgFileioReadDirResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.contents)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.contents, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioReadDirResp {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -398,13 +398,13 @@ impl WireFormat for MsgFileioReadReq {
             + WireFormat::encoded_len(&self.chunk_size)
             + WireFormat::encoded_len(&self.filename)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.offset, buf);
         WireFormat::write(&self.chunk_size, buf);
         WireFormat::write(&self.filename, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioReadReq {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -472,11 +472,11 @@ impl WireFormat for MsgFileioReadResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.contents)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.contents, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioReadResp {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -539,10 +539,10 @@ impl WireFormat for MsgFileioRemove {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.filename)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.filename, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioRemove {
             sender_id: None,
             filename: WireFormat::parse_unchecked(buf),
@@ -621,13 +621,13 @@ impl WireFormat for MsgFileioWriteReq {
             + WireFormat::encoded_len(&self.filename)
             + WireFormat::encoded_len(&self.data)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
         WireFormat::write(&self.offset, buf);
         WireFormat::write(&self.filename, buf);
         WireFormat::write(&self.data, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioWriteReq {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),
@@ -691,10 +691,10 @@ impl WireFormat for MsgFileioWriteResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sequence)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFileioWriteResp {
             sender_id: None,
             sequence: WireFormat::parse_unchecked(buf),

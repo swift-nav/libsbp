@@ -15,6 +15,7 @@ license = "MIT"
 categories = ["parsing"]
 edition = "2018"
 keywords = ["encoding", "parsing"]
+readme = "../../README.md"
 
 [features]
 default = []

@@ -93,13 +93,13 @@ impl WireFormat for MsgSbasRaw {
             + WireFormat::encoded_len(&self.message_type)
             + WireFormat::encoded_len(&self.data)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sid, buf);
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.message_type, buf);
         WireFormat::write(&self.data, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSbasRaw {
             sender_id: None,
             sid: WireFormat::parse_unchecked(buf),

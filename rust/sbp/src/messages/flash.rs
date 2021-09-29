@@ -72,10 +72,10 @@ impl WireFormat for MsgFlashDone {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.response)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.response, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFlashDone {
             sender_id: None,
             response: WireFormat::parse_unchecked(buf),
@@ -140,11 +140,11 @@ impl WireFormat for MsgFlashErase {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.target) + WireFormat::encoded_len(&self.sector_num)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
         WireFormat::write(&self.sector_num, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFlashErase {
             sender_id: None,
             target: WireFormat::parse_unchecked(buf),
@@ -222,13 +222,13 @@ impl WireFormat for MsgFlashProgram {
             + WireFormat::encoded_len(&self.addr_len)
             + WireFormat::encoded_len(&self.data)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
         WireFormat::write(&self.addr_start, buf);
         WireFormat::write(&self.addr_len, buf);
         WireFormat::write(&self.data, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFlashProgram {
             sender_id: None,
             target: WireFormat::parse_unchecked(buf),
@@ -304,12 +304,12 @@ impl WireFormat for MsgFlashReadReq {
             + WireFormat::encoded_len(&self.addr_start)
             + WireFormat::encoded_len(&self.addr_len)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
         WireFormat::write(&self.addr_start, buf);
         WireFormat::write(&self.addr_len, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFlashReadReq {
             sender_id: None,
             target: WireFormat::parse_unchecked(buf),
@@ -384,12 +384,12 @@ impl WireFormat for MsgFlashReadResp {
             + WireFormat::encoded_len(&self.addr_start)
             + WireFormat::encoded_len(&self.addr_len)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
         WireFormat::write(&self.addr_start, buf);
         WireFormat::write(&self.addr_len, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgFlashReadResp {
             sender_id: None,
             target: WireFormat::parse_unchecked(buf),
@@ -450,10 +450,10 @@ impl WireFormat for MsgM25FlashWriteStatus {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.status)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.status, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgM25FlashWriteStatus {
             sender_id: None,
             status: WireFormat::parse_unchecked(buf),
@@ -512,10 +512,10 @@ impl WireFormat for MsgStmFlashLockSector {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sector)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sector, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgStmFlashLockSector {
             sender_id: None,
             sector: WireFormat::parse_unchecked(buf),
@@ -574,10 +574,10 @@ impl WireFormat for MsgStmFlashUnlockSector {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.sector)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sector, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgStmFlashUnlockSector {
             sender_id: None,
             sector: WireFormat::parse_unchecked(buf),
@@ -635,8 +635,8 @@ impl WireFormat for MsgStmUniqueIdReq {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgStmUniqueIdReq { sender_id: None }
     }
 }
@@ -694,10 +694,10 @@ impl WireFormat for MsgStmUniqueIdResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.stm_id)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.stm_id, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgStmUniqueIdResp {
             sender_id: None,
             stm_id: WireFormat::parse_unchecked(buf),

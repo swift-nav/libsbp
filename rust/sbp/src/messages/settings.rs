@@ -88,8 +88,8 @@ impl WireFormat for MsgSettingsReadByIndexDone {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgSettingsReadByIndexDone { sender_id: None }
     }
 }
@@ -146,10 +146,10 @@ impl WireFormat for MsgSettingsReadByIndexReq {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.index)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsReadByIndexReq {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -222,11 +222,11 @@ impl WireFormat for MsgSettingsReadByIndexResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.index) + WireFormat::encoded_len(&self.setting)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
         WireFormat::write(&self.setting, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsReadByIndexResp {
             sender_id: None,
             index: WireFormat::parse_unchecked(buf),
@@ -293,10 +293,10 @@ impl WireFormat for MsgSettingsReadReq {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.setting)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.setting, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsReadReq {
             sender_id: None,
             setting: WireFormat::parse_unchecked(buf),
@@ -360,10 +360,10 @@ impl WireFormat for MsgSettingsReadResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.setting)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.setting, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsReadResp {
             sender_id: None,
             setting: WireFormat::parse_unchecked(buf),
@@ -424,10 +424,10 @@ impl WireFormat for MsgSettingsRegister {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.setting)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.setting, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsRegister {
             sender_id: None,
             setting: WireFormat::parse_unchecked(buf),
@@ -494,11 +494,11 @@ impl WireFormat for MsgSettingsRegisterResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.status) + WireFormat::encoded_len(&self.setting)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.status, buf);
         WireFormat::write(&self.setting, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsRegisterResp {
             sender_id: None,
             status: WireFormat::parse_unchecked(buf),
@@ -555,8 +555,8 @@ impl WireFormat for MsgSettingsSave {
     fn encoded_len(&self) -> usize {
         0
     }
-    fn write(&self, _buf: &mut bytes::BytesMut) {}
-    fn parse_unchecked(_buf: &mut bytes::BytesMut) -> Self {
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
         MsgSettingsSave { sender_id: None }
     }
 }
@@ -618,10 +618,10 @@ impl WireFormat for MsgSettingsWrite {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.setting)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.setting, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsWrite {
             sender_id: None,
             setting: WireFormat::parse_unchecked(buf),
@@ -690,11 +690,11 @@ impl WireFormat for MsgSettingsWriteResp {
     fn encoded_len(&self) -> usize {
         WireFormat::encoded_len(&self.status) + WireFormat::encoded_len(&self.setting)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.status, buf);
         WireFormat::write(&self.setting, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgSettingsWriteResp {
             sender_id: None,
             status: WireFormat::parse_unchecked(buf),

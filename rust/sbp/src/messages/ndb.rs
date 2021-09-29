@@ -110,7 +110,7 @@ impl WireFormat for MsgNdbEvent {
             + WireFormat::encoded_len(&self.src_sid)
             + WireFormat::encoded_len(&self.original_sender)
     }
-    fn write(&self, buf: &mut bytes::BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.recv_time, buf);
         WireFormat::write(&self.event, buf);
         WireFormat::write(&self.object_type, buf);
@@ -120,7 +120,7 @@ impl WireFormat for MsgNdbEvent {
         WireFormat::write(&self.src_sid, buf);
         WireFormat::write(&self.original_sender, buf);
     }
-    fn parse_unchecked(buf: &mut bytes::BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         MsgNdbEvent {
             sender_id: None,
             recv_time: WireFormat::parse_unchecked(buf),

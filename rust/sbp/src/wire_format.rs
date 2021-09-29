@@ -6,7 +6,7 @@ use std::{
     ptr,
 };
 
-use bytes::{Buf, BufMut, BytesMut};
+use bytes::{Buf, BufMut};
 
 pub trait WireFormat: Sized {
     /// Minimum number of bytes this type will take in the frame.
@@ -18,13 +18,13 @@ pub trait WireFormat: Sized {
     }
 
     /// Write the type to a buffer.
-    fn write(&self, buf: &mut BytesMut);
+    fn write<B: BufMut>(&self, buf: &mut B);
 
     /// Read the type out of a buffer, without checking any invariants.
-    fn parse_unchecked(buf: &mut BytesMut) -> Self;
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self;
 
     /// Read the type out of a buffer.
-    fn parse(buf: &mut BytesMut) -> Result<Self, PayloadParseError> {
+    fn parse<B: Buf>(buf: &mut B) -> Result<Self, PayloadParseError> {
         if buf.remaining() >= Self::MIN_ENCODED_LEN {
             Ok(Self::parse_unchecked(buf))
         } else {
@@ -44,13 +44,13 @@ where
         self.iter().map(WireFormat::encoded_len).sum()
     }
 
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         for item in self.iter() {
             item.write(buf);
         }
     }
 
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         let mut v = Vec::new();
         while buf.remaining() >= T::MIN_ENCODED_LEN {
             v.push(T::parse_unchecked(buf));
@@ -65,13 +65,13 @@ where
 {
     const MIN_ENCODED_LEN: usize = T::MIN_ENCODED_LEN * LEN;
 
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         for item in self {
             item.write(buf);
         }
     }
 
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         // Safety: MaybeUninit`s do not require initialization so we can call assume_init()
         // https://doc.rust-lang.org/stable/std/mem/union.MaybeUninit.html#initializing-an-array-element-by-element
         let mut a: [MaybeUninit<T>; LEN] = unsafe { MaybeUninit::uninit().assume_init() };
@@ -86,91 +86,91 @@ where
 }
 
 impl WireFormat for u8 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u8(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u8()
     }
 }
 
 impl WireFormat for u16 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u16_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u16_le()
     }
 }
 
 impl WireFormat for u32 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u32_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u32_le()
     }
 }
 
 impl WireFormat for u64 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_u64_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_u64_le()
     }
 }
 
 impl WireFormat for i8 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i8(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i8()
     }
 }
 
 impl WireFormat for i16 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i16_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i16_le()
     }
 }
 
 impl WireFormat for i32 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i32_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i32_le()
     }
 }
 
 impl WireFormat for i64 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_i64_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_i64_le()
     }
 }
 
 impl WireFormat for f32 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_f32_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_f32_le()
     }
 }
 
 impl WireFormat for f64 {
-    fn write(&self, buf: &mut BytesMut) {
+    fn write<B: BufMut>(&self, buf: &mut B) {
         buf.put_f64_le(*self)
     }
-    fn parse_unchecked(buf: &mut BytesMut) -> Self {
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         buf.get_f64_le()
     }
 }
@@ -188,6 +188,8 @@ impl std::error::Error for PayloadParseError {}
 
 #[cfg(test)]
 mod tests {
+    use bytes::BytesMut;
+
     use super::*;
 
     #[test]
