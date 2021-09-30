@@ -62,11 +62,11 @@ size_t sbp_unterminated_string_space_remaining(const sbp_string_t *s,
 }
 
 bool sbp_unterminated_string_set_raw(sbp_string_t *s, size_t maxlen,
-                                   bool should_truncate, size_t *n_written,
+                                   bool should_trunc, size_t *n_written,
                                    const char *new_buf, size_t new_buf_len) {
   size_t copied;
   size_t truncated_len = maxlen > new_buf_len ? new_buf_len : maxlen;
-  size_t len = should_truncate ? truncated_len : new_buf_len;
+  size_t len = should_trunc ? truncated_len : new_buf_len;
 
   if (!sbp_string_copy_to_buf(s->data, &copied, maxlen + 1u,
                               new_buf, len)) {
@@ -81,8 +81,8 @@ bool sbp_unterminated_string_set_raw(sbp_string_t *s, size_t maxlen,
 }
 
 bool sbp_unterminated_string_set(sbp_string_t *s, size_t maxlen,
-                                   bool should_truncate, size_t *n_written, const char *new_str) {
-  return sbp_unterminated_string_set_raw(s, maxlen, should_truncate, n_written, new_str, sbp_strnlen(new_str, maxlen+1));
+                                   bool should_trunc, size_t *n_written, const char *new_str) {
+  return sbp_unterminated_string_set_raw(s, maxlen, should_trunc, n_written, new_str, sbp_strnlen(new_str, maxlen+1));
 }
 
 bool sbp_unterminated_string_vprintf(sbp_string_t *s, size_t maxlen, bool should_trunc, size_t *n_written,

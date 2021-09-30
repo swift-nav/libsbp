@@ -69,13 +69,13 @@ size_t sbp_null_terminated_string_space_remaining(const sbp_string_t *s,
 
 
 bool sbp_null_terminated_string_set_raw(sbp_string_t *s, size_t maxlen,
-                                      bool should_trunc, size_t *n_written, const char *new_str,
-                                      size_t new_str_len) {
+                                      bool should_trunc, size_t *n_written, const char *new_buf,
+                                      size_t new_buf_len) {
   size_t copied;
   size_t truncated_len =
-      (maxlen - 1) > new_str_len ? new_str_len : (maxlen - 1);
-  size_t len = should_trunc ? truncated_len : new_str_len;
-  if (!sbp_string_copy_to_buf(s->data, &copied, maxlen, new_str, len)) {
+      (maxlen - 1) > new_buf_len ? new_buf_len : (maxlen - 1);
+  size_t len = should_trunc ? truncated_len : new_buf_len;
+  if (!sbp_string_copy_to_buf(s->data, &copied, maxlen, new_buf, len)) {
     return false;
   }
 

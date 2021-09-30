@@ -21,7 +21,6 @@ include(TestTargets)
 add_code_coverage_all_targets()
 # TODO: Reformatting is limited to generated files; it should be expanded to cover all files
 swift_setup_clang_format(PATTERNS 'include/*.h' 'test/*.c' 'test/*.h' 'test/cpp/*.cc')
-swift_setup_clang_tidy(PATTERNS 'src/*.c')
 
 if(libsbp_BUILD_TESTS)
   find_package(Googletest)
@@ -35,3 +34,6 @@ if(libsbp_BUILD_TESTS)
   add_subdirectory(test)
 endif()
 add_subdirectory(examples)
+
+swift_validate_targets()
+swift_create_clang_tidy_targets()
