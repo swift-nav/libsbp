@@ -102,6 +102,9 @@ impl SbpMessage for MsgAlmanac {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAlmanac {
@@ -165,6 +168,9 @@ impl SbpMessage for MsgCellModemStatus {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -240,6 +246,9 @@ impl SbpMessage for MsgCommandOutput {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgCommandOutput {
@@ -309,6 +318,9 @@ impl SbpMessage for MsgCommandReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgCommandReq {
@@ -377,6 +389,9 @@ impl SbpMessage for MsgCommandResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgCommandResp {
@@ -440,6 +455,9 @@ impl SbpMessage for MsgCwResults {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgCwResults {
@@ -494,6 +512,9 @@ impl SbpMessage for MsgCwStart {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -564,6 +585,9 @@ impl SbpMessage for MsgDeviceMonitor {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -651,6 +675,9 @@ impl SbpMessage for MsgFrontEndGain {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgFrontEndGain {
@@ -717,6 +744,9 @@ impl SbpMessage for MsgIarState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgIarState {
@@ -774,6 +804,9 @@ impl SbpMessage for MsgInitBaseDep {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -834,6 +867,9 @@ impl SbpMessage for MsgMaskSatellite {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -902,6 +938,9 @@ impl SbpMessage for MsgMaskSatelliteDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgMaskSatelliteDep {
@@ -966,6 +1005,9 @@ impl SbpMessage for MsgNetworkBandwidthUsage {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgNetworkBandwidthUsage {
@@ -1024,6 +1066,9 @@ impl SbpMessage for MsgNetworkStateReq {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1102,6 +1147,9 @@ impl SbpMessage for MsgNetworkStateResp {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1192,6 +1240,9 @@ impl SbpMessage for MsgReset {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgReset {
@@ -1250,6 +1301,9 @@ impl SbpMessage for MsgResetDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgResetDep {
@@ -1306,6 +1360,9 @@ impl SbpMessage for MsgResetFilters {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1365,6 +1422,9 @@ impl SbpMessage for MsgSetTime {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1439,6 +1499,9 @@ impl SbpMessage for MsgSpecan {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1543,6 +1606,9 @@ impl SbpMessage for MsgSpecanDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSpecanDep {
@@ -1637,6 +1703,9 @@ impl SbpMessage for MsgThreadState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgThreadState {
@@ -1726,6 +1795,9 @@ impl SbpMessage for MsgUartState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgUartState {
@@ -1811,6 +1883,9 @@ impl SbpMessage for MsgUartStateDepa {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 

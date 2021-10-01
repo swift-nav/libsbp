@@ -53,6 +53,9 @@ impl SbpMessage for MsgBootloaderHandshakeDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgBootloaderHandshakeDepA {
@@ -112,6 +115,9 @@ impl SbpMessage for MsgBootloaderHandshakeReq {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -174,6 +180,9 @@ impl SbpMessage for MsgBootloaderHandshakeResp {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -239,6 +248,9 @@ impl SbpMessage for MsgBootloaderJumpToApp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgBootloaderJumpToApp {
@@ -302,6 +314,9 @@ impl SbpMessage for MsgNapDeviceDnaReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgNapDeviceDnaReq {
@@ -362,6 +377,9 @@ impl SbpMessage for MsgNapDeviceDnaResp {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 

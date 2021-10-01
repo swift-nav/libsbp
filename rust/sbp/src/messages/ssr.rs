@@ -317,6 +317,9 @@ impl SbpMessage for MsgSsrCodeBiases {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSsrCodeBiases {
@@ -405,6 +408,9 @@ impl SbpMessage for MsgSsrGriddedCorrection {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSsrGriddedCorrection {
@@ -483,6 +489,9 @@ impl SbpMessage for MsgSsrGriddedCorrectionDepA {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -563,6 +572,9 @@ impl SbpMessage for MsgSsrGriddedCorrectionNoStdDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSsrGriddedCorrectionNoStdDepA {
@@ -638,6 +650,9 @@ impl SbpMessage for MsgSsrGridDefinitionDepA {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -745,6 +760,9 @@ impl SbpMessage for MsgSsrOrbitClock {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -897,6 +915,9 @@ impl SbpMessage for MsgSsrOrbitClockDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSsrOrbitClockDepA {
@@ -1040,6 +1061,9 @@ impl SbpMessage for MsgSsrPhaseBiases {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSsrPhaseBiases {
@@ -1130,6 +1154,9 @@ impl SbpMessage for MsgSsrSatelliteApc {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSsrSatelliteApc {
@@ -1199,6 +1226,9 @@ impl SbpMessage for MsgSsrStecCorrection {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSsrStecCorrection {
@@ -1262,6 +1292,9 @@ impl SbpMessage for MsgSsrStecCorrectionDepA {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1394,6 +1427,9 @@ impl SbpMessage for MsgSsrTileDefinition {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 

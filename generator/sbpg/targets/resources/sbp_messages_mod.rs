@@ -50,6 +50,8 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn sender_id(&self) -> Option<u16>;
     /// Set the sender id.
     fn set_sender_id(&mut self, new_id: u16);
+    /// Number of bytes this message will take on the wire.
+    fn len(&self) -> usize;
     /// Get the GPS time associated with the message.
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
@@ -184,6 +186,19 @@ impl SbpMessage for Sbp {
             ((*- endfor *))
             Sbp::Unknown(msg) => {
                 msg.set_sender_id(new_id)
+            },
+        }
+    }
+
+    fn len(&self) -> usize {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.identifier|camel_case)))(msg) => {
+                msg.len()
+            },
+            ((*- endfor *))
+            Sbp::Unknown(msg) => {
+                msg.len()
             },
         }
     }

@@ -602,6 +602,9 @@ impl SbpMessage for MsgAlmanacGlo {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAlmanacGlo {
@@ -715,6 +718,9 @@ impl SbpMessage for MsgAlmanacGloDep {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -834,6 +840,9 @@ impl SbpMessage for MsgAlmanacGps {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -962,6 +971,9 @@ impl SbpMessage for MsgAlmanacGpsDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAlmanacGpsDep {
@@ -1069,6 +1081,9 @@ impl SbpMessage for MsgBasePosEcef {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgBasePosEcef {
@@ -1146,6 +1161,9 @@ impl SbpMessage for MsgBasePosLlh {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1295,6 +1313,9 @@ impl SbpMessage for MsgEphemerisBds {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1527,6 +1548,9 @@ impl SbpMessage for MsgEphemerisDepA {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -1770,6 +1794,9 @@ impl SbpMessage for MsgEphemerisDepB {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -2026,6 +2053,9 @@ impl SbpMessage for MsgEphemerisDepC {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -2291,6 +2321,9 @@ impl SbpMessage for MsgEphemerisDepD {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisDepD {
@@ -2543,6 +2576,9 @@ impl SbpMessage for MsgEphemerisGal {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisGal {
@@ -2774,6 +2810,9 @@ impl SbpMessage for MsgEphemerisGalDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisGalDepA {
@@ -2954,6 +2993,9 @@ impl SbpMessage for MsgEphemerisGlo {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisGlo {
@@ -3065,6 +3107,9 @@ impl SbpMessage for MsgEphemerisGloDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisGloDepA {
@@ -3163,6 +3208,9 @@ impl SbpMessage for MsgEphemerisGloDepB {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -3268,6 +3316,9 @@ impl SbpMessage for MsgEphemerisGloDepC {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -3382,6 +3433,9 @@ impl SbpMessage for MsgEphemerisGloDepD {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -3548,6 +3602,9 @@ impl SbpMessage for MsgEphemerisGps {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -3771,6 +3828,9 @@ impl SbpMessage for MsgEphemerisGpsDepE {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisGpsDepE {
@@ -3990,6 +4050,9 @@ impl SbpMessage for MsgEphemerisGpsDepF {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -4211,6 +4274,9 @@ impl SbpMessage for MsgEphemerisQzss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisQzss {
@@ -4372,6 +4438,9 @@ impl SbpMessage for MsgEphemerisSbas {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisSbas {
@@ -4464,6 +4533,9 @@ impl SbpMessage for MsgEphemerisSbasDepA {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -4562,6 +4634,9 @@ impl SbpMessage for MsgEphemerisSbasDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgEphemerisSbasDepB {
@@ -4657,6 +4732,9 @@ impl SbpMessage for MsgGloBiases {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgGloBiases {
@@ -4734,6 +4812,9 @@ impl SbpMessage for MsgGnssCapb {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgGnssCapb {
@@ -4810,6 +4891,9 @@ impl SbpMessage for MsgGroupDelay {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -4905,6 +4989,9 @@ impl SbpMessage for MsgGroupDelayDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgGroupDelayDepA {
@@ -4998,6 +5085,9 @@ impl SbpMessage for MsgGroupDelayDepB {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -5097,6 +5187,9 @@ impl SbpMessage for MsgIono {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -5199,6 +5292,9 @@ impl SbpMessage for MsgObs {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
@@ -5278,6 +5374,9 @@ impl SbpMessage for MsgObsDepA {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -5361,6 +5460,9 @@ impl SbpMessage for MsgObsDepB {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -5447,6 +5549,9 @@ impl SbpMessage for MsgObsDepC {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
@@ -5528,6 +5633,9 @@ impl SbpMessage for MsgOsr {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.header.t.tow as f64) / 1000.0;
@@ -5606,6 +5714,9 @@ impl SbpMessage for MsgSvAzEl {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgSvAzEl {
@@ -5669,6 +5780,9 @@ impl SbpMessage for MsgSvConfigurationGpsDep {
     }
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+    fn len(&self) -> usize {
+        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
