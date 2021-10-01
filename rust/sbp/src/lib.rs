@@ -68,6 +68,7 @@
 
 pub mod messages;
 pub mod sbp_iter_ext;
+pub mod sbp_string;
 
 #[cfg(feature = "json")]
 pub mod json;
@@ -81,7 +82,6 @@ mod swiftnav_conversions;
 pub mod time;
 
 pub(crate) mod de;
-pub(crate) mod sbp_string;
 pub(crate) mod ser;
 pub(crate) mod wire_format;
 
