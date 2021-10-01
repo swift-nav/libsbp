@@ -53,6 +53,9 @@ impl SbpMessage for MsgMeasurementState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgMeasurementState {
@@ -66,9 +69,9 @@ impl TryFrom<Sbp> for MsgMeasurementState {
 }
 
 impl WireFormat for MsgMeasurementState {
-    const MIN_ENCODED_LEN: usize = <Vec<MeasurementState> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.states)
+    const MIN_LEN: usize = <Vec<MeasurementState> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.states)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
@@ -121,6 +124,9 @@ impl SbpMessage for MsgTrackingIq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingIq {
@@ -134,13 +140,11 @@ impl TryFrom<Sbp> for MsgTrackingIq {
 }
 
 impl WireFormat for MsgTrackingIq {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <[TrackingChannelCorrelation; 3] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.channel)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.corrs)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <[TrackingChannelCorrelation; 3] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.channel) + WireFormat::len(&self.sid) + WireFormat::len(&self.corrs)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel, buf);
@@ -196,6 +200,9 @@ impl SbpMessage for MsgTrackingIqDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingIqDepA {
@@ -209,13 +216,11 @@ impl TryFrom<Sbp> for MsgTrackingIqDepA {
 }
 
 impl WireFormat for MsgTrackingIqDepA {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignalDep as WireFormat>::MIN_ENCODED_LEN
-        + <[TrackingChannelCorrelationDep; 3] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.channel)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.corrs)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN
+        + <[TrackingChannelCorrelationDep; 3] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.channel) + WireFormat::len(&self.sid) + WireFormat::len(&self.corrs)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel, buf);
@@ -272,6 +277,9 @@ impl SbpMessage for MsgTrackingIqDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingIqDepB {
@@ -285,13 +293,11 @@ impl TryFrom<Sbp> for MsgTrackingIqDepB {
 }
 
 impl WireFormat for MsgTrackingIqDepB {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <[TrackingChannelCorrelationDep; 3] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.channel)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.corrs)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <[TrackingChannelCorrelationDep; 3] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.channel) + WireFormat::len(&self.sid) + WireFormat::len(&self.corrs)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.channel, buf);
@@ -343,6 +349,9 @@ impl SbpMessage for MsgTrackingState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingState {
@@ -356,9 +365,9 @@ impl TryFrom<Sbp> for MsgTrackingState {
 }
 
 impl WireFormat for MsgTrackingState {
-    const MIN_ENCODED_LEN: usize = <Vec<TrackingChannelState> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.states)
+    const MIN_LEN: usize = <Vec<TrackingChannelState> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.states)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
@@ -404,6 +413,9 @@ impl SbpMessage for MsgTrackingStateDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingStateDepA {
@@ -417,9 +429,9 @@ impl TryFrom<Sbp> for MsgTrackingStateDepA {
 }
 
 impl WireFormat for MsgTrackingStateDepA {
-    const MIN_ENCODED_LEN: usize = <Vec<TrackingChannelStateDepA> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.states)
+    const MIN_LEN: usize = <Vec<TrackingChannelStateDepA> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.states)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
@@ -465,6 +477,9 @@ impl SbpMessage for MsgTrackingStateDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingStateDepB {
@@ -478,9 +493,9 @@ impl TryFrom<Sbp> for MsgTrackingStateDepB {
 }
 
 impl WireFormat for MsgTrackingStateDepB {
-    const MIN_ENCODED_LEN: usize = <Vec<TrackingChannelStateDepB> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.states)
+    const MIN_LEN: usize = <Vec<TrackingChannelStateDepB> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.states)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.states, buf);
@@ -592,6 +607,9 @@ impl SbpMessage for MsgTrackingStateDetailedDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingStateDetailedDep {
@@ -605,49 +623,49 @@ impl TryFrom<Sbp> for MsgTrackingStateDetailedDep {
 }
 
 impl WireFormat for MsgTrackingStateDetailedDep {
-    const MIN_ENCODED_LEN: usize = <u64 as WireFormat>::MIN_ENCODED_LEN
-        + <GpsTimeDep as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <CarrierPhase as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignalDep as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <i8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.recv_time)
-            + WireFormat::encoded_len(&self.tot)
-            + WireFormat::encoded_len(&self.p)
-            + WireFormat::encoded_len(&self.p_std)
-            + WireFormat::encoded_len(&self.l)
-            + WireFormat::encoded_len(&self.cn0)
-            + WireFormat::encoded_len(&self.lock)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.doppler)
-            + WireFormat::encoded_len(&self.doppler_std)
-            + WireFormat::encoded_len(&self.uptime)
-            + WireFormat::encoded_len(&self.clock_offset)
-            + WireFormat::encoded_len(&self.clock_drift)
-            + WireFormat::encoded_len(&self.corr_spacing)
-            + WireFormat::encoded_len(&self.acceleration)
-            + WireFormat::encoded_len(&self.sync_flags)
-            + WireFormat::encoded_len(&self.tow_flags)
-            + WireFormat::encoded_len(&self.track_flags)
-            + WireFormat::encoded_len(&self.nav_flags)
-            + WireFormat::encoded_len(&self.pset_flags)
-            + WireFormat::encoded_len(&self.misc_flags)
+    const MIN_LEN: usize = <u64 as WireFormat>::MIN_LEN
+        + <GpsTimeDep as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <CarrierPhase as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <i8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.recv_time)
+            + WireFormat::len(&self.tot)
+            + WireFormat::len(&self.p)
+            + WireFormat::len(&self.p_std)
+            + WireFormat::len(&self.l)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.lock)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.doppler)
+            + WireFormat::len(&self.doppler_std)
+            + WireFormat::len(&self.uptime)
+            + WireFormat::len(&self.clock_offset)
+            + WireFormat::len(&self.clock_drift)
+            + WireFormat::len(&self.corr_spacing)
+            + WireFormat::len(&self.acceleration)
+            + WireFormat::len(&self.sync_flags)
+            + WireFormat::len(&self.tow_flags)
+            + WireFormat::len(&self.track_flags)
+            + WireFormat::len(&self.nav_flags)
+            + WireFormat::len(&self.pset_flags)
+            + WireFormat::len(&self.misc_flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.recv_time, buf);
@@ -800,6 +818,9 @@ impl SbpMessage for MsgTrackingStateDetailedDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgTrackingStateDetailedDepA {
@@ -813,49 +834,49 @@ impl TryFrom<Sbp> for MsgTrackingStateDetailedDepA {
 }
 
 impl WireFormat for MsgTrackingStateDetailedDepA {
-    const MIN_ENCODED_LEN: usize = <u64 as WireFormat>::MIN_ENCODED_LEN
-        + <GpsTime as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <CarrierPhase as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <i8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.recv_time)
-            + WireFormat::encoded_len(&self.tot)
-            + WireFormat::encoded_len(&self.p)
-            + WireFormat::encoded_len(&self.p_std)
-            + WireFormat::encoded_len(&self.l)
-            + WireFormat::encoded_len(&self.cn0)
-            + WireFormat::encoded_len(&self.lock)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.doppler)
-            + WireFormat::encoded_len(&self.doppler_std)
-            + WireFormat::encoded_len(&self.uptime)
-            + WireFormat::encoded_len(&self.clock_offset)
-            + WireFormat::encoded_len(&self.clock_drift)
-            + WireFormat::encoded_len(&self.corr_spacing)
-            + WireFormat::encoded_len(&self.acceleration)
-            + WireFormat::encoded_len(&self.sync_flags)
-            + WireFormat::encoded_len(&self.tow_flags)
-            + WireFormat::encoded_len(&self.track_flags)
-            + WireFormat::encoded_len(&self.nav_flags)
-            + WireFormat::encoded_len(&self.pset_flags)
-            + WireFormat::encoded_len(&self.misc_flags)
+    const MIN_LEN: usize = <u64 as WireFormat>::MIN_LEN
+        + <GpsTime as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <CarrierPhase as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <i8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.recv_time)
+            + WireFormat::len(&self.tot)
+            + WireFormat::len(&self.p)
+            + WireFormat::len(&self.p_std)
+            + WireFormat::len(&self.l)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.lock)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.doppler)
+            + WireFormat::len(&self.doppler_std)
+            + WireFormat::len(&self.uptime)
+            + WireFormat::len(&self.clock_offset)
+            + WireFormat::len(&self.clock_drift)
+            + WireFormat::len(&self.corr_spacing)
+            + WireFormat::len(&self.acceleration)
+            + WireFormat::len(&self.sync_flags)
+            + WireFormat::len(&self.tow_flags)
+            + WireFormat::len(&self.track_flags)
+            + WireFormat::len(&self.nav_flags)
+            + WireFormat::len(&self.pset_flags)
+            + WireFormat::len(&self.misc_flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.recv_time, buf);
@@ -928,10 +949,9 @@ pub struct MeasurementState {
 }
 
 impl WireFormat for MeasurementState {
-    const MIN_ENCODED_LEN: usize =
-        <GnssSignal as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.mesid) + WireFormat::encoded_len(&self.cn0)
+    const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.mesid) + WireFormat::len(&self.cn0)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mesid, buf);
@@ -961,10 +981,9 @@ pub struct TrackingChannelCorrelation {
 }
 
 impl WireFormat for TrackingChannelCorrelation {
-    const MIN_ENCODED_LEN: usize =
-        <i16 as WireFormat>::MIN_ENCODED_LEN + <i16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.i) + WireFormat::encoded_len(&self.q)
+    const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN + <i16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.i) + WireFormat::len(&self.q)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.i, buf);
@@ -994,10 +1013,9 @@ pub struct TrackingChannelCorrelationDep {
 }
 
 impl WireFormat for TrackingChannelCorrelationDep {
-    const MIN_ENCODED_LEN: usize =
-        <i32 as WireFormat>::MIN_ENCODED_LEN + <i32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.i) + WireFormat::encoded_len(&self.q)
+    const MIN_LEN: usize = <i32 as WireFormat>::MIN_LEN + <i32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.i) + WireFormat::len(&self.q)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.i, buf);
@@ -1031,13 +1049,11 @@ pub struct TrackingChannelState {
 }
 
 impl WireFormat for TrackingChannelState {
-    const MIN_ENCODED_LEN: usize = <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.fcn)
-            + WireFormat::encoded_len(&self.cn0)
+    const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid) + WireFormat::len(&self.fcn) + WireFormat::len(&self.cn0)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sid, buf);
@@ -1072,13 +1088,10 @@ pub struct TrackingChannelStateDepA {
 }
 
 impl WireFormat for TrackingChannelStateDepA {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.state)
-            + WireFormat::encoded_len(&self.prn)
-            + WireFormat::encoded_len(&self.cn0)
+    const MIN_LEN: usize =
+        <u8 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN + <f32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.state) + WireFormat::len(&self.prn) + WireFormat::len(&self.cn0)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.state, buf);
@@ -1113,13 +1126,11 @@ pub struct TrackingChannelStateDepB {
 }
 
 impl WireFormat for TrackingChannelStateDepB {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignalDep as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.state)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.cn0)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.state) + WireFormat::len(&self.sid) + WireFormat::len(&self.cn0)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.state, buf);

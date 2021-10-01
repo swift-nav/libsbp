@@ -66,31 +66,31 @@ pub struct AcqSvProfile {
 }
 
 impl WireFormat for AcqSvProfile {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.job_type)
-            + WireFormat::encoded_len(&self.status)
-            + WireFormat::encoded_len(&self.cn0)
-            + WireFormat::encoded_len(&self.int_time)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.bin_width)
-            + WireFormat::encoded_len(&self.timestamp)
-            + WireFormat::encoded_len(&self.time_spent)
-            + WireFormat::encoded_len(&self.cf_min)
-            + WireFormat::encoded_len(&self.cf_max)
-            + WireFormat::encoded_len(&self.cf)
-            + WireFormat::encoded_len(&self.cp)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.job_type)
+            + WireFormat::len(&self.status)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.int_time)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.bin_width)
+            + WireFormat::len(&self.timestamp)
+            + WireFormat::len(&self.time_spent)
+            + WireFormat::len(&self.cf_min)
+            + WireFormat::len(&self.cf_max)
+            + WireFormat::len(&self.cf)
+            + WireFormat::len(&self.cp)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.job_type, buf);
@@ -170,31 +170,31 @@ pub struct AcqSvProfileDep {
 }
 
 impl WireFormat for AcqSvProfileDep {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignalDep as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.job_type)
-            + WireFormat::encoded_len(&self.status)
-            + WireFormat::encoded_len(&self.cn0)
-            + WireFormat::encoded_len(&self.int_time)
-            + WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.bin_width)
-            + WireFormat::encoded_len(&self.timestamp)
-            + WireFormat::encoded_len(&self.time_spent)
-            + WireFormat::encoded_len(&self.cf_min)
-            + WireFormat::encoded_len(&self.cf_max)
-            + WireFormat::encoded_len(&self.cf)
-            + WireFormat::encoded_len(&self.cp)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.job_type)
+            + WireFormat::len(&self.status)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.int_time)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.bin_width)
+            + WireFormat::len(&self.timestamp)
+            + WireFormat::len(&self.time_spent)
+            + WireFormat::len(&self.cf_min)
+            + WireFormat::len(&self.cf_max)
+            + WireFormat::len(&self.cf)
+            + WireFormat::len(&self.cp)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.job_type, buf);
@@ -273,6 +273,9 @@ impl SbpMessage for MsgAcqResult {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAcqResult {
@@ -286,15 +289,15 @@ impl TryFrom<Sbp> for MsgAcqResult {
 }
 
 impl WireFormat for MsgAcqResult {
-    const MIN_ENCODED_LEN: usize = <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignal as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.cn0)
-            + WireFormat::encoded_len(&self.cp)
-            + WireFormat::encoded_len(&self.cf)
-            + WireFormat::encoded_len(&self.sid)
+    const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.cp)
+            + WireFormat::len(&self.cf)
+            + WireFormat::len(&self.sid)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.cn0, buf);
@@ -357,6 +360,9 @@ impl SbpMessage for MsgAcqResultDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAcqResultDepA {
@@ -370,15 +376,15 @@ impl TryFrom<Sbp> for MsgAcqResultDepA {
 }
 
 impl WireFormat for MsgAcqResultDepA {
-    const MIN_ENCODED_LEN: usize = <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.snr)
-            + WireFormat::encoded_len(&self.cp)
-            + WireFormat::encoded_len(&self.cf)
-            + WireFormat::encoded_len(&self.prn)
+    const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.snr)
+            + WireFormat::len(&self.cp)
+            + WireFormat::len(&self.cf)
+            + WireFormat::len(&self.prn)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.snr, buf);
@@ -440,6 +446,9 @@ impl SbpMessage for MsgAcqResultDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAcqResultDepB {
@@ -453,15 +462,15 @@ impl TryFrom<Sbp> for MsgAcqResultDepB {
 }
 
 impl WireFormat for MsgAcqResultDepB {
-    const MIN_ENCODED_LEN: usize = <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignalDep as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.snr)
-            + WireFormat::encoded_len(&self.cp)
-            + WireFormat::encoded_len(&self.cf)
-            + WireFormat::encoded_len(&self.sid)
+    const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.snr)
+            + WireFormat::len(&self.cp)
+            + WireFormat::len(&self.cf)
+            + WireFormat::len(&self.sid)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.snr, buf);
@@ -522,6 +531,9 @@ impl SbpMessage for MsgAcqResultDepC {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAcqResultDepC {
@@ -535,15 +547,15 @@ impl TryFrom<Sbp> for MsgAcqResultDepC {
 }
 
 impl WireFormat for MsgAcqResultDepC {
-    const MIN_ENCODED_LEN: usize = <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignalDep as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.cn0)
-            + WireFormat::encoded_len(&self.cp)
-            + WireFormat::encoded_len(&self.cf)
-            + WireFormat::encoded_len(&self.sid)
+    const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.cp)
+            + WireFormat::len(&self.cf)
+            + WireFormat::len(&self.sid)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.cn0, buf);
@@ -596,6 +608,9 @@ impl SbpMessage for MsgAcqSvProfile {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAcqSvProfile {
@@ -609,9 +624,9 @@ impl TryFrom<Sbp> for MsgAcqSvProfile {
 }
 
 impl WireFormat for MsgAcqSvProfile {
-    const MIN_ENCODED_LEN: usize = <Vec<AcqSvProfile> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.acq_sv_profile)
+    const MIN_LEN: usize = <Vec<AcqSvProfile> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.acq_sv_profile)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.acq_sv_profile, buf);
@@ -657,6 +672,9 @@ impl SbpMessage for MsgAcqSvProfileDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgAcqSvProfileDep {
@@ -670,9 +688,9 @@ impl TryFrom<Sbp> for MsgAcqSvProfileDep {
 }
 
 impl WireFormat for MsgAcqSvProfileDep {
-    const MIN_ENCODED_LEN: usize = <Vec<AcqSvProfileDep> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.acq_sv_profile)
+    const MIN_LEN: usize = <Vec<AcqSvProfileDep> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.acq_sv_profile)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.acq_sv_profile, buf);

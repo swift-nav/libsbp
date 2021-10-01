@@ -53,6 +53,9 @@ impl SbpMessage for MsgBootloaderHandshakeDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgBootloaderHandshakeDepA {
@@ -66,9 +69,9 @@ impl TryFrom<Sbp> for MsgBootloaderHandshakeDepA {
 }
 
 impl WireFormat for MsgBootloaderHandshakeDepA {
-    const MIN_ENCODED_LEN: usize = <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.handshake)
+    const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.handshake)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.handshake, buf);
@@ -113,6 +116,9 @@ impl SbpMessage for MsgBootloaderHandshakeReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgBootloaderHandshakeReq {
@@ -126,8 +132,8 @@ impl TryFrom<Sbp> for MsgBootloaderHandshakeReq {
 }
 
 impl WireFormat for MsgBootloaderHandshakeReq {
-    const MIN_ENCODED_LEN: usize = 0;
-    fn encoded_len(&self) -> usize {
+    const MIN_LEN: usize = 0;
+    fn len(&self) -> usize {
         0
     }
     fn write<B: BufMut>(&self, _buf: &mut B) {}
@@ -175,6 +181,9 @@ impl SbpMessage for MsgBootloaderHandshakeResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgBootloaderHandshakeResp {
@@ -188,10 +197,10 @@ impl TryFrom<Sbp> for MsgBootloaderHandshakeResp {
 }
 
 impl WireFormat for MsgBootloaderHandshakeResp {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.flags) + WireFormat::encoded_len(&self.version)
+    const MIN_LEN: usize =
+        <u32 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.flags) + WireFormat::len(&self.version)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
@@ -239,6 +248,9 @@ impl SbpMessage for MsgBootloaderJumpToApp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgBootloaderJumpToApp {
@@ -252,9 +264,9 @@ impl TryFrom<Sbp> for MsgBootloaderJumpToApp {
 }
 
 impl WireFormat for MsgBootloaderJumpToApp {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.jump)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.jump)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.jump, buf);
@@ -302,6 +314,9 @@ impl SbpMessage for MsgNapDeviceDnaReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgNapDeviceDnaReq {
@@ -315,8 +330,8 @@ impl TryFrom<Sbp> for MsgNapDeviceDnaReq {
 }
 
 impl WireFormat for MsgNapDeviceDnaReq {
-    const MIN_ENCODED_LEN: usize = 0;
-    fn encoded_len(&self) -> usize {
+    const MIN_LEN: usize = 0;
+    fn len(&self) -> usize {
         0
     }
     fn write<B: BufMut>(&self, _buf: &mut B) {}
@@ -363,6 +378,9 @@ impl SbpMessage for MsgNapDeviceDnaResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgNapDeviceDnaResp {
@@ -376,9 +394,9 @@ impl TryFrom<Sbp> for MsgNapDeviceDnaResp {
 }
 
 impl WireFormat for MsgNapDeviceDnaResp {
-    const MIN_ENCODED_LEN: usize = <[u8; 8] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.dna)
+    const MIN_LEN: usize = <[u8; 8] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.dna)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.dna, buf);

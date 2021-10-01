@@ -50,6 +50,8 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn sender_id(&self) -> Option<u16>;
     /// Set the sender id.
     fn set_sender_id(&mut self, new_id: u16);
+    /// Number of bytes this message will take on the wire.
+    fn encoded_len(&self) -> usize;
     /// Get the GPS time associated with the message.
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
@@ -188,6 +190,19 @@ impl SbpMessage for Sbp {
         }
     }
 
+    fn encoded_len(&self) -> usize {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.identifier|camel_case)))(msg) => {
+                msg.encoded_len()
+            },
+            ((*- endfor *))
+            Sbp::Unknown(msg) => {
+                msg.encoded_len()
+            },
+        }
+    }
+
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         match self {
@@ -204,7 +219,7 @@ impl SbpMessage for Sbp {
 }
 
 impl WireFormat for Sbp {
-    const MIN_ENCODED_LEN: usize = crate::MAX_FRAME_LEN;
+    const MIN_LEN: usize = crate::MAX_FRAME_LEN;
 
     fn parse_unchecked<B: Buf>(_: &mut B) -> Self {
         unimplemented!("Sbp must be parsed with Sbp::from_frame");
@@ -223,15 +238,15 @@ impl WireFormat for Sbp {
         }
     }
 
-    fn encoded_len(&self) -> usize {
+    fn len(&self) -> usize {
         match self {
             ((*- for m in msgs *))
             Sbp::(((m.identifier|camel_case)))(msg) => {
-                WireFormat::encoded_len(msg)
+                WireFormat::len(msg)
             },
             ((*- endfor *))
             Sbp::Unknown(msg) => {
-                WireFormat::encoded_len(msg)
+                WireFormat::len(msg)
             },
         }
     }

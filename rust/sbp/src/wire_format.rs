@@ -10,11 +10,11 @@ use bytes::{Buf, BufMut};
 
 pub trait WireFormat: Sized {
     /// Minimum number of bytes this type will take in the frame.
-    const MIN_ENCODED_LEN: usize = mem::size_of::<Self>();
+    const MIN_LEN: usize = mem::size_of::<Self>();
 
     /// The actual number of bytes the type will take in the frame.
-    fn encoded_len(&self) -> usize {
-        Self::MIN_ENCODED_LEN
+    fn len(&self) -> usize {
+        Self::MIN_LEN
     }
 
     /// Write the type to a buffer.
@@ -25,7 +25,7 @@ pub trait WireFormat: Sized {
 
     /// Read the type out of a buffer.
     fn parse<B: Buf>(buf: &mut B) -> Result<Self, PayloadParseError> {
-        if buf.remaining() >= Self::MIN_ENCODED_LEN {
+        if buf.remaining() >= Self::MIN_LEN {
             Ok(Self::parse_unchecked(buf))
         } else {
             Err(PayloadParseError {})
@@ -38,10 +38,10 @@ where
     T: WireFormat,
 {
     // A variable length array with no elements takes 0 bytes
-    const MIN_ENCODED_LEN: usize = 0;
+    const MIN_LEN: usize = 0;
 
-    fn encoded_len(&self) -> usize {
-        self.iter().map(WireFormat::encoded_len).sum()
+    fn len(&self) -> usize {
+        self.iter().map(WireFormat::len).sum()
     }
 
     fn write<B: BufMut>(&self, buf: &mut B) {
@@ -52,7 +52,7 @@ where
 
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         let mut v = Vec::new();
-        while buf.remaining() >= T::MIN_ENCODED_LEN {
+        while buf.remaining() >= T::MIN_LEN {
             v.push(T::parse_unchecked(buf));
         }
         v
@@ -63,7 +63,7 @@ impl<T, const LEN: usize> WireFormat for [T; LEN]
 where
     T: WireFormat,
 {
-    const MIN_ENCODED_LEN: usize = T::MIN_ENCODED_LEN * LEN;
+    const MIN_LEN: usize = T::MIN_LEN * LEN;
 
     fn write<B: BufMut>(&self, buf: &mut B) {
         for item in self {

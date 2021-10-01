@@ -68,6 +68,9 @@ impl SbpMessage for MsgLinuxCpuState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxCpuState {
@@ -81,21 +84,21 @@ impl TryFrom<Sbp> for MsgLinuxCpuState {
 }
 
 impl WireFormat for MsgLinuxCpuState {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.index)
-            + WireFormat::encoded_len(&self.pid)
-            + WireFormat::encoded_len(&self.pcpu)
-            + WireFormat::encoded_len(&self.time)
-            + WireFormat::encoded_len(&self.flags)
-            + WireFormat::encoded_len(&self.tname)
-            + WireFormat::encoded_len(&self.cmdline)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+            + WireFormat::len(&self.pid)
+            + WireFormat::len(&self.pcpu)
+            + WireFormat::len(&self.time)
+            + WireFormat::len(&self.flags)
+            + WireFormat::len(&self.tname)
+            + WireFormat::len(&self.cmdline)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
@@ -166,6 +169,9 @@ impl SbpMessage for MsgLinuxCpuStateDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxCpuStateDepA {
@@ -179,17 +185,17 @@ impl TryFrom<Sbp> for MsgLinuxCpuStateDepA {
 }
 
 impl WireFormat for MsgLinuxCpuStateDepA {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.index)
-            + WireFormat::encoded_len(&self.pid)
-            + WireFormat::encoded_len(&self.pcpu)
-            + WireFormat::encoded_len(&self.tname)
-            + WireFormat::encoded_len(&self.cmdline)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+            + WireFormat::len(&self.pid)
+            + WireFormat::len(&self.pcpu)
+            + WireFormat::len(&self.tname)
+            + WireFormat::len(&self.cmdline)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
@@ -262,6 +268,9 @@ impl SbpMessage for MsgLinuxMemState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxMemState {
@@ -275,21 +284,21 @@ impl TryFrom<Sbp> for MsgLinuxMemState {
 }
 
 impl WireFormat for MsgLinuxMemState {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.index)
-            + WireFormat::encoded_len(&self.pid)
-            + WireFormat::encoded_len(&self.pmem)
-            + WireFormat::encoded_len(&self.time)
-            + WireFormat::encoded_len(&self.flags)
-            + WireFormat::encoded_len(&self.tname)
-            + WireFormat::encoded_len(&self.cmdline)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+            + WireFormat::len(&self.pid)
+            + WireFormat::len(&self.pmem)
+            + WireFormat::len(&self.time)
+            + WireFormat::len(&self.flags)
+            + WireFormat::len(&self.tname)
+            + WireFormat::len(&self.cmdline)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
@@ -360,6 +369,9 @@ impl SbpMessage for MsgLinuxMemStateDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxMemStateDepA {
@@ -373,17 +385,17 @@ impl TryFrom<Sbp> for MsgLinuxMemStateDepA {
 }
 
 impl WireFormat for MsgLinuxMemStateDepA {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.index)
-            + WireFormat::encoded_len(&self.pid)
-            + WireFormat::encoded_len(&self.pmem)
-            + WireFormat::encoded_len(&self.tname)
-            + WireFormat::encoded_len(&self.cmdline)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <SbpString<[u8; 15], Unterminated> as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+            + WireFormat::len(&self.pid)
+            + WireFormat::len(&self.pmem)
+            + WireFormat::len(&self.tname)
+            + WireFormat::len(&self.cmdline)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
@@ -446,6 +458,9 @@ impl SbpMessage for MsgLinuxProcessFdCount {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxProcessFdCount {
@@ -459,15 +474,15 @@ impl TryFrom<Sbp> for MsgLinuxProcessFdCount {
 }
 
 impl WireFormat for MsgLinuxProcessFdCount {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.index)
-            + WireFormat::encoded_len(&self.pid)
-            + WireFormat::encoded_len(&self.fd_count)
-            + WireFormat::encoded_len(&self.cmdline)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+            + WireFormat::len(&self.pid)
+            + WireFormat::len(&self.fd_count)
+            + WireFormat::len(&self.cmdline)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
@@ -526,6 +541,9 @@ impl SbpMessage for MsgLinuxProcessFdSummary {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxProcessFdSummary {
@@ -539,10 +557,10 @@ impl TryFrom<Sbp> for MsgLinuxProcessFdSummary {
 }
 
 impl WireFormat for MsgLinuxProcessFdSummary {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, DoubleNullTerminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sys_fd_count) + WireFormat::encoded_len(&self.most_opened)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, DoubleNullTerminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sys_fd_count) + WireFormat::len(&self.most_opened)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sys_fd_count, buf);
@@ -609,6 +627,9 @@ impl SbpMessage for MsgLinuxProcessSocketCounts {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxProcessSocketCounts {
@@ -622,19 +643,19 @@ impl TryFrom<Sbp> for MsgLinuxProcessSocketCounts {
 }
 
 impl WireFormat for MsgLinuxProcessSocketCounts {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.index)
-            + WireFormat::encoded_len(&self.pid)
-            + WireFormat::encoded_len(&self.socket_count)
-            + WireFormat::encoded_len(&self.socket_types)
-            + WireFormat::encoded_len(&self.socket_states)
-            + WireFormat::encoded_len(&self.cmdline)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+            + WireFormat::len(&self.pid)
+            + WireFormat::len(&self.socket_count)
+            + WireFormat::len(&self.socket_types)
+            + WireFormat::len(&self.socket_states)
+            + WireFormat::len(&self.cmdline)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
@@ -716,6 +737,9 @@ impl SbpMessage for MsgLinuxProcessSocketQueues {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxProcessSocketQueues {
@@ -729,23 +753,23 @@ impl TryFrom<Sbp> for MsgLinuxProcessSocketQueues {
 }
 
 impl WireFormat for MsgLinuxProcessSocketQueues {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<[u8; 64], Unterminated> as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.index)
-            + WireFormat::encoded_len(&self.pid)
-            + WireFormat::encoded_len(&self.recv_queued)
-            + WireFormat::encoded_len(&self.send_queued)
-            + WireFormat::encoded_len(&self.socket_types)
-            + WireFormat::encoded_len(&self.socket_states)
-            + WireFormat::encoded_len(&self.address_of_largest)
-            + WireFormat::encoded_len(&self.cmdline)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <SbpString<[u8; 64], Unterminated> as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+            + WireFormat::len(&self.pid)
+            + WireFormat::len(&self.recv_queued)
+            + WireFormat::len(&self.send_queued)
+            + WireFormat::len(&self.socket_types)
+            + WireFormat::len(&self.socket_states)
+            + WireFormat::len(&self.address_of_largest)
+            + WireFormat::len(&self.cmdline)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.index, buf);
@@ -818,6 +842,9 @@ impl SbpMessage for MsgLinuxSocketUsage {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxSocketUsage {
@@ -831,15 +858,15 @@ impl TryFrom<Sbp> for MsgLinuxSocketUsage {
 }
 
 impl WireFormat for MsgLinuxSocketUsage {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <[u16; 16] as WireFormat>::MIN_ENCODED_LEN
-        + <[u16; 16] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.avg_queue_depth)
-            + WireFormat::encoded_len(&self.max_queue_depth)
-            + WireFormat::encoded_len(&self.socket_state_counts)
-            + WireFormat::encoded_len(&self.socket_type_counts)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <[u16; 16] as WireFormat>::MIN_LEN
+        + <[u16; 16] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.avg_queue_depth)
+            + WireFormat::len(&self.max_queue_depth)
+            + WireFormat::len(&self.socket_state_counts)
+            + WireFormat::len(&self.socket_type_counts)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.avg_queue_depth, buf);
@@ -913,6 +940,9 @@ impl SbpMessage for MsgLinuxSysState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxSysState {
@@ -926,23 +956,23 @@ impl TryFrom<Sbp> for MsgLinuxSysState {
 }
 
 impl WireFormat for MsgLinuxSysState {
-    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.mem_total)
-            + WireFormat::encoded_len(&self.pcpu)
-            + WireFormat::encoded_len(&self.pmem)
-            + WireFormat::encoded_len(&self.procs_starting)
-            + WireFormat::encoded_len(&self.procs_stopping)
-            + WireFormat::encoded_len(&self.pid_count)
-            + WireFormat::encoded_len(&self.time)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.mem_total)
+            + WireFormat::len(&self.pcpu)
+            + WireFormat::len(&self.pmem)
+            + WireFormat::len(&self.procs_starting)
+            + WireFormat::len(&self.procs_stopping)
+            + WireFormat::len(&self.pid_count)
+            + WireFormat::len(&self.time)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mem_total, buf);
@@ -1017,6 +1047,9 @@ impl SbpMessage for MsgLinuxSysStateDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgLinuxSysStateDepA {
@@ -1030,19 +1063,19 @@ impl TryFrom<Sbp> for MsgLinuxSysStateDepA {
 }
 
 impl WireFormat for MsgLinuxSysStateDepA {
-    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.mem_total)
-            + WireFormat::encoded_len(&self.pcpu)
-            + WireFormat::encoded_len(&self.pmem)
-            + WireFormat::encoded_len(&self.procs_starting)
-            + WireFormat::encoded_len(&self.procs_stopping)
-            + WireFormat::encoded_len(&self.pid_count)
+    const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.mem_total)
+            + WireFormat::len(&self.pcpu)
+            + WireFormat::len(&self.pmem)
+            + WireFormat::len(&self.procs_starting)
+            + WireFormat::len(&self.procs_stopping)
+            + WireFormat::len(&self.pid_count)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.mem_total, buf);

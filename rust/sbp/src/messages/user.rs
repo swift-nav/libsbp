@@ -50,6 +50,9 @@ impl SbpMessage for MsgUserData {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
 }
 
 impl TryFrom<Sbp> for MsgUserData {
@@ -63,9 +66,9 @@ impl TryFrom<Sbp> for MsgUserData {
 }
 
 impl WireFormat for MsgUserData {
-    const MIN_ENCODED_LEN: usize = <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.contents)
+    const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.contents)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.contents, buf);

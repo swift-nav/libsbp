@@ -61,6 +61,9 @@ impl SbpMessage for MsgSbasRaw {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
@@ -83,15 +86,15 @@ impl TryFrom<Sbp> for MsgSbasRaw {
 }
 
 impl WireFormat for MsgSbasRaw {
-    const MIN_ENCODED_LEN: usize = <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <[u8; 27] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sid)
-            + WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.message_type)
-            + WireFormat::encoded_len(&self.data)
+    const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <[u8; 27] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid)
+            + WireFormat::len(&self.tow)
+            + WireFormat::len(&self.message_type)
+            + WireFormat::len(&self.data)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sid, buf);

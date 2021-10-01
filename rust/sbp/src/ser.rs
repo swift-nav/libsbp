@@ -6,7 +6,7 @@ use dencode::{Encoder, FramedWrite, IterSinkExt};
 
 use crate::wire_format::WireFormat;
 use crate::{Sbp, SbpMessage};
-use crate::{CRC_LEN, HEADER_LEN, MAX_PAYLOAD_LEN, PREAMBLE};
+use crate::{MAX_PAYLOAD_LEN, PREAMBLE};
 
 /// Serialize the given message into the IO stream.
 ///
@@ -36,7 +36,7 @@ where
     W: io::Write,
     M: SbpMessage,
 {
-    let mut buf = BytesMut::with_capacity(msg.encoded_len() + HEADER_LEN + CRC_LEN);
+    let mut buf = BytesMut::with_capacity(msg.len());
     to_buffer(&mut buf, msg)?;
     writer.write_all(&buf)?;
     Ok(())
@@ -65,14 +65,14 @@ where
 /// }
 /// ```
 pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
-    let mut buf = BytesMut::with_capacity(msg.encoded_len() + HEADER_LEN + CRC_LEN);
+    let mut buf = BytesMut::with_capacity(msg.len());
     to_buffer(&mut buf, msg)?;
     Ok(buf.to_vec())
 }
 
 pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
     let sender_id = msg.sender_id().ok_or(WriteFrameError::NoSenderId)?;
-    let payload_len = msg.encoded_len();
+    let payload_len = msg.len();
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
     }
