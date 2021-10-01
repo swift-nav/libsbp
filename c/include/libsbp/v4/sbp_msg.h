@@ -1862,7 +1862,7 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
                                   const sbp_msg_t *b) {
   switch (msg_type) {
     case SbpMsgInvalid:
-      return -1;
+      return 0;
     case SbpMsgAcqResultDepA:
       return sbp_msg_acq_result_dep_a_cmp(&a->acq_result_dep_a,
                                           &b->acq_result_dep_a);
