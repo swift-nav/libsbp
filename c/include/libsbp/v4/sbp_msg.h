@@ -277,6 +277,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
                                     uint8_t *n_written, sbp_msg_type_t msg_type,
                                     const sbp_msg_t *msg) {
   switch (msg_type) {
+    case SbpMsgInvalid:
+      return -1;
     case SbpMsgAcqResultDepA:
       return sbp_msg_acq_result_dep_a_encode(buf, len, n_written,
                                              &msg->acq_result_dep_a);
@@ -845,6 +847,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
                                     uint8_t *n_read, sbp_msg_type_t msg_type,
                                     sbp_msg_t *msg) {
   switch (msg_type) {
+    case SbpMsgInvalid:
+      return -1;
     case SbpMsgAcqResultDepA:
       return sbp_msg_acq_result_dep_a_decode(buf, len, n_read,
                                              &msg->acq_result_dep_a);
@@ -1397,6 +1401,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
 static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
                                              const sbp_msg_t *msg) {
   switch (msg_type) {
+    case SbpMsgInvalid:
+      return 0;
     case SbpMsgAcqResultDepA:
       return sbp_msg_acq_result_dep_a_encoded_len(&msg->acq_result_dep_a);
     case SbpMsgAcqResultDepB:
@@ -1855,6 +1861,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
 static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
                                   const sbp_msg_t *b) {
   switch (msg_type) {
+    case SbpMsgInvalid:
+      return -1;
     case SbpMsgAcqResultDepA:
       return sbp_msg_acq_result_dep_a_cmp(&a->acq_result_dep_a,
                                           &b->acq_result_dep_a);

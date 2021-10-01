@@ -47,6 +47,7 @@ extern "C" {
 #endif
 
 typedef enum {
+  SbpMsgInvalid = -1,
   SbpMsgAcqResultDepA = SBP_MSG_ACQ_RESULT_DEP_A,
   SbpMsgAcqResultDepB = SBP_MSG_ACQ_RESULT_DEP_B,
   SbpMsgAcqResultDepC = SBP_MSG_ACQ_RESULT_DEP_C,
