@@ -59,8 +59,8 @@ impl SbpMessage for MsgFileioConfigReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -75,9 +75,9 @@ impl TryFrom<Sbp> for MsgFileioConfigReq {
 }
 
 impl WireFormat for MsgFileioConfigReq {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
@@ -136,8 +136,8 @@ impl SbpMessage for MsgFileioConfigResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -152,15 +152,15 @@ impl TryFrom<Sbp> for MsgFileioConfigResp {
 }
 
 impl WireFormat for MsgFileioConfigResp {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence)
-            + WireFormat::encoded_len(&self.window_size)
-            + WireFormat::encoded_len(&self.batch_size)
-            + WireFormat::encoded_len(&self.fileio_version)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence)
+            + WireFormat::len(&self.window_size)
+            + WireFormat::len(&self.batch_size)
+            + WireFormat::len(&self.fileio_version)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
@@ -226,8 +226,8 @@ impl SbpMessage for MsgFileioReadDirReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -242,13 +242,13 @@ impl TryFrom<Sbp> for MsgFileioReadDirReq {
 }
 
 impl WireFormat for MsgFileioReadDirReq {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence)
-            + WireFormat::encoded_len(&self.offset)
-            + WireFormat::encoded_len(&self.dirname)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence)
+            + WireFormat::len(&self.offset)
+            + WireFormat::len(&self.dirname)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
@@ -305,8 +305,8 @@ impl SbpMessage for MsgFileioReadDirResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -321,10 +321,9 @@ impl TryFrom<Sbp> for MsgFileioReadDirResp {
 }
 
 impl WireFormat for MsgFileioReadDirResp {
-    const MIN_ENCODED_LEN: usize =
-        <u32 as WireFormat>::MIN_ENCODED_LEN + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.contents)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <Vec<u8> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence) + WireFormat::len(&self.contents)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
@@ -387,8 +386,8 @@ impl SbpMessage for MsgFileioReadReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -403,15 +402,15 @@ impl TryFrom<Sbp> for MsgFileioReadReq {
 }
 
 impl WireFormat for MsgFileioReadReq {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence)
-            + WireFormat::encoded_len(&self.offset)
-            + WireFormat::encoded_len(&self.chunk_size)
-            + WireFormat::encoded_len(&self.filename)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence)
+            + WireFormat::len(&self.offset)
+            + WireFormat::len(&self.chunk_size)
+            + WireFormat::len(&self.filename)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
@@ -469,8 +468,8 @@ impl SbpMessage for MsgFileioReadResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -485,10 +484,9 @@ impl TryFrom<Sbp> for MsgFileioReadResp {
 }
 
 impl WireFormat for MsgFileioReadResp {
-    const MIN_ENCODED_LEN: usize =
-        <u32 as WireFormat>::MIN_ENCODED_LEN + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence) + WireFormat::encoded_len(&self.contents)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <Vec<u8> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence) + WireFormat::len(&self.contents)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
@@ -539,8 +537,8 @@ impl SbpMessage for MsgFileioRemove {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -555,10 +553,9 @@ impl TryFrom<Sbp> for MsgFileioRemove {
 }
 
 impl WireFormat for MsgFileioRemove {
-    const MIN_ENCODED_LEN: usize =
-        <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.filename)
+    const MIN_LEN: usize = <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.filename)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.filename, buf);
@@ -619,8 +616,8 @@ impl SbpMessage for MsgFileioWriteReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -635,15 +632,15 @@ impl TryFrom<Sbp> for MsgFileioWriteReq {
 }
 
 impl WireFormat for MsgFileioWriteReq {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_ENCODED_LEN
-        + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence)
-            + WireFormat::encoded_len(&self.offset)
-            + WireFormat::encoded_len(&self.filename)
-            + WireFormat::encoded_len(&self.data)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <SbpString<Vec<u8>, NullTerminated> as WireFormat>::MIN_LEN
+        + <Vec<u8> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence)
+            + WireFormat::len(&self.offset)
+            + WireFormat::len(&self.filename)
+            + WireFormat::len(&self.data)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);
@@ -698,8 +695,8 @@ impl SbpMessage for MsgFileioWriteResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -714,9 +711,9 @@ impl TryFrom<Sbp> for MsgFileioWriteResp {
 }
 
 impl WireFormat for MsgFileioWriteResp {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sequence)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sequence)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sequence, buf);

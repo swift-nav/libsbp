@@ -57,8 +57,8 @@ impl SbpMessage for MsgImuAux {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -73,13 +73,12 @@ impl TryFrom<Sbp> for MsgImuAux {
 }
 
 impl WireFormat for MsgImuAux {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.imu_type)
-            + WireFormat::encoded_len(&self.temp)
-            + WireFormat::encoded_len(&self.imu_conf)
+    const MIN_LEN: usize =
+        <u8 as WireFormat>::MIN_LEN + <i16 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.imu_type)
+            + WireFormat::len(&self.temp)
+            + WireFormat::len(&self.imu_conf)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.imu_type, buf);
@@ -159,8 +158,8 @@ impl SbpMessage for MsgImuRaw {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -188,23 +187,23 @@ impl TryFrom<Sbp> for MsgImuRaw {
 }
 
 impl WireFormat for MsgImuRaw {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.tow_f)
-            + WireFormat::encoded_len(&self.acc_x)
-            + WireFormat::encoded_len(&self.acc_y)
-            + WireFormat::encoded_len(&self.acc_z)
-            + WireFormat::encoded_len(&self.gyr_x)
-            + WireFormat::encoded_len(&self.gyr_y)
-            + WireFormat::encoded_len(&self.gyr_z)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.tow_f)
+            + WireFormat::len(&self.acc_x)
+            + WireFormat::len(&self.acc_y)
+            + WireFormat::len(&self.acc_z)
+            + WireFormat::len(&self.gyr_x)
+            + WireFormat::len(&self.gyr_y)
+            + WireFormat::len(&self.gyr_z)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);

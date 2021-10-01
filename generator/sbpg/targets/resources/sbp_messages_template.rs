@@ -66,8 +66,8 @@ impl SbpMessage for (((m.identifier|camel_case))) {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     (((m|gps_time(msgs))))
 }
@@ -84,22 +84,22 @@ impl TryFrom<Sbp> for (((m.identifier|camel_case))) {
 ((* endif *))
 
 impl WireFormat for (((m.identifier|camel_case))) {
-    const MIN_ENCODED_LEN: usize =
+    const MIN_LEN: usize =
     ((*- if not m.fields *))
     0
     ((*- else *))
-    < (((m.fields[0]|type_map))) as WireFormat>::MIN_ENCODED_LEN
+    < (((m.fields[0]|type_map))) as WireFormat>::MIN_LEN
     ((*- for f in m.fields[1:] *))
-    + < (((f|type_map))) as WireFormat>::MIN_ENCODED_LEN
+    + < (((f|type_map))) as WireFormat>::MIN_LEN
     ((*- endfor *))
     ((*- endif *));
-    fn encoded_len(&self) -> usize {
+    fn len(&self) -> usize {
         ((*- if not m.fields *))
         0
         ((*- else *))
-        WireFormat::encoded_len( &self.(((m.fields[0].identifier|snake_case))) )
+        WireFormat::len( &self.(((m.fields[0].identifier|snake_case))) )
         ((*- for f in m.fields[1:] *))
-        + WireFormat::encoded_len( &self.(((f.identifier|snake_case))) )
+        + WireFormat::len( &self.(((f.identifier|snake_case))) )
         ((*- endfor *))
         ((*- endif *))
     }

@@ -72,7 +72,7 @@ pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
 
 pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
     let sender_id = msg.sender_id().ok_or(WriteFrameError::NoSenderId)?;
-    let payload_len = msg.encoded_len();
+    let payload_len = msg.len();
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
     }

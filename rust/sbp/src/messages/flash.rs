@@ -55,8 +55,8 @@ impl SbpMessage for MsgFlashDone {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -71,9 +71,9 @@ impl TryFrom<Sbp> for MsgFlashDone {
 }
 
 impl WireFormat for MsgFlashDone {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.response)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.response)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.response, buf);
@@ -125,8 +125,8 @@ impl SbpMessage for MsgFlashErase {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -141,10 +141,9 @@ impl TryFrom<Sbp> for MsgFlashErase {
 }
 
 impl WireFormat for MsgFlashErase {
-    const MIN_ENCODED_LEN: usize =
-        <u8 as WireFormat>::MIN_ENCODED_LEN + <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.target) + WireFormat::encoded_len(&self.sector_num)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.target) + WireFormat::len(&self.sector_num)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
@@ -205,8 +204,8 @@ impl SbpMessage for MsgFlashProgram {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -221,15 +220,15 @@ impl TryFrom<Sbp> for MsgFlashProgram {
 }
 
 impl WireFormat for MsgFlashProgram {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <[u8; 3] as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <Vec<u8> as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.target)
-            + WireFormat::encoded_len(&self.addr_start)
-            + WireFormat::encoded_len(&self.addr_len)
-            + WireFormat::encoded_len(&self.data)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <[u8; 3] as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <Vec<u8> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.target)
+            + WireFormat::len(&self.addr_start)
+            + WireFormat::len(&self.addr_len)
+            + WireFormat::len(&self.data)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
@@ -292,8 +291,8 @@ impl SbpMessage for MsgFlashReadReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -308,13 +307,13 @@ impl TryFrom<Sbp> for MsgFlashReadReq {
 }
 
 impl WireFormat for MsgFlashReadReq {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <[u8; 3] as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.target)
-            + WireFormat::encoded_len(&self.addr_start)
-            + WireFormat::encoded_len(&self.addr_len)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <[u8; 3] as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.target)
+            + WireFormat::len(&self.addr_start)
+            + WireFormat::len(&self.addr_len)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
@@ -375,8 +374,8 @@ impl SbpMessage for MsgFlashReadResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -391,13 +390,13 @@ impl TryFrom<Sbp> for MsgFlashReadResp {
 }
 
 impl WireFormat for MsgFlashReadResp {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <[u8; 3] as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.target)
-            + WireFormat::encoded_len(&self.addr_start)
-            + WireFormat::encoded_len(&self.addr_len)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <[u8; 3] as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.target)
+            + WireFormat::len(&self.addr_start)
+            + WireFormat::len(&self.addr_len)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.target, buf);
@@ -448,8 +447,8 @@ impl SbpMessage for MsgM25FlashWriteStatus {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -464,9 +463,9 @@ impl TryFrom<Sbp> for MsgM25FlashWriteStatus {
 }
 
 impl WireFormat for MsgM25FlashWriteStatus {
-    const MIN_ENCODED_LEN: usize = <[u8; 1] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.status)
+    const MIN_LEN: usize = <[u8; 1] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.status)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.status, buf);
@@ -513,8 +512,8 @@ impl SbpMessage for MsgStmFlashLockSector {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -529,9 +528,9 @@ impl TryFrom<Sbp> for MsgStmFlashLockSector {
 }
 
 impl WireFormat for MsgStmFlashLockSector {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sector)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sector)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sector, buf);
@@ -578,8 +577,8 @@ impl SbpMessage for MsgStmFlashUnlockSector {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -594,9 +593,9 @@ impl TryFrom<Sbp> for MsgStmFlashUnlockSector {
 }
 
 impl WireFormat for MsgStmFlashUnlockSector {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sector)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sector)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sector, buf);
@@ -642,8 +641,8 @@ impl SbpMessage for MsgStmUniqueIdReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -658,8 +657,8 @@ impl TryFrom<Sbp> for MsgStmUniqueIdReq {
 }
 
 impl WireFormat for MsgStmUniqueIdReq {
-    const MIN_ENCODED_LEN: usize = 0;
-    fn encoded_len(&self) -> usize {
+    const MIN_LEN: usize = 0;
+    fn len(&self) -> usize {
         0
     }
     fn write<B: BufMut>(&self, _buf: &mut B) {}
@@ -704,8 +703,8 @@ impl SbpMessage for MsgStmUniqueIdResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -720,9 +719,9 @@ impl TryFrom<Sbp> for MsgStmUniqueIdResp {
 }
 
 impl WireFormat for MsgStmUniqueIdResp {
-    const MIN_ENCODED_LEN: usize = <[u8; 12] as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.stm_id)
+    const MIN_LEN: usize = <[u8; 12] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.stm_id)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.stm_id, buf);

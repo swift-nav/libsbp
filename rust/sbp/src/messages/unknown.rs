@@ -33,14 +33,14 @@ impl SbpMessage for Unknown {
         self.sender_id = Some(new_id);
     }
 
-    fn len(&self) -> usize {
-        self.payload.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
 impl WireFormat for Unknown {
-    fn encoded_len(&self) -> usize {
-        self.payload.encoded_len()
+    fn len(&self) -> usize {
+        self.payload.len()
     }
 
     fn write<B: BufMut>(&self, buf: &mut B) {

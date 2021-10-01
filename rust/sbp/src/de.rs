@@ -303,7 +303,7 @@ mod tests {
         assert!(sbp_result.is_ok());
 
         let sbp_message = sbp_result.unwrap();
-        assert_eq!(sbp_message.encoded_len(), 72);
+        assert_eq!(sbp_message.len(), 72);
     }
 
     #[test]

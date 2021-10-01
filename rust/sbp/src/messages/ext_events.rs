@@ -64,8 +64,8 @@ impl SbpMessage for MsgExtEvent {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -94,17 +94,17 @@ impl TryFrom<Sbp> for MsgExtEvent {
 }
 
 impl WireFormat for MsgExtEvent {
-    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.wn)
-            + WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.ns_residual)
-            + WireFormat::encoded_len(&self.flags)
-            + WireFormat::encoded_len(&self.pin)
+    const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.wn)
+            + WireFormat::len(&self.tow)
+            + WireFormat::len(&self.ns_residual)
+            + WireFormat::len(&self.flags)
+            + WireFormat::len(&self.pin)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);

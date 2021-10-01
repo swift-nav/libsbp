@@ -34,10 +34,9 @@ pub struct CarrierPhase {
 }
 
 impl WireFormat for CarrierPhase {
-    const MIN_ENCODED_LEN: usize =
-        <i32 as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.i) + WireFormat::encoded_len(&self.f)
+    const MIN_LEN: usize = <i32 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.i) + WireFormat::len(&self.f)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.i, buf);
@@ -73,13 +72,10 @@ pub struct GpsTime {
 }
 
 impl WireFormat for GpsTime {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.ns_residual)
-            + WireFormat::encoded_len(&self.wn)
+    const MIN_LEN: usize =
+        <u32 as WireFormat>::MIN_LEN + <i32 as WireFormat>::MIN_LEN + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow) + WireFormat::len(&self.ns_residual) + WireFormat::len(&self.wn)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -112,10 +108,9 @@ pub struct GpsTimeDep {
 }
 
 impl WireFormat for GpsTimeDep {
-    const MIN_ENCODED_LEN: usize =
-        <u32 as WireFormat>::MIN_ENCODED_LEN + <u16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.wn)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow) + WireFormat::len(&self.wn)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -146,10 +141,9 @@ pub struct GpsTimeSec {
 }
 
 impl WireFormat for GpsTimeSec {
-    const MIN_ENCODED_LEN: usize =
-        <u32 as WireFormat>::MIN_ENCODED_LEN + <u16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.wn)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow) + WireFormat::len(&self.wn)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -181,10 +175,9 @@ pub struct GnssSignal {
 }
 
 impl WireFormat for GnssSignal {
-    const MIN_ENCODED_LEN: usize =
-        <u8 as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sat) + WireFormat::encoded_len(&self.code)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sat) + WireFormat::len(&self.code)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sat, buf);
@@ -220,13 +213,10 @@ pub struct GnssSignalDep {
 }
 
 impl WireFormat for GnssSignalDep {
-    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sat)
-            + WireFormat::encoded_len(&self.code)
-            + WireFormat::encoded_len(&self.reserved)
+    const MIN_LEN: usize =
+        <u16 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sat) + WireFormat::len(&self.code) + WireFormat::len(&self.reserved)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sat, buf);
@@ -259,10 +249,9 @@ pub struct SvId {
 }
 
 impl WireFormat for SvId {
-    const MIN_ENCODED_LEN: usize =
-        <u8 as WireFormat>::MIN_ENCODED_LEN + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.sat_id) + WireFormat::encoded_len(&self.constellation)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sat_id) + WireFormat::len(&self.constellation)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.sat_id, buf);

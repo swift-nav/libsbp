@@ -58,13 +58,12 @@ pub struct EstimatedHorizontalErrorEllipse {
 }
 
 impl WireFormat for EstimatedHorizontalErrorEllipse {
-    const MIN_ENCODED_LEN: usize = <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.semi_major)
-            + WireFormat::encoded_len(&self.semi_minor)
-            + WireFormat::encoded_len(&self.orientation)
+    const MIN_LEN: usize =
+        <f32 as WireFormat>::MIN_LEN + <f32 as WireFormat>::MIN_LEN + <f32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.semi_major)
+            + WireFormat::len(&self.semi_minor)
+            + WireFormat::len(&self.orientation)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.semi_major, buf);
@@ -117,8 +116,8 @@ impl SbpMessage for MsgAgeCorrections {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -142,10 +141,9 @@ impl TryFrom<Sbp> for MsgAgeCorrections {
 }
 
 impl WireFormat for MsgAgeCorrections {
-    const MIN_ENCODED_LEN: usize =
-        <u32 as WireFormat>::MIN_ENCODED_LEN + <u16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow) + WireFormat::encoded_len(&self.age)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow) + WireFormat::len(&self.age)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -214,8 +212,8 @@ impl SbpMessage for MsgBaselineEcef {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -239,21 +237,21 @@ impl TryFrom<Sbp> for MsgBaselineEcef {
 }
 
 impl WireFormat for MsgBaselineEcef {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -332,8 +330,8 @@ impl SbpMessage for MsgBaselineEcefDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -357,21 +355,21 @@ impl TryFrom<Sbp> for MsgBaselineEcefDepA {
 }
 
 impl WireFormat for MsgBaselineEcefDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -440,8 +438,8 @@ impl SbpMessage for MsgBaselineHeadingDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -465,15 +463,15 @@ impl TryFrom<Sbp> for MsgBaselineHeadingDepA {
 }
 
 impl WireFormat for MsgBaselineHeadingDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.heading)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.heading)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -551,8 +549,8 @@ impl SbpMessage for MsgBaselineNed {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -576,23 +574,23 @@ impl TryFrom<Sbp> for MsgBaselineNed {
 }
 
 impl WireFormat for MsgBaselineNed {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.n)
-            + WireFormat::encoded_len(&self.e)
-            + WireFormat::encoded_len(&self.d)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.n)
+            + WireFormat::len(&self.e)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -678,8 +676,8 @@ impl SbpMessage for MsgBaselineNedDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -703,23 +701,23 @@ impl TryFrom<Sbp> for MsgBaselineNedDepA {
 }
 
 impl WireFormat for MsgBaselineNedDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.n)
-            + WireFormat::encoded_len(&self.e)
-            + WireFormat::encoded_len(&self.d)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.n)
+            + WireFormat::len(&self.e)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -800,8 +798,8 @@ impl SbpMessage for MsgDops {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -825,21 +823,21 @@ impl TryFrom<Sbp> for MsgDops {
 }
 
 impl WireFormat for MsgDops {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.gdop)
-            + WireFormat::encoded_len(&self.pdop)
-            + WireFormat::encoded_len(&self.tdop)
-            + WireFormat::encoded_len(&self.hdop)
-            + WireFormat::encoded_len(&self.vdop)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.gdop)
+            + WireFormat::len(&self.pdop)
+            + WireFormat::len(&self.tdop)
+            + WireFormat::len(&self.hdop)
+            + WireFormat::len(&self.vdop)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -913,8 +911,8 @@ impl SbpMessage for MsgDopsDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -938,19 +936,19 @@ impl TryFrom<Sbp> for MsgDopsDepA {
 }
 
 impl WireFormat for MsgDopsDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.gdop)
-            + WireFormat::encoded_len(&self.pdop)
-            + WireFormat::encoded_len(&self.tdop)
-            + WireFormat::encoded_len(&self.hdop)
-            + WireFormat::encoded_len(&self.vdop)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.gdop)
+            + WireFormat::len(&self.pdop)
+            + WireFormat::len(&self.tdop)
+            + WireFormat::len(&self.hdop)
+            + WireFormat::len(&self.vdop)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -1026,8 +1024,8 @@ impl SbpMessage for MsgGpsTime {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1056,15 +1054,15 @@ impl TryFrom<Sbp> for MsgGpsTime {
 }
 
 impl WireFormat for MsgGpsTime {
-    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.wn)
-            + WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.ns_residual)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.wn)
+            + WireFormat::len(&self.tow)
+            + WireFormat::len(&self.ns_residual)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);
@@ -1136,8 +1134,8 @@ impl SbpMessage for MsgGpsTimeDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1166,15 +1164,15 @@ impl TryFrom<Sbp> for MsgGpsTimeDepA {
 }
 
 impl WireFormat for MsgGpsTimeDepA {
-    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.wn)
-            + WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.ns_residual)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.wn)
+            + WireFormat::len(&self.tow)
+            + WireFormat::len(&self.ns_residual)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);
@@ -1246,8 +1244,8 @@ impl SbpMessage for MsgGpsTimeGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1276,15 +1274,15 @@ impl TryFrom<Sbp> for MsgGpsTimeGnss {
 }
 
 impl WireFormat for MsgGpsTimeGnss {
-    const MIN_ENCODED_LEN: usize = <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.wn)
-            + WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.ns_residual)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.wn)
+            + WireFormat::len(&self.tow)
+            + WireFormat::len(&self.ns_residual)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.wn, buf);
@@ -1360,8 +1358,8 @@ impl SbpMessage for MsgPosEcef {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1385,21 +1383,21 @@ impl TryFrom<Sbp> for MsgPosEcef {
 }
 
 impl WireFormat for MsgPosEcef {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -1497,8 +1495,8 @@ impl SbpMessage for MsgPosEcefCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1522,31 +1520,31 @@ impl TryFrom<Sbp> for MsgPosEcefCov {
 }
 
 impl WireFormat for MsgPosEcefCov {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.cov_x_x)
-            + WireFormat::encoded_len(&self.cov_x_y)
-            + WireFormat::encoded_len(&self.cov_x_z)
-            + WireFormat::encoded_len(&self.cov_y_y)
-            + WireFormat::encoded_len(&self.cov_y_z)
-            + WireFormat::encoded_len(&self.cov_z_z)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.cov_x_x)
+            + WireFormat::len(&self.cov_x_y)
+            + WireFormat::len(&self.cov_x_z)
+            + WireFormat::len(&self.cov_y_y)
+            + WireFormat::len(&self.cov_y_z)
+            + WireFormat::len(&self.cov_z_z)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -1654,8 +1652,8 @@ impl SbpMessage for MsgPosEcefCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1679,31 +1677,31 @@ impl TryFrom<Sbp> for MsgPosEcefCovGnss {
 }
 
 impl WireFormat for MsgPosEcefCovGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.cov_x_x)
-            + WireFormat::encoded_len(&self.cov_x_y)
-            + WireFormat::encoded_len(&self.cov_x_z)
-            + WireFormat::encoded_len(&self.cov_y_y)
-            + WireFormat::encoded_len(&self.cov_y_z)
-            + WireFormat::encoded_len(&self.cov_z_z)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.cov_x_x)
+            + WireFormat::len(&self.cov_x_y)
+            + WireFormat::len(&self.cov_x_z)
+            + WireFormat::len(&self.cov_y_y)
+            + WireFormat::len(&self.cov_y_z)
+            + WireFormat::len(&self.cov_z_z)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -1795,8 +1793,8 @@ impl SbpMessage for MsgPosEcefDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1820,21 +1818,21 @@ impl TryFrom<Sbp> for MsgPosEcefDepA {
 }
 
 impl WireFormat for MsgPosEcefDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -1916,8 +1914,8 @@ impl SbpMessage for MsgPosEcefGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -1941,21 +1939,21 @@ impl TryFrom<Sbp> for MsgPosEcefGnss {
 }
 
 impl WireFormat for MsgPosEcefGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -2040,8 +2038,8 @@ impl SbpMessage for MsgPosLlh {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2065,23 +2063,23 @@ impl TryFrom<Sbp> for MsgPosLlh {
 }
 
 impl WireFormat for MsgPosLlh {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -2194,8 +2192,8 @@ impl SbpMessage for MsgPosLlhAcc {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2219,33 +2217,33 @@ impl TryFrom<Sbp> for MsgPosLlhAcc {
 }
 
 impl WireFormat for MsgPosLlhAcc {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <EstimatedHorizontalErrorEllipse as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.orthometric_height)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.ct_accuracy)
-            + WireFormat::encoded_len(&self.at_accuracy)
-            + WireFormat::encoded_len(&self.h_ellipse)
-            + WireFormat::encoded_len(&self.confidence_and_geoid)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <EstimatedHorizontalErrorEllipse as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.orthometric_height)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.ct_accuracy)
+            + WireFormat::len(&self.at_accuracy)
+            + WireFormat::len(&self.h_ellipse)
+            + WireFormat::len(&self.confidence_and_geoid)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -2355,8 +2353,8 @@ impl SbpMessage for MsgPosLlhCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2380,31 +2378,31 @@ impl TryFrom<Sbp> for MsgPosLlhCov {
 }
 
 impl WireFormat for MsgPosLlhCov {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.cov_n_n)
-            + WireFormat::encoded_len(&self.cov_n_e)
-            + WireFormat::encoded_len(&self.cov_n_d)
-            + WireFormat::encoded_len(&self.cov_e_e)
-            + WireFormat::encoded_len(&self.cov_e_d)
-            + WireFormat::encoded_len(&self.cov_d_d)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.cov_n_n)
+            + WireFormat::len(&self.cov_n_e)
+            + WireFormat::len(&self.cov_n_d)
+            + WireFormat::len(&self.cov_e_e)
+            + WireFormat::len(&self.cov_e_d)
+            + WireFormat::len(&self.cov_d_d)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -2512,8 +2510,8 @@ impl SbpMessage for MsgPosLlhCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2537,31 +2535,31 @@ impl TryFrom<Sbp> for MsgPosLlhCovGnss {
 }
 
 impl WireFormat for MsgPosLlhCovGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.cov_n_n)
-            + WireFormat::encoded_len(&self.cov_n_e)
-            + WireFormat::encoded_len(&self.cov_n_d)
-            + WireFormat::encoded_len(&self.cov_e_e)
-            + WireFormat::encoded_len(&self.cov_e_d)
-            + WireFormat::encoded_len(&self.cov_d_d)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.cov_n_n)
+            + WireFormat::len(&self.cov_n_e)
+            + WireFormat::len(&self.cov_n_d)
+            + WireFormat::len(&self.cov_e_e)
+            + WireFormat::len(&self.cov_e_d)
+            + WireFormat::len(&self.cov_d_d)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -2656,8 +2654,8 @@ impl SbpMessage for MsgPosLlhDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2681,23 +2679,23 @@ impl TryFrom<Sbp> for MsgPosLlhDepA {
 }
 
 impl WireFormat for MsgPosLlhDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -2784,8 +2782,8 @@ impl SbpMessage for MsgPosLlhGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2809,23 +2807,23 @@ impl TryFrom<Sbp> for MsgPosLlhGnss {
 }
 
 impl WireFormat for MsgPosLlhGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -2949,8 +2947,8 @@ impl SbpMessage for MsgProtectionLevel {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -2979,49 +2977,49 @@ impl TryFrom<Sbp> for MsgProtectionLevel {
 }
 
 impl WireFormat for MsgProtectionLevel {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.wn)
-            + WireFormat::encoded_len(&self.hpl)
-            + WireFormat::encoded_len(&self.vpl)
-            + WireFormat::encoded_len(&self.atpl)
-            + WireFormat::encoded_len(&self.ctpl)
-            + WireFormat::encoded_len(&self.hvpl)
-            + WireFormat::encoded_len(&self.vvpl)
-            + WireFormat::encoded_len(&self.hopl)
-            + WireFormat::encoded_len(&self.popl)
-            + WireFormat::encoded_len(&self.ropl)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.v_x)
-            + WireFormat::encoded_len(&self.v_y)
-            + WireFormat::encoded_len(&self.v_z)
-            + WireFormat::encoded_len(&self.roll)
-            + WireFormat::encoded_len(&self.pitch)
-            + WireFormat::encoded_len(&self.heading)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.wn)
+            + WireFormat::len(&self.hpl)
+            + WireFormat::len(&self.vpl)
+            + WireFormat::len(&self.atpl)
+            + WireFormat::len(&self.ctpl)
+            + WireFormat::len(&self.hvpl)
+            + WireFormat::len(&self.vvpl)
+            + WireFormat::len(&self.hopl)
+            + WireFormat::len(&self.popl)
+            + WireFormat::len(&self.ropl)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.v_x)
+            + WireFormat::len(&self.v_y)
+            + WireFormat::len(&self.v_z)
+            + WireFormat::len(&self.roll)
+            + WireFormat::len(&self.pitch)
+            + WireFormat::len(&self.heading)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -3127,8 +3125,8 @@ impl SbpMessage for MsgProtectionLevelDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3152,21 +3150,21 @@ impl TryFrom<Sbp> for MsgProtectionLevelDepA {
 }
 
 impl WireFormat for MsgProtectionLevelDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <f64 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.vpl)
-            + WireFormat::encoded_len(&self.hpl)
-            + WireFormat::encoded_len(&self.lat)
-            + WireFormat::encoded_len(&self.lon)
-            + WireFormat::encoded_len(&self.height)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.vpl)
+            + WireFormat::len(&self.hpl)
+            + WireFormat::len(&self.lat)
+            + WireFormat::len(&self.lon)
+            + WireFormat::len(&self.height)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -3250,8 +3248,8 @@ impl SbpMessage for MsgUtcTime {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3275,25 +3273,25 @@ impl TryFrom<Sbp> for MsgUtcTime {
 }
 
 impl WireFormat for MsgUtcTime {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.flags)
-            + WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.year)
-            + WireFormat::encoded_len(&self.month)
-            + WireFormat::encoded_len(&self.day)
-            + WireFormat::encoded_len(&self.hours)
-            + WireFormat::encoded_len(&self.minutes)
-            + WireFormat::encoded_len(&self.seconds)
-            + WireFormat::encoded_len(&self.ns)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.flags)
+            + WireFormat::len(&self.tow)
+            + WireFormat::len(&self.year)
+            + WireFormat::len(&self.month)
+            + WireFormat::len(&self.day)
+            + WireFormat::len(&self.hours)
+            + WireFormat::len(&self.minutes)
+            + WireFormat::len(&self.seconds)
+            + WireFormat::len(&self.ns)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
@@ -3381,8 +3379,8 @@ impl SbpMessage for MsgUtcTimeGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3406,25 +3404,25 @@ impl TryFrom<Sbp> for MsgUtcTimeGnss {
 }
 
 impl WireFormat for MsgUtcTimeGnss {
-    const MIN_ENCODED_LEN: usize = <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u32 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.flags)
-            + WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.year)
-            + WireFormat::encoded_len(&self.month)
-            + WireFormat::encoded_len(&self.day)
-            + WireFormat::encoded_len(&self.hours)
-            + WireFormat::encoded_len(&self.minutes)
-            + WireFormat::encoded_len(&self.seconds)
-            + WireFormat::encoded_len(&self.ns)
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.flags)
+            + WireFormat::len(&self.tow)
+            + WireFormat::len(&self.year)
+            + WireFormat::len(&self.month)
+            + WireFormat::len(&self.day)
+            + WireFormat::len(&self.hours)
+            + WireFormat::len(&self.minutes)
+            + WireFormat::len(&self.seconds)
+            + WireFormat::len(&self.ns)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.flags, buf);
@@ -3527,8 +3525,8 @@ impl SbpMessage for MsgVelBody {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3552,31 +3550,31 @@ impl TryFrom<Sbp> for MsgVelBody {
 }
 
 impl WireFormat for MsgVelBody {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.cov_x_x)
-            + WireFormat::encoded_len(&self.cov_x_y)
-            + WireFormat::encoded_len(&self.cov_x_z)
-            + WireFormat::encoded_len(&self.cov_y_y)
-            + WireFormat::encoded_len(&self.cov_y_z)
-            + WireFormat::encoded_len(&self.cov_z_z)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.cov_x_x)
+            + WireFormat::len(&self.cov_x_y)
+            + WireFormat::len(&self.cov_x_z)
+            + WireFormat::len(&self.cov_y_y)
+            + WireFormat::len(&self.cov_y_z)
+            + WireFormat::len(&self.cov_z_z)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -3664,8 +3662,8 @@ impl SbpMessage for MsgVelEcef {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3689,21 +3687,21 @@ impl TryFrom<Sbp> for MsgVelEcef {
 }
 
 impl WireFormat for MsgVelEcef {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -3796,8 +3794,8 @@ impl SbpMessage for MsgVelEcefCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3821,31 +3819,31 @@ impl TryFrom<Sbp> for MsgVelEcefCov {
 }
 
 impl WireFormat for MsgVelEcefCov {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.cov_x_x)
-            + WireFormat::encoded_len(&self.cov_x_y)
-            + WireFormat::encoded_len(&self.cov_x_z)
-            + WireFormat::encoded_len(&self.cov_y_y)
-            + WireFormat::encoded_len(&self.cov_y_z)
-            + WireFormat::encoded_len(&self.cov_z_z)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.cov_x_x)
+            + WireFormat::len(&self.cov_x_y)
+            + WireFormat::len(&self.cov_x_z)
+            + WireFormat::len(&self.cov_y_y)
+            + WireFormat::len(&self.cov_y_z)
+            + WireFormat::len(&self.cov_z_z)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -3948,8 +3946,8 @@ impl SbpMessage for MsgVelEcefCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -3973,31 +3971,31 @@ impl TryFrom<Sbp> for MsgVelEcefCovGnss {
 }
 
 impl WireFormat for MsgVelEcefCovGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.cov_x_x)
-            + WireFormat::encoded_len(&self.cov_x_y)
-            + WireFormat::encoded_len(&self.cov_x_z)
-            + WireFormat::encoded_len(&self.cov_y_y)
-            + WireFormat::encoded_len(&self.cov_y_z)
-            + WireFormat::encoded_len(&self.cov_z_z)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.cov_x_x)
+            + WireFormat::len(&self.cov_x_y)
+            + WireFormat::len(&self.cov_x_z)
+            + WireFormat::len(&self.cov_y_y)
+            + WireFormat::len(&self.cov_y_z)
+            + WireFormat::len(&self.cov_z_z)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -4085,8 +4083,8 @@ impl SbpMessage for MsgVelEcefDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4110,21 +4108,21 @@ impl TryFrom<Sbp> for MsgVelEcefDepA {
 }
 
 impl WireFormat for MsgVelEcefDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -4202,8 +4200,8 @@ impl SbpMessage for MsgVelEcefGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4227,21 +4225,21 @@ impl TryFrom<Sbp> for MsgVelEcefGnss {
 }
 
 impl WireFormat for MsgVelEcefGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.x)
-            + WireFormat::encoded_len(&self.y)
-            + WireFormat::encoded_len(&self.z)
-            + WireFormat::encoded_len(&self.accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.x)
+            + WireFormat::len(&self.y)
+            + WireFormat::len(&self.z)
+            + WireFormat::len(&self.accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -4323,8 +4321,8 @@ impl SbpMessage for MsgVelNed {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4348,23 +4346,23 @@ impl TryFrom<Sbp> for MsgVelNed {
 }
 
 impl WireFormat for MsgVelNed {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.n)
-            + WireFormat::encoded_len(&self.e)
-            + WireFormat::encoded_len(&self.d)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.n)
+            + WireFormat::len(&self.e)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -4462,8 +4460,8 @@ impl SbpMessage for MsgVelNedCov {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4487,31 +4485,31 @@ impl TryFrom<Sbp> for MsgVelNedCov {
 }
 
 impl WireFormat for MsgVelNedCov {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.n)
-            + WireFormat::encoded_len(&self.e)
-            + WireFormat::encoded_len(&self.d)
-            + WireFormat::encoded_len(&self.cov_n_n)
-            + WireFormat::encoded_len(&self.cov_n_e)
-            + WireFormat::encoded_len(&self.cov_n_d)
-            + WireFormat::encoded_len(&self.cov_e_e)
-            + WireFormat::encoded_len(&self.cov_e_d)
-            + WireFormat::encoded_len(&self.cov_d_d)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.n)
+            + WireFormat::len(&self.e)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.cov_n_n)
+            + WireFormat::len(&self.cov_n_e)
+            + WireFormat::len(&self.cov_n_d)
+            + WireFormat::len(&self.cov_e_e)
+            + WireFormat::len(&self.cov_e_d)
+            + WireFormat::len(&self.cov_d_d)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -4617,8 +4615,8 @@ impl SbpMessage for MsgVelNedCovGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4642,31 +4640,31 @@ impl TryFrom<Sbp> for MsgVelNedCovGnss {
 }
 
 impl WireFormat for MsgVelNedCovGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <f32 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.n)
-            + WireFormat::encoded_len(&self.e)
-            + WireFormat::encoded_len(&self.d)
-            + WireFormat::encoded_len(&self.cov_n_n)
-            + WireFormat::encoded_len(&self.cov_n_e)
-            + WireFormat::encoded_len(&self.cov_n_d)
-            + WireFormat::encoded_len(&self.cov_e_e)
-            + WireFormat::encoded_len(&self.cov_e_d)
-            + WireFormat::encoded_len(&self.cov_d_d)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.n)
+            + WireFormat::len(&self.e)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.cov_n_n)
+            + WireFormat::len(&self.cov_n_e)
+            + WireFormat::len(&self.cov_n_d)
+            + WireFormat::len(&self.cov_e_e)
+            + WireFormat::len(&self.cov_e_d)
+            + WireFormat::len(&self.cov_d_d)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -4758,8 +4756,8 @@ impl SbpMessage for MsgVelNedDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4783,23 +4781,23 @@ impl TryFrom<Sbp> for MsgVelNedDepA {
 }
 
 impl WireFormat for MsgVelNedDepA {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.n)
-            + WireFormat::encoded_len(&self.e)
-            + WireFormat::encoded_len(&self.d)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.n)
+            + WireFormat::len(&self.e)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
@@ -4883,8 +4881,8 @@ impl SbpMessage for MsgVelNedGnss {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
     #[cfg(feature = "swiftnav")]
     fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
@@ -4908,23 +4906,23 @@ impl TryFrom<Sbp> for MsgVelNedGnss {
 }
 
 impl WireFormat for MsgVelNedGnss {
-    const MIN_ENCODED_LEN: usize = <u32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <i32 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.tow)
-            + WireFormat::encoded_len(&self.n)
-            + WireFormat::encoded_len(&self.e)
-            + WireFormat::encoded_len(&self.d)
-            + WireFormat::encoded_len(&self.h_accuracy)
-            + WireFormat::encoded_len(&self.v_accuracy)
-            + WireFormat::encoded_len(&self.n_sats)
-            + WireFormat::encoded_len(&self.flags)
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.n)
+            + WireFormat::len(&self.e)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.h_accuracy)
+            + WireFormat::len(&self.v_accuracy)
+            + WireFormat::len(&self.n_sats)
+            + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);

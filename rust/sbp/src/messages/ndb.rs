@@ -79,8 +79,8 @@ impl SbpMessage for MsgNdbEvent {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-    fn len(&self) -> usize {
-        self.encoded_len() + crate::HEADER_LEN + crate::CRC_LEN
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
@@ -95,23 +95,23 @@ impl TryFrom<Sbp> for MsgNdbEvent {
 }
 
 impl WireFormat for MsgNdbEvent {
-    const MIN_ENCODED_LEN: usize = <u64 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <u8 as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <GnssSignal as WireFormat>::MIN_ENCODED_LEN
-        + <u16 as WireFormat>::MIN_ENCODED_LEN;
-    fn encoded_len(&self) -> usize {
-        WireFormat::encoded_len(&self.recv_time)
-            + WireFormat::encoded_len(&self.event)
-            + WireFormat::encoded_len(&self.object_type)
-            + WireFormat::encoded_len(&self.result)
-            + WireFormat::encoded_len(&self.data_source)
-            + WireFormat::encoded_len(&self.object_sid)
-            + WireFormat::encoded_len(&self.src_sid)
-            + WireFormat::encoded_len(&self.original_sender)
+    const MIN_LEN: usize = <u64 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.recv_time)
+            + WireFormat::len(&self.event)
+            + WireFormat::len(&self.object_type)
+            + WireFormat::len(&self.result)
+            + WireFormat::len(&self.data_source)
+            + WireFormat::len(&self.object_sid)
+            + WireFormat::len(&self.src_sid)
+            + WireFormat::len(&self.original_sender)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.recv_time, buf);

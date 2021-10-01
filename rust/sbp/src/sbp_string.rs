@@ -71,9 +71,9 @@ where
 }
 
 impl<E, const LEN: usize> WireFormat for SbpString<[u8; LEN], E> {
-    const MIN_ENCODED_LEN: usize = LEN;
+    const MIN_LEN: usize = LEN;
 
-    fn encoded_len(&self) -> usize {
+    fn len(&self) -> usize {
         LEN
     }
 
@@ -90,10 +90,10 @@ impl<E, const LEN: usize> WireFormat for SbpString<[u8; LEN], E> {
 macro_rules! forward_payload_vec {
     ($encoding:ty, $min_len:expr) => {
         impl WireFormat for SbpString<Vec<u8>, $encoding> {
-            const MIN_ENCODED_LEN: usize = $min_len;
+            const MIN_LEN: usize = $min_len;
 
-            fn encoded_len(&self) -> usize {
-                self.data.encoded_len()
+            fn len(&self) -> usize {
+                self.data.len()
             }
 
             fn write<B: BufMut>(&self, buf: &mut B) {

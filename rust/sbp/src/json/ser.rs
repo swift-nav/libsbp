@@ -220,7 +220,7 @@ fn get_common_fields<'a, M: SbpMessage>(
 ) -> Result<CommonJson<'a>, JsonError> {
     payload_buf.clear();
     frame_buf.clear();
-    let size = msg.encoded_len();
+    let size = msg.len();
     crate::ser::to_buffer(&mut frame_buf, msg)?;
     let crc = {
         let crc_b0 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][0] as u16;
