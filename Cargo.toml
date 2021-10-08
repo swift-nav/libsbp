@@ -3,3 +3,7 @@ members = [
   "rust/sbp",
   "rust/sbp2json"
 ]
+
+[profile.release]
+lto = true
+codegen-units = 1

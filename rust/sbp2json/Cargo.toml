@@ -19,13 +19,11 @@ features = ["json"]
 env_logger = "0.8"
 serde_json = "1.0"
 structopt = "0.3"
+mimalloc = { version = "*", default-features = false }
 
 [dependencies.dencode]
 version = "0.3.0"
 default-features = false
-
-[target.'cfg(all(not(windows), not(target_env = "musl")))'.dependencies]
-jemallocator = "0.3"
 
 [dev-dependencies]
 sha2 = "0.8"

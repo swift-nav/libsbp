@@ -5,9 +5,8 @@ use structopt::StructOpt;
 
 use converters::{sbp2json, Result};
 
-#[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
-static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert binary SBP data to JSON.
 ///
