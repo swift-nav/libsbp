@@ -11,10 +11,10 @@ use crate::{
     de::Frame,
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
-    SbpMessage, CRC_LEN, HEADER_LEN, MAX_PAYLOAD_LEN, PREAMBLE,
+    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, PREAMBLE,
 };
 
-const BASE64_MAX_PAYLOAD_LEN: usize = MAX_PAYLOAD_LEN / 3 * 4 + 4;
+const BASE64_BUFLEN: usize = BUFLEN * 4;
 
 /// Serialize the given message as JSON into the IO stream.
 pub fn to_writer<W, M>(mut writer: W, msg: &M) -> Result<(), JsonError>
@@ -22,9 +22,9 @@ where
     W: io::Write,
     M: SbpMessage + Serialize,
 {
-    let mut frame = BytesMut::new();
-    let mut payload = String::new();
-    let mut buf = BytesMut::new();
+    let mut frame = BytesMut::with_capacity(BUFLEN);
+    let mut payload = String::with_capacity(BUFLEN);
+    let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(
         &mut frame,
         &mut payload,
@@ -41,9 +41,9 @@ pub fn to_vec<M>(msg: &M) -> Result<Vec<u8>, JsonError>
 where
     M: SbpMessage + Serialize,
 {
-    let mut frame = BytesMut::new();
-    let mut payload = String::new();
-    let mut buf = BytesMut::new();
+    let mut frame = BytesMut::with_capacity(BUFLEN);
+    let mut payload = String::with_capacity(BUFLEN);
+    let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(
         &mut frame,
         &mut payload,
@@ -114,8 +114,8 @@ struct JsonEncoderInner<F> {
 impl<F: Formatter + Clone> JsonEncoderInner<F> {
     fn new(formatter: F) -> Self {
         JsonEncoderInner {
-            frame_buf: BytesMut::with_capacity(MAX_PAYLOAD_LEN),
-            payload_buf: String::with_capacity(BASE64_MAX_PAYLOAD_LEN),
+            frame_buf: BytesMut::with_capacity(BUFLEN),
+            payload_buf: String::with_capacity(BASE64_BUFLEN),
             formatter,
         }
     }
@@ -181,8 +181,8 @@ struct Json2JsonEncoderInner<F> {
 impl<F: Formatter + Clone> Json2JsonEncoderInner<F> {
     fn new(formatter: F) -> Self {
         Json2JsonEncoderInner {
-            frame_buf: BytesMut::with_capacity(MAX_PAYLOAD_LEN),
-            payload_buf: String::with_capacity(BASE64_MAX_PAYLOAD_LEN),
+            frame_buf: BytesMut::with_capacity(BUFLEN),
+            payload_buf: String::with_capacity(BASE64_BUFLEN),
             formatter,
         }
     }

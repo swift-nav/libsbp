@@ -8,6 +8,8 @@ use std::{
 
 use bytes::{Buf, BufMut};
 
+use crate::BUFLEN;
+
 pub trait WireFormat: Sized {
     /// Minimum number of bytes this type will take in the frame.
     const MIN_LEN: usize = mem::size_of::<Self>();
@@ -51,7 +53,7 @@ where
     }
 
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-        let mut v = Vec::new();
+        let mut v = Vec::with_capacity(BUFLEN);
         while buf.remaining() >= T::MIN_LEN {
             v.push(T::parse_unchecked(buf));
         }

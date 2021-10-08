@@ -91,6 +91,9 @@ pub const PREAMBLE: u8 = 0x55;
 /// Length of the header section.
 pub const HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 
+/// Internal buffer length.
+pub(crate) const BUFLEN: usize = 128;
+
 /// Max length of the variable-sized payload field.
 pub const MAX_PAYLOAD_LEN: usize = 255;
 

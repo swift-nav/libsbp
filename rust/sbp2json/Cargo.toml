@@ -19,7 +19,7 @@ features = ["json"]
 env_logger = "0.8"
 serde_json = "1.0"
 structopt = "0.3"
-mimalloc = { version = "*", default-features = false }
+mimalloc = { version = "0.1", default-features = false }
 
 [dependencies.dencode]
 version = "0.3.0"
