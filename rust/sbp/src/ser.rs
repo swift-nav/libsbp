@@ -6,7 +6,7 @@ use dencode::{Encoder, FramedWrite, IterSinkExt};
 
 use crate::wire_format::WireFormat;
 use crate::{Sbp, SbpMessage};
-use crate::{MAX_PAYLOAD_LEN, PREAMBLE};
+use crate::{BUFLEN, MAX_PAYLOAD_LEN, PREAMBLE};
 
 /// Serialize the given message into the IO stream.
 ///
@@ -36,7 +36,7 @@ where
     W: io::Write,
     M: SbpMessage,
 {
-    let mut buf = BytesMut::with_capacity(msg.len());
+    let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(&mut buf, msg)?;
     writer.write_all(&buf)?;
     Ok(())
@@ -65,7 +65,7 @@ where
 /// }
 /// ```
 pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
-    let mut buf = BytesMut::with_capacity(msg.len());
+    let mut buf = BytesMut::with_capacity(BUFLEN);
     to_buffer(&mut buf, msg)?;
     Ok(buf.to_vec())
 }

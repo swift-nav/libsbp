@@ -9,7 +9,7 @@ use crate::{
     de::Frame,
     json::{Json2JsonInput, JsonError, JsonInput},
     messages::Sbp,
-    MAX_PAYLOAD_LEN,
+    BUFLEN,
 };
 
 /// Deserialize the IO stream into an iterator of messages.
@@ -40,7 +40,7 @@ struct JsonDecoder {
 impl JsonDecoder {
     fn new() -> Self {
         JsonDecoder {
-            payload_buf: Vec::with_capacity(MAX_PAYLOAD_LEN),
+            payload_buf: Vec::with_capacity(BUFLEN),
         }
     }
 
