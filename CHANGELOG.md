@@ -1,5 +1,31 @@
 # Change Log
 
+## [v4.0.0](https://github.com/swift-nav/libsbp/tree/v4.0.0) (2021-10-08)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.10...v4.0.0)
+
+**Closed issues:**
+
+- sbp.dll doesnt export symbols [\#1062](https://github.com/swift-nav/libsbp/issues/1062)
+
+**Merged pull requests:**
+
+- rust: Use minimum internal buffer size of 128b [\#1080](https://github.com/swift-nav/libsbp/pull/1080) ([silverjam](https://github.com/silverjam))
+- rust: add len method to SbpMessage [\#1078](https://github.com/swift-nav/libsbp/pull/1078) ([notoriaga](https://github.com/notoriaga))
+- Auto submodule update: cmake - Add Profiling to Unit Tests \(\#102\) [\#1077](https://github.com/swift-nav/libsbp/pull/1077) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- expose parsing messages from frames [\#1075](https://github.com/swift-nav/libsbp/pull/1075) ([notoriaga](https://github.com/notoriaga))
+- \[ESD-2180\] clang-tidy improvements [\#1074](https://github.com/swift-nav/libsbp/pull/1074) ([woodfell](https://github.com/woodfell))
+- rust: update to swiftnav 0.6.1 [\#1073](https://github.com/swift-nav/libsbp/pull/1073) ([silverjam](https://github.com/silverjam))
+- rust: release cleanup [\#1071](https://github.com/swift-nav/libsbp/pull/1071) ([notoriaga](https://github.com/notoriaga))
+- Rust: callback based message handler [\#1070](https://github.com/swift-nav/libsbp/pull/1070) ([notoriaga](https://github.com/notoriaga))
+- windows dll update [\#1069](https://github.com/swift-nav/libsbp/pull/1069) ([RReichert](https://github.com/RReichert))
+- Auto submodule update: cmake - Merge pull request \#99 from swift-nav/lkloh/always\_allow\_track\_origins [\#1067](https://github.com/swift-nav/libsbp/pull/1067) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Fix windows library install directory [\#1061](https://github.com/swift-nav/libsbp/pull/1061) ([RReichert](https://github.com/RReichert))
+- Dockerfile: Use Ubuntu focal [\#1059](https://github.com/swift-nav/libsbp/pull/1059) ([jayvdb](https://github.com/jayvdb))
+- Fix spelling and copyright year [\#1058](https://github.com/swift-nav/libsbp/pull/1058) ([jayvdb](https://github.com/jayvdb))
+- Auto submodule update: cmake - Add CONTRIBUTING.md [\#1057](https://github.com/swift-nav/libsbp/pull/1057) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Portability project [\#1000](https://github.com/swift-nav/libsbp/pull/1000) ([RReichert](https://github.com/RReichert))
+
 ## [v3.4.10](https://github.com/swift-nav/libsbp/tree/v3.4.10) (2021-07-23)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.8...v3.4.10)

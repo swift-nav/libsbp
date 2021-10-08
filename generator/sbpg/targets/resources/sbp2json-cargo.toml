@@ -8,6 +8,8 @@
 [package]
 name = "sbp2json"
 version = "(((release)))"
+description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
+license = "MIT"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
 
