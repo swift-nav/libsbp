@@ -291,5 +291,9 @@ def render_sbp_cargo_toml(output_dir, release: ReleaseVersion):
 def render_sbp2json_cargo_toml(output_dir, release: ReleaseVersion):
   destination_filename = "%s/sbp2json/Cargo.toml" % output_dir
   py_template = JENV.get_template(SBP2JSON_CARGO_TEMPLATE)
+  if '-alpha' not in release.full_version:
+    version = "%s-unreleased" % (release.full_version,)
+  else:
+    version = release.full_version
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(release=release.full_version))
+    f.write(py_template.render(release=version))

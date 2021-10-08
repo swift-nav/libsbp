@@ -6,9 +6,11 @@ libsbp Development Procedures
 - [Adding and Testing New Messages](#adding-and-testing-new-messages)
 - [Message Guidelines](#message-guidelines)
 - [Releasing New Versions of the Library](#releasing-new-versions-of-the-library)
+  * [Using Docker](#using-docker)
+  * [The Process](#the-process)
 - [Installing QuickType](#installing-quicktype)
+- [Distributing Rust](#distributing-rust)
 - [Distributing Python](#distributing-python)
-  * [Building on Windows](#building-on-windows)
   * [Troubleshooting](#troubleshooting)
     + [Error: `!!! No Python wheel (.whl) file found...`](#error--no-python-wheel-whl-file-found)
     + [Tox error: `ERROR: FAIL could not package project`](#tox-error-error-fail-could-not-package-project)
@@ -227,6 +229,7 @@ inside the container (so you don't have to setup git inside the docker container
    - `make dist-javascript`
    - `make dist-haskell`
    - `make dist-pdf`
+   - `make dist-rust` (see section on Rust below)
    - `make dist-python` (see section on Python below)
 
    You may need credentials on the appropriate package repositories. Ignore the
@@ -250,6 +253,46 @@ to generate libraries for JavaScript, TypeScript, and Elm.
 In order to run the `make quicktype-*` target you need to install the
 quicktype tool first.  No particular version of this tool is required
 at the moment.
+
+# Distributing Rust
+
+To distribute Rust.  Use the `cargo-release` tool:
+
+```
+cargo install cargo-release
+```
+
+Release `sbp` and `sbp2json` crates separately, first `sbp`, this will do a dry
+run first:
+
+```
+cargo release --package sbp <INCREMENTED_TAG>
+```
+
+Then use `--execute` to actually run the release:
+
+```
+cargo release --package sbp <INCREMENTED_TAG> --execute
+```
+
+Next, release `sbp2son`, first do a dry-run:
+
+```
+cargo release --package sbp2json <INCREMENTED_TAG>
+```
+
+Then, reset any modifications from the dry run, and then actually release `sbp2son`:
+
+```
+git checkout .
+cargo release --package sbp2json <INCREMENTED_TAG> --execute
+```
+
+Then rollback any commits that are created:
+
+```
+git reset --hard v<INCREMENTED_TAG>
+```
 
 # Distributing Python
 

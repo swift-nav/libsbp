@@ -1,5 +1,12 @@
 # Change Log
 
+## [v4.0.1](https://github.com/swift-nav/libsbp/tree/v4.0.1) (2021-10-08)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.0...v4.0.1)
+
+Addressed release bug, Python and JavaSccript modules were not updated.  Rust
+sbp2json was prepped for release to crates.io.
+
 ## [v4.0.0](https://github.com/swift-nav/libsbp/tree/v4.0.0) (2021-10-08)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.10...v4.0.0)
