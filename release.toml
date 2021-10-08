@@ -1,0 +1,4 @@
+pre-release-hook = ["./release-hook.sh"]
+disable-tag = true
+disable-push = true
+no-dev-version = true

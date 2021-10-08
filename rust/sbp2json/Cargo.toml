@@ -9,12 +9,15 @@
 name = "sbp2json"
 version = "4.0.1-alpha"
 description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
-license = "MIT"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
+readme = "./README.md"
+license = "MIT"
+categories = ["parsing"]
+keywords = ["encoding", "parsing"]
 
 [dependencies.sbp]
-path = "../sbp"
+path = "../sbp" # TODO: replace with published `sbp` crate version
 features = ["json"]
 
 [dependencies]
