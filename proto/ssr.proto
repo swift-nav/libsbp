@@ -125,28 +125,6 @@ message STECResidual {
     uint32 stddev = 3;
 }
 
-/** Correction data for a single grid point
- *
- * Contains one tropo delay, plus STEC residuals for each satellite at the
- * grid point.
- */
-message GridElementNoStd {
-    uint32 index = 1;
-    TroposphericDelayCorrectionNoStd tropo_delay_correction = 2;
-    repeated STECResidualNoStd stec_residuals = 3;
-}
-
-/** Correction data for a single grid point
- *
- * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
- * stddev) for each satellite at the grid point.
- */
-message GridElement {
-    uint32 index = 1;
-    TroposphericDelayCorrection tropo_delay_correction = 2;
-    repeated STECResidual stec_residuals = 3;
-}
-
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is to be applied as a delta
@@ -226,7 +204,9 @@ message MsgSsrStecCorrection {
  */
 message MsgSsrGriddedCorrection {
     GriddedCorrectionHeader header = 1;
-    GridElement element = 2;
+    uint32 index = 2;
+    TroposphericDelayCorrection tropo_delay_correction = 3;
+    repeated STECResidual stec_residuals = 4;
 }
 
 /** Definition of a SSR atmospheric correction tile.

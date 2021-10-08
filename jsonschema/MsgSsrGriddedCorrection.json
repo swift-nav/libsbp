@@ -17,10 +17,14 @@
   "type": "object",
   "properties": {
     "header": {"$ref": "GriddedCorrectionHeader.json"},
-    "element": {"$ref": "GridElement.json"}
+    "index": {"type": "integer"},
+    "tropo_delay_correction": {"$ref": "TroposphericDelayCorrection.json"},
+    "stec_residuals": {"type": "array", "items": {"$ref": "STECResidual.json"}}
   },
   "required": [
     "header",
-    "element"
+    "index",
+    "tropo_delay_correction",
+    "stec_residuals"
   ]
 }
