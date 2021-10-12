@@ -131,7 +131,7 @@ class SBP(object):
     crc_offset = header_offset + self.length
     preamble_bytes = 1
     crc_over_len = _HEADER_LEN + self.length - preamble_bytes
-    self.crc = crc16(buf[1:1+crc_over_len])
+    self.crc = crc16(buf[1+offset:1+offset+crc_over_len])
     _CRC_PARSER.pack_into(buf, crc_offset, self.crc)
     length = preamble_bytes + crc_over_len + _CRC_LEN
     return length
