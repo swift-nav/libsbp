@@ -1,5 +1,13 @@
 # Change Log
 
+## [v4.0.2](https://github.com/swift-nav/libsbp/tree/v4.0.2) (2021-10-13)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.1...v4.0.2)
+
+**Merged pull requests:**
+
+- fix crc calculation bug \[DEVINFRA-568\] [\#1081](https://github.com/swift-nav/libsbp/pull/1081) ([silverjam](https://github.com/silverjam))
+
 ## [v4.0.1](https://github.com/swift-nav/libsbp/tree/v4.0.1) (2021-10-08)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.0...v4.0.1)
