@@ -15,7 +15,7 @@ description: >
   Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
   configuration flash from Piksi 2.3.1.  This module does not apply
   to Piksi Multi.
-stable: False
+stable: True
 public: False
 include:
   - types.yaml

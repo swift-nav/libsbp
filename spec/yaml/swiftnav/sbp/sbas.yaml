@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.sbas
 description: SBAS data
-stable: False
+stable: True
 public: True
 include:
   - gnss.yaml

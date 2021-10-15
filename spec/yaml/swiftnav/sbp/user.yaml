@@ -11,7 +11,7 @@
 package: swiftnav.sbp.user
 description: >
   Messages reserved for use by the user.
-stable: False
+stable: True
 public: True
 include:
   - types.yaml

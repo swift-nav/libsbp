@@ -11,7 +11,7 @@
 package: swiftnav.sbp.tracking
 description: >
   Satellite code and carrier-phase tracking messages from the device.
-stable: False
+stable: True
 public: True
 include:
   - types.yaml

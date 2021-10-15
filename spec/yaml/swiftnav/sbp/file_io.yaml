@@ -19,7 +19,7 @@ description: >
 
   Note that some of these messages share the same message type ID for both the
   host request and the device response.
-stable: False
+stable: True
 public: True
 include:
   - types.yaml

@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.vehicle
 description: Messages from a vehicle.
-stable: False
+stable: True
 public: True
 definitions:
 

@@ -10,7 +10,7 @@
 
 package: swiftnav.sbp.ssr
 description: Precise State Space Representation (SSR) corrections format
-stable: False
+stable: True
 public: True
 include:
   - types.yaml
