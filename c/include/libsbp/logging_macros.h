@@ -23,10 +23,10 @@
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
   (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) & SBP_LOG_LOGGING_LEVEL_MASK)
-#define SBP_LOG_LOGGING_LEVEL_SET(flags, val)           \
-  do {                                                  \
-    ((flags) |= (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
-                 << (SBP_LOG_LOGGING_LEVEL_SHIFT)));    \
+#define SBP_LOG_LOGGING_LEVEL_SET(flags, val)                        \
+  do {                                                               \
+    (flags) = (u8)((flags) | (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
+                              << (SBP_LOG_LOGGING_LEVEL_SHIFT)));    \
   } while (0)
 
 #define SBP_LOG_LOGGING_LEVEL_EMERG (0)
