@@ -189,9 +189,9 @@
 
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1f)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT (0u)
-#define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags)      \
-  (((flags) >> SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT) & \
-   SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)
+#define SBP_SATELLITEAPC_SATELLITE_TYPE_GET(flags)           \
+  ((u8)(((flags) >> SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT) & \
+        SBP_SATELLITEAPC_SATELLITE_TYPE_MASK))
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SET(flags, val)                        \
   do {                                                                         \
     (flags) = (u8)((flags) | (((val) & (SBP_SATELLITEAPC_SATELLITE_TYPE_MASK)) \

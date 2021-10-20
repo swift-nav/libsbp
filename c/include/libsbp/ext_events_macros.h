@@ -21,9 +21,9 @@
 #define SBP_MSG_EXT_EVENT 0x0101
 #define SBP_EXT_EVENT_TIME_QUALITY_MASK (0x1)
 #define SBP_EXT_EVENT_TIME_QUALITY_SHIFT (1u)
-#define SBP_EXT_EVENT_TIME_QUALITY_GET(flags)      \
-  (((flags) >> SBP_EXT_EVENT_TIME_QUALITY_SHIFT) & \
-   SBP_EXT_EVENT_TIME_QUALITY_MASK)
+#define SBP_EXT_EVENT_TIME_QUALITY_GET(flags)           \
+  ((u8)(((flags) >> SBP_EXT_EVENT_TIME_QUALITY_SHIFT) & \
+        SBP_EXT_EVENT_TIME_QUALITY_MASK))
 #define SBP_EXT_EVENT_TIME_QUALITY_SET(flags, val)                        \
   do {                                                                    \
     (flags) = (u8)((flags) | (((val) & (SBP_EXT_EVENT_TIME_QUALITY_MASK)) \
@@ -34,9 +34,9 @@
 #define SBP_EXT_EVENT_TIME_QUALITY_GOOD (1)
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK (0x1)
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT (0u)
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_GET(flags)      \
-  (((flags) >> SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT) & \
-   SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK)
+#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_GET(flags)           \
+  ((u8)(((flags) >> SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT) & \
+        SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK))
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SET(flags, val)                        \
   do {                                                                        \
     (flags) = (u8)((flags) | (((val) & (SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK)) \

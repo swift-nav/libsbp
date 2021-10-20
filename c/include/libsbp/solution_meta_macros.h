@@ -20,9 +20,9 @@
 
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK (0x3)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT (3u)
-#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_GET(flags)      \
-  (((flags) >> SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT) & \
-   SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_GET(flags)           \
+  ((u8)(((flags) >> SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT) & \
+        SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK))
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SET(flags, val)                  \
   do {                                                                      \
     (flags) =                                                               \
@@ -35,9 +35,9 @@
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_RECEIVED_BUT_NOT_USED (2)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_MASK (0x7)
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SHIFT (0u)
-#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_GET(flags)      \
-  (((flags) >> SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SHIFT) & \
-   SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_MASK)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_GET(flags)           \
+  ((u8)(((flags) >> SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SHIFT) & \
+        SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_MASK))
 #define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SET(flags, val)                  \
   do {                                                                     \
     (flags) =                                                              \
@@ -61,9 +61,9 @@
 #define SBP_MSG_SOLN_META_DEP_A 0xFF0F
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags)      \
-  (((flags) >> SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT) & \
-   SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags)           \
+  ((u8)(((flags) >> SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT) & \
+        SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK))
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SET(flags, val)                  \
   do {                                                                        \
     (flags) =                                                                 \
@@ -106,9 +106,9 @@
 #define SBP_MSG_SOLN_META 0xFF0E
 #define SBP_SOLN_META_TIME_STATUS_MASK (0x3)
 #define SBP_SOLN_META_TIME_STATUS_SHIFT (30u)
-#define SBP_SOLN_META_TIME_STATUS_GET(flags)      \
-  (((flags) >> SBP_SOLN_META_TIME_STATUS_SHIFT) & \
-   SBP_SOLN_META_TIME_STATUS_MASK)
+#define SBP_SOLN_META_TIME_STATUS_GET(flags)            \
+  ((u32)(((flags) >> SBP_SOLN_META_TIME_STATUS_SHIFT) & \
+         SBP_SOLN_META_TIME_STATUS_MASK))
 #define SBP_SOLN_META_TIME_STATUS_SET(flags, val)                         \
   do {                                                                    \
     (flags) = (u32)((flags) | (((val) & (SBP_SOLN_META_TIME_STATUS_MASK)) \
@@ -121,9 +121,9 @@
   (0x3fffffff)
 #define SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT (0u)
 #define SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_GET(flags) \
-  (((flags) >>                                                                \
-    SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT) &       \
-   SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK)
+  ((u32)(((flags) >>                                                          \
+          SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT) & \
+         SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK))
 #define SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SET(flags,     \
                                                                        val)       \
   do {                                                                            \
@@ -158,9 +158,9 @@
 
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK (0x3)
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT (0u)
-#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GET(flags)      \
-  (((flags) >> SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT) & \
-   SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK)
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GET(flags)           \
+  ((u8)(((flags) >> SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT) & \
+        SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK))
 #define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SET(flags, val)             \
   do {                                                                         \
     (flags) = (u8)(                                                            \
@@ -180,9 +180,9 @@
 
 #define SBP_IMUINPUTTYPE_TIME_STATUS_MASK (0x3)
 #define SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT (4u)
-#define SBP_IMUINPUTTYPE_TIME_STATUS_GET(flags)      \
-  (((flags) >> SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT) & \
-   SBP_IMUINPUTTYPE_TIME_STATUS_MASK)
+#define SBP_IMUINPUTTYPE_TIME_STATUS_GET(flags)           \
+  ((u8)(((flags) >> SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT) & \
+        SBP_IMUINPUTTYPE_TIME_STATUS_MASK))
 #define SBP_IMUINPUTTYPE_TIME_STATUS_SET(flags, val)                        \
   do {                                                                      \
     (flags) = (u8)((flags) | (((val) & (SBP_IMUINPUTTYPE_TIME_STATUS_MASK)) \
@@ -197,9 +197,9 @@
 #define SBP_IMUINPUTTYPE_TIME_STATUS_REFERENCE_EPOCH_IS_LAST_PPS (3)
 #define SBP_IMUINPUTTYPE_IMU_GRADE_MASK (0x3)
 #define SBP_IMUINPUTTYPE_IMU_GRADE_SHIFT (2u)
-#define SBP_IMUINPUTTYPE_IMU_GRADE_GET(flags)      \
-  (((flags) >> SBP_IMUINPUTTYPE_IMU_GRADE_SHIFT) & \
-   SBP_IMUINPUTTYPE_IMU_GRADE_MASK)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_GET(flags)           \
+  ((u8)(((flags) >> SBP_IMUINPUTTYPE_IMU_GRADE_SHIFT) & \
+        SBP_IMUINPUTTYPE_IMU_GRADE_MASK))
 #define SBP_IMUINPUTTYPE_IMU_GRADE_SET(flags, val)                        \
   do {                                                                    \
     (flags) = (u8)((flags) | (((val) & (SBP_IMUINPUTTYPE_IMU_GRADE_MASK)) \
@@ -212,9 +212,9 @@
 #define SBP_IMUINPUTTYPE_IMU_GRADE_SUPERIOR_GRADE (3)
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_MASK (0x3)
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SHIFT (0u)
-#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_GET(flags)      \
-  (((flags) >> SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SHIFT) & \
-   SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_MASK)
+#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_GET(flags)           \
+  ((u8)(((flags) >> SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SHIFT) & \
+        SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_MASK))
 #define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SET(flags, val)                  \
   do {                                                                     \
     (flags) =                                                              \
@@ -233,7 +233,7 @@
 #define SBP_ODOINPUTTYPE_RATE_MASK (0x3)
 #define SBP_ODOINPUTTYPE_RATE_SHIFT (4u)
 #define SBP_ODOINPUTTYPE_RATE_GET(flags) \
-  (((flags) >> SBP_ODOINPUTTYPE_RATE_SHIFT) & SBP_ODOINPUTTYPE_RATE_MASK)
+  ((u8)(((flags) >> SBP_ODOINPUTTYPE_RATE_SHIFT) & SBP_ODOINPUTTYPE_RATE_MASK))
 #define SBP_ODOINPUTTYPE_RATE_SET(flags, val)                        \
   do {                                                               \
     (flags) = (u8)((flags) | (((val) & (SBP_ODOINPUTTYPE_RATE_MASK)) \
@@ -244,9 +244,9 @@
 #define SBP_ODOINPUTTYPE_RATE_TRIGGERED_BY_MINIMUM_DISTANCE_OR_SPEED (1)
 #define SBP_ODOINPUTTYPE_ODOMETER_GRADE_MASK (0x3)
 #define SBP_ODOINPUTTYPE_ODOMETER_GRADE_SHIFT (2u)
-#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_GET(flags)      \
-  (((flags) >> SBP_ODOINPUTTYPE_ODOMETER_GRADE_SHIFT) & \
-   SBP_ODOINPUTTYPE_ODOMETER_GRADE_MASK)
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_GET(flags)           \
+  ((u8)(((flags) >> SBP_ODOINPUTTYPE_ODOMETER_GRADE_SHIFT) & \
+        SBP_ODOINPUTTYPE_ODOMETER_GRADE_MASK))
 #define SBP_ODOINPUTTYPE_ODOMETER_GRADE_SET(flags, val)                        \
   do {                                                                         \
     (flags) = (u8)((flags) | (((val) & (SBP_ODOINPUTTYPE_ODOMETER_GRADE_MASK)) \
@@ -258,9 +258,9 @@
 #define SBP_ODOINPUTTYPE_ODOMETER_GRADE_SUPERIOR_GRADE (2)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MASK (0x3)
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SHIFT (0u)
-#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_GET(flags)      \
-  (((flags) >> SBP_ODOINPUTTYPE_ODOMETER_CLASS_SHIFT) & \
-   SBP_ODOINPUTTYPE_ODOMETER_CLASS_MASK)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_GET(flags)           \
+  ((u8)(((flags) >> SBP_ODOINPUTTYPE_ODOMETER_CLASS_SHIFT) & \
+        SBP_ODOINPUTTYPE_ODOMETER_CLASS_MASK))
 #define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SET(flags, val)                        \
   do {                                                                         \
     (flags) = (u8)((flags) | (((val) & (SBP_ODOINPUTTYPE_ODOMETER_CLASS_MASK)) \
