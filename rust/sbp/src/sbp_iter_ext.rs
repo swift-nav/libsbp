@@ -233,7 +233,7 @@ mod tests {
 
         let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
-        assert!((gps_time.tow() - 2568.).abs() < f64::EPSILON);
+        assert!((gps_time.tow() - 2567.8).abs() < f64::EPSILON);
 
         assert!(with_time.next().map(|(_, t)| t).flatten().is_none());
 
@@ -242,6 +242,23 @@ mod tests {
         assert!((gps_time.tow() - 2567.9).abs() < f64::EPSILON);
 
         let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
+        assert_eq!(gps_time.wn(), 1787);
+        assert!((gps_time.tow() - 2568.).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn test_rover_time_result() {
+        let data = Cursor::new(vec![
+            // MsgGPSTimeDepA TOW: 2567800 WN: 1787
+            85, 0, 1, 246, 215, 11, 251, 6, 120, 46, 39, 0, 0, 0, 0, 0, 0, 133, 36,
+        ]);
+
+        let mut with_time = iter_messages(data).with_rover_time();
+
+        let msg = with_time.next().unwrap();
+        assert!(msg.0.is_ok());
+
+        let gps_time = msg.1.unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
         assert!((gps_time.tow() - 2567.8).abs() < f64::EPSILON);
     }
