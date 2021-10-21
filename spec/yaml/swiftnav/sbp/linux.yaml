@@ -12,7 +12,7 @@ package: swiftnav.sbp.linux
 description: >
   Linux state monitoring.
 
-stable: True
+stable: False
 public: False
 
 include:
