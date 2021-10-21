@@ -89,6 +89,7 @@
 ((*- endfor *))
 \newpage
 ((*- endfor *))
+((*- if umsgs *))
 \section{Draft Message Definitions}
 ((*- for m in umsgs *))
 ((*- if m.pkg *))
@@ -176,4 +177,5 @@
 
 \newpage
 ((*- endfor *))
+((*- endif *))
 ((* endblock *))
