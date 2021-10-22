@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp2json"
-version = "4.0.3-unreleased"
+version = "4.0.3"
 description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
@@ -17,7 +17,7 @@ categories = ["parsing"]
 keywords = ["encoding", "parsing"]
 
 [dependencies.sbp]
-path = "../sbp" # TODO: replace with published `sbp` crate version
+version = "4.0.3"
 features = ["json"]
 
 [dependencies]
