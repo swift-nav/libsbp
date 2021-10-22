@@ -1,14 +1,5 @@
 //! Extra adaptors for iterators of [Sbp] messages.
 
-#[cfg(feature = "swiftnav")]
-use swiftnav::time::GpsTime;
-
-#[cfg(feature = "swiftnav")]
-use crate::{
-    messages::SbpMessage,
-    time::{GpsTimeError, MessageTime, RoverTime},
-};
-
 use crate::{DeserializeError, Sbp};
 
 /// An [Iterator] blanket implementation that provides extra adaptors for iterators of [Sbp] messages.
@@ -54,11 +45,12 @@ pub trait SbpIterExt: Iterator {
     /// If the message has a complete GpsTime it is returned. If the message only has a TOW, this itertor will use the
     /// last week number it has seen, or return `None` if it hasn't seen any.
     #[cfg(feature = "swiftnav")]
-    fn with_rover_time(self) -> RoverTimeIter<Self>
+    fn with_rover_time<T>(self) -> swiftnav_impl::RoverTimeIter<Self>
     where
-        Self: Sized,
+        T: swiftnav_impl::HasTime,
+        Self: Iterator<Item = T> + Sized,
     {
-        RoverTimeIter::new(self)
+        swiftnav_impl::RoverTimeIter::new(self)
     }
 }
 
@@ -123,66 +115,93 @@ where
     }
 }
 
-/// See [SbpIterExt::with_rover_time] for more information.
 #[cfg(feature = "swiftnav")]
-pub struct RoverTimeIter<I: Iterator> {
-    messages: I,
-    clock: Option<GpsTime>,
-}
+mod swiftnav_impl {
+    use swiftnav::time::GpsTime;
 
-#[cfg(feature = "swiftnav")]
-impl<I> RoverTimeIter<I>
-where
-    I: Iterator,
-{
-    fn new(messages: I) -> RoverTimeIter<I> {
-        Self {
-            messages,
-            clock: None,
-        }
+    use crate::{
+        messages::SbpMessage,
+        time::{GpsTimeError, MessageTime, RoverTime},
+        Sbp,
+    };
+
+    /// See [SbpIterExt::with_rover_time] for more information.
+    pub struct RoverTimeIter<I: Iterator> {
+        messages: I,
+        clock: Option<GpsTime>,
     }
 
-    fn update(&mut self, time: MessageTime) -> Option<GpsTime> {
-        match time {
-            MessageTime::Rover(time) => match time {
-                RoverTime::GpsTime(time) => {
-                    self.clock = Some(time);
-                    Some(time)
-                }
-                RoverTime::Tow(tow) => {
-                    if let Some(clock) = self.clock {
-                        // tow came from a `GpsTime` so it must be valid
-                        let time = GpsTime::new(clock.wn(), tow).unwrap();
+    impl<I> RoverTimeIter<I>
+    where
+        I: Iterator,
+    {
+        pub fn new(messages: I) -> RoverTimeIter<I> {
+            Self {
+                messages,
+                clock: None,
+            }
+        }
+
+        fn update(&mut self, time: MessageTime) -> Option<GpsTime> {
+            match time {
+                MessageTime::Rover(time) => match time {
+                    RoverTime::GpsTime(time) => {
                         self.clock = Some(time);
                         Some(time)
-                    } else {
-                        // no previous time to use wn from
-                        None
                     }
-                }
-            },
-            _ => None,
+                    RoverTime::Tow(tow) => {
+                        if let Some(clock) = self.clock {
+                            // tow came from a `GpsTime` so it must be valid
+                            let time = GpsTime::new(clock.wn(), tow).unwrap();
+                            self.clock = Some(time);
+                            Some(time)
+                        } else {
+                            // no previous time to use wn from
+                            None
+                        }
+                    }
+                },
+                _ => None,
+            }
         }
     }
-}
 
-#[cfg(feature = "swiftnav")]
-impl<I> Iterator for RoverTimeIter<I>
-where
-    I: Iterator<Item = Sbp>,
-{
-    type Item = (Sbp, Option<Result<GpsTime, GpsTimeError>>);
+    impl<I> Iterator for RoverTimeIter<I>
+    where
+        I: Iterator,
+        I::Item: HasTime,
+    {
+        type Item = (I::Item, Option<Result<GpsTime, GpsTimeError>>);
 
-    fn next(&mut self) -> Option<Self::Item> {
-        let msg = self.messages.next()?;
-
-        match msg.gps_time() {
-            Some(Ok(time)) => match self.update(time) {
-                Some(gps_time) => Some((msg, Some(Ok(gps_time)))),
+        fn next(&mut self) -> Option<Self::Item> {
+            let msg = self.messages.next()?;
+            match msg.time() {
+                Some(Ok(time)) => match self.update(time) {
+                    Some(gps_time) => Some((msg, Some(Ok(gps_time)))),
+                    None => Some((msg, None)),
+                },
+                Some(Err(e)) => Some((msg, Some(Err(e)))),
                 None => Some((msg, None)),
-            },
-            Some(Err(e)) => Some((msg, Some(Err(e)))),
-            None => Some((msg, None)),
+            }
+        }
+    }
+
+    pub trait HasTime {
+        fn time(&self) -> Option<Result<MessageTime, GpsTimeError>>;
+    }
+
+    impl HasTime for Sbp {
+        fn time(&self) -> Option<Result<MessageTime, GpsTimeError>> {
+            self.gps_time()
+        }
+    }
+
+    impl<E> HasTime for Result<Sbp, E> {
+        fn time(&self) -> Option<Result<MessageTime, GpsTimeError>> {
+            match self {
+                Ok(m) => m.gps_time(),
+                Err(_) => None,
+            }
         }
     }
 }
@@ -214,17 +233,34 @@ mod tests {
 
         let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
-        assert_eq!(gps_time.tow(), 2567.8);
+        assert!((gps_time.tow() - 2567.8).abs() < f64::EPSILON);
 
         assert!(with_time.next().map(|(_, t)| t).flatten().is_none());
 
         let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
-        assert_eq!(gps_time.tow(), 2567.9);
+        assert!((gps_time.tow() - 2567.9).abs() < f64::EPSILON);
 
         let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
-        assert_eq!(gps_time.tow(), 2568.);
+        assert!((gps_time.tow() - 2568.).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn test_rover_time_result() {
+        let data = Cursor::new(vec![
+            // MsgGPSTimeDepA TOW: 2567800 WN: 1787
+            85, 0, 1, 246, 215, 11, 251, 6, 120, 46, 39, 0, 0, 0, 0, 0, 0, 133, 36,
+        ]);
+
+        let mut with_time = iter_messages(data).with_rover_time();
+
+        let msg = with_time.next().unwrap();
+        assert!(msg.0.is_ok());
+
+        let gps_time = msg.1.unwrap().unwrap();
+        assert_eq!(gps_time.wn(), 1787);
+        assert!((gps_time.tow() - 2567.8).abs() < f64::EPSILON);
     }
 
     #[test]
@@ -268,7 +304,7 @@ mod tests {
             ControlFlow::Break
         });
 
-        while let Some(_) = messages.next() {
+        for _ in &mut messages {
             msg_count += 1;
         }
         assert!(matches!(
@@ -277,7 +313,7 @@ mod tests {
         ));
         assert_eq!(msg_count, 2);
 
-        while let Some(_) = messages.next() {
+        for _ in &mut messages {
             msg_count += 1;
         }
         assert!(messages.take_err().is_ok());
