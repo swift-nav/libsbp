@@ -14,7 +14,6 @@
 //   const gnssSignal = Convert.toGnssSignal(json);
 //   const gpsTime = Convert.toGpsTime(json);
 //   const gpsTimeSEC = Convert.toGpsTimeSEC(json);
-//   const gridDefinitionHeader = Convert.toGridDefinitionHeader(json);
 //   const gridElement = Convert.toGridElement(json);
 //   const gridElementNoStd = Convert.toGridElementNoStd(json);
 //   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
@@ -136,9 +135,7 @@
 //   const msgSolnMeta = Convert.toMsgSolnMeta(json);
 //   const msgSpecan = Convert.toMsgSpecan(json);
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
-//   const msgSsrGridDefinition = Convert.toMsgSsrGridDefinition(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
-//   const msgSsrGriddedCorrectionNoStd = Convert.toMsgSsrGriddedCorrectionNoStd(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
@@ -289,14 +286,6 @@ function toGpsTimeSEC(json) {
 
 function gpsTimeSECToJson(value) {
     return JSON.stringify(uncast(value, r("GpsTimeSEC")), null, 2);
-}
-
-function toGridDefinitionHeader(json) {
-    return cast(JSON.parse(json), r("GridDefinitionHeader"));
-}
-
-function gridDefinitionHeaderToJson(value) {
-    return JSON.stringify(uncast(value, r("GridDefinitionHeader")), null, 2);
 }
 
 function toGridElement(json) {
@@ -1267,28 +1256,12 @@ function msgSsrCodeBiasesToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrCodeBiases")), null, 2);
 }
 
-function toMsgSsrGridDefinition(json) {
-    return cast(JSON.parse(json), r("MsgSsrGridDefinition"));
-}
-
-function msgSsrGridDefinitionToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgSsrGridDefinition")), null, 2);
-}
-
 function toMsgSsrGriddedCorrection(json) {
     return cast(JSON.parse(json), r("MsgSsrGriddedCorrection"));
 }
 
 function msgSsrGriddedCorrectionToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrection")), null, 2);
-}
-
-function toMsgSsrGriddedCorrectionNoStd(json) {
-    return cast(JSON.parse(json), r("MsgSsrGriddedCorrectionNoStd"));
-}
-
-function msgSsrGriddedCorrectionNoStdToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrectionNoStd")), null, 2);
 }
 
 function toMsgSsrOrbitClock(json) {
@@ -1826,6 +1799,38 @@ function r(name) {
 const typeMap = {
     "GNSSInputType": o([
         { json: "flags", js: "flags", typ: 0 },
+    ], "any"),
+    "GridElement": o([
+        { json: "index", js: "index", typ: 0 },
+        { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidual")) },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
+    ], "any"),
+    "STECResidual": o([
+        { json: "residual", js: "residual", typ: 0 },
+        { json: "stddev", js: "stddev", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
+    ], "any"),
+    "SvID": o([
+        { json: "constellation", js: "constellation", typ: 0 },
+        { json: "satId", js: "satId", typ: 0 },
+    ], "any"),
+    "TroposphericDelayCorrection": o([
+        { json: "hydro", js: "hydro", typ: 0 },
+        { json: "stddev", js: "stddev", typ: 0 },
+        { json: "wet", js: "wet", typ: 0 },
+    ], "any"),
+    "GridElementNoStd": o([
+        { json: "index", js: "index", typ: 0 },
+        { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidualNoStd")) },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrectionNoStd") },
+    ], "any"),
+    "STECResidualNoStd": o([
+        { json: "residual", js: "residual", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
+    ], "any"),
+    "TroposphericDelayCorrectionNoStd": o([
+        { json: "hydro", js: "hydro", typ: 0 },
+        { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "IMUInputType": o([
         { json: "flags", js: "flags", typ: 0 },
@@ -2707,40 +2712,11 @@ const typeMap = {
         { json: "code", js: "code", typ: 0 },
         { json: "value", js: "value", typ: 0 },
     ], "any"),
-    "MsgSsrGridDefinition": o([
-        { json: "header", js: "header", typ: r("GridDefinitionHeader") },
-        { json: "rle_list", js: "rle_list", typ: a(0) },
-    ], "any"),
-    "GridDefinitionHeader": o([
-        { json: "area_width", js: "area_width", typ: 0 },
-        { json: "lat_nw_corner_enc", js: "lat_nw_corner_enc", typ: 0 },
-        { json: "lon_nw_corner_enc", js: "lon_nw_corner_enc", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "region_size_inverse", js: "region_size_inverse", typ: 0 },
-        { json: "seq_num", js: "seq_num", typ: 0 },
-    ], "any"),
     "MsgSsrGriddedCorrection": o([
-        { json: "element", js: "element", typ: r("GridElement") },
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
-    ], "any"),
-    "GridElement": o([
         { json: "index", js: "index", typ: 0 },
         { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidual")) },
         { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
-    ], "any"),
-    "STECResidual": o([
-        { json: "residual", js: "residual", typ: 0 },
-        { json: "stddev", js: "stddev", typ: 0 },
-        { json: "sv_id", js: "sv_id", typ: r("SvID") },
-    ], "any"),
-    "SvID": o([
-        { json: "constellation", js: "constellation", typ: 0 },
-        { json: "satId", js: "satId", typ: 0 },
-    ], "any"),
-    "TroposphericDelayCorrection": o([
-        { json: "hydro", js: "hydro", typ: 0 },
-        { json: "stddev", js: "stddev", typ: 0 },
-        { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "GriddedCorrectionHeader": o([
         { json: "iod_atmo", js: "iod_atmo", typ: 0 },
@@ -2751,23 +2727,6 @@ const typeMap = {
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "tropo_quality_indicator", js: "tropo_quality_indicator", typ: 0 },
         { json: "update_interval", js: "update_interval", typ: 0 },
-    ], "any"),
-    "MsgSsrGriddedCorrectionNoStd": o([
-        { json: "element", js: "element", typ: r("GridElementNoStd") },
-        { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
-    ], "any"),
-    "GridElementNoStd": o([
-        { json: "index", js: "index", typ: 0 },
-        { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidualNoStd")) },
-        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrectionNoStd") },
-    ], "any"),
-    "STECResidualNoStd": o([
-        { json: "residual", js: "residual", typ: 0 },
-        { json: "sv_id", js: "sv_id", typ: r("SvID") },
-    ], "any"),
-    "TroposphericDelayCorrectionNoStd": o([
-        { json: "hydro", js: "hydro", typ: 0 },
-        { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "MsgSsrOrbitClock": o([
         { json: "along", js: "along", typ: 0 },
@@ -3093,8 +3052,6 @@ module.exports = {
     "toGpsTime": toGpsTime,
     "gpsTimeSECToJson": gpsTimeSECToJson,
     "toGpsTimeSEC": toGpsTimeSEC,
-    "gridDefinitionHeaderToJson": gridDefinitionHeaderToJson,
-    "toGridDefinitionHeader": toGridDefinitionHeader,
     "gridElementToJson": gridElementToJson,
     "toGridElement": toGridElement,
     "gridElementNoStdToJson": gridElementNoStdToJson,
@@ -3337,12 +3294,8 @@ module.exports = {
     "toMsgSpecan": toMsgSpecan,
     "msgSsrCodeBiasesToJson": msgSsrCodeBiasesToJson,
     "toMsgSsrCodeBiases": toMsgSsrCodeBiases,
-    "msgSsrGridDefinitionToJson": msgSsrGridDefinitionToJson,
-    "toMsgSsrGridDefinition": toMsgSsrGridDefinition,
     "msgSsrGriddedCorrectionToJson": msgSsrGriddedCorrectionToJson,
     "toMsgSsrGriddedCorrection": toMsgSsrGriddedCorrection,
-    "msgSsrGriddedCorrectionNoStdToJson": msgSsrGriddedCorrectionNoStdToJson,
-    "toMsgSsrGriddedCorrectionNoStd": toMsgSsrGriddedCorrectionNoStd,
     "msgSsrOrbitClockToJson": msgSsrOrbitClockToJson,
     "toMsgSsrOrbitClock": toMsgSsrOrbitClock,
     "msgSsrPhaseBiasesToJson": msgSsrPhaseBiasesToJson,

@@ -782,6 +782,35 @@ type alias GNSSInputType =
     { flags : Int
     }
 
+{-| Contains one tropo delay (mean and stddev), plus STEC residuals (mean and stddev) for
+each satellite at the grid point.
+-}
+type alias GridElement =
+    { index : Int
+    , stecResiduals : Array STECResidual
+    , tropoDelayCorrection : TroposphericDelayCorrection
+    }
+
+{-| STEC residual (mean and standard deviation) for the given satellite at the grid point. -}
+type alias STECResidual =
+    { residual : Int
+    , stddev : Int
+    , svID : SvID
+    }
+
+{-| A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle. -}
+type alias SvID =
+    { constellation : Int
+    , satID : Int
+    }
+
+{-| Troposphere vertical delays (mean and standard deviation) at the grid point. -}
+type alias TroposphericDelayCorrection =
+    { hydro : Int
+    , stddev : Int
+    , wet : Int
+    }
+
 {-| Contains one tropo delay, plus STEC residuals for each satellite at the grid point. -}
 type alias GridElementNoStd =
     { index : Int
@@ -793,12 +822,6 @@ type alias GridElementNoStd =
 type alias STECResidualNoStd =
     { residual : Int
     , svID : SvID
-    }
-
-{-| A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle. -}
-type alias SvID =
-    { constellation : Int
-    , satID : Int
     }
 
 {-| Troposphere vertical delays at the grid point. -}
@@ -2356,31 +2379,10 @@ type alias CodeBiasesContent =
 It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 -}
 type alias MsgSsrGriddedCorrection =
-    { element : GridElement
-    , header : GriddedCorrectionHeader
-    }
-
-{-| Contains one tropo delay (mean and stddev), plus STEC residuals (mean and stddev) for
-each satellite at the grid point.
--}
-type alias GridElement =
-    { index : Int
+    { header : GriddedCorrectionHeader
+    , index : Int
     , stecResiduals : Array STECResidual
     , tropoDelayCorrection : TroposphericDelayCorrection
-    }
-
-{-| STEC residual (mean and standard deviation) for the given satellite at the grid point. -}
-type alias STECResidual =
-    { residual : Int
-    , stddev : Int
-    , svID : SvID
-    }
-
-{-| Troposphere vertical delays (mean and standard deviation) at the grid point. -}
-type alias TroposphericDelayCorrection =
-    { hydro : Int
-    , stddev : Int
-    , wet : Int
     }
 
 {-| The LPP message contains nested variable length arrays which are not supported in SBP, so
@@ -3485,6 +3487,64 @@ encodeGNSSInputType x =
         [ ("flags", Jenc.int x.flags)
         ]
 
+gridElement : Jdec.Decoder GridElement
+gridElement =
+    Jpipe.decode GridElement
+        |> Jpipe.required "index" Jdec.int
+        |> Jpipe.required "stec_residuals" (Jdec.array stecResidual)
+        |> Jpipe.required "tropo_delay_correction" troposphericDelayCorrection
+
+encodeGridElement : GridElement -> Jenc.Value
+encodeGridElement x =
+    Jenc.object
+        [ ("index", Jenc.int x.index)
+        , ("stec_residuals", makeArrayEncoder encodeSTECResidual x.stecResiduals)
+        , ("tropo_delay_correction", encodeTroposphericDelayCorrection x.tropoDelayCorrection)
+        ]
+
+stecResidual : Jdec.Decoder STECResidual
+stecResidual =
+    Jpipe.decode STECResidual
+        |> Jpipe.required "residual" Jdec.int
+        |> Jpipe.required "stddev" Jdec.int
+        |> Jpipe.required "sv_id" svID
+
+encodeSTECResidual : STECResidual -> Jenc.Value
+encodeSTECResidual x =
+    Jenc.object
+        [ ("residual", Jenc.int x.residual)
+        , ("stddev", Jenc.int x.stddev)
+        , ("sv_id", encodeSvID x.svID)
+        ]
+
+svID : Jdec.Decoder SvID
+svID =
+    Jpipe.decode SvID
+        |> Jpipe.required "constellation" Jdec.int
+        |> Jpipe.required "satId" Jdec.int
+
+encodeSvID : SvID -> Jenc.Value
+encodeSvID x =
+    Jenc.object
+        [ ("constellation", Jenc.int x.constellation)
+        , ("satId", Jenc.int x.satID)
+        ]
+
+troposphericDelayCorrection : Jdec.Decoder TroposphericDelayCorrection
+troposphericDelayCorrection =
+    Jpipe.decode TroposphericDelayCorrection
+        |> Jpipe.required "hydro" Jdec.int
+        |> Jpipe.required "stddev" Jdec.int
+        |> Jpipe.required "wet" Jdec.int
+
+encodeTroposphericDelayCorrection : TroposphericDelayCorrection -> Jenc.Value
+encodeTroposphericDelayCorrection x =
+    Jenc.object
+        [ ("hydro", Jenc.int x.hydro)
+        , ("stddev", Jenc.int x.stddev)
+        , ("wet", Jenc.int x.wet)
+        ]
+
 gridElementNoStd : Jdec.Decoder GridElementNoStd
 gridElementNoStd =
     Jpipe.decode GridElementNoStd
@@ -3511,19 +3571,6 @@ encodeSTECResidualNoStd x =
     Jenc.object
         [ ("residual", Jenc.int x.residual)
         , ("sv_id", encodeSvID x.svID)
-        ]
-
-svID : Jdec.Decoder SvID
-svID =
-    Jpipe.decode SvID
-        |> Jpipe.required "constellation" Jdec.int
-        |> Jpipe.required "satId" Jdec.int
-
-encodeSvID : SvID -> Jenc.Value
-encodeSvID x =
-    Jenc.object
-        [ ("constellation", Jenc.int x.constellation)
-        , ("satId", Jenc.int x.satID)
         ]
 
 troposphericDelayCorrectionNoStd : Jdec.Decoder TroposphericDelayCorrectionNoStd
@@ -5922,59 +5969,18 @@ encodeCodeBiasesContent x =
 msgSsrGriddedCorrection : Jdec.Decoder MsgSsrGriddedCorrection
 msgSsrGriddedCorrection =
     Jpipe.decode MsgSsrGriddedCorrection
-        |> Jpipe.required "element" gridElement
         |> Jpipe.required "header" griddedCorrectionHeader
-
-encodeMsgSsrGriddedCorrection : MsgSsrGriddedCorrection -> Jenc.Value
-encodeMsgSsrGriddedCorrection x =
-    Jenc.object
-        [ ("element", encodeGridElement x.element)
-        , ("header", encodeGriddedCorrectionHeader x.header)
-        ]
-
-gridElement : Jdec.Decoder GridElement
-gridElement =
-    Jpipe.decode GridElement
         |> Jpipe.required "index" Jdec.int
         |> Jpipe.required "stec_residuals" (Jdec.array stecResidual)
         |> Jpipe.required "tropo_delay_correction" troposphericDelayCorrection
 
-encodeGridElement : GridElement -> Jenc.Value
-encodeGridElement x =
+encodeMsgSsrGriddedCorrection : MsgSsrGriddedCorrection -> Jenc.Value
+encodeMsgSsrGriddedCorrection x =
     Jenc.object
-        [ ("index", Jenc.int x.index)
+        [ ("header", encodeGriddedCorrectionHeader x.header)
+        , ("index", Jenc.int x.index)
         , ("stec_residuals", makeArrayEncoder encodeSTECResidual x.stecResiduals)
         , ("tropo_delay_correction", encodeTroposphericDelayCorrection x.tropoDelayCorrection)
-        ]
-
-stecResidual : Jdec.Decoder STECResidual
-stecResidual =
-    Jpipe.decode STECResidual
-        |> Jpipe.required "residual" Jdec.int
-        |> Jpipe.required "stddev" Jdec.int
-        |> Jpipe.required "sv_id" svID
-
-encodeSTECResidual : STECResidual -> Jenc.Value
-encodeSTECResidual x =
-    Jenc.object
-        [ ("residual", Jenc.int x.residual)
-        , ("stddev", Jenc.int x.stddev)
-        , ("sv_id", encodeSvID x.svID)
-        ]
-
-troposphericDelayCorrection : Jdec.Decoder TroposphericDelayCorrection
-troposphericDelayCorrection =
-    Jpipe.decode TroposphericDelayCorrection
-        |> Jpipe.required "hydro" Jdec.int
-        |> Jpipe.required "stddev" Jdec.int
-        |> Jpipe.required "wet" Jdec.int
-
-encodeTroposphericDelayCorrection : TroposphericDelayCorrection -> Jenc.Value
-encodeTroposphericDelayCorrection x =
-    Jenc.object
-        [ ("hydro", Jenc.int x.hydro)
-        , ("stddev", Jenc.int x.stddev)
-        , ("wet", Jenc.int x.wet)
         ]
 
 griddedCorrectionHeader : Jdec.Decoder GriddedCorrectionHeader

@@ -199,6 +199,42 @@ export interface GNSSInputType {
 }
 
 /**
+ * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and stddev) for
+ * each satellite at the grid point.
+ */
+export interface GridElement {
+    index:                  number;
+    stec_residuals:         STECResidual[];
+    tropo_delay_correction: TroposphericDelayCorrection;
+}
+
+/**
+ * STEC residual (mean and standard deviation) for the given satellite at the grid point.
+ */
+export interface STECResidual {
+    residual: number;
+    stddev:   number;
+    sv_id:    SvID;
+}
+
+/**
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle.
+ */
+export interface SvID {
+    constellation: number;
+    satId:         number;
+}
+
+/**
+ * Troposphere vertical delays (mean and standard deviation) at the grid point.
+ */
+export interface TroposphericDelayCorrection {
+    hydro:  number;
+    stddev: number;
+    wet:    number;
+}
+
+/**
  * Contains one tropo delay, plus STEC residuals for each satellite at the grid point.
  */
 export interface GridElementNoStd {
@@ -213,14 +249,6 @@ export interface GridElementNoStd {
 export interface STECResidualNoStd {
     residual: number;
     sv_id:    SvID;
-}
-
-/**
- * A (Constellation ID, satellite ID) tuple that uniquely identifies a space vehicle.
- */
-export interface SvID {
-    constellation: number;
-    satId:         number;
 }
 
 /**
@@ -1915,36 +1943,10 @@ export interface CodeBiasesContent {
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
  */
 export interface MsgSsrGriddedCorrection {
-    element: GridElement;
-    header:  GriddedCorrectionHeader;
-}
-
-/**
- * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and stddev) for
- * each satellite at the grid point.
- */
-export interface GridElement {
+    header:                 GriddedCorrectionHeader;
     index:                  number;
     stec_residuals:         STECResidual[];
     tropo_delay_correction: TroposphericDelayCorrection;
-}
-
-/**
- * STEC residual (mean and standard deviation) for the given satellite at the grid point.
- */
-export interface STECResidual {
-    residual: number;
-    stddev:   number;
-    sv_id:    SvID;
-}
-
-/**
- * Troposphere vertical delays (mean and standard deviation) at the grid point.
- */
-export interface TroposphericDelayCorrection {
-    hydro:  number;
-    stddev: number;
-    wet:    number;
 }
 
 /**
@@ -4112,6 +4114,25 @@ const typeMap: any = {
     "GNSSInputType": o([
         { json: "flags", js: "flags", typ: 0 },
     ], "any"),
+    "GridElement": o([
+        { json: "index", js: "index", typ: 0 },
+        { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidual")) },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
+    ], "any"),
+    "STECResidual": o([
+        { json: "residual", js: "residual", typ: 0 },
+        { json: "stddev", js: "stddev", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
+    ], "any"),
+    "SvID": o([
+        { json: "constellation", js: "constellation", typ: 0 },
+        { json: "satId", js: "satId", typ: 0 },
+    ], "any"),
+    "TroposphericDelayCorrection": o([
+        { json: "hydro", js: "hydro", typ: 0 },
+        { json: "stddev", js: "stddev", typ: 0 },
+        { json: "wet", js: "wet", typ: 0 },
+    ], "any"),
     "GridElementNoStd": o([
         { json: "index", js: "index", typ: 0 },
         { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidualNoStd")) },
@@ -4120,10 +4141,6 @@ const typeMap: any = {
     "STECResidualNoStd": o([
         { json: "residual", js: "residual", typ: 0 },
         { json: "sv_id", js: "sv_id", typ: r("SvID") },
-    ], "any"),
-    "SvID": o([
-        { json: "constellation", js: "constellation", typ: 0 },
-        { json: "satId", js: "satId", typ: 0 },
     ], "any"),
     "TroposphericDelayCorrectionNoStd": o([
         { json: "hydro", js: "hydro", typ: 0 },
@@ -5010,23 +5027,10 @@ const typeMap: any = {
         { json: "value", js: "value", typ: 0 },
     ], "any"),
     "MsgSsrGriddedCorrection": o([
-        { json: "element", js: "element", typ: r("GridElement") },
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
-    ], "any"),
-    "GridElement": o([
         { json: "index", js: "index", typ: 0 },
         { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidual")) },
         { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
-    ], "any"),
-    "STECResidual": o([
-        { json: "residual", js: "residual", typ: 0 },
-        { json: "stddev", js: "stddev", typ: 0 },
-        { json: "sv_id", js: "sv_id", typ: r("SvID") },
-    ], "any"),
-    "TroposphericDelayCorrection": o([
-        { json: "hydro", js: "hydro", typ: 0 },
-        { json: "stddev", js: "stddev", typ: 0 },
-        { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "GriddedCorrectionHeader": o([
         { json: "iod_atmo", js: "iod_atmo", typ: 0 },
