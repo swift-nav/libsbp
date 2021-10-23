@@ -409,12 +409,7 @@ dist-haskell:
 	(cd $(SWIFTNAV_ROOT)/haskell; stack sdist; stack upload .)
 	$(call announce-begin,"Finished deploying Haskell package")
 
-dist-pdf:
-	$(call announce-begin,"Deploying PDF documentation")
-	$(MAKE) pdf_dist
-	$(call announce-begin,"Finished deploying PDF documentation")
-
-dist: dist-python dist-javascript dist-haskell dist-pdf
+dist: dist-python dist-javascript dist-haskell dist-rust
 
 pdf:
 	$(call announce-begin,"Generating PDF datasheet documentation")
@@ -430,9 +425,6 @@ pdf-for-real:
 		       -o $(SWIFTNAV_ROOT)/latex/ \
 		       -r $(SBP_VERSION) \
 	               --latex
-
-pdf_dist:
-	s3cmd put  $(SWIFTNAV_ROOT)/docs/sbp.pdf s3://downloads.swiftnav.com/sbp/docs/sbp_$(SBP_VERSION).pdf
 
 html:
 	$(call announce-begin,"Generating html documentation")
