@@ -1,5 +1,13 @@
 # Change Log
 
+## [v4.0.3](https://github.com/swift-nav/libsbp/tree/v4.0.3) (2021-10-22)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.2...v4.0.3)
+
+**Merged pull requests:**
+
+- rust: support Result\<Sbp\> in with\_rover\_time [\#1084](https://github.com/swift-nav/libsbp/pull/1084) ([notoriaga](https://github.com/notoriaga))
+
 ## [v4.0.2](https://github.com/swift-nav/libsbp/tree/v4.0.2) (2021-10-13)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.1...v4.0.2)

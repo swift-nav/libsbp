@@ -228,7 +228,6 @@ inside the container (so you don't have to setup git inside the docker container
 
    - `make dist-javascript`
    - `make dist-haskell`
-   - `make dist-pdf`
    - `make dist-rust` (see section on Rust below)
    - `make dist-python` (see section on Python below)
 
@@ -262,8 +261,15 @@ To distribute Rust.  Use the `cargo-release` tool:
 cargo install cargo-release
 ```
 
-Release `sbp` and `sbp2json` crates separately, first `sbp`, this will do a dry
-run first:
+**FIRST** just try running the `dist-rust` target:
+
+```
+make dist-rust
+```
+
+If that doesn't work (consider fixing the make target), otherwise try releasing
+`sbp` and `sbp2json` crates separately, first `sbp`, this will do a dry run
+first:
 
 ```
 cargo release --package sbp <INCREMENTED_TAG>

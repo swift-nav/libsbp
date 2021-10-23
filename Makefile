@@ -402,12 +402,23 @@ dist-python:
 dist-javascript:
 	$(call announce-begin,"Deploying Javascript package")
 	npm publish
-	$(call announce-begin,"Finished deploying Javascript package")
+	$(call announce-end,"Finished deploying Javascript package")
 
 dist-haskell:
 	$(call announce-begin,"Deploying Haskell package")
 	(cd $(SWIFTNAV_ROOT)/haskell; stack sdist; stack upload .)
-	$(call announce-begin,"Finished deploying Haskell package")
+	$(call announce-end,"Finished deploying Haskell package")
+
+dist-rust:
+	$(call announce-begin,"Deploying Rust `sbp` package")
+	cargo release --package sbp --execute $(SBP_VERSION_UNPREFIXED)
+	$(call announce-end,"Finished deploying Rust `sbp` package")
+	$(call announce-begin,"Deploying Rust `sbp2json` package")
+	cargo release --package sbp2json --execute $(SBP_VERSION_UNPREFIXED)
+	$(call announce-end,"Finished deploying Rust `sbp2json` package")
+	$(call announce-begin,"Reverting commit made by `sbp2json` deployment")
+	git reset --hard $(SBP_VERSION)
+	$(call announce-end,"Finished reverting commit made by `sbp2json` deployment")
 
 dist: dist-python dist-javascript dist-haskell dist-rust
 
