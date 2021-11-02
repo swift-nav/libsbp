@@ -75,6 +75,15 @@ struct MessageTraits<(((m.type_name)))> {
     return sbp_msg.(((m.return_union_member_name)));
   }
 ((* endif *))
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written, const (((m.type_name))) &msg){
+    return (((m.public_encode_fn)))(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, (((m.type_name))) *msg){
+    return (((m.public_decode_fn)))(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const (((m.type_name))) &msg) {
+    return (((m.encoded_len_fn)))(&msg);
+  }
 };
 ((* endfor *))
 
