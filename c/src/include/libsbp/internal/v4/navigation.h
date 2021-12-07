@@ -553,6 +553,26 @@ bool sbp_msg_vel_body_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
+bool sbp_msg_cog_sog_encode_internal(sbp_encode_ctx_t *ctx,
+                                     const sbp_msg_cog_sog_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_cog_sog_decode_internal(sbp_decode_ctx_t *ctx,
+                                     sbp_msg_cog_sog_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_age_corrections_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_age_corrections_t *msg);
 

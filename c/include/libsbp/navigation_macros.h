@@ -924,6 +924,52 @@
  */
 #define SBP_MSG_VEL_BODY_ENCODED_LEN 42u
 
+#define SBP_MSG_COG_SOG 0x021C
+#define SBP_COG_SOG_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_COG_SOG_INS_NAVIGATION_MODE_SHIFT (2u)
+#define SBP_COG_SOG_INS_NAVIGATION_MODE_GET(flags)           \
+  ((u8)(((flags) >> SBP_COG_SOG_INS_NAVIGATION_MODE_SHIFT) & \
+        SBP_COG_SOG_INS_NAVIGATION_MODE_MASK))
+#define SBP_COG_SOG_INS_NAVIGATION_MODE_SET(flags, val)                        \
+  do {                                                                         \
+    (flags) = (u8)((flags) | (((val) & (SBP_COG_SOG_INS_NAVIGATION_MODE_MASK)) \
+                              << (SBP_COG_SOG_INS_NAVIGATION_MODE_SHIFT)));    \
+  } while (0)
+
+#define SBP_COG_SOG_INS_NAVIGATION_MODE_NONE (0)
+#define SBP_COG_SOG_INS_NAVIGATION_MODE_INS_USED (1)
+#define SBP_COG_SOG_SOG_VALIDITY_MASK (0x3)
+#define SBP_COG_SOG_SOG_VALIDITY_SHIFT (1u)
+#define SBP_COG_SOG_SOG_VALIDITY_GET(flags)           \
+  ((u8)(((flags) >> SBP_COG_SOG_SOG_VALIDITY_SHIFT) & \
+        SBP_COG_SOG_SOG_VALIDITY_MASK))
+#define SBP_COG_SOG_SOG_VALIDITY_SET(flags, val)                        \
+  do {                                                                  \
+    (flags) = (u8)((flags) | (((val) & (SBP_COG_SOG_SOG_VALIDITY_MASK)) \
+                              << (SBP_COG_SOG_SOG_VALIDITY_SHIFT)));    \
+  } while (0)
+
+#define SBP_COG_SOG_SOG_VALIDITY_INVALID (0)
+#define SBP_COG_SOG_SOG_VALIDITY_SOG_VALID (1)
+#define SBP_COG_SOG_COG_VALIDITY_MASK (0x3)
+#define SBP_COG_SOG_COG_VALIDITY_SHIFT (0u)
+#define SBP_COG_SOG_COG_VALIDITY_GET(flags)           \
+  ((u8)(((flags) >> SBP_COG_SOG_COG_VALIDITY_SHIFT) & \
+        SBP_COG_SOG_COG_VALIDITY_MASK))
+#define SBP_COG_SOG_COG_VALIDITY_SET(flags, val)                        \
+  do {                                                                  \
+    (flags) = (u8)((flags) | (((val) & (SBP_COG_SOG_COG_VALIDITY_MASK)) \
+                              << (SBP_COG_SOG_COG_VALIDITY_SHIFT)));    \
+  } while (0)
+
+#define SBP_COG_SOG_COG_VALIDITY_INVALID (0)
+#define SBP_COG_SOG_COG_VALIDITY_COG_VALID (1)
+/**
+ * Encoded length of sbp_msg_cog_sog_t (V4 API) and
+ * msg_cog_sog_t (legacy API)
+ */
+#define SBP_MSG_COG_SOG_ENCODED_LEN 21u
+
 #define SBP_MSG_AGE_CORRECTIONS 0x0210
 /**
  * Encoded length of sbp_msg_age_corrections_t (V4 API) and

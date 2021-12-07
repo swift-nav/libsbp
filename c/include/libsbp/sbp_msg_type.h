@@ -73,6 +73,7 @@ typedef enum {
   SbpMsgBootloaderHandshakeResp = SBP_MSG_BOOTLOADER_HANDSHAKE_RESP,
   SbpMsgBootloaderJumpToApp = SBP_MSG_BOOTLOADER_JUMP_TO_APP,
   SbpMsgCellModemStatus = SBP_MSG_CELL_MODEM_STATUS,
+  SbpMsgCogSog = SBP_MSG_COG_SOG,
   SbpMsgCommandOutput = SBP_MSG_COMMAND_OUTPUT,
   SbpMsgCommandReq = SBP_MSG_COMMAND_REQ,
   SbpMsgCommandResp = SBP_MSG_COMMAND_RESP,

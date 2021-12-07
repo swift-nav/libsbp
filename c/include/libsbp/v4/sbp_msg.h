@@ -82,6 +82,7 @@ typedef union {
   sbp_msg_bootloader_handshake_resp_t bootloader_handshake_resp;
   sbp_msg_bootloader_jump_to_app_t bootloader_jump_to_app;
   sbp_msg_cell_modem_status_t cell_modem_status;
+  sbp_msg_cog_sog_t cog_sog;
   sbp_msg_command_output_t command_output;
   sbp_msg_command_req_t command_req;
   sbp_msg_command_resp_t command_resp;
@@ -351,6 +352,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_encode(buf, len, n_written,
                                               &msg->cell_modem_status);
+    case SbpMsgCogSog:
+      return sbp_msg_cog_sog_encode(buf, len, n_written, &msg->cog_sog);
     case SbpMsgCommandOutput:
       return sbp_msg_command_output_encode(buf, len, n_written,
                                            &msg->command_output);
@@ -916,6 +919,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_decode(buf, len, n_read,
                                               &msg->cell_modem_status);
+    case SbpMsgCogSog:
+      return sbp_msg_cog_sog_decode(buf, len, n_read, &msg->cog_sog);
     case SbpMsgCommandOutput:
       return sbp_msg_command_output_decode(buf, len, n_read,
                                            &msg->command_output);
@@ -1454,6 +1459,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
           &msg->bootloader_jump_to_app);
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_encoded_len(&msg->cell_modem_status);
+    case SbpMsgCogSog:
+      return sbp_msg_cog_sog_encoded_len(&msg->cog_sog);
     case SbpMsgCommandOutput:
       return sbp_msg_command_output_encoded_len(&msg->command_output);
     case SbpMsgCommandReq:
@@ -1923,6 +1930,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_cmp(&a->cell_modem_status,
                                            &b->cell_modem_status);
+    case SbpMsgCogSog:
+      return sbp_msg_cog_sog_cmp(&a->cog_sog, &b->cog_sog);
     case SbpMsgCommandOutput:
       return sbp_msg_command_output_cmp(&a->command_output, &b->command_output);
     case SbpMsgCommandReq:
