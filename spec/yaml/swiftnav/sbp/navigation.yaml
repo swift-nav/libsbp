@@ -1671,6 +1671,61 @@ definitions:
                         - 2: Computed Doppler derived
                         - 3: Dead Reckoning
 
+ - MSG_COG_SOG:
+    id: 0x021C
+    short_desc: Course over ground and speed over ground
+    desc: >
+      This message reports the receiver course over ground (COG) and speed over 
+      ground (SOG) based on the horizontal (N-E) components of the NED velocity 
+      vector. The NED coordinate system is defined as the local WGS84 tangent 
+      plane centered at the current position. The full GPS time is given by the 
+      preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - cog:
+              type: u32
+              units: microdegrees
+              desc: Course over ground relative to local north
+          - sog:
+              type: u32
+              units: mm/s
+              desc: Speed over ground
+          - cog_accuracy:
+              type: u32
+              units: microdegrees
+              desc: >
+                Course over ground estimated standard deviation
+          - sog_accuracy:
+              type: u32
+              units: mm/s
+              desc: >
+                Speed over ground estimated standard deviation
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 2-3:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 1-2:
+                    desc: SOG validity
+                    values:
+                        - 0: Invalid
+                        - 1: SOG valid
+                - 0-1:
+                    desc: COG validity
+                    values:
+                        - 0: Invalid
+                        - 1: COG valid
+
+
  - MSG_AGE_CORRECTIONS:
     id: 0x0210
     short_desc: Age of corrections
