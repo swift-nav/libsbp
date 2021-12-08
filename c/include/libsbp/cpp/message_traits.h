@@ -962,38 +962,6 @@ struct MessageTraits<sbp_msg_cell_modem_status_t> {
 };
 
 template <>
-struct MessageTraits<sbp_msg_cog_sog_t> {
-  static constexpr sbp_msg_type_t id = SbpMsgCogSog;
-  static const sbp_msg_cog_sog_t &get(const sbp_msg_t &msg) {
-    return msg.cog_sog;
-  }
-  static sbp_msg_cog_sog_t &get(sbp_msg_t &msg) { return msg.cog_sog; }
-  static void to_sbp_msg(const sbp_msg_cog_sog_t &msg, sbp_msg_t *sbp_msg) {
-    sbp_msg->cog_sog = msg;
-  }
-  static sbp_msg_t to_sbp_msg(const sbp_msg_cog_sog_t &msg) {
-    sbp_msg_t sbp_msg;
-    sbp_msg.cog_sog = msg;
-    return sbp_msg;
-  }
-  static s8 send(sbp_state_t *state, u16 sender_id,
-                 const sbp_msg_cog_sog_t &msg, sbp_write_fn_t write) {
-    return sbp_msg_cog_sog_send(state, sender_id, &msg, write);
-  }
-  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                   const sbp_msg_cog_sog_t &msg) {
-    return sbp_msg_cog_sog_encode(buf, len, n_written, &msg);
-  }
-  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                   sbp_msg_cog_sog_t *msg) {
-    return sbp_msg_cog_sog_decode(buf, len, n_read, msg);
-  }
-  static size_t encoded_len(const sbp_msg_cog_sog_t &msg) {
-    return sbp_msg_cog_sog_encoded_len(&msg);
-  }
-};
-
-template <>
 struct MessageTraits<sbp_msg_command_output_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCommandOutput;
   static const sbp_msg_command_output_t &get(const sbp_msg_t &msg) {
@@ -6800,6 +6768,38 @@ struct MessageTraits<sbp_msg_vel_body_t> {
   }
   static size_t encoded_len(const sbp_msg_vel_body_t &msg) {
     return sbp_msg_vel_body_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_vel_cog_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgVelCog;
+  static const sbp_msg_vel_cog_t &get(const sbp_msg_t &msg) {
+    return msg.vel_cog;
+  }
+  static sbp_msg_vel_cog_t &get(sbp_msg_t &msg) { return msg.vel_cog; }
+  static void to_sbp_msg(const sbp_msg_vel_cog_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->vel_cog = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_vel_cog_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.vel_cog = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_vel_cog_t &msg, sbp_write_fn_t write) {
+    return sbp_msg_vel_cog_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_vel_cog_t &msg) {
+    return sbp_msg_vel_cog_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_vel_cog_t *msg) {
+    return sbp_msg_vel_cog_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_vel_cog_t &msg) {
+    return sbp_msg_vel_cog_encoded_len(&msg);
   }
 };
 

@@ -3472,20 +3472,23 @@ class MsgVelBody(SBP):
     d.update(j)
     return d
     
-SBP_MSG_COG_SOG = 0x021C
-class MsgCogSog(SBP):
-  """SBP class for message MSG_COG_SOG (0x021C).
+SBP_MSG_VEL_COG = 0x021C
+class MsgVelCog(SBP):
+  """SBP class for message MSG_VEL_COG (0x021C).
 
-  You can have MSG_COG_SOG inherit its fields directly
+  You can have MSG_VEL_COG inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   This message reports the receiver course over ground (COG) and speed over
   ground (SOG) based on the horizontal (N-E) components of the NED velocity
-  vector. The NED coordinate system is defined as the local WGS84 tangent
-  plane centered at the current position. The full GPS time is given by the
-  preceding MSG_GPS_TIME with the matching time-of-week (tow).
+  vector. It also includes the vertical velocity in the form of the
+  D-component of the NED velocity vector. The NED coordinate system is defined
+  as the local WGS84 tangent  plane centered at the current position. The full
+  GPS time is given by the  preceding MSG_GPS_TIME with the matching time-of-
+  week (tow). Note: course over ground represents the receiver's direction of
+  travel,  but not necessarily the device heading.
 
   Parameters
   ----------
@@ -3497,10 +3500,14 @@ class MsgCogSog(SBP):
     Course over ground relative to local north
   sog : int
     Speed over ground
+  vel_d : int
+    Velocity Down coordinate
   cog_accuracy : int
     Course over ground estimated standard deviation
   sog_accuracy : int
     Speed over ground estimated standard deviation
+  vel_d_accuracy : int
+    Vertical velocity estimated standard deviation
   flags : int
     Status flags
   sender : int
@@ -3511,33 +3518,39 @@ class MsgCogSog(SBP):
                    'tow' / construct.Int32ul,
                    'cog' / construct.Int32ul,
                    'sog' / construct.Int32ul,
+                   'vel_d' / construct.Int32sl,
                    'cog_accuracy' / construct.Int32ul,
                    'sog_accuracy' / construct.Int32ul,
+                   'vel_d_accuracy' / construct.Int32ul,
                    'flags' / construct.Int8ul,)
   __slots__ = [
                'tow',
                'cog',
                'sog',
+               'vel_d',
                'cog_accuracy',
                'sog_accuracy',
+               'vel_d_accuracy',
                'flags',
               ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgCogSog,
+      super( MsgVelCog,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgCogSog, self).__init__()
-      self.msg_type = SBP_MSG_COG_SOG
+      super( MsgVelCog, self).__init__()
+      self.msg_type = SBP_MSG_VEL_COG
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.cog = kwargs.pop('cog')
       self.sog = kwargs.pop('sog')
+      self.vel_d = kwargs.pop('vel_d')
       self.cog_accuracy = kwargs.pop('cog_accuracy')
       self.sog_accuracy = kwargs.pop('sog_accuracy')
+      self.vel_d_accuracy = kwargs.pop('vel_d_accuracy')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):
@@ -3549,12 +3562,12 @@ class MsgCogSog(SBP):
 
     """
     d = json.loads(s)
-    return MsgCogSog.from_json_dict(d)
+    return MsgVelCog.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgCogSog(sbp, **d)
+    return MsgVelCog(sbp, **d)
 
  
   def from_binary(self, d):
@@ -3562,7 +3575,7 @@ class MsgCogSog(SBP):
     the message.
 
     """
-    p = MsgCogSog._parser.parse(d)
+    p = MsgVelCog._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -3571,7 +3584,7 @@ class MsgCogSog(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgCogSog._parser.build(c)
+    self.payload = MsgVelCog._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -3579,13 +3592,13 @@ class MsgCogSog(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgCogSog._parser
+    self.parser = MsgVelCog._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgCogSog, self).to_json_dict()
+    d = super( MsgVelCog, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -5116,7 +5129,7 @@ msg_classes = {
   0x022E: MsgVelNEDGnss,
   0x0232: MsgVelNEDCovGnss,
   0x0213: MsgVelBody,
-  0x021C: MsgCogSog,
+  0x021C: MsgVelCog,
   0x0210: MsgAgeCorrections,
   0x0100: MsgGPSTimeDepA,
   0x0206: MsgDopsDepA,

@@ -24,7 +24,6 @@
 #include <libsbp/v4/navigation/MSG_BASELINE_HEADING_DEP_A.h>
 #include <libsbp/v4/navigation/MSG_BASELINE_NED.h>
 #include <libsbp/v4/navigation/MSG_BASELINE_NED_DEP_A.h>
-#include <libsbp/v4/navigation/MSG_COG_SOG.h>
 #include <libsbp/v4/navigation/MSG_DOPS.h>
 #include <libsbp/v4/navigation/MSG_DOPS_DEP_A.h>
 #include <libsbp/v4/navigation/MSG_GPS_TIME.h>
@@ -46,6 +45,7 @@
 #include <libsbp/v4/navigation/MSG_UTC_TIME.h>
 #include <libsbp/v4/navigation/MSG_UTC_TIME_GNSS.h>
 #include <libsbp/v4/navigation/MSG_VEL_BODY.h>
+#include <libsbp/v4/navigation/MSG_VEL_COG.h>
 #include <libsbp/v4/navigation/MSG_VEL_ECEF.h>
 #include <libsbp/v4/navigation/MSG_VEL_ECEF_COV.h>
 #include <libsbp/v4/navigation/MSG_VEL_ECEF_COV_GNSS.h>

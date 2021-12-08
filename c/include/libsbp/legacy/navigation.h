@@ -649,25 +649,31 @@ typedef struct SBP_ATTR_PACKED {
   u8 flags;      /**< Status flags */
 } msg_vel_body_t;
 
-/** Course over ground and speed over ground
+/** Velocity expressed as course over ground
  *
  * This message reports the receiver course over ground (COG) and speed over
  * ground (SOG) based on the horizontal (N-E) components of the NED velocity
- * vector. The NED coordinate system is defined as the local WGS84 tangent
- * plane centered at the current position. The full GPS time is given by the
- * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * vector. It also includes the vertical velocity in the form of the
+ * D-component of the NED velocity vector. The NED coordinate system is
+ * defined as the local WGS84 tangent  plane centered at the current position.
+ * The full GPS time is given by the  preceding MSG_GPS_TIME with the matching
+ * time-of-week (tow). Note: course over ground represents the receiver's
+ * direction of travel,  but not necessarily the device heading.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow; /**< GPS Time of Week [ms] */
-  u32 cog; /**< Course over ground relative to local north [microdegrees] */
-  u32 sog; /**< Speed over ground [mm/s] */
-  u32 cog_accuracy; /**< Course over ground estimated standard deviation
-                       [microdegrees] */
-  u32 sog_accuracy; /**< Speed over ground estimated standard deviation [mm/s]
-                     */
-  u8 flags;         /**< Status flags */
-} msg_cog_sog_t;
+  u32 tow;   /**< GPS Time of Week [ms] */
+  u32 cog;   /**< Course over ground relative to local north [microdegrees] */
+  u32 sog;   /**< Speed over ground [mm/s] */
+  s32 vel_d; /**< Velocity Down coordinate [mm/s] */
+  u32 cog_accuracy;   /**< Course over ground estimated standard deviation
+                         [microdegrees] */
+  u32 sog_accuracy;   /**< Speed over ground estimated standard deviation [mm/s]
+                       */
+  u32 vel_d_accuracy; /**< Vertical velocity estimated standard deviation [mm/s]
+                       */
+  u8 flags;           /**< Status flags */
+} msg_vel_cog_t;
 
 /** Age of corrections
  *

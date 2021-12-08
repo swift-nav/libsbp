@@ -1671,15 +1671,19 @@ definitions:
                         - 2: Computed Doppler derived
                         - 3: Dead Reckoning
 
- - MSG_COG_SOG:
+ - MSG_VEL_COG:
     id: 0x021C
-    short_desc: Course over ground and speed over ground
+    short_desc: Velocity expressed as course over ground
     desc: >
       This message reports the receiver course over ground (COG) and speed over 
       ground (SOG) based on the horizontal (N-E) components of the NED velocity 
-      vector. The NED coordinate system is defined as the local WGS84 tangent 
+      vector. It also includes the vertical velocity in the form of the
+      D-component of the NED velocity vector.
+      The NED coordinate system is defined as the local WGS84 tangent 
       plane centered at the current position. The full GPS time is given by the 
       preceding MSG_GPS_TIME with the matching time-of-week (tow).
+      Note: course over ground represents the receiver's direction of travel, 
+      but not necessarily the device heading.
     fields:
           - tow:
               type: u32
@@ -1693,6 +1697,10 @@ definitions:
               type: u32
               units: mm/s
               desc: Speed over ground
+          - vel_d:
+              type: s32
+              units: mm/s
+              desc: Velocity Down coordinate
           - cog_accuracy:
               type: u32
               units: microdegrees
@@ -1703,17 +1711,27 @@ definitions:
               units: mm/s
               desc: >
                 Speed over ground estimated standard deviation
+          - vel_d_accuracy:
+              type: u32
+              units: mm/s
+              desc: >
+                Vertical velocity estimated standard deviation
           - flags:
               type: u8
               desc: Status flags
               fields:
-                - 3-7:
+                - 4-7:
                     desc: Reserved
-                - 2-3:
+                - 3-4:
                     desc: INS Navigation Mode
                     values:
                         - 0: None
                         - 1: INS used
+                - 2-3:
+                    desc: Vertical velocity validity
+                    values:
+                        - 0: Invalid
+                        - 1: Vertical velocity valid
                 - 1-2:
                     desc: SOG validity
                     values:
