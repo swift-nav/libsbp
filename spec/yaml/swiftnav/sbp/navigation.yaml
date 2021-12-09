@@ -1720,28 +1720,35 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 4-7:
+                - 6-7:
                     desc: Reserved
-                - 3-4:
-                    desc: INS Navigation Mode
-                    values:
-                        - 0: None
-                        - 1: INS used
-                - 2-3:
+                - 5-6:
                     desc: Vertical velocity validity
                     values:
                         - 0: Invalid
                         - 1: Vertical velocity valid
-                - 1-2:
+                - 4-5:
                     desc: SOG validity
                     values:
                         - 0: Invalid
                         - 1: SOG valid
-                - 0-1:
+                - 3-4:
                     desc: COG validity
                     values:
                         - 0: Invalid
                         - 1: COG valid
+                - 2-3:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
 
 
  - MSG_AGE_CORRECTIONS:
