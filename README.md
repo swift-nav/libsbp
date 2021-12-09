@@ -241,7 +241,7 @@ payload field, and a 16-bit CRC value. SBP uses the CCITT CRC16
 Please see
 [the docs](https://github.com/swift-nav/libsbp/raw/master/docs/sbp.pdf)
 for a full description of the packet structure and the message
-types. Developer documentatation for the language-specific sbp
+types. Developer documentation for the language-specific sbp
 libraries is [here](http://swift-nav.github.io/libsbp/).
 Please refer to [the changelog](https://github.com/swift-nav/libsbp/blob/master/CHANGELOG.md)
 for more information about the evolution of the library and its messages.
