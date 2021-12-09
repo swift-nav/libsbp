@@ -3609,6 +3609,135 @@ impl WireFormat for MsgVelBody {
     }
 }
 
+/// Velocity expressed as course over ground
+///
+/// This message reports the receiver course over ground (COG) and speed over
+/// ground (SOG) based on the horizontal (N-E) components of the NED velocity
+/// vector. It also includes the vertical velocity in the form of the
+/// D-component of the NED velocity vector. The NED coordinate system is
+/// defined as the local WGS84 tangent  plane centered at the current
+/// position. The full GPS time is given by the  preceding MSG_GPS_TIME with
+/// the matching time-of-week (tow). Note: course over ground represents the
+/// receiver's direction of travel,  but not necessarily the device heading.
+///
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+pub struct MsgVelCog {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+    pub tow: u32,
+    /// Course over ground relative to local north
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cog")))]
+    pub cog: u32,
+    /// Speed over ground
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sog")))]
+    pub sog: u32,
+    /// Velocity Down coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel_d")))]
+    pub vel_d: i32,
+    /// Course over ground estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cog_accuracy")))]
+    pub cog_accuracy: u32,
+    /// Speed over ground estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sog_accuracy")))]
+    pub sog_accuracy: u32,
+    /// Vertical velocity estimated standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel_d_accuracy")))]
+    pub vel_d_accuracy: u32,
+    /// Status flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+    pub flags: u8,
+}
+
+impl ConcreteMessage for MsgVelCog {
+    const MESSAGE_TYPE: u16 = 540;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_COG";
+}
+
+impl SbpMessage for MsgVelCog {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
+    }
+}
+
+impl TryFrom<Sbp> for MsgVelCog {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgVelCog(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
+    }
+}
+
+impl WireFormat for MsgVelCog {
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <i32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tow)
+            + WireFormat::len(&self.cog)
+            + WireFormat::len(&self.sog)
+            + WireFormat::len(&self.vel_d)
+            + WireFormat::len(&self.cog_accuracy)
+            + WireFormat::len(&self.sog_accuracy)
+            + WireFormat::len(&self.vel_d_accuracy)
+            + WireFormat::len(&self.flags)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.tow, buf);
+        WireFormat::write(&self.cog, buf);
+        WireFormat::write(&self.sog, buf);
+        WireFormat::write(&self.vel_d, buf);
+        WireFormat::write(&self.cog_accuracy, buf);
+        WireFormat::write(&self.sog_accuracy, buf);
+        WireFormat::write(&self.vel_d_accuracy, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgVelCog {
+            sender_id: None,
+            tow: WireFormat::parse_unchecked(buf),
+            cog: WireFormat::parse_unchecked(buf),
+            sog: WireFormat::parse_unchecked(buf),
+            vel_d: WireFormat::parse_unchecked(buf),
+            cog_accuracy: WireFormat::parse_unchecked(buf),
+            sog_accuracy: WireFormat::parse_unchecked(buf),
+            vel_d_accuracy: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
