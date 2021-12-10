@@ -156,6 +156,7 @@
 //   const msgUTCTime = Convert.toMsgUTCTime(json);
 //   const msgUTCTimeGnss = Convert.toMsgUTCTimeGnss(json);
 //   const msgVelBody = Convert.toMsgVelBody(json);
+//   const msgVelCog = Convert.toMsgVelCog(json);
 //   const msgVelECEF = Convert.toMsgVelECEF(json);
 //   const msgVelECEFCov = Convert.toMsgVelECEFCov(json);
 //   const msgVelECEFCovGnss = Convert.toMsgVelECEFCovGnss(json);
@@ -1422,6 +1423,14 @@ function toMsgVelBody(json) {
 
 function msgVelBodyToJson(value) {
     return JSON.stringify(uncast(value, r("MsgVelBody")), null, 2);
+}
+
+function toMsgVelCog(json) {
+    return cast(JSON.parse(json), r("MsgVelCog"));
+}
+
+function msgVelCogToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgVelCog")), null, 2);
 }
 
 function toMsgVelECEF(json) {
@@ -2922,6 +2931,16 @@ const typeMap = {
         { json: "y", js: "y", typ: 0 },
         { json: "z", js: "z", typ: 0 },
     ], "any"),
+    "MsgVelCog": o([
+        { json: "cog", js: "cog", typ: 0 },
+        { json: "cog_accuracy", js: "cog_accuracy", typ: 0 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "sog", js: "sog", typ: 0 },
+        { json: "sog_accuracy", js: "sog_accuracy", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "vel_d", js: "vel_d", typ: 0 },
+        { json: "vel_d_accuracy", js: "vel_d_accuracy", typ: 0 },
+    ], "any"),
     "MsgVelECEF": o([
         { json: "accuracy", js: "accuracy", typ: 0 },
         { json: "flags", js: "flags", typ: 0 },
@@ -3336,6 +3355,8 @@ module.exports = {
     "toMsgUTCTimeGnss": toMsgUTCTimeGnss,
     "msgVelBodyToJson": msgVelBodyToJson,
     "toMsgVelBody": toMsgVelBody,
+    "msgVelCogToJson": msgVelCogToJson,
+    "toMsgVelCog": toMsgVelCog,
     "msgVelECEFToJson": msgVelECEFToJson,
     "toMsgVelECEF": toMsgVelECEF,
     "msgVelECEFCovToJson": msgVelECEFCovToJson,
