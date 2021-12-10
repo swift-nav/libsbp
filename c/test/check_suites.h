@@ -53,6 +53,7 @@ Suite* auto_check_sbp_navigation_MsgProtectionLevel_suite(void);
 Suite* auto_check_sbp_navigation_MsgUTCTime_suite(void);
 Suite* auto_check_sbp_navigation_MsgUTCTimeGNSS_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelBody_suite(void);
+Suite* auto_check_sbp_navigation_MsgVelCog_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelECEF_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelECEFCov_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelECEFDepA_suite(void);

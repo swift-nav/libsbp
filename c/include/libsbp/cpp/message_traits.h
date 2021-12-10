@@ -841,6 +841,12 @@ struct MessageTraits<msg_pos_llh_acc_t> {
 
 
 template<>
+struct MessageTraits<msg_vel_cog_t> {
+  static constexpr u16 id = 540;
+};
+
+
+template<>
 struct MessageTraits<msg_orient_quat_t> {
   static constexpr u16 id = 544;
 };

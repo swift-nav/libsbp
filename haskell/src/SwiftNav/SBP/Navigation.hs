@@ -1613,6 +1613,64 @@ $(makeSBP 'msgVelBody ''MsgVelBody)
 $(makeJSON "_msgVelBody_" ''MsgVelBody)
 $(makeLenses ''MsgVelBody)
 
+msgVelCog :: Word16
+msgVelCog = 0x021C
+
+-- | SBP class for message MSG_VEL_COG (0x021C).
+--
+-- This message reports the receiver course over ground (COG) and speed over
+-- ground (SOG) based on the horizontal (N-E) components of the NED velocity
+-- vector. It also includes the vertical velocity in the form of the
+-- D-component of the NED velocity vector. The NED coordinate system is
+-- defined as the local WGS84 tangent plane centered at the current position.
+-- The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+-- time-of-week (tow). Note: course over ground represents the receiver's
+-- direction of travel, but not necessarily the device heading.
+data MsgVelCog = MsgVelCog
+  { _msgVelCog_tow          :: !Word32
+    -- ^ GPS Time of Week
+  , _msgVelCog_cog          :: !Word32
+    -- ^ Course over ground relative to local north
+  , _msgVelCog_sog          :: !Word32
+    -- ^ Speed over ground
+  , _msgVelCog_vel_d        :: !Int32
+    -- ^ Velocity Down coordinate
+  , _msgVelCog_cog_accuracy :: !Word32
+    -- ^ Course over ground estimated standard deviation
+  , _msgVelCog_sog_accuracy :: !Word32
+    -- ^ Speed over ground estimated standard deviation
+  , _msgVelCog_vel_d_accuracy :: !Word32
+    -- ^ Vertical velocity estimated standard deviation
+  , _msgVelCog_flags        :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgVelCog where
+  get = do
+    _msgVelCog_tow <- getWord32le
+    _msgVelCog_cog <- getWord32le
+    _msgVelCog_sog <- getWord32le
+    _msgVelCog_vel_d <- (fromIntegral <$> getWord32le)
+    _msgVelCog_cog_accuracy <- getWord32le
+    _msgVelCog_sog_accuracy <- getWord32le
+    _msgVelCog_vel_d_accuracy <- getWord32le
+    _msgVelCog_flags <- getWord8
+    pure MsgVelCog {..}
+
+  put MsgVelCog {..} = do
+    putWord32le _msgVelCog_tow
+    putWord32le _msgVelCog_cog
+    putWord32le _msgVelCog_sog
+    (putWord32le . fromIntegral) _msgVelCog_vel_d
+    putWord32le _msgVelCog_cog_accuracy
+    putWord32le _msgVelCog_sog_accuracy
+    putWord32le _msgVelCog_vel_d_accuracy
+    putWord8 _msgVelCog_flags
+
+$(makeSBP 'msgVelCog ''MsgVelCog)
+$(makeJSON "_msgVelCog_" ''MsgVelCog)
+$(makeLenses ''MsgVelCog)
+
 msgAgeCorrections :: Word16
 msgAgeCorrections = 0x0210
 

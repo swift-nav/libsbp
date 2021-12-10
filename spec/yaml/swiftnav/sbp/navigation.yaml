@@ -1671,7 +1671,7 @@ definitions:
                         - 2: Computed Doppler derived
                         - 3: Dead Reckoning
 
-- MSG_VEL_COG:
+ - MSG_VEL_COG:
     id: 0x021C
     short_desc: Velocity expressed as course over ground
     desc: >

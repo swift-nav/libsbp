@@ -3702,6 +3702,138 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
     }
 }
 
+/// Velocity expressed as course over ground
+///
+/// This message reports the receiver course over ground (COG) and speed over
+/// ground (SOG) based on the horizontal (N-E) components of the NED velocity
+/// vector. It also includes the vertical velocity in the form of the
+/// D-component of the NED velocity vector. The NED coordinate system is
+/// defined as the local WGS84 tangent plane centered at the current position.
+/// The full GPS time is given by the preceding MSG_GPS_TIME with the matching
+/// time-of-week (tow). Note: course over ground represents the receiver's
+/// direction of travel, but not necessarily the device heading.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgVelCog {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Course over ground relative to local north
+    pub cog: u32,
+    /// Speed over ground
+    pub sog: u32,
+    /// Velocity Down coordinate
+    pub vel_d: i32,
+    /// Course over ground estimated standard deviation
+    pub cog_accuracy: u32,
+    /// Speed over ground estimated standard deviation
+    pub sog_accuracy: u32,
+    /// Vertical velocity estimated standard deviation
+    pub vel_d_accuracy: u32,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgVelCog {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelCog, crate::Error> {
+        Ok( MsgVelCog{
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            cog: _buf.read_u32::<LittleEndian>()?,
+            sog: _buf.read_u32::<LittleEndian>()?,
+            vel_d: _buf.read_i32::<LittleEndian>()?,
+            cog_accuracy: _buf.read_u32::<LittleEndian>()?,
+            sog_accuracy: _buf.read_u32::<LittleEndian>()?,
+            vel_d_accuracy: _buf.read_u32::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgVelCog {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_COG"
+    }
+
+    fn get_message_type(&self) -> u16 {
+        540
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
+    }
+}
+impl super::ConcreteMessage for MsgVelCog {
+    const MESSAGE_TYPE: u16 = 540;
+    const MESSAGE_NAME: &'static str = "MSG_VEL_COG";
+}
+impl TryFrom<super::SBP> for MsgVelCog {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgVelCog(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgVelCog {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.cog.append_to_sbp_buffer(buf);
+        self.sog.append_to_sbp_buffer(buf);
+        self.vel_d.append_to_sbp_buffer(buf);
+        self.cog_accuracy.append_to_sbp_buffer(buf);
+        self.sog_accuracy.append_to_sbp_buffer(buf);
+        self.vel_d_accuracy.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.cog.sbp_size();
+        size += self.sog.sbp_size();
+        size += self.vel_d.sbp_size();
+        size += self.cog_accuracy.sbp_size();
+        size += self.sog_accuracy.sbp_size();
+        size += self.vel_d_accuracy.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
