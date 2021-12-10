@@ -1,0 +1,29 @@
+description: Unit tests for swiftnav.sbp.navigation MsgVelCog
+generated_on: '2021-12-09 17:44:56.393167'
+package: sbp.navigation
+tests:
+- msg:
+    fields:
+      cog: 45123
+      cog_accuracy: 789
+      flags: 63
+      sog: 123
+      sog_accuracy: 42
+      tow: 326825520
+      vel_d: 456
+      vel_d_accuracy: 24
+    module: sbp.navigation
+    name: MsgVelCog
+  msg_type: '0x21C'
+  raw_json: '{"preamble": 85, "msg_type": 540, "sender": 35027, "length": 29, "payload":
+    "MPZ6E0OwAAB7AAAAyAEAABUDAAAqAAAAGAAAAD8=", "crc": 28802, "tow": 326825520, "cog":
+    45123, "sog": 123, "vel_d": 456, "cog_accuracy": 789, "sog_accuracy": 42, "vel_d_accuracy":
+    24, "flags": 63}'
+  raw_packet: VRwC04gdMPZ6E0OwAAB7AAAAyAEAABUDAAAqAAAAGAAAAD+CcA==
+  sbp:
+    crc: '0x7082'
+    length: 29
+    msg_type: '0x21C'
+    payload: MPZ6E0OwAAB7AAAAyAEAABUDAAAqAAAAGAAAAD8=
+    preamble: '0x55'
+    sender: '0x88D3'
