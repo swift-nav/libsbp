@@ -1,0 +1,177 @@
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+// This file was auto-generated from (((s.src_filename))) by generate.py. Do not modify by hand!
+
+#include <cstring>
+#include <gtest/gtest.h>
+#include <libsbp/cpp/state.h>
+#include <libsbp/cpp/message_traits.h>
+#include <libsbp/cpp/message_handler.h>
+
+((*- for t in s.tests *))
+((*- set msg_type = t.msg_type_name|convert_unpacked *))
+class Test_(((s.suite_name)))(((loop.index0))) : 
+  public ::testing::Test, 
+  public sbp::State, 
+  public sbp::IReader, 
+  public sbp::IWriter, 
+  sbp::MessageHandler<(((msg_type)))>
+{
+public:
+  Test_(((s.suite_name)))(((loop.index0)))() : 
+        ::testing::Test(), 
+        sbp::State(), 
+        sbp::IReader(), 
+        sbp::IWriter(), 
+        sbp::MessageHandler<(((msg_type)))>(this), 
+        last_msg_(),
+        last_msg_len_(),
+        last_sender_id_(), 
+        n_callbacks_logged_(), 
+        dummy_wr_(), 
+        dummy_rd_(), 
+        dummy_buff_()
+  {
+    set_reader(this);
+    set_writer(this);
+  }
+
+  s32 read(uint8_t *buf, const uint32_t n) override
+  {
+    uint32_t real_n = n;
+    memcpy(buf, dummy_buff_ + dummy_rd_, real_n);
+    dummy_rd_ += real_n;
+    return (s32)real_n;
+  }
+
+  s32 write(const uint8_t *buf, uint32_t n) override
+  {
+    uint32_t real_n = n;
+    memcpy(dummy_buff_ + dummy_wr_, buf, real_n);
+    dummy_wr_ += real_n;
+    return (s32)real_n;
+  }
+
+
+protected:
+
+  void handle_sbp_msg(uint16_t sender_id, const (((msg_type))) &msg) override
+  {
+    last_msg_ = msg;
+    last_sender_id_ = sender_id;
+    n_callbacks_logged_++;
+  }
+
+  (((msg_type))) last_msg_;
+  uint8_t last_msg_len_;
+  uint16_t last_sender_id_;                                                   
+  size_t n_callbacks_logged_;                                                 
+  uint32_t dummy_wr_;
+  uint32_t dummy_rd_;
+  uint8_t dummy_buff_[1024];
+};                                                                            
+                                                                              
+TEST_F(Test_(((s.suite_name)))(((loop.index0))), Test)     
+{                                                                             
+    ((*- macro compare_string(root_path, value) *))
+    EXPECT_EQ( (((- value.fn_prefix)))_encoded_len(&(((root_path)))), (((value.encoded_len))));
+    ((*- if value.sections *))
+    ((*- for s in value.sections *))
+    EXPECT_STREQ( (((- value.fn_prefix)))_get_section(&(((root_path))), (((loop.index0)))), "(((value.sections[loop.index0])))");
+    ((*- endfor *))
+    ((*- else *))
+    EXPECT_STREQ( (((- value.fn_prefix)))_get(&(((root_path)))), "(((value.text)))");
+    ((*- endif *))
+    ((*- endmacro *))
+
+    ((*- macro compare_value(root_path, path, value) *))
+    ((*- if value is string_type *))
+    {
+      const char check_string[] = { (((value|str_escape))) };
+      EXPECT_EQ(memcmp( (((-path))), check_string, sizeof(check_string)), 0) << "incorrect value for (((path))), expected string '" << check_string << "', is '" << (((path))) << "'";
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))(((compare_value(root_path, path + '[' + loop.index0|to_str + ']', ff))))((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- if value.handle_as and value.handle_as == "encoded-string" *))
+    (((compare_string(root_path, value))))
+    ((*- else *))
+    ((*- for k in value|sorted *))(((compare_value(root_path, path + '.' + k, value[k]))))((*- endfor *))
+    ((*- endif *))
+    ((*- elif value is float_type *))((=
+        Note: the ("%.12g"|format(value)|float) filter is intended to keep float
+        literal precision unchanged whether generated under Python 2.7 or 3.x. =))
+    EXPECT_LT(( (((-path))) * 100 - ((("%.12g"|format(value)|float))) * 100), 0.05) << "incorrect value for (((path))), expected ((("%.12g"|format(value)|float))), is " << (((path)));
+    ((*- else *))
+    EXPECT_EQ( (((-path))), (((value)))) << "incorrect value for (((path))), expected (((value))), is " << (((path)));
+    ((*- endif *))
+    ((*- endmacro *))
+
+    ((*- macro assign_string(root_path, value) *))
+    ((*- if value.sections *))
+    ((*- for s in value.sections *))
+    EXPECT_TRUE( (((- value.fn_prefix)))_add_section(&(((root_path))), "(((value.sections[loop.index0])))"));
+    ((*- endfor *))
+    ((*- else *))
+    size_t written;
+    EXPECT_TRUE( (((- value.fn_prefix)))_set(&(((root_path))), "(((value.text)))", false, &written));
+    EXPECT_EQ( written, strlen("(((value.text)))"));
+    ((*- endif *))
+    EXPECT_EQ( (((- value.fn_prefix)))_encoded_len(&(((root_path)))), (((value.encoded_len))));
+    ((*- endmacro *))
+
+    ((*- macro assign_value(root_path, path, value) *))
+    ((*- if value is string_type *))
+    {
+      const char assign_string[] = { (((value|str_escape))) };
+      memcpy( (((-path))), assign_string, sizeof(assign_string));
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))
+    (((assign_value(root_path, path + '[' + loop.index0|to_str + ']', ff))))
+    ((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- if value.handle_as and value.handle_as == "encoded-string" *))
+    (((assign_string(root_path, value))))
+    ((*- else *))
+    ((*- for k in value|sorted *))(((assign_value(root_path, path + '.' + k, value[k]))))((*- endfor *))
+    ((*- endif *))
+    ((*- else *))
+    (((path))) = (((value)));
+    ((*- endif *))
+    ((*- endmacro *))
+
+    uint8_t encoded_frame[] = { ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) };
+
+    (((msg_type))) test_msg{};
+    ((*- if t.c_decoded_fields *))
+    ((*- for f in t.c_decoded_fieldskeys *))(((assign_value("test_msg", "test_msg." + f, t.c_decoded_fields[f]))))((*- endfor *))
+    ((*- endif *))
+                                                                              
+    EXPECT_EQ(send_message( (((t.raw_json_obj.sender))), test_msg), SBP_OK);
+                                                                              
+    EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));                               
+    EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);   
+                                                                              
+    while (dummy_rd_ < dummy_wr_) {                                             
+      process();                                                              
+    }
+
+    EXPECT_EQ(n_callbacks_logged_, 1);
+    EXPECT_EQ(last_sender_id_, (((t.raw_json_obj.sender))));
+    EXPECT_EQ(last_msg_, test_msg);
+
+    ((*- for f in t.c_decoded_fieldskeys *))(((compare_value("last_msg_", "last_msg_." + f, t.c_decoded_fields[f]))))((*- endfor *))
+}
+((*- endfor *))
+

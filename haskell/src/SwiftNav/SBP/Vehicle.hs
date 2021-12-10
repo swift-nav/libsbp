@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Vehicle
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages from a vehicle.\>
+-- \< Messages from a vehicle. \>
 
 module SwiftNav.SBP.Vehicle
   ( module SwiftNav.SBP.Vehicle
@@ -40,19 +40,19 @@ msgOdometry = 0x0903
 -- | SBP class for message MSG_ODOMETRY (0x0903).
 --
 -- Message representing the x component of vehicle velocity in the user frame
--- at the odometry reference point(s) specified by the user. The offset for the
--- odometry reference point and  the definition and origin of the user frame
--- are defined through the device settings interface. There are 4 possible
--- user-defined sources of this message  which are labeled arbitrarily  source
--- 0 through 3. If using "processor time" time tags, the receiving end will
--- expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
+-- at the odometry reference point(s) specified by the user. The offset for
+-- the odometry reference point and the definition and origin of the user
+-- frame are defined through the device settings interface. There are 4
+-- possible user-defined sources of this message which are labeled arbitrarily
+-- source 0 through 3. If using "processor time" time tags, the receiving end
+-- will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
 -- synchronise odometry measurements with GNSS. Processor time shall roll over
 -- to zero after one week.
 data MsgOdometry = MsgOdometry
   { _msgOdometry_tow    :: !Word32
-    -- ^ Time field representing either milliseconds in the GPS Week or local CPU
-    -- time from the producing system in milliseconds.  See the tow_source flag
-    -- for the exact source of this timestamp.
+    -- ^ Time field representing either milliseconds in the GPS Week or local
+    -- CPU time from the producing system in milliseconds.  See the tow_source
+    -- flag for the exact source of this timestamp.
   , _msgOdometry_velocity :: !Int32
     -- ^ The signed forward component of vehicle velocity.
   , _msgOdometry_flags  :: !Word8
@@ -81,22 +81,22 @@ msgWheeltick = 0x0904
 -- | SBP class for message MSG_WHEELTICK (0x0904).
 --
 -- Message containing the accumulated distance travelled by a wheel located at
--- an odometry reference point defined by the user. The offset for the odometry
--- reference point and the definition and origin of the user frame are defined
--- through the device settings interface. The source of this message is
--- identified by the source field, which is an integer ranging from 0 to 255.
--- The timestamp associated with this message should represent the time when
--- the accumulated tick count reached the value given by the contents of this
--- message as accurately as possible. If using "local CPU time" time tags, the
--- receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes
--- available to synchronise wheeltick measurements with GNSS. Local CPU time
--- shall roll over to zero after one week.
+-- an odometry reference point defined by the user. The offset for the
+-- odometry reference point and the definition and origin of the user frame
+-- are defined through the device settings interface. The source of this
+-- message is identified by the source field, which is an integer ranging from
+-- 0 to 255. The timestamp associated with this message should represent the
+-- time when the accumulated tick count reached the value given by the
+-- contents of this message as accurately as possible. If using "local CPU
+-- time" time tags, the receiving end will expect a `MSG_GNSS_TIME_OFFSET`
+-- when a PVT fix becomes available to synchronise wheeltick measurements with
+-- GNSS. Local CPU time shall roll over to zero after one week.
 data MsgWheeltick = MsgWheeltick
   { _msgWheeltick_time :: !Word64
     -- ^ Time field representing either microseconds since the last PPS,
-    -- microseconds in the GPS Week or local CPU time from the producing system
-    -- in microseconds. See the synch_type field for the exact meaning of this
-    -- timestamp.
+    -- microseconds in the GPS Week or local CPU time from the producing
+    -- system in microseconds. See the synch_type field for the exact meaning
+    -- of this timestamp.
   , _msgWheeltick_flags :: !Word8
     -- ^ Field indicating the type of timestamp contained in the time field.
   , _msgWheeltick_source :: !Word8

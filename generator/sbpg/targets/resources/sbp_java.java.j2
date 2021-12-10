@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,6 +11,9 @@
  */
 
 package (((module_path)));
+
+// This file was auto-generated from yaml/(((filepath))) by generate.py.
+// Do not modify by hand!
 
 import java.math.BigInteger;
 
@@ -33,7 +36,7 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-(((m.desc | commentify))) */
+ * (((m.desc | commentify))) */
 ((*- endif *))
 
 public class (((m.identifier | classnameify))) extends SBPMessage {
@@ -42,7 +45,7 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
     ((* if m.fields *))
     ((*- for f in m.fields *))
     ((*- if f.desc *))
-    /** (((f.desc))) */
+    /** (((f.desc | commentify(indent=5) ))) */
     ((*- endif *))
     public (((f | type_map))) (((f.identifier)));
     ((* endfor *))
@@ -52,22 +55,27 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
     public (((m.identifier | classnameify))) () { super(TYPE); }
     public (((m.identifier | classnameify))) (SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
+        ((*- if m.fields *))
         /* Parse fields from binary */
-        ((*- if m.fields *)) ((*- for f in m.fields *))
+        ((*- for f in m.fields *))
         (((f.identifier))) = (((f | parse_type)));
-        ((*- endfor *)) ((*- endif *))
+        ((*- endfor *)) ((* else *))
+        // No additional fields
+        ((*- endif *))
     }
 
     @Override
     protected void build(Builder builder) {
         ((*- if m.fields *)) ((*- for f in m.fields *))
         (((f | build_type)));
-        ((*- endfor *)) ((*- endif *))
+        ((*- endfor *)) ((* else *))
+        // No additional fields
+        ((*- endif *))
     }
 
     @Override
@@ -81,13 +89,12 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
 }
 ((*- endif *))
 ((*- if not m.is_real_message *))
-import com.swiftnav.sbp.SBPStruct;
 
 public class (((m.identifier))) extends SBPStruct {
     ((* if m.fields *))
     ((*- for f in m.fields *))
     ((*- if f.desc *))
-    /** (((f.desc))) */
+    /** (((f.desc | wordwrap(wrapstring="\n      * ") ))) */
     ((*- endif *))
     public (((f | type_map))) (((f.identifier)));
     ((* endfor *))

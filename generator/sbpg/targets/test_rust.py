@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2019 Swift Navigation Inc.
+# Copyright (C) 2019-2021 Swift Navigation Inc.
 # Contact: Swift NAvigation <dev@swiftnav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -13,18 +13,14 @@
 Generator for rust tests target.
 """
 
-from sbpg.targets.templating import *
-from sbpg.targets.rust import *
-from sbpg.targets.common import *
-import base64
+import re
+
+from sbpg.targets.common import array_type, dict_type, float_type, is_empty, string_type, to_str
+from sbpg.targets.templating import JENV
+from sbpg.targets.rust import lower_acronyms, snake_case
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
-
-def b64_decode(field):
-    print("Decoding '{}'".format(field))
-    b = base64.standard_b64decode(field)
-    return [ str(ord(ch)) for ch in b ]
-
+TEST_MAIN_TEMPLATE_NAME = "sbp_tests_main_template.rs"
 
 def str_escape(value):
     return "\"{}\".to_string()".format(value)
@@ -32,11 +28,12 @@ def str_escape(value):
 def mod_name(value):
     return value.split('.')[1]
 
-JENV.filters['b64_decode'] = b64_decode
 JENV.filters['to_str'] = to_str
 JENV.filters['str_escape'] = str_escape
 JENV.filters['sorted'] = sorted
 JENV.filters['mod_name'] = mod_name
+JENV.filters['lower_acronyms'] = lower_acronyms
+JENV.filters['snake_case'] = snake_case
 
 JENV.tests['string_type'] = string_type
 JENV.tests['array_type'] = array_type
@@ -49,7 +46,7 @@ def render_source(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  destination_filename = "%s/%s.rs" % (output_dir, name)
+  destination_filename = "%s/integration/%s.rs" % (output_dir, snake_case(name))
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(s=package_spec,
@@ -58,3 +55,9 @@ def render_source(output_dir, package_spec):
                                include=package_spec.package.split('.')[1],
                                filepath="/".join(package_spec.filepath) + ".yaml"))
 
+def render_main(output_dir, package_specs):
+  destination_filename = "%s/integration/main.rs" % output_dir
+  py_template = JENV.get_template(TEST_MAIN_TEMPLATE_NAME)
+  test_names = [snake_case(p.filepath[1]) for p in package_specs]
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(test_names=test_names))

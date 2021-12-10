@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -11,10 +11,9 @@
 
 
 """
-System health, configuration, and diagnostic messages specific to
-the Piksi L1 receiver, including a variety of legacy messages that
-may no longer be used.
-
+System health, configuration, and diagnostic messages specific to the Piksi
+L1 receiver, including a variety of legacy messages that may no longer be
+used.
 """
 
 import json
@@ -23,7 +22,7 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import *
+from sbp.gnss import GPSTime, GPSTimeDep, GnssSignal, GnssSignalDep
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml with generate.py.
 # Please do not hand edit!
@@ -32,10 +31,8 @@ from sbp.gnss import *
 class UARTChannel(object):
   """UARTChannel.
   
-  Throughput, utilization, and error counts on the RX/TX buffers
-of this UART channel. The reported percentage values must
-be normalized.
-
+  Throughput, utilization, and error counts on the RX/TX buffers of this UART
+  channel. The reported percentage values must be normalized.
   
   Parameters
   ----------
@@ -48,22 +45,18 @@ be normalized.
   io_error_count : int
     UART IO error count
   tx_buffer_level : int
-    UART transmit buffer percentage utilization (ranges from
-0 to 255)
-
+    UART transmit buffer percentage utilization (ranges from 0 to 255)
   rx_buffer_level : int
-    UART receive buffer percentage utilization (ranges from
-0 to 255)
-
+    UART receive buffer percentage utilization (ranges from 0 to 255)
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'tx_throughput' / construct.Float32l,
                      'rx_throughput' / construct.Float32l,
                      'crc_error_count' / construct.Int16ul,
                      'io_error_count' / construct.Int16ul,
                      'tx_buffer_level' / construct.Int8ul,
-                     'rx_buffer_level' / construct.Int8ul,))
+                     'rx_buffer_level' / construct.Int8ul,)
   __slots__ = [
                'tx_throughput',
                'rx_throughput',
@@ -91,21 +84,15 @@ be normalized.
     p = UARTChannel._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return UARTChannel.build(d)
     
 class Period(object):
   """Period.
   
-  Statistics on the period of observations received from the base
-station. As complete observation sets are received, their time
-of reception is compared with the prior set''s time of reception.
-This measurement provides a proxy for link quality as incomplete
-or missing sets will increase the period.  Long periods
-can cause momentary RTK solution outages.
-
+  Statistics on the period of observations received from the base station. As
+  complete observation sets are received, their time of reception is compared
+  with the prior set''s time of reception. This measurement provides a proxy
+  for link quality as incomplete or missing sets will increase the period.
+  Long periods can cause momentary RTK solution outages.
   
   Parameters
   ----------
@@ -119,11 +106,11 @@ can cause momentary RTK solution outages.
     Smoothed estimate of the current period
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'avg' / construct.Int32sl,
                      'pmin' / construct.Int32sl,
                      'pmax' / construct.Int32sl,
-                     'current' / construct.Int32sl,))
+                     'current' / construct.Int32sl,)
   __slots__ = [
                'avg',
                'pmin',
@@ -147,20 +134,14 @@ can cause momentary RTK solution outages.
     p = Period._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return Period.build(d)
     
 class Latency(object):
   """Latency.
   
-  Statistics on the latency of observations received from the base
-station. As observation packets are received their GPS time is
-compared to the current GPS time calculated locally by the
-receiver to give a precise measurement of the end-to-end
-communication latency in the system.
-
+  Statistics on the latency of observations received from the base station. As
+  observation packets are received their GPS time is compared to the current
+  GPS time calculated locally by the receiver to give a precise measurement of
+  the end-to-end communication latency in the system.
   
   Parameters
   ----------
@@ -174,11 +155,11 @@ communication latency in the system.
     Smoothed estimate of the current latency
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'avg' / construct.Int32sl,
                      'lmin' / construct.Int32sl,
                      'lmax' / construct.Int32sl,
-                     'current' / construct.Int32sl,))
+                     'current' / construct.Int32sl,)
   __slots__ = [
                'avg',
                'lmin',
@@ -202,21 +183,15 @@ communication latency in the system.
     p = Latency._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return Latency.build(d)
     
 class NetworkUsage(object):
   """NetworkUsage.
   
-  The bandwidth usage for each interface can be reported
-within this struct and utilize multiple fields to fully
-specify the type of traffic that is being tracked. As
-either the interval of collection or the collection time
-may vary, both a timestamp and period field is provided,
-though may not necessarily be populated with a value. 
-
+  The bandwidth usage for each interface can be reported within this struct
+  and utilize multiple fields to fully specify the type of traffic that is
+  being tracked. As either the interval of collection or the collection time
+  may vary, both a timestamp and period field is provided, though may not
+  necessarily be populated with a value.
   
   Parameters
   ----------
@@ -232,12 +207,12 @@ though may not necessarily be populated with a value.
     Interface Name
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'duration' / construct.Int64ul,
                      'total_bytes' / construct.Int64ul,
                      'rx_bytes' / construct.Int32ul,
                      'tx_bytes' / construct.Int32ul,
-                     'interface_name'/ construct.Bytes(16),))
+                     'interface_name'/ construct.Bytes(16),)
   __slots__ = [
                'duration',
                'total_bytes',
@@ -263,10 +238,6 @@ though may not necessarily be populated with a value.
     p = NetworkUsage._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return NetworkUsage.build(d)
     
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
@@ -277,9 +248,8 @@ class MsgAlmanac(SBP):
   of its fields.
 
   
-  This is a legacy message for sending and loading a satellite
-alamanac onto the Piksi's flash memory from the host.
-
+  This is a legacy message for sending and loading a satellite alamanac onto
+  the Piksi's flash memory from the host.
 
   """
   __slots__ = []
@@ -323,9 +293,8 @@ class MsgSetTime(SBP):
   of its fields.
 
   
-  This message sets up timing functionality using a coarse GPS
-time estimate sent by the host.
-
+  This message sets up timing functionality using a coarse GPS time estimate
+  sent by the host.
 
   """
   __slots__ = []
@@ -369,9 +338,7 @@ class MsgReset(SBP):
   of its fields.
 
   
-  This message from the host resets the Piksi back into the
-bootloader.
-
+  This message from the host resets the Piksi back into the bootloader.
 
   Parameters
   ----------
@@ -460,9 +427,7 @@ class MsgResetDep(SBP):
   of its fields.
 
   
-  This message from the host resets the Piksi back into the
-bootloader.
-
+  This message from the host resets the Piksi back into the bootloader.
 
   """
   __slots__ = []
@@ -506,10 +471,9 @@ class MsgCwResults(SBP):
   of its fields.
 
   
-  This is an unused legacy message for result reporting from the
-CW interference channel on the SwiftNAP. This message will be
-removed in a future release.
-
+  This is an unused legacy message for result reporting from the CW
+  interference channel on the SwiftNAP. This message will be removed in a
+  future release.
 
   """
   __slots__ = []
@@ -553,10 +517,9 @@ class MsgCwStart(SBP):
   of its fields.
 
   
-  This is an unused legacy message from the host for starting
-the CW interference channel on the SwiftNAP. This message will
-be removed in a future release.
-
+  This is an unused legacy message from the host for starting the CW
+  interference channel on the SwiftNAP. This message will be removed in a
+  future release.
 
   """
   __slots__ = []
@@ -600,9 +563,8 @@ class MsgResetFilters(SBP):
   of its fields.
 
   
-  This message resets either the DGNSS Kalman filters or Integer
-Ambiguity Resolution (IAR) process.
-
+  This message resets either the DGNSS Kalman filters or Integer Ambiguity
+  Resolution (IAR) process.
 
   Parameters
   ----------
@@ -735,10 +697,9 @@ class MsgThreadState(SBP):
   of its fields.
 
   
-  The thread usage message from the device reports real-time
-operating system (RTOS) thread usage statistics for the named
-thread. The reported percentage values must be normalized.
-
+  The thread usage message from the device reports real-time operating system
+  (RTOS) thread usage statistics for the named thread. The reported percentage
+  values must be normalized.
 
   Parameters
   ----------
@@ -747,9 +708,8 @@ thread. The reported percentage values must be normalized.
   name : string
     Thread name (NULL terminated)
   cpu : int
-    Percentage cpu use for this thread. Values range from 0
-- 1000 and needs to be renormalized to 100
-
+    Percentage cpu use for this thread. Values range from 0 - 1000 and needs
+    to be renormalized to 100
   stack_free : int
     Free stack space for this thread
   sender : int
@@ -839,16 +799,14 @@ class MsgUartState(SBP):
   of its fields.
 
   
-  The UART message reports data latency and throughput of the UART
-channels providing SBP I/O. On the default Piksi configuration,
-UARTs A and B are used for telemetry radios, but can also be
-host access ports for embedded hosts, or other interfaces in
-future. The reported percentage values must be normalized.
-Observations latency and period can be used to assess the
-health of the differential corrections link. Latency provides
-the timeliness of received base observations while the
-period indicates their likelihood of transmission.
-
+  The UART message reports data latency and throughput of the UART channels
+  providing SBP I/O. On the default Piksi configuration, UARTs A and B are
+  used for telemetry radios, but can also be host access ports for embedded
+  hosts, or other interfaces in future. The reported percentage values must be
+  normalized. Observations latency and period can be used to assess the health
+  of the differential corrections link. Latency provides the timeliness of
+  received base observations while the period indicates their likelihood of
+  transmission.
 
   Parameters
   ----------
@@ -869,11 +827,11 @@ period indicates their likelihood of transmission.
 
   """
   _parser = construct.Struct(
-                   'uart_a' / construct.Struct(UARTChannel._parser),
-                   'uart_b' / construct.Struct(UARTChannel._parser),
-                   'uart_ftdi' / construct.Struct(UARTChannel._parser),
-                   'latency' / construct.Struct(Latency._parser),
-                   'obs_period' / construct.Struct(Period._parser),)
+                   'uart_a' / UARTChannel._parser,
+                   'uart_b' / UARTChannel._parser,
+                   'uart_ftdi' / UARTChannel._parser,
+                   'latency' / Latency._parser,
+                   'obs_period' / Period._parser,)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -976,10 +934,10 @@ class MsgUartStateDepa(SBP):
 
   """
   _parser = construct.Struct(
-                   'uart_a' / construct.Struct(UARTChannel._parser),
-                   'uart_b' / construct.Struct(UARTChannel._parser),
-                   'uart_ftdi' / construct.Struct(UARTChannel._parser),
-                   'latency' / construct.Struct(Latency._parser),)
+                   'uart_a' / UARTChannel._parser,
+                   'uart_b' / UARTChannel._parser,
+                   'uart_ftdi' / UARTChannel._parser,
+                   'latency' / Latency._parser,)
   __slots__ = [
                'uart_a',
                'uart_b',
@@ -1061,11 +1019,9 @@ class MsgIarState(SBP):
   of its fields.
 
   
-  This message reports the state of the Integer Ambiguity
-Resolution (IAR) process, which resolves unknown integer
-ambiguities from double-differenced carrier-phase measurements
-from satellite observations.
-
+  This message reports the state of the Integer Ambiguity Resolution (IAR)
+  process, which resolves unknown integer ambiguities from double-differenced
+  carrier-phase measurements from satellite observations.
 
   Parameters
   ----------
@@ -1154,9 +1110,8 @@ class MsgMaskSatellite(SBP):
   of its fields.
 
   
-  This message allows setting a mask to prevent a particular satellite
-from being used in various Piksi subsystems.
-
+  This message allows setting a mask to prevent a particular satellite from
+  being used in various Piksi subsystems.
 
   Parameters
   ----------
@@ -1172,7 +1127,7 @@ from being used in various Piksi subsystems.
   """
   _parser = construct.Struct(
                    'mask' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),)
+                   'sid' / GnssSignal._parser,)
   __slots__ = [
                'mask',
                'sid',
@@ -1266,7 +1221,7 @@ class MsgMaskSatelliteDep(SBP):
   """
   _parser = construct.Struct(
                    'mask' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),)
+                   'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'mask',
                'sid',
@@ -1345,9 +1300,8 @@ class MsgDeviceMonitor(SBP):
 
   
   This message contains temperature and voltage level measurements from the
-processor's monitoring system and the RF frontend die temperature if
-available.
-
+  processor's monitoring system and the RF frontend die temperature if
+  available.
 
   Parameters
   ----------
@@ -1456,10 +1410,8 @@ class MsgCommandReq(SBP):
   of its fields.
 
   
-  Request the recipient to execute an command.
-Output will be sent in MSG_LOG messages, and the exit
-code will be returned with MSG_COMMAND_RESP.
-
+  Request the recipient to execute an command. Output will be sent in MSG_LOG
+  messages, and the exit code will be returned with MSG_COMMAND_RESP.
 
   Parameters
   ----------
@@ -1553,9 +1505,8 @@ class MsgCommandResp(SBP):
   of its fields.
 
   
-  The response to MSG_COMMAND_REQ with the return code of
-the command.  A return code of zero indicates success.
-
+  The response to MSG_COMMAND_REQ with the return code of the command.  A
+  return code of zero indicates success.
 
   Parameters
   ----------
@@ -1649,11 +1600,9 @@ class MsgCommandOutput(SBP):
   of its fields.
 
   
-  Returns the standard output and standard error of the
-command requested by MSG_COMMAND_REQ.
-The sequence number can be used to filter for filtering
-the correct command.
-
+  Returns the standard output and standard error of the command requested by
+  MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the
+  correct command.
 
   Parameters
   ----------
@@ -1747,9 +1696,8 @@ class MsgNetworkStateReq(SBP):
   of its fields.
 
   
-  Request state of Piksi network interfaces.
-Output will be sent in MSG_NETWORK_STATE_RESP messages
-
+  Request state of Piksi network interfaces. Output will be sent in
+  MSG_NETWORK_STATE_RESP messages.
 
   """
   __slots__ = []
@@ -1793,10 +1741,8 @@ class MsgNetworkStateResp(SBP):
   of its fields.
 
   
-  The state of a network interface on the Piksi.
-Data is made to reflect output of ifaddrs struct returned by getifaddrs
-in c.
-
+  The state of a network interface on the Piksi. Data is made to reflect
+  output of ifaddrs struct returned by getifaddrs in c.
 
   Parameters
   ----------
@@ -1920,8 +1866,7 @@ class MsgNetworkBandwidthUsage(SBP):
   of its fields.
 
   
-  The bandwidth usage, a list of usage by interface. 
-
+  The bandwidth usage, a list of usage by interface.
 
   Parameters
   ----------
@@ -1934,7 +1879,7 @@ class MsgNetworkBandwidthUsage(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('interfaces' / construct.Struct(NetworkUsage._parser)),)
+                   'interfaces' / construct.GreedyRange(NetworkUsage._parser),)
   __slots__ = [
                'interfaces',
               ]
@@ -2010,10 +1955,9 @@ class MsgCellModemStatus(SBP):
   of its fields.
 
   
-  If a cell modem is present on a piksi device, this message
-will be send periodically to update the host on the status
-of the modem and its various parameters.
-
+  If a cell modem is present on a piksi device, this message will be send
+  periodically to update the host on the status of the modem and its various
+  parameters.
 
   Parameters
   ----------
@@ -2032,7 +1976,7 @@ of the modem and its various parameters.
   _parser = construct.Struct(
                    'signal_strength' / construct.Int8sl,
                    'signal_error_rate' / construct.Float32l,
-                   construct.GreedyRange('reserved' / construct.Int8ul),)
+                   'reserved' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'signal_strength',
                'signal_error_rate',
@@ -2124,31 +2068,26 @@ class MsgSpecanDep(SBP):
     Receiver time of this observation
   freq_ref : float
     Reference frequency of this packet
-
   freq_step : float
     Frequency step of points in this packet
-
   amplitude_ref : float
     Reference amplitude of this packet
-
   amplitude_unit : float
     Amplitude unit value of points in this packet
-
   amplitude_value : array
     Amplitude values (in the above units) of points in this packet
-
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
                    'channel_tag' / construct.Int16ul,
-                   't' / construct.Struct(GPSTimeDep._parser),
+                   't' / GPSTimeDep._parser,
                    'freq_ref' / construct.Float32l,
                    'freq_step' / construct.Float32l,
                    'amplitude_ref' / construct.Float32l,
                    'amplitude_unit' / construct.Float32l,
-                   construct.GreedyRange('amplitude_value' / construct.Int8ul),)
+                   'amplitude_value' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'channel_tag',
                't',
@@ -2238,7 +2177,6 @@ class MsgSpecan(SBP):
   
   Spectrum analyzer packet.
 
-
   Parameters
   ----------
   sbp : SBP
@@ -2249,31 +2187,26 @@ class MsgSpecan(SBP):
     Receiver time of this observation
   freq_ref : float
     Reference frequency of this packet
-
   freq_step : float
     Frequency step of points in this packet
-
   amplitude_ref : float
     Reference amplitude of this packet
-
   amplitude_unit : float
     Amplitude unit value of points in this packet
-
   amplitude_value : array
     Amplitude values (in the above units) of points in this packet
-
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
                    'channel_tag' / construct.Int16ul,
-                   't' / construct.Struct(GPSTime._parser),
+                   't' / GPSTime._parser,
                    'freq_ref' / construct.Float32l,
                    'freq_step' / construct.Float32l,
                    'amplitude_ref' / construct.Float32l,
                    'amplitude_unit' / construct.Float32l,
-                   construct.GreedyRange('amplitude_value' / construct.Int8ul),)
+                   'amplitude_value' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'channel_tag',
                't',
@@ -2361,13 +2294,13 @@ class MsgFrontEndGain(SBP):
   of its fields.
 
   
-  This message describes the gain of each channel in the receiver frontend. Each 
-gain is encoded as a non-dimensional percentage relative to the maximum range  
-possible for the gain stage of the frontend. By convention, each gain array 
-has 8 entries and the index of the array corresponding to the index of the rf channel 
-in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
-A negative value implies an error for the particular gain stage as reported by the frontend.
-
+  This message describes the gain of each channel in the receiver frontend.
+  Each gain is encoded as a non-dimensional percentage relative to the maximum
+  range possible for the gain stage of the frontend. By convention, each gain
+  array has 8 entries and the index of the array corresponding to the index of
+  the rf channel in the frontend. A gain of 127 percent encodes that rf
+  channel is not present in the hardware. A negative value implies an error
+  for the particular gain stage as reported by the frontend.
 
   Parameters
   ----------

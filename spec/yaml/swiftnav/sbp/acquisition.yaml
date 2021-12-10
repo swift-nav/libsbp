@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -20,7 +20,7 @@ definitions:
  - MSG_ACQ_RESULT:
     id: 0x002F
     short_desc: Satellite acquisition result
-    desc: |
+    desc: >
       This message describes the results from an attempted GPS signal
       acquisition search for a satellite PRN over a code phase/carrier
       frequency range. It contains the parameters of the point in the
@@ -77,7 +77,7 @@ definitions:
     fields:
         - snr:
             type: float
-            desc: |
+            desc: >
               SNR of best point. Currently in arbitrary SNR points, but will
               be in units of dB Hz in a later revision of this message.
         - cp:
@@ -102,8 +102,8 @@ definitions:
     fields:
         - snr:
             type: float
-            desc: |
-              SNR of best point. Currently dimensonless, but will have
+            desc: >
+              SNR of best point. Currently dimensionless, but will have
               units of dB Hz in the revision of this message.
         - cp:
             type: float
@@ -115,14 +115,14 @@ definitions:
             desc: Carrier frequency of best point
         - prn:
             type: u8
-            desc: |
+            desc: >
               PRN-1 identifier of the satellite signal for which
               acquisition was attempted
 
  - AcqSvProfile:
     short_desc: Acq perfomance measurement and debug
-    desc: |
-      Profile for a specific SV for debugging purposes
+    desc: >
+      Profile for a specific SV for debugging purposes.
       The message describes SV profile during acquisition time.
       The message is used to debug and measure the performance.
     fields:
@@ -225,7 +225,7 @@ definitions:
  - MSG_ACQ_SV_PROFILE:
     id: 0x002E
     short_desc: Acquisition perfomance measurement and debug
-    desc: |
+    desc: >
       The message describes all SV profiles during acquisition time.
       The message is used to debug and measure the performance.
     fields:
@@ -236,7 +236,7 @@ definitions:
 
  - MSG_ACQ_SV_PROFILE_DEP:
     id: 0x001E
-    short_desc: Deprecated.
+    short_desc: Deprecated
     desc: Deprecated.
     public: False
     replaced_by:

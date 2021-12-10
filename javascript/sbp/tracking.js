@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -22,13 +22,12 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
+var CarrierPhase = require("./gnss").CarrierPhase;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
+var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;
 
 /**
@@ -283,7 +282,7 @@ MsgTrackingState.prototype.fieldSpec.push(['states', 'array', TrackingChannelSta
  *
  * Measurement Engine tracking channel state for a specific satellite signal and
  * measured signal power. The mesid field for Glonass can either carry the FCN as
- * 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28)
+ * 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28).
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field mesid GnssSignal Measurement Engine GNSS signal being tracked (carries either Glonass FCN or

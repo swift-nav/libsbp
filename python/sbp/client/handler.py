@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -18,6 +18,11 @@ import threading
 import weakref
 import six
 from six.moves.queue import Queue
+
+try:
+    from typing import Optional  # noqa
+except ImportError:
+    pass
 
 
 class Handler(object):
@@ -227,7 +232,6 @@ class Handler(object):
             self._receive_thread.join(0.1)
         except Exception as exc:
             warnings.warn("Handler stop error: %s" % (exc,))
-            pass
 
     def join(self, timeout=None):
         self._receive_thread.join(timeout)

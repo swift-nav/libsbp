@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,54 +8,50 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
-import com.swiftnav.sbp.SBPStruct;
 
 public class PackedObsContent extends SBPStruct {
-    
+
     /** Pseudorange observation */
     public long P;
-    
+
     /** Carrier phase observation with typical sign convention. */
     public CarrierPhase L;
-    
+
     /** Doppler observation with typical sign convention. */
     public Doppler D;
-    
-    /** Carrier-to-Noise density.  Zero implies invalid cn0. */
+
+    /** Carrier-to-Noise density. Zero implies invalid cn0. */
     public int cn0;
-    
-    /** Lock timer. This value gives an indication of the time
-for which a signal has maintained continuous phase lock.
-Whenever a signal has lost and regained lock, this
-value is reset to zero. It is encoded according to DF402 from
-the RTCM 10403.2 Amendment 2 specification.  Valid values range
-from 0 to 15 and the most significant nibble is reserved for future use.
- */
+
+    /**
+     * Lock timer. This value gives an indication of the time for which a signal has maintained
+     * continuous phase lock. Whenever a signal has lost and regained lock, this value is reset to
+     * zero. It is encoded according to DF402 from the RTCM 10403.2 Amendment 2 specification. Valid
+     * values range from 0 to 15 and the most significant nibble is reserved for future use.
+     */
     public int lock;
-    
-    /** Measurement status flags. A bit field of flags providing the
-status of this observation.  If this field is 0 it means only the Cn0
-estimate for the signal is valid.
- */
+
+    /**
+     * Measurement status flags. A bit field of flags providing the status of this observation. If
+     * this field is 0 it means only the Cn0 estimate for the signal is valid.
+     */
     public int flags;
-    
+
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
-    
 
-    public PackedObsContent () {}
+    public PackedObsContent() {}
 
     @Override
     public PackedObsContent parse(SBPMessage.Parser parser) throws SBPBinaryException {

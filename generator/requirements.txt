@@ -1,16 +1,18 @@
-Jinja2
-pyyaml
-coverage
-docutils
-flake8
-mccabe
-pep8
-pyflakes
-pylint
-pytest
-tox
-voluptuous
-construct
-pytest-cov
-pytest-xdist
-dataclasses
+coverage~=6.0
+dataclasses~=0.6
+docutils==0.17.*
+flake8~=4.0
+Jinja2~=3.0
+mccabe~=0.6
+numpy~=1.21
+pybase64~=1.2
+python-rapidjson~=1.5
+pep8~=1.7
+pyflakes~=2.4
+pylint~=2.11
+pytest~=6.2
+pytest-cov~=3.0
+pytest-xdist~=2.4
+pyyaml            # PyYAML API is very stable
+tox               # Tox is (generally) designed to be very backwards compatible
+voluptuous~=0.12

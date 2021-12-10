@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#SolutionInputType",
   "title":"SolutionInputType",
-  "description":"Metadata describing which sensors were involved in the solution.,\nThe structure is fixed no matter what the actual sensor type is.,\nThe sensor_type field tells you which sensor we are talking about. It also tells you,\nwhether the sensor data was actually used or not.,\nThe flags field, always a u8, contains the sensor-specific data.,\nThe content of flags, for each sensor type, is described in the relevant structures in this section.\n",
+  "description":"Metadata describing which sensors were involved in the solution. The structure is fixed no matter what the actual sensor type is. The sensor_type field tells you which sensor we are talking about. It also tells you whether the sensor data was actually used or not. The flags field, always a u8, contains the sensor-specific data. The content of flags, for each sensor type, is described in the relevant structures in this section.\n",
   "type": "object",
   "properties": {
     "sensor_type": {"type": "integer"},

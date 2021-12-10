@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,44 +8,45 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
+/**
+ * SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
  *
- * You can have MSG_SV_CONFIGURATION_GPS_DEP inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SV_CONFIGURATION_GPS_DEP inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details. */
-
+ * <p>Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ */
 public class MsgSvConfigurationGPSDep extends SBPMessage {
     public static final int TYPE = 0x0091;
 
-    
-    /** Navigation Message Correction Table Valitidy Time */
+    /** Navigation Message Correction Table Validity Time */
     public GPSTimeSec t_nmct;
-    
+
     /** L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
     public long l2c_mask;
-    
 
-    public MsgSvConfigurationGPSDep (int sender) { super(sender, TYPE); }
-    public MsgSvConfigurationGPSDep () { super(TYPE); }
-    public MsgSvConfigurationGPSDep (SBPMessage msg) throws SBPBinaryException {
+    public MsgSvConfigurationGPSDep(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSvConfigurationGPSDep() {
+        super(TYPE);
+    }
+
+    public MsgSvConfigurationGPSDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

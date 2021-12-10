@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -16,10 +16,7 @@ from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator
 from sbp.client.loggers.rotating_logger import RotatingFileLogger
 from sbp.client.loggers.udp_logger import UdpLogger
-from sbp.acquisition import MsgAcqResultDepA
 from sbp.logging import MsgPrintDep
-from sbp.table import _SBP_TABLE, dispatch
-from sbp.table import InvalidSBPMessageType
 
 import six
 from six.moves import socketserver

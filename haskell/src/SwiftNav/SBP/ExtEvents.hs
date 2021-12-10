@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.ExtEvents
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages reporting accurately-timestamped external events, e.g. camera
+-- \< Messages reporting accurately-timestamped external events, e.g. camera
 -- shutter time. \>
 
 module SwiftNav.SBP.ExtEvents

@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.User
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages reserved for use by the user. \>
+-- \< Messages reserved for use by the user. \>
 
 module SwiftNav.SBP.User
   ( module SwiftNav.SBP.User

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,52 +8,54 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.system;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/system.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-/** SBP class for message MSG_GROUP_META (0xFF0A).
+/**
+ * SBP class for message MSG_GROUP_META (0xFF0A).
  *
- * You can have MSG_GROUP_META inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_GROUP_META inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * This leading message lists the time metadata of the Solution Group.
- * It also lists the atomic contents (i.e. types of messages included) of the Solution Group. */
-
+ * <p>This leading message lists the time metadata of the Solution Group. It also lists the atomic
+ * contents (i.e. types of messages included) of the Solution Group.
+ */
 public class MsgGroupMeta extends SBPMessage {
     public static final int TYPE = 0xFF0A;
 
-    
     /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
     public int group_id;
-    
+
     /** Status flags (reserved) */
     public int flags;
-    
+
     /** Size of list group_msgs */
     public int n_group_msgs;
-    
-    /** An inorder list of message types included in the Solution Group,
-including GROUP_META itself
- */
-    public int[] group_msgs;
-    
 
-    public MsgGroupMeta (int sender) { super(sender, TYPE); }
-    public MsgGroupMeta () { super(TYPE); }
-    public MsgGroupMeta (SBPMessage msg) throws SBPBinaryException {
+    /**
+     * An in-order list of message types included in the Solution Group, including GROUP_META itself
+     */
+    public int[] group_msgs;
+
+    public MsgGroupMeta(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgGroupMeta() {
+        super(TYPE);
+    }
+
+    public MsgGroupMeta(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

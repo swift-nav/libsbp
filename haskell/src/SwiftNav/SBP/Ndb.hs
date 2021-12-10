@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Ndb
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages for logging NDB events. \>
+-- \< Messages for logging NDB events. \>
 
 module SwiftNav.SBP.Ndb
   ( module SwiftNav.SBP.Ndb

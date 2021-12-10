@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFlashProgram",
   "title":"MsgFlashProgram",
-  "description":"The flash program message programs a set of addresses of either,\nthe STM or M25 flash. The device replies with either a,\nMSG_FLASH_DONE message containing the return code FLASH_OK (0),\non success, or FLASH_INVALID_LEN (2) if the maximum write size,\nis exceeded. Note that the sector-containing addresses must be,\nerased before addresses can be programmed.\n",
+  "description":"The flash program message programs a set of addresses of either the STM or M25 flash. The device replies with either a MSG_FLASH_DONE message containing the return code FLASH_OK (0) on success, or FLASH_INVALID_LEN (2) if the maximum write size is exceeded. Note that the sector-containing addresses must be erased before addresses can be programmed.\n",
   "type": "object",
   "properties": {
     "target": {"type": "integer"},

@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -26,7 +26,7 @@ class Forwarder(Thread):
     ----------
     source : iterable of tuple(SBP, dict)
       Source of SBP messages.
-    sink : callable (SBP, **metadata)
+    sink : callable (SBP, metadata)
       Callable sink of SBP messages.
 
     """
@@ -48,13 +48,13 @@ class Forwarder(Thread):
         self._broken = True
         try:
             self._source.breakiter()
-            self.sink.flush()
-            self.sink.close()
+            self._sink.flush()
+            self._sink.close()
         except:
             pass
 
     def __enter__(self):
         self.run()
 
-    def __exit__(self):
+    def __exit__(self, *args, **kw):
         self.stop()

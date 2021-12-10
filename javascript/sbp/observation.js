@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -24,13 +24,12 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
+var CarrierPhase = require("./gnss").CarrierPhase;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
+var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;
 
 /**
@@ -101,7 +100,7 @@ Doppler.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
  * observations are interoperable with 3rd party receivers and conform with typical
  * RTCM 3.1 message GPS/GLO observations.  Carrier phase observations are not
  * guaranteed to be aligned to the RINEX 3 or RTCM 3.3 MSM reference signal and no
- * 1/4 cycle adjustments are currently peformed.
+ * 1/4 cycle adjustments are currently performed.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field P number (unsigned 32-bit int, 4 bytes) Pseudorange observation
@@ -280,7 +279,7 @@ MsgBasePosLlh.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
  * pseudo-absolute position output.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field x number (float, 8 bytes) ECEF X coodinate
+ * @field x number (float, 8 bytes) ECEF X coordinate
  * @field y number (float, 8 bytes) ECEF Y coordinate
  * @field z number (float, 8 bytes) ECEF Z coordinate
  *
@@ -841,9 +840,9 @@ MsgEphemerisQzss.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field af1 number (float, 4 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
  * @field toc GPSTimeSec Clock reference
- * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data  Calculated from the navigation data parameter t_oe per
+ * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data Calculated from the navigation data parameter t_oe per
  *   RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
- * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data  Calculated from the navigation data parameter t_oe per
+ * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data Calculated from the navigation data parameter t_oe per
  *   RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -2134,7 +2133,7 @@ MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.protot
  * This observation message has been deprecated in favor of observations that are
  * more interoperable. This message should be used for observations referenced to a
  * nominal pseudorange which are not interoperable with most 3rd party GNSS
- * receievers or typical RTCMv3 observations.
+ * receivers or typical RTCMv3 observations.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeaderDep Header of a GPS observation message
@@ -2204,7 +2203,7 @@ MsgObsDepC.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepC.protot
  * see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_nmct GPSTimeSec Navigation Message Correction Table Valitidy Time
+ * @field t_nmct GPSTimeSec Navigation Message Correction Table Validity Time
  * @field a0 number (float, 8 bytes)
  * @field a1 number (float, 8 bytes)
  * @field a2 number (float, 8 bytes)
@@ -2255,7 +2254,7 @@ MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field t_nmct GPSTimeSec Navigation Message Correction Table Valitidy Time
+ * @field t_nmct GPSTimeSec Navigation Message Correction Table Validity Time
  * @field l2c_mask number (unsigned 32-bit int, 4 bytes) L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -2519,8 +2518,8 @@ MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
  * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
  *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
  *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
- *   Components. Satellite health status for GLO:   See GLO ICD 5.1 table 5.1 for
- *   details   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
+ *   Components. Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+ *   details):   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
  *   immediate data and indicates overall constellation status     at the moment of
  *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
  *   indicates that n-satellite is operational.   - bit 1: Bn(ln), '0' indicates the
@@ -2567,8 +2566,8 @@ AlmanacCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
  * @field health_bits number (unsigned 8-bit int, 1 byte) Satellite health status for GPS:   - bits 5-7: NAV data health status. See IS-
  *   GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits 0-4: Signal
  *   health status. See IS-GPS-200H     Table 20-VIII. Codes for Health of SV Signal
- *   Components. Satellite health status for GLO:   See GLO ICD 5.1 table 5.1 for
- *   details   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
+ *   Components. Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for
+ *   details):   - bit 0: C(n), "unhealthy" flag that is transmitted within     non-
  *   immediate data and indicates overall constellation status     at the moment of
  *   almanac uploading.     '0' indicates malfunction of n-satellite.     '1'
  *   indicates that n-satellite is operational.   - bit 1: Bn(ln), '0' indicates the
@@ -2821,7 +2820,7 @@ MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
  *
  * The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
  * ambiguity resolution for baselines with mixed receiver types (e.g. receiver of
- * different manufacturers)
+ * different manufacturers).
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field mask number (unsigned 8-bit int, 1 byte) GLONASS FDMA signals mask
@@ -2920,7 +2919,7 @@ MsgSvAzEl.prototype.fieldSpec.push(['azel', 'array', SvAzEl.prototype.fieldSpec,
 /**
  * SBP class for message MSG_OSR (0x0640).
  *
- * The OSR message contains network corrections in an observation-like format
+ * The OSR message contains network corrections in an observation-like format.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeader Header of a GPS observation message

@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.linux
-description: |
+description: >
   Linux state monitoring.
 
 stable: False
@@ -22,9 +22,9 @@ definitions:
 
  - MSG_LINUX_CPU_STATE_DEP_A:
     id: 0x7F00
-    short_desc: List CPU state on the system. DEPRECATED.
+    short_desc: List CPU state on the system. DEPRECATED
     public: false
-    desc: |
+    desc: >
       This message indicates the process state of the top 10 heaviest
       consumers of CPU on the system.
     fields:
@@ -43,13 +43,14 @@ definitions:
           desc: fixed length string representing the thread name
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line (as much as it fits in the remaining packet)
 
  - MSG_LINUX_MEM_STATE_DEP_A:
     id: 0x7F01
-    short_desc: List memory state on the system. DEPRECATED.
+    short_desc: List memory state on the system. DEPRECATED
     public: false
-    desc: |
+    desc: >
       This message indicates the process state of the top 10 heaviest
       consumers of memory on the system.
     fields:
@@ -68,13 +69,14 @@ definitions:
           desc: fixed length string representing the thread name
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line (as much as it fits in the remaining packet)
 
  - MSG_LINUX_SYS_STATE_DEP_A:
     id: 0x7F02
     public: false
-    short_desc: CPU, Memory and Process Starts/Stops. DEPRECATED.
-    desc: |
+    short_desc: CPU, Memory and Process Starts/Stops. DEPRECATED
+    desc: >
       This presents a summary of CPU and memory utilization.
     fields:
       - mem_total:
@@ -100,7 +102,7 @@ definitions:
     id: 0x7F03
     public: false
     short_desc: A list of processes with high socket counts
-    desc: |
+    desc: >
       Top 10 list of processes with high socket counts.
     fields:
       - index:
@@ -114,27 +116,28 @@ definitions:
           desc: the number of sockets the process is using
       - socket_types:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket types used:
-             0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
-             and 0x8000 (unknown)
+           0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
+           and 0x8000 (unknown)
       - socket_states:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket states:
-             0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
-             0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
-             0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
-             and 0x8000 (unknown)
+           0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
+           0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
+           0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
+           and 0x8000 (unknown)
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line of the process in question
- 
+
  - MSG_LINUX_PROCESS_SOCKET_QUEUES:
     id: 0x7F04
     public: false
     short_desc: A list of processes with deep socket queues
-    desc: |
+    desc: >
       Top 10 list of sockets with deep queues.
     fields:
       - index:
@@ -151,33 +154,34 @@ definitions:
           desc: the total amount of send data queued for this process
       - socket_types:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket types used:
-             0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
-             and 0x8000 (unknown)
+           0x1 (tcp), 0x2 (udp), 0x4 (unix stream), 0x8 (unix dgram), 0x10 (netlink),
+           and 0x8000 (unknown)
       - socket_states:
          type: u16
-         desc: |
+         desc: >
            A bitfield indicating the socket states:
-             0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
-             0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
-             0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
-             and 0x8000 (unknown)
+           0x1 (established), 0x2 (syn-sent), 0x4 (syn-recv), 0x8 (fin-wait-1),
+           0x10 (fin-wait-2), 0x20 (time-wait), 0x40 (closed), 0x80 (close-wait),
+           0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
+           and 0x8000 (unknown)
       - address_of_largest:
           type: string
-          size: 64 
-          desc: |
+          size: 64
+          desc: >
              Address of the largest queue, remote or local depending on the directionality
              of the connection.
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line of the process in question
- 
+
  - MSG_LINUX_SOCKET_USAGE:
     id: 0x7F05
     public: false
     short_desc: Summary of socket usage across the system
-    desc: |
+    desc: >
       Summaries the socket usage across the system.
     fields:
       - avg_queue_depth:
@@ -190,22 +194,22 @@ definitions:
           type: array
           size: 16
           fill: u16
-          desc: |
+          desc: >
             A count for each socket type reported in the `socket_types_reported` field,
             the first entry corresponds to the first enabled bit in `types_reported`.
       - socket_type_counts:
           type: array
           size: 16
           fill: u16
-          desc: |
+          desc: >
             A count for each socket type reported in the `socket_types_reported` field,
             the first entry corresponds to the first enabled bit in `types_reported`.
-            
+
  - MSG_LINUX_PROCESS_FD_COUNT:
     id: 0x7F06
     public: false
     short_desc: Summary of processes with large amounts of open file descriptors
-    desc: |
+    desc: >
       Top 10 list of processes with a large number of open file descriptors.
     fields:
       - index:
@@ -219,13 +223,14 @@ definitions:
           desc: a count of the number of file descriptors opened by the process
       - cmdline:
           type: string
+          encoding: unterminated
           desc: the command line of the process in question
-          
+
  - MSG_LINUX_PROCESS_FD_SUMMARY:
     id: 0x7F07
     public: false
     short_desc: Summary of open file descriptors on the system
-    desc: |
+    desc: >
       Summary of open file descriptors on the system.
     fields:
       - sys_fd_count:
@@ -233,7 +238,8 @@ definitions:
           desc: count of total FDs open on the system
       - most_opened:
           type: string
-          desc: |
+          encoding: double_null_terminated
+          desc: >
              A null delimited list of strings which alternates between
              a string representation of the process count and the file
              name whose count it being reported.  That is, in C string
@@ -244,7 +250,7 @@ definitions:
      id: 0x7F08
      short_desc: List CPU state on the system
      public: false
-     desc: |
+     desc: >
        This message indicates the process state of the top 10 heaviest
        consumers of CPU on the system, including a timestamp.
      fields:
@@ -275,6 +281,7 @@ definitions:
            desc: fixed length string representing the thread name
        - cmdline:
            type: string
+           encoding: unterminated
            desc: the command line (as much as it fits in the remaining packet)
 
 
@@ -282,7 +289,7 @@ definitions:
      id: 0x7F09
      short_desc: List memory state on the system
      public: false
-     desc: |
+     desc: >
        This message indicates the process state of the top 10 heaviest
        consumers of memory on the system, including a timestamp.
      fields:
@@ -313,13 +320,14 @@ definitions:
            desc: fixed length string representing the thread name
        - cmdline:
            type: string
+           encoding: unterminated
            desc: the command line (as much as it fits in the remaining packet)
 
  - MSG_LINUX_SYS_STATE:
      id: 0x7F0A
      public: false
-     short_desc: CPU, Memory and Process Starts/Stops.
-     desc: |
+     short_desc: CPU, Memory and Process Starts/Stops
+     desc: >
        This presents a summary of CPU and memory utilization, including a timestamp.
      fields:
        - mem_total:

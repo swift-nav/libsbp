@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -9,7 +9,7 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.logging
-description: |
+description: >
   Logging and debugging messages from the device.
 stable: True
 public: True
@@ -20,7 +20,7 @@ definitions:
  - MSG_LOG:
     id: 0x0401
     short_desc: Plaintext logging messages with levels
-    desc: |
+    desc: >
       This message contains a human-readable payload string from the
       device containing errors, warnings and informational messages at
       ERROR, WARNING, DEBUG, INFO logging levels.
@@ -44,16 +44,18 @@ definitions:
                         - 7: DEBUG
       - text:
           type: string
+          encoding: unterminated
           desc: Human-readable string
 
  - MSG_FWD:
     id: 0x0402
     short_desc: Wrapper for FWD a separate stream of information over SBP
-    desc: |
+    desc: >
           This message provides the ability to forward messages over SBP.  This may take the form
-          of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
+          of wrapping up SBP messages received by Piksi for logging purposes or wrapping
           another protocol with SBP.
-          
+
+
           The source identifier indicates from what interface a forwarded stream derived.
           The protocol identifier identifies what the expected protocol the forwarded msg contains.
           Protocol 0 represents SBP and the remaining values are implementation defined.
@@ -65,8 +67,9 @@ definitions:
           type: u8
           desc: protocol identifier
       - fwd_payload:
-          type: string
-          desc: variable length wrapped binary message     
+          type: array
+          fill: u8
+          desc: variable length wrapped binary message
 
  - MSG_PRINT_DEP:
     id: 0x0010
@@ -78,5 +81,5 @@ definitions:
     fields:
       - text:
           type: string
+          encoding: unterminated
           desc: Human-readable string
-

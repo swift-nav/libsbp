@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,41 +8,43 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.user;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/user.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-/** SBP class for message MSG_USER_DATA (0x0800).
+/**
+ * SBP class for message MSG_USER_DATA (0x0800).
  *
- * You can have MSG_USER_DATA inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_USER_DATA inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * This message can contain any application specific user data up to a
- * maximum length of 255 bytes per message. */
-
+ * <p>This message can contain any application specific user data up to a maximum length of 255
+ * bytes per message.
+ */
 public class MsgUserData extends SBPMessage {
     public static final int TYPE = 0x0800;
 
-    
     /** User data payload */
     public int[] contents;
-    
 
-    public MsgUserData (int sender) { super(sender, TYPE); }
-    public MsgUserData () { super(TYPE); }
-    public MsgUserData (SBPMessage msg) throws SBPBinaryException {
+    public MsgUserData(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgUserData() {
+        super(TYPE);
+    }
+
+    public MsgUserData(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

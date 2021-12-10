@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,64 +8,61 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.piksi;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-/** SBP class for message MSG_SPECAN_DEP (0x0050).
+/**
+ * SBP class for message MSG_SPECAN_DEP (0x0050).
  *
- * You can have MSG_SPECAN_DEP inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SPECAN_DEP inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
-* Deprecated. */
-
+ * <p>Deprecated.
+ */
 public class MsgSpecanDep extends SBPMessage {
     public static final int TYPE = 0x0050;
 
-    
     /** Channel ID */
     public int channel_tag;
-    
+
     /** Receiver time of this observation */
     public GPSTimeDep t;
-    
-    /** Reference frequency of this packet
- */
-    public float freq_ref;
-    
-    /** Frequency step of points in this packet
- */
-    public float freq_step;
-    
-    /** Reference amplitude of this packet
- */
-    public float amplitude_ref;
-    
-    /** Amplitude unit value of points in this packet
- */
-    public float amplitude_unit;
-    
-    /** Amplitude values (in the above units) of points in this packet
- */
-    public int[] amplitude_value;
-    
 
-    public MsgSpecanDep (int sender) { super(sender, TYPE); }
-    public MsgSpecanDep () { super(TYPE); }
-    public MsgSpecanDep (SBPMessage msg) throws SBPBinaryException {
+    /** Reference frequency of this packet */
+    public float freq_ref;
+
+    /** Frequency step of points in this packet */
+    public float freq_step;
+
+    /** Reference amplitude of this packet */
+    public float amplitude_ref;
+
+    /** Amplitude unit value of points in this packet */
+    public float amplitude_unit;
+
+    /** Amplitude values (in the above units) of points in this packet */
+    public int[] amplitude_value;
+
+    public MsgSpecanDep(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSpecanDep() {
+        super(TYPE);
+    }
+
+    public MsgSpecanDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

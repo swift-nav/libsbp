@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,52 +8,51 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_BASE_POS_ECEF (0x0048).
+/**
+ * SBP class for message MSG_BASE_POS_ECEF (0x0048).
  *
- * You can have MSG_BASE_POS_ECEF inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_BASE_POS_ECEF inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * The base station position message is the position reported by
- * the base station itself in absolute Earth Centered Earth Fixed
- * coordinates. It is used for pseudo-absolute RTK positioning, and
- * is required to be a high-accuracy surveyed location of the base
- * station. Any error here will result in an error in the
- * pseudo-absolute position output. */
-
+ * <p>The base station position message is the position reported by the base station itself in
+ * absolute Earth Centered Earth Fixed coordinates. It is used for pseudo-absolute RTK positioning,
+ * and is required to be a high- accuracy surveyed location of the base station. Any error here will
+ * result in an error in the pseudo-absolute position output.
+ */
 public class MsgBasePosECEF extends SBPMessage {
     public static final int TYPE = 0x0048;
 
-    
-    /** ECEF X coodinate */
+    /** ECEF X coordinate */
     public double x;
-    
+
     /** ECEF Y coordinate */
     public double y;
-    
+
     /** ECEF Z coordinate */
     public double z;
-    
 
-    public MsgBasePosECEF (int sender) { super(sender, TYPE); }
-    public MsgBasePosECEF () { super(TYPE); }
-    public MsgBasePosECEF (SBPMessage msg) throws SBPBinaryException {
+    public MsgBasePosECEF(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgBasePosECEF() {
+        super(TYPE);
+    }
+
+    public MsgBasePosECEF(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

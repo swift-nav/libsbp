@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -13,126 +13,110 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 
-//! (((description | replace("\n", "\n//! "))))
+//! (((description | commentify(prefix="//! ") )))
 
-#[allow(unused_imports)]
-use byteorder::{LittleEndian,ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::SbpString;
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-
-((*- for i in includes *))
+((* for i in includes *))
 use super::(((i)))::*;
-((*- endfor *))
+((* endfor *))
+
+use super::lib::*;
 
 ((* for m in msgs *))
 ((*- if m.desc *))
 /// (((m.short_desc)))
 ///
-(((m.desc|commentify)))
+/// (((m.desc | commentify)))
 ///
+((*- elif m.short_desc *))
+/// (((m.short_desc)))
 ((*- endif *))
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct (((m.identifier|camel_case))) {
     ((*- if m.is_real_message *))
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     ((*- endif *))
     ((*- for f in m.fields *))
     ((*- if f.desc *))
-    /// (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    /// "))))
+    /// (((f.desc | commentify(indent=2) )))
     ((*- endif *))
-    pub (((f.identifier))): (((f|type_map))),
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "(((f.identifier)))")))]
+    pub (((f.identifier|snake_case))): (((f|type_map))),
     ((*- endfor *))
 }
 
-impl (((m.identifier|camel_case))) {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<(((m.identifier|camel_case))), crate::Error> {
-        Ok( (((m.identifier|camel_case))){
-            ((*- if m.is_real_message *))
-            sender_id: None,
-            ((*- endif *))
-            ((*- for f in m.fields *))
-            (((f.identifier))): (((f|parse_type)))?,
-            ((*- endfor *))
-        } )
-    }
-
-    ((*- if not m.is_real_message *))
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<(((m.identifier|camel_case)))>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push( (((m.identifier|camel_case)))::parse(buf)? );
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<(((m.identifier|camel_case)))>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push( (((m.identifier|camel_case)))::parse(buf)? );
-        }
-        Ok(v)
-    }
-    ((*- endif *))
+((* if m.is_real_message *))
+impl ConcreteMessage for (((m.identifier|camel_case))) {
+    const MESSAGE_TYPE: u16 = (((m.sbp_id)));
+    const MESSAGE_NAME: &'static str = "(((m.identifier)))";
 }
 
-((*- if m.is_real_message *))
-impl super::SBPMessage for (((m.identifier|camel_case))) {
-    fn get_message_name(&self) -> &'static str {
-        "(((m.identifier)))"
+impl SbpMessage for (((m.identifier|camel_case))) {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_message_type(&self) -> u16 {
-        (((m.sbp_id)))
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
+    (((m|gps_time(msgs))))
+}
 
-    fn write_frame(
-        &self,
-        frame: &mut Vec<u8>,
-    ) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+impl TryFrom<Sbp> for (((m.identifier|camel_case))) {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::(((m.identifier|camel_case)))(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
 }
-((*- endif *))
+((* endif *))
 
-impl crate::serialize::SbpSerialize for (((m.identifier|camel_case))) {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        ((*- for f in m.fields *))
-        self.(((f.identifier))).append_to_sbp_buffer(buf);
-        ((*- endfor *))
-    }
-
-    fn sbp_size(&self) -> usize {
+impl WireFormat for (((m.identifier|camel_case))) {
+    const MIN_LEN: usize =
+    ((*- if not m.fields *))
+    0
+    ((*- else *))
+    < (((m.fields[0]|type_map))) as WireFormat>::MIN_LEN
+    ((*- for f in m.fields[1:] *))
+    + < (((f|type_map))) as WireFormat>::MIN_LEN
+    ((*- endfor *))
+    ((*- endif *));
+    fn len(&self) -> usize {
         ((*- if not m.fields *))
         0
         ((*- else *))
-        let mut size = 0;
-        ((*- for f in m.fields *))
-        size += self.(((f.identifier))).sbp_size();
+        WireFormat::len( &self.(((m.fields[0].identifier|snake_case))) )
+        ((*- for f in m.fields[1:] *))
+        + WireFormat::len( &self.(((f.identifier|snake_case))) )
         ((*- endfor *))
-        size
         ((*- endif *))
+    }
+    fn write<B: BufMut>(&self, ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut B) {
+        ((*- for f in m.fields *))
+        WireFormat::write( &self.(((f.identifier|snake_case))), buf);
+        ((*- endfor *))
+    }
+    fn parse_unchecked<B: Buf>( ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut B) -> Self {
+        (((m.identifier|camel_case))) {
+        ((*- if m.is_real_message *))
+        sender_id: None,
+        ((*- endif *))
+        ((*- for f in m.fields *))
+        (((f.identifier|snake_case))): WireFormat::parse_unchecked(buf),
+        ((*- endfor *))
+        }
     }
 }
 ((* endfor *))

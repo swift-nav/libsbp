@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgImuRaw",
   "title":"MsgImuRaw",
-  "description":"Raw data from the Inertial Measurement Unit, containing accelerometer and,\ngyroscope readings. The sense of the measurements are to be aligned with ,\nthe indications on the device itself. Measurement units, which are specific to the,\ndevice hardware and settings, are communicated via the MSG_IMU_AUX message.,\nIf using \"time since startup\" time tags, the receiving end will expect a,\n`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements,\nwith GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).,\n,\nThe time-tagging mode should not change throughout a run.\n",
+  "description":"Raw data from the Inertial Measurement Unit, containing accelerometer and gyroscope readings. The sense of the measurements are to be aligned with the indications on the device itself. Measurement units, which are specific to the device hardware and settings, are communicated via the MSG_IMU_AUX message. If using \"time since startup\" time tags, the receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).,\n,\nThe time-tagging mode should not change throughout a run.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

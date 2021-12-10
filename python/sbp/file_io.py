@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -11,15 +11,14 @@
 
 
 """
-Messages for using device's onboard flash filesystem
-functionality. This allows data to be stored persistently in the
-device's program flash with wear-levelling using a simple filesystem
-interface. The file system interface (CFS) defines an abstract API
-for reading directories and for reading and writing files.
+Messages for using device's onboard flash filesystem functionality. This
+allows data to be stored persistently in the device's program flash with
+wear-levelling using a simple filesystem interface. The file system
+interface (CFS) defines an abstract API for reading directories and for
+reading and writing files.
 
 Note that some of these messages share the same message type ID for both the
 host request and the device response.
-
 """
 
 import json
@@ -42,15 +41,13 @@ class MsgFileioReadReq(SBP):
   of its fields.
 
   
-  The file read message reads a certain length (up to 255 bytes)
-from a given offset into a file, and returns the data in a
-MSG_FILEIO_READ_RESP message where the message length field
-indicates how many bytes were succesfully read.The sequence
-number in the request will be returned in the response.
-If the message is invalid, a followup MSG_PRINT message will
-print "Invalid fileio read message". A device will only respond
-to this message when it is received from sender ID 0x42.
-
+  The file read message reads a certain length (up to 255 bytes) from a given
+  offset into a file, and returns the data in a MSG_FILEIO_READ_RESP message
+  where the message length field indicates how many bytes were successfully
+  read. The sequence number in the request will be returned in the response.
+  If the message is invalid, a followup MSG_PRINT message will print "Invalid
+  fileio read message". A device will only respond to this message when it is
+  received from sender ID 0x42.
 
   Parameters
   ----------
@@ -154,12 +151,10 @@ class MsgFileioReadResp(SBP):
   of its fields.
 
   
-  The file read message reads a certain length (up to 255 bytes)
-from a given offset into a file, and returns the data in a
-message where the message length field indicates how many bytes
-were succesfully read. The sequence number in the response is
-preserved from the request.
-
+  The file read message reads a certain length (up to 255 bytes) from a given
+  offset into a file, and returns the data in a message where the message
+  length field indicates how many bytes were successfully read. The sequence
+  number in the response is preserved from the request.
 
   Parameters
   ----------
@@ -175,7 +170,7 @@ preserved from the request.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   construct.GreedyRange('contents' / construct.Int8ul),)
+                   'contents' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -253,17 +248,14 @@ class MsgFileioReadDirReq(SBP):
   of its fields.
 
   
-  The read directory message lists the files in a directory on the
-device's onboard flash file system.  The offset parameter can be
-used to skip the first n elements of the file list. Returns a
-MSG_FILEIO_READ_DIR_RESP message containing the directory
-listings as a NULL delimited list. The listing is chunked over
-multiple SBP packets. The sequence number in the request will be
-returned in the response.  If message is invalid, a followup
-MSG_PRINT message will print "Invalid fileio read message".
-A device will only respond to this message when it is received
-from sender ID 0x42.
-
+  The read directory message lists the files in a directory on the device's
+  onboard flash file system.  The offset parameter can be used to skip the
+  first n elements of the file list. Returns a MSG_FILEIO_READ_DIR_RESP
+  message containing the directory listings as a NULL delimited list. The
+  listing is chunked over multiple SBP packets. The sequence number in the
+  request will be returned in the response.  If message is invalid, a followup
+  MSG_PRINT message will print "Invalid fileio read message". A device will
+  only respond to this message when it is received from sender ID 0x42.
 
   Parameters
   ----------
@@ -273,7 +265,6 @@ from sender ID 0x42.
     Read sequence number
   offset : int
     The offset to skip the first n elements of the file list
-
   dirname : string
     Name of the directory to list
   sender : int
@@ -363,13 +354,11 @@ class MsgFileioReadDirResp(SBP):
   of its fields.
 
   
-  The read directory message lists the files in a directory on the
-device's onboard flash file system. Message contains the directory
-listings as a NULL delimited list. The listing is chunked over
-multiple SBP packets and the end of the list is identified by an
-entry containing just the character 0xFF. The sequence number in
-the response is preserved from the request.
-
+  The read directory message lists the files in a directory on the device's
+  onboard flash file system. Message contains the directory listings as a NULL
+  delimited list. The listing is chunked over multiple SBP packets and the end
+  of the list is identified by an packet with no entries. The sequence number
+  in the response is preserved from the request.
 
   Parameters
   ----------
@@ -385,7 +374,7 @@ the response is preserved from the request.
   """
   _parser = construct.Struct(
                    'sequence' / construct.Int32ul,
-                   construct.GreedyRange('contents' / construct.Int8ul),)
+                   'contents' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'sequence',
                'contents',
@@ -463,11 +452,10 @@ class MsgFileioRemove(SBP):
   of its fields.
 
   
-  The file remove message deletes a file from the file system.
-If the message is invalid, a followup MSG_PRINT message will
-print "Invalid fileio remove message". A device will only
-process this message when it is received from sender ID 0x42.
-
+  The file remove message deletes a file from the file system. If the message
+  is invalid, a followup MSG_PRINT message will print "Invalid fileio remove
+  message". A device will only process this message when it is received from
+  sender ID 0x42.
 
   Parameters
   ----------
@@ -556,15 +544,13 @@ class MsgFileioWriteReq(SBP):
   of its fields.
 
   
-  The file write message writes a certain length (up to 255 bytes)
-of data to a file at a given offset. Returns a copy of the
-original MSG_FILEIO_WRITE_RESP message to check integrity of
-the write. The sequence number in the request will be returned
-in the response. If message is invalid, a followup MSG_PRINT
-message will print "Invalid fileio write message". A device will
-only  process this message when it is received from sender ID
-0x42.
-
+  The file write message writes a certain length (up to 255 bytes) of data to
+  a file at a given offset. Returns a copy of the original
+  MSG_FILEIO_WRITE_RESP message to check integrity of the write. The sequence
+  number in the request will be returned in the response. If message is
+  invalid, a followup MSG_PRINT message will print "Invalid fileio write
+  message". A device will only process this message when it is received from
+  sender ID 0x42.
 
   Parameters
   ----------
@@ -586,7 +572,7 @@ only  process this message when it is received from sender ID
                    'sequence' / construct.Int32ul,
                    'offset' / construct.Int32ul,
                    'filename' / construct.GreedyBytes,
-                   construct.GreedyRange('data' / construct.Int8ul),)
+                   'data' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'sequence',
                'offset',
@@ -668,12 +654,10 @@ class MsgFileioWriteResp(SBP):
   of its fields.
 
   
-  The file write message writes a certain length (up to 255 bytes)
-of data to a file at a given offset. The message is a copy of the
-original MSG_FILEIO_WRITE_REQ message to check integrity of the
-write. The sequence number in the response is preserved from the
-request.
-
+  The file write message writes a certain length (up to 255 bytes) of data to
+  a file at a given offset. The message is a copy of the original
+  MSG_FILEIO_WRITE_REQ message to check integrity of the write. The sequence
+  number in the response is preserved from the request.
 
   Parameters
   ----------
@@ -762,11 +746,9 @@ class MsgFileioConfigReq(SBP):
   of its fields.
 
   
-  Requests advice on the optimal configuration for a FileIO 
-transfer.  Newer version of FileIO can support greater
-throughput by supporting a large window of FileIO data
-that can be in-flight during read or write operations.
-
+  Requests advice on the optimal configuration for a FileIO transfer.  Newer
+  version of FileIO can support greater throughput by supporting a large
+  window of FileIO data that can be in-flight during read or write operations.
 
   Parameters
   ----------
@@ -855,11 +837,9 @@ class MsgFileioConfigResp(SBP):
   of its fields.
 
   
-  The advice on the optimal configuration for a FileIO
-transfer.  Newer version of FileIO can support greater
-throughput by supporting a large window of FileIO data
-that can be in-flight during read or write operations.
-
+  The advice on the optimal configuration for a FileIO transfer.  Newer
+  version of FileIO can support greater throughput by supporting a large
+  window of FileIO data that can be in-flight during read or write operations.
 
   Parameters
   ----------

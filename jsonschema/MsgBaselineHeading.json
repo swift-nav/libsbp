@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgBaselineHeading",
   "title":"MsgBaselineHeading",
-  "description":"This message reports the baseline heading pointing from the base station,\nto the rover relative to True North. The full GPS time is given by the,\npreceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended,\nthat time-matched RTK mode is used when the base station is moving.\n",
+  "description":"This message reports the baseline heading pointing from the base station to the rover relative to True North. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended that time-matched RTK mode is used when the base station is moving.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

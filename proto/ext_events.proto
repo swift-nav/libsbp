@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -14,8 +14,8 @@ syntax = "proto3";
 
 /** Ext_Events
  *
-  * Messages reporting accurately-timestamped external events,
- * e.g. camera shutter time.
+ * Messages reporting accurately-timestamped external events, e.g. camera
+ * shutter time.
  */
 
 package swiftnav.sbp.ext_events;
@@ -23,8 +23,8 @@ package swiftnav.sbp.ext_events;
 
 /** Reports timestamped external pin event
  *
- * Reports detection of an external event, the GPS time it occurred,
- * which pin it was and whether it was rising or falling.
+ * Reports detection of an external event, the GPS time it occurred, which pin
+ * it was and whether it was rising or falling.
  */
 message MsgExtEvent {
     uint32 wn = 1;

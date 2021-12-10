@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -33,7 +33,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * The file read message reads a certain length (up to 255 bytes) from a given
  * offset into a file, and returns the data in a MSG_FILEIO_READ_RESP message where
- * the message length field indicates how many bytes were succesfully read.The
+ * the message length field indicates how many bytes were successfully read. The
  * sequence number in the request will be returned in the response. If the message
  * is invalid, a followup MSG_PRINT message will print "Invalid fileio read
  * message". A device will only respond to this message when it is received from
@@ -75,8 +75,8 @@ MsgFileioReadReq.prototype.fieldSpec.push(['filename', 'string', null]);
  *
  * The file read message reads a certain length (up to 255 bytes) from a given
  * offset into a file, and returns the data in a message where the message length
- * field indicates how many bytes were succesfully read. The sequence number in the
- * response is preserved from the request.
+ * field indicates how many bytes were successfully read. The sequence number in
+ * the response is preserved from the request.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sequence number (unsigned 32-bit int, 4 bytes) Read sequence number
@@ -149,8 +149,8 @@ MsgFileioReadDirReq.prototype.fieldSpec.push(['dirname', 'string', null]);
  * The read directory message lists the files in a directory on the device's
  * onboard flash file system. Message contains the directory listings as a NULL
  * delimited list. The listing is chunked over multiple SBP packets and the end of
- * the list is identified by an entry containing just the character 0xFF. The
- * sequence number in the response is preserved from the request.
+ * the list is identified by an packet with no entries. The sequence number in the
+ * response is preserved from the request.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sequence number (unsigned 32-bit int, 4 bytes) Read sequence number
@@ -214,7 +214,7 @@ MsgFileioRemove.prototype.fieldSpec.push(['filename', 'string', null]);
  * file at a given offset. Returns a copy of the original MSG_FILEIO_WRITE_RESP
  * message to check integrity of the write. The sequence number in the request will
  * be returned in the response. If message is invalid, a followup MSG_PRINT message
- * will print "Invalid fileio write message". A device will only  process this
+ * will print "Invalid fileio write message". A device will only process this
  * message when it is received from sender ID 0x42.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -281,7 +281,7 @@ MsgFileioWriteResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 /**
  * SBP class for message MSG_FILEIO_CONFIG_REQ (0x1001).
  *
- * Requests advice on the optimal configuration for a FileIO  transfer.  Newer
+ * Requests advice on the optimal configuration for a FileIO transfer.  Newer
  * version of FileIO can support greater throughput by supporting a large window of
  * FileIO data that can be in-flight during read or write operations.
  *

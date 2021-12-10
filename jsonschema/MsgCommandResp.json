@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgCommandResp",
   "title":"MsgCommandResp",
-  "description":"The response to MSG_COMMAND_REQ with the return code of,\nthe command.  A return code of zero indicates success.\n",
+  "description":"The response to MSG_COMMAND_REQ with the return code of the command.  A return code of zero indicates success.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},

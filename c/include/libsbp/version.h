@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -21,16 +21,15 @@
  * \{ */
 
 /** Protocol major version. */
-#define SBP_MAJOR_VERSION 3
+#define SBP_MAJOR_VERSION 4
 /** Protocol minor version. */
-#define SBP_MINOR_VERSION 4
+#define SBP_MINOR_VERSION 0
 /** Protocol patch version. */
-#define SBP_PATCH_VERSION 7
+#define SBP_PATCH_VERSION 3
 
 /** Full SBP version string. */
-#define SBP_VERSION "3.4.8-alpha"
+#define SBP_VERSION "4.0.4-alpha"
 
 /** \} */
-
 
 #endif /* LIBSBP_VERSION_H */

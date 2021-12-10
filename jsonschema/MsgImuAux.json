@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgImuAux",
   "title":"MsgImuAux",
-  "description":"Auxiliary data specific to a particular IMU. The `imu_type` field will,\nalways be consistent but the rest of the payload is device specific and,\ndepends on the value of `imu_type`.\n",
+  "description":"Auxiliary data specific to a particular IMU. The `imu_type` field will always be consistent but the rest of the payload is device specific and depends on the value of `imu_type`.\n",
   "type": "object",
   "properties": {
     "imu_type": {"type": "integer"},

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -22,13 +22,12 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
+var CarrierPhase = require("./gnss").CarrierPhase;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
+var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;
 
 /**
@@ -149,7 +148,7 @@ STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
 /**
  * SBP class for message fragment GriddedCorrectionHeader
  *
- * The LPP message contains nested variable length arrays which are not suppported
+ * The LPP message contains nested variable length arrays which are not supported
  * in SBP, so each grid point will be identified by the index.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -205,7 +204,7 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'wr
  * @field sv_id SvId Unique space vehicle identifier
  * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specification but in
  *   units of TECU instead of m.
- * @field stec_coeff array Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+ * @field stec_coeff array Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -323,7 +322,7 @@ STECResidualNoStd.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
  * SBP class for message fragment STECResidual
  *
  * STEC residual (mean and standard deviation) for the given satellite at the grid
- * point,
+ * point.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
@@ -353,77 +352,11 @@ STECResidual.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
 STECResidual.prototype.fieldSpec.push(['stddev', 'writeUInt8', 1]);
 
 /**
- * SBP class for message fragment GridElementNoStd
- *
- * Contains one tropo delay, plus STEC residuals for each satellite at the grid
- * point.
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
- * @field tropo_delay_correction TroposphericDelayCorrectionNoStd Wet and hydrostatic vertical delays
- * @field stec_residuals array STEC residuals for each satellite
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var GridElementNoStd = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "GridElementNoStd";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-GridElementNoStd.prototype = Object.create(SBP.prototype);
-GridElementNoStd.prototype.messageType = "GridElementNoStd";
-GridElementNoStd.prototype.constructor = GridElementNoStd;
-GridElementNoStd.prototype.parser = new Parser()
-  .endianess('little')
-  .uint16('index')
-  .nest('tropo_delay_correction', { type: TroposphericDelayCorrectionNoStd.prototype.parser })
-  .array('stec_residuals', { type: STECResidualNoStd.prototype.parser, readUntil: 'eof' });
-GridElementNoStd.prototype.fieldSpec = [];
-GridElementNoStd.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
-GridElementNoStd.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrectionNoStd.prototype.fieldSpec]);
-GridElementNoStd.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidualNoStd.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
-
-/**
- * SBP class for message fragment GridElement
- *
- * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
- * stddev) for each satellite at the grid point.
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
- * @field tropo_delay_correction TroposphericDelayCorrection Wet and hydrostatic vertical delays (mean, stddev)
- * @field stec_residuals array STEC residuals for each satellite (mean, stddev)
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var GridElement = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "GridElement";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-GridElement.prototype = Object.create(SBP.prototype);
-GridElement.prototype.messageType = "GridElement";
-GridElement.prototype.constructor = GridElement;
-GridElement.prototype.parser = new Parser()
-  .endianess('little')
-  .uint16('index')
-  .nest('tropo_delay_correction', { type: TroposphericDelayCorrection.prototype.parser })
-  .array('stec_residuals', { type: STECResidual.prototype.parser, readUntil: 'eof' });
-GridElement.prototype.fieldSpec = [];
-GridElement.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
-GridElement.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrection.prototype.fieldSpec]);
-GridElement.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
-
-/**
  * SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
  *
  * The precise orbit and clock correction message is to be applied as a delta
  * correction to broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM
- * message types
+ * message types.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -493,7 +426,7 @@ MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
  *
  * The precise code biases message is to be added to the pseudorange of the
  * corresponding signal to get corrected pseudorange. It is an equivalent to the
- * 1059 / 1065 RTCM message types
+ * 1059 / 1065 RTCM message types.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -537,7 +470,7 @@ MsgSsrCodeBiases.prototype.fieldSpec.push(['biases', 'array', CodeBiasesContent.
  * The precise phase biases message contains the biases to be added to the carrier
  * phase of the corresponding signal to get corrected carrier phase measurement, as
  * well as the satellite yaw angle to be applied to compute the phase wind-up
- * correction. It is typically an equivalent to the 1265 RTCM message types
+ * correction. It is typically an equivalent to the 1265 RTCM message types.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -597,8 +530,8 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesConten
  * messages.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field header STECHeader Header of a STEC polynomial coeffcient message.
- * @field stec_sat_list array Array of STEC polynomial coeffcients for each space vehicle.
+ * @field header STECHeader Header of a STEC polynomial coefficient message.
+ * @field stec_sat_list array Array of STEC polynomial coefficients for each space vehicle.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -625,11 +558,13 @@ MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSat
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
  *
  * STEC residuals are per space vehicle, troposphere is not.  It is typically
- * equivalent to the QZSS CLAS Sub Type 9 messages
+ * equivalent to the QZSS CLAS Sub Type 9 messages.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeader Header of a gridded correction message
- * @field element GridElement Tropo and STEC residuals for the given grid point.
+ * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point.
+ * @field tropo_delay_correction TroposphericDelayCorrection Wet and hydrostatic vertical delays (mean, stddev).
+ * @field stec_residuals array STEC residuals for each satellite (mean, stddev).
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -647,10 +582,14 @@ MsgSsrGriddedCorrection.prototype.constructor = MsgSsrGriddedCorrection;
 MsgSsrGriddedCorrection.prototype.parser = new Parser()
   .endianess('little')
   .nest('header', { type: GriddedCorrectionHeader.prototype.parser })
-  .nest('element', { type: GridElement.prototype.parser });
+  .uint16('index')
+  .nest('tropo_delay_correction', { type: TroposphericDelayCorrection.prototype.parser })
+  .array('stec_residuals', { type: STECResidual.prototype.parser, readUntil: 'eof' });
 MsgSsrGriddedCorrection.prototype.fieldSpec = [];
 MsgSsrGriddedCorrection.prototype.fieldSpec.push(['header', GriddedCorrectionHeader.prototype.fieldSpec]);
-MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototype.fieldSpec]);
+MsgSsrGriddedCorrection.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrection.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrection.prototype.fieldSpec]);
+MsgSsrGriddedCorrection.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_SSR_TILE_DEFINITION (0x05F6).
@@ -663,23 +602,23 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototy
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
- * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.  See GNSS-SSR-
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set. See GNSS-SSR-
  *   ArrayOfCorrectionPoints field correctionPointSetID.
  * @field corner_nw_lat number (signed 16-bit int, 2 bytes) North-West corner correction point latitude.  The relation between the latitude
  *   X in the range [-90, 90] and the coded number N is:  N = floor((X / 90) * 2^14)
  *   See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
- * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longtitude.  The relation between the
- *   longtitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
+ * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longitude.  The relation between the
+ *   longitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
  *   180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
  *   referencePointLongitude.
  * @field spacing_lat number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the latitude direction.  See GNSS-SSR-
  *   ArrayOfCorrectionPoints field stepOfLatitude.
- * @field spacing_lon number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the longtitude direction.  See GNSS-SSR-
- *   ArrayOfCorrectionPoints field stepOfLongtitude.
+ * @field spacing_lon number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field stepOfLongitude.
  * @field rows number (unsigned 16-bit int, 2 bytes) Number of steps in the latitude direction.  See GNSS-SSR-ArrayOfCorrectionPoints
  *   field numberOfStepsLatitude.
- * @field cols number (unsigned 16-bit int, 2 bytes) Number of steps in the longtitude direction.  See GNSS-SSR-
- *   ArrayOfCorrectionPoints field numberOfStepsLongtitude.
+ * @field cols number (unsigned 16-bit int, 2 bytes) Number of steps in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field numberOfStepsLongitude.
  * @field bitmask number (unsigned 64-bit int, 8 bytes) Specifies the availability of correction data at the correction points in the
  *   array.  If a specific bit is enabled (set to 1), the correction is not
  *   available. Only the first rows * cols bits are used, the remainder are set to 0.
@@ -735,8 +674,8 @@ MsgSsrTileDefinition.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]);
  * @field sid GnssSignal GNSS signal identifier (16 bit)
  * @field sat_info number (unsigned 8-bit int, 1 byte) Additional satellite information
  * @field svn number (unsigned 16-bit int, 2 bytes) Satellite Code, as defined by IGS. Typically the space vehicle number.
- * @field pco array Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
- *   description for coordinate system definition.
+ * @field pco array Mean phase center offset, X Y and Z axes. See IGS ANTEX file format description
+ *   for coordinate system definition.
  * @field pcv array Elevation dependent phase center variations. First element is 0 degrees
  *   separation from the Z axis, subsequent elements represent elevation variations
  *   in 1 degree increments.
@@ -904,7 +843,7 @@ STECHeaderDepA.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
 /**
  * SBP class for message fragment GriddedCorrectionHeaderDepA
  *
- * The 3GPP message contains nested variable length arrays which are not suppported
+ * The 3GPP message contains nested variable length arrays which are not supported
  * in SBP, so each grid point will be identified by the index.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -914,7 +853,7 @@ STECHeaderDepA.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
- * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation in
+ * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specification in
  *   units of m.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -956,9 +895,9 @@ GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['tropo_quality_indicator',
  * @field area_width number (unsigned 16-bit int, 2 bytes) grid height (deg) = grid width (deg) = area_width / region_size 0 is an invalid
  *   value.
  * @field lat_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
- * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+ * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner longitude (deg) = region_size * lon_nw_corner_enc - 180
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
- * @field seq_num number (unsigned 8-bit int, 1 byte) Postion of this message in the dataset
+ * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1023,7 +962,9 @@ MsgSsrStecCorrectionDepA.prototype.fieldSpec.push(['stec_sat_list', 'array', STE
  
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeaderDepA Header of a Gridded Correction message
- * @field element GridElementNoStd Tropo and STEC residuals for the given grid point
+ * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
+ * @field tropo_delay_correction TroposphericDelayCorrectionNoStd Wet and hydrostatic vertical delays
+ * @field stec_residuals array STEC residuals for each satellite
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1041,10 +982,14 @@ MsgSsrGriddedCorrectionNoStdDepA.prototype.constructor = MsgSsrGriddedCorrection
 MsgSsrGriddedCorrectionNoStdDepA.prototype.parser = new Parser()
   .endianess('little')
   .nest('header', { type: GriddedCorrectionHeaderDepA.prototype.parser })
-  .nest('element', { type: GridElementNoStd.prototype.parser });
+  .uint16('index')
+  .nest('tropo_delay_correction', { type: TroposphericDelayCorrectionNoStd.prototype.parser })
+  .array('stec_residuals', { type: STECResidualNoStd.prototype.parser, readUntil: 'eof' });
 MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec = [];
 MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['header', GriddedCorrectionHeaderDepA.prototype.fieldSpec]);
-MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['element', GridElementNoStd.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrectionNoStd.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidualNoStd.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05FA).
@@ -1052,7 +997,9 @@ MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['element', GridElemen
  
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeaderDepA Header of a Gridded Correction message
- * @field element GridElement Tropo and STEC residuals for the given grid point (mean and standard deviation)
+ * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
+ * @field tropo_delay_correction TroposphericDelayCorrection Wet and hydrostatic vertical delays (mean, stddev)
+ * @field stec_residuals array STEC residuals for each satellite (mean, stddev)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1070,10 +1017,14 @@ MsgSsrGriddedCorrectionDepA.prototype.constructor = MsgSsrGriddedCorrectionDepA;
 MsgSsrGriddedCorrectionDepA.prototype.parser = new Parser()
   .endianess('little')
   .nest('header', { type: GriddedCorrectionHeaderDepA.prototype.parser })
-  .nest('element', { type: GridElement.prototype.parser });
+  .uint16('index')
+  .nest('tropo_delay_correction', { type: TroposphericDelayCorrection.prototype.parser })
+  .array('stec_residuals', { type: STECResidual.prototype.parser, readUntil: 'eof' });
 MsgSsrGriddedCorrectionDepA.prototype.fieldSpec = [];
 MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['header', GriddedCorrectionHeaderDepA.prototype.fieldSpec]);
-MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['element', GridElement.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrection.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
@@ -1117,8 +1068,6 @@ module.exports = {
   TroposphericDelayCorrection: TroposphericDelayCorrection,
   STECResidualNoStd: STECResidualNoStd,
   STECResidual: STECResidual,
-  GridElementNoStd: GridElementNoStd,
-  GridElement: GridElement,
   0x05DD: MsgSsrOrbitClock,
   MsgSsrOrbitClock: MsgSsrOrbitClock,
   0x05E1: MsgSsrCodeBiases,

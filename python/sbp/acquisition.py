@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -20,7 +20,7 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import *
+from sbp.gnss import GnssSignal, GnssSignalDep
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
 # Please do not hand edit!
@@ -29,10 +29,9 @@ from sbp.gnss import *
 class AcqSvProfile(object):
   """AcqSvProfile.
   
-  Profile for a specific SV for debugging purposes
-The message describes SV profile during acquisition time.
-The message is used to debug and measure the performance.
-
+  Profile for a specific SV for debugging purposes. The message describes SV
+  profile during acquisition time. The message is used to debug and measure
+  the performance.
   
   Parameters
   ----------
@@ -62,19 +61,19 @@ The message is used to debug and measure the performance.
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'job_type' / construct.Int8ul,
                      'status' / construct.Int8ul,
                      'cn0' / construct.Int16ul,
                      'int_time' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignal._parser),
+                     'sid' / GnssSignal._parser,
                      'bin_width' / construct.Int16ul,
                      'timestamp' / construct.Int32ul,
                      'time_spent' / construct.Int32ul,
                      'cf_min' / construct.Int32sl,
                      'cf_max' / construct.Int32sl,
                      'cf' / construct.Int32sl,
-                     'cp' / construct.Int32ul,))
+                     'cp' / construct.Int32ul,)
   __slots__ = [
                'job_type',
                'status',
@@ -114,10 +113,6 @@ The message is used to debug and measure the performance.
     p = AcqSvProfile._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AcqSvProfile.build(d)
     
 class AcqSvProfileDep(object):
   """AcqSvProfileDep.
@@ -152,19 +147,19 @@ class AcqSvProfileDep(object):
     Codephase of detected peak. Only valid if status is '1'
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'job_type' / construct.Int8ul,
                      'status' / construct.Int8ul,
                      'cn0' / construct.Int16ul,
                      'int_time' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignalDep._parser),
+                     'sid' / GnssSignalDep._parser,
                      'bin_width' / construct.Int16ul,
                      'timestamp' / construct.Int32ul,
                      'time_spent' / construct.Int32ul,
                      'cf_min' / construct.Int32sl,
                      'cf_max' / construct.Int32sl,
                      'cf' / construct.Int32sl,
-                     'cp' / construct.Int32ul,))
+                     'cp' / construct.Int32ul,)
   __slots__ = [
                'job_type',
                'status',
@@ -204,10 +199,6 @@ class AcqSvProfileDep(object):
     p = AcqSvProfileDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AcqSvProfileDep.build(d)
     
 SBP_MSG_ACQ_RESULT = 0x002F
 class MsgAcqResult(SBP):
@@ -218,12 +209,10 @@ class MsgAcqResult(SBP):
   of its fields.
 
   
-  This message describes the results from an attempted GPS signal
-acquisition search for a satellite PRN over a code phase/carrier
-frequency range. It contains the parameters of the point in the
-acquisition search space with the best carrier-to-noise (CN/0)
-ratio.
-
+  This message describes the results from an attempted GPS signal acquisition
+  search for a satellite PRN over a code phase/carrier frequency range. It
+  contains the parameters of the point in the acquisition search space with
+  the best carrier-to-noise (CN/0) ratio.
 
   Parameters
   ----------
@@ -245,7 +234,7 @@ ratio.
                    'cn0' / construct.Float32l,
                    'cp' / construct.Float32l,
                    'cf' / construct.Float32l,
-                   'sid' / construct.Struct(GnssSignal._parser),)
+                   'sid' / GnssSignal._parser,)
   __slots__ = [
                'cn0',
                'cp',
@@ -349,7 +338,7 @@ class MsgAcqResultDepC(SBP):
                    'cn0' / construct.Float32l,
                    'cp' / construct.Float32l,
                    'cf' / construct.Float32l,
-                   'sid' / construct.Struct(GnssSignalDep._parser),)
+                   'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'cn0',
                'cp',
@@ -438,9 +427,8 @@ class MsgAcqResultDepB(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   snr : float
-    SNR of best point. Currently in arbitrary SNR points, but will
-be in units of dB Hz in a later revision of this message.
-
+    SNR of best point. Currently in arbitrary SNR points, but will be in units
+    of dB Hz in a later revision of this message.
   cp : float
     Code phase of best point
   cf : float
@@ -455,7 +443,7 @@ be in units of dB Hz in a later revision of this message.
                    'snr' / construct.Float32l,
                    'cp' / construct.Float32l,
                    'cf' / construct.Float32l,
-                   'sid' / construct.Struct(GnssSignalDep._parser),)
+                   'sid' / GnssSignalDep._parser,)
   __slots__ = [
                'snr',
                'cp',
@@ -544,17 +532,15 @@ class MsgAcqResultDepA(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   snr : float
-    SNR of best point. Currently dimensonless, but will have
-units of dB Hz in the revision of this message.
-
+    SNR of best point. Currently dimensionless, but will have units of dB Hz
+    in the revision of this message.
   cp : float
     Code phase of best point
   cf : float
     Carrier frequency of best point
   prn : int
-    PRN-1 identifier of the satellite signal for which
-acquisition was attempted
-
+    PRN-1 identifier of the satellite signal for which acquisition was
+    attempted
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -645,9 +631,8 @@ class MsgAcqSvProfile(SBP):
   of its fields.
 
   
-  The message describes all SV profiles during acquisition time.
-The message is used to debug and measure the performance.
-
+  The message describes all SV profiles during acquisition time. The message
+  is used to debug and measure the performance.
 
   Parameters
   ----------
@@ -660,7 +645,7 @@ The message is used to debug and measure the performance.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('acq_sv_profile' / construct.Struct(AcqSvProfile._parser)),)
+                   'acq_sv_profile' / construct.GreedyRange(AcqSvProfile._parser),)
   __slots__ = [
                'acq_sv_profile',
               ]
@@ -749,7 +734,7 @@ class MsgAcqSvProfileDep(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('acq_sv_profile' / construct.Struct(AcqSvProfileDep._parser)),)
+                   'acq_sv_profile' / construct.GreedyRange(AcqSvProfileDep._parser),)
   __slots__ = [
                'acq_sv_profile',
               ]

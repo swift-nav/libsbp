@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -241,7 +241,7 @@ MsgInsStatus.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  * intended to be a low rate message for status purposes.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implementation defined.
  * @field telemetry string Comma separated list of values as defined by the index
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -273,7 +273,7 @@ MsgCsacTelemetry.prototype.fieldSpec.push(['telemetry', 'string', null]);
  * rate than the MSG_CSAC_TELEMETRY.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implementation defined.
  * @field telemetry_labels string Comma separated list of telemetry field values
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -300,7 +300,7 @@ MsgCsacTelemetryLabels.prototype.fieldSpec.push(['telemetry_labels', 'string', n
 /**
  * SBP class for message MSG_INS_UPDATES (0xFF06).
  *
- * The INS update status message contains informations about executed and rejected
+ * The INS update status message contains information about executed and rejected
  * INS updates. This message is expected to be extended in the future as new types
  * of measurements are being added.
  *
@@ -431,7 +431,7 @@ MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field group_id number (unsigned 8-bit int, 1 byte) Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
  * @field n_group_msgs number (unsigned 8-bit int, 1 byte) Size of list group_msgs
- * @field group_msgs array An inorder list of message types included in the Solution Group, including
+ * @field group_msgs array An in-order list of message types included in the Solution Group, including
  *   GROUP_META itself
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -452,12 +452,12 @@ MsgGroupMeta.prototype.parser = new Parser()
   .uint8('group_id')
   .uint8('flags')
   .uint8('n_group_msgs')
-  .array('group_msgs', { type: 'uint16le', readUntil: 'eof' });
+  .array('group_msgs', { type: 'uint16le', length: 'n_group_msgs' });
 MsgGroupMeta.prototype.fieldSpec = [];
 MsgGroupMeta.prototype.fieldSpec.push(['group_id', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['n_group_msgs', 'writeUInt8', 1]);
-MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, null]);
+MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, 'n_group_msgs']);
 
 module.exports = {
   0xFF00: MsgStartup,

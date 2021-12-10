@@ -1,24 +1,40 @@
+FILE(GLOB generated_c_sources v4/*.c)
+
 set(libsbp_SRCS
   edc.c
   sbp.c
+  v4/string/sbp_string.c
+  v4/string/multipart.c
+  v4/string/unterminated.c
+  v4/string/null_terminated.c
+  v4/string/double_null_terminated.c
+  ${generated_c_sources}
   )
 
-add_library(sbp ${libsbp_SRCS})
+swift_add_library(sbp
+  SOURCES ${libsbp_SRCS}
+)
 add_library(swiftnav::sbp ALIAS sbp)
 
-if(MSVC)
-    separate_arguments(LIBSBP_COMPILER_OPTIONS WINDOWS_COMMAND ${LIBSBP_CFLAGS})
-else()
-    separate_arguments(LIBSBP_COMPILER_OPTIONS UNIX_COMMAND ${LIBSBP_CFLAGS})
-endif()
-target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
-
-target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
-set_target_properties(sbp PROPERTIES
-        POSITION_INDEPENDENT_CODE ON)
-target_code_coverage(sbp AUTO ALL)
-swift_set_language_standards(sbp)
-swift_set_compile_options(sbp REMOVE -Wconversion)
+target_compile_definitions(sbp
+  PRIVATE
+    $<BUILD_INTERFACE:sbp_EXPORTS>
+)
+target_include_directories(sbp
+  PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_LIBDIR}>
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+set_target_properties(sbp
+  PROPERTIES
+    VISIBILITY_INLINES_HIDDEN true
+    C_VISIBILITY_PRESET hidden
+    CXX_VISIBILITY_PRESET hidden
+    POSITION_INDEPENDENT_CODE true
+)
 
 if (MINGW)
   if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")
@@ -27,11 +43,15 @@ if (MINGW)
   endif()
 endif()
 
-install(TARGETS sbp
-        EXPORT sbp-export
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/libsbp/" DESTINATION "${CMAKE_INSTALL_FULL_INCLUDEDIR}/libsbp")
+install(
+  TARGETS sbp
+  EXPORT sbp-export
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/libsbp/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libsbp)
 
 export(EXPORT sbp-export
-       NAMESPACE LibSbp::
+       NAMESPACE swiftnav::
        FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)

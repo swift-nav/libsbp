@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -12,7 +12,6 @@
 
 """
 Logging and debugging messages from the device.
-
 """
 
 import json
@@ -35,10 +34,9 @@ class MsgLog(SBP):
   of its fields.
 
   
-  This message contains a human-readable payload string from the
-device containing errors, warnings and informational messages at
-ERROR, WARNING, DEBUG, INFO logging levels.
-
+  This message contains a human-readable payload string from the device
+  containing errors, warnings and informational messages at ERROR, WARNING,
+  DEBUG, INFO logging levels.
 
   Parameters
   ----------
@@ -132,14 +130,14 @@ class MsgFwd(SBP):
   of its fields.
 
   
-  This message provides the ability to forward messages over SBP.  This may take the form
-of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
-another protocol with SBP.
+  This message provides the ability to forward messages over SBP.  This may
+  take the form of wrapping up SBP messages received by Piksi for logging
+  purposes or wrapping another protocol with SBP.
 
-The source identifier indicates from what interface a forwarded stream derived.
-The protocol identifier identifies what the expected protocol the forwarded msg contains.
-Protocol 0 represents SBP and the remaining values are implementation defined.
-
+  The source identifier indicates from what interface a forwarded stream
+  derived. The protocol identifier identifies what the expected protocol the
+  forwarded msg contains. Protocol 0 represents SBP and the remaining values
+  are implementation defined.
 
   Parameters
   ----------
@@ -149,7 +147,7 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     source identifier
   protocol : int
     protocol identifier
-  fwd_payload : string
+  fwd_payload : array
     variable length wrapped binary message
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -158,7 +156,7 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
   _parser = construct.Struct(
                    'source' / construct.Int8ul,
                    'protocol' / construct.Int8ul,
-                   'fwd_payload' / construct.GreedyBytes,)
+                   'fwd_payload' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'source',
                'protocol',

@@ -6,7 +6,7 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Msg
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
@@ -183,6 +183,7 @@ data SBPMsg =
    | SBPMsgPosEcefDepA MsgPosEcefDepA Msg
    | SBPMsgPosEcefGnss MsgPosEcefGnss Msg
    | SBPMsgPosLlh MsgPosLlh Msg
+   | SBPMsgPosLlhAcc MsgPosLlhAcc Msg
    | SBPMsgPosLlhCov MsgPosLlhCov Msg
    | SBPMsgPosLlhCovGnss MsgPosLlhCovGnss Msg
    | SBPMsgPosLlhDepA MsgPosLlhDepA Msg
@@ -245,6 +246,7 @@ data SBPMsg =
    | SBPMsgUtcTime MsgUtcTime Msg
    | SBPMsgUtcTimeGnss MsgUtcTimeGnss Msg
    | SBPMsgVelBody MsgVelBody Msg
+   | SBPMsgVelCog MsgVelCog Msg
    | SBPMsgVelEcef MsgVelEcef Msg
    | SBPMsgVelEcefCov MsgVelEcefCov Msg
    | SBPMsgVelEcefCovGnss MsgVelEcefCovGnss Msg
@@ -397,6 +399,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgPosEcefDepA = SBPMsgPosEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcefGnss = SBPMsgPosEcefGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosLlhAcc = SBPMsgPosLlhAcc (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhCov = SBPMsgPosLlhCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhCovGnss = SBPMsgPosLlhCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -459,6 +462,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUtcTimeGnss = SBPMsgUtcTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelBody = SBPMsgVelBody (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelCog = SBPMsgVelCog (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefCov = SBPMsgVelEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefCovGnss = SBPMsgVelEcefCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -603,6 +607,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgPosEcefDepA _ m) = put m
       encoder (SBPMsgPosEcefGnss _ m) = put m
       encoder (SBPMsgPosLlh _ m) = put m
+      encoder (SBPMsgPosLlhAcc _ m) = put m
       encoder (SBPMsgPosLlhCov _ m) = put m
       encoder (SBPMsgPosLlhCovGnss _ m) = put m
       encoder (SBPMsgPosLlhDepA _ m) = put m
@@ -665,6 +670,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgUtcTime _ m) = put m
       encoder (SBPMsgUtcTimeGnss _ m) = put m
       encoder (SBPMsgVelBody _ m) = put m
+      encoder (SBPMsgVelCog _ m) = put m
       encoder (SBPMsgVelEcef _ m) = put m
       encoder (SBPMsgVelEcefCov _ m) = put m
       encoder (SBPMsgVelEcefCovGnss _ m) = put m
@@ -813,6 +819,7 @@ instance FromJSON SBPMsg where
         | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcefGnss = SBPMsgPosEcefGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlh = SBPMsgPosLlh <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosLlhAcc = SBPMsgPosLlhAcc <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhCov = SBPMsgPosLlhCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhCovGnss = SBPMsgPosLlhCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -875,6 +882,7 @@ instance FromJSON SBPMsg where
         | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUtcTimeGnss = SBPMsgUtcTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelBody = SBPMsgVelBody <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelCog = SBPMsgVelCog <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefCov = SBPMsgVelEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefCovGnss = SBPMsgVelEcefCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1024,6 +1032,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgPosEcefDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcefGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlh n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosLlhAcc n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhCovGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhDepA n m) = toJSON n <<>> toJSON m
@@ -1086,6 +1095,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgUtcTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUtcTimeGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelBody n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelCog n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcef n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefCovGnss n m) = toJSON n <<>> toJSON m
@@ -1229,6 +1239,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgPosEcefDepA n m) = SBPMsgPosEcefDepA n <$> f m
   msg f (SBPMsgPosEcefGnss n m) = SBPMsgPosEcefGnss n <$> f m
   msg f (SBPMsgPosLlh n m) = SBPMsgPosLlh n <$> f m
+  msg f (SBPMsgPosLlhAcc n m) = SBPMsgPosLlhAcc n <$> f m
   msg f (SBPMsgPosLlhCov n m) = SBPMsgPosLlhCov n <$> f m
   msg f (SBPMsgPosLlhCovGnss n m) = SBPMsgPosLlhCovGnss n <$> f m
   msg f (SBPMsgPosLlhDepA n m) = SBPMsgPosLlhDepA n <$> f m
@@ -1291,6 +1302,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgUtcTime n m) = SBPMsgUtcTime n <$> f m
   msg f (SBPMsgUtcTimeGnss n m) = SBPMsgUtcTimeGnss n <$> f m
   msg f (SBPMsgVelBody n m) = SBPMsgVelBody n <$> f m
+  msg f (SBPMsgVelCog n m) = SBPMsgVelCog n <$> f m
   msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
   msg f (SBPMsgVelEcefCov n m) = SBPMsgVelEcefCov n <$> f m
   msg f (SBPMsgVelEcefCovGnss n m) = SBPMsgVelEcefCovGnss n <$> f m

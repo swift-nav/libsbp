@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgAngularRate",
   "title":"MsgAngularRate",
-  "description":"This message reports the orientation rates in the vehicle body frame. ,\nThe values represent the measurements a strapped down gyroscope would ,\nmake and are not equivalent to the time derivative of the Euler angles.,\nThe orientation and origin of the user frame is specified via device settings.,\nBy convention, the vehicle x-axis is expected to be aligned with the forward,\ndirection, while the vehicle y-axis is expected to be aligned with the right,\ndirection, and the vehicle z-axis should be aligned with the down direction.,\nThis message will only be available in future INS versions of Swift Products ,\nand is not produced by Piksi Multi or Duro.\n",
+  "description":"This message reports the orientation rates in the vehicle body frame. The values represent the measurements a strapped down gyroscope would make and are not equivalent to the time derivative of the Euler angles. The orientation and origin of the user frame is specified via device settings. By convention, the vehicle x-axis is expected to be aligned with the forward direction, while the vehicle y-axis is expected to be aligned with the right direction, and the vehicle z-axis should be aligned with the down direction. This message will only be available in future INS versions of Swift Products and is not produced by Piksi Multi or Duro.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

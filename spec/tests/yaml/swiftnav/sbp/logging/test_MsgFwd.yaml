@@ -6,14 +6,16 @@ tests:
 
 - msg:
     fields:
-      fwd_payload: VQD/QgAEAAAAAEag
+      fwd_payload: [ 86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103 ]
       protocol: 0
       source: 0
+    c_decoded_fields:
+      n_fwd_payload: 16
     module: sbp.logging
     name: MsgFwd
   msg_type: '0x402'
   raw_json: '{"protocol": 0, "sender": 66, "msg_type": 1026, "source": 0, "fwd_payload":
-    "VQD/QgAEAAAAAEag", "crc": 24445, "length": 18, "preamble": 85, "payload": "AABWUUQvUWdBRUFBQUFBRWFn"}'
+    [ 86, 81, 68, 47, 81, 103, 65, 69, 65, 65, 65, 65, 65, 69, 97, 103 ], "crc": 24445, "length": 18, "preamble": 85, "payload": "AABWUUQvUWdBRUFBQUFBRWFn"}'
   raw_packet: VQIEQgASAABWUUQvUWdBRUFBQUFBRWFnfV8=
   sbp:
     crc: '0x5f7d'

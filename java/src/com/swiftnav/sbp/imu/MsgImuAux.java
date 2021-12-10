@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,48 +8,48 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.imu;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/imu.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_IMU_AUX (0x0901).
+/**
+ * SBP class for message MSG_IMU_AUX (0x0901).
  *
- * You can have MSG_IMU_AUX inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_IMU_AUX inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * Auxiliary data specific to a particular IMU. The `imu_type` field will
- * always be consistent but the rest of the payload is device specific and
- * depends on the value of `imu_type`. */
-
+ * <p>Auxiliary data specific to a particular IMU. The `imu_type` field will always be consistent
+ * but the rest of the payload is device specific and depends on the value of `imu_type`.
+ */
 public class MsgImuAux extends SBPMessage {
     public static final int TYPE = 0x0901;
 
-    
     /** IMU type */
     public int imu_type;
-    
+
     /** Raw IMU temperature */
     public int temp;
-    
+
     /** IMU configuration */
     public int imu_conf;
-    
 
-    public MsgImuAux (int sender) { super(sender, TYPE); }
-    public MsgImuAux () { super(TYPE); }
-    public MsgImuAux (SBPMessage msg) throws SBPBinaryException {
+    public MsgImuAux(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgImuAux() {
+        super(TYPE);
+    }
+
+    public MsgImuAux(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

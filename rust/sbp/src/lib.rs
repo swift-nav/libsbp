@@ -1,196 +1,126 @@
 //! Native implementation of decoding of SBP (Swift Binary Protocol) used by products
 //! made by Swift Navigation. For language agnostic description of the protocol please
-//! see the protocol specification documentation at https://github.com/swift-nav/libsbp/tree/master/docs
+//! see the [protocol specification documentation](https://github.com/swift-nav/libsbp/tree/master/docs).
+//!
+//! # Example: Print log messages
+//!
+//! This example shows how to read messages from stdin and print the contents
+//! of each message `MsgLog` to stderr.
+//!
+//! ```no_run
+//! use std::convert::TryFrom;
+//! use std::error::Error;
+//! use std::io;
+//! use std::process;
+//!
+//! use sbp::messages::logging::MsgLog;
+//!
+//! fn example() -> Result<(), Box<dyn Error>> {
+//!     let messages = sbp::iter_messages(io::stdin());
+//!     for msg in messages {
+//!         // The iterator yields Result<Sbp, Error>, so we check the error here.
+//!         let msg = msg?;
+//!         match MsgLog::try_from(msg) {
+//!             Ok(msg) => eprintln!("{}", msg.text),
+//!             _ => {}
+//!         }
+//!     }
+//!     Ok(())
+//! }
+//!
+//! fn main() {
+//!     if let Err(err) = example() {
+//!         eprintln!("error: {}", err);
+//!         process::exit(1);
+//!     }
+//! }
+//! ```
+//!
+//! # Example: Filter by sender id and write to stdout
+//!
+//! This example shows how to read messages from stdin and forward messages with a matching
+//! sender_id to stdout.
+//!
+//! ```no_run
+//! use std::error::Error;
+//! use std::io;
+//! use std::process;
+//!
+//! use sbp::{SbpEncoder, SbpMessage};
+//!
+//! fn example(sender_id: u16) -> Result<(), Box<dyn Error>> {
+//!     let messages = sbp::iter_messages(io::stdin());
+//!     let messages = messages.filter_map(|msg| match msg {
+//!         Ok(msg) if msg.sender_id() == Some(sender_id) => Some(msg),
+//!         _ => None,
+//!     });
+//!     SbpEncoder::new(io::stdout()).send_all(messages)?;
+//!     Ok(())
+//! }
+//!
+//! fn main() {
+//!     if let Err(err) = example(42) {
+//!         eprintln!("error: {}", err);
+//!         process::exit(1);
+//!     }
+//! }
+//! ```
 
-pub mod codec;
 pub mod messages;
-pub(crate) mod parser;
-pub mod serialize;
-
-use std::{
-    convert::{From, Into},
-    fmt, result,
-};
-
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
-
-use crate::{messages::SBPMessage, serialize::SbpSerialize};
-
-pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
-pub const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
-pub const MSG_CRC_LEN: usize = 2;
-
-pub use codec::sbp::iter_messages;
-
-#[cfg(feature = "async")]
-pub use codec::sbp::stream_messages;
+pub mod sbp_iter_ext;
+pub mod sbp_string;
 
 #[cfg(feature = "json")]
-pub mod json {
-    pub use crate::codec::json::iter_messages;
+pub mod json;
 
-    #[cfg(feature = "async")]
-    pub use crate::codec::json::stream_messages;
-}
+#[cfg(feature = "link")]
+pub mod link;
 
-#[derive(Debug, Clone)]
-pub struct SbpString(Vec<u8>);
+#[cfg(feature = "swiftnav")]
+mod swiftnav_conversions;
+#[cfg(feature = "swiftnav")]
+pub mod time;
 
-impl SbpString {
-    pub fn as_bytes(&self) -> &[u8] {
-        &self.0
-    }
-    pub fn to_string(&self) -> String {
-        String::from_utf8_lossy(&self.0).into()
-    }
-}
+pub(crate) mod de;
+pub(crate) mod ser;
+pub(crate) mod wire_format;
 
-#[cfg(feature = "sbp_serde")]
-impl Serialize for SbpString {
-    fn serialize<S>(&self, serializer: S) -> result::Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let s: String = self.clone().into();
-        serializer.serialize_str(&s)
-    }
-}
+/// Denotes the start of frame transmission.
+pub const PREAMBLE: u8 = 0x55;
 
-#[cfg(feature = "sbp_serde")]
-impl<'de> Deserialize<'de> for SbpString {
-    fn deserialize<D>(deserializer: D) -> result::Result<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        Deserialize::deserialize(deserializer).map(|s: String| SbpString::from(s))
-    }
-}
+/// Length of the header section.
+pub const HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 
-impl From<String> for SbpString {
-    fn from(s: String) -> SbpString {
-        SbpString(s.as_bytes().to_vec())
-    }
-}
+/// Internal buffer length.
+pub(crate) const BUFLEN: usize = 128;
 
-impl Into<String> for SbpString {
-    fn into(self) -> String {
-        self.to_string()
-    }
-}
+/// Max length of the variable-sized payload field.
+pub const MAX_PAYLOAD_LEN: usize = 255;
 
-impl Into<String> for &SbpString {
-    fn into(self) -> String {
-        self.to_string()
-    }
-}
+/// Length of the crc of the payload.
+pub const CRC_LEN: usize = 2;
 
-impl Into<Vec<u8>> for SbpString {
-    fn into(self) -> Vec<u8> {
-        self.0
-    }
-}
+/// Max length of a frame (header + payload + crc).
+pub const MAX_FRAME_LEN: usize = HEADER_LEN + MAX_PAYLOAD_LEN + CRC_LEN;
 
-impl fmt::Display for SbpString {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SbpString({})", Into::<String>::into(self.clone()))
-    }
-}
+#[doc(inline)]
+pub use messages::Sbp;
 
-pub type Result<T> = result::Result<T, Error>;
+#[doc(inline)]
+pub use crate::messages::SbpMessage;
 
-#[derive(Debug, thiserror::Error)]
-pub enum Error {
-    #[error("An error occured during parsing. Error kind: {kind:?}")]
-    ParseError { kind: nom::error::ErrorKind },
+#[doc(inline)]
+pub use ser::{to_vec, to_writer, Error as SerializeError, SbpEncoder};
 
-    #[cfg(feature = "json")]
-    #[error("Failed to parse sbp message from json: {details}")]
-    JsonParseError { details: String },
+#[doc(inline)]
+pub use de::{iter_messages, Error as DeserializeError, Frame};
 
-    #[error(
-        "CRC validation failed: sender_id={sender_id:#02X?} msg_type={msg_type:#02X?} crc={crc:#02X?}"
-    )]
-    CrcError {
-        msg_type: u16,
-        sender_id: u16,
-        crc: u16,
-    },
+#[cfg(feature = "async")]
+#[doc(inline)]
+pub use de::stream_messages;
 
-    #[error(transparent)]
-    FramerError(#[from] FramerError),
+#[doc(inline)]
+pub use sbp_iter_ext::SbpIterExt;
 
-    #[cfg(feature = "json")]
-    #[error(transparent)]
-    SerdeJsonError(#[from] serde_json::error::Error),
-
-    #[error(transparent)]
-    IoError(#[from] std::io::Error),
-}
-
-pub(crate) fn write_frame<M: SBPMessage>(
-    msg: &M,
-    frame: &mut Vec<u8>,
-) -> std::result::Result<(), FramerError> {
-    let len = msg.sbp_size();
-    if len > SBP_MAX_PAYLOAD_SIZE {
-        return Err(crate::FramerError::TooLarge);
-    }
-    let sender_id = msg.get_sender_id().ok_or(FramerError::NoSenderId)?;
-
-    frame.reserve(len);
-
-    (0x55 as u8).append_to_sbp_buffer(frame);
-    msg.get_message_type().append_to_sbp_buffer(frame);
-    sender_id.append_to_sbp_buffer(frame);
-    (len as u8).append_to_sbp_buffer(frame);
-    msg.append_to_sbp_buffer(frame);
-    crc16::State::<crc16::XMODEM>::calculate(&frame[1..]).append_to_sbp_buffer(frame);
-
-    Ok(())
-}
-
-#[derive(Debug, thiserror::Error)]
-pub enum FramerError {
-    #[error("Message is too large to fit into an SBP frame")]
-    TooLarge,
-
-    #[error("No sender ID is present in the message bring framed")]
-    NoSenderId,
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_making_frame() {
-        use crate::messages::SBPMessage;
-
-        let msg = crate::messages::system::MsgStartup {
-            sender_id: Some(250),
-            cause: 1,
-            startup_type: 45,
-            reserved: 0,
-        };
-
-        let frame = msg.to_frame().unwrap();
-
-        let expected_frame = b"\x55\x00\xFF\xFA\x00\x04\x01\x2D\x00\x00\xBC\x73";
-
-        assert_eq!(frame, expected_frame);
-    }
-
-    #[test]
-    fn test_sbp_string() {
-        use crate::SbpString;
-
-        let sbp_str = SbpString(b"1234".to_vec());
-        let s = sbp_str.to_string();
-
-        assert_eq!("1234", s);
-
-        let sbp_str = SbpString(b"1234\xFF".to_vec());
-        let s = sbp_str.to_string();
-
-        assert_eq!("1234\u{FFFD}", s);
-    }
-}
+#[doc(inline)]
+pub use sbp_string::SbpString;

@@ -2,8 +2,8 @@
 
 -- |
 -- Module:      SwiftNav.SBP
--- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
--- License:     LGPL-3
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
+-- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable

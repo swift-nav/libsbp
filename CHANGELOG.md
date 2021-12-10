@@ -1,5 +1,115 @@
 # Change Log
 
+## [v4.0.3](https://github.com/swift-nav/libsbp/tree/v4.0.3) (2021-10-22)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.2...v4.0.3)
+
+**Merged pull requests:**
+
+- rust: support Result\<Sbp\> in with\_rover\_time [\#1084](https://github.com/swift-nav/libsbp/pull/1084) ([notoriaga](https://github.com/notoriaga))
+
+## [v4.0.2](https://github.com/swift-nav/libsbp/tree/v4.0.2) (2021-10-13)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.1...v4.0.2)
+
+**Merged pull requests:**
+
+- fix crc calculation bug \[DEVINFRA-568\] [\#1081](https://github.com/swift-nav/libsbp/pull/1081) ([silverjam](https://github.com/silverjam))
+
+## [v4.0.1](https://github.com/swift-nav/libsbp/tree/v4.0.1) (2021-10-08)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.0...v4.0.1)
+
+Addressed release bug, Python and JavaSccript modules were not updated.  Rust
+sbp2json was prepped for release to crates.io.
+
+## [v4.0.0](https://github.com/swift-nav/libsbp/tree/v4.0.0) (2021-10-08)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.10...v4.0.0)
+
+**Closed issues:**
+
+- sbp.dll doesnt export symbols [\#1062](https://github.com/swift-nav/libsbp/issues/1062)
+
+**Merged pull requests:**
+
+- rust: Use minimum internal buffer size of 128b [\#1080](https://github.com/swift-nav/libsbp/pull/1080) ([silverjam](https://github.com/silverjam))
+- rust: add len method to SbpMessage [\#1078](https://github.com/swift-nav/libsbp/pull/1078) ([notoriaga](https://github.com/notoriaga))
+- Auto submodule update: cmake - Add Profiling to Unit Tests \(\#102\) [\#1077](https://github.com/swift-nav/libsbp/pull/1077) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- expose parsing messages from frames [\#1075](https://github.com/swift-nav/libsbp/pull/1075) ([notoriaga](https://github.com/notoriaga))
+- \[ESD-2180\] clang-tidy improvements [\#1074](https://github.com/swift-nav/libsbp/pull/1074) ([woodfell](https://github.com/woodfell))
+- rust: update to swiftnav 0.6.1 [\#1073](https://github.com/swift-nav/libsbp/pull/1073) ([silverjam](https://github.com/silverjam))
+- rust: release cleanup [\#1071](https://github.com/swift-nav/libsbp/pull/1071) ([notoriaga](https://github.com/notoriaga))
+- Rust: callback based message handler [\#1070](https://github.com/swift-nav/libsbp/pull/1070) ([notoriaga](https://github.com/notoriaga))
+- windows dll update [\#1069](https://github.com/swift-nav/libsbp/pull/1069) ([RReichert](https://github.com/RReichert))
+- Auto submodule update: cmake - Merge pull request \#99 from swift-nav/lkloh/always\_allow\_track\_origins [\#1067](https://github.com/swift-nav/libsbp/pull/1067) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Fix windows library install directory [\#1061](https://github.com/swift-nav/libsbp/pull/1061) ([RReichert](https://github.com/RReichert))
+- Dockerfile: Use Ubuntu focal [\#1059](https://github.com/swift-nav/libsbp/pull/1059) ([jayvdb](https://github.com/jayvdb))
+- Fix spelling and copyright year [\#1058](https://github.com/swift-nav/libsbp/pull/1058) ([jayvdb](https://github.com/jayvdb))
+- Auto submodule update: cmake - Add CONTRIBUTING.md [\#1057](https://github.com/swift-nav/libsbp/pull/1057) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Portability project [\#1000](https://github.com/swift-nav/libsbp/pull/1000) ([RReichert](https://github.com/RReichert))
+
+## [v3.4.10](https://github.com/swift-nav/libsbp/tree/v3.4.10) (2021-07-23)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.8...v3.4.10)
+
+**Merged pull requests:**
+
+- rust: Derive clone for GpsTimeError [\#1052](https://github.com/swift-nav/libsbp/pull/1052) ([notoriaga](https://github.com/notoriaga))
+- Add orthometric height to MSG\_POS\_LLH\_ACC [\#1050](https://github.com/swift-nav/libsbp/pull/1050) ([jbangelo](https://github.com/jbangelo))
+- don't stop converters when they encounter an error [\#1049](https://github.com/swift-nav/libsbp/pull/1049) ([notoriaga](https://github.com/notoriaga))
+- docker: sync with github actions [\#1047](https://github.com/swift-nav/libsbp/pull/1047) ([silverjam](https://github.com/silverjam))
+- change SBP table to use decimal instead of hex [\#1043](https://github.com/swift-nav/libsbp/pull/1043) ([silverjam](https://github.com/silverjam))
+- Define new message for unbounded accuracy [\#1038](https://github.com/swift-nav/libsbp/pull/1038) ([richarddeurloo](https://github.com/richarddeurloo))
+- build.gradle: Fix gradle 4 compatibility [\#1037](https://github.com/swift-nav/libsbp/pull/1037) ([jayvdb](https://github.com/jayvdb))
+- build.gradle: Add coverage reporting [\#1036](https://github.com/swift-nav/libsbp/pull/1036) ([jayvdb](https://github.com/jayvdb))
+- Reformat java using AOSP style [\#1035](https://github.com/swift-nav/libsbp/pull/1035) ([jayvdb](https://github.com/jayvdb))
+- Add SonarCloud Github Action [\#1034](https://github.com/swift-nav/libsbp/pull/1034) ([jayvdb](https://github.com/jayvdb))
+- Auto submodule update: cmake - memcheck\_xml2junit\_converter.py: Remove redundancy [\#1033](https://github.com/swift-nav/libsbp/pull/1033) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Java CI: Add GITHUB\_TOKEN to sonarqube task [\#1032](https://github.com/swift-nav/libsbp/pull/1032) ([jayvdb](https://github.com/jayvdb))
+- build.gradle: Add sonarcloud [\#1030](https://github.com/swift-nav/libsbp/pull/1030) ([jayvdb](https://github.com/jayvdb))
+- javascript: Replace var with let [\#1029](https://github.com/swift-nav/libsbp/pull/1029) ([jayvdb](https://github.com/jayvdb))
+- Javascript tests: Remove code duplication [\#1028](https://github.com/swift-nav/libsbp/pull/1028) ([jayvdb](https://github.com/jayvdb))
+- Javascript lint fixes [\#1027](https://github.com/swift-nav/libsbp/pull/1027) ([jayvdb](https://github.com/jayvdb))
+- Python lint fixes 2 [\#1026](https://github.com/swift-nav/libsbp/pull/1026) ([jayvdb](https://github.com/jayvdb))
+- Python lint fixes [\#1025](https://github.com/swift-nav/libsbp/pull/1025) ([jayvdb](https://github.com/jayvdb))
+
+## [v3.4.9](https://github.com/swift-nav/libsbp/tree/v3.4.9-yanked) (2021-07-14)
+
+Release yanked, do not use.
+
+## [v3.4.8](https://github.com/swift-nav/libsbp/tree/v3.4.8) (2021-06-18)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.7...v3.4.8)
+
+**Closed issues:**
+
+- Broken pyusb dependency on Python 2.x [\#982](https://github.com/swift-nav/libsbp/issues/982)
+- Restart the serial thread [\#970](https://github.com/swift-nav/libsbp/issues/970)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - SV4-144 update googleflags \(\#83\) [\#1010](https://github.com/swift-nav/libsbp/pull/1010) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- rust: impl TryFrom\<SBP\> for all messages [\#1009](https://github.com/swift-nav/libsbp/pull/1009) ([notoriaga](https://github.com/notoriaga))
+- rust: fix parsing of invalid sbp [\#992](https://github.com/swift-nav/libsbp/pull/992) ([notoriaga](https://github.com/notoriaga))
+- Correct spec for fwd\_payload member of MSG\_FWD [\#991](https://github.com/swift-nav/libsbp/pull/991) ([woodfell](https://github.com/woodfell))
+- Correct docs for read dir resp [\#989](https://github.com/swift-nav/libsbp/pull/989) ([woodfell](https://github.com/woodfell))
+- docker: add clang for rust build [\#987](https://github.com/swift-nav/libsbp/pull/987) ([silverjam](https://github.com/silverjam))
+- rust: support encoding borrowed messages [\#986](https://github.com/swift-nav/libsbp/pull/986) ([notoriaga](https://github.com/notoriaga))
+- Fix Java parsing and generate tests [\#985](https://github.com/swift-nav/libsbp/pull/985) ([jayvdb](https://github.com/jayvdb))
+- Add support for construct 2.9.52 and 2.10 [\#984](https://github.com/swift-nav/libsbp/pull/984) ([jayvdb](https://github.com/jayvdb))
+- Auto generate cpp tests [\#980](https://github.com/swift-nav/libsbp/pull/980) ([woodfell](https://github.com/woodfell))
+- Add three message test specs [\#977](https://github.com/swift-nav/libsbp/pull/977) ([jayvdb](https://github.com/jayvdb))
+- sbpjson: Sync generated code [\#976](https://github.com/swift-nav/libsbp/pull/976) ([jayvdb](https://github.com/jayvdb))
+- Tidy generated tests [\#975](https://github.com/swift-nav/libsbp/pull/975) ([jayvdb](https://github.com/jayvdb))
+- Remove unused test spec from python/ [\#974](https://github.com/swift-nav/libsbp/pull/974) ([jayvdb](https://github.com/jayvdb))
+- Remove haskell from python CI [\#973](https://github.com/swift-nav/libsbp/pull/973) ([jayvdb](https://github.com/jayvdb))
+- python: Run coverage and parameterize test cases [\#972](https://github.com/swift-nav/libsbp/pull/972) ([jayvdb](https://github.com/jayvdb))
+- Add tcp\_2sigma\_example [\#971](https://github.com/swift-nav/libsbp/pull/971) ([dgburr](https://github.com/dgburr))
+- Python: Detect and Fix pyflakes errors, and remove broken to\_binary [\#969](https://github.com/swift-nav/libsbp/pull/969) ([jayvdb](https://github.com/jayvdb))
+- add gps\_time method [\#967](https://github.com/swift-nav/libsbp/pull/967) ([notoriaga](https://github.com/notoriaga))
+- Fix docs [\#929](https://github.com/swift-nav/libsbp/pull/929) ([jayvdb](https://github.com/jayvdb))
+
 ## [v3.4.7](https://github.com/swift-nav/libsbp/tree/v3.4.7) (2021-04-30)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.6...v3.4.7)

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,57 +8,57 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.vehicle;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/vehicle.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_ODOMETRY (0x0903).
+/**
+ * SBP class for message MSG_ODOMETRY (0x0903).
  *
- * You can have MSG_ODOMETRY inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_ODOMETRY inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * Message representing the x component of vehicle velocity in the user frame at the odometry
- * reference point(s) specified by the user. The offset for the odometry reference point and 
- * the definition and origin of the user frame are defined through the device settings interface.
- * There are 4 possible user-defined sources of this message  which are labeled arbitrarily 
- * source 0 through 3.
- * If using "processor time" time tags, the receiving end will expect a
- * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
- * with GNSS. Processor time shall roll over to zero after one week. */
-
+ * <p>Message representing the x component of vehicle velocity in the user frame at the odometry
+ * reference point(s) specified by the user. The offset for the odometry reference point and the
+ * definition and origin of the user frame are defined through the device settings interface. There
+ * are 4 possible user-defined sources of this message which are labeled arbitrarily source 0
+ * through 3. If using "processor time" time tags, the receiving end will expect a
+ * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements with
+ * GNSS. Processor time shall roll over to zero after one week.
+ */
 public class MsgOdometry extends SBPMessage {
     public static final int TYPE = 0x0903;
 
-    
-    /** Time field representing either milliseconds in the GPS Week or local CPU
-time from the producing system in milliseconds.  See the tow_source flag
-for the exact source of this timestamp.
- */
+    /**
+     * Time field representing either milliseconds in the GPS Week or local CPU time from the
+     * producing system in milliseconds. See the tow_source flag for the exact source of this
+     * timestamp.
+     */
     public long tow;
-    
-    /** The signed forward component of vehicle velocity.
- */
+
+    /** The signed forward component of vehicle velocity. */
     public int velocity;
-    
+
     /** Status flags */
     public int flags;
-    
 
-    public MsgOdometry (int sender) { super(sender, TYPE); }
-    public MsgOdometry () { super(TYPE); }
-    public MsgOdometry (SBPMessage msg) throws SBPBinaryException {
+    public MsgOdometry(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgOdometry() {
+        super(TYPE);
+    }
+
+    public MsgOdometry(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

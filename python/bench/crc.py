@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-
-# Copyright (C) 2019 Swift Navigation Inc.
+# Copyright (C) 2019-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -24,7 +23,7 @@ print("Start: building random data...")
 
 for _ in range(blob_count):
     blob = bytes(b'').join(
-        (chr(int(0xFF * random.random()) & 0xFF)) for X in range(blob_size))
+        (chr(int(0xFF * random.random()) & 0xFF)) for _ in range(blob_size))
     blobs.append(blob)
 
 print("End: building random data.")

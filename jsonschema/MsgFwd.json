@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,12 +13,12 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFwd",
   "title":"MsgFwd",
-  "description":"This message provides the ability to forward messages over SBP.  This may take the form,\nof wrapping up SBP messages received by Piksi for logging purposes or wrapping ,\nanother protocol with SBP.,\n,\nThe source identifier indicates from what interface a forwarded stream derived.,\nThe protocol identifier identifies what the expected protocol the forwarded msg contains.,\nProtocol 0 represents SBP and the remaining values are implementation defined.\n",
+  "description":"This message provides the ability to forward messages over SBP.  This may take the form of wrapping up SBP messages received by Piksi for logging purposes or wrapping another protocol with SBP.,\n,\nThe source identifier indicates from what interface a forwarded stream derived. The protocol identifier identifies what the expected protocol the forwarded msg contains. Protocol 0 represents SBP and the remaining values are implementation defined.\n",
   "type": "object",
   "properties": {
     "source": {"type": "integer"},
     "protocol": {"type": "integer"},
-    "fwd_payload": {"type": "string"}
+    "fwd_payload": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
     "source",

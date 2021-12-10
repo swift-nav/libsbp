@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2014 Swift Navigation Inc.
+ * Copyright (C) 2011-2021 Swift Navigation Inc.
  * Contact: Swift Navigation <dev@swift-nav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -13,11 +13,15 @@
 #ifndef LIBSBP_SBP_H
 #define LIBSBP_SBP_H
 
+#include <libsbp/common.h>
+#include <libsbp/legacy/api.h>
+#include <libsbp/legacy/compat.h>
+#include <libsbp/v4/api.h>
+#include <libsbp/sbp_msg_type.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "common.h"
 
 /** \addtogroup sbp
  * \{ */
@@ -40,6 +44,10 @@ extern "C" {
 #define SBP_WRITE_ERROR          (-5)
 /** Return value indicating an error occured in the read() operation. */
 #define SBP_READ_ERROR           (-6)
+/** Return value indicating an error while encoding an SBP message to the wire format */
+#define SBP_ENCODE_ERROR (-7)
+/** Return value indicating an error while decoding an SBP message from wire format */
+#define SBP_DECODE_ERROR (-8)
 
 /** Default sender ID. Intended for messages sent from the host to the device. */
 #define SBP_SENDER_ID 0x42
@@ -73,25 +81,29 @@ extern "C" {
 #define SBP_MSG_ALL 0
 
 /** SBP callback function prototype definitions. */
-typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
-typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
-                                     u8 payload_len, u8 payload[],
-                                     u16 frame_len, u8 frame[], void *context);
 typedef union {
   sbp_msg_callback_t msg;
   sbp_frame_callback_t frame;
+  sbp_decoded_callback_t decoded;
 } sbp_callback_t;
 
 /** SBP callback type enum:
  * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing args
  * SBP_FRAME_CALLBACK are raw frame callbacks that include framing data as args.
+ * SBP_DECODED_CALLBACK are callbacks which receive decoded (ie, not raw) messages
+ *
  * This enum is stored on each sbp_msg_callback_node struct to identify how
  * to cast the callback function pointer stored within.
+ *
+ * SBP_PAYLOAD_CALLBACK and SBP_FRAME_CALLBACK are part of the legacy libsbp API. They
+ * are both deprecated and should not be used in new code. SBP_DECODED_CALLBACK should
+ * be used for all new development.
  */
 enum sbp_cb_type {
-  SBP_PAYLOAD_CALLBACK = 0,
+  SBP_MSG_CALLBACK = 0,
   SBP_FRAME_CALLBACK = 1,
-  SBP_CALLBACK_TYPE_COUNT = 2,
+  SBP_DECODED_CALLBACK = 2,
+  SBP_CALLBACK_TYPE_COUNT = 3,
 };
 
 #define SBP_CALLBACK_FLAG(cb_type) (1u << (cb_type))
@@ -104,25 +116,25 @@ typedef enum sbp_cb_type sbp_cb_type;
  * \note Must be statically allocated for use with sbp_register_callback()
  *       and sbp_register_frame_callback().
  */
-typedef struct sbp_msg_callbacks_node {
-  u16 msg_type;      /**< Message ID associated with callback. */
+struct sbp_msg_callbacks_node {
+  sbp_msg_type_t msg_type;      /**< Message ID associated with callback. */
   sbp_callback_t cb; /**< Pointer to callback function. */
   void *context;     /**< Pointer to a context */
   struct sbp_msg_callbacks_node *next; /**< Pointer to next node in list. */
   sbp_cb_type cb_type;                 /**< Enum that holds the type of callback. */
-} sbp_msg_callbacks_node_t;
+};
 
 /** State structure for processing SBP messages. */
-typedef struct {
+struct sbp_state {
   enum {
-    WAITING = 0,
-    GET_TYPE,
-    GET_SENDER,
-    GET_LEN,
-    GET_MSG,
-    GET_CRC
+    SBP_WAITING = 0,
+    SBP_GET_TYPE,
+    SBP_GET_SENDER,
+    SBP_GET_LEN,
+    SBP_GET_MSG,
+    SBP_GET_CRC
   } state;
-  u16 msg_type;
+  sbp_msg_type_t msg_type;
   u16 sender_id;
   u16 crc;
   u8 msg_len;
@@ -132,28 +144,15 @@ typedef struct {
   u8* msg_buff;
   void* io_context;
   sbp_msg_callbacks_node_t* sbp_msg_callbacks_head;
-} sbp_state_t;
+};
 
 /** \} */
 
-s8 sbp_register_callback(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
-                         sbp_msg_callbacks_node_t *node);
-s8 sbp_register_frame_callback(sbp_state_t* s, u16 msg_type,
-                               sbp_frame_callback_t cb, void* context,
-                               sbp_msg_callbacks_node_t *node);
-s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context, sbp_msg_callbacks_node_t *node);
-s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
-void sbp_clear_callbacks(sbp_state_t* s);
-void sbp_state_init(sbp_state_t *s);
-void sbp_state_set_io_context(sbp_state_t *s, void* context);
-s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void* context));
-s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
-    u8 payload[]);
-s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
-                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
-s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
-                    s32 (*write)(u8 *buff, u32 n, void* context));
+SBP_EXPORT s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
+SBP_EXPORT void sbp_clear_callbacks(sbp_state_t* s);
+SBP_EXPORT void sbp_state_init(sbp_state_t *s);
+SBP_EXPORT void sbp_state_set_io_context(sbp_state_t *s, void* context);
+SBP_EXPORT s8 sbp_process(sbp_state_t *s, sbp_read_fn_t read);
 
 #ifdef __cplusplus
 }

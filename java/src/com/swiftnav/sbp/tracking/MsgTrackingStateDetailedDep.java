@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,116 +8,117 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.tracking;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/tracking.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
+import java.math.BigInteger;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).
+/**
+ * SBP class for message MSG_TRACKING_STATE_DETAILED_DEP (0x0011).
  *
- * You can have MSG_TRACKING_STATE_DETAILED_DEP inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_TRACKING_STATE_DETAILED_DEP inherent its fields directly from an inherited
+ * SBP object, or construct it inline using a dict of its fields.
  *
-* Deprecated. */
-
+ * <p>Deprecated.
+ */
 public class MsgTrackingStateDetailedDep extends SBPMessage {
     public static final int TYPE = 0x0011;
 
-    
     /** Receiver clock time. */
     public BigInteger recv_time;
-    
-    /** Time of transmission of signal from satellite. TOW only valid when
-TOW status is decoded or propagated. WN only valid when week
-number valid flag is set.
- */
+
+    /**
+     * Time of transmission of signal from satellite. TOW only valid when TOW status is decoded or
+     * propagated. WN only valid when week number valid flag is set.
+     */
     public GPSTimeDep tot;
-    
-    /** Pseudorange observation. Valid only when pseudorange valid flag is
-set.
- */
+
+    /** Pseudorange observation. Valid only when pseudorange valid flag is set. */
     public long P;
-    
-    /** Pseudorange observation standard deviation. Valid only when
-pseudorange valid flag is set.
- */
+
+    /**
+     * Pseudorange observation standard deviation. Valid only when pseudorange valid flag is set.
+     */
     public int P_std;
-    
-    /** Carrier phase observation with typical sign convention. Valid only
-when PLL pessimistic lock is achieved.
- */
+
+    /**
+     * Carrier phase observation with typical sign convention. Valid only when PLL pessimistic lock
+     * is achieved.
+     */
     public CarrierPhase L;
-    
+
     /** Carrier-to-Noise density */
     public int cn0;
-    
-    /** Lock time. It is encoded according to DF402 from the RTCM 10403.2
-Amendment 2 specification. Valid values range from 0 to 15.
- */
+
+    /**
+     * Lock time. It is encoded according to DF402 from the RTCM 10403.2 Amendment 2 specification.
+     * Valid values range from 0 to 15.
+     */
     public int lock;
-    
+
     /** GNSS signal identifier. */
     public GnssSignalDep sid;
-    
+
     /** Carrier Doppler frequency. */
     public int doppler;
-    
+
     /** Carrier Doppler frequency standard deviation. */
     public int doppler_std;
-    
-    /** Number of seconds of continuous tracking. Specifies how much time
-signal is in continuous track.
- */
+
+    /**
+     * Number of seconds of continuous tracking. Specifies how much time signal is in continuous
+     * track.
+     */
     public long uptime;
-    
-    /** TCXO clock offset. Valid only when valid clock valid flag is set.
- */
+
+    /** TCXO clock offset. Valid only when valid clock valid flag is set. */
     public int clock_offset;
-    
-    /** TCXO clock drift. Valid only when valid clock valid flag is set.
- */
+
+    /** TCXO clock drift. Valid only when valid clock valid flag is set. */
     public int clock_drift;
-    
+
     /** Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. */
     public int corr_spacing;
-    
+
     /** Acceleration. Valid only when acceleration valid flag is set. */
     public int acceleration;
-    
+
     /** Synchronization status flags. */
     public int sync_flags;
-    
+
     /** TOW status flags. */
     public int tow_flags;
-    
+
     /** Tracking loop status flags. */
     public int track_flags;
-    
+
     /** Navigation data status flags. */
     public int nav_flags;
-    
+
     /** Parameters sets flags. */
     public int pset_flags;
-    
+
     /** Miscellaneous flags. */
     public int misc_flags;
-    
 
-    public MsgTrackingStateDetailedDep (int sender) { super(sender, TYPE); }
-    public MsgTrackingStateDetailedDep () { super(TYPE); }
-    public MsgTrackingStateDetailedDep (SBPMessage msg) throws SBPBinaryException {
+    public MsgTrackingStateDetailedDep(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgTrackingStateDetailedDep() {
+        super(TYPE);
+    }
+
+    public MsgTrackingStateDetailedDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

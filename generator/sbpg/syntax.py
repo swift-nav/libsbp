@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -28,12 +27,12 @@ class PackageSpecification(object):
 
   """
 
-  def __init__(self, identifier=None, description=None, includes=[],
-               definitions=[], render_source=True, stable=False, public=False):
+  def __init__(self, identifier=None, description=None, includes=None,
+               definitions=None, render_source=True, stable=False, public=False):
     self.identifier = identifier
     self.description = description
-    self.includes = includes
-    self.definitions = definitions
+    self.includes = includes or []
+    self.definitions = definitions or []
     self.render_source = render_source
     self.stable = stable
     self.public = public
@@ -64,8 +63,8 @@ class Dependency(object):
 
   """
 
-  def __init__(self, includes=[]):
-    self.includes = includes
+  def __init__(self, includes=None):
+    self.includes = includes or []
 
   def __repr__(self):
     return fmt_repr(self)
@@ -74,14 +73,14 @@ class Dependency(object):
 class Definition(object):
   def __init__(self, identifier=None,
                sbp_id=None, short_desc=None, desc=None, type_id=None,
-               fields=[], public=False, embedded_type=False):
+               fields=None, public=False, embedded_type=False):
     self.identifier = identifier
     self.sbp_id = sbp_id
     self.short_desc = short_desc
     self.desc = desc
     self.embedded_type = embedded_type
     self.type_id = type_id
-    self.fields = fields
+    self.fields = fields or []
     self.public = public
     self.static = True
 
@@ -92,7 +91,7 @@ class Definition(object):
   @property
   def max_fid_len(self):
     return max([0]+[len(f.identifier) for f in self.fields])
-  
+
   @property
   def is_real_message(self):
     return (not getattr(self, 'embedded_type', False)) and getattr(self, 'sbp_id', False)
@@ -141,8 +140,8 @@ class Message(Definition):
   @property
   def static(self):
     return True
-  
-  # Some primitive types are defined like messages, 
+
+  # Some primitive types are defined like messages,
   # but are not standalone messages with their own ids that would go on the wire
   # The is_real_message property disambiguates these.
 
@@ -163,7 +162,7 @@ class Struct(Definition):
   @property
   def static(self):
     return True
-  
+
   def __repr__(self):
     return fmt_repr(self)
 

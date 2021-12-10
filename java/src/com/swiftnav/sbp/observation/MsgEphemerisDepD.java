@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,129 +8,128 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
+/**
+ * SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
  *
- * You can have MSG_EPHEMERIS_DEP_D inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_EPHEMERIS_DEP_D inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate GPS satellite position,
- * velocity, and clock offset. Please see the Navstar GPS
- * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
- * 20-III) for more details. */
-
+ * <p>The ephemeris message returns a set of satellite orbit parameters that is used to calculate
+ * GPS satellite position, velocity, and clock offset. Please see the Navstar GPS Space
+ * Segment/Navigation user interfaces (ICD- GPS-200, Table 20-III) for more details.
+ */
 public class MsgEphemerisDepD extends SBPMessage {
     public static final int TYPE = 0x0080;
 
-    
     /** Group delay differential between L1 and L2 */
     public double tgd;
-    
+
     /** Amplitude of the sine harmonic correction term to the orbit radius */
     public double c_rs;
-    
+
     /** Amplitude of the cosine harmonic correction term to the orbit radius */
     public double c_rc;
-    
+
     /** Amplitude of the cosine harmonic correction term to the argument of latitude */
     public double c_uc;
-    
+
     /** Amplitude of the sine harmonic correction term to the argument of latitude */
     public double c_us;
-    
+
     /** Amplitude of the cosine harmonic correction term to the angle of inclination */
     public double c_ic;
-    
+
     /** Amplitude of the sine harmonic correction term to the angle of inclination */
     public double c_is;
-    
+
     /** Mean motion difference */
     public double dn;
-    
+
     /** Mean anomaly at reference time */
     public double m0;
-    
+
     /** Eccentricity of satellite orbit */
     public double ecc;
-    
+
     /** Square root of the semi-major axis of orbit */
     public double sqrta;
-    
+
     /** Longitude of ascending node of orbit plane at weekly epoch */
     public double omega0;
-    
+
     /** Rate of right ascension */
     public double omegadot;
-    
+
     /** Argument of perigee */
     public double w;
-    
+
     /** Inclination */
     public double inc;
-    
+
     /** Inclination first derivative */
     public double inc_dot;
-    
+
     /** Polynomial clock correction coefficient (clock bias) */
     public double af0;
-    
+
     /** Polynomial clock correction coefficient (clock drift) */
     public double af1;
-    
+
     /** Polynomial clock correction coefficient (rate of clock drift) */
     public double af2;
-    
+
     /** Time of week */
     public double toe_tow;
-    
+
     /** Week number */
     public int toe_wn;
-    
+
     /** Clock reference time of week */
     public double toc_tow;
-    
+
     /** Clock reference week number */
     public int toc_wn;
-    
+
     /** Is valid? */
     public int valid;
-    
+
     /** Satellite is healthy? */
     public int healthy;
-    
+
     /** GNSS signal identifier */
     public GnssSignalDep sid;
-    
+
     /** Issue of ephemeris data */
     public int iode;
-    
+
     /** Issue of clock data */
     public int iodc;
-    
+
     /** Reserved field */
     public long reserved;
-    
 
-    public MsgEphemerisDepD (int sender) { super(sender, TYPE); }
-    public MsgEphemerisDepD () { super(TYPE); }
-    public MsgEphemerisDepD (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisDepD(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgEphemerisDepD() {
+        super(TYPE);
+    }
+
+    public MsgEphemerisDepD(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

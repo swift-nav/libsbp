@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -14,11 +14,11 @@ syntax = "proto3";
 
 /** Bootload
  *
-  * Messages for the bootloading configuration of a Piksi 2.3.1.  This message
+ * Messages for the bootloading configuration of a Piksi 2.3.1.  This message
  * group does not apply to Piksi Multi.
- * 
- * Note that some of these messages share the same message type ID for both the
- * host request and the device response.
+ *
+ * Note that some of these messages share the same message type ID for both
+ * the host request and the device response.
  */
 
 package swiftnav.sbp.bootload;
@@ -26,20 +26,19 @@ package swiftnav.sbp.bootload;
 
 /** Bootloading handshake request (host => device)
  *
- * The handshake message request from the host establishes a
- * handshake between the device bootloader and the host. The
- * response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
+ * The handshake message request from the host establishes a handshake between
+ * the device bootloader and the host. The response from the device is
+ * MSG_BOOTLOADER_HANDSHAKE_RESP.
  */
 message MsgBootloaderHandshakeReq {
 }
 
 /** Bootloading handshake response (host <= device)
  *
- * The handshake message response from the device establishes a
- * handshake between the device bootloader and the host. The
- * request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
- * payload contains the bootloader version number and the SBP
- * protocol version number.
+ * The handshake message response from the device establishes a handshake
+ * between the device bootloader and the host. The request from the host is
+ * MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
+ * number and the SBP protocol version number.
  */
 message MsgBootloaderHandshakeResp {
     uint32 flags = 1;
@@ -56,24 +55,24 @@ message MsgBootloaderJumpToApp {
 
 /** Read FPGA device ID over UART request (host => device)
  *
- * The device message from the host reads a unique device
- * identifier from the SwiftNAP, an FPGA. The host requests the ID
- * by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
- * responds with a MSG_NAP_DEVICE_DNA_RESP message with the
- * device ID in the payload. Note that this ID is tied to the FPGA,
- * and not related to the Piksi's serial number.
+ * The device message from the host reads a unique device identifier from the
+ * SwiftNAP, an FPGA. The host requests the ID by sending a
+ * MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+ * MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
+ * that this ID is tied to the FPGA, and not related to the Piksi's serial
+ * number.
  */
 message MsgNapDeviceDnaReq {
 }
 
 /** Read FPGA device ID over UART response (host <= device)
  *
- * The device message from the host reads a unique device
- * identifier from the SwiftNAP, an FPGA. The host requests the ID
- * by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
- * responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
- * device ID in the payload. Note that this ID is tied to the FPGA,
- * and not related to the Piksi's serial number.
+ * The device message from the host reads a unique device identifier from the
+ * SwiftNAP, an FPGA. The host requests the ID by sending a
+ * MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+ * MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
+ * that this ID is tied to the FPGA, and not related to the Piksi's serial
+ * number.
  */
 message MsgNapDeviceDnaResp {
     repeated uint32 dna = 1;

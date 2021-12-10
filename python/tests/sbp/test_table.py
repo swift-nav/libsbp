@@ -1,4 +1,4 @@
-# Copyright (C) 2015 - 2016 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -10,7 +10,6 @@
 
 from sbp.msg import SBP
 from sbp.table import _SBP_TABLE, dispatch
-from sbp.table import InvalidSBPMessageType
 from sbp import acquisition as acq
 from sbp import bootload as boot
 from sbp import file_io as file_io
@@ -34,9 +33,6 @@ from sbp import sbas as sbas
 from sbp import ssr as ssr
 from sbp import solution_meta as solmeta
 
-import pytest
-import sbp.acquisition as acq
-import sbp.logging as log
 import warnings
 
 def test_table_count():
@@ -44,7 +40,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 201
+  number_of_messages = 203
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():

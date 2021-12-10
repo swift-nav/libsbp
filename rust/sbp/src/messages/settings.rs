@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -12,7 +12,6 @@
 // Automatically generated from yaml/swiftnav/sbp/settings.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//!
 //! Messages for reading, writing, and discovering device settings. Settings
 //! with a "string" field have multiple values in this field delimited with a
 //! null character (the c style null terminator).  For instance, when querying
@@ -22,153 +21,145 @@
 //! null characters are specified with the escape sequence '\0' and all
 //! quotation marks should be omitted.
 //!
-//!
 //! In the message descriptions below, the generic strings SECTION_SETTING and
 //! SETTING are used to refer to the two strings that comprise the identifier
-//! of an individual setting.In firmware_version example above, SECTION_SETTING
-//! is the 'system_info', and the SETTING portion is 'firmware_version'.
-//!
+//! of an individual setting.In firmware_version example above,
+//! SECTION_SETTING is the 'system_info', and the SETTING portion is
+//! 'firmware_version'.
 //! See the "Software Settings Manual" on support.swiftnav.com for detailed
 //! documentation about all settings and sections available for each Swift
 //! firmware version. Settings manuals are available for each firmware version
-//! at the following link: @@https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi Multi Specifications].
+//! at the following link: [Piksi Multi
+//! Specifications](https://support.swiftnav.com/support/solutions/articles/44001850753-piksi-multi-specification).
 //! The latest settings document is also available at the following link:
-//! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document] .
-//! See lastly @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py[settings.py] ,
-//! the open source python command line utility for reading, writing, and
+//! [Latest settings
+//! document](http://swiftnav.com/latest/piksi-multi-settings) . See lastly
+//! [settings.py](https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py)
+//! , the open source python command line utility for reading, writing, and
 //! saving settings in the piksi_tools repository on github as a helpful
 //! reference and example.
-//!
 
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use super::lib::*;
 
 /// Finished reading settings (host <= device)
 ///
 /// The settings message for indicating end of the settings values.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexDone {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
-impl MsgSettingsReadByIndexDone {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, crate::Error> {
-        Ok( MsgSettingsReadByIndexDone{
-            sender_id: None,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsReadByIndexDone {
+    const MESSAGE_TYPE: u16 = 166;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_DONE";
 }
-impl super::SBPMessage for MsgSettingsReadByIndexDone {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_BY_INDEX_DONE"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        166
+impl SbpMessage for MsgSettingsReadByIndexDone {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexDone {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+impl TryFrom<Sbp> for MsgSettingsReadByIndexDone {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsReadByIndexDone(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
+    }
+}
 
-    fn sbp_size(&self) -> usize {
+impl WireFormat for MsgSettingsReadByIndexDone {
+    const MIN_LEN: usize = 0;
+    fn len(&self) -> usize {
         0
+    }
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
+        MsgSettingsReadByIndexDone { sender_id: None }
     }
 }
 
 /// Read setting by direct index (host => device)
 ///
-/// The settings message for iterating through the settings
-/// values. A device will respond to this message with a
-/// "MSG_SETTINGS_READ_BY_INDEX_RESP".
+/// The settings message for iterating through the settings values. A device
+/// will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// An index into the device settings, with values ranging from 0 to
-    /// length(settings)
+    /// length(settings).
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u16,
 }
 
-impl MsgSettingsReadByIndexReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, crate::Error> {
-        Ok( MsgSettingsReadByIndexReq{
-            sender_id: None,
-            index: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsReadByIndexReq {
+    const MESSAGE_TYPE: u16 = 162;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_REQ";
 }
-impl super::SBPMessage for MsgSettingsReadByIndexReq {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_BY_INDEX_REQ"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        162
+impl SbpMessage for MsgSettingsReadByIndexReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsReadByIndexReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsReadByIndexReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size
+impl WireFormat for MsgSettingsReadByIndexReq {
+    const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.index, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsReadByIndexReq {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -176,289 +167,289 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexReq {
 ///
 /// The settings message that reports the value of a setting at an index.
 ///
-/// In the string field, it reports NULL-terminated and delimited string
-/// with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where
-/// the '\0' escape sequence denotes the NULL character and where quotation
-/// marks are omitted. The FORMAT_TYPE field is optional and denotes
-/// possible string values of the setting as a hint to the user. If
-/// included, the format type portion of the string has the format
-/// "enum:value1,value2,value3". An example string that could be sent from
-/// the device is "simulator\0enabled\0True\0enum:True,False\0"
+/// In the string field, it reports NULL-terminated and delimited string with
+/// contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where the '\0'
+/// escape sequence denotes the NULL character and where quotation marks are
+/// omitted. The FORMAT_TYPE field is optional and denotes possible string
+/// values of the setting as a hint to the user. If included, the format type
+/// portion of the string has the format "enum:value1,value2,value3". An
+/// example string that could be sent from the device is
+/// "simulator\0enabled\0True\0enum:True,False\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// An index into the device settings, with values ranging from 0 to
     /// length(settings)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
     pub index: u16,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
-    pub setting: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+    pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
-impl MsgSettingsReadByIndexResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, crate::Error> {
-        Ok( MsgSettingsReadByIndexResp{
-            sender_id: None,
-            index: _buf.read_u16::<LittleEndian>()?,
-            setting: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsReadByIndexResp {
+    const MESSAGE_TYPE: u16 = 167;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_BY_INDEX_RESP";
 }
-impl super::SBPMessage for MsgSettingsReadByIndexResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_BY_INDEX_RESP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        167
+impl SbpMessage for MsgSettingsReadByIndexResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.index.append_to_sbp_buffer(buf);
-        self.setting.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsReadByIndexResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsReadByIndexResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.index.sbp_size();
-        size += self.setting.sbp_size();
-        size
+impl WireFormat for MsgSettingsReadByIndexResp {
+    const MIN_LEN: usize =
+        <u16 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.index) + WireFormat::len(&self.setting)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.index, buf);
+        WireFormat::write(&self.setting, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsReadByIndexResp {
+            sender_id: None,
+            index: WireFormat::parse_unchecked(buf),
+            setting: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Read device configuration settings (host => device)
 ///
-/// The setting message that reads the device configuration. The string
-/// field is a NULL-terminated and NULL-delimited string with contents
+/// The setting message that reads the device configuration. The string field
+/// is a NULL-terminated and NULL-delimited string with contents
 /// "SECTION_SETTING\0SETTING\0" where the '\0' escape sequence denotes the
-/// NULL character and where quotation marks are omitted. An example
-/// string that could be sent to a device is "solution\0soln_freq\0". A
-/// device will only respond to this message when it is received from
-/// sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
-/// message (msg_id 0x00A5).
+/// NULL character and where quotation marks are omitted. An example string
+/// that could be sent to a device is "solution\0soln_freq\0". A device will
+/// only respond to this message when it is received from sender ID 0x42. A
+/// device should respond with a MSG_SETTINGS_READ_RESP message (msg_id
+/// 0x00A5).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsReadReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0"
-    pub setting: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+    pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
-impl MsgSettingsReadReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, crate::Error> {
-        Ok( MsgSettingsReadReq{
-            sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsReadReq {
+    const MESSAGE_TYPE: u16 = 164;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_REQ";
 }
-impl super::SBPMessage for MsgSettingsReadReq {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_REQ"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        164
+impl SbpMessage for MsgSettingsReadReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsReadReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.setting.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsReadReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsReadReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.setting.sbp_size();
-        size
+impl WireFormat for MsgSettingsReadReq {
+    const MIN_LEN: usize = <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.setting)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.setting, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsReadReq {
+            sender_id: None,
+            setting: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Read device configuration settings (host <= device)
 ///
-/// The setting message wich which the device responds after a
-/// MSG_SETTING_READ_REQ is sent to device. The string field is a
-/// NULL-terminated and NULL-delimited string with contents
-/// "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence
-/// denotes the NULL character and where quotation marks are omitted. An
-/// example string that could be sent from device is
-/// "solution\0soln_freq\010\0".
+/// The setting message with which the device responds after a
+/// MSG_SETTING_READ_REQ is sent to device. The string field is a NULL-
+/// terminated and NULL-delimited string with contents
+/// "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
+/// the NULL character and where quotation marks are omitted. An example
+/// string that could be sent from device is "solution\0soln_freq\010\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsReadResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+    pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
-impl MsgSettingsReadResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, crate::Error> {
-        Ok( MsgSettingsReadResp{
-            sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsReadResp {
+    const MESSAGE_TYPE: u16 = 165;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_READ_RESP";
 }
-impl super::SBPMessage for MsgSettingsReadResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_READ_RESP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        165
+impl SbpMessage for MsgSettingsReadResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsReadResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.setting.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsReadResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsReadResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.setting.sbp_size();
-        size
+impl WireFormat for MsgSettingsReadResp {
+    const MIN_LEN: usize = <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.setting)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.setting, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsReadResp {
+            sender_id: None,
+            setting: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Register setting and default value (device => host)
 ///
-/// This message registers the presence and default value of a setting
-/// with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
-/// for this setting to set the initial value.
+/// This message registers the presence and default value of a setting with a
+/// settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
+/// setting to set the initial value.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsRegister {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE".
-    pub setting: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+    pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
-impl MsgSettingsRegister {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, crate::Error> {
-        Ok( MsgSettingsRegister{
-            sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsRegister {
+    const MESSAGE_TYPE: u16 = 174;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER";
 }
-impl super::SBPMessage for MsgSettingsRegister {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_REGISTER"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        174
+impl SbpMessage for MsgSettingsRegister {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsRegister {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.setting.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsRegister {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsRegister(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.setting.sbp_size();
-        size
+impl WireFormat for MsgSettingsRegister {
+    const MIN_LEN: usize = <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.setting)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.setting, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsRegister {
+            sender_id: None,
+            setting: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -469,70 +460,71 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegister {
 /// was already registered or is available in the permanent setting storage
 /// and had a different value.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsRegisterResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Register status
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
     pub status: u8,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
     /// according to the status field.
-    pub setting: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+    pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
-impl MsgSettingsRegisterResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, crate::Error> {
-        Ok( MsgSettingsRegisterResp{
-            sender_id: None,
-            status: _buf.read_u8()?,
-            setting: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsRegisterResp {
+    const MESSAGE_TYPE: u16 = 431;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER_RESP";
 }
-impl super::SBPMessage for MsgSettingsRegisterResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_REGISTER_RESP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        431
+impl SbpMessage for MsgSettingsRegisterResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsRegisterResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.status.append_to_sbp_buffer(buf);
-        self.setting.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsRegisterResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsRegisterResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.status.sbp_size();
-        size += self.setting.sbp_size();
-        size
+impl WireFormat for MsgSettingsRegisterResp {
+    const MIN_LEN: usize =
+        <u8 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.status) + WireFormat::len(&self.setting)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.status, buf);
+        WireFormat::write(&self.setting, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsRegisterResp {
+            sender_id: None,
+            status: WireFormat::parse_unchecked(buf),
+            setting: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -541,56 +533,55 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegisterResp {
 /// The save settings message persists the device's current settings
 /// configuration to its onboard flash memory file system.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsSave {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
-impl MsgSettingsSave {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, crate::Error> {
-        Ok( MsgSettingsSave{
-            sender_id: None,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsSave {
+    const MESSAGE_TYPE: u16 = 161;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_SAVE";
 }
-impl super::SBPMessage for MsgSettingsSave {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_SAVE"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        161
+impl SbpMessage for MsgSettingsSave {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsSave {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+impl TryFrom<Sbp> for MsgSettingsSave {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsSave(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
+    }
+}
 
-    fn sbp_size(&self) -> usize {
+impl WireFormat for MsgSettingsSave {
+    const MIN_LEN: usize = 0;
+    fn len(&self) -> usize {
         0
+    }
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
+        MsgSettingsSave { sender_id: None }
     }
 }
 
@@ -600,143 +591,144 @@ impl crate::serialize::SbpSerialize for MsgSettingsSave {
 /// setting via A NULL-terminated and NULL-delimited string with contents
 /// "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
 /// the NULL character and where quotation marks are omitted. A device will
-/// only process to this message when it is received from sender ID 0x42.
-/// An example string that could be sent to a device is
+/// only process to this message when it is received from sender ID 0x42. An
+/// example string that could be sent to a device is
 /// "solution\0soln_freq\010\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsWrite {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+    pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
-impl MsgSettingsWrite {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, crate::Error> {
-        Ok( MsgSettingsWrite{
-            sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsWrite {
+    const MESSAGE_TYPE: u16 = 160;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE";
 }
-impl super::SBPMessage for MsgSettingsWrite {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_WRITE"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        160
+impl SbpMessage for MsgSettingsWrite {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsWrite {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.setting.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsWrite {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsWrite(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.setting.sbp_size();
-        size
+impl WireFormat for MsgSettingsWrite {
+    const MIN_LEN: usize = <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.setting)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.setting, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsWrite {
+            sender_id: None,
+            setting: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Acknowledgement with status of MSG_SETTINGS_WRITE
 ///
-/// Return the status of a write request with the new value of the
-/// setting.  If the requested value is rejected, the current value
-/// will be returned. The string field is a NULL-terminated and NULL-delimited
-/// string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0'
-/// escape sequence denotes the NULL character and where quotation marks
-/// are omitted. An example string that could be sent from device is
+/// Return the status of a write request with the new value of the setting.
+/// If the requested value is rejected, the current value will be returned.
+/// The string field is a NULL-terminated and NULL-delimited string with
+/// contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape
+/// sequence denotes the NULL character and where quotation marks are omitted.
+/// An example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSettingsWriteResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write status
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
     pub status: u8,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+    pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
-impl MsgSettingsWriteResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, crate::Error> {
-        Ok( MsgSettingsWriteResp{
-            sender_id: None,
-            status: _buf.read_u8()?,
-            setting: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSettingsWriteResp {
+    const MESSAGE_TYPE: u16 = 175;
+    const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE_RESP";
 }
-impl super::SBPMessage for MsgSettingsWriteResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SETTINGS_WRITE_RESP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        175
+impl SbpMessage for MsgSettingsWriteResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSettingsWriteResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.status.append_to_sbp_buffer(buf);
-        self.setting.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSettingsWriteResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSettingsWriteResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.status.sbp_size();
-        size += self.setting.sbp_size();
-        size
+impl WireFormat for MsgSettingsWriteResp {
+    const MIN_LEN: usize =
+        <u8 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.status) + WireFormat::len(&self.setting)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.status, buf);
+        WireFormat::write(&self.setting, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSettingsWriteResp {
+            sender_id: None,
+            status: WireFormat::parse_unchecked(buf),
+            setting: WireFormat::parse_unchecked(buf),
+        }
     }
 }

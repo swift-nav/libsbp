@@ -7,29 +7,35 @@
 
 [package]
 name = "sbp2json"
-version = "3.4.8-alpha"
+version = "4.0.4-alpha"
+description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
+readme = "./README.md"
+license = "MIT"
+categories = ["parsing"]
+keywords = ["encoding", "parsing"]
 
 [dependencies.sbp]
-path = "../sbp"
+path = "../sbp" # TODO: replace with published `sbp` crate version
 features = ["json"]
 
 [dependencies]
-dencode = "0.1"
 env_logger = "0.8"
 serde_json = "1.0"
 structopt = "0.3"
+mimalloc = { version = "0.1", default-features = false }
 
-[target.'cfg(all(not(windows), not(target_env = "musl")))'.dependencies]
-jemallocator = "0.3"
+[dependencies.dencode]
+version = "0.3.0"
+default-features = false
 
 [dev-dependencies]
 sha2 = "0.8"
 hex = "0.4"
 assert_cmd = "1.0.1"
-serde_json = "1"
-assert-json-diff = "1.1.0"
+serde_json = "1.0"
+assert-json-diff = "2.0"
 
 [profile.release]
 lto = true

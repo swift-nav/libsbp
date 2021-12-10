@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -9,16 +9,14 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from voluptuous import Coerce
-from voluptuous import Optional
-from voluptuous import Schema
-from voluptuous import Any
-from voluptuous import IsFalse
+from voluptuous import Any, Coerce, IsFalse, Schema
 
 SBP_EXTENSION = "/*.yaml"
 
 msg = Schema({
   'fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
+  'c_decoded_fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
+  'c_string_fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
   'module': Coerce(str),
   'name': Coerce(str)
 })

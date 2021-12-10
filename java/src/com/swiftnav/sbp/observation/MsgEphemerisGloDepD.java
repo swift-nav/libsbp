@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,66 +8,68 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.observation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/observation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
-import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-/** SBP class for message MSG_EPHEMERIS_GLO_DEP_D (0x0088).
+/**
+ * SBP class for message MSG_EPHEMERIS_GLO_DEP_D (0x0088).
  *
- * You can have MSG_EPHEMERIS_GLO_DEP_D inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_EPHEMERIS_GLO_DEP_D inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
- * This observation message has been deprecated in favor of
- * ephemeris message using floats for size reduction. */
-
+ * <p>This observation message has been deprecated in favor of ephemeris message using floats for
+ * size reduction.
+ */
 public class MsgEphemerisGloDepD extends SBPMessage {
     public static final int TYPE = 0x0088;
 
-    
     /** Values common for all ephemeris types */
     public EphemerisCommonContentDepB common;
-    
+
     /** Relative deviation of predicted carrier frequency from nominal */
     public double gamma;
-    
+
     /** Correction to the SV time */
     public double tau;
-    
+
     /** Equipment delay between L1 and L2 */
     public double d_tau;
-    
+
     /** Position of the SV at tb in PZ-90.02 coordinates system */
     public double[] pos;
-    
+
     /** Velocity vector of the SV at tb in PZ-90.02 coordinates system */
     public double[] vel;
-    
+
     /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys */
     public double[] acc;
-    
+
     /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
     public int fcn;
-    
+
     /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
     public int iod;
-    
 
-    public MsgEphemerisGloDepD (int sender) { super(sender, TYPE); }
-    public MsgEphemerisGloDepD () { super(TYPE); }
-    public MsgEphemerisGloDepD (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisGloDepD(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgEphemerisGloDepD() {
+        super(TYPE);
+    }
+
+    public MsgEphemerisGloDepD(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

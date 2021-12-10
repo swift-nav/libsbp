@@ -1,0 +1,48 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgPosLLHAcc",
+  "title":"MsgPosLLHAcc",
+  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution as well as the estimated horizontal, vertical, cross-track and along-track errors.  The position information and Fix Mode flags  follow the MSG_POS_LLH message. Since the covariance matrix is computed in the local-level North, East, Down frame, the estimated error terms follow that convention.,\n,\nThe estimated errors are reported at a user-configurable confidence level. The user-configured percentile is encoded in the percentile field.\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "lat": {"type": "number"},
+    "lon": {"type": "number"},
+    "height": {"type": "number"},
+    "orthometric_height": {"type": "number"},
+    "h_accuracy": {"type": "number"},
+    "v_accuracy": {"type": "number"},
+    "ct_accuracy": {"type": "number"},
+    "at_accuracy": {"type": "number"},
+    "h_ellipse": {"$ref": "EstimatedHorizontalErrorEllipse.json"},
+    "confidence_and_geoid": {"type": "integer"},
+    "n_sats": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "lat",
+    "lon",
+    "height",
+    "orthometric_height",
+    "h_accuracy",
+    "v_accuracy",
+    "ct_accuracy",
+    "at_accuracy",
+    "h_ellipse",
+    "confidence_and_geoid",
+    "n_sats",
+    "flags"
+  ]
+}

@@ -1,13 +1,12 @@
 use std::io;
 
-use sbp::codec::json::{CompactFormatter, HaskellishFloatFormatter};
+use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
 use structopt::StructOpt;
 
-use converters::json2json;
+use converters::{json2json, Result};
 
-#[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
-static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert "compact" SBP JSON data to an "exploded" form
 ///
@@ -28,9 +27,13 @@ struct Options {
     /// Buffer output before flushing
     #[structopt(short, long)]
     buffered: bool,
+
+    /// Stop on first error encountered
+    #[structopt(long)]
+    fatal_errors: bool,
 }
 
-fn main() -> sbp::Result<()> {
+fn main() -> Result<()> {
     let options = Options::from_args();
 
     if options.debug {
@@ -43,8 +46,20 @@ fn main() -> sbp::Result<()> {
     let stdout = io::stdout();
 
     if options.float_compat {
-        json2json(stdin, stdout, HaskellishFloatFormatter {}, options.buffered)
+        json2json(
+            stdin,
+            stdout,
+            HaskellishFloatFormatter {},
+            options.buffered,
+            options.fatal_errors,
+        )
     } else {
-        json2json(stdin, stdout, CompactFormatter {}, options.buffered)
+        json2json(
+            stdin,
+            stdout,
+            CompactFormatter {},
+            options.buffered,
+            options.fatal_errors,
+        )
     }
 }

@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#TroposphericDelayCorrection",
   "title":"TroposphericDelayCorrection",
-  "description":"Troposphere vertical delays (mean and standard deviation) at the grid,\npoint.\n",
+  "description":"Troposphere vertical delays (mean and standard deviation) at the grid point.\n",
   "type": "object",
   "properties": {
     "hydro": {"type": "integer"},

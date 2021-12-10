@@ -5,7 +5,7 @@ homepage:              https://github.com/swift-nav/libsbp
 license:               MIT
 author:                Swift Navigation Inc.
 maintainer:            Swift Navigation <dev@swiftnav.com>
-copyright:             Copyright (C) 2015-2018 Swift Navigation, Inc.
+copyright:             Copyright (C) 2015-2021 Swift Navigation, Inc.
 category:              Network
 build-type:            Simple
 cabal-version:         >= 1.22

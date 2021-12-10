@@ -2,11 +2,10 @@ use std::io;
 
 use structopt::StructOpt;
 
-use converters::json2sbp;
+use converters::{json2sbp, Result};
 
-#[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
-static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert SBP JSON data to binary SBP.
 ///
@@ -23,9 +22,13 @@ struct Options {
     /// Buffer output before flushing
     #[structopt(short, long)]
     buffered: bool,
+
+    /// Stop on first error encountered
+    #[structopt(long)]
+    fatal_errors: bool,
 }
 
-fn main() -> sbp::Result<()> {
+fn main() -> Result<()> {
     let options = Options::from_args();
 
     if options.debug {
@@ -37,5 +40,5 @@ fn main() -> sbp::Result<()> {
     let stdin = io::stdin();
     let stdout = io::stdout();
 
-    json2sbp(stdin, stdout, options.buffered)
+    json2sbp(stdin, stdout, options.buffered, options.fatal_errors)
 }

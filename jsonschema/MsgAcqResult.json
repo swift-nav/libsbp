@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgAcqResult",
   "title":"MsgAcqResult",
-  "description":"This message describes the results from an attempted GPS signal,\nacquisition search for a satellite PRN over a code phase/carrier,\nfrequency range. It contains the parameters of the point in the,\nacquisition search space with the best carrier-to-noise (CN/0),\nratio.\n",
+  "description":"This message describes the results from an attempted GPS signal acquisition search for a satellite PRN over a code phase/carrier frequency range. It contains the parameters of the point in the acquisition search space with the best carrier-to-noise (CN/0) ratio.\n",
   "type": "object",
   "properties": {
     "cn0": {"type": "number"},

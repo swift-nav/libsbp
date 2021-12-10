@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -12,635 +12,533 @@
 // Automatically generated from yaml/swiftnav/sbp/observation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Satellite observation messages from the device. The SBP sender ID of 0 indicates remote observations from a GNSS base station, correction network, or Skylark, Swift's cloud GNSS correction product.
-
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
+//! Satellite observation messages from the device. The SBP sender ID of 0
+//! indicates remote observations from a GNSS base station, correction
+//! network, or Skylark, Swift's cloud GNSS correction product.
 
 use super::gnss::*;
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+use super::lib::*;
+
+/// Common fields for every almanac message
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct AlmanacCommonContent {
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
     /// Reference time of almanac
-    pub toa: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toa")))]
+    pub toa: GpsTimeSec,
     /// User Range Accuracy
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
     pub ura: f64,
     /// Curve fit interval
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
     pub fit_interval: u32,
     /// Status of almanac, 1 = valid, 0 = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
-    /// Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    /// See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    /// 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    /// Health of SV Signal     Components. Satellite health status for GLO:
-    /// See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    /// that is transmitted within     non-immediate data and indicates overall
-    /// constellation status     at the moment of almanac uploading.     '0'
-    /// indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    /// is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    /// operational     and suitable for navigation.
+    /// Satellite health status for GPS:
+    ///   - bits 5-7: NAV data health status. See IS-GPS-200H
+    ///     Table 20-VII: NAV Data Health Indications.
+    ///   - bits 0-4: Signal health status. See IS-GPS-200H
+    ///     Table 20-VIII. Codes for Health of SV Signal
+    ///     Components.
+    /// Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for details):
+    ///   - bit 0: C(n), "unhealthy" flag that is transmitted within
+    ///     non-immediate data and indicates overall constellation status
+    ///     at the moment of almanac uploading.
+    ///     '0' indicates malfunction of n-satellite.
+    ///     '1' indicates that n-satellite is operational.
+    ///   - bit 1: Bn(ln), '0' indicates the satellite is operational
+    ///     and suitable for navigation.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
     pub health_bits: u8,
 }
 
-impl AlmanacCommonContent {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContent, crate::Error> {
-        Ok( AlmanacCommonContent{
-            sid: GnssSignal::parse(_buf)?,
-            toa: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
-        } )
+impl WireFormat for AlmanacCommonContent {
+    const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid)
+            + WireFormat::len(&self.toa)
+            + WireFormat::len(&self.ura)
+            + WireFormat::len(&self.fit_interval)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.health_bits)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AlmanacCommonContent::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.toa, buf);
+        WireFormat::write(&self.ura, buf);
+        WireFormat::write(&self.fit_interval, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.health_bits, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(AlmanacCommonContent::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        AlmanacCommonContent {
+            sid: WireFormat::parse_unchecked(buf),
+            toa: WireFormat::parse_unchecked(buf),
+            ura: WireFormat::parse_unchecked(buf),
+            fit_interval: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            health_bits: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for AlmanacCommonContent {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.toa.append_to_sbp_buffer(buf);
-        self.ura.append_to_sbp_buffer(buf);
-        self.fit_interval.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.health_bits.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.toa.sbp_size();
-        size += self.ura.sbp_size();
-        size += self.fit_interval.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.health_bits.sbp_size();
-        size
-    }
-}
-
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+/// Common fields for every almanac message
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct AlmanacCommonContentDep {
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
     /// Reference time of almanac
-    pub toa: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toa")))]
+    pub toa: GpsTimeSec,
     /// User Range Accuracy
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
     pub ura: f64,
     /// Curve fit interval
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
     pub fit_interval: u32,
     /// Status of almanac, 1 = valid, 0 = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
-    /// Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    /// See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    /// 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    /// Health of SV Signal     Components. Satellite health status for GLO:
-    /// See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    /// that is transmitted within     non-immediate data and indicates overall
-    /// constellation status     at the moment of almanac uploading.     '0'
-    /// indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    /// is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    /// operational     and suitable for navigation.
+    /// Satellite health status for GPS:
+    ///   - bits 5-7: NAV data health status. See IS-GPS-200H
+    ///     Table 20-VII: NAV Data Health Indications.
+    ///   - bits 0-4: Signal health status. See IS-GPS-200H
+    ///     Table 20-VIII. Codes for Health of SV Signal
+    ///     Components.
+    /// Satellite health status for GLO (see GLO ICD 5.1 table 5.1 for details):
+    ///   - bit 0: C(n), "unhealthy" flag that is transmitted within
+    ///     non-immediate data and indicates overall constellation status
+    ///     at the moment of almanac uploading.
+    ///     '0' indicates malfunction of n-satellite.
+    ///     '1' indicates that n-satellite is operational.
+    ///   - bit 1: Bn(ln), '0' indicates the satellite is operational
+    ///     and suitable for navigation.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
     pub health_bits: u8,
 }
 
-impl AlmanacCommonContentDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContentDep, crate::Error> {
-        Ok( AlmanacCommonContentDep{
-            sid: GnssSignalDep::parse(_buf)?,
-            toa: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
-        } )
+impl WireFormat for AlmanacCommonContentDep {
+    const MIN_LEN: usize = <GnssSignalDep as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid)
+            + WireFormat::len(&self.toa)
+            + WireFormat::len(&self.ura)
+            + WireFormat::len(&self.fit_interval)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.health_bits)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AlmanacCommonContentDep::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.toa, buf);
+        WireFormat::write(&self.ura, buf);
+        WireFormat::write(&self.fit_interval, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.health_bits, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(AlmanacCommonContentDep::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        AlmanacCommonContentDep {
+            sid: WireFormat::parse_unchecked(buf),
+            toa: WireFormat::parse_unchecked(buf),
+            ura: WireFormat::parse_unchecked(buf),
+            fit_interval: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            health_bits: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for AlmanacCommonContentDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.toa.append_to_sbp_buffer(buf);
-        self.ura.append_to_sbp_buffer(buf);
-        self.fit_interval.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.health_bits.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.toa.sbp_size();
-        size += self.ura.sbp_size();
-        size += self.fit_interval.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.health_bits.sbp_size();
-        size
-    }
-}
-
-/// GPS carrier phase measurement.
+/// GPS carrier phase measurement
 ///
-/// Carrier phase measurement in cycles represented as a 40-bit
-/// fixed point number with Q32.8 layout, i.e. 32-bits of whole
-/// cycles and 8-bits of fractional cycles. This has the opposite
-/// sign convention than a typical GPS receiver and the phase has
-/// the opposite sign as the pseudorange.
+/// Carrier phase measurement in cycles represented as a 40-bit fixed point
+/// number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+/// fractional cycles. This has the opposite sign convention than a typical
+/// GPS receiver and the phase has the opposite sign as the pseudorange.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct CarrierPhaseDepA {
     /// Carrier phase whole cycles
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
     pub i: i32,
     /// Carrier phase fractional part
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "f")))]
     pub f: u8,
 }
 
-impl CarrierPhaseDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhaseDepA, crate::Error> {
-        Ok( CarrierPhaseDepA{
-            i: _buf.read_i32::<LittleEndian>()?,
-            f: _buf.read_u8()?,
-        } )
+impl WireFormat for CarrierPhaseDepA {
+    const MIN_LEN: usize = <i32 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.i) + WireFormat::len(&self.f)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(CarrierPhaseDepA::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.i, buf);
+        WireFormat::write(&self.f, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(CarrierPhaseDepA::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        CarrierPhaseDepA {
+            i: WireFormat::parse_unchecked(buf),
+            f: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for CarrierPhaseDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.i.append_to_sbp_buffer(buf);
-        self.f.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.i.sbp_size();
-        size += self.f.sbp_size();
-        size
-    }
-}
-
-/// GNSS doppler measurement.
+/// GNSS doppler measurement
 ///
-/// Doppler measurement in Hz represented as a 24-bit
-/// fixed point number with Q16.8 layout, i.e. 16-bits of whole
-/// doppler and 8-bits of fractional doppler. This doppler is defined
-/// as positive for approaching satellites.
+/// Doppler measurement in Hz represented as a 24-bit fixed point number with
+/// Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
+/// doppler. This doppler is defined as positive for approaching satellites.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct Doppler {
     /// Doppler whole Hz
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
     pub i: i16,
     /// Doppler fractional part
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "f")))]
     pub f: u8,
 }
 
-impl Doppler {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<Doppler, crate::Error> {
-        Ok( Doppler{
-            i: _buf.read_i16::<LittleEndian>()?,
-            f: _buf.read_u8()?,
-        } )
+impl WireFormat for Doppler {
+    const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.i) + WireFormat::len(&self.f)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Doppler>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(Doppler::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.i, buf);
+        WireFormat::write(&self.f, buf);
     }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Doppler>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(Doppler::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        Doppler {
+            i: WireFormat::parse_unchecked(buf),
+            f: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for Doppler {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.i.append_to_sbp_buffer(buf);
-        self.f.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.i.sbp_size();
-        size += self.f.sbp_size();
-        size
-    }
-}
-
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+/// Common fields for every ephemeris message
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct EphemerisCommonContent {
     /// GNSS signal identifier (16 bit)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
     /// Time of Ephemerides
-    pub toe: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe")))]
+    pub toe: GpsTimeSec,
     /// User Range Accuracy
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
     pub ura: f32,
     /// Curve fit interval
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
     pub fit_interval: u32,
     /// Status of ephemeris, 1 = valid, 0 = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
-    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    /// = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+    /// Satellite health status.
+    /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    /// SBAS: 0 = valid, non-zero = invalid
+    /// GLO: 0 = valid, non-zero = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
     pub health_bits: u8,
 }
 
-impl EphemerisCommonContent {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContent, crate::Error> {
-        Ok( EphemerisCommonContent{
-            sid: GnssSignal::parse(_buf)?,
-            toe: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f32::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
-        } )
+impl WireFormat for EphemerisCommonContent {
+    const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid)
+            + WireFormat::len(&self.toe)
+            + WireFormat::len(&self.ura)
+            + WireFormat::len(&self.fit_interval)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.health_bits)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(EphemerisCommonContent::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.toe, buf);
+        WireFormat::write(&self.ura, buf);
+        WireFormat::write(&self.fit_interval, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.health_bits, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(EphemerisCommonContent::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        EphemerisCommonContent {
+            sid: WireFormat::parse_unchecked(buf),
+            toe: WireFormat::parse_unchecked(buf),
+            ura: WireFormat::parse_unchecked(buf),
+            fit_interval: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            health_bits: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for EphemerisCommonContent {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.toe.append_to_sbp_buffer(buf);
-        self.ura.append_to_sbp_buffer(buf);
-        self.fit_interval.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.health_bits.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.toe.sbp_size();
-        size += self.ura.sbp_size();
-        size += self.fit_interval.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.health_bits.sbp_size();
-        size
-    }
-}
-
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+/// Common fields for every ephemeris message
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepA {
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
     /// Time of Ephemerides
-    pub toe: GPSTimeDep,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe")))]
+    pub toe: GpsTimeDep,
     /// User Range Accuracy
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
     pub ura: f64,
     /// Curve fit interval
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
     pub fit_interval: u32,
     /// Status of ephemeris, 1 = valid, 0 = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
-    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    /// = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
+    /// Satellite health status.
+    /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    /// SBAS: 0 = valid, non-zero = invalid
+    /// GLO: 0 = valid, non-zero = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
     pub health_bits: u8,
 }
 
-impl EphemerisCommonContentDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepA, crate::Error> {
-        Ok( EphemerisCommonContentDepA{
-            sid: GnssSignalDep::parse(_buf)?,
-            toe: GPSTimeDep::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
-        } )
+impl WireFormat for EphemerisCommonContentDepA {
+    const MIN_LEN: usize = <GnssSignalDep as WireFormat>::MIN_LEN
+        + <GpsTimeDep as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid)
+            + WireFormat::len(&self.toe)
+            + WireFormat::len(&self.ura)
+            + WireFormat::len(&self.fit_interval)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.health_bits)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(EphemerisCommonContentDepA::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.toe, buf);
+        WireFormat::write(&self.ura, buf);
+        WireFormat::write(&self.fit_interval, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.health_bits, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(EphemerisCommonContentDepA::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        EphemerisCommonContentDepA {
+            sid: WireFormat::parse_unchecked(buf),
+            toe: WireFormat::parse_unchecked(buf),
+            ura: WireFormat::parse_unchecked(buf),
+            fit_interval: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            health_bits: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for EphemerisCommonContentDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.toe.append_to_sbp_buffer(buf);
-        self.ura.append_to_sbp_buffer(buf);
-        self.fit_interval.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.health_bits.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.toe.sbp_size();
-        size += self.ura.sbp_size();
-        size += self.fit_interval.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.health_bits.sbp_size();
-        size
-    }
-}
-
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+/// Common fields for every ephemeris message
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepB {
     /// GNSS signal identifier (16 bit)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
     /// Time of Ephemerides
-    pub toe: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe")))]
+    pub toe: GpsTimeSec,
     /// User Range Accuracy
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
     pub ura: f64,
     /// Curve fit interval
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
     pub fit_interval: u32,
     /// Status of ephemeris, 1 = valid, 0 = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
-    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 Others:
-    /// 0 = valid, non-zero = invalid
+    /// Satellite health status.
+    /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+    /// Others: 0 = valid, non-zero = invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
     pub health_bits: u8,
 }
 
-impl EphemerisCommonContentDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepB, crate::Error> {
-        Ok( EphemerisCommonContentDepB{
-            sid: GnssSignal::parse(_buf)?,
-            toe: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
-        } )
+impl WireFormat for EphemerisCommonContentDepB {
+    const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid)
+            + WireFormat::len(&self.toe)
+            + WireFormat::len(&self.ura)
+            + WireFormat::len(&self.fit_interval)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.health_bits)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(EphemerisCommonContentDepB::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.toe, buf);
+        WireFormat::write(&self.ura, buf);
+        WireFormat::write(&self.fit_interval, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.health_bits, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(EphemerisCommonContentDepB::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        EphemerisCommonContentDepB {
+            sid: WireFormat::parse_unchecked(buf),
+            toe: WireFormat::parse_unchecked(buf),
+            ura: WireFormat::parse_unchecked(buf),
+            fit_interval: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            health_bits: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for EphemerisCommonContentDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.toe.append_to_sbp_buffer(buf);
-        self.ura.append_to_sbp_buffer(buf);
-        self.fit_interval.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.health_bits.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.toe.sbp_size();
-        size += self.ura.sbp_size();
-        size += self.fit_interval.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.health_bits.sbp_size();
-        size
-    }
-}
-
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+/// GNSS capabilities masks
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct GnssCapb {
     /// GPS SV active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gps_active")))]
     pub gps_active: u64,
     /// GPS L2C active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gps_l2c")))]
     pub gps_l2c: u64,
     /// GPS L5 active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gps_l5")))]
     pub gps_l5: u64,
     /// GLO active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "glo_active")))]
     pub glo_active: u32,
     /// GLO L2OF active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "glo_l2of")))]
     pub glo_l2of: u32,
     /// GLO L3 active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "glo_l3")))]
     pub glo_l3: u32,
     /// SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-    /// https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+    /// <https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf>)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sbas_active")))]
     pub sbas_active: u64,
     /// SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-    /// https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+    /// <https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf>)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sbas_l5")))]
     pub sbas_l5: u64,
     /// BDS active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_active")))]
     pub bds_active: u64,
     /// BDS D2NAV active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_d2nav")))]
     pub bds_d2nav: u64,
     /// BDS B2 active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_b2")))]
     pub bds_b2: u64,
     /// BDS B2A active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_b2a")))]
     pub bds_b2a: u64,
     /// QZSS active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "qzss_active")))]
     pub qzss_active: u32,
     /// GAL active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gal_active")))]
     pub gal_active: u64,
     /// GAL E5 active mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gal_e5")))]
     pub gal_e5: u64,
 }
 
-impl GnssCapb {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssCapb, crate::Error> {
-        Ok( GnssCapb{
-            gps_active: _buf.read_u64::<LittleEndian>()?,
-            gps_l2c: _buf.read_u64::<LittleEndian>()?,
-            gps_l5: _buf.read_u64::<LittleEndian>()?,
-            glo_active: _buf.read_u32::<LittleEndian>()?,
-            glo_l2of: _buf.read_u32::<LittleEndian>()?,
-            glo_l3: _buf.read_u32::<LittleEndian>()?,
-            sbas_active: _buf.read_u64::<LittleEndian>()?,
-            sbas_l5: _buf.read_u64::<LittleEndian>()?,
-            bds_active: _buf.read_u64::<LittleEndian>()?,
-            bds_d2nav: _buf.read_u64::<LittleEndian>()?,
-            bds_b2: _buf.read_u64::<LittleEndian>()?,
-            bds_b2a: _buf.read_u64::<LittleEndian>()?,
-            qzss_active: _buf.read_u32::<LittleEndian>()?,
-            gal_active: _buf.read_u64::<LittleEndian>()?,
-            gal_e5: _buf.read_u64::<LittleEndian>()?,
-        } )
+impl WireFormat for GnssCapb {
+    const MIN_LEN: usize = <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN
+        + <u64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.gps_active)
+            + WireFormat::len(&self.gps_l2c)
+            + WireFormat::len(&self.gps_l5)
+            + WireFormat::len(&self.glo_active)
+            + WireFormat::len(&self.glo_l2of)
+            + WireFormat::len(&self.glo_l3)
+            + WireFormat::len(&self.sbas_active)
+            + WireFormat::len(&self.sbas_l5)
+            + WireFormat::len(&self.bds_active)
+            + WireFormat::len(&self.bds_d2nav)
+            + WireFormat::len(&self.bds_b2)
+            + WireFormat::len(&self.bds_b2a)
+            + WireFormat::len(&self.qzss_active)
+            + WireFormat::len(&self.gal_active)
+            + WireFormat::len(&self.gal_e5)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssCapb>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GnssCapb::parse(buf)?);
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.gps_active, buf);
+        WireFormat::write(&self.gps_l2c, buf);
+        WireFormat::write(&self.gps_l5, buf);
+        WireFormat::write(&self.glo_active, buf);
+        WireFormat::write(&self.glo_l2of, buf);
+        WireFormat::write(&self.glo_l3, buf);
+        WireFormat::write(&self.sbas_active, buf);
+        WireFormat::write(&self.sbas_l5, buf);
+        WireFormat::write(&self.bds_active, buf);
+        WireFormat::write(&self.bds_d2nav, buf);
+        WireFormat::write(&self.bds_b2, buf);
+        WireFormat::write(&self.bds_b2a, buf);
+        WireFormat::write(&self.qzss_active, buf);
+        WireFormat::write(&self.gal_active, buf);
+        WireFormat::write(&self.gal_e5, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        GnssCapb {
+            gps_active: WireFormat::parse_unchecked(buf),
+            gps_l2c: WireFormat::parse_unchecked(buf),
+            gps_l5: WireFormat::parse_unchecked(buf),
+            glo_active: WireFormat::parse_unchecked(buf),
+            glo_l2of: WireFormat::parse_unchecked(buf),
+            glo_l3: WireFormat::parse_unchecked(buf),
+            sbas_active: WireFormat::parse_unchecked(buf),
+            sbas_l5: WireFormat::parse_unchecked(buf),
+            bds_active: WireFormat::parse_unchecked(buf),
+            bds_d2nav: WireFormat::parse_unchecked(buf),
+            bds_b2: WireFormat::parse_unchecked(buf),
+            bds_b2a: WireFormat::parse_unchecked(buf),
+            qzss_active: WireFormat::parse_unchecked(buf),
+            gal_active: WireFormat::parse_unchecked(buf),
+            gal_e5: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssCapb>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(GnssCapb::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for GnssCapb {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.gps_active.append_to_sbp_buffer(buf);
-        self.gps_l2c.append_to_sbp_buffer(buf);
-        self.gps_l5.append_to_sbp_buffer(buf);
-        self.glo_active.append_to_sbp_buffer(buf);
-        self.glo_l2of.append_to_sbp_buffer(buf);
-        self.glo_l3.append_to_sbp_buffer(buf);
-        self.sbas_active.append_to_sbp_buffer(buf);
-        self.sbas_l5.append_to_sbp_buffer(buf);
-        self.bds_active.append_to_sbp_buffer(buf);
-        self.bds_d2nav.append_to_sbp_buffer(buf);
-        self.bds_b2.append_to_sbp_buffer(buf);
-        self.bds_b2a.append_to_sbp_buffer(buf);
-        self.qzss_active.append_to_sbp_buffer(buf);
-        self.gal_active.append_to_sbp_buffer(buf);
-        self.gal_e5.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.gps_active.sbp_size();
-        size += self.gps_l2c.sbp_size();
-        size += self.gps_l5.sbp_size();
-        size += self.glo_active.sbp_size();
-        size += self.glo_l2of.sbp_size();
-        size += self.glo_l3.sbp_size();
-        size += self.sbas_active.sbp_size();
-        size += self.sbas_l5.sbp_size();
-        size += self.bds_active.sbp_size();
-        size += self.bds_d2nav.sbp_size();
-        size += self.bds_b2.sbp_size();
-        size += self.bds_b2a.sbp_size();
-        size += self.qzss_active.sbp_size();
-        size += self.gal_active.sbp_size();
-        size += self.gal_e5.sbp_size();
-        size
     }
 }
 
@@ -651,99 +549,113 @@ impl crate::serialize::SbpSerialize for GnssCapb {
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgAlmanacGlo {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: AlmanacCommonContent,
     /// Longitude of the first ascending node of the orbit in PZ-90.02
     /// coordinate system
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lambda_na")))]
     pub lambda_na: f64,
     /// Time of the first ascending node passage
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_lambda_na")))]
     pub t_lambda_na: f64,
     /// Value of inclination at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
     pub i: f64,
     /// Value of Draconian period at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
     pub t: f64,
     /// Rate of change of the Draconian period
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_dot")))]
     pub t_dot: f64,
     /// Eccentricity at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "epsilon")))]
     pub epsilon: f64,
     /// Argument of perigee at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega")))]
     pub omega: f64,
 }
 
-impl MsgAlmanacGlo {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGlo, crate::Error> {
-        Ok( MsgAlmanacGlo{
-            sender_id: None,
-            common: AlmanacCommonContent::parse(_buf)?,
-            lambda_na: _buf.read_f64::<LittleEndian>()?,
-            t_lambda_na: _buf.read_f64::<LittleEndian>()?,
-            i: _buf.read_f64::<LittleEndian>()?,
-            t: _buf.read_f64::<LittleEndian>()?,
-            t_dot: _buf.read_f64::<LittleEndian>()?,
-            epsilon: _buf.read_f64::<LittleEndian>()?,
-            omega: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgAlmanacGlo {
+    const MESSAGE_TYPE: u16 = 115;
+    const MESSAGE_NAME: &'static str = "MSG_ALMANAC_GLO";
 }
-impl super::SBPMessage for MsgAlmanacGlo {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GLO"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        115
+impl SbpMessage for MsgAlmanacGlo {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.lambda_na.append_to_sbp_buffer(buf);
-        self.t_lambda_na.append_to_sbp_buffer(buf);
-        self.i.append_to_sbp_buffer(buf);
-        self.t.append_to_sbp_buffer(buf);
-        self.t_dot.append_to_sbp_buffer(buf);
-        self.epsilon.append_to_sbp_buffer(buf);
-        self.omega.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgAlmanacGlo {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgAlmanacGlo(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.lambda_na.sbp_size();
-        size += self.t_lambda_na.sbp_size();
-        size += self.i.sbp_size();
-        size += self.t.sbp_size();
-        size += self.t_dot.sbp_size();
-        size += self.epsilon.sbp_size();
-        size += self.omega.sbp_size();
-        size
+impl WireFormat for MsgAlmanacGlo {
+    const MIN_LEN: usize = <AlmanacCommonContent as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.lambda_na)
+            + WireFormat::len(&self.t_lambda_na)
+            + WireFormat::len(&self.i)
+            + WireFormat::len(&self.t)
+            + WireFormat::len(&self.t_dot)
+            + WireFormat::len(&self.epsilon)
+            + WireFormat::len(&self.omega)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.lambda_na, buf);
+        WireFormat::write(&self.t_lambda_na, buf);
+        WireFormat::write(&self.i, buf);
+        WireFormat::write(&self.t, buf);
+        WireFormat::write(&self.t_dot, buf);
+        WireFormat::write(&self.epsilon, buf);
+        WireFormat::write(&self.omega, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgAlmanacGlo {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            lambda_na: WireFormat::parse_unchecked(buf),
+            t_lambda_na: WireFormat::parse_unchecked(buf),
+            i: WireFormat::parse_unchecked(buf),
+            t: WireFormat::parse_unchecked(buf),
+            t_dot: WireFormat::parse_unchecked(buf),
+            epsilon: WireFormat::parse_unchecked(buf),
+            omega: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -754,99 +666,113 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgAlmanacGloDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: AlmanacCommonContentDep,
     /// Longitude of the first ascending node of the orbit in PZ-90.02
     /// coordinate system
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lambda_na")))]
     pub lambda_na: f64,
     /// Time of the first ascending node passage
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_lambda_na")))]
     pub t_lambda_na: f64,
     /// Value of inclination at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
     pub i: f64,
     /// Value of Draconian period at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
     pub t: f64,
     /// Rate of change of the Draconian period
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_dot")))]
     pub t_dot: f64,
     /// Eccentricity at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "epsilon")))]
     pub epsilon: f64,
     /// Argument of perigee at instant of t_lambda
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega")))]
     pub omega: f64,
 }
 
-impl MsgAlmanacGloDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGloDep, crate::Error> {
-        Ok( MsgAlmanacGloDep{
-            sender_id: None,
-            common: AlmanacCommonContentDep::parse(_buf)?,
-            lambda_na: _buf.read_f64::<LittleEndian>()?,
-            t_lambda_na: _buf.read_f64::<LittleEndian>()?,
-            i: _buf.read_f64::<LittleEndian>()?,
-            t: _buf.read_f64::<LittleEndian>()?,
-            t_dot: _buf.read_f64::<LittleEndian>()?,
-            epsilon: _buf.read_f64::<LittleEndian>()?,
-            omega: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgAlmanacGloDep {
+    const MESSAGE_TYPE: u16 = 113;
+    const MESSAGE_NAME: &'static str = "MSG_ALMANAC_GLO_DEP";
 }
-impl super::SBPMessage for MsgAlmanacGloDep {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GLO_DEP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        113
+impl SbpMessage for MsgAlmanacGloDep {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.lambda_na.append_to_sbp_buffer(buf);
-        self.t_lambda_na.append_to_sbp_buffer(buf);
-        self.i.append_to_sbp_buffer(buf);
-        self.t.append_to_sbp_buffer(buf);
-        self.t_dot.append_to_sbp_buffer(buf);
-        self.epsilon.append_to_sbp_buffer(buf);
-        self.omega.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgAlmanacGloDep {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgAlmanacGloDep(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.lambda_na.sbp_size();
-        size += self.t_lambda_na.sbp_size();
-        size += self.i.sbp_size();
-        size += self.t.sbp_size();
-        size += self.t_dot.sbp_size();
-        size += self.epsilon.sbp_size();
-        size += self.omega.sbp_size();
-        size
+impl WireFormat for MsgAlmanacGloDep {
+    const MIN_LEN: usize = <AlmanacCommonContentDep as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.lambda_na)
+            + WireFormat::len(&self.t_lambda_na)
+            + WireFormat::len(&self.i)
+            + WireFormat::len(&self.t)
+            + WireFormat::len(&self.t_dot)
+            + WireFormat::len(&self.epsilon)
+            + WireFormat::len(&self.omega)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.lambda_na, buf);
+        WireFormat::write(&self.t_lambda_na, buf);
+        WireFormat::write(&self.i, buf);
+        WireFormat::write(&self.t, buf);
+        WireFormat::write(&self.t_dot, buf);
+        WireFormat::write(&self.epsilon, buf);
+        WireFormat::write(&self.omega, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgAlmanacGloDep {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            lambda_na: WireFormat::parse_unchecked(buf),
+            t_lambda_na: WireFormat::parse_unchecked(buf),
+            i: WireFormat::parse_unchecked(buf),
+            t: WireFormat::parse_unchecked(buf),
+            t_dot: WireFormat::parse_unchecked(buf),
+            epsilon: WireFormat::parse_unchecked(buf),
+            omega: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -854,111 +780,129 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
 ///
 /// The almanac message returns a set of satellite orbit parameters. Almanac
 /// data is not very precise and is considered valid for up to several months.
-/// Please see the Navstar GPS Space Segment/Navigation user interfaces
-/// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAlmanacGPS {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgAlmanacGps {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: AlmanacCommonContent,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
 }
 
-impl MsgAlmanacGPS {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, crate::Error> {
-        Ok( MsgAlmanacGPS{
-            sender_id: None,
-            common: AlmanacCommonContent::parse(_buf)?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgAlmanacGps {
+    const MESSAGE_TYPE: u16 = 114;
+    const MESSAGE_NAME: &'static str = "MSG_ALMANAC_GPS";
 }
-impl super::SBPMessage for MsgAlmanacGPS {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GPS"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        114
+impl SbpMessage for MsgAlmanacGps {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgAlmanacGps {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgAlmanacGps(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size
+impl WireFormat for MsgAlmanacGps {
+    const MIN_LEN: usize = <AlmanacCommonContent as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgAlmanacGps {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -966,456 +910,522 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
 ///
 /// The almanac message returns a set of satellite orbit parameters. Almanac
 /// data is not very precise and is considered valid for up to several months.
-/// Please see the Navstar GPS Space Segment/Navigation user interfaces
-/// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAlmanacGPSDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgAlmanacGpsDep {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: AlmanacCommonContentDep,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
 }
 
-impl MsgAlmanacGPSDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, crate::Error> {
-        Ok( MsgAlmanacGPSDep{
-            sender_id: None,
-            common: AlmanacCommonContentDep::parse(_buf)?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgAlmanacGpsDep {
+    const MESSAGE_TYPE: u16 = 112;
+    const MESSAGE_NAME: &'static str = "MSG_ALMANAC_GPS_DEP";
 }
-impl super::SBPMessage for MsgAlmanacGPSDep {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ALMANAC_GPS_DEP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        112
+impl SbpMessage for MsgAlmanacGpsDep {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgAlmanacGpsDep {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgAlmanacGpsDep(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size
+impl WireFormat for MsgAlmanacGpsDep {
+    const MIN_LEN: usize = <AlmanacCommonContentDep as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgAlmanacGpsDep {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Base station position in ECEF
 ///
-/// The base station position message is the position reported by
-/// the base station itself in absolute Earth Centered Earth Fixed
-/// coordinates. It is used for pseudo-absolute RTK positioning, and
-/// is required to be a high-accuracy surveyed location of the base
-/// station. Any error here will result in an error in the
-/// pseudo-absolute position output.
+/// The base station position message is the position reported by the base
+/// station itself in absolute Earth Centered Earth Fixed coordinates. It is
+/// used for pseudo-absolute RTK positioning, and is required to be a high-
+/// accuracy surveyed location of the base station. Any error here will result
+/// in an error in the pseudo-absolute position output.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgBasePosECEF {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgBasePosEcef {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// ECEF X coodinate
+    /// ECEF X coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
     pub x: f64,
     /// ECEF Y coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
     pub y: f64,
     /// ECEF Z coordinate
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
     pub z: f64,
 }
 
-impl MsgBasePosECEF {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, crate::Error> {
-        Ok( MsgBasePosECEF{
-            sender_id: None,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgBasePosEcef {
+    const MESSAGE_TYPE: u16 = 72;
+    const MESSAGE_NAME: &'static str = "MSG_BASE_POS_ECEF";
 }
-impl super::SBPMessage for MsgBasePosECEF {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BASE_POS_ECEF"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        72
+impl SbpMessage for MsgBasePosEcef {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBasePosECEF {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.x.append_to_sbp_buffer(buf);
-        self.y.append_to_sbp_buffer(buf);
-        self.z.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgBasePosEcef {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgBasePosEcef(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.x.sbp_size();
-        size += self.y.sbp_size();
-        size += self.z.sbp_size();
-        size
+impl WireFormat for MsgBasePosEcef {
+    const MIN_LEN: usize =
+        <f64 as WireFormat>::MIN_LEN + <f64 as WireFormat>::MIN_LEN + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.x) + WireFormat::len(&self.y) + WireFormat::len(&self.z)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.x, buf);
+        WireFormat::write(&self.y, buf);
+        WireFormat::write(&self.z, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgBasePosEcef {
+            sender_id: None,
+            x: WireFormat::parse_unchecked(buf),
+            y: WireFormat::parse_unchecked(buf),
+            z: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Base station position
 ///
-/// The base station position message is the position reported by
-/// the base station itself. It is used for pseudo-absolute RTK
-/// positioning, and is required to be a high-accuracy surveyed
-/// location of the base station. Any error here will result in an
-/// error in the pseudo-absolute position output.
+/// The base station position message is the position reported by the base
+/// station itself. It is used for pseudo-absolute RTK positioning, and is
+/// required to be a high-accuracy surveyed location of the base station. Any
+/// error here will result in an error in the pseudo-absolute position output.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgBasePosLLH {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgBasePosLlh {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
     pub lat: f64,
     /// Longitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
     pub lon: f64,
     /// Height
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
     pub height: f64,
 }
 
-impl MsgBasePosLLH {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, crate::Error> {
-        Ok( MsgBasePosLLH{
-            sender_id: None,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgBasePosLlh {
+    const MESSAGE_TYPE: u16 = 68;
+    const MESSAGE_NAME: &'static str = "MSG_BASE_POS_LLH";
 }
-impl super::SBPMessage for MsgBasePosLLH {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BASE_POS_LLH"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        68
+impl SbpMessage for MsgBasePosLlh {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBasePosLLH {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.lat.append_to_sbp_buffer(buf);
-        self.lon.append_to_sbp_buffer(buf);
-        self.height.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgBasePosLlh {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgBasePosLlh(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.lat.sbp_size();
-        size += self.lon.sbp_size();
-        size += self.height.sbp_size();
-        size
+impl WireFormat for MsgBasePosLlh {
+    const MIN_LEN: usize =
+        <f64 as WireFormat>::MIN_LEN + <f64 as WireFormat>::MIN_LEN + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.lat) + WireFormat::len(&self.lon) + WireFormat::len(&self.height)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.lat, buf);
+        WireFormat::write(&self.lon, buf);
+        WireFormat::write(&self.height, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgBasePosLlh {
+            sender_id: None,
+            lat: WireFormat::parse_unchecked(buf),
+            lon: WireFormat::parse_unchecked(buf),
+            height: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for BDS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate BDS satellite position,
-/// velocity, and clock offset. Please see the BeiDou Navigation
-/// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate BDS satellite position, velocity, and clock offset.
+/// Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
+/// Table 5-9 for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisBds {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContent,
     /// Group delay differential for B1
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd1")))]
     pub tgd1: f32,
     /// Group delay differential for B2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd2")))]
     pub tgd2: f32,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f32,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f32,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f32,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f32,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f32,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f32,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f32,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f32,
     /// Clock reference
-    pub toc: GPSTimeSec,
-    /// Issue of ephemeris data  Calculated from the navigation data parameter
-    /// t_oe per RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+    pub toc: GpsTimeSec,
+    /// Issue of ephemeris data
+    /// Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    /// recommendation: IODE = mod (t_oe / 720, 240)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
-    /// Issue of clock data  Calculated from the navigation data parameter t_oe
-    /// per RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
+    /// Issue of clock data
+    /// Calculated from the navigation data parameter t_oe per RTCM/CSNO
+    /// recommendation: IODE = mod (t_oc / 720, 240)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
 }
 
-impl MsgEphemerisBds {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisBds, crate::Error> {
-        Ok( MsgEphemerisBds{
-            sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            tgd1: _buf.read_f32::<LittleEndian>()?,
-            tgd2: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f32::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisBds {
+    const MESSAGE_TYPE: u16 = 137;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_BDS";
 }
-impl super::SBPMessage for MsgEphemerisBds {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_BDS"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        137
+impl SbpMessage for MsgEphemerisBds {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisBds {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.tgd1.append_to_sbp_buffer(buf);
-        self.tgd2.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toc.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisBds {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisBds(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.tgd1.sbp_size();
-        size += self.tgd2.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toc.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size
+impl WireFormat for MsgEphemerisBds {
+    const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.tgd1)
+            + WireFormat::len(&self.tgd2)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toc)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.tgd1, buf);
+        WireFormat::write(&self.tgd2, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toc, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisBds {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            tgd1: WireFormat::parse_unchecked(buf),
+            tgd2: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toc: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1423,192 +1433,242 @@ impl crate::serialize::SbpSerialize for MsgEphemerisBds {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f64,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f64,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f64,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f64,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f64,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f64,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f64,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f64,
     /// Time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
     pub toe_tow: f64,
     /// Week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
     pub toe_wn: u16,
     /// Clock reference time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
     pub toc_tow: f64,
     /// Clock reference week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
     pub toc_wn: u16,
     /// Is valid?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
     /// Satellite is healthy?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
     pub healthy: u8,
     /// PRN being tracked
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
     pub prn: u8,
 }
 
-impl MsgEphemerisDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepA, crate::Error> {
-        Ok( MsgEphemerisDepA{
-            sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            prn: _buf.read_u8()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisDepA {
+    const MESSAGE_TYPE: u16 = 26;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_DEP_A";
 }
-impl super::SBPMessage for MsgEphemerisDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_A"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        26
+impl SbpMessage for MsgEphemerisDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toe_tow.append_to_sbp_buffer(buf);
-        self.toe_wn.append_to_sbp_buffer(buf);
-        self.toc_tow.append_to_sbp_buffer(buf);
-        self.toc_wn.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.healthy.append_to_sbp_buffer(buf);
-        self.prn.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toe_tow.sbp_size();
-        size += self.toe_wn.sbp_size();
-        size += self.toc_tow.sbp_size();
-        size += self.toc_wn.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.healthy.sbp_size();
-        size += self.prn.sbp_size();
-        size
+impl WireFormat for MsgEphemerisDepA {
+    const MIN_LEN: usize = <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toe_tow)
+            + WireFormat::len(&self.toe_wn)
+            + WireFormat::len(&self.toc_tow)
+            + WireFormat::len(&self.toc_wn)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.healthy)
+            + WireFormat::len(&self.prn)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toe_tow, buf);
+        WireFormat::write(&self.toe_wn, buf);
+        WireFormat::write(&self.toc_tow, buf);
+        WireFormat::write(&self.toc_wn, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.healthy, buf);
+        WireFormat::write(&self.prn, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisDepA {
+            sender_id: None,
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toe_tow: WireFormat::parse_unchecked(buf),
+            toe_wn: WireFormat::parse_unchecked(buf),
+            toc_tow: WireFormat::parse_unchecked(buf),
+            toc_wn: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            healthy: WireFormat::parse_unchecked(buf),
+            prn: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -1616,2633 +1676,3164 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepA {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f64,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f64,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f64,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f64,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f64,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f64,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f64,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f64,
     /// Time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
     pub toe_tow: f64,
     /// Week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
     pub toe_wn: u16,
     /// Clock reference time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
     pub toc_tow: f64,
     /// Clock reference week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
     pub toc_wn: u16,
     /// Is valid?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
     /// Satellite is healthy?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
     pub healthy: u8,
     /// PRN being tracked
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
     pub prn: u8,
     /// Issue of ephemeris data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
 }
 
-impl MsgEphemerisDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepB, crate::Error> {
-        Ok( MsgEphemerisDepB{
-            sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            prn: _buf.read_u8()?,
-            iode: _buf.read_u8()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisDepB {
+    const MESSAGE_TYPE: u16 = 70;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_DEP_B";
 }
-impl super::SBPMessage for MsgEphemerisDepB {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_B"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        70
+impl SbpMessage for MsgEphemerisDepB {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toe_tow.append_to_sbp_buffer(buf);
-        self.toe_wn.append_to_sbp_buffer(buf);
-        self.toc_tow.append_to_sbp_buffer(buf);
-        self.toc_wn.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.healthy.append_to_sbp_buffer(buf);
-        self.prn.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisDepB {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisDepB(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toe_tow.sbp_size();
-        size += self.toe_wn.sbp_size();
-        size += self.toc_tow.sbp_size();
-        size += self.toc_wn.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.healthy.sbp_size();
-        size += self.prn.sbp_size();
-        size += self.iode.sbp_size();
-        size
+impl WireFormat for MsgEphemerisDepB {
+    const MIN_LEN: usize = <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toe_tow)
+            + WireFormat::len(&self.toe_wn)
+            + WireFormat::len(&self.toc_tow)
+            + WireFormat::len(&self.toc_wn)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.healthy)
+            + WireFormat::len(&self.prn)
+            + WireFormat::len(&self.iode)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toe_tow, buf);
+        WireFormat::write(&self.toe_wn, buf);
+        WireFormat::write(&self.toc_tow, buf);
+        WireFormat::write(&self.toc_wn, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.healthy, buf);
+        WireFormat::write(&self.prn, buf);
+        WireFormat::write(&self.iode, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisDepB {
+            sender_id: None,
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toe_tow: WireFormat::parse_unchecked(buf),
+            toe_wn: WireFormat::parse_unchecked(buf),
+            toc_tow: WireFormat::parse_unchecked(buf),
+            toc_wn: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            healthy: WireFormat::parse_unchecked(buf),
+            prn: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f64,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f64,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f64,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f64,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f64,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f64,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f64,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f64,
     /// Time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
     pub toe_tow: f64,
     /// Week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
     pub toe_wn: u16,
     /// Clock reference time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
     pub toc_tow: f64,
     /// Clock reference week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
     pub toc_wn: u16,
     /// Is valid?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
     /// Satellite is healthy?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
     pub healthy: u8,
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
     /// Issue of ephemeris data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
     /// Issue of clock data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
     /// Reserved field
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
     pub reserved: u32,
 }
 
-impl MsgEphemerisDepC {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepC, crate::Error> {
-        Ok( MsgEphemerisDepC{
-            sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            sid: GnssSignalDep::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-            reserved: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisDepC {
+    const MESSAGE_TYPE: u16 = 71;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_DEP_C";
 }
-impl super::SBPMessage for MsgEphemerisDepC {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_C"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        71
+impl SbpMessage for MsgEphemerisDepC {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisDepC {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toe_tow.append_to_sbp_buffer(buf);
-        self.toe_wn.append_to_sbp_buffer(buf);
-        self.toc_tow.append_to_sbp_buffer(buf);
-        self.toc_wn.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.healthy.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
-        self.reserved.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisDepC {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisDepC(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toe_tow.sbp_size();
-        size += self.toe_wn.sbp_size();
-        size += self.toc_tow.sbp_size();
-        size += self.toc_wn.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.healthy.sbp_size();
-        size += self.sid.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size += self.reserved.sbp_size();
-        size
+impl WireFormat for MsgEphemerisDepC {
+    const MIN_LEN: usize = <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toe_tow)
+            + WireFormat::len(&self.toe_wn)
+            + WireFormat::len(&self.toc_tow)
+            + WireFormat::len(&self.toc_wn)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.healthy)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+            + WireFormat::len(&self.reserved)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toe_tow, buf);
+        WireFormat::write(&self.toe_wn, buf);
+        WireFormat::write(&self.toc_tow, buf);
+        WireFormat::write(&self.toc_wn, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.healthy, buf);
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+        WireFormat::write(&self.reserved, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisDepC {
+            sender_id: None,
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toe_tow: WireFormat::parse_unchecked(buf),
+            toe_wn: WireFormat::parse_unchecked(buf),
+            toc_tow: WireFormat::parse_unchecked(buf),
+            toc_wn: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            healthy: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+            reserved: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisDepD {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f64,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f64,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f64,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f64,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f64,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f64,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f64,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f64,
     /// Time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
     pub toe_tow: f64,
     /// Week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
     pub toe_wn: u16,
     /// Clock reference time of week
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
     pub toc_tow: f64,
     /// Clock reference week number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
     pub toc_wn: u16,
     /// Is valid?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
     /// Satellite is healthy?
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
     pub healthy: u8,
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
     /// Issue of ephemeris data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
     /// Issue of clock data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
     /// Reserved field
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
     pub reserved: u32,
 }
 
-impl MsgEphemerisDepD {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepD, crate::Error> {
-        Ok( MsgEphemerisDepD{
-            sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            sid: GnssSignalDep::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-            reserved: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisDepD {
+    const MESSAGE_TYPE: u16 = 128;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_DEP_D";
 }
-impl super::SBPMessage for MsgEphemerisDepD {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_DEP_D"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        128
+impl SbpMessage for MsgEphemerisDepD {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toe_tow.append_to_sbp_buffer(buf);
-        self.toe_wn.append_to_sbp_buffer(buf);
-        self.toc_tow.append_to_sbp_buffer(buf);
-        self.toc_wn.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.healthy.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
-        self.reserved.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisDepD {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisDepD(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toe_tow.sbp_size();
-        size += self.toe_wn.sbp_size();
-        size += self.toc_tow.sbp_size();
-        size += self.toc_wn.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.healthy.sbp_size();
-        size += self.sid.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size += self.reserved.sbp_size();
-        size
+impl WireFormat for MsgEphemerisDepD {
+    const MIN_LEN: usize = <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toe_tow)
+            + WireFormat::len(&self.toe_wn)
+            + WireFormat::len(&self.toc_tow)
+            + WireFormat::len(&self.toc_wn)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.healthy)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+            + WireFormat::len(&self.reserved)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toe_tow, buf);
+        WireFormat::write(&self.toe_wn, buf);
+        WireFormat::write(&self.toc_tow, buf);
+        WireFormat::write(&self.toc_wn, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.healthy, buf);
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+        WireFormat::write(&self.reserved, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisDepD {
+            sender_id: None,
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toe_tow: WireFormat::parse_unchecked(buf),
+            toe_wn: WireFormat::parse_unchecked(buf),
+            toc_tow: WireFormat::parse_unchecked(buf),
+            toc_wn: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            healthy: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+            reserved: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for Galileo
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate Galileo satellite position,
-/// velocity, and clock offset. Please see the Signal In Space ICD
-/// OS SIS ICD, Issue 1.3, December 2016 for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate Galileo satellite position, velocity, and clock offset.
+/// Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016
+/// for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisGal {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContent,
     /// E1-E5a Broadcast Group Delay
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5a")))]
     pub bgd_e1e5a: f32,
     /// E1-E5b Broadcast Group Delay
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5b")))]
     pub bgd_e1e5b: f32,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f32,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f32,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f32,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f32,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f32,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f32,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f32,
     /// Clock reference
-    pub toc: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+    pub toc: GpsTimeSec,
     /// Issue of data (IODnav)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u16,
     /// Issue of data (IODnav). Always equal to iode
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
     /// 0=I/NAV, 1=F/NAV
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "source")))]
     pub source: u8,
 }
 
-impl MsgEphemerisGal {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGal, crate::Error> {
-        Ok( MsgEphemerisGal{
-            sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            bgd_e1e5a: _buf.read_f32::<LittleEndian>()?,
-            bgd_e1e5b: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u16::<LittleEndian>()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-            source: _buf.read_u8()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGal {
+    const MESSAGE_TYPE: u16 = 141;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GAL";
 }
-impl super::SBPMessage for MsgEphemerisGal {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GAL"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        141
+impl SbpMessage for MsgEphemerisGal {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGal {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.bgd_e1e5a.append_to_sbp_buffer(buf);
-        self.bgd_e1e5b.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toc.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
-        self.source.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGal {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGal(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.bgd_e1e5a.sbp_size();
-        size += self.bgd_e1e5b.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toc.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size += self.source.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGal {
+    const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.bgd_e1e5a)
+            + WireFormat::len(&self.bgd_e1e5b)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toc)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+            + WireFormat::len(&self.source)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.bgd_e1e5a, buf);
+        WireFormat::write(&self.bgd_e1e5b, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toc, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+        WireFormat::write(&self.source, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGal {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            bgd_e1e5a: WireFormat::parse_unchecked(buf),
+            bgd_e1e5b: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toc: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+            source: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// an ephemeris message with explicit source of NAV data.
+/// This observation message has been deprecated in favor of an ephemeris
+/// message with explicit source of NAV data.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisGalDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContent,
     /// E1-E5a Broadcast Group Delay
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5a")))]
     pub bgd_e1e5a: f32,
     /// E1-E5b Broadcast Group Delay
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5b")))]
     pub bgd_e1e5b: f32,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f32,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f32,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f32,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f32,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f32,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f32,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f32,
     /// Clock reference
-    pub toc: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+    pub toc: GpsTimeSec,
     /// Issue of data (IODnav)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u16,
     /// Issue of data (IODnav). Always equal to iode
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
 }
 
-impl MsgEphemerisGalDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGalDepA, crate::Error> {
-        Ok( MsgEphemerisGalDepA{
-            sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            bgd_e1e5a: _buf.read_f32::<LittleEndian>()?,
-            bgd_e1e5b: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u16::<LittleEndian>()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGalDepA {
+    const MESSAGE_TYPE: u16 = 149;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GAL_DEP_A";
 }
-impl super::SBPMessage for MsgEphemerisGalDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GAL_DEP_A"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        149
+impl SbpMessage for MsgEphemerisGalDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.bgd_e1e5a.append_to_sbp_buffer(buf);
-        self.bgd_e1e5b.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toc.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGalDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGalDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.bgd_e1e5a.sbp_size();
-        size += self.bgd_e1e5b.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toc.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGalDepA {
+    const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.bgd_e1e5a)
+            + WireFormat::len(&self.bgd_e1e5b)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toc)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.bgd_e1e5a, buf);
+        WireFormat::write(&self.bgd_e1e5b, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toc, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGalDepA {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            bgd_e1e5a: WireFormat::parse_unchecked(buf),
+            bgd_e1e5b: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toc: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisGlo {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContent,
     /// Relative deviation of predicted carrier frequency from nominal
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
     pub gamma: f32,
     /// Correction to the SV time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
     pub tau: f32,
     /// Equipment delay between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d_tau")))]
     pub d_tau: f32,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f32>,
-    /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f32; 3],
+    /// Frequency slot. FCN+8 (that is \[1..14\]). 0 or 0xFF for invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fcn")))]
     pub fcn: u8,
     /// Issue of data. Equal to the 7 bits of the immediate data word t_b
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iod")))]
     pub iod: u8,
 }
 
-impl MsgEphemerisGlo {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGlo, crate::Error> {
-        Ok( MsgEphemerisGlo{
-            sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            gamma: _buf.read_f32::<LittleEndian>()?,
-            tau: _buf.read_f32::<LittleEndian>()?,
-            d_tau: _buf.read_f32::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_float_array_limit(_buf, 3)?,
-            fcn: _buf.read_u8()?,
-            iod: _buf.read_u8()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGlo {
+    const MESSAGE_TYPE: u16 = 139;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GLO";
 }
-impl super::SBPMessage for MsgEphemerisGlo {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        139
+impl SbpMessage for MsgEphemerisGlo {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.gamma.append_to_sbp_buffer(buf);
-        self.tau.append_to_sbp_buffer(buf);
-        self.d_tau.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
-        self.fcn.append_to_sbp_buffer(buf);
-        self.iod.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGlo {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGlo(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.gamma.sbp_size();
-        size += self.tau.sbp_size();
-        size += self.d_tau.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size += self.fcn.sbp_size();
-        size += self.iod.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGlo {
+    const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f32; 3] as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.gamma)
+            + WireFormat::len(&self.tau)
+            + WireFormat::len(&self.d_tau)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+            + WireFormat::len(&self.fcn)
+            + WireFormat::len(&self.iod)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.gamma, buf);
+        WireFormat::write(&self.tau, buf);
+        WireFormat::write(&self.d_tau, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+        WireFormat::write(&self.fcn, buf);
+        WireFormat::write(&self.iod, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGlo {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            gamma: WireFormat::parse_unchecked(buf),
+            tau: WireFormat::parse_unchecked(buf),
+            d_tau: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+            fcn: WireFormat::parse_unchecked(buf),
+            iod: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepA,
     /// Relative deviation of predicted carrier frequency from nominal
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
     pub gamma: f64,
     /// Correction to the SV time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
     pub tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f64; 3],
 }
 
-impl MsgEphemerisGloDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepA, crate::Error> {
-        Ok( MsgEphemerisGloDepA{
-            sender_id: None,
-            common: EphemerisCommonContentDepA::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGloDepA {
+    const MESSAGE_TYPE: u16 = 131;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GLO_DEP_A";
 }
-impl super::SBPMessage for MsgEphemerisGloDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_A"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        131
+impl SbpMessage for MsgEphemerisGloDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.gamma.append_to_sbp_buffer(buf);
-        self.tau.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGloDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGloDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.gamma.sbp_size();
-        size += self.tau.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGloDepA {
+    const MIN_LEN: usize = <EphemerisCommonContentDepA as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.gamma)
+            + WireFormat::len(&self.tau)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.gamma, buf);
+        WireFormat::write(&self.tau, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGloDepA {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            gamma: WireFormat::parse_unchecked(buf),
+            tau: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepB,
     /// Relative deviation of predicted carrier frequency from nominal
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
     pub gamma: f64,
     /// Correction to the SV time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
     pub tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f64; 3],
 }
 
-impl MsgEphemerisGloDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepB, crate::Error> {
-        Ok( MsgEphemerisGloDepB{
-            sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGloDepB {
+    const MESSAGE_TYPE: u16 = 133;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GLO_DEP_B";
 }
-impl super::SBPMessage for MsgEphemerisGloDepB {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_B"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        133
+impl SbpMessage for MsgEphemerisGloDepB {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGloDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.gamma.append_to_sbp_buffer(buf);
-        self.tau.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGloDepB {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGloDepB(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.gamma.sbp_size();
-        size += self.tau.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGloDepB {
+    const MIN_LEN: usize = <EphemerisCommonContentDepB as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.gamma)
+            + WireFormat::len(&self.tau)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.gamma, buf);
+        WireFormat::write(&self.tau, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGloDepB {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            gamma: WireFormat::parse_unchecked(buf),
+            tau: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for GLO
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GLO satellite position,
-/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-/// Characteristics of words of immediate information (ephemeris parameters)"
-/// for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GLO satellite position, velocity, and clock offset.
+/// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
+/// immediate information (ephemeris parameters)" for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepB,
     /// Relative deviation of predicted carrier frequency from nominal
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
     pub gamma: f64,
     /// Correction to the SV time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
     pub tau: f64,
     /// Equipment delay between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d_tau")))]
     pub d_tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
-    /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f64; 3],
+    /// Frequency slot. FCN+8 (that is \[1..14\]). 0 or 0xFF for invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fcn")))]
     pub fcn: u8,
 }
 
-impl MsgEphemerisGloDepC {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepC, crate::Error> {
-        Ok( MsgEphemerisGloDepC{
-            sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
-            fcn: _buf.read_u8()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGloDepC {
+    const MESSAGE_TYPE: u16 = 135;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GLO_DEP_C";
 }
-impl super::SBPMessage for MsgEphemerisGloDepC {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_C"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        135
+impl SbpMessage for MsgEphemerisGloDepC {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGloDepC {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.gamma.append_to_sbp_buffer(buf);
-        self.tau.append_to_sbp_buffer(buf);
-        self.d_tau.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
-        self.fcn.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGloDepC {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGloDepC(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.gamma.sbp_size();
-        size += self.tau.sbp_size();
-        size += self.d_tau.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size += self.fcn.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGloDepC {
+    const MIN_LEN: usize = <EphemerisCommonContentDepB as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.gamma)
+            + WireFormat::len(&self.tau)
+            + WireFormat::len(&self.d_tau)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+            + WireFormat::len(&self.fcn)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.gamma, buf);
+        WireFormat::write(&self.tau, buf);
+        WireFormat::write(&self.d_tau, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+        WireFormat::write(&self.fcn, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGloDepC {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            gamma: WireFormat::parse_unchecked(buf),
+            tau: WireFormat::parse_unchecked(buf),
+            d_tau: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+            fcn: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// ephemeris message using floats for size reduction.
+/// This observation message has been deprecated in favor of ephemeris message
+/// using floats for size reduction.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepD {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepB,
     /// Relative deviation of predicted carrier frequency from nominal
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
     pub gamma: f64,
     /// Correction to the SV time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
     pub tau: f64,
     /// Equipment delay between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "d_tau")))]
     pub d_tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
-    /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f64; 3],
+    /// Frequency slot. FCN+8 (that is \[1..14\]). 0 or 0xFF for invalid
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "fcn")))]
     pub fcn: u8,
     /// Issue of data. Equal to the 7 bits of the immediate data word t_b
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iod")))]
     pub iod: u8,
 }
 
-impl MsgEphemerisGloDepD {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepD, crate::Error> {
-        Ok( MsgEphemerisGloDepD{
-            sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
-            fcn: _buf.read_u8()?,
-            iod: _buf.read_u8()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGloDepD {
+    const MESSAGE_TYPE: u16 = 136;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GLO_DEP_D";
 }
-impl super::SBPMessage for MsgEphemerisGloDepD {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GLO_DEP_D"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        136
+impl SbpMessage for MsgEphemerisGloDepD {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.gamma.append_to_sbp_buffer(buf);
-        self.tau.append_to_sbp_buffer(buf);
-        self.d_tau.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
-        self.fcn.append_to_sbp_buffer(buf);
-        self.iod.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGloDepD {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGloDepD(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.gamma.sbp_size();
-        size += self.tau.sbp_size();
-        size += self.d_tau.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size += self.fcn.sbp_size();
-        size += self.iod.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGloDepD {
+    const MIN_LEN: usize = <EphemerisCommonContentDepB as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.gamma)
+            + WireFormat::len(&self.tau)
+            + WireFormat::len(&self.d_tau)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+            + WireFormat::len(&self.fcn)
+            + WireFormat::len(&self.iod)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.gamma, buf);
+        WireFormat::write(&self.tau, buf);
+        WireFormat::write(&self.d_tau, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+        WireFormat::write(&self.fcn, buf);
+        WireFormat::write(&self.iod, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGloDepD {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            gamma: WireFormat::parse_unchecked(buf),
+            tau: WireFormat::parse_unchecked(buf),
+            d_tau: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+            fcn: WireFormat::parse_unchecked(buf),
+            iod: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for GPS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgEphemerisGPS {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgEphemerisGps {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContent,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f32,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f32,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f32,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f32,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f32,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f32,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f32,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f32,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f32,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f32,
     /// Clock reference
-    pub toc: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+    pub toc: GpsTimeSec,
     /// Issue of ephemeris data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
     /// Issue of clock data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPS {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, crate::Error> {
-        Ok( MsgEphemerisGPS{
-            sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            tgd: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f32::<LittleEndian>()?,
-            af1: _buf.read_f32::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGps {
+    const MESSAGE_TYPE: u16 = 138;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GPS";
 }
-impl super::SBPMessage for MsgEphemerisGPS {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GPS"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        138
+impl SbpMessage for MsgEphemerisGps {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toc.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGps {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGps(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toc.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGps {
+    const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toc)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toc, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGps {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toc: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for GPS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate GPS satellite position,
-/// velocity, and clock offset. Please see the Navstar GPS
-/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-/// 20-III) for more details.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate GPS satellite position, velocity, and clock offset.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
+/// GPS-200, Table 20-III) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgEphemerisGPSDepE {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgEphemerisGpsDepE {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepA,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f64,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f64,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f64,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f64,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f64,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f64,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f64,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f64,
     /// Clock reference
-    pub toc: GPSTimeDep,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+    pub toc: GpsTimeDep,
     /// Issue of ephemeris data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
     /// Issue of clock data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPSDepE {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, crate::Error> {
-        Ok( MsgEphemerisGPSDepE{
-            sender_id: None,
-            common: EphemerisCommonContentDepA::parse(_buf)?,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toc: GPSTimeDep::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGpsDepE {
+    const MESSAGE_TYPE: u16 = 129;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GPS_DEP_E";
 }
-impl super::SBPMessage for MsgEphemerisGPSDepE {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GPS_DEP_E"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        129
+impl SbpMessage for MsgEphemerisGpsDepE {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toc.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGpsDepE {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGpsDepE(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toc.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGpsDepE {
+    const MIN_LEN: usize = <EphemerisCommonContentDepA as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <GpsTimeDep as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toc)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toc, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGpsDepE {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toc: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// ephemeris message using floats for size reduction.
+/// This observation message has been deprecated in favor of ephemeris message
+/// using floats for size reduction.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgEphemerisGPSDepF {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgEphemerisGpsDepF {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepB,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f64,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f64,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f64,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f64,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f64,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f64,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f64,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f64,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f64,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f64,
     /// Clock reference
-    pub toc: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+    pub toc: GpsTimeSec,
     /// Issue of ephemeris data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
     /// Issue of clock data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPSDepF {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, crate::Error> {
-        Ok( MsgEphemerisGPSDepF{
-            sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisGpsDepF {
+    const MESSAGE_TYPE: u16 = 134;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_GPS_DEP_F";
 }
-impl super::SBPMessage for MsgEphemerisGPSDepF {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_GPS_DEP_F"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        134
+impl SbpMessage for MsgEphemerisGpsDepF {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepF {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toc.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisGpsDepF {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisGpsDepF(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toc.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size
+impl WireFormat for MsgEphemerisGpsDepF {
+    const MIN_LEN: usize = <EphemerisCommonContentDepB as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toc)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toc, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisGpsDepF {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toc: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite broadcast ephemeris for QZSS
 ///
-/// The ephemeris message returns a set of satellite orbit
-/// parameters that is used to calculate QZSS satellite position,
-/// velocity, and clock offset.
+/// The ephemeris message returns a set of satellite orbit parameters that is
+/// used to calculate QZSS satellite position, velocity, and clock offset.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisQzss {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContent,
     /// Group delay differential between L1 and L2
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: f32,
     /// Amplitude of the sine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
     pub c_rs: f32,
     /// Amplitude of the cosine harmonic correction term to the orbit radius
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
     pub c_rc: f32,
     /// Amplitude of the cosine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
     pub c_uc: f32,
     /// Amplitude of the sine harmonic correction term to the argument of
     /// latitude
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
     pub c_us: f32,
     /// Amplitude of the cosine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
     pub c_ic: f32,
     /// Amplitude of the sine harmonic correction term to the angle of
     /// inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
     pub c_is: f32,
     /// Mean motion difference
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
     pub dn: f64,
     /// Mean anomaly at reference time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
     pub m0: f64,
     /// Eccentricity of satellite orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
     pub ecc: f64,
     /// Square root of the semi-major axis of orbit
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
     pub sqrta: f64,
     /// Longitude of ascending node of orbit plane at weekly epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
     pub omega0: f64,
     /// Rate of right ascension
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
     pub omegadot: f64,
     /// Argument of perigee
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
     pub w: f64,
     /// Inclination
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
     pub inc: f64,
     /// Inclination first derivative
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
     pub inc_dot: f64,
     /// Polynomial clock correction coefficient (clock bias)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
     pub af0: f32,
     /// Polynomial clock correction coefficient (clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
     pub af1: f32,
     /// Polynomial clock correction coefficient (rate of clock drift)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
     pub af2: f32,
     /// Clock reference
-    pub toc: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+    pub toc: GpsTimeSec,
     /// Issue of ephemeris data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
     pub iode: u8,
     /// Issue of clock data
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
     pub iodc: u16,
 }
 
-impl MsgEphemerisQzss {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisQzss, crate::Error> {
-        Ok( MsgEphemerisQzss{
-            sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            tgd: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f32::<LittleEndian>()?,
-            af1: _buf.read_f32::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisQzss {
+    const MESSAGE_TYPE: u16 = 142;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_QZSS";
 }
-impl super::SBPMessage for MsgEphemerisQzss {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_QZSS"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        142
+impl SbpMessage for MsgEphemerisQzss {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisQzss {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.tgd.append_to_sbp_buffer(buf);
-        self.c_rs.append_to_sbp_buffer(buf);
-        self.c_rc.append_to_sbp_buffer(buf);
-        self.c_uc.append_to_sbp_buffer(buf);
-        self.c_us.append_to_sbp_buffer(buf);
-        self.c_ic.append_to_sbp_buffer(buf);
-        self.c_is.append_to_sbp_buffer(buf);
-        self.dn.append_to_sbp_buffer(buf);
-        self.m0.append_to_sbp_buffer(buf);
-        self.ecc.append_to_sbp_buffer(buf);
-        self.sqrta.append_to_sbp_buffer(buf);
-        self.omega0.append_to_sbp_buffer(buf);
-        self.omegadot.append_to_sbp_buffer(buf);
-        self.w.append_to_sbp_buffer(buf);
-        self.inc.append_to_sbp_buffer(buf);
-        self.inc_dot.append_to_sbp_buffer(buf);
-        self.af0.append_to_sbp_buffer(buf);
-        self.af1.append_to_sbp_buffer(buf);
-        self.af2.append_to_sbp_buffer(buf);
-        self.toc.append_to_sbp_buffer(buf);
-        self.iode.append_to_sbp_buffer(buf);
-        self.iodc.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.tgd.sbp_size();
-        size += self.c_rs.sbp_size();
-        size += self.c_rc.sbp_size();
-        size += self.c_uc.sbp_size();
-        size += self.c_us.sbp_size();
-        size += self.c_ic.sbp_size();
-        size += self.c_is.sbp_size();
-        size += self.dn.sbp_size();
-        size += self.m0.sbp_size();
-        size += self.ecc.sbp_size();
-        size += self.sqrta.sbp_size();
-        size += self.omega0.sbp_size();
-        size += self.omegadot.sbp_size();
-        size += self.w.sbp_size();
-        size += self.inc.sbp_size();
-        size += self.inc_dot.sbp_size();
-        size += self.af0.sbp_size();
-        size += self.af1.sbp_size();
-        size += self.af2.sbp_size();
-        size += self.toc.sbp_size();
-        size += self.iode.sbp_size();
-        size += self.iodc.sbp_size();
-        size
+impl TryFrom<Sbp> for MsgEphemerisQzss {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisQzss(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+impl WireFormat for MsgEphemerisQzss {
+    const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <GpsTimeSec as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.c_rs)
+            + WireFormat::len(&self.c_rc)
+            + WireFormat::len(&self.c_uc)
+            + WireFormat::len(&self.c_us)
+            + WireFormat::len(&self.c_ic)
+            + WireFormat::len(&self.c_is)
+            + WireFormat::len(&self.dn)
+            + WireFormat::len(&self.m0)
+            + WireFormat::len(&self.ecc)
+            + WireFormat::len(&self.sqrta)
+            + WireFormat::len(&self.omega0)
+            + WireFormat::len(&self.omegadot)
+            + WireFormat::len(&self.w)
+            + WireFormat::len(&self.inc)
+            + WireFormat::len(&self.inc_dot)
+            + WireFormat::len(&self.af0)
+            + WireFormat::len(&self.af1)
+            + WireFormat::len(&self.af2)
+            + WireFormat::len(&self.toc)
+            + WireFormat::len(&self.iode)
+            + WireFormat::len(&self.iodc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.c_rs, buf);
+        WireFormat::write(&self.c_rc, buf);
+        WireFormat::write(&self.c_uc, buf);
+        WireFormat::write(&self.c_us, buf);
+        WireFormat::write(&self.c_ic, buf);
+        WireFormat::write(&self.c_is, buf);
+        WireFormat::write(&self.dn, buf);
+        WireFormat::write(&self.m0, buf);
+        WireFormat::write(&self.ecc, buf);
+        WireFormat::write(&self.sqrta, buf);
+        WireFormat::write(&self.omega0, buf);
+        WireFormat::write(&self.omegadot, buf);
+        WireFormat::write(&self.w, buf);
+        WireFormat::write(&self.inc, buf);
+        WireFormat::write(&self.inc_dot, buf);
+        WireFormat::write(&self.af0, buf);
+        WireFormat::write(&self.af1, buf);
+        WireFormat::write(&self.af2, buf);
+        WireFormat::write(&self.toc, buf);
+        WireFormat::write(&self.iode, buf);
+        WireFormat::write(&self.iodc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisQzss {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            tgd: WireFormat::parse_unchecked(buf),
+            c_rs: WireFormat::parse_unchecked(buf),
+            c_rc: WireFormat::parse_unchecked(buf),
+            c_uc: WireFormat::parse_unchecked(buf),
+            c_us: WireFormat::parse_unchecked(buf),
+            c_ic: WireFormat::parse_unchecked(buf),
+            c_is: WireFormat::parse_unchecked(buf),
+            dn: WireFormat::parse_unchecked(buf),
+            m0: WireFormat::parse_unchecked(buf),
+            ecc: WireFormat::parse_unchecked(buf),
+            sqrta: WireFormat::parse_unchecked(buf),
+            omega0: WireFormat::parse_unchecked(buf),
+            omegadot: WireFormat::parse_unchecked(buf),
+            w: WireFormat::parse_unchecked(buf),
+            inc: WireFormat::parse_unchecked(buf),
+            inc_dot: WireFormat::parse_unchecked(buf),
+            af0: WireFormat::parse_unchecked(buf),
+            af1: WireFormat::parse_unchecked(buf),
+            af2: WireFormat::parse_unchecked(buf),
+            toc: WireFormat::parse_unchecked(buf),
+            iode: WireFormat::parse_unchecked(buf),
+            iodc: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Satellite broadcast ephemeris for SBAS
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContent,
     /// Position of the GEO at time toe
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity of the GEO at time toe
-    pub vel: Vec<f32>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f32; 3],
     /// Acceleration of the GEO at time toe
-    pub acc: Vec<f32>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f32; 3],
     /// Time offset of the GEO clock w.r.t. SBAS Network Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf0")))]
     pub a_gf0: f32,
     /// Drift of the GEO clock w.r.t. SBAS Network Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf1")))]
     pub a_gf1: f32,
 }
 
-impl MsgEphemerisSbas {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbas, crate::Error> {
-        Ok( MsgEphemerisSbas{
-            sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_float_array_limit(_buf, 3)?,
-            acc: crate::parser::read_float_array_limit(_buf, 3)?,
-            a_gf0: _buf.read_f32::<LittleEndian>()?,
-            a_gf1: _buf.read_f32::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisSbas {
+    const MESSAGE_TYPE: u16 = 140;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_SBAS";
 }
-impl super::SBPMessage for MsgEphemerisSbas {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_SBAS"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        140
+impl SbpMessage for MsgEphemerisSbas {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisSbas {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
-        self.a_gf0.append_to_sbp_buffer(buf);
-        self.a_gf1.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size += self.a_gf0.sbp_size();
-        size += self.a_gf1.sbp_size();
-        size
+impl TryFrom<Sbp> for MsgEphemerisSbas {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisSbas(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+impl WireFormat for MsgEphemerisSbas {
+    const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f32; 3] as WireFormat>::MIN_LEN
+        + <[f32; 3] as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN
+        + <f32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+            + WireFormat::len(&self.a_gf0)
+            + WireFormat::len(&self.a_gf1)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+        WireFormat::write(&self.a_gf0, buf);
+        WireFormat::write(&self.a_gf1, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisSbas {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+            a_gf0: WireFormat::parse_unchecked(buf),
+            a_gf1: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Satellite broadcast ephemeris for SBAS
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepA,
     /// Position of the GEO at time toe
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity of the GEO at time toe
-    pub vel: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f64; 3],
     /// Acceleration of the GEO at time toe
-    pub acc: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f64; 3],
     /// Time offset of the GEO clock w.r.t. SBAS Network Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf0")))]
     pub a_gf0: f64,
     /// Drift of the GEO clock w.r.t. SBAS Network Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf1")))]
     pub a_gf1: f64,
 }
 
-impl MsgEphemerisSbasDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepA, crate::Error> {
-        Ok( MsgEphemerisSbasDepA{
-            sender_id: None,
-            common: EphemerisCommonContentDepA::parse(_buf)?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
-            a_gf0: _buf.read_f64::<LittleEndian>()?,
-            a_gf1: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisSbasDepA {
+    const MESSAGE_TYPE: u16 = 130;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_SBAS_DEP_A";
 }
-impl super::SBPMessage for MsgEphemerisSbasDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_SBAS_DEP_A"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        130
+impl SbpMessage for MsgEphemerisSbasDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
-        self.a_gf0.append_to_sbp_buffer(buf);
-        self.a_gf1.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisSbasDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisSbasDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size += self.a_gf0.sbp_size();
-        size += self.a_gf1.sbp_size();
-        size
+impl WireFormat for MsgEphemerisSbasDepA {
+    const MIN_LEN: usize = <EphemerisCommonContentDepA as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+            + WireFormat::len(&self.a_gf0)
+            + WireFormat::len(&self.a_gf1)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+        WireFormat::write(&self.a_gf0, buf);
+        WireFormat::write(&self.a_gf1, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisSbasDepA {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+            a_gf0: WireFormat::parse_unchecked(buf),
+            a_gf1: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// ephemeris message using floats for size reduction.
+/// This observation message has been deprecated in favor of ephemeris message
+/// using floats for size reduction.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
     pub common: EphemerisCommonContentDepB,
     /// Position of the GEO at time toe
-    pub pos: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+    pub pos: [f64; 3],
     /// Velocity of the GEO at time toe
-    pub vel: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+    pub vel: [f64; 3],
     /// Acceleration of the GEO at time toe
-    pub acc: Vec<f64>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+    pub acc: [f64; 3],
     /// Time offset of the GEO clock w.r.t. SBAS Network Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf0")))]
     pub a_gf0: f64,
     /// Drift of the GEO clock w.r.t. SBAS Network Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf1")))]
     pub a_gf1: f64,
 }
 
-impl MsgEphemerisSbasDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepB, crate::Error> {
-        Ok( MsgEphemerisSbasDepB{
-            sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
-            a_gf0: _buf.read_f64::<LittleEndian>()?,
-            a_gf1: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgEphemerisSbasDepB {
+    const MESSAGE_TYPE: u16 = 132;
+    const MESSAGE_NAME: &'static str = "MSG_EPHEMERIS_SBAS_DEP_B";
 }
-impl super::SBPMessage for MsgEphemerisSbasDepB {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_EPHEMERIS_SBAS_DEP_B"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        132
+impl SbpMessage for MsgEphemerisSbasDepB {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.common.append_to_sbp_buffer(buf);
-        self.pos.append_to_sbp_buffer(buf);
-        self.vel.append_to_sbp_buffer(buf);
-        self.acc.append_to_sbp_buffer(buf);
-        self.a_gf0.append_to_sbp_buffer(buf);
-        self.a_gf1.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgEphemerisSbasDepB {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgEphemerisSbasDepB(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.common.sbp_size();
-        size += self.pos.sbp_size();
-        size += self.vel.sbp_size();
-        size += self.acc.sbp_size();
-        size += self.a_gf0.sbp_size();
-        size += self.a_gf1.sbp_size();
-        size
+impl WireFormat for MsgEphemerisSbasDepB {
+    const MIN_LEN: usize = <EphemerisCommonContentDepB as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <[f64; 3] as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.common)
+            + WireFormat::len(&self.pos)
+            + WireFormat::len(&self.vel)
+            + WireFormat::len(&self.acc)
+            + WireFormat::len(&self.a_gf0)
+            + WireFormat::len(&self.a_gf1)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.common, buf);
+        WireFormat::write(&self.pos, buf);
+        WireFormat::write(&self.vel, buf);
+        WireFormat::write(&self.acc, buf);
+        WireFormat::write(&self.a_gf0, buf);
+        WireFormat::write(&self.a_gf1, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgEphemerisSbasDepB {
+            sender_id: None,
+            common: WireFormat::parse_unchecked(buf),
+            pos: WireFormat::parse_unchecked(buf),
+            vel: WireFormat::parse_unchecked(buf),
+            acc: WireFormat::parse_unchecked(buf),
+            a_gf0: WireFormat::parse_unchecked(buf),
+            a_gf1: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// GLONASS L1/L2 Code-Phase biases
 ///
-/// The GLONASS L1/L2 Code-Phase biases allows to perform
-/// GPS+GLONASS integer ambiguity resolution for baselines
-/// with mixed receiver types (e.g. receiver of different
-/// manufacturers)
+/// The GLONASS L1/L2 Code-Phase biases allows to perform GPS+GLONASS integer
+/// ambiguity resolution for baselines with mixed receiver types (e.g.
+/// receiver of different manufacturers).
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgGloBiases {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GLONASS FDMA signals mask
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "mask")))]
     pub mask: u8,
     /// GLONASS L1 C/A Code-Phase Bias
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "l1ca_bias")))]
     pub l1ca_bias: i16,
     /// GLONASS L1 P Code-Phase Bias
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "l1p_bias")))]
     pub l1p_bias: i16,
     /// GLONASS L2 C/A Code-Phase Bias
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "l2ca_bias")))]
     pub l2ca_bias: i16,
     /// GLONASS L2 P Code-Phase Bias
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "l2p_bias")))]
     pub l2p_bias: i16,
 }
 
-impl MsgGloBiases {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGloBiases, crate::Error> {
-        Ok( MsgGloBiases{
-            sender_id: None,
-            mask: _buf.read_u8()?,
-            l1ca_bias: _buf.read_i16::<LittleEndian>()?,
-            l1p_bias: _buf.read_i16::<LittleEndian>()?,
-            l2ca_bias: _buf.read_i16::<LittleEndian>()?,
-            l2p_bias: _buf.read_i16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgGloBiases {
+    const MESSAGE_TYPE: u16 = 117;
+    const MESSAGE_NAME: &'static str = "MSG_GLO_BIASES";
 }
-impl super::SBPMessage for MsgGloBiases {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GLO_BIASES"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        117
+impl SbpMessage for MsgGloBiases {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGloBiases {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.mask.append_to_sbp_buffer(buf);
-        self.l1ca_bias.append_to_sbp_buffer(buf);
-        self.l1p_bias.append_to_sbp_buffer(buf);
-        self.l2ca_bias.append_to_sbp_buffer(buf);
-        self.l2p_bias.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.mask.sbp_size();
-        size += self.l1ca_bias.sbp_size();
-        size += self.l1p_bias.sbp_size();
-        size += self.l2ca_bias.sbp_size();
-        size += self.l2p_bias.sbp_size();
-        size
+impl TryFrom<Sbp> for MsgGloBiases {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgGloBiases(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+impl WireFormat for MsgGloBiases {
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.mask)
+            + WireFormat::len(&self.l1ca_bias)
+            + WireFormat::len(&self.l1p_bias)
+            + WireFormat::len(&self.l2ca_bias)
+            + WireFormat::len(&self.l2p_bias)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.mask, buf);
+        WireFormat::write(&self.l1ca_bias, buf);
+        WireFormat::write(&self.l1p_bias, buf);
+        WireFormat::write(&self.l2ca_bias, buf);
+        WireFormat::write(&self.l2p_bias, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgGloBiases {
+            sender_id: None,
+            mask: WireFormat::parse_unchecked(buf),
+            l1ca_bias: WireFormat::parse_unchecked(buf),
+            l1p_bias: WireFormat::parse_unchecked(buf),
+            l2ca_bias: WireFormat::parse_unchecked(buf),
+            l2p_bias: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// GNSS capabilities
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgGnssCapb {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Validity Time
-    pub t_nmct: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_nmct")))]
+    pub t_nmct: GpsTimeSec,
     /// GNSS capabilities masks
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "gc")))]
     pub gc: GnssCapb,
 }
 
-impl MsgGnssCapb {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssCapb, crate::Error> {
-        Ok( MsgGnssCapb{
-            sender_id: None,
-            t_nmct: GPSTimeSec::parse(_buf)?,
-            gc: GnssCapb::parse(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgGnssCapb {
+    const MESSAGE_TYPE: u16 = 150;
+    const MESSAGE_NAME: &'static str = "MSG_GNSS_CAPB";
 }
-impl super::SBPMessage for MsgGnssCapb {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GNSS_CAPB"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        150
+impl SbpMessage for MsgGnssCapb {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGnssCapb {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t_nmct.append_to_sbp_buffer(buf);
-        self.gc.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgGnssCapb {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgGnssCapb(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t_nmct.sbp_size();
-        size += self.gc.sbp_size();
-        size
+impl WireFormat for MsgGnssCapb {
+    const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN + <GnssCapb as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t_nmct) + WireFormat::len(&self.gc)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t_nmct, buf);
+        WireFormat::write(&self.gc, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgGnssCapb {
+            sender_id: None,
+            t_nmct: WireFormat::parse_unchecked(buf),
+            gc: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4250,86 +4841,96 @@ impl crate::serialize::SbpSerialize for MsgGnssCapb {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgGroupDelay {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
-    pub t_op: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_op")))]
+    pub t_op: GpsTimeSec,
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
     /// bit-field indicating validity of the values, LSB indicating tgd validity
     /// etc. 1 = value is valid, 0 = value is not valid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: i16,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l1ca")))]
     pub isc_l1ca: i16,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l2c")))]
     pub isc_l2c: i16,
 }
 
-impl MsgGroupDelay {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelay, crate::Error> {
-        Ok( MsgGroupDelay{
-            sender_id: None,
-            t_op: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignal::parse(_buf)?,
-            valid: _buf.read_u8()?,
-            tgd: _buf.read_i16::<LittleEndian>()?,
-            isc_l1ca: _buf.read_i16::<LittleEndian>()?,
-            isc_l2c: _buf.read_i16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgGroupDelay {
+    const MESSAGE_TYPE: u16 = 148;
+    const MESSAGE_NAME: &'static str = "MSG_GROUP_DELAY";
 }
-impl super::SBPMessage for MsgGroupDelay {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GROUP_DELAY"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        148
+impl SbpMessage for MsgGroupDelay {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGroupDelay {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t_op.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.tgd.append_to_sbp_buffer(buf);
-        self.isc_l1ca.append_to_sbp_buffer(buf);
-        self.isc_l2c.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgGroupDelay {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgGroupDelay(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t_op.sbp_size();
-        size += self.sid.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.tgd.sbp_size();
-        size += self.isc_l1ca.sbp_size();
-        size += self.isc_l2c.sbp_size();
-        size
+impl WireFormat for MsgGroupDelay {
+    const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t_op)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.isc_l1ca)
+            + WireFormat::len(&self.isc_l2c)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t_op, buf);
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.isc_l1ca, buf);
+        WireFormat::write(&self.isc_l2c, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgGroupDelay {
+            sender_id: None,
+            t_op: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            tgd: WireFormat::parse_unchecked(buf),
+            isc_l1ca: WireFormat::parse_unchecked(buf),
+            isc_l2c: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4337,86 +4938,96 @@ impl crate::serialize::SbpSerialize for MsgGroupDelay {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgGroupDelayDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
-    pub t_op: GPSTimeDep,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_op")))]
+    pub t_op: GpsTimeDep,
     /// Satellite number
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
     pub prn: u8,
     /// bit-field indicating validity of the values, LSB indicating tgd validity
     /// etc. 1 = value is valid, 0 = value is not valid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: i16,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l1ca")))]
     pub isc_l1ca: i16,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l2c")))]
     pub isc_l2c: i16,
 }
 
-impl MsgGroupDelayDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepA, crate::Error> {
-        Ok( MsgGroupDelayDepA{
-            sender_id: None,
-            t_op: GPSTimeDep::parse(_buf)?,
-            prn: _buf.read_u8()?,
-            valid: _buf.read_u8()?,
-            tgd: _buf.read_i16::<LittleEndian>()?,
-            isc_l1ca: _buf.read_i16::<LittleEndian>()?,
-            isc_l2c: _buf.read_i16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgGroupDelayDepA {
+    const MESSAGE_TYPE: u16 = 146;
+    const MESSAGE_NAME: &'static str = "MSG_GROUP_DELAY_DEP_A";
 }
-impl super::SBPMessage for MsgGroupDelayDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GROUP_DELAY_DEP_A"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        146
+impl SbpMessage for MsgGroupDelayDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t_op.append_to_sbp_buffer(buf);
-        self.prn.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.tgd.append_to_sbp_buffer(buf);
-        self.isc_l1ca.append_to_sbp_buffer(buf);
-        self.isc_l2c.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgGroupDelayDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgGroupDelayDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t_op.sbp_size();
-        size += self.prn.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.tgd.sbp_size();
-        size += self.isc_l1ca.sbp_size();
-        size += self.isc_l2c.sbp_size();
-        size
+impl WireFormat for MsgGroupDelayDepA {
+    const MIN_LEN: usize = <GpsTimeDep as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t_op)
+            + WireFormat::len(&self.prn)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.isc_l1ca)
+            + WireFormat::len(&self.isc_l2c)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t_op, buf);
+        WireFormat::write(&self.prn, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.isc_l1ca, buf);
+        WireFormat::write(&self.isc_l2c, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgGroupDelayDepA {
+            sender_id: None,
+            t_op: WireFormat::parse_unchecked(buf),
+            prn: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            tgd: WireFormat::parse_unchecked(buf),
+            isc_l1ca: WireFormat::parse_unchecked(buf),
+            isc_l2c: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4424,86 +5035,96 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgGroupDelayDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
-    pub t_op: GPSTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_op")))]
+    pub t_op: GpsTimeSec,
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
     /// bit-field indicating validity of the values, LSB indicating tgd validity
     /// etc. 1 = value is valid, 0 = value is not valid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
     pub valid: u8,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
     pub tgd: i16,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l1ca")))]
     pub isc_l1ca: i16,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l2c")))]
     pub isc_l2c: i16,
 }
 
-impl MsgGroupDelayDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepB, crate::Error> {
-        Ok( MsgGroupDelayDepB{
-            sender_id: None,
-            t_op: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignalDep::parse(_buf)?,
-            valid: _buf.read_u8()?,
-            tgd: _buf.read_i16::<LittleEndian>()?,
-            isc_l1ca: _buf.read_i16::<LittleEndian>()?,
-            isc_l2c: _buf.read_i16::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgGroupDelayDepB {
+    const MESSAGE_TYPE: u16 = 147;
+    const MESSAGE_NAME: &'static str = "MSG_GROUP_DELAY_DEP_B";
 }
-impl super::SBPMessage for MsgGroupDelayDepB {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_GROUP_DELAY_DEP_B"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        147
+impl SbpMessage for MsgGroupDelayDepB {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t_op.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-        self.valid.append_to_sbp_buffer(buf);
-        self.tgd.append_to_sbp_buffer(buf);
-        self.isc_l1ca.append_to_sbp_buffer(buf);
-        self.isc_l2c.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgGroupDelayDepB {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgGroupDelayDepB(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t_op.sbp_size();
-        size += self.sid.sbp_size();
-        size += self.valid.sbp_size();
-        size += self.tgd.sbp_size();
-        size += self.isc_l1ca.sbp_size();
-        size += self.isc_l2c.sbp_size();
-        size
+impl WireFormat for MsgGroupDelayDepB {
+    const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN
+        + <i16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t_op)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.valid)
+            + WireFormat::len(&self.tgd)
+            + WireFormat::len(&self.isc_l1ca)
+            + WireFormat::len(&self.isc_l2c)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t_op, buf);
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.valid, buf);
+        WireFormat::write(&self.tgd, buf);
+        WireFormat::write(&self.isc_l1ca, buf);
+        WireFormat::write(&self.isc_l2c, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgGroupDelayDepB {
+            sender_id: None,
+            t_op: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
+            valid: WireFormat::parse_unchecked(buf),
+            tgd: WireFormat::parse_unchecked(buf),
+            isc_l1ca: WireFormat::parse_unchecked(buf),
+            isc_l2c: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4513,170 +5134,199 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
 /// utilize the ionospheric model for computation of the ionospheric delay.
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgIono {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// Navigation Message Correction Table Valitidy Time
-    pub t_nmct: GPSTimeSec,
+    /// Navigation Message Correction Table Validity Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_nmct")))]
+    pub t_nmct: GpsTimeSec,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a0")))]
     pub a0: f64,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a1")))]
     pub a1: f64,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a2")))]
     pub a2: f64,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "a3")))]
     pub a3: f64,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "b0")))]
     pub b0: f64,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "b1")))]
     pub b1: f64,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "b2")))]
     pub b2: f64,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "b3")))]
     pub b3: f64,
 }
 
-impl MsgIono {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIono, crate::Error> {
-        Ok( MsgIono{
-            sender_id: None,
-            t_nmct: GPSTimeSec::parse(_buf)?,
-            a0: _buf.read_f64::<LittleEndian>()?,
-            a1: _buf.read_f64::<LittleEndian>()?,
-            a2: _buf.read_f64::<LittleEndian>()?,
-            a3: _buf.read_f64::<LittleEndian>()?,
-            b0: _buf.read_f64::<LittleEndian>()?,
-            b1: _buf.read_f64::<LittleEndian>()?,
-            b2: _buf.read_f64::<LittleEndian>()?,
-            b3: _buf.read_f64::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgIono {
+    const MESSAGE_TYPE: u16 = 144;
+    const MESSAGE_NAME: &'static str = "MSG_IONO";
 }
-impl super::SBPMessage for MsgIono {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_IONO"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        144
+impl SbpMessage for MsgIono {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgIono {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t_nmct.append_to_sbp_buffer(buf);
-        self.a0.append_to_sbp_buffer(buf);
-        self.a1.append_to_sbp_buffer(buf);
-        self.a2.append_to_sbp_buffer(buf);
-        self.a3.append_to_sbp_buffer(buf);
-        self.b0.append_to_sbp_buffer(buf);
-        self.b1.append_to_sbp_buffer(buf);
-        self.b2.append_to_sbp_buffer(buf);
-        self.b3.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgIono {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgIono(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t_nmct.sbp_size();
-        size += self.a0.sbp_size();
-        size += self.a1.sbp_size();
-        size += self.a2.sbp_size();
-        size += self.a3.sbp_size();
-        size += self.b0.sbp_size();
-        size += self.b1.sbp_size();
-        size += self.b2.sbp_size();
-        size += self.b3.sbp_size();
-        size
+impl WireFormat for MsgIono {
+    const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN
+        + <f64 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t_nmct)
+            + WireFormat::len(&self.a0)
+            + WireFormat::len(&self.a1)
+            + WireFormat::len(&self.a2)
+            + WireFormat::len(&self.a3)
+            + WireFormat::len(&self.b0)
+            + WireFormat::len(&self.b1)
+            + WireFormat::len(&self.b2)
+            + WireFormat::len(&self.b3)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t_nmct, buf);
+        WireFormat::write(&self.a0, buf);
+        WireFormat::write(&self.a1, buf);
+        WireFormat::write(&self.a2, buf);
+        WireFormat::write(&self.a3, buf);
+        WireFormat::write(&self.b0, buf);
+        WireFormat::write(&self.b1, buf);
+        WireFormat::write(&self.b2, buf);
+        WireFormat::write(&self.b3, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgIono {
+            sender_id: None,
+            t_nmct: WireFormat::parse_unchecked(buf),
+            a0: WireFormat::parse_unchecked(buf),
+            a1: WireFormat::parse_unchecked(buf),
+            a2: WireFormat::parse_unchecked(buf),
+            a3: WireFormat::parse_unchecked(buf),
+            b0: WireFormat::parse_unchecked(buf),
+            b1: WireFormat::parse_unchecked(buf),
+            b2: WireFormat::parse_unchecked(buf),
+            b3: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// GPS satellite observations
 ///
-/// The GPS observations message reports all the raw pseudorange and
-/// carrier phase observations for the satellites being tracked by
-/// the device. Carrier phase observation here is represented as a
-/// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-/// whole cycles and 8-bits of fractional cycles). The observations
-/// are be interoperable with 3rd party receivers and conform
-/// with typical RTCMv3 GNSS observations.
+/// The GPS observations message reports all the raw pseudorange and carrier
+/// phase observations for the satellites being tracked by the device. Carrier
+/// phase observation here is represented as a 40-bit fixed point number with
+/// Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+/// cycles). The observations are be interoperable with 3rd party receivers
+/// and conform with typical RTCMv3 GNSS observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgObs {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
     pub header: ObservationHeader,
     /// Pseudorange and carrier phase observation for a satellite being tracked.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
     pub obs: Vec<PackedObsContent>,
 }
 
-impl MsgObs {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObs, crate::Error> {
-        Ok( MsgObs{
-            sender_id: None,
-            header: ObservationHeader::parse(_buf)?,
-            obs: PackedObsContent::parse_array(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgObs {
+    const MESSAGE_TYPE: u16 = 74;
+    const MESSAGE_NAME: &'static str = "MSG_OBS";
 }
-impl super::SBPMessage for MsgObs {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_OBS"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        74
+impl SbpMessage for MsgObs {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn: i16 = match self.header.t.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Base(gps_time.into())))
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgObs {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.header.append_to_sbp_buffer(buf);
-        self.obs.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgObs {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgObs(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.header.sbp_size();
-        size += self.obs.sbp_size();
-        size
+impl WireFormat for MsgObs {
+    const MIN_LEN: usize =
+        <ObservationHeader as WireFormat>::MIN_LEN + <Vec<PackedObsContent> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.header) + WireFormat::len(&self.obs)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.header, buf);
+        WireFormat::write(&self.obs, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgObs {
+            sender_id: None,
+            header: WireFormat::parse_unchecked(buf),
+            obs: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -4684,351 +5334,405 @@ impl crate::serialize::SbpSerialize for MsgObs {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgObsDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
     pub header: ObservationHeaderDep,
     /// Pseudorange and carrier phase observation for a satellite being tracked.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
     pub obs: Vec<PackedObsContentDepA>,
 }
 
-impl MsgObsDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepA, crate::Error> {
-        Ok( MsgObsDepA{
-            sender_id: None,
-            header: ObservationHeaderDep::parse(_buf)?,
-            obs: PackedObsContentDepA::parse_array(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgObsDepA {
+    const MESSAGE_TYPE: u16 = 69;
+    const MESSAGE_NAME: &'static str = "MSG_OBS_DEP_A";
 }
-impl super::SBPMessage for MsgObsDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_OBS_DEP_A"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        69
+impl SbpMessage for MsgObsDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn: i16 = match self.header.t.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgObsDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.header.append_to_sbp_buffer(buf);
-        self.obs.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgObsDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgObsDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.header.sbp_size();
-        size += self.obs.sbp_size();
-        size
+impl WireFormat for MsgObsDepA {
+    const MIN_LEN: usize = <ObservationHeaderDep as WireFormat>::MIN_LEN
+        + <Vec<PackedObsContentDepA> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.header) + WireFormat::len(&self.obs)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.header, buf);
+        WireFormat::write(&self.obs, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgObsDepA {
+            sender_id: None,
+            header: WireFormat::parse_unchecked(buf),
+            obs: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Deprecated
 ///
-/// This observation message has been deprecated in favor of
-/// observations that are more interoperable. This message
-/// should be used for observations referenced to
-/// a nominal pseudorange which are not interoperable with
-/// most 3rd party GNSS receievers or typical RTCMv3
-/// observations.
+/// This observation message has been deprecated in favor of observations that
+/// are more interoperable. This message should be used for observations
+/// referenced to a nominal pseudorange which are not interoperable with most
+/// 3rd party GNSS receivers or typical RTCMv3 observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgObsDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
     pub header: ObservationHeaderDep,
     /// Pseudorange and carrier phase observation for a satellite being tracked.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
     pub obs: Vec<PackedObsContentDepB>,
 }
 
-impl MsgObsDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepB, crate::Error> {
-        Ok( MsgObsDepB{
-            sender_id: None,
-            header: ObservationHeaderDep::parse(_buf)?,
-            obs: PackedObsContentDepB::parse_array(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgObsDepB {
+    const MESSAGE_TYPE: u16 = 67;
+    const MESSAGE_NAME: &'static str = "MSG_OBS_DEP_B";
 }
-impl super::SBPMessage for MsgObsDepB {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_OBS_DEP_B"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        67
+impl SbpMessage for MsgObsDepB {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn: i16 = match self.header.t.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgObsDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.header.append_to_sbp_buffer(buf);
-        self.obs.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgObsDepB {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgObsDepB(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.header.sbp_size();
-        size += self.obs.sbp_size();
-        size
+impl WireFormat for MsgObsDepB {
+    const MIN_LEN: usize = <ObservationHeaderDep as WireFormat>::MIN_LEN
+        + <Vec<PackedObsContentDepB> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.header) + WireFormat::len(&self.obs)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.header, buf);
+        WireFormat::write(&self.obs, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgObsDepB {
+            sender_id: None,
+            header: WireFormat::parse_unchecked(buf),
+            obs: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Deprecated
 ///
-/// The GPS observations message reports all the raw pseudorange and
-/// carrier phase observations for the satellites being tracked by
-/// the device. Carrier phase observation here is represented as a
-/// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-/// whole cycles and 8-bits of fractional cycles). The observations
-/// are interoperable with 3rd party receivers and conform
-/// with typical RTCMv3 GNSS observations.
+/// The GPS observations message reports all the raw pseudorange and carrier
+/// phase observations for the satellites being tracked by the device. Carrier
+/// phase observation here is represented as a 40-bit fixed point number with
+/// Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
+/// cycles). The observations are interoperable with 3rd party receivers and
+/// conform with typical RTCMv3 GNSS observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgObsDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
     pub header: ObservationHeaderDep,
     /// Pseudorange and carrier phase observation for a satellite being tracked.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
     pub obs: Vec<PackedObsContentDepC>,
 }
 
-impl MsgObsDepC {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepC, crate::Error> {
-        Ok( MsgObsDepC{
-            sender_id: None,
-            header: ObservationHeaderDep::parse(_buf)?,
-            obs: PackedObsContentDepC::parse_array(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgObsDepC {
+    const MESSAGE_TYPE: u16 = 73;
+    const MESSAGE_NAME: &'static str = "MSG_OBS_DEP_C";
 }
-impl super::SBPMessage for MsgObsDepC {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_OBS_DEP_C"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        73
+impl SbpMessage for MsgObsDepC {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn: i16 = match self.header.t.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Rover(gps_time.into())))
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgObsDepC {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.header.append_to_sbp_buffer(buf);
-        self.obs.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgObsDepC {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgObsDepC(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.header.sbp_size();
-        size += self.obs.sbp_size();
-        size
+impl WireFormat for MsgObsDepC {
+    const MIN_LEN: usize = <ObservationHeaderDep as WireFormat>::MIN_LEN
+        + <Vec<PackedObsContentDepC> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.header) + WireFormat::len(&self.obs)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.header, buf);
+        WireFormat::write(&self.obs, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgObsDepC {
+            sender_id: None,
+            header: WireFormat::parse_unchecked(buf),
+            obs: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// OSR corrections
 ///
-/// The OSR message contains network corrections in an observation-like format
+/// The OSR message contains network corrections in an observation-like
+/// format.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgOsr {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
     pub header: ObservationHeader,
     /// Network correction for a satellite signal.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
     pub obs: Vec<PackedOsrContent>,
 }
 
-impl MsgOsr {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOsr, crate::Error> {
-        Ok( MsgOsr{
-            sender_id: None,
-            header: ObservationHeader::parse(_buf)?,
-            obs: PackedOsrContent::parse_array(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgOsr {
+    const MESSAGE_TYPE: u16 = 1600;
+    const MESSAGE_NAME: &'static str = "MSG_OSR";
 }
-impl super::SBPMessage for MsgOsr {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_OSR"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        1600
+impl SbpMessage for MsgOsr {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    #[cfg(feature = "swiftnav")]
+    fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn: i16 = match self.header.t.wn.try_into() {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        let gps_time = match time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(Ok(time::MessageTime::Base(gps_time.into())))
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgOsr {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.header.append_to_sbp_buffer(buf);
-        self.obs.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgOsr {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgOsr(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.header.sbp_size();
-        size += self.obs.sbp_size();
-        size
+impl WireFormat for MsgOsr {
+    const MIN_LEN: usize =
+        <ObservationHeader as WireFormat>::MIN_LEN + <Vec<PackedOsrContent> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.header) + WireFormat::len(&self.obs)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.header, buf);
+        WireFormat::write(&self.obs, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgOsr {
+            sender_id: None,
+            header: WireFormat::parse_unchecked(buf),
+            obs: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Satellite azimuths and elevations
 ///
-/// Azimuth and elevation angles of all the visible satellites
-/// that the device does have ephemeris or almanac for.
+/// Azimuth and elevation angles of all the visible satellites that the device
+/// does have ephemeris or almanac for.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgSvAzEl {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Azimuth and elevation per satellite
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "azel")))]
     pub azel: Vec<SvAzEl>,
 }
 
-impl MsgSvAzEl {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvAzEl, crate::Error> {
-        Ok( MsgSvAzEl{
-            sender_id: None,
-            azel: SvAzEl::parse_array(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgSvAzEl {
+    const MESSAGE_TYPE: u16 = 151;
+    const MESSAGE_NAME: &'static str = "MSG_SV_AZ_EL";
 }
-impl super::SBPMessage for MsgSvAzEl {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SV_AZ_EL"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        151
+impl SbpMessage for MsgSvAzEl {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSvAzEl {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.azel.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgSvAzEl {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSvAzEl(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.azel.sbp_size();
-        size
+impl WireFormat for MsgSvAzEl {
+    const MIN_LEN: usize = <Vec<SvAzEl> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.azel)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.azel, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSvAzEl {
+            sender_id: None,
+            azel: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -5036,208 +5740,161 @@ impl crate::serialize::SbpSerialize for MsgSvAzEl {
 ///
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgSvConfigurationGPSDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+pub struct MsgSvConfigurationGpsDep {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// Navigation Message Correction Table Valitidy Time
-    pub t_nmct: GPSTimeSec,
+    /// Navigation Message Correction Table Validity Time
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t_nmct")))]
+    pub t_nmct: GpsTimeSec,
     /// L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "l2c_mask")))]
     pub l2c_mask: u32,
 }
 
-impl MsgSvConfigurationGPSDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, crate::Error> {
-        Ok( MsgSvConfigurationGPSDep{
-            sender_id: None,
-            t_nmct: GPSTimeSec::parse(_buf)?,
-            l2c_mask: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
+impl ConcreteMessage for MsgSvConfigurationGpsDep {
+    const MESSAGE_TYPE: u16 = 145;
+    const MESSAGE_NAME: &'static str = "MSG_SV_CONFIGURATION_GPS_DEP";
 }
-impl super::SBPMessage for MsgSvConfigurationGPSDep {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SV_CONFIGURATION_GPS_DEP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        145
+impl SbpMessage for MsgSvConfigurationGpsDep {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSvConfigurationGPSDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t_nmct.append_to_sbp_buffer(buf);
-        self.l2c_mask.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t_nmct.sbp_size();
-        size += self.l2c_mask.sbp_size();
-        size
+impl TryFrom<Sbp> for MsgSvConfigurationGpsDep {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSvConfigurationGpsDep(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
 }
 
-/// Header for observation message.
+impl WireFormat for MsgSvConfigurationGpsDep {
+    const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t_nmct) + WireFormat::len(&self.l2c_mask)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t_nmct, buf);
+        WireFormat::write(&self.l2c_mask, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSvConfigurationGpsDep {
+            sender_id: None,
+            t_nmct: WireFormat::parse_unchecked(buf),
+            l2c_mask: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Header for observation message
 ///
 /// Header of a GNSS observation message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct ObservationHeader {
     /// GNSS time of this observation
-    pub t: GPSTime,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+    pub t: GpsTime,
     /// Total number of observations. First nibble is the size of the sequence
     /// (n), second nibble is the zero-indexed counter (ith packet of n)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_obs")))]
     pub n_obs: u8,
 }
 
-impl ObservationHeader {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeader, crate::Error> {
-        Ok( ObservationHeader{
-            t: GPSTime::parse(_buf)?,
-            n_obs: _buf.read_u8()?,
-        } )
+impl WireFormat for ObservationHeader {
+    const MIN_LEN: usize = <GpsTime as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t) + WireFormat::len(&self.n_obs)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeader>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(ObservationHeader::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t, buf);
+        WireFormat::write(&self.n_obs, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<ObservationHeader>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(ObservationHeader::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        ObservationHeader {
+            t: WireFormat::parse_unchecked(buf),
+            n_obs: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for ObservationHeader {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t.append_to_sbp_buffer(buf);
-        self.n_obs.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t.sbp_size();
-        size += self.n_obs.sbp_size();
-        size
-    }
-}
-
-/// Header for observation message.
+/// Header for observation message
 ///
 /// Header of a GPS observation message.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct ObservationHeaderDep {
     /// GPS time of this observation
-    pub t: GPSTimeDep,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+    pub t: GpsTimeDep,
     /// Total number of observations. First nibble is the size of the sequence
     /// (n), second nibble is the zero-indexed counter (ith packet of n)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_obs")))]
     pub n_obs: u8,
 }
 
-impl ObservationHeaderDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeaderDep, crate::Error> {
-        Ok( ObservationHeaderDep{
-            t: GPSTimeDep::parse(_buf)?,
-            n_obs: _buf.read_u8()?,
-        } )
+impl WireFormat for ObservationHeaderDep {
+    const MIN_LEN: usize = <GpsTimeDep as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.t) + WireFormat::len(&self.n_obs)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(ObservationHeaderDep::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.t, buf);
+        WireFormat::write(&self.n_obs, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(ObservationHeaderDep::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        ObservationHeaderDep {
+            t: WireFormat::parse_unchecked(buf),
+            n_obs: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for ObservationHeaderDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.t.append_to_sbp_buffer(buf);
-        self.n_obs.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.t.sbp_size();
-        size += self.n_obs.sbp_size();
-        size
-    }
-}
-
-/// GNSS observations for a particular satellite signal.
+/// GNSS observations for a particular satellite signal
 ///
 /// Pseudorange and carrier phase observation for a satellite being tracked.
-/// The observations are interoperable with 3rd party receivers and conform with
-/// typical RTCM 3.1 message GPS/GLO observations.
+/// The observations are interoperable with 3rd party receivers and conform
+/// with typical RTCM 3.1 message GPS/GLO observations.
 ///
 /// Carrier phase observations are not guaranteed to be aligned to the RINEX 3
-/// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
-/// peformed.
+/// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are
+/// currently performed.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct PackedObsContent {
     /// Pseudorange observation
-    pub P: u32,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+    pub p: u32,
     /// Carrier phase observation with typical sign convention.
-    pub L: CarrierPhase,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+    pub l: CarrierPhase,
     /// Doppler observation with typical sign convention.
-    pub D: Doppler,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "D")))]
+    pub d: Doppler,
     /// Carrier-to-Noise density.  Zero implies invalid cn0.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
     pub cn0: u8,
     /// Lock timer. This value gives an indication of the time for which a
     /// signal has maintained continuous phase lock. Whenever a signal has lost
@@ -5245,70 +5902,54 @@ pub struct PackedObsContent {
     /// to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
     /// range from 0 to 15 and the most significant nibble is reserved for
     /// future use.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
     pub lock: u8,
     /// Measurement status flags. A bit field of flags providing the status of
     /// this observation.  If this field is 0 it means only the Cn0 estimate for
     /// the signal is valid.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
     /// GNSS signal identifier (16 bit)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
 }
 
-impl PackedObsContent {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContent, crate::Error> {
-        Ok( PackedObsContent{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhase::parse(_buf)?,
-            D: Doppler::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-            sid: GnssSignal::parse(_buf)?,
-        } )
+impl WireFormat for PackedObsContent {
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <CarrierPhase as WireFormat>::MIN_LEN
+        + <Doppler as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.p)
+            + WireFormat::len(&self.l)
+            + WireFormat::len(&self.d)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.lock)
+            + WireFormat::len(&self.flags)
+            + WireFormat::len(&self.sid)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContent::parse(buf)?);
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.p, buf);
+        WireFormat::write(&self.l, buf);
+        WireFormat::write(&self.d, buf);
+        WireFormat::write(&self.cn0, buf);
+        WireFormat::write(&self.lock, buf);
+        WireFormat::write(&self.flags, buf);
+        WireFormat::write(&self.sid, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        PackedObsContent {
+            p: WireFormat::parse_unchecked(buf),
+            l: WireFormat::parse_unchecked(buf),
+            d: WireFormat::parse_unchecked(buf),
+            cn0: WireFormat::parse_unchecked(buf),
+            lock: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContent>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(PackedObsContent::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for PackedObsContent {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.P.append_to_sbp_buffer(buf);
-        self.L.append_to_sbp_buffer(buf);
-        self.D.append_to_sbp_buffer(buf);
-        self.cn0.append_to_sbp_buffer(buf);
-        self.lock.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.P.sbp_size();
-        size += self.L.sbp_size();
-        size += self.D.sbp_size();
-        size += self.cn0.sbp_size();
-        size += self.lock.sbp_size();
-        size += self.flags.sbp_size();
-        size += self.sid.sbp_size();
-        size
     }
 }
 
@@ -5316,374 +5957,292 @@ impl crate::serialize::SbpSerialize for PackedObsContent {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct PackedObsContentDepA {
     /// Pseudorange observation
-    pub P: u32,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+    pub p: u32,
     /// Carrier phase observation with opposite sign from typical convention
-    pub L: CarrierPhaseDepA,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+    pub l: CarrierPhaseDepA,
     /// Carrier-to-Noise density
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
     pub cn0: u8,
     /// Lock indicator. This value changes whenever a satellite signal has lost
     /// and regained lock, indicating that the carrier phase ambiguity may have
     /// changed.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
     pub lock: u16,
     /// PRN-1 identifier of the satellite signal
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
     pub prn: u8,
 }
 
-impl PackedObsContentDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepA, crate::Error> {
-        Ok( PackedObsContentDepA{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhaseDepA::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u16::<LittleEndian>()?,
-            prn: _buf.read_u8()?,
-        } )
+impl WireFormat for PackedObsContentDepA {
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <CarrierPhaseDepA as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.p)
+            + WireFormat::len(&self.l)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.lock)
+            + WireFormat::len(&self.prn)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContentDepA::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.p, buf);
+        WireFormat::write(&self.l, buf);
+        WireFormat::write(&self.cn0, buf);
+        WireFormat::write(&self.lock, buf);
+        WireFormat::write(&self.prn, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(PackedObsContentDepA::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        PackedObsContentDepA {
+            p: WireFormat::parse_unchecked(buf),
+            l: WireFormat::parse_unchecked(buf),
+            cn0: WireFormat::parse_unchecked(buf),
+            lock: WireFormat::parse_unchecked(buf),
+            prn: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for PackedObsContentDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.P.append_to_sbp_buffer(buf);
-        self.L.append_to_sbp_buffer(buf);
-        self.cn0.append_to_sbp_buffer(buf);
-        self.lock.append_to_sbp_buffer(buf);
-        self.prn.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.P.sbp_size();
-        size += self.L.sbp_size();
-        size += self.cn0.sbp_size();
-        size += self.lock.sbp_size();
-        size += self.prn.sbp_size();
-        size
-    }
-}
-
-/// GPS observations for a particular satellite signal.
+/// GPS observations for a particular satellite signal
 ///
-/// Pseudorange and carrier phase observation for a satellite being
-/// tracked.  Pseudoranges are referenced to a nominal pseudorange.
+/// Pseudorange and carrier phase observation for a satellite being tracked.
+/// Pseudoranges are referenced to a nominal pseudorange.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct PackedObsContentDepB {
     /// Pseudorange observation
-    pub P: u32,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+    pub p: u32,
     /// Carrier phase observation with opposite sign from typical convention.
-    pub L: CarrierPhaseDepA,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+    pub l: CarrierPhaseDepA,
     /// Carrier-to-Noise density
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
     pub cn0: u8,
     /// Lock indicator. This value changes whenever a satellite signal has lost
     /// and regained lock, indicating that the carrier phase ambiguity may have
     /// changed.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
     pub lock: u16,
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
 }
 
-impl PackedObsContentDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepB, crate::Error> {
-        Ok( PackedObsContentDepB{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhaseDepA::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u16::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
-        } )
+impl WireFormat for PackedObsContentDepB {
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <CarrierPhaseDepA as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.p)
+            + WireFormat::len(&self.l)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.lock)
+            + WireFormat::len(&self.sid)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContentDepB::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.p, buf);
+        WireFormat::write(&self.l, buf);
+        WireFormat::write(&self.cn0, buf);
+        WireFormat::write(&self.lock, buf);
+        WireFormat::write(&self.sid, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(PackedObsContentDepB::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        PackedObsContentDepB {
+            p: WireFormat::parse_unchecked(buf),
+            l: WireFormat::parse_unchecked(buf),
+            cn0: WireFormat::parse_unchecked(buf),
+            lock: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for PackedObsContentDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.P.append_to_sbp_buffer(buf);
-        self.L.append_to_sbp_buffer(buf);
-        self.cn0.append_to_sbp_buffer(buf);
-        self.lock.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.P.sbp_size();
-        size += self.L.sbp_size();
-        size += self.cn0.sbp_size();
-        size += self.lock.sbp_size();
-        size += self.sid.sbp_size();
-        size
-    }
-}
-
-/// GPS observations for a particular satellite signal.
+/// GPS observations for a particular satellite signal
 ///
-/// Pseudorange and carrier phase observation for a satellite being
-/// tracked. The observations are be interoperable with 3rd party
-/// receivers and conform with typical RTCMv3 GNSS observations.
+/// Pseudorange and carrier phase observation for a satellite being tracked.
+/// The observations are be interoperable with 3rd party receivers and conform
+/// with typical RTCMv3 GNSS observations.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct PackedObsContentDepC {
     /// Pseudorange observation
-    pub P: u32,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+    pub p: u32,
     /// Carrier phase observation with typical sign convention.
-    pub L: CarrierPhase,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+    pub l: CarrierPhase,
     /// Carrier-to-Noise density
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
     pub cn0: u8,
     /// Lock indicator. This value changes whenever a satellite signal has lost
     /// and regained lock, indicating that the carrier phase ambiguity may have
     /// changed.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
     pub lock: u16,
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
 }
 
-impl PackedObsContentDepC {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepC, crate::Error> {
-        Ok( PackedObsContentDepC{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhase::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u16::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
-        } )
+impl WireFormat for PackedObsContentDepC {
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <CarrierPhase as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <GnssSignalDep as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.p)
+            + WireFormat::len(&self.l)
+            + WireFormat::len(&self.cn0)
+            + WireFormat::len(&self.lock)
+            + WireFormat::len(&self.sid)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContentDepC::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.p, buf);
+        WireFormat::write(&self.l, buf);
+        WireFormat::write(&self.cn0, buf);
+        WireFormat::write(&self.lock, buf);
+        WireFormat::write(&self.sid, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(PackedObsContentDepC::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        PackedObsContentDepC {
+            p: WireFormat::parse_unchecked(buf),
+            l: WireFormat::parse_unchecked(buf),
+            cn0: WireFormat::parse_unchecked(buf),
+            lock: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for PackedObsContentDepC {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.P.append_to_sbp_buffer(buf);
-        self.L.append_to_sbp_buffer(buf);
-        self.cn0.append_to_sbp_buffer(buf);
-        self.lock.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.P.sbp_size();
-        size += self.L.sbp_size();
-        size += self.cn0.sbp_size();
-        size += self.lock.sbp_size();
-        size += self.sid.sbp_size();
-        size
-    }
-}
-
-/// Network correction for a particular satellite signal.
+/// Network correction for a particular satellite signal
 ///
 /// Pseudorange and carrier phase network corrections for a satellite signal.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct PackedOsrContent {
     /// Pseudorange observation
-    pub P: u32,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+    pub p: u32,
     /// Carrier phase observation with typical sign convention.
-    pub L: CarrierPhase,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+    pub l: CarrierPhase,
     /// Lock timer. This value gives an indication of the time for which a
     /// signal has maintained continuous phase lock. Whenever a signal has lost
     /// and regained lock, this value is reset to zero. It is encoded according
     /// to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
     /// range from 0 to 15 and the most significant nibble is reserved for
     /// future use.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
     pub lock: u8,
     /// Correction flags.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
     /// GNSS signal identifier (16 bit)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
     /// Slant ionospheric correction standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "iono_std")))]
     pub iono_std: u16,
     /// Slant tropospheric correction standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_std")))]
     pub tropo_std: u16,
     /// Orbit/clock/bias correction projected on range standard deviation
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "range_std")))]
     pub range_std: u16,
 }
 
-impl PackedOsrContent {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedOsrContent, crate::Error> {
-        Ok( PackedOsrContent{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhase::parse(_buf)?,
-            lock: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-            sid: GnssSignal::parse(_buf)?,
-            iono_std: _buf.read_u16::<LittleEndian>()?,
-            tropo_std: _buf.read_u16::<LittleEndian>()?,
-            range_std: _buf.read_u16::<LittleEndian>()?,
-        } )
+impl WireFormat for PackedOsrContent {
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <CarrierPhase as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <GnssSignal as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.p)
+            + WireFormat::len(&self.l)
+            + WireFormat::len(&self.lock)
+            + WireFormat::len(&self.flags)
+            + WireFormat::len(&self.sid)
+            + WireFormat::len(&self.iono_std)
+            + WireFormat::len(&self.tropo_std)
+            + WireFormat::len(&self.range_std)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedOsrContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedOsrContent::parse(buf)?);
-        }
-        Ok(v)
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.p, buf);
+        WireFormat::write(&self.l, buf);
+        WireFormat::write(&self.lock, buf);
+        WireFormat::write(&self.flags, buf);
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.iono_std, buf);
+        WireFormat::write(&self.tropo_std, buf);
+        WireFormat::write(&self.range_std, buf);
     }
-
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedOsrContent>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(PackedOsrContent::parse(buf)?);
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        PackedOsrContent {
+            p: WireFormat::parse_unchecked(buf),
+            l: WireFormat::parse_unchecked(buf),
+            lock: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+            sid: WireFormat::parse_unchecked(buf),
+            iono_std: WireFormat::parse_unchecked(buf),
+            tropo_std: WireFormat::parse_unchecked(buf),
+            range_std: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
     }
 }
 
-impl crate::serialize::SbpSerialize for PackedOsrContent {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.P.append_to_sbp_buffer(buf);
-        self.L.append_to_sbp_buffer(buf);
-        self.lock.append_to_sbp_buffer(buf);
-        self.flags.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-        self.iono_std.append_to_sbp_buffer(buf);
-        self.tropo_std.append_to_sbp_buffer(buf);
-        self.range_std.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.P.sbp_size();
-        size += self.L.sbp_size();
-        size += self.lock.sbp_size();
-        size += self.flags.sbp_size();
-        size += self.sid.sbp_size();
-        size += self.iono_std.sbp_size();
-        size += self.tropo_std.sbp_size();
-        size += self.range_std.sbp_size();
-        size
-    }
-}
-
-/// Satellite azimuth and elevation.
+/// Satellite azimuth and elevation
 ///
 /// Satellite azimuth and elevation.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct SvAzEl {
     /// GNSS signal identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignal,
     /// Azimuth angle (range 0..179)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "az")))]
     pub az: u8,
     /// Elevation angle (range -90..90)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "el")))]
     pub el: i8,
 }
 
-impl SvAzEl {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<SvAzEl, crate::Error> {
-        Ok( SvAzEl{
-            sid: GnssSignal::parse(_buf)?,
-            az: _buf.read_u8()?,
-            el: _buf.read_i8()?,
-        } )
+impl WireFormat for SvAzEl {
+    const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <i8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.sid) + WireFormat::len(&self.az) + WireFormat::len(&self.el)
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvAzEl>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(SvAzEl::parse(buf)?);
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.sid, buf);
+        WireFormat::write(&self.az, buf);
+        WireFormat::write(&self.el, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        SvAzEl {
+            sid: WireFormat::parse_unchecked(buf),
+            az: WireFormat::parse_unchecked(buf),
+            el: WireFormat::parse_unchecked(buf),
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvAzEl>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(SvAzEl::parse(buf)?);
-        }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for SvAzEl {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.az.append_to_sbp_buffer(buf);
-        self.el.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.az.sbp_size();
-        size += self.el.sbp_size();
-        size
     }
 }

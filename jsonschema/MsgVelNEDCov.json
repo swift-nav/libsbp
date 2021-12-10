@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgVelNEDCov",
   "title":"MsgVelNEDCov",
-  "description":"This message reports the velocity in local North East Down (NED),\ncoordinates. The NED coordinate system is defined as the local WGS84,\ntangent plane centered at the current position. The full GPS time is,\ngiven by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,\nThis message is similar to the MSG_VEL_NED, but it includes the upper triangular,\nportion of the 3x3 covariance matrix.\n",
+  "description":"This message reports the velocity in local North East Down (NED) coordinates. The NED coordinate system is defined as the local WGS84 tangent plane centered at the current position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is similar to the MSG_VEL_NED, but it includes the upper triangular portion of the 3x3 covariance matrix.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

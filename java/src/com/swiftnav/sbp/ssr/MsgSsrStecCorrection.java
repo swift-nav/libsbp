@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,49 +8,50 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.ssr;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
+/**
+ * SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
  *
- * You can have MSG_SSR_STEC_CORRECTION inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SSR_STEC_CORRECTION inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
- * of the atmospheric delay.
- * 
- * It is typically equivalent to the QZSS CLAS Sub Type 8 messages. */
-
+ * <p>The Slant Total Electron Content per space vehicle, given as polynomial approximation for a
+ * given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get the state
+ * space representation of the atmospheric delay.
+ *
+ * <p>It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+ */
 public class MsgSsrStecCorrection extends SBPMessage {
     public static final int TYPE = 0x05FB;
 
-    
-    /** Header of a STEC polynomial coeffcient message. */
+    /** Header of a STEC polynomial coefficient message. */
     public STECHeader header;
-    
-    /** Array of STEC polynomial coeffcients for each space vehicle. */
-    public STECSatElement[] stec_sat_list;
-    
 
-    public MsgSsrStecCorrection (int sender) { super(sender, TYPE); }
-    public MsgSsrStecCorrection () { super(TYPE); }
-    public MsgSsrStecCorrection (SBPMessage msg) throws SBPBinaryException {
+    /** Array of STEC polynomial coefficients for each space vehicle. */
+    public STECSatElement[] stec_sat_list;
+
+    public MsgSsrStecCorrection(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSsrStecCorrection() {
+        super(TYPE);
+    }
+
+    public MsgSsrStecCorrection(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

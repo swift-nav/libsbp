@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Sbas
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<SBAS data\>
+-- \< SBAS data \>
 
 module SwiftNav.SBP.Sbas
   ( module SwiftNav.SBP.Sbas

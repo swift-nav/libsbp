@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.System
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Standardized system messages from Swift Navigation devices.\>
+-- \< Standardized system messages from Swift Navigation devices. \>
 
 module SwiftNav.SBP.System
   ( module SwiftNav.SBP.System
@@ -40,9 +40,9 @@ msgStartup = 0xFF00
 
 -- | SBP class for message MSG_STARTUP (0xFF00).
 --
--- The system start-up message is sent once on system start-up. It notifies the
--- host or other attached devices that the system has started and is now ready
--- to respond to commands or configuration requests.
+-- The system start-up message is sent once on system start-up. It notifies
+-- the host or other attached devices that the system has started and is now
+-- ready to respond to commands or configuration requests.
 data MsgStartup = MsgStartup
   { _msgStartup_cause      :: !Word8
     -- ^ Cause of startup
@@ -114,9 +114,11 @@ msgHeartbeat = 0xFFFF
 -- attached devices that the system is running. It is used to monitor system
 -- malfunctions. It also contains status flags that indicate to the host the
 -- status of the system and whether it is operating correctly. Currently, the
--- expected heartbeat interval is 1 sec.  The system error flag is used to
--- indicate that an error has occurred in the system. To determine the source
--- of the error, the remaining error flags should be inspected.
+-- expected heartbeat interval is 1 sec.
+--
+-- The system error flag is used to indicate that an error has occurred in the
+-- system. To determine the source of the error, the remaining error flags
+-- should be inspected.
 data MsgHeartbeat = MsgHeartbeat
   { _msgHeartbeat_flags :: !Word32
     -- ^ Status flags
@@ -136,8 +138,8 @@ $(makeLenses ''MsgHeartbeat)
 
 -- | SubSystemReport.
 --
--- Report the general and specific state of a sub-system.  If the generic state
--- is reported as initializing, the specific state should be ignored.
+-- Report the general and specific state of a sub-system.  If the generic
+-- state is reported as initializing, the specific state should be ignored.
 data SubSystemReport = SubSystemReport
   { _subSystemReport_component :: !Word16
     -- ^ Identity of reporting subsystem
@@ -171,9 +173,10 @@ msgStatusReport = 0xFFFE
 -- devices that the system is running. It is used to monitor system
 -- malfunctions. It contains status reports that indicate to the host the
 -- status of each sub-system and whether it is operating correctly.
+--
 -- Interpretation of the subsystem specific status code is product dependent,
--- but if the generic status code is initializing, it should be ignored.  Refer
--- to product documentation for details.
+-- but if the generic status code is initializing, it should be ignored.
+-- Refer to product documentation for details.
 data MsgStatusReport = MsgStatusReport
   { _msgStatusReport_reporting_system :: !Word16
     -- ^ Identity of reporting system
@@ -237,11 +240,11 @@ msgCsacTelemetry = 0xFF04
 -- | SBP class for message MSG_CSAC_TELEMETRY (0xFF04).
 --
 -- The CSAC telemetry message has an implementation defined telemetry string
--- from a device. It is not produced or available on general Swift Products. It
--- is intended to be a low rate message for status purposes.
+-- from a device. It is not produced or available on general Swift Products.
+-- It is intended to be a low rate message for status purposes.
 data MsgCsacTelemetry = MsgCsacTelemetry
   { _msgCsacTelemetry_id      :: !Word8
-    -- ^ Index representing the type of telemetry in use.  It is implemention
+    -- ^ Index representing the type of telemetry in use.  It is implementation
     -- defined.
   , _msgCsacTelemetry_telemetry :: !Text
     -- ^ Comma separated list of values as defined by the index
@@ -267,11 +270,11 @@ msgCsacTelemetryLabels = 0xFF05
 -- | SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).
 --
 -- The CSAC telemetry message provides labels for each member of the string
--- produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
--- rate than the MSG_CSAC_TELEMETRY.
+-- produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a
+-- lower rate than the MSG_CSAC_TELEMETRY.
 data MsgCsacTelemetryLabels = MsgCsacTelemetryLabels
   { _msgCsacTelemetryLabels_id             :: !Word8
-    -- ^ Index representing the type of telemetry in use.  It is implemention
+    -- ^ Index representing the type of telemetry in use.  It is implementation
     -- defined.
   , _msgCsacTelemetryLabels_telemetry_labels :: !Text
     -- ^ Comma separated list of telemetry field values
@@ -296,7 +299,7 @@ msgInsUpdates = 0xFF06
 
 -- | SBP class for message MSG_INS_UPDATES (0xFF06).
 --
--- The INS update status message contains informations about executed and
+-- The INS update status message contains information about executed and
 -- rejected INS updates. This message is expected to be extended in the future
 -- as new types of measurements are being added.
 data MsgInsUpdates = MsgInsUpdates
@@ -386,12 +389,13 @@ msgPpsTime = 0xFF08
 -- microseconds at the moment a pulse is detected on the PPS input. This is to
 -- be used for syncronisation of sensor data sampled with a local timestamp
 -- (e.g. IMU or wheeltick messages) where GNSS time is unknown to the sender.
--- The local time used to timestamp the PPS pulse must be generated by the same
--- clock which is used to timestamp the IMU/wheel sensor data and should follow
--- the same roll-over rules.  A separate MSG_PPS_TIME message should be sent
--- for each source of sensor data which uses PPS-relative timestamping.  The
--- sender ID for each of these MSG_PPS_TIME messages should match the sender ID
--- of the respective sensor data.
+--
+-- The local time used to timestamp the PPS pulse must be generated by the
+-- same clock which is used to timestamp the IMU/wheel sensor data and should
+-- follow the same roll-over rules.  A separate MSG_PPS_TIME message should be
+-- sent for each source of sensor data which uses PPS-relative timestamping.
+-- The sender ID for each of these MSG_PPS_TIME messages should match the
+-- sender ID of the respective sensor data.
 data MsgPpsTime = MsgPpsTime
   { _msgPpsTime_time :: !Word64
     -- ^ Local time in microseconds
@@ -429,7 +433,7 @@ data MsgGroupMeta = MsgGroupMeta
   , _msgGroupMeta_n_group_msgs :: !Word8
     -- ^ Size of list group_msgs
   , _msgGroupMeta_group_msgs :: ![Word16]
-    -- ^ An inorder list of message types included in the Solution Group,
+    -- ^ An in-order list of message types included in the Solution Group,
     -- including GROUP_META itself
   } deriving ( Show, Read, Eq )
 

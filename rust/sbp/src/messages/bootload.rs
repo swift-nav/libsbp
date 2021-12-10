@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -15,211 +15,203 @@
 //! Messages for the bootloading configuration of a Piksi 2.3.1.  This message
 //! group does not apply to Piksi Multi.
 //!
-//! Note that some of these messages share the same message type ID for both the
-//! host request and the device response.
-//!
+//! Note that some of these messages share the same message type ID for both
+//! the host request and the device response.
 
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
-
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+use super::lib::*;
 
 /// Deprecated
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Version number string (not NULL terminated)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "handshake")))]
     pub handshake: Vec<u8>,
 }
 
-impl MsgBootloaderHandshakeDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, crate::Error> {
-        Ok( MsgBootloaderHandshakeDepA{
-            sender_id: None,
-            handshake: crate::parser::read_u8_array(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgBootloaderHandshakeDepA {
+    const MESSAGE_TYPE: u16 = 176;
+    const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_HANDSHAKE_DEP_A";
 }
-impl super::SBPMessage for MsgBootloaderHandshakeDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_HANDSHAKE_DEP_A"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        176
+impl SbpMessage for MsgBootloaderHandshakeDepA {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.handshake.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgBootloaderHandshakeDepA {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgBootloaderHandshakeDepA(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.handshake.sbp_size();
-        size
+impl WireFormat for MsgBootloaderHandshakeDepA {
+    const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.handshake)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.handshake, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgBootloaderHandshakeDepA {
+            sender_id: None,
+            handshake: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Bootloading handshake request (host => device)
 ///
-/// The handshake message request from the host establishes a
-/// handshake between the device bootloader and the host. The
-/// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
+/// The handshake message request from the host establishes a handshake
+/// between the device bootloader and the host. The response from the device
+/// is MSG_BOOTLOADER_HANDSHAKE_RESP.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
-impl MsgBootloaderHandshakeReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, crate::Error> {
-        Ok( MsgBootloaderHandshakeReq{
-            sender_id: None,
-        } )
-    }
+impl ConcreteMessage for MsgBootloaderHandshakeReq {
+    const MESSAGE_TYPE: u16 = 179;
+    const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_HANDSHAKE_REQ";
 }
-impl super::SBPMessage for MsgBootloaderHandshakeReq {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_HANDSHAKE_REQ"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        179
+impl SbpMessage for MsgBootloaderHandshakeReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+impl TryFrom<Sbp> for MsgBootloaderHandshakeReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgBootloaderHandshakeReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
+    }
+}
 
-    fn sbp_size(&self) -> usize {
+impl WireFormat for MsgBootloaderHandshakeReq {
+    const MIN_LEN: usize = 0;
+    fn len(&self) -> usize {
         0
+    }
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
+        MsgBootloaderHandshakeReq { sender_id: None }
     }
 }
 
 /// Bootloading handshake response (host <= device)
 ///
-/// The handshake message response from the device establishes a
-/// handshake between the device bootloader and the host. The
-/// request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
-/// payload contains the bootloader version number and the SBP
-/// protocol version number.
+/// The handshake message response from the device establishes a handshake
+/// between the device bootloader and the host. The request from the host is
+/// MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version
+/// number and the SBP protocol version number.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Bootloader flags
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u32,
     /// Bootloader version number
-    pub version: SbpString,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "version")))]
+    pub version: SbpString<Vec<u8>, Unterminated>,
 }
 
-impl MsgBootloaderHandshakeResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, crate::Error> {
-        Ok( MsgBootloaderHandshakeResp{
-            sender_id: None,
-            flags: _buf.read_u32::<LittleEndian>()?,
-            version: crate::parser::read_string(_buf)?,
-        } )
-    }
+impl ConcreteMessage for MsgBootloaderHandshakeResp {
+    const MESSAGE_TYPE: u16 = 180;
+    const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_HANDSHAKE_RESP";
 }
-impl super::SBPMessage for MsgBootloaderHandshakeResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_HANDSHAKE_RESP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        180
+impl SbpMessage for MsgBootloaderHandshakeResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.flags.append_to_sbp_buffer(buf);
-        self.version.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgBootloaderHandshakeResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgBootloaderHandshakeResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.flags.sbp_size();
-        size += self.version.sbp_size();
-        size
+impl WireFormat for MsgBootloaderHandshakeResp {
+    const MIN_LEN: usize =
+        <u32 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.flags) + WireFormat::len(&self.version)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.flags, buf);
+        WireFormat::write(&self.version, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgBootloaderHandshakeResp {
+            sender_id: None,
+            flags: WireFormat::parse_unchecked(buf),
+            version: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
@@ -227,193 +219,192 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
 ///
 /// The host initiates the bootloader to jump to the application.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Ignored by the device
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "jump")))]
     pub jump: u8,
 }
 
-impl MsgBootloaderJumpToApp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, crate::Error> {
-        Ok( MsgBootloaderJumpToApp{
-            sender_id: None,
-            jump: _buf.read_u8()?,
-        } )
-    }
+impl ConcreteMessage for MsgBootloaderJumpToApp {
+    const MESSAGE_TYPE: u16 = 177;
+    const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_JUMP_TO_APP";
 }
-impl super::SBPMessage for MsgBootloaderJumpToApp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_BOOTLOADER_JUMP_TO_APP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        177
+impl SbpMessage for MsgBootloaderJumpToApp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.jump.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgBootloaderJumpToApp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgBootloaderJumpToApp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.jump.sbp_size();
-        size
+impl WireFormat for MsgBootloaderJumpToApp {
+    const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.jump)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.jump, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgBootloaderJumpToApp {
+            sender_id: None,
+            jump: WireFormat::parse_unchecked(buf),
+        }
     }
 }
 
 /// Read FPGA device ID over UART request (host => device)
 ///
-/// The device message from the host reads a unique device
-/// identifier from the SwiftNAP, an FPGA. The host requests the ID
-/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-/// responds with a MSG_NAP_DEVICE_DNA_RESP message with the
-/// device ID in the payload. Note that this ID is tied to the FPGA,
-/// and not related to the Piksi's serial number.
+/// The device message from the host reads a unique device identifier from the
+/// SwiftNAP, an FPGA. The host requests the ID by sending a
+/// MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+/// MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
+/// that this ID is tied to the FPGA, and not related to the Piksi's serial
+/// number.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
 }
 
-impl MsgNapDeviceDnaReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, crate::Error> {
-        Ok( MsgNapDeviceDnaReq{
-            sender_id: None,
-        } )
-    }
+impl ConcreteMessage for MsgNapDeviceDnaReq {
+    const MESSAGE_TYPE: u16 = 222;
+    const MESSAGE_NAME: &'static str = "MSG_NAP_DEVICE_DNA_REQ";
 }
-impl super::SBPMessage for MsgNapDeviceDnaReq {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_NAP_DEVICE_DNA_REQ"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        222
+impl SbpMessage for MsgNapDeviceDnaReq {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+impl TryFrom<Sbp> for MsgNapDeviceDnaReq {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgNapDeviceDnaReq(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
+    }
+}
 
-    fn sbp_size(&self) -> usize {
+impl WireFormat for MsgNapDeviceDnaReq {
+    const MIN_LEN: usize = 0;
+    fn len(&self) -> usize {
         0
+    }
+    fn write<B: BufMut>(&self, _buf: &mut B) {}
+    fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
+        MsgNapDeviceDnaReq { sender_id: None }
     }
 }
 
 /// Read FPGA device ID over UART response (host <= device)
 ///
-/// The device message from the host reads a unique device
-/// identifier from the SwiftNAP, an FPGA. The host requests the ID
-/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-/// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
-/// device ID in the payload. Note that this ID is tied to the FPGA,
-/// and not related to the Piksi's serial number.
+/// The device message from the host reads a unique device identifier from the
+/// SwiftNAP, an FPGA. The host requests the ID by sending a
+/// MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
+/// MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
+/// that this ID is tied to the FPGA, and not related to the Piksi's serial
+/// number.
 ///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-#[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
-    pub dna: Vec<u8>,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "dna")))]
+    pub dna: [u8; 8],
 }
 
-impl MsgNapDeviceDnaResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, crate::Error> {
-        Ok( MsgNapDeviceDnaResp{
-            sender_id: None,
-            dna: crate::parser::read_u8_array_limit(_buf, 8)?,
-        } )
-    }
+impl ConcreteMessage for MsgNapDeviceDnaResp {
+    const MESSAGE_TYPE: u16 = 221;
+    const MESSAGE_NAME: &'static str = "MSG_NAP_DEVICE_DNA_RESP";
 }
-impl super::SBPMessage for MsgNapDeviceDnaResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_NAP_DEVICE_DNA_RESP"
-    }
 
-    fn get_message_type(&self) -> u16 {
-        221
+impl SbpMessage for MsgNapDeviceDnaResp {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
     }
-
-    fn get_sender_id(&self) -> Option<u16> {
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
         self.sender_id
     }
-
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgNapDeviceDnaResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.dna.append_to_sbp_buffer(buf);
+impl TryFrom<Sbp> for MsgNapDeviceDnaResp {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgNapDeviceDnaResp(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
     }
+}
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.dna.sbp_size();
-        size
+impl WireFormat for MsgNapDeviceDnaResp {
+    const MIN_LEN: usize = <[u8; 8] as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.dna)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.dna, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgNapDeviceDnaResp {
+            sender_id: None,
+            dna: WireFormat::parse_unchecked(buf),
+        }
     }
 }

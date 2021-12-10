@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -15,8 +15,7 @@ printing them out.
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
-from sbp.client.loggers.json_logger import JSONLogger
-from sbp.navigation import SBP_MSG_BASELINE_NED, MsgBaselineNED
+from sbp.navigation import SBP_MSG_BASELINE_NED
 import argparse
 
 
