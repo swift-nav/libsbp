@@ -1,5 +1,26 @@
 # Change Log
 
+## [v4.1.0](https://github.com/swift-nav/libsbp/tree/v4.1.0) (2021-12-10)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.11...v4.1.0)
+
+**Merged pull requests:**
+
+- Typo fix in Readme.md [\#1089](https://github.com/swift-nav/libsbp/pull/1089) ([jtec](https://github.com/jtec))
+- Create new COG/SOG message [\#1088](https://github.com/swift-nav/libsbp/pull/1088) ([lloydmaza](https://github.com/lloydmaza))
+- Auto submodule update: cmake - Added variable to disable RTTI in RapidCheck \(\#106\) [\#1087](https://github.com/swift-nav/libsbp/pull/1087) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - \[ESD-2257\] Move archive util to common cmake repo \(\#105\) [\#1086](https://github.com/swift-nav/libsbp/pull/1086) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- \[ESD-2250\] Encode/decode functions in cpp message traits [\#1085](https://github.com/swift-nav/libsbp/pull/1085) ([woodfell](https://github.com/woodfell))
+- \[ESD-2242\] Fix integer promotion issues in generated macros [\#1083](https://github.com/swift-nav/libsbp/pull/1083) ([woodfell](https://github.com/woodfell))
+
+## [v3.4.11](https://github.com/swift-nav/libsbp/tree/v3.4.11) (2021-12-10)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.3...v3.4.11)
+
+**Changes:**
+
+- Create new COG/SOG message [\#1088](https://github.com/swift-nav/libsbp/pull/1088) ([lloydmaza](https://github.com/lloydmaza))
+
 ## [v4.0.3](https://github.com/swift-nav/libsbp/tree/v4.0.3) (2021-10-22)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.0.2...v4.0.3)
