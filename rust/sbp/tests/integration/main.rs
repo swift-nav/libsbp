@@ -45,6 +45,7 @@ mod auto_check_sbp_navigation_msg_protection_level;
 mod auto_check_sbp_navigation_msg_utc_time;
 mod auto_check_sbp_navigation_msg_utc_time_gnss;
 mod auto_check_sbp_navigation_msg_vel_body;
+mod auto_check_sbp_navigation_msg_vel_cog;
 mod auto_check_sbp_navigation_msg_vel_ecef;
 mod auto_check_sbp_navigation_msg_vel_ecef_cov;
 mod auto_check_sbp_navigation_msg_vel_ecef_cov_gnss;
