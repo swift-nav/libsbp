@@ -52,7 +52,7 @@ def test_message_case_count():
 
     # TODO: ideally we need tests for every message type
     assert (
-        missing_messages <= EXPECTED_MISSING_MESSAGES
+        missing_messages == EXPECTED_MISSING_MESSAGES
     ), "Missing tests for %d out of %d messages" % (missing_messages, total_messages)
 
 @pytest.mark.parametrize("case", CASES)

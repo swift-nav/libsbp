@@ -924,6 +924,81 @@
  */
 #define SBP_MSG_VEL_BODY_ENCODED_LEN 42u
 
+#define SBP_MSG_VEL_COG 0x021C
+#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_MASK (0x3)
+#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_SHIFT (5u)
+#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_GET(flags)           \
+  ((u8)(((flags) >> SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_SHIFT) & \
+        SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_MASK))
+#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_SET(flags, val)              \
+  do {                                                                      \
+    (flags) = (u8)((flags) |                                                \
+                   (((val) & (SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_MASK)) \
+                    << (SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_SHIFT)));    \
+  } while (0)
+
+#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_INVALID (0)
+#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_VERTICAL_VELOCITY_VALID (1)
+#define SBP_VEL_COG_SOG_VALIDITY_MASK (0x3)
+#define SBP_VEL_COG_SOG_VALIDITY_SHIFT (4u)
+#define SBP_VEL_COG_SOG_VALIDITY_GET(flags)           \
+  ((u8)(((flags) >> SBP_VEL_COG_SOG_VALIDITY_SHIFT) & \
+        SBP_VEL_COG_SOG_VALIDITY_MASK))
+#define SBP_VEL_COG_SOG_VALIDITY_SET(flags, val)                        \
+  do {                                                                  \
+    (flags) = (u8)((flags) | (((val) & (SBP_VEL_COG_SOG_VALIDITY_MASK)) \
+                              << (SBP_VEL_COG_SOG_VALIDITY_SHIFT)));    \
+  } while (0)
+
+#define SBP_VEL_COG_SOG_VALIDITY_INVALID (0)
+#define SBP_VEL_COG_SOG_VALIDITY_SOG_VALID (1)
+#define SBP_VEL_COG_COG_VALIDITY_MASK (0x3)
+#define SBP_VEL_COG_COG_VALIDITY_SHIFT (3u)
+#define SBP_VEL_COG_COG_VALIDITY_GET(flags)           \
+  ((u8)(((flags) >> SBP_VEL_COG_COG_VALIDITY_SHIFT) & \
+        SBP_VEL_COG_COG_VALIDITY_MASK))
+#define SBP_VEL_COG_COG_VALIDITY_SET(flags, val)                        \
+  do {                                                                  \
+    (flags) = (u8)((flags) | (((val) & (SBP_VEL_COG_COG_VALIDITY_MASK)) \
+                              << (SBP_VEL_COG_COG_VALIDITY_SHIFT)));    \
+  } while (0)
+
+#define SBP_VEL_COG_COG_VALIDITY_INVALID (0)
+#define SBP_VEL_COG_COG_VALIDITY_COG_VALID (1)
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_SHIFT (2u)
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_GET(flags)           \
+  ((u8)(((flags) >> SBP_VEL_COG_INS_NAVIGATION_MODE_SHIFT) & \
+        SBP_VEL_COG_INS_NAVIGATION_MODE_MASK))
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_SET(flags, val)                        \
+  do {                                                                         \
+    (flags) = (u8)((flags) | (((val) & (SBP_VEL_COG_INS_NAVIGATION_MODE_MASK)) \
+                              << (SBP_VEL_COG_INS_NAVIGATION_MODE_SHIFT)));    \
+  } while (0)
+
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_NONE (0)
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_INS_USED (1)
+#define SBP_VEL_COG_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_COG_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_COG_VELOCITY_MODE_GET(flags)           \
+  ((u8)(((flags) >> SBP_VEL_COG_VELOCITY_MODE_SHIFT) & \
+        SBP_VEL_COG_VELOCITY_MODE_MASK))
+#define SBP_VEL_COG_VELOCITY_MODE_SET(flags, val)                        \
+  do {                                                                   \
+    (flags) = (u8)((flags) | (((val) & (SBP_VEL_COG_VELOCITY_MODE_MASK)) \
+                              << (SBP_VEL_COG_VELOCITY_MODE_SHIFT)));    \
+  } while (0)
+
+#define SBP_VEL_COG_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_COG_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_COG_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#define SBP_VEL_COG_VELOCITY_MODE_DEAD_RECKONING (3)
+/**
+ * Encoded length of sbp_msg_vel_cog_t (V4 API) and
+ * msg_vel_cog_t (legacy API)
+ */
+#define SBP_MSG_VEL_COG_ENCODED_LEN 29u
+
 #define SBP_MSG_AGE_CORRECTIONS 0x0210
 /**
  * Encoded length of sbp_msg_age_corrections_t (V4 API) and

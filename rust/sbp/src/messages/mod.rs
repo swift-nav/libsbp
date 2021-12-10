@@ -108,6 +108,7 @@ use self::navigation::MsgProtectionLevelDepA;
 use self::navigation::MsgUtcTime;
 use self::navigation::MsgUtcTimeGnss;
 use self::navigation::MsgVelBody;
+use self::navigation::MsgVelCog;
 use self::navigation::MsgVelEcef;
 use self::navigation::MsgVelEcefCov;
 use self::navigation::MsgVelEcefCovGnss;
@@ -584,6 +585,8 @@ pub enum Sbp {
     MsgProtectionLevel(MsgProtectionLevel),
     /// Geodetic Position and Accuracy
     MsgPosLlhAcc(MsgPosLlhAcc),
+    /// Velocity expressed as course over ground
+    MsgVelCog(MsgVelCog),
     /// Quaternion 4 component vector
     MsgOrientQuat(MsgOrientQuat),
     /// Euler angles
@@ -1446,6 +1449,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPosLlhAcc(msg))
             }
+            MsgVelCog::MESSAGE_TYPE => {
+                let mut msg = MsgVelCog::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgVelCog(msg))
+            }
             MsgOrientQuat::MESSAGE_TYPE => {
                 let mut msg = MsgOrientQuat::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1900,6 +1908,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => msg.message_name(),
             Sbp::MsgProtectionLevel(msg) => msg.message_name(),
             Sbp::MsgPosLlhAcc(msg) => msg.message_name(),
+            Sbp::MsgVelCog(msg) => msg.message_name(),
             Sbp::MsgOrientQuat(msg) => msg.message_name(),
             Sbp::MsgOrientEuler(msg) => msg.message_name(),
             Sbp::MsgAngularRate(msg) => msg.message_name(),
@@ -2108,6 +2117,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => msg.message_type(),
             Sbp::MsgProtectionLevel(msg) => msg.message_type(),
             Sbp::MsgPosLlhAcc(msg) => msg.message_type(),
+            Sbp::MsgVelCog(msg) => msg.message_type(),
             Sbp::MsgOrientQuat(msg) => msg.message_type(),
             Sbp::MsgOrientEuler(msg) => msg.message_type(),
             Sbp::MsgAngularRate(msg) => msg.message_type(),
@@ -2316,6 +2326,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => msg.sender_id(),
             Sbp::MsgProtectionLevel(msg) => msg.sender_id(),
             Sbp::MsgPosLlhAcc(msg) => msg.sender_id(),
+            Sbp::MsgVelCog(msg) => msg.sender_id(),
             Sbp::MsgOrientQuat(msg) => msg.sender_id(),
             Sbp::MsgOrientEuler(msg) => msg.sender_id(),
             Sbp::MsgAngularRate(msg) => msg.sender_id(),
@@ -2524,6 +2535,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgProtectionLevel(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPosLlhAcc(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgVelCog(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOrientQuat(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOrientEuler(msg) => msg.set_sender_id(new_id),
             Sbp::MsgAngularRate(msg) => msg.set_sender_id(new_id),
@@ -2732,6 +2744,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => msg.encoded_len(),
             Sbp::MsgProtectionLevel(msg) => msg.encoded_len(),
             Sbp::MsgPosLlhAcc(msg) => msg.encoded_len(),
+            Sbp::MsgVelCog(msg) => msg.encoded_len(),
             Sbp::MsgOrientQuat(msg) => msg.encoded_len(),
             Sbp::MsgOrientEuler(msg) => msg.encoded_len(),
             Sbp::MsgAngularRate(msg) => msg.encoded_len(),
@@ -2943,6 +2956,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => msg.gps_time(),
             Sbp::MsgProtectionLevel(msg) => msg.gps_time(),
             Sbp::MsgPosLlhAcc(msg) => msg.gps_time(),
+            Sbp::MsgVelCog(msg) => msg.gps_time(),
             Sbp::MsgOrientQuat(msg) => msg.gps_time(),
             Sbp::MsgOrientEuler(msg) => msg.gps_time(),
             Sbp::MsgAngularRate(msg) => msg.gps_time(),
@@ -3159,6 +3173,7 @@ impl WireFormat for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgProtectionLevel(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPosLlhAcc(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgVelCog(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOrientQuat(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOrientEuler(msg) => WireFormat::write(msg, buf),
             Sbp::MsgAngularRate(msg) => WireFormat::write(msg, buf),
@@ -3367,6 +3382,7 @@ impl WireFormat for Sbp {
             Sbp::MsgProtectionLevelDepA(msg) => WireFormat::len(msg),
             Sbp::MsgProtectionLevel(msg) => WireFormat::len(msg),
             Sbp::MsgPosLlhAcc(msg) => WireFormat::len(msg),
+            Sbp::MsgVelCog(msg) => WireFormat::len(msg),
             Sbp::MsgOrientQuat(msg) => WireFormat::len(msg),
             Sbp::MsgOrientEuler(msg) => WireFormat::len(msg),
             Sbp::MsgAngularRate(msg) => WireFormat::len(msg),
@@ -4281,6 +4297,12 @@ impl From<MsgProtectionLevel> for Sbp {
 impl From<MsgPosLlhAcc> for Sbp {
     fn from(msg: MsgPosLlhAcc) -> Self {
         Sbp::MsgPosLlhAcc(msg)
+    }
+}
+
+impl From<MsgVelCog> for Sbp {
+    fn from(msg: MsgVelCog) -> Self {
+        Sbp::MsgVelCog(msg)
     }
 }
 
