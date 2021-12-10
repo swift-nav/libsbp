@@ -1,0 +1,79 @@
+description: Unit tests for swiftnav.sbp.navigation MsgVelCog
+generated_on: 2021-12-09 18:33:35.382091
+package: sbp.navigation
+tests:
+- msg:
+    fields:
+      cog: 1000
+      cog_accuracy: 4000
+      flags: 62
+      sog: 2000
+      sog_accuracy: 5000
+      tow: 326825520
+      vel_d: 3000
+      vel_d_accuracy: 6000
+    module: sbp.navigation
+    name: MsgVelCog
+  msg_type: '0x21C'
+  raw_json: '{"preamble": 85, "msg_type": 540, "sender": 35027, "length": 29, "payload":
+    "MPZ6E+gDAADQBwAAuAsAAKAPAACIEwAAcBcAAD4=", "crc": 19114, "tow": 326825520, "cog":
+    1000, "sog": 2000, "vel_d": 3000, "cog_accuracy": 4000, "sog_accuracy": 5000,
+    "vel_d_accuracy": 6000, "flags": 62}'
+  raw_packet: VRwC04gdMPZ6E+gDAADQBwAAuAsAAKAPAACIEwAAcBcAAD6qSg==
+  sbp:
+    crc: '0x4AAA'
+    length: 29
+    msg_type: '0x21C'
+    payload: MPZ6E+gDAADQBwAAuAsAAKAPAACIEwAAcBcAAD4=
+    preamble: '0x55'
+    sender: '0x88D3'
+- msg:
+    fields:
+      cog: 123
+      cog_accuracy: 180000000
+      flags: 0
+      sog: 456
+      sog_accuracy: 100
+      tow: 326825520
+      vel_d: -1000
+      vel_d_accuracy: 100
+    module: sbp.navigation
+    name: MsgVelCog
+  msg_type: '0x21C'
+  raw_json: '{"preamble": 85, "msg_type": 540, "sender": 35027, "length": 29, "payload":
+    "MPZ6E3sAAADIAQAAGPz//wCVugpkAAAAZAAAAAA=", "crc": 240, "tow": 326825520, "cog":
+    123, "sog": 456, "vel_d": -1000, "cog_accuracy": 180000000, "sog_accuracy": 100,
+    "vel_d_accuracy": 100, "flags": 0}'
+  raw_packet: VRwC04gdMPZ6E3sAAADIAQAAGPz//wCVugpkAAAAZAAAAADwAA==
+  sbp:
+    crc: '0xF0'
+    length: 29
+    msg_type: '0x21C'
+    payload: MPZ6E3sAAADIAQAAGPz//wCVugpkAAAAZAAAAAA=
+    preamble: '0x55'
+    sender: '0x88D3'
+- msg:
+    fields:
+      cog: 0
+      cog_accuracy: 0
+      flags: 0
+      sog: 0
+      sog_accuracy: 0
+      tow: 326825520
+      vel_d: 0
+      vel_d_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelCog
+  msg_type: '0x21C'
+  raw_json: '{"preamble": 85, "msg_type": 540, "sender": 35027, "length": 29, "payload":
+    "MPZ6EwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=", "crc": 30558, "tow": 326825520, "cog":
+    0, "sog": 0, "vel_d": 0, "cog_accuracy": 0, "sog_accuracy": 0, "vel_d_accuracy":
+    0, "flags": 0}'
+  raw_packet: VRwC04gdMPZ6EwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABedw==
+  sbp:
+    crc: '0x775E'
+    length: 29
+    msg_type: '0x21C'
+    payload: MPZ6EwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+    preamble: '0x55'
+    sender: '0x88D3'

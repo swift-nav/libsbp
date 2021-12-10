@@ -1481,6 +1481,61 @@ MsgVelBody.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgVelBody.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_VEL_COG (0x021C).
+ *
+ * This message reports the receiver course over ground (COG) and speed over
+ * ground (SOG) based on the horizontal (N-E) components of the NED velocity
+ * vector. It also includes the vertical velocity in the form of the D-component of
+ * the NED velocity vector. The NED coordinate system is defined as the local WGS84
+ * tangent  plane centered at the current position. The full GPS time is given by
+ * the  preceding MSG_GPS_TIME with the matching time-of-week (tow). Note: course
+ * over ground represents the receiver's direction of travel,  but not necessarily
+ * the device heading.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field cog number (unsigned 32-bit int, 4 bytes) Course over ground relative to local north
+ * @field sog number (unsigned 32-bit int, 4 bytes) Speed over ground
+ * @field vel_d number (signed 32-bit int, 4 bytes) Velocity Down coordinate
+ * @field cog_accuracy number (unsigned 32-bit int, 4 bytes) Course over ground estimated standard deviation
+ * @field sog_accuracy number (unsigned 32-bit int, 4 bytes) Speed over ground estimated standard deviation
+ * @field vel_d_accuracy number (unsigned 32-bit int, 4 bytes) Vertical velocity estimated standard deviation
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgVelCog = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_VEL_COG";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgVelCog.prototype = Object.create(SBP.prototype);
+MsgVelCog.prototype.messageType = "MSG_VEL_COG";
+MsgVelCog.prototype.msg_type = 0x021C;
+MsgVelCog.prototype.constructor = MsgVelCog;
+MsgVelCog.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint32('cog')
+  .uint32('sog')
+  .int32('vel_d')
+  .uint32('cog_accuracy')
+  .uint32('sog_accuracy')
+  .uint32('vel_d_accuracy')
+  .uint8('flags');
+MsgVelCog.prototype.fieldSpec = [];
+MsgVelCog.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgVelCog.prototype.fieldSpec.push(['cog', 'writeUInt32LE', 4]);
+MsgVelCog.prototype.fieldSpec.push(['sog', 'writeUInt32LE', 4]);
+MsgVelCog.prototype.fieldSpec.push(['vel_d', 'writeInt32LE', 4]);
+MsgVelCog.prototype.fieldSpec.push(['cog_accuracy', 'writeUInt32LE', 4]);
+MsgVelCog.prototype.fieldSpec.push(['sog_accuracy', 'writeUInt32LE', 4]);
+MsgVelCog.prototype.fieldSpec.push(['vel_d_accuracy', 'writeUInt32LE', 4]);
+MsgVelCog.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_AGE_CORRECTIONS (0x0210).
  *
  * This message reports the Age of the corrections used for the current
@@ -2127,6 +2182,8 @@ module.exports = {
   MsgVelNedCovGnss: MsgVelNedCovGnss,
   0x0213: MsgVelBody,
   MsgVelBody: MsgVelBody,
+  0x021C: MsgVelCog,
+  MsgVelCog: MsgVelCog,
   0x0210: MsgAgeCorrections,
   MsgAgeCorrections: MsgAgeCorrections,
   0x0100: MsgGpsTimeDepA,

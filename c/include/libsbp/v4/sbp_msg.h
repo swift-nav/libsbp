@@ -248,6 +248,7 @@ typedef union {
   sbp_msg_utc_time_gnss_t utc_time_gnss;
   sbp_msg_utc_time_t utc_time;
   sbp_msg_vel_body_t vel_body;
+  sbp_msg_vel_cog_t vel_cog;
   sbp_msg_vel_ecef_cov_gnss_t vel_ecef_cov_gnss;
   sbp_msg_vel_ecef_cov_t vel_ecef_cov;
   sbp_msg_vel_ecef_dep_a_t vel_ecef_dep_a;
@@ -795,6 +796,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_utc_time_encode(buf, len, n_written, &msg->utc_time);
     case SbpMsgVelBody:
       return sbp_msg_vel_body_encode(buf, len, n_written, &msg->vel_body);
+    case SbpMsgVelCog:
+      return sbp_msg_vel_cog_encode(buf, len, n_written, &msg->vel_cog);
     case SbpMsgVelEcefCovGnss:
       return sbp_msg_vel_ecef_cov_gnss_encode(buf, len, n_written,
                                               &msg->vel_ecef_cov_gnss);
@@ -1354,6 +1357,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_utc_time_decode(buf, len, n_read, &msg->utc_time);
     case SbpMsgVelBody:
       return sbp_msg_vel_body_decode(buf, len, n_read, &msg->vel_body);
+    case SbpMsgVelCog:
+      return sbp_msg_vel_cog_decode(buf, len, n_read, &msg->vel_cog);
     case SbpMsgVelEcefCovGnss:
       return sbp_msg_vel_ecef_cov_gnss_decode(buf, len, n_read,
                                               &msg->vel_ecef_cov_gnss);
@@ -1815,6 +1820,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_utc_time_encoded_len(&msg->utc_time);
     case SbpMsgVelBody:
       return sbp_msg_vel_body_encoded_len(&msg->vel_body);
+    case SbpMsgVelCog:
+      return sbp_msg_vel_cog_encoded_len(&msg->vel_cog);
     case SbpMsgVelEcefCovGnss:
       return sbp_msg_vel_ecef_cov_gnss_encoded_len(&msg->vel_ecef_cov_gnss);
     case SbpMsgVelEcefCov:
@@ -2336,6 +2343,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_utc_time_cmp(&a->utc_time, &b->utc_time);
     case SbpMsgVelBody:
       return sbp_msg_vel_body_cmp(&a->vel_body, &b->vel_body);
+    case SbpMsgVelCog:
+      return sbp_msg_vel_cog_cmp(&a->vel_cog, &b->vel_cog);
     case SbpMsgVelEcefCovGnss:
       return sbp_msg_vel_ecef_cov_gnss_cmp(&a->vel_ecef_cov_gnss,
                                            &b->vel_ecef_cov_gnss);

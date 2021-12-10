@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGriddedCorrection, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGriddedCorrection, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -163,6 +163,7 @@
 --     decodeString msgUTCTime myJsonString
 --     decodeString msgUTCTimeGnss myJsonString
 --     decodeString msgVelBody myJsonString
+--     decodeString msgVelCog myJsonString
 --     decodeString msgVelECEF myJsonString
 --     decodeString msgVelECEFCov myJsonString
 --     decodeString msgVelECEFCovGnss myJsonString
@@ -657,6 +658,9 @@ module SbpJson exposing
     , MsgVelBody
     , msgVelBodyToString
     , msgVelBody
+    , MsgVelCog
+    , msgVelCogToString
+    , msgVelCog
     , MsgVelECEF
     , msgVelECEFToString
     , msgVelECEF
@@ -2731,6 +2735,25 @@ type alias MsgVelBody =
     , z : Int
     }
 
+{-| This message reports the receiver course over ground (COG) and speed over  ground (SOG)
+based on the horizontal (N-E) components of the NED velocity  vector. It also includes
+the vertical velocity in the form of the D-component of the NED velocity vector. The NED
+coordinate system is defined as the local WGS84 tangent  plane centered at the current
+position. The full GPS time is given by the  preceding MSG_GPS_TIME with the matching
+time-of-week (tow). Note: course over ground represents the receiver's direction of
+travel,  but not necessarily the device heading.
+-}
+type alias MsgVelCog =
+    { cog : Int
+    , cogAccuracy : Int
+    , flags : Int
+    , sog : Int
+    , sogAccuracy : Int
+    , tow : Int
+    , velD : Int
+    , velDAccuracy : Int
+    }
+
 {-| This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
 full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 -}
@@ -3385,6 +3408,9 @@ msgUTCTimeGnssToString r = Jenc.encode 0 (encodeMsgUTCTimeGnss r)
 
 msgVelBodyToString : MsgVelBody -> String
 msgVelBodyToString r = Jenc.encode 0 (encodeMsgVelBody r)
+
+msgVelCogToString : MsgVelCog -> String
+msgVelCogToString r = Jenc.encode 0 (encodeMsgVelCog r)
 
 msgVelECEFToString : MsgVelECEF -> String
 msgVelECEFToString r = Jenc.encode 0 (encodeMsgVelECEF r)
@@ -6544,6 +6570,31 @@ encodeMsgVelBody x =
         , ("x", Jenc.int x.x)
         , ("y", Jenc.int x.y)
         , ("z", Jenc.int x.z)
+        ]
+
+msgVelCog : Jdec.Decoder MsgVelCog
+msgVelCog =
+    Jpipe.decode MsgVelCog
+        |> Jpipe.required "cog" Jdec.int
+        |> Jpipe.required "cog_accuracy" Jdec.int
+        |> Jpipe.required "flags" Jdec.int
+        |> Jpipe.required "sog" Jdec.int
+        |> Jpipe.required "sog_accuracy" Jdec.int
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "vel_d" Jdec.int
+        |> Jpipe.required "vel_d_accuracy" Jdec.int
+
+encodeMsgVelCog : MsgVelCog -> Jenc.Value
+encodeMsgVelCog x =
+    Jenc.object
+        [ ("cog", Jenc.int x.cog)
+        , ("cog_accuracy", Jenc.int x.cogAccuracy)
+        , ("flags", Jenc.int x.flags)
+        , ("sog", Jenc.int x.sog)
+        , ("sog_accuracy", Jenc.int x.sogAccuracy)
+        , ("tow", Jenc.int x.tow)
+        , ("vel_d", Jenc.int x.velD)
+        , ("vel_d_accuracy", Jenc.int x.velDAccuracy)
         ]
 
 msgVelECEF : Jdec.Decoder MsgVelECEF

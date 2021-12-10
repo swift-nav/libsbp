@@ -45,6 +45,7 @@
 #include <libsbp/v4/navigation/MSG_UTC_TIME.h>
 #include <libsbp/v4/navigation/MSG_UTC_TIME_GNSS.h>
 #include <libsbp/v4/navigation/MSG_VEL_BODY.h>
+#include <libsbp/v4/navigation/MSG_VEL_COG.h>
 #include <libsbp/v4/navigation/MSG_VEL_ECEF.h>
 #include <libsbp/v4/navigation/MSG_VEL_ECEF_COV.h>
 #include <libsbp/v4/navigation/MSG_VEL_ECEF_COV_GNSS.h>
