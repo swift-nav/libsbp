@@ -239,6 +239,7 @@ typedef enum {
   SbpMsgUtcTimeGnss = SBP_MSG_UTC_TIME_GNSS,
   SbpMsgUtcTime = SBP_MSG_UTC_TIME,
   SbpMsgVelBody = SBP_MSG_VEL_BODY,
+  SbpMsgVelCog = SBP_MSG_VEL_COG,
   SbpMsgVelEcefCovGnss = SBP_MSG_VEL_ECEF_COV_GNSS,
   SbpMsgVelEcefCov = SBP_MSG_VEL_ECEF_COV,
   SbpMsgVelEcefDepA = SBP_MSG_VEL_ECEF_DEP_A,

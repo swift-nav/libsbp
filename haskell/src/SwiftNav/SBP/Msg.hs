@@ -246,6 +246,7 @@ data SBPMsg =
    | SBPMsgUtcTime MsgUtcTime Msg
    | SBPMsgUtcTimeGnss MsgUtcTimeGnss Msg
    | SBPMsgVelBody MsgVelBody Msg
+   | SBPMsgVelCog MsgVelCog Msg
    | SBPMsgVelEcef MsgVelEcef Msg
    | SBPMsgVelEcefCov MsgVelEcefCov Msg
    | SBPMsgVelEcefCovGnss MsgVelEcefCovGnss Msg
@@ -461,6 +462,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUtcTimeGnss = SBPMsgUtcTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelBody = SBPMsgVelBody (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelCog = SBPMsgVelCog (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefCov = SBPMsgVelEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefCovGnss = SBPMsgVelEcefCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -668,6 +670,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgUtcTime _ m) = put m
       encoder (SBPMsgUtcTimeGnss _ m) = put m
       encoder (SBPMsgVelBody _ m) = put m
+      encoder (SBPMsgVelCog _ m) = put m
       encoder (SBPMsgVelEcef _ m) = put m
       encoder (SBPMsgVelEcefCov _ m) = put m
       encoder (SBPMsgVelEcefCovGnss _ m) = put m
@@ -879,6 +882,7 @@ instance FromJSON SBPMsg where
         | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUtcTimeGnss = SBPMsgUtcTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelBody = SBPMsgVelBody <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelCog = SBPMsgVelCog <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefCov = SBPMsgVelEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefCovGnss = SBPMsgVelEcefCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1091,6 +1095,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgUtcTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUtcTimeGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelBody n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelCog n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcef n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefCovGnss n m) = toJSON n <<>> toJSON m
@@ -1297,6 +1302,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgUtcTime n m) = SBPMsgUtcTime n <$> f m
   msg f (SBPMsgUtcTimeGnss n m) = SBPMsgUtcTimeGnss n <$> f m
   msg f (SBPMsgVelBody n m) = SBPMsgVelBody n <$> f m
+  msg f (SBPMsgVelCog n m) = SBPMsgVelCog n <$> f m
   msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
   msg f (SBPMsgVelEcefCov n m) = SBPMsgVelEcefCov n <$> f m
   msg f (SBPMsgVelEcefCovGnss n m) = SBPMsgVelEcefCovGnss n <$> f m
