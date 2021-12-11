@@ -1722,27 +1722,27 @@ definitions:
               fields:
                 - 6-7:
                     desc: Reserved
-                - 5-6:
+                - 5:
                     desc: Vertical velocity validity
                     values:
                         - 0: Invalid
                         - 1: Vertical velocity valid
-                - 4-5:
+                - 4:
                     desc: SOG validity
                     values:
                         - 0: Invalid
                         - 1: SOG valid
-                - 3-4:
+                - 3:
                     desc: COG validity
                     values:
                         - 0: Invalid
                         - 1: COG valid
-                - 2-3:
+                - 2:
                     desc: INS Navigation Mode
                     values:
                         - 0: None
                         - 1: INS used
-                - 0-2:
+                - 0-1:
                     desc: Velocity mode
                     values:
                         - 0: Invalid
