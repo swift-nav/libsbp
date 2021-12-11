@@ -1,5 +1,13 @@
 # Change Log
 
+## [v4.1.1](https://github.com/swift-nav/libsbp/tree/v4.1.1) (2021-12-11)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.12...v4.1.1)
+
+**Merged pull requests:**
+
+- fix bit masks for new COG message [\#1091](https://github.com/swift-nav/libsbp/pull/1091) ([silverjam](https://github.com/silverjam))
+
 ## [v4.1.0](https://github.com/swift-nav/libsbp/tree/v4.1.0) (2021-12-10)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.11...v4.1.0)
