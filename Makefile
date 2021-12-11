@@ -62,7 +62,12 @@ help:
 	@echo "  quicktype-elm          generate Elm module from JSON Schema"
 	@echo
 
-all: c python javascript java docs haskell protobuf rust jsonschema quicktype
+packaged-languages: c python haskell rust javascript
+
+non-packaged-languages: java protobuf jsonschema quicktype
+
+all: packaged-languages docs non-packaged-languages
+
 clean:
 	@echo "Removing the ./c/build directory..."
 	rm -fr $(SWIFTNAV_ROOT)/c/build
@@ -74,7 +79,7 @@ docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
 python:     deps-python     gen-python     test-python
-javascript: deps-javascript gen-javascript test-javascript
+javascript: deps-javascript gen-javascript test-javascript bundle-javascript
 java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
 rust:       deps-rust       gen-rust       test-rust
@@ -143,10 +148,14 @@ deps-c: verify-prereq-c
 
 deps-python: verify-prereq-python
 
+bundle-javascript: deps-javascript
+	$(call announce-begin,"Building Javascript bundle")
+	cd $(SWIFTNAV_ROOT); npm run webpack
+	$(call announce-end,"Finished building JavaScript bundle")
+
 deps-javascript: verify-prereq-javascript
 	$(call announce-begin,"Installing Javascript dependencies")
 	cd $(SWIFTNAV_ROOT); npm install
-	cd $(SWIFTNAV_ROOT); npm run webpack
 	$(call announce-end,"Finished installing Javascript dependencies")
 
 deps-java: verify-prereq-java
