@@ -1692,11 +1692,12 @@ definitions:
           - cog:
               type: u32
               units: microdegrees
-              desc: Course over ground relative to local north
+              desc: Course over ground relative to north direction
           - sog:
               type: u32
               units: mm/s
-              desc: Speed over ground
+              desc: >
+                Speed over ground (based on horizontal velocity)
           - vel_d:
               type: s32
               units: mm/s
@@ -1717,32 +1718,37 @@ definitions:
               desc: >
                 Vertical velocity estimated standard deviation
           - flags:
-              type: u8
+              type: u16
               desc: Status flags
               fields:
-                - 6-7:
+                - 9-15:
                     desc: Reserved
-                - 5:
+                - 8:
                     desc: Vertical velocity validity
                     values:
                         - 0: Invalid
                         - 1: Vertical velocity valid
-                - 4:
+                - 7:
                     desc: SOG validity
                     values:
                         - 0: Invalid
                         - 1: SOG valid
-                - 3:
+                - 6:
                     desc: COG validity
                     values:
                         - 0: Invalid
                         - 1: COG valid
-                - 2:
+                - 5:
+                    desc: Type of reported TOW
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
+                - 3-4:
                     desc: INS Navigation Mode
                     values:
                         - 0: None
                         - 1: INS used
-                - 0-1:
+                - 0-2:
                     desc: Velocity mode
                     values:
                         - 0: Invalid
