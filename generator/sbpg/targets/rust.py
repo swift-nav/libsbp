@@ -300,7 +300,6 @@ def get_bitfield(field, msg):
         else:
             msb = bitrange[1]
             lsb = bitrange[0]
-        print(field_name, type_name, calc_item_size(item, field))
         items.append(
             {
                 "desc": item.get("desc"),
