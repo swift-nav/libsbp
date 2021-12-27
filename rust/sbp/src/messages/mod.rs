@@ -256,20 +256,20 @@ mod lib {
 
     macro_rules! get_bit_range {
         ($bitrange:expr, $source_ty:ty, $target_ty:ty, $msb:expr, $lsb:expr) => {{
-            let bit_len = std::mem::size_of::<$source_ty>() * 8;
-            let result_bit_len = std::mem::size_of::<$target_ty>() * 8;
-            let result =
-                (($bitrange << (bit_len - $msb - 1)) >> (bit_len - $msb - 1 + $lsb)) as $target_ty;
-            result << (result_bit_len - ($msb - $lsb + 1)) >> (result_bit_len - ($msb - $lsb + 1))
+            let source_bit_len = std::mem::size_of::<$source_ty>() * 8;
+            let target_bit_len = std::mem::size_of::<$target_ty>() * 8;
+            let result = (($bitrange << (source_bit_len - $msb - 1))
+                >> (source_bit_len - $msb - 1 + $lsb)) as $target_ty;
+            result << (target_bit_len - ($msb - $lsb + 1)) >> (target_bit_len - ($msb - $lsb + 1))
         }};
     }
 
     macro_rules! set_bit_range {
         ($bitrange:expr, $value: expr, $source_ty:ty, $target_ty:ty, $msb:expr, $lsb:expr) => {
-            let bit_len = std::mem::size_of::<$source_ty>() * 8;
+            let source_bit_len = std::mem::size_of::<$source_ty>() * 8;
             let mask: $source_ty = !(0 as $source_ty)
-                << (bit_len - $msb - 1)
-                >> (bit_len - $msb - 1 + $lsb)
+                << (source_bit_len - $msb - 1)
+                >> (source_bit_len - $msb - 1 + $lsb)
                 << ($lsb);
             *$bitrange &= !mask;
             *$bitrange |= ($value as $source_ty << $lsb) & mask;
