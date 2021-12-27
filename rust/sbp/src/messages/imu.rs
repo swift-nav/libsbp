@@ -39,6 +39,49 @@ pub struct MsgImuAux {
     pub imu_conf: u8,
 }
 
+impl MsgImuAux {
+    pub fn imu_type(&self) -> Option<MsgImuAuxImuType> {
+        match get_bit_range!(self.imu_type, u8, u8, 7, 0) {
+            0 => Some(MsgImuAuxImuType::BoschBmi160),
+            1 => Some(MsgImuAuxImuType::StMicroelectronicsAsm330Llh),
+            _ => None,
+        }
+    }
+
+    pub fn set_imu_type(&mut self, imu_type: MsgImuAuxImuType) {
+        set_bit_range!(&mut self.imu_type, imu_type, u8, u8, 7, 0);
+    }
+
+    pub fn gyroscope_range(&self) -> Option<MsgImuAuxGyroscopeRange> {
+        match get_bit_range!(self.imu_conf, u8, u8, 7, 4) {
+            0 => Some(MsgImuAuxGyroscopeRange::_2000DegS),
+            1 => Some(MsgImuAuxGyroscopeRange::_1000DegS),
+            2 => Some(MsgImuAuxGyroscopeRange::_500DegS),
+            3 => Some(MsgImuAuxGyroscopeRange::_250DegS),
+            4 => Some(MsgImuAuxGyroscopeRange::_125DegS),
+            _ => None,
+        }
+    }
+
+    pub fn set_gyroscope_range(&mut self, gyroscope_range: MsgImuAuxGyroscopeRange) {
+        set_bit_range!(&mut self.imu_conf, gyroscope_range, u8, u8, 7, 4);
+    }
+
+    pub fn accelerometer_range(&self) -> Option<MsgImuAuxAccelerometerRange> {
+        match get_bit_range!(self.imu_conf, u8, u8, 3, 0) {
+            0 => Some(MsgImuAuxAccelerometerRange::_2G),
+            1 => Some(MsgImuAuxAccelerometerRange::_4G),
+            2 => Some(MsgImuAuxAccelerometerRange::_8G),
+            3 => Some(MsgImuAuxAccelerometerRange::_16G),
+            _ => None,
+        }
+    }
+
+    pub fn set_accelerometer_range(&mut self, accelerometer_range: MsgImuAuxAccelerometerRange) {
+        set_bit_range!(&mut self.imu_conf, accelerometer_range, u8, u8, 3, 0);
+    }
+}
+
 impl ConcreteMessage for MsgImuAux {
     const MESSAGE_TYPE: u16 = 2305;
     const MESSAGE_NAME: &'static str = "MSG_IMU_AUX";
@@ -95,6 +138,85 @@ impl WireFormat for MsgImuAux {
     }
 }
 
+/// IMU Type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgImuAuxImuType {
+    /// Bosch BMI160
+    BoschBmi160 = 0,
+
+    /// ST Microelectronics ASM330LLH
+    StMicroelectronicsAsm330Llh = 1,
+}
+
+impl std::fmt::Display for MsgImuAuxImuType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgImuAuxImuType::BoschBmi160 => f.write_str("Bosch BMI160"),
+            MsgImuAuxImuType::StMicroelectronicsAsm330Llh => {
+                f.write_str("ST Microelectronics ASM330LLH")
+            }
+        }
+    }
+}
+
+/// Gyroscope Range
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgImuAuxGyroscopeRange {
+    /// +/- 2000 deg / s
+    _2000DegS = 0,
+
+    /// +/- 1000 deg / s
+    _1000DegS = 1,
+
+    /// +/- 500 deg / s
+    _500DegS = 2,
+
+    /// +/- 250 deg / s
+    _250DegS = 3,
+
+    /// +/- 125 deg / s
+    _125DegS = 4,
+}
+
+impl std::fmt::Display for MsgImuAuxGyroscopeRange {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgImuAuxGyroscopeRange::_2000DegS => f.write_str("+/- 2000 deg / s"),
+            MsgImuAuxGyroscopeRange::_1000DegS => f.write_str("+/- 1000 deg / s"),
+            MsgImuAuxGyroscopeRange::_500DegS => f.write_str("+/- 500 deg / s"),
+            MsgImuAuxGyroscopeRange::_250DegS => f.write_str("+/- 250 deg / s"),
+            MsgImuAuxGyroscopeRange::_125DegS => f.write_str("+/- 125 deg / s"),
+        }
+    }
+}
+
+/// Accelerometer Range
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgImuAuxAccelerometerRange {
+    /// +/- 2g
+    _2G = 0,
+
+    /// +/- 4g
+    _4G = 1,
+
+    /// +/- 8g
+    _8G = 2,
+
+    /// +/- 16g
+    _16G = 3,
+}
+
+impl std::fmt::Display for MsgImuAuxAccelerometerRange {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgImuAuxAccelerometerRange::_2G => f.write_str("+/- 2g"),
+            MsgImuAuxAccelerometerRange::_4G => f.write_str("+/- 4g"),
+            MsgImuAuxAccelerometerRange::_8G => f.write_str("+/- 8g"),
+            MsgImuAuxAccelerometerRange::_16G => f.write_str("+/- 16g"),
+        }
+    }
+}
+
 /// Raw IMU data
 ///
 /// Raw data from the Inertial Measurement Unit, containing accelerometer and
@@ -138,6 +260,40 @@ pub struct MsgImuRaw {
     /// Angular rate around IMU frame Z axis
     #[cfg_attr(feature = "serde", serde(rename(serialize = "gyr_z")))]
     pub gyr_z: i16,
+}
+
+impl MsgImuRaw {
+    pub fn time_status(&self) -> Option<MsgImuRawTimeStatus> {
+        match get_bit_range!(self.tow, u32, u8, 31, 30) {
+            0 => Some(MsgImuRawTimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
+            1 => Some(MsgImuRawTimeStatus::ReferenceEpochIsTimeOfSystemStartup),
+            2 => Some(MsgImuRawTimeStatus::ReferenceEpochIsUnknown),
+            3 => Some(MsgImuRawTimeStatus::ReferenceEpochIsLastPps),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_status(&mut self, time_status: MsgImuRawTimeStatus) {
+        set_bit_range!(&mut self.tow, time_status, u32, u8, 31, 30);
+    }
+
+    pub fn time_since_reference_epoch_in_milliseconds(&self) -> u32 {
+        get_bit_range!(self.tow, u32, u32, 29, 0)
+    }
+
+    pub fn set_time_since_reference_epoch_in_milliseconds(
+        &mut self,
+        time_since_reference_epoch_in_milliseconds: u32,
+    ) {
+        set_bit_range!(
+            &mut self.tow,
+            time_since_reference_epoch_in_milliseconds,
+            u32,
+            u32,
+            29,
+            0
+        );
+    }
 }
 
 impl ConcreteMessage for MsgImuRaw {
@@ -226,6 +382,41 @@ impl WireFormat for MsgImuRaw {
             gyr_x: WireFormat::parse_unchecked(buf),
             gyr_y: WireFormat::parse_unchecked(buf),
             gyr_z: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Time status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgImuRawTimeStatus {
+    /// Reference epoch is start of current GPS week
+    ReferenceEpochIsStartOfCurrentGpsWeek = 0,
+
+    /// Reference epoch is time of system startup
+    ReferenceEpochIsTimeOfSystemStartup = 1,
+
+    /// Reference epoch is unknown
+    ReferenceEpochIsUnknown = 2,
+
+    /// Reference epoch is last PPS
+    ReferenceEpochIsLastPps = 3,
+}
+
+impl std::fmt::Display for MsgImuRawTimeStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgImuRawTimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek => {
+                f.write_str("Reference epoch is start of current GPS week")
+            }
+            MsgImuRawTimeStatus::ReferenceEpochIsTimeOfSystemStartup => {
+                f.write_str("Reference epoch is time of system startup")
+            }
+            MsgImuRawTimeStatus::ReferenceEpochIsUnknown => {
+                f.write_str("Reference epoch is unknown")
+            }
+            MsgImuRawTimeStatus::ReferenceEpochIsLastPps => {
+                f.write_str("Reference epoch is last PPS")
+            }
         }
     }
 }

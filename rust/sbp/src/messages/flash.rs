@@ -37,6 +37,24 @@ pub struct MsgFlashDone {
     pub response: u8,
 }
 
+impl MsgFlashDone {
+    pub fn response_code(&self) -> Option<MsgFlashDoneResponseCode> {
+        match get_bit_range!(self.response, u8, u8, 2, 0) {
+            0 => Some(MsgFlashDoneResponseCode::FlashOk),
+            1 => Some(MsgFlashDoneResponseCode::FlashInvalidFlash),
+            2 => Some(MsgFlashDoneResponseCode::FlashInvalidLen),
+            3 => Some(MsgFlashDoneResponseCode::FlashInvalidAddr),
+            4 => Some(MsgFlashDoneResponseCode::FlashInvalidRange),
+            5 => Some(MsgFlashDoneResponseCode::FlashInvalidSector),
+            _ => None,
+        }
+    }
+
+    pub fn set_response_code(&mut self, response_code: MsgFlashDoneResponseCode) {
+        set_bit_range!(&mut self.response, response_code, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgFlashDone {
     const MESSAGE_TYPE: u16 = 224;
     const MESSAGE_NAME: &'static str = "MSG_FLASH_DONE";
@@ -86,6 +104,41 @@ impl WireFormat for MsgFlashDone {
     }
 }
 
+/// Response code
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgFlashDoneResponseCode {
+    /// FLASH_OK
+    FlashOk = 0,
+
+    /// FLASH_INVALID_FLASH
+    FlashInvalidFlash = 1,
+
+    /// FLASH_INVALID_LEN
+    FlashInvalidLen = 2,
+
+    /// FLASH_INVALID_ADDR
+    FlashInvalidAddr = 3,
+
+    /// FLASH_INVALID_RANGE
+    FlashInvalidRange = 4,
+
+    /// FLASH_INVALID_SECTOR
+    FlashInvalidSector = 5,
+}
+
+impl std::fmt::Display for MsgFlashDoneResponseCode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgFlashDoneResponseCode::FlashOk => f.write_str("FLASH_OK"),
+            MsgFlashDoneResponseCode::FlashInvalidFlash => f.write_str("FLASH_INVALID_FLASH"),
+            MsgFlashDoneResponseCode::FlashInvalidLen => f.write_str("FLASH_INVALID_LEN"),
+            MsgFlashDoneResponseCode::FlashInvalidAddr => f.write_str("FLASH_INVALID_ADDR"),
+            MsgFlashDoneResponseCode::FlashInvalidRange => f.write_str("FLASH_INVALID_RANGE"),
+            MsgFlashDoneResponseCode::FlashInvalidSector => f.write_str("FLASH_INVALID_SECTOR"),
+        }
+    }
+}
+
 /// Erase sector of device flash memory (host => device)
 ///
 /// The flash erase message from the host erases a sector of either the STM or
@@ -105,6 +158,23 @@ pub struct MsgFlashErase {
     /// Flash sector number to erase (0-11 for the STM, 0-15 for the M25)
     #[cfg_attr(feature = "serde", serde(rename(serialize = "sector_num")))]
     pub sector_num: u32,
+}
+
+impl MsgFlashErase {
+    pub fn flash_target_to_read(&self) -> Option<MsgFlashEraseFlashTargetToRead> {
+        match get_bit_range!(self.target, u8, u8, 0, 0) {
+            0 => Some(MsgFlashEraseFlashTargetToRead::FlashStm),
+            1 => Some(MsgFlashEraseFlashTargetToRead::FlashM25),
+            _ => None,
+        }
+    }
+
+    pub fn set_flash_target_to_read(
+        &mut self,
+        flash_target_to_read: MsgFlashEraseFlashTargetToRead,
+    ) {
+        set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+    }
 }
 
 impl ConcreteMessage for MsgFlashErase {
@@ -158,6 +228,25 @@ impl WireFormat for MsgFlashErase {
     }
 }
 
+/// Flash target to read
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgFlashEraseFlashTargetToRead {
+    /// FLASH_STM
+    FlashStm = 0,
+
+    /// FLASH_M25
+    FlashM25 = 1,
+}
+
+impl std::fmt::Display for MsgFlashEraseFlashTargetToRead {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgFlashEraseFlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+            MsgFlashEraseFlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+        }
+    }
+}
+
 /// Program flash addresses
 ///
 /// The flash program message programs a set of addresses of either the STM or
@@ -184,6 +273,23 @@ pub struct MsgFlashProgram {
     /// Data to program addresses with, with length N=addr_len
     #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
     pub data: Vec<u8>,
+}
+
+impl MsgFlashProgram {
+    pub fn flash_target_to_read(&self) -> Option<MsgFlashProgramFlashTargetToRead> {
+        match get_bit_range!(self.target, u8, u8, 0, 0) {
+            0 => Some(MsgFlashProgramFlashTargetToRead::FlashStm),
+            1 => Some(MsgFlashProgramFlashTargetToRead::FlashM25),
+            _ => None,
+        }
+    }
+
+    pub fn set_flash_target_to_read(
+        &mut self,
+        flash_target_to_read: MsgFlashProgramFlashTargetToRead,
+    ) {
+        set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+    }
 }
 
 impl ConcreteMessage for MsgFlashProgram {
@@ -247,6 +353,25 @@ impl WireFormat for MsgFlashProgram {
     }
 }
 
+/// Flash target to read
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgFlashProgramFlashTargetToRead {
+    /// FLASH_STM
+    FlashStm = 0,
+
+    /// FLASH_M25
+    FlashM25 = 1,
+}
+
+impl std::fmt::Display for MsgFlashProgramFlashTargetToRead {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgFlashProgramFlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+            MsgFlashProgramFlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+        }
+    }
+}
+
 /// Read STM or M25 flash address request (host => device)
 ///
 /// The flash read message reads a set of addresses of either the STM or M25
@@ -271,6 +396,23 @@ pub struct MsgFlashReadReq {
     /// Length of set of addresses to read, counting up from starting address
     #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
     pub addr_len: u8,
+}
+
+impl MsgFlashReadReq {
+    pub fn flash_target_to_read(&self) -> Option<MsgFlashReadReqFlashTargetToRead> {
+        match get_bit_range!(self.target, u8, u8, 0, 0) {
+            0 => Some(MsgFlashReadReqFlashTargetToRead::FlashStm),
+            1 => Some(MsgFlashReadReqFlashTargetToRead::FlashM25),
+            _ => None,
+        }
+    }
+
+    pub fn set_flash_target_to_read(
+        &mut self,
+        flash_target_to_read: MsgFlashReadReqFlashTargetToRead,
+    ) {
+        set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+    }
 }
 
 impl ConcreteMessage for MsgFlashReadReq {
@@ -330,6 +472,25 @@ impl WireFormat for MsgFlashReadReq {
     }
 }
 
+/// Flash target to read
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgFlashReadReqFlashTargetToRead {
+    /// FLASH_STM
+    FlashStm = 0,
+
+    /// FLASH_M25
+    FlashM25 = 1,
+}
+
+impl std::fmt::Display for MsgFlashReadReqFlashTargetToRead {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgFlashReadReqFlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+            MsgFlashReadReqFlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+        }
+    }
+}
+
 /// Read STM or M25 flash address response (host <= device)
 ///
 /// The flash read message reads a set of addresses of either the STM or M25
@@ -354,6 +515,23 @@ pub struct MsgFlashReadResp {
     /// Length of set of addresses to read, counting up from starting address
     #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
     pub addr_len: u8,
+}
+
+impl MsgFlashReadResp {
+    pub fn flash_target_to_read(&self) -> Option<MsgFlashReadRespFlashTargetToRead> {
+        match get_bit_range!(self.target, u8, u8, 0, 0) {
+            0 => Some(MsgFlashReadRespFlashTargetToRead::FlashStm),
+            1 => Some(MsgFlashReadRespFlashTargetToRead::FlashM25),
+            _ => None,
+        }
+    }
+
+    pub fn set_flash_target_to_read(
+        &mut self,
+        flash_target_to_read: MsgFlashReadRespFlashTargetToRead,
+    ) {
+        set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+    }
 }
 
 impl ConcreteMessage for MsgFlashReadResp {
@@ -409,6 +587,25 @@ impl WireFormat for MsgFlashReadResp {
             target: WireFormat::parse_unchecked(buf),
             addr_start: WireFormat::parse_unchecked(buf),
             addr_len: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Flash target to read
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgFlashReadRespFlashTargetToRead {
+    /// FLASH_STM
+    FlashStm = 0,
+
+    /// FLASH_M25
+    FlashM25 = 1,
+}
+
+impl std::fmt::Display for MsgFlashReadRespFlashTargetToRead {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgFlashReadRespFlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+            MsgFlashReadRespFlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
         }
     }
 }

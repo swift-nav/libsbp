@@ -30,6 +30,24 @@ pub struct GnssInputType {
     pub flags: u8,
 }
 
+impl GnssInputType {
+    pub fn type_of_gnss_measurement(&self) -> Option<GnssInputTypeTypeOfGnssMeasurement> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(GnssInputTypeTypeOfGnssMeasurement::GnssPosition),
+            1 => Some(GnssInputTypeTypeOfGnssMeasurement::GnssVelocityDoppler),
+            2 => Some(GnssInputTypeTypeOfGnssMeasurement::GnssVelocityDisplacement),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_gnss_measurement(
+        &mut self,
+        type_of_gnss_measurement: GnssInputTypeTypeOfGnssMeasurement,
+    ) {
+        set_bit_range!(&mut self.flags, type_of_gnss_measurement, u8, u8, 1, 0);
+    }
+}
+
 impl WireFormat for GnssInputType {
     const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
     fn len(&self) -> usize {
@@ -41,6 +59,33 @@ impl WireFormat for GnssInputType {
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         GnssInputType {
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Type of GNSS measurement
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GnssInputTypeTypeOfGnssMeasurement {
+    /// GNSS Position
+    GnssPosition = 0,
+
+    /// GNSS Velocity Doppler
+    GnssVelocityDoppler = 1,
+
+    /// GNSS Velocity Displacement
+    GnssVelocityDisplacement = 2,
+}
+
+impl std::fmt::Display for GnssInputTypeTypeOfGnssMeasurement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            GnssInputTypeTypeOfGnssMeasurement::GnssPosition => f.write_str("GNSS Position"),
+            GnssInputTypeTypeOfGnssMeasurement::GnssVelocityDoppler => {
+                f.write_str("GNSS Velocity Doppler")
+            }
+            GnssInputTypeTypeOfGnssMeasurement::GnssVelocityDisplacement => {
+                f.write_str("GNSS Velocity Displacement")
+            }
         }
     }
 }
@@ -59,6 +104,48 @@ pub struct ImuInputType {
     pub flags: u8,
 }
 
+impl ImuInputType {
+    pub fn time_status(&self) -> Option<ImuInputTypeTimeStatus> {
+        match get_bit_range!(self.flags, u8, u8, 5, 4) {
+            0 => Some(ImuInputTypeTimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
+            1 => Some(ImuInputTypeTimeStatus::ReferenceEpochIsTimeOfSystemStartup),
+            2 => Some(ImuInputTypeTimeStatus::ReferenceEpochIsUnknown),
+            3 => Some(ImuInputTypeTimeStatus::ReferenceEpochIsLastPps),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_status(&mut self, time_status: ImuInputTypeTimeStatus) {
+        set_bit_range!(&mut self.flags, time_status, u8, u8, 5, 4);
+    }
+
+    pub fn imu_grade(&self) -> Option<ImuInputTypeImuGrade> {
+        match get_bit_range!(self.flags, u8, u8, 3, 2) {
+            0 => Some(ImuInputTypeImuGrade::ConsumerGrade),
+            1 => Some(ImuInputTypeImuGrade::TacticalGrade),
+            2 => Some(ImuInputTypeImuGrade::IntermediateGrade),
+            3 => Some(ImuInputTypeImuGrade::SuperiorGrade),
+            _ => None,
+        }
+    }
+
+    pub fn set_imu_grade(&mut self, imu_grade: ImuInputTypeImuGrade) {
+        set_bit_range!(&mut self.flags, imu_grade, u8, u8, 3, 2);
+    }
+
+    pub fn imu_architecture(&self) -> Option<ImuInputTypeImuArchitecture> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(ImuInputTypeImuArchitecture::_6AxisMems),
+            1 => Some(ImuInputTypeImuArchitecture::OtherType),
+            _ => None,
+        }
+    }
+
+    pub fn set_imu_architecture(&mut self, imu_architecture: ImuInputTypeImuArchitecture) {
+        set_bit_range!(&mut self.flags, imu_architecture, u8, u8, 1, 0);
+    }
+}
+
 impl WireFormat for ImuInputType {
     const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
     fn len(&self) -> usize {
@@ -70,6 +157,89 @@ impl WireFormat for ImuInputType {
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         ImuInputType {
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Time status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ImuInputTypeTimeStatus {
+    /// Reference epoch is start of current GPS week
+    ReferenceEpochIsStartOfCurrentGpsWeek = 0,
+
+    /// Reference epoch is time of system startup
+    ReferenceEpochIsTimeOfSystemStartup = 1,
+
+    /// Reference epoch is unknown
+    ReferenceEpochIsUnknown = 2,
+
+    /// Reference epoch is last PPS
+    ReferenceEpochIsLastPps = 3,
+}
+
+impl std::fmt::Display for ImuInputTypeTimeStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ImuInputTypeTimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek => {
+                f.write_str("Reference epoch is start of current GPS week")
+            }
+            ImuInputTypeTimeStatus::ReferenceEpochIsTimeOfSystemStartup => {
+                f.write_str("Reference epoch is time of system startup")
+            }
+            ImuInputTypeTimeStatus::ReferenceEpochIsUnknown => {
+                f.write_str("Reference epoch is unknown")
+            }
+            ImuInputTypeTimeStatus::ReferenceEpochIsLastPps => {
+                f.write_str("Reference epoch is last PPS")
+            }
+        }
+    }
+}
+
+/// IMU Grade
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ImuInputTypeImuGrade {
+    /// Consumer Grade
+    ConsumerGrade = 0,
+
+    /// Tactical grade
+    TacticalGrade = 1,
+
+    /// Intermediate Grade
+    IntermediateGrade = 2,
+
+    /// Superior (Marine / Aviation) Grade
+    SuperiorGrade = 3,
+}
+
+impl std::fmt::Display for ImuInputTypeImuGrade {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ImuInputTypeImuGrade::ConsumerGrade => f.write_str("Consumer Grade"),
+            ImuInputTypeImuGrade::TacticalGrade => f.write_str("Tactical grade"),
+            ImuInputTypeImuGrade::IntermediateGrade => f.write_str("Intermediate Grade"),
+            ImuInputTypeImuGrade::SuperiorGrade => {
+                f.write_str("Superior (Marine / Aviation) Grade")
+            }
+        }
+    }
+}
+
+/// IMU architecture
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ImuInputTypeImuArchitecture {
+    /// 6-axis MEMS
+    _6AxisMems = 0,
+
+    /// Other type
+    OtherType = 1,
+}
+
+impl std::fmt::Display for ImuInputTypeImuArchitecture {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ImuInputTypeImuArchitecture::_6AxisMems => f.write_str("6-axis MEMS"),
+            ImuInputTypeImuArchitecture::OtherType => f.write_str("Other type"),
         }
     }
 }
@@ -121,6 +291,38 @@ pub struct MsgSolnMeta {
     /// doc.
     #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_in")))]
     pub sol_in: Vec<SolutionInputType>,
+}
+
+impl MsgSolnMeta {
+    pub fn time_status(&self) -> Option<MsgSolnMetaTimeStatus> {
+        match get_bit_range!(self.age_gnss, u32, u8, 31, 30) {
+            0 => Some(MsgSolnMetaTimeStatus::AgeCanNotBeUsedToRetrieveTom),
+            1 => Some(MsgSolnMetaTimeStatus::AgeCanBeUsedToRetrieveTom),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_status(&mut self, time_status: MsgSolnMetaTimeStatus) {
+        set_bit_range!(&mut self.age_gnss, time_status, u32, u8, 31, 30);
+    }
+
+    pub fn age_of_the_last_received_valid_gnss_solution(&self) -> u32 {
+        get_bit_range!(self.age_gnss, u32, u32, 29, 0)
+    }
+
+    pub fn set_age_of_the_last_received_valid_gnss_solution(
+        &mut self,
+        age_of_the_last_received_valid_gnss_solution: u32,
+    ) {
+        set_bit_range!(
+            &mut self.age_gnss,
+            age_of_the_last_received_valid_gnss_solution,
+            u32,
+            u32,
+            29,
+            0
+        );
+    }
 }
 
 impl ConcreteMessage for MsgSolnMeta {
@@ -205,6 +407,29 @@ impl WireFormat for MsgSolnMeta {
     }
 }
 
+/// Time status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgSolnMetaTimeStatus {
+    /// Age can not be used to retrieve TOM
+    AgeCanNotBeUsedToRetrieveTom = 0,
+
+    /// Age can be used to retrieve TOM
+    AgeCanBeUsedToRetrieveTom = 1,
+}
+
+impl std::fmt::Display for MsgSolnMetaTimeStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgSolnMetaTimeStatus::AgeCanNotBeUsedToRetrieveTom => {
+                f.write_str("Age can not be used to retrieve TOM")
+            }
+            MsgSolnMetaTimeStatus::AgeCanBeUsedToRetrieveTom => {
+                f.write_str("Age can be used to retrieve TOM")
+            }
+        }
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -254,6 +479,23 @@ pub struct MsgSolnMetaDepA {
     /// doc.
     #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_in")))]
     pub sol_in: Vec<SolutionInputType>,
+}
+
+impl MsgSolnMetaDepA {
+    pub fn alignment_status(&self) -> Option<MsgSolnMetaDepAAlignmentStatus> {
+        match get_bit_range!(self.alignment_status, u8, u8, 2, 0) {
+            0 => Some(MsgSolnMetaDepAAlignmentStatus::UnknownReasonOrAlreadyAligned),
+            1 => Some(MsgSolnMetaDepAAlignmentStatus::SeedValuesLoadedAndAlignmentInProgress),
+            2 => Some(MsgSolnMetaDepAAlignmentStatus::NoSeedValuesAndAlignmentInProgress),
+            3 => Some(MsgSolnMetaDepAAlignmentStatus::SeedValuesLoadedButNoGnssMeasurements),
+            4 => Some(MsgSolnMetaDepAAlignmentStatus::NoSeedValuesNorGnssMeasurements),
+            _ => None,
+        }
+    }
+
+    pub fn set_alignment_status(&mut self, alignment_status: MsgSolnMetaDepAAlignmentStatus) {
+        set_bit_range!(&mut self.alignment_status, alignment_status, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgSolnMetaDepA {
@@ -337,6 +579,47 @@ impl WireFormat for MsgSolnMetaDepA {
     }
 }
 
+/// Alignment status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgSolnMetaDepAAlignmentStatus {
+    /// Unknown reason or already aligned
+    UnknownReasonOrAlreadyAligned = 0,
+
+    /// Seed values loaded and Alignment in progress
+    SeedValuesLoadedAndAlignmentInProgress = 1,
+
+    /// No seed values and Alignment in progress
+    NoSeedValuesAndAlignmentInProgress = 2,
+
+    /// Seed values loaded but no GNSS measurements
+    SeedValuesLoadedButNoGnssMeasurements = 3,
+
+    /// No seed values nor GNSS measurements
+    NoSeedValuesNorGnssMeasurements = 4,
+}
+
+impl std::fmt::Display for MsgSolnMetaDepAAlignmentStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgSolnMetaDepAAlignmentStatus::UnknownReasonOrAlreadyAligned => {
+                f.write_str("Unknown reason or already aligned")
+            }
+            MsgSolnMetaDepAAlignmentStatus::SeedValuesLoadedAndAlignmentInProgress => {
+                f.write_str("Seed values loaded and Alignment in progress")
+            }
+            MsgSolnMetaDepAAlignmentStatus::NoSeedValuesAndAlignmentInProgress => {
+                f.write_str("No seed values and Alignment in progress")
+            }
+            MsgSolnMetaDepAAlignmentStatus::SeedValuesLoadedButNoGnssMeasurements => {
+                f.write_str("Seed values loaded but no GNSS measurements")
+            }
+            MsgSolnMetaDepAAlignmentStatus::NoSeedValuesNorGnssMeasurements => {
+                f.write_str("No seed values nor GNSS measurements")
+            }
+        }
+    }
+}
+
 /// Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution
 
 ///
@@ -351,6 +634,47 @@ pub struct OdoInputType {
     pub flags: u8,
 }
 
+impl OdoInputType {
+    pub fn rate(&self) -> Option<OdoInputTypeRate> {
+        match get_bit_range!(self.flags, u8, u8, 5, 4) {
+            0 => Some(OdoInputTypeRate::FixedIncomingRate),
+            1 => Some(OdoInputTypeRate::TriggeredByMinimumDistanceOrSpeed),
+            _ => None,
+        }
+    }
+
+    pub fn set_rate(&mut self, rate: OdoInputTypeRate) {
+        set_bit_range!(&mut self.flags, rate, u8, u8, 5, 4);
+    }
+
+    pub fn odometer_grade(&self) -> Option<OdoInputTypeOdometerGrade> {
+        match get_bit_range!(self.flags, u8, u8, 3, 2) {
+            0 => Some(OdoInputTypeOdometerGrade::LowGrade),
+            1 => Some(OdoInputTypeOdometerGrade::MediumGrade),
+            2 => Some(OdoInputTypeOdometerGrade::SuperiorGrade),
+            _ => None,
+        }
+    }
+
+    pub fn set_odometer_grade(&mut self, odometer_grade: OdoInputTypeOdometerGrade) {
+        set_bit_range!(&mut self.flags, odometer_grade, u8, u8, 3, 2);
+    }
+
+    pub fn odometer_class(&self) -> Option<OdoInputTypeOdometerClass> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(OdoInputTypeOdometerClass::SingleOrAveragedTicks),
+            1 => Some(OdoInputTypeOdometerClass::SingleOrAveragedSpeed),
+            2 => Some(OdoInputTypeOdometerClass::MultiDimensionalTicks),
+            3 => Some(OdoInputTypeOdometerClass::MultiDimensionalSpeed),
+            _ => None,
+        }
+    }
+
+    pub fn set_odometer_class(&mut self, odometer_class: OdoInputTypeOdometerClass) {
+        set_bit_range!(&mut self.flags, odometer_class, u8, u8, 1, 0);
+    }
+}
+
 impl WireFormat for OdoInputType {
     const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
     fn len(&self) -> usize {
@@ -362,6 +686,85 @@ impl WireFormat for OdoInputType {
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
         OdoInputType {
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Rate
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum OdoInputTypeRate {
+    /// Fixed incoming rate
+    FixedIncomingRate = 0,
+
+    /// Triggered by minimum distance or speed
+    TriggeredByMinimumDistanceOrSpeed = 1,
+}
+
+impl std::fmt::Display for OdoInputTypeRate {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            OdoInputTypeRate::FixedIncomingRate => f.write_str("Fixed incoming rate"),
+            OdoInputTypeRate::TriggeredByMinimumDistanceOrSpeed => {
+                f.write_str("Triggered by minimum distance or speed")
+            }
+        }
+    }
+}
+
+/// Odometer grade
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum OdoInputTypeOdometerGrade {
+    /// Low Grade (e.g. quantized CAN)
+    LowGrade = 0,
+
+    /// Medium Grade
+    MediumGrade = 1,
+
+    /// Superior Grade
+    SuperiorGrade = 2,
+}
+
+impl std::fmt::Display for OdoInputTypeOdometerGrade {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            OdoInputTypeOdometerGrade::LowGrade => f.write_str("Low Grade (e.g. quantized CAN)"),
+            OdoInputTypeOdometerGrade::MediumGrade => f.write_str("Medium Grade"),
+            OdoInputTypeOdometerGrade::SuperiorGrade => f.write_str("Superior Grade"),
+        }
+    }
+}
+
+/// Odometer class
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum OdoInputTypeOdometerClass {
+    /// Single or averaged ticks
+    SingleOrAveragedTicks = 0,
+
+    /// Single or averaged speed
+    SingleOrAveragedSpeed = 1,
+
+    /// Multi-dimensional ticks
+    MultiDimensionalTicks = 2,
+
+    /// Multi-dimensional speed
+    MultiDimensionalSpeed = 3,
+}
+
+impl std::fmt::Display for OdoInputTypeOdometerClass {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            OdoInputTypeOdometerClass::SingleOrAveragedTicks => {
+                f.write_str("Single or averaged ticks")
+            }
+            OdoInputTypeOdometerClass::SingleOrAveragedSpeed => {
+                f.write_str("Single or averaged speed")
+            }
+            OdoInputTypeOdometerClass::MultiDimensionalTicks => {
+                f.write_str("Multi-dimensional ticks")
+            }
+            OdoInputTypeOdometerClass::MultiDimensionalSpeed => {
+                f.write_str("Multi-dimensional speed")
+            }
         }
     }
 }
@@ -387,6 +790,38 @@ pub struct SolutionInputType {
     pub flags: u8,
 }
 
+impl SolutionInputType {
+    pub fn sensor_usage(&self) -> Option<SolutionInputTypeSensorUsage> {
+        match get_bit_range!(self.sensor_type, u8, u8, 4, 3) {
+            0 => Some(SolutionInputTypeSensorUsage::Unknown),
+            1 => Some(SolutionInputTypeSensorUsage::ReceivedAndUsed),
+            2 => Some(SolutionInputTypeSensorUsage::ReceivedButNotUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_sensor_usage(&mut self, sensor_usage: SolutionInputTypeSensorUsage) {
+        set_bit_range!(&mut self.sensor_type, sensor_usage, u8, u8, 4, 3);
+    }
+
+    pub fn sensor_type(&self) -> Option<SolutionInputTypeSensorType> {
+        match get_bit_range!(self.sensor_type, u8, u8, 2, 0) {
+            0 => Some(SolutionInputTypeSensorType::Invalid),
+            1 => Some(SolutionInputTypeSensorType::GnssPosition),
+            2 => Some(SolutionInputTypeSensorType::GnssVelocityDisplacement),
+            3 => Some(SolutionInputTypeSensorType::GnssVelocityDoppler),
+            4 => Some(SolutionInputTypeSensorType::OdometryTicks),
+            5 => Some(SolutionInputTypeSensorType::OdometrySpeed),
+            6 => Some(SolutionInputTypeSensorType::ImuSensor),
+            _ => None,
+        }
+    }
+
+    pub fn set_sensor_type(&mut self, sensor_type: SolutionInputTypeSensorType) {
+        set_bit_range!(&mut self.sensor_type, sensor_type, u8, u8, 2, 0);
+    }
+}
+
 impl WireFormat for SolutionInputType {
     const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
     fn len(&self) -> usize {
@@ -400,6 +835,80 @@ impl WireFormat for SolutionInputType {
         SolutionInputType {
             sensor_type: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Sensor Usage
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SolutionInputTypeSensorUsage {
+    /// Unknown
+    Unknown = 0,
+
+    /// Received and used
+    ReceivedAndUsed = 1,
+
+    /// Received but not used
+    ReceivedButNotUsed = 2,
+}
+
+impl std::fmt::Display for SolutionInputTypeSensorUsage {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SolutionInputTypeSensorUsage::Unknown => f.write_str("Unknown"),
+            SolutionInputTypeSensorUsage::ReceivedAndUsed => f.write_str("Received and used"),
+            SolutionInputTypeSensorUsage::ReceivedButNotUsed => {
+                f.write_str("Received but not used")
+            }
+        }
+    }
+}
+
+/// Sensor Type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SolutionInputTypeSensorType {
+    /// Invalid
+    Invalid = 0,
+
+    /// GNSS Position (see GNSSInputType)
+    GnssPosition = 1,
+
+    /// GNSS Velocity Displacement (see GNSSInputType)
+    GnssVelocityDisplacement = 2,
+
+    /// GNSS Velocity Doppler (see GNSSInputType)
+    GnssVelocityDoppler = 3,
+
+    /// Odometry Ticks (see OdoInputType)
+    OdometryTicks = 4,
+
+    /// Odometry Speed (see OdoInputType)
+    OdometrySpeed = 5,
+
+    /// IMU Sensor (see IMUInputType)
+    ImuSensor = 6,
+}
+
+impl std::fmt::Display for SolutionInputTypeSensorType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SolutionInputTypeSensorType::Invalid => f.write_str("Invalid"),
+            SolutionInputTypeSensorType::GnssPosition => {
+                f.write_str("GNSS Position (see GNSSInputType)")
+            }
+            SolutionInputTypeSensorType::GnssVelocityDisplacement => {
+                f.write_str("GNSS Velocity Displacement (see GNSSInputType)")
+            }
+            SolutionInputTypeSensorType::GnssVelocityDoppler => {
+                f.write_str("GNSS Velocity Doppler (see GNSSInputType)")
+            }
+            SolutionInputTypeSensorType::OdometryTicks => {
+                f.write_str("Odometry Ticks (see OdoInputType)")
+            }
+            SolutionInputTypeSensorType::OdometrySpeed => {
+                f.write_str("Odometry Speed (see OdoInputType)")
+            }
+            SolutionInputTypeSensorType::ImuSensor => f.write_str("IMU Sensor (see IMUInputType)"),
         }
     }
 }

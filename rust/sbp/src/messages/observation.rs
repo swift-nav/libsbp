@@ -5914,6 +5914,76 @@ pub struct PackedObsContent {
     pub sid: GnssSignal,
 }
 
+impl PackedObsContent {
+    pub fn raim_exclusion(&self) -> Option<PackedObsContentRaimExclusion> {
+        match get_bit_range!(self.flags, u8, u8, 7, 0) {
+            0 => Some(PackedObsContentRaimExclusion::NoExclusion),
+            1 => Some(PackedObsContentRaimExclusion::MeasurementWasExcludedBySppRaimUseWithCare),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_exclusion(&mut self, raim_exclusion: PackedObsContentRaimExclusion) {
+        set_bit_range!(&mut self.flags, raim_exclusion, u8, u8, 7, 0);
+    }
+
+    pub fn doppler_valid(&self) -> Option<PackedObsContentDopplerValid> {
+        match get_bit_range!(self.flags, u8, u8, 3, 0) {
+            0 => Some(PackedObsContentDopplerValid::InvalidDopplerMeasurement),
+            1 => Some(PackedObsContentDopplerValid::ValidDopplerMeasurement),
+            _ => None,
+        }
+    }
+
+    pub fn set_doppler_valid(&mut self, doppler_valid: PackedObsContentDopplerValid) {
+        set_bit_range!(&mut self.flags, doppler_valid, u8, u8, 3, 0);
+    }
+
+    pub fn halfcycle_ambiguity(&self) -> Option<PackedObsContentHalfCycleAmbiguity> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(PackedObsContentHalfCycleAmbiguity::HalfCyclePhaseAmbiguityUnresolved),
+            1 => Some(PackedObsContentHalfCycleAmbiguity::HalfCyclePhaseAmbiguityResolved),
+            _ => None,
+        }
+    }
+
+    pub fn set_halfcycle_ambiguity(
+        &mut self,
+        halfcycle_ambiguity: PackedObsContentHalfCycleAmbiguity,
+    ) {
+        set_bit_range!(&mut self.flags, halfcycle_ambiguity, u8, u8, 2, 0);
+    }
+
+    pub fn carrier_phase_valid(&self) -> Option<PackedObsContentCarrierPhaseValid> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(PackedObsContentCarrierPhaseValid::InvalidCarrierPhaseMeasurement),
+            1 => Some(PackedObsContentCarrierPhaseValid::ValidCarrierPhaseMeasurement),
+            _ => None,
+        }
+    }
+
+    pub fn set_carrier_phase_valid(
+        &mut self,
+        carrier_phase_valid: PackedObsContentCarrierPhaseValid,
+    ) {
+        set_bit_range!(&mut self.flags, carrier_phase_valid, u8, u8, 1, 0);
+    }
+
+    pub fn pseudorange_valid(&self) -> Option<PackedObsContentPseudorangeValid> {
+        match get_bit_range!(self.flags, u8, u8, 0, 0) {
+            0 => Some(PackedObsContentPseudorangeValid::InvalidPseudorangeMeasurement),
+            1 => Some(
+                PackedObsContentPseudorangeValid::ValidPseudorangeMeasurementAndCoarseTowDecoded,
+            ),
+            _ => None,
+        }
+    }
+
+    pub fn set_pseudorange_valid(&mut self, pseudorange_valid: PackedObsContentPseudorangeValid) {
+        set_bit_range!(&mut self.flags, pseudorange_valid, u8, u8, 0, 0);
+    }
+}
+
 impl WireFormat for PackedObsContent {
     const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
         + <CarrierPhase as WireFormat>::MIN_LEN
@@ -5949,6 +6019,119 @@ impl WireFormat for PackedObsContent {
             lock: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
             sid: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// RAIM exclusion
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedObsContentRaimExclusion {
+    /// No exclusion
+    NoExclusion = 0,
+
+    /// Measurement was excluded by SPP RAIM, use with care
+    MeasurementWasExcludedBySppRaimUseWithCare = 1,
+}
+
+impl std::fmt::Display for PackedObsContentRaimExclusion {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedObsContentRaimExclusion::NoExclusion => f.write_str("No exclusion"),
+            PackedObsContentRaimExclusion::MeasurementWasExcludedBySppRaimUseWithCare => {
+                f.write_str("Measurement was excluded by SPP RAIM, use with care")
+            }
+        }
+    }
+}
+
+/// Doppler valid
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedObsContentDopplerValid {
+    /// Invalid doppler measurement
+    InvalidDopplerMeasurement = 0,
+
+    /// Valid doppler measurement
+    ValidDopplerMeasurement = 1,
+}
+
+impl std::fmt::Display for PackedObsContentDopplerValid {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedObsContentDopplerValid::InvalidDopplerMeasurement => {
+                f.write_str("Invalid doppler measurement")
+            }
+            PackedObsContentDopplerValid::ValidDopplerMeasurement => {
+                f.write_str("Valid doppler measurement")
+            }
+        }
+    }
+}
+
+/// Half-cycle ambiguity
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedObsContentHalfCycleAmbiguity {
+    /// Half cycle phase ambiguity unresolved
+    HalfCyclePhaseAmbiguityUnresolved = 0,
+
+    /// Half cycle phase ambiguity resolved
+    HalfCyclePhaseAmbiguityResolved = 1,
+}
+
+impl std::fmt::Display for PackedObsContentHalfCycleAmbiguity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedObsContentHalfCycleAmbiguity::HalfCyclePhaseAmbiguityUnresolved => {
+                f.write_str("Half cycle phase ambiguity unresolved")
+            }
+            PackedObsContentHalfCycleAmbiguity::HalfCyclePhaseAmbiguityResolved => {
+                f.write_str("Half cycle phase ambiguity resolved")
+            }
+        }
+    }
+}
+
+/// Carrier phase valid
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedObsContentCarrierPhaseValid {
+    /// Invalid carrier phase measurement
+    InvalidCarrierPhaseMeasurement = 0,
+
+    /// Valid carrier phase measurement
+    ValidCarrierPhaseMeasurement = 1,
+}
+
+impl std::fmt::Display for PackedObsContentCarrierPhaseValid {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedObsContentCarrierPhaseValid::InvalidCarrierPhaseMeasurement => {
+                f.write_str("Invalid carrier phase measurement")
+            }
+            PackedObsContentCarrierPhaseValid::ValidCarrierPhaseMeasurement => {
+                f.write_str("Valid carrier phase measurement")
+            }
+        }
+    }
+}
+
+/// Pseudorange valid
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedObsContentPseudorangeValid {
+    /// Invalid pseudorange measurement
+    InvalidPseudorangeMeasurement = 0,
+
+    /// Valid pseudorange measurement and coarse TOW decoded
+    ValidPseudorangeMeasurementAndCoarseTowDecoded = 1,
+}
+
+impl std::fmt::Display for PackedObsContentPseudorangeValid {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedObsContentPseudorangeValid::InvalidPseudorangeMeasurement => {
+                f.write_str("Invalid pseudorange measurement")
+            }
+            PackedObsContentPseudorangeValid::ValidPseudorangeMeasurementAndCoarseTowDecoded => {
+                f.write_str("Valid pseudorange measurement and coarse TOW decoded")
+            }
         }
     }
 }
@@ -6165,6 +6348,80 @@ pub struct PackedOsrContent {
     pub range_std: u16,
 }
 
+impl PackedOsrContent {
+    pub fn invalid_phase_corrections(&self) -> Option<PackedOsrContentInvalidPhaseCorrections> {
+        match get_bit_range!(self.flags, u8, u8, 4, 0) {
+            0 => Some(PackedOsrContentInvalidPhaseCorrections::ValidPhaseCorrections),
+            1 => Some(PackedOsrContentInvalidPhaseCorrections::DoNotUsePhaseCorrections),
+            _ => None,
+        }
+    }
+
+    pub fn set_invalid_phase_corrections(
+        &mut self,
+        invalid_phase_corrections: PackedOsrContentInvalidPhaseCorrections,
+    ) {
+        set_bit_range!(&mut self.flags, invalid_phase_corrections, u8, u8, 4, 0);
+    }
+
+    pub fn invalid_code_corrections(&self) -> Option<PackedOsrContentInvalidCodeCorrections> {
+        match get_bit_range!(self.flags, u8, u8, 3, 0) {
+            0 => Some(PackedOsrContentInvalidCodeCorrections::ValidCodeCorrections),
+            1 => Some(PackedOsrContentInvalidCodeCorrections::DoNotUseCodeCorrections),
+            _ => None,
+        }
+    }
+
+    pub fn set_invalid_code_corrections(
+        &mut self,
+        invalid_code_corrections: PackedOsrContentInvalidCodeCorrections,
+    ) {
+        set_bit_range!(&mut self.flags, invalid_code_corrections, u8, u8, 3, 0);
+    }
+
+    pub fn full_fixing_flag(&self) -> Option<PackedOsrContentFullFixingFlag> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(PackedOsrContentFullFixingFlag::FullFixingUnavailable),
+            1 => Some(PackedOsrContentFullFixingFlag::FullFixingAvailable),
+            _ => None,
+        }
+    }
+
+    pub fn set_full_fixing_flag(&mut self, full_fixing_flag: PackedOsrContentFullFixingFlag) {
+        set_bit_range!(&mut self.flags, full_fixing_flag, u8, u8, 2, 0);
+    }
+
+    pub fn partial_fixing_flag(&self) -> Option<PackedOsrContentPartialFixingFlag> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(PackedOsrContentPartialFixingFlag::PartialFixingUnavailable),
+            1 => Some(PackedOsrContentPartialFixingFlag::PartialFixingAvailable),
+            _ => None,
+        }
+    }
+
+    pub fn set_partial_fixing_flag(
+        &mut self,
+        partial_fixing_flag: PackedOsrContentPartialFixingFlag,
+    ) {
+        set_bit_range!(&mut self.flags, partial_fixing_flag, u8, u8, 1, 0);
+    }
+
+    pub fn correction_validity(&self) -> Option<PackedOsrContentCorrectionValidity> {
+        match get_bit_range!(self.flags, u8, u8, 0, 0) {
+            0 => Some(PackedOsrContentCorrectionValidity::DoNotUseSignal),
+            1 => Some(PackedOsrContentCorrectionValidity::ValidSignal),
+            _ => None,
+        }
+    }
+
+    pub fn set_correction_validity(
+        &mut self,
+        correction_validity: PackedOsrContentCorrectionValidity,
+    ) {
+        set_bit_range!(&mut self.flags, correction_validity, u8, u8, 0, 0);
+    }
+}
+
 impl WireFormat for PackedOsrContent {
     const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
         + <CarrierPhase as WireFormat>::MIN_LEN
@@ -6204,6 +6461,117 @@ impl WireFormat for PackedOsrContent {
             iono_std: WireFormat::parse_unchecked(buf),
             tropo_std: WireFormat::parse_unchecked(buf),
             range_std: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Invalid phase corrections
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedOsrContentInvalidPhaseCorrections {
+    /// Valid phase corrections
+    ValidPhaseCorrections = 0,
+
+    /// Do not use phase corrections
+    DoNotUsePhaseCorrections = 1,
+}
+
+impl std::fmt::Display for PackedOsrContentInvalidPhaseCorrections {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedOsrContentInvalidPhaseCorrections::ValidPhaseCorrections => {
+                f.write_str("Valid phase corrections")
+            }
+            PackedOsrContentInvalidPhaseCorrections::DoNotUsePhaseCorrections => {
+                f.write_str("Do not use phase corrections")
+            }
+        }
+    }
+}
+
+/// Invalid code corrections
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedOsrContentInvalidCodeCorrections {
+    /// Valid code corrections
+    ValidCodeCorrections = 0,
+
+    /// Do not use code corrections
+    DoNotUseCodeCorrections = 1,
+}
+
+impl std::fmt::Display for PackedOsrContentInvalidCodeCorrections {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedOsrContentInvalidCodeCorrections::ValidCodeCorrections => {
+                f.write_str("Valid code corrections")
+            }
+            PackedOsrContentInvalidCodeCorrections::DoNotUseCodeCorrections => {
+                f.write_str("Do not use code corrections")
+            }
+        }
+    }
+}
+
+/// Full fixing flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedOsrContentFullFixingFlag {
+    /// Full fixing unavailable
+    FullFixingUnavailable = 0,
+
+    /// Full fixing available
+    FullFixingAvailable = 1,
+}
+
+impl std::fmt::Display for PackedOsrContentFullFixingFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedOsrContentFullFixingFlag::FullFixingUnavailable => {
+                f.write_str("Full fixing unavailable")
+            }
+            PackedOsrContentFullFixingFlag::FullFixingAvailable => {
+                f.write_str("Full fixing available")
+            }
+        }
+    }
+}
+
+/// Partial fixing flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedOsrContentPartialFixingFlag {
+    /// Partial fixing unavailable
+    PartialFixingUnavailable = 0,
+
+    /// Partial fixing available
+    PartialFixingAvailable = 1,
+}
+
+impl std::fmt::Display for PackedOsrContentPartialFixingFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedOsrContentPartialFixingFlag::PartialFixingUnavailable => {
+                f.write_str("Partial fixing unavailable")
+            }
+            PackedOsrContentPartialFixingFlag::PartialFixingAvailable => {
+                f.write_str("Partial fixing available")
+            }
+        }
+    }
+}
+
+/// Correction validity
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PackedOsrContentCorrectionValidity {
+    /// Do not use signal
+    DoNotUseSignal = 0,
+
+    /// Valid signal
+    ValidSignal = 1,
+}
+
+impl std::fmt::Display for PackedOsrContentCorrectionValidity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackedOsrContentCorrectionValidity::DoNotUseSignal => f.write_str("Do not use signal"),
+            PackedOsrContentCorrectionValidity::ValidSignal => f.write_str("Valid signal"),
         }
     }
 }

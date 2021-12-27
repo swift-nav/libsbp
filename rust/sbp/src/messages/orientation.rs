@@ -51,6 +51,23 @@ pub struct MsgAngularRate {
     pub flags: u8,
 }
 
+impl MsgAngularRate {
+    pub fn ins_navigation_mode(&self) -> Option<MsgAngularRateInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgAngularRateInsNavigationMode::Invalid),
+            1 => Some(MsgAngularRateInsNavigationMode::Valid),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(
+        &mut self,
+        ins_navigation_mode: MsgAngularRateInsNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgAngularRate {
     const MESSAGE_TYPE: u16 = 546;
     const MESSAGE_NAME: &'static str = "MSG_ANGULAR_RATE";
@@ -125,6 +142,25 @@ impl WireFormat for MsgAngularRate {
     }
 }
 
+/// INS Navigation mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgAngularRateInsNavigationMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Valid
+    Valid = 1,
+}
+
+impl std::fmt::Display for MsgAngularRateInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgAngularRateInsNavigationMode::Invalid => f.write_str("Invalid"),
+            MsgAngularRateInsNavigationMode::Valid => f.write_str("Valid"),
+        }
+    }
+}
+
 /// Heading relative to True North
 ///
 /// This message reports the baseline heading pointing from the base station
@@ -151,6 +187,22 @@ pub struct MsgBaselineHeading {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgBaselineHeading {
+    pub fn fix_mode(&self) -> Option<MsgBaselineHeadingFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgBaselineHeadingFixMode::Invalid),
+            2 => Some(MsgBaselineHeadingFixMode::DifferentialGnss),
+            3 => Some(MsgBaselineHeadingFixMode::FloatRtk),
+            4 => Some(MsgBaselineHeadingFixMode::FixedRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgBaselineHeadingFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgBaselineHeading {
@@ -223,6 +275,33 @@ impl WireFormat for MsgBaselineHeading {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineHeadingFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+}
+
+impl std::fmt::Display for MsgBaselineHeadingFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineHeadingFixMode::Invalid => f.write_str("Invalid"),
+            MsgBaselineHeadingFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgBaselineHeadingFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgBaselineHeadingFixMode::FixedRtk => f.write_str("Fixed RTK"),
+        }
+    }
+}
+
 /// Euler angles
 ///
 /// This message reports the yaw, pitch, and roll angles of the vehicle body
@@ -262,6 +341,23 @@ pub struct MsgOrientEuler {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgOrientEuler {
+    pub fn ins_navigation_mode(&self) -> Option<MsgOrientEulerInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgOrientEulerInsNavigationMode::Invalid),
+            1 => Some(MsgOrientEulerInsNavigationMode::Valid),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(
+        &mut self,
+        ins_navigation_mode: MsgOrientEulerInsNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgOrientEuler {
@@ -350,6 +446,25 @@ impl WireFormat for MsgOrientEuler {
     }
 }
 
+/// INS Navigation mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgOrientEulerInsNavigationMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Valid
+    Valid = 1,
+}
+
+impl std::fmt::Display for MsgOrientEulerInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgOrientEulerInsNavigationMode::Invalid => f.write_str("Invalid"),
+            MsgOrientEulerInsNavigationMode::Valid => f.write_str("Valid"),
+        }
+    }
+}
+
 /// Quaternion 4 component vector
 ///
 /// This message reports the quaternion vector describing the vehicle body
@@ -395,6 +510,20 @@ pub struct MsgOrientQuat {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgOrientQuat {
+    pub fn ins_navigation_mode(&self) -> Option<MsgOrientQuatInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgOrientQuatInsNavigationMode::Invalid),
+            1 => Some(MsgOrientQuatInsNavigationMode::Valid),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: MsgOrientQuatInsNavigationMode) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgOrientQuat {
@@ -487,6 +616,25 @@ impl WireFormat for MsgOrientQuat {
             y_accuracy: WireFormat::parse_unchecked(buf),
             z_accuracy: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// INS Navigation mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgOrientQuatInsNavigationMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Valid
+    Valid = 1,
+}
+
+impl std::fmt::Display for MsgOrientQuatInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgOrientQuatInsNavigationMode::Invalid => f.write_str("Invalid"),
+            MsgOrientQuatInsNavigationMode::Valid => f.write_str("Valid"),
         }
     }
 }

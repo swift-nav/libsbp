@@ -171,9 +171,6 @@ def main():
         elif args.test_java:
           import sbpg.targets.test_java as test_java
           test_java.render_source(output_dir, parsed)
-        elif args.rust:
-          import sbpg.targets.rust as rs
-          rs.render_source(output_dir, parsed)
         elif args.test_rust:
           import sbpg.targets.test_rust as test_rs
           test_rs.render_source(output_dir, parsed)
@@ -200,10 +197,9 @@ def main():
         parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
         java.render_table(output_dir, parsed)
       elif args.rust:
+        import sbpg.targets.rust as rs
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-        rs.render_mod(output_dir, parsed)
-        rs.render_sbp_cargo_toml(output_dir, release)
-        rs.render_sbp2json_cargo_toml(output_dir, release)
+        rs.render_all(output_dir, parsed, release)
       elif args.test_c:
         test_c.render_check_suites(output_dir, all_specs)
         test_c.render_check_main(output_dir, all_specs)

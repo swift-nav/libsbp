@@ -61,6 +61,74 @@ pub struct MsgNdbEvent {
     pub original_sender: u16,
 }
 
+impl MsgNdbEvent {
+    pub fn event_type(&self) -> Option<MsgNdbEventEventType> {
+        match get_bit_range!(self.event, u8, u8, 1, 0) {
+            0 => Some(MsgNdbEventEventType::UNKNOWN),
+            1 => Some(MsgNdbEventEventType::STORE),
+            2 => Some(MsgNdbEventEventType::FETCH),
+            3 => Some(MsgNdbEventEventType::ERASE),
+            _ => None,
+        }
+    }
+
+    pub fn set_event_type(&mut self, event_type: MsgNdbEventEventType) {
+        set_bit_range!(&mut self.event, event_type, u8, u8, 1, 0);
+    }
+
+    pub fn event_object_type(&self) -> Option<MsgNdbEventEventObjectType> {
+        match get_bit_range!(self.object_type, u8, u8, 2, 0) {
+            0 => Some(MsgNdbEventEventObjectType::UNKNOWN),
+            1 => Some(MsgNdbEventEventObjectType::EPHEMERIS),
+            2 => Some(MsgNdbEventEventObjectType::ALMANAC),
+            3 => Some(MsgNdbEventEventObjectType::AlmanacWn),
+            4 => Some(MsgNdbEventEventObjectType::IoNO),
+            5 => Some(MsgNdbEventEventObjectType::L2CCap),
+            6 => Some(MsgNdbEventEventObjectType::LGF),
+            _ => None,
+        }
+    }
+
+    pub fn set_event_object_type(&mut self, event_object_type: MsgNdbEventEventObjectType) {
+        set_bit_range!(&mut self.object_type, event_object_type, u8, u8, 2, 0);
+    }
+
+    pub fn event_result(&self) -> Option<MsgNdbEventEventResult> {
+        match get_bit_range!(self.result, u8, u8, 3, 0) {
+            0 => Some(MsgNdbEventEventResult::NdbErrNone),
+            1 => Some(MsgNdbEventEventResult::NdbErrMissingIe),
+            2 => Some(MsgNdbEventEventResult::NdbErrUnsupported),
+            3 => Some(MsgNdbEventEventResult::NdbErrFileIo),
+            4 => Some(MsgNdbEventEventResult::NdbErrInitDone),
+            5 => Some(MsgNdbEventEventResult::NdbErrBadParam),
+            6 => Some(MsgNdbEventEventResult::NdbErrUnreliableData),
+            7 => Some(MsgNdbEventEventResult::NdbErrAlgorithmError),
+            8 => Some(MsgNdbEventEventResult::NdbErrNoData),
+            9 => Some(MsgNdbEventEventResult::NdbErrNoChange),
+            10 => Some(MsgNdbEventEventResult::NdbErrOlderData),
+            _ => None,
+        }
+    }
+
+    pub fn set_event_result(&mut self, event_result: MsgNdbEventEventResult) {
+        set_bit_range!(&mut self.result, event_result, u8, u8, 3, 0);
+    }
+
+    pub fn data_source(&self) -> Option<MsgNdbEventDataSource> {
+        match get_bit_range!(self.data_source, u8, u8, 1, 0) {
+            0 => Some(MsgNdbEventDataSource::NdbDsUndefined),
+            1 => Some(MsgNdbEventDataSource::NdbDsInit),
+            2 => Some(MsgNdbEventDataSource::NdbDsReceiver),
+            3 => Some(MsgNdbEventDataSource::NdbDsSbp),
+            _ => None,
+        }
+    }
+
+    pub fn set_data_source(&mut self, data_source: MsgNdbEventDataSource) {
+        set_bit_range!(&mut self.data_source, data_source, u8, u8, 1, 0);
+    }
+}
+
 impl ConcreteMessage for MsgNdbEvent {
     const MESSAGE_TYPE: u16 = 1024;
     const MESSAGE_NAME: &'static str = "MSG_NDB_EVENT";
@@ -134,6 +202,154 @@ impl WireFormat for MsgNdbEvent {
             object_sid: WireFormat::parse_unchecked(buf),
             src_sid: WireFormat::parse_unchecked(buf),
             original_sender: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Event type.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgNdbEventEventType {
+    /// UNKNOWN
+    UNKNOWN = 0,
+
+    /// STORE
+    STORE = 1,
+
+    /// FETCH
+    FETCH = 2,
+
+    /// ERASE
+    ERASE = 3,
+}
+
+impl std::fmt::Display for MsgNdbEventEventType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgNdbEventEventType::UNKNOWN => f.write_str("UNKNOWN"),
+            MsgNdbEventEventType::STORE => f.write_str("STORE"),
+            MsgNdbEventEventType::FETCH => f.write_str("FETCH"),
+            MsgNdbEventEventType::ERASE => f.write_str("ERASE"),
+        }
+    }
+}
+
+/// Event object type.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgNdbEventEventObjectType {
+    /// UNKNOWN
+    UNKNOWN = 0,
+
+    /// EPHEMERIS
+    EPHEMERIS = 1,
+
+    /// ALMANAC
+    ALMANAC = 2,
+
+    /// ALMANAC_WN
+    AlmanacWn = 3,
+
+    /// IONO
+    IoNO = 4,
+
+    /// L2C_CAP
+    L2CCap = 5,
+
+    /// LGF
+    LGF = 6,
+}
+
+impl std::fmt::Display for MsgNdbEventEventObjectType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgNdbEventEventObjectType::UNKNOWN => f.write_str("UNKNOWN"),
+            MsgNdbEventEventObjectType::EPHEMERIS => f.write_str("EPHEMERIS"),
+            MsgNdbEventEventObjectType::ALMANAC => f.write_str("ALMANAC"),
+            MsgNdbEventEventObjectType::AlmanacWn => f.write_str("ALMANAC_WN"),
+            MsgNdbEventEventObjectType::IoNO => f.write_str("IONO"),
+            MsgNdbEventEventObjectType::L2CCap => f.write_str("L2C_CAP"),
+            MsgNdbEventEventObjectType::LGF => f.write_str("LGF"),
+        }
+    }
+}
+
+/// Event result.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgNdbEventEventResult {
+    /// NDB_ERR_NONE
+    NdbErrNone = 0,
+
+    /// NDB_ERR_MISSING_IE
+    NdbErrMissingIe = 1,
+
+    /// NDB_ERR_UNSUPPORTED
+    NdbErrUnsupported = 2,
+
+    /// NDB_ERR_FILE_IO
+    NdbErrFileIo = 3,
+
+    /// NDB_ERR_INIT_DONE
+    NdbErrInitDone = 4,
+
+    /// NDB_ERR_BAD_PARAM
+    NdbErrBadParam = 5,
+
+    /// NDB_ERR_UNRELIABLE_DATA
+    NdbErrUnreliableData = 6,
+
+    /// NDB_ERR_ALGORITHM_ERROR
+    NdbErrAlgorithmError = 7,
+
+    /// NDB_ERR_NO_DATA
+    NdbErrNoData = 8,
+
+    /// NDB_ERR_NO_CHANGE
+    NdbErrNoChange = 9,
+
+    /// NDB_ERR_OLDER_DATA
+    NdbErrOlderData = 10,
+}
+
+impl std::fmt::Display for MsgNdbEventEventResult {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgNdbEventEventResult::NdbErrNone => f.write_str("NDB_ERR_NONE"),
+            MsgNdbEventEventResult::NdbErrMissingIe => f.write_str("NDB_ERR_MISSING_IE"),
+            MsgNdbEventEventResult::NdbErrUnsupported => f.write_str("NDB_ERR_UNSUPPORTED"),
+            MsgNdbEventEventResult::NdbErrFileIo => f.write_str("NDB_ERR_FILE_IO"),
+            MsgNdbEventEventResult::NdbErrInitDone => f.write_str("NDB_ERR_INIT_DONE"),
+            MsgNdbEventEventResult::NdbErrBadParam => f.write_str("NDB_ERR_BAD_PARAM"),
+            MsgNdbEventEventResult::NdbErrUnreliableData => f.write_str("NDB_ERR_UNRELIABLE_DATA"),
+            MsgNdbEventEventResult::NdbErrAlgorithmError => f.write_str("NDB_ERR_ALGORITHM_ERROR"),
+            MsgNdbEventEventResult::NdbErrNoData => f.write_str("NDB_ERR_NO_DATA"),
+            MsgNdbEventEventResult::NdbErrNoChange => f.write_str("NDB_ERR_NO_CHANGE"),
+            MsgNdbEventEventResult::NdbErrOlderData => f.write_str("NDB_ERR_OLDER_DATA"),
+        }
+    }
+}
+
+/// Data source.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgNdbEventDataSource {
+    /// NDB_DS_UNDEFINED
+    NdbDsUndefined = 0,
+
+    /// NDB_DS_INIT
+    NdbDsInit = 1,
+
+    /// NDB_DS_RECEIVER
+    NdbDsReceiver = 2,
+
+    /// NDB_DS_SBP
+    NdbDsSbp = 3,
+}
+
+impl std::fmt::Display for MsgNdbEventDataSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgNdbEventDataSource::NdbDsUndefined => f.write_str("NDB_DS_UNDEFINED"),
+            MsgNdbEventDataSource::NdbDsInit => f.write_str("NDB_DS_INIT"),
+            MsgNdbEventDataSource::NdbDsReceiver => f.write_str("NDB_DS_RECEIVER"),
+            MsgNdbEventDataSource::NdbDsSbp => f.write_str("NDB_DS_SBP"),
         }
     }
 }

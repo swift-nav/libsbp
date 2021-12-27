@@ -50,6 +50,20 @@ pub struct MsgLinuxCpuState {
     pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
+impl MsgLinuxCpuState {
+    pub fn timestamp_type(&self) -> Option<MsgLinuxCpuStateTimestampType> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgLinuxCpuStateTimestampType::SystemTimeInSeconds),
+            1 => Some(MsgLinuxCpuStateTimestampType::GpsTowInMilliseconds),
+            _ => None,
+        }
+    }
+
+    pub fn set_timestamp_type(&mut self, timestamp_type: MsgLinuxCpuStateTimestampType) {
+        set_bit_range!(&mut self.flags, timestamp_type, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgLinuxCpuState {
     const MESSAGE_TYPE: u16 = 32520;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_CPU_STATE";
@@ -119,6 +133,29 @@ impl WireFormat for MsgLinuxCpuState {
             flags: WireFormat::parse_unchecked(buf),
             tname: WireFormat::parse_unchecked(buf),
             cmdline: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// timestamp type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgLinuxCpuStateTimestampType {
+    /// System time in seconds
+    SystemTimeInSeconds = 0,
+
+    /// GPS TOW in milliseconds
+    GpsTowInMilliseconds = 1,
+}
+
+impl std::fmt::Display for MsgLinuxCpuStateTimestampType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgLinuxCpuStateTimestampType::SystemTimeInSeconds => {
+                f.write_str("System time in seconds")
+            }
+            MsgLinuxCpuStateTimestampType::GpsTowInMilliseconds => {
+                f.write_str("GPS TOW in milliseconds")
+            }
         }
     }
 }
@@ -250,6 +287,20 @@ pub struct MsgLinuxMemState {
     pub cmdline: SbpString<Vec<u8>, Unterminated>,
 }
 
+impl MsgLinuxMemState {
+    pub fn timestamp_type(&self) -> Option<MsgLinuxMemStateTimestampType> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgLinuxMemStateTimestampType::SystemTimeInSeconds),
+            1 => Some(MsgLinuxMemStateTimestampType::GpsTowInMilliseconds),
+            _ => None,
+        }
+    }
+
+    pub fn set_timestamp_type(&mut self, timestamp_type: MsgLinuxMemStateTimestampType) {
+        set_bit_range!(&mut self.flags, timestamp_type, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgLinuxMemState {
     const MESSAGE_TYPE: u16 = 32521;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_MEM_STATE";
@@ -319,6 +370,29 @@ impl WireFormat for MsgLinuxMemState {
             flags: WireFormat::parse_unchecked(buf),
             tname: WireFormat::parse_unchecked(buf),
             cmdline: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// timestamp type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgLinuxMemStateTimestampType {
+    /// System time in seconds
+    SystemTimeInSeconds = 0,
+
+    /// GPS TOW in milliseconds
+    GpsTowInMilliseconds = 1,
+}
+
+impl std::fmt::Display for MsgLinuxMemStateTimestampType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgLinuxMemStateTimestampType::SystemTimeInSeconds => {
+                f.write_str("System time in seconds")
+            }
+            MsgLinuxMemStateTimestampType::GpsTowInMilliseconds => {
+                f.write_str("GPS TOW in milliseconds")
+            }
         }
     }
 }
@@ -922,6 +996,20 @@ pub struct MsgLinuxSysState {
     pub flags: u8,
 }
 
+impl MsgLinuxSysState {
+    pub fn timestamp_type(&self) -> Option<MsgLinuxSysStateTimestampType> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgLinuxSysStateTimestampType::SystemTimeInSeconds),
+            1 => Some(MsgLinuxSysStateTimestampType::GpsTowInMilliseconds),
+            _ => None,
+        }
+    }
+
+    pub fn set_timestamp_type(&mut self, timestamp_type: MsgLinuxSysStateTimestampType) {
+        set_bit_range!(&mut self.flags, timestamp_type, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgLinuxSysState {
     const MESSAGE_TYPE: u16 = 32522;
     const MESSAGE_NAME: &'static str = "MSG_LINUX_SYS_STATE";
@@ -995,6 +1083,29 @@ impl WireFormat for MsgLinuxSysState {
             pid_count: WireFormat::parse_unchecked(buf),
             time: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// timestamp type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgLinuxSysStateTimestampType {
+    /// System time in seconds
+    SystemTimeInSeconds = 0,
+
+    /// GPS TOW in milliseconds
+    GpsTowInMilliseconds = 1,
+}
+
+impl std::fmt::Display for MsgLinuxSysStateTimestampType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgLinuxSysStateTimestampType::SystemTimeInSeconds => {
+                f.write_str("System time in seconds")
+            }
+            MsgLinuxSysStateTimestampType::GpsTowInMilliseconds => {
+                f.write_str("GPS TOW in milliseconds")
+            }
         }
     }
 }

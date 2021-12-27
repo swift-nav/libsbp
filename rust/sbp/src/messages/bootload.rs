@@ -163,6 +163,38 @@ pub struct MsgBootloaderHandshakeResp {
     pub version: SbpString<Vec<u8>, Unterminated>,
 }
 
+impl MsgBootloaderHandshakeResp {
+    pub fn sbp_major_protocol_version_number(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 15, 8)
+    }
+
+    pub fn set_sbp_major_protocol_version_number(&mut self, sbp_major_protocol_version_number: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            sbp_major_protocol_version_number,
+            u32,
+            u8,
+            15,
+            8
+        );
+    }
+
+    pub fn sbp_minor_protocol_version_number(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 7, 0)
+    }
+
+    pub fn set_sbp_minor_protocol_version_number(&mut self, sbp_minor_protocol_version_number: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            sbp_minor_protocol_version_number,
+            u32,
+            u8,
+            7,
+            0
+        );
+    }
+}
+
 impl ConcreteMessage for MsgBootloaderHandshakeResp {
     const MESSAGE_TYPE: u16 = 180;
     const MESSAGE_NAME: &'static str = "MSG_BOOTLOADER_HANDSHAKE_RESP";

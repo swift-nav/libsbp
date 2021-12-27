@@ -121,6 +121,26 @@ pub struct MsgLog {
     pub text: SbpString<Vec<u8>, Unterminated>,
 }
 
+impl MsgLog {
+    pub fn logging_level(&self) -> Option<MsgLogLoggingLevel> {
+        match get_bit_range!(self.level, u8, u8, 2, 0) {
+            0 => Some(MsgLogLoggingLevel::EMERG),
+            1 => Some(MsgLogLoggingLevel::ALERT),
+            2 => Some(MsgLogLoggingLevel::CRIT),
+            3 => Some(MsgLogLoggingLevel::ERROR),
+            4 => Some(MsgLogLoggingLevel::WARN),
+            5 => Some(MsgLogLoggingLevel::NOTICE),
+            6 => Some(MsgLogLoggingLevel::INFO),
+            7 => Some(MsgLogLoggingLevel::DEBUG),
+            _ => None,
+        }
+    }
+
+    pub fn set_logging_level(&mut self, logging_level: MsgLogLoggingLevel) {
+        set_bit_range!(&mut self.level, logging_level, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgLog {
     const MESSAGE_TYPE: u16 = 1025;
     const MESSAGE_NAME: &'static str = "MSG_LOG";
@@ -169,6 +189,49 @@ impl WireFormat for MsgLog {
             sender_id: None,
             level: WireFormat::parse_unchecked(buf),
             text: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Logging level
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgLogLoggingLevel {
+    /// EMERG
+    EMERG = 0,
+
+    /// ALERT
+    ALERT = 1,
+
+    /// CRIT
+    CRIT = 2,
+
+    /// ERROR
+    ERROR = 3,
+
+    /// WARN
+    WARN = 4,
+
+    /// NOTICE
+    NOTICE = 5,
+
+    /// INFO
+    INFO = 6,
+
+    /// DEBUG
+    DEBUG = 7,
+}
+
+impl std::fmt::Display for MsgLogLoggingLevel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgLogLoggingLevel::EMERG => f.write_str("EMERG"),
+            MsgLogLoggingLevel::ALERT => f.write_str("ALERT"),
+            MsgLogLoggingLevel::CRIT => f.write_str("CRIT"),
+            MsgLogLoggingLevel::ERROR => f.write_str("ERROR"),
+            MsgLogLoggingLevel::WARN => f.write_str("WARN"),
+            MsgLogLoggingLevel::NOTICE => f.write_str("NOTICE"),
+            MsgLogLoggingLevel::INFO => f.write_str("INFO"),
+            MsgLogLoggingLevel::DEBUG => f.write_str("DEBUG"),
         }
     }
 }

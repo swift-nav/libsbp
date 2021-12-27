@@ -476,6 +476,22 @@ pub struct MsgSettingsRegisterResp {
     pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
+impl MsgSettingsRegisterResp {
+    pub fn register_status(&self) -> Option<MsgSettingsRegisterRespRegisterStatus> {
+        match get_bit_range!( self.status,  u8, u8, 1, 0 ) {
+            0 => Some( MsgSettingsRegisterRespRegisterStatus :: AcceptedRequestedDefaultValueReturned ),
+            1 => Some( MsgSettingsRegisterRespRegisterStatus :: AcceptedSettingFoundInPermanentStorageValueFromStorageReturned ),
+            2 => Some( MsgSettingsRegisterRespRegisterStatus :: RejectedSettingAlreadyRegisteredValueFromMemoryReturned ),
+            3 => Some( MsgSettingsRegisterRespRegisterStatus :: RejectedMalformedMessage ),
+            _ => None,
+        }
+    }
+
+    pub fn set_register_status(&mut self, register_status: MsgSettingsRegisterRespRegisterStatus) {
+        set_bit_range!(&mut self.status, register_status, u8, u8, 1, 0);
+    }
+}
+
 impl ConcreteMessage for MsgSettingsRegisterResp {
     const MESSAGE_TYPE: u16 = 431;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_REGISTER_RESP";
@@ -524,6 +540,34 @@ impl WireFormat for MsgSettingsRegisterResp {
             sender_id: None,
             status: WireFormat::parse_unchecked(buf),
             setting: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Register status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgSettingsRegisterRespRegisterStatus {
+    /// Accepted; requested default value returned
+    AcceptedRequestedDefaultValueReturned = 0,
+
+    /// Accepted; setting found in permanent storage, value from storage
+    /// returned
+    AcceptedSettingFoundInPermanentStorageValueFromStorageReturned = 1,
+
+    /// Rejected; setting already registered, value from memory returned
+    RejectedSettingAlreadyRegisteredValueFromMemoryReturned = 2,
+
+    /// Rejected; malformed message
+    RejectedMalformedMessage = 3,
+}
+
+impl std::fmt::Display for MsgSettingsRegisterRespRegisterStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgSettingsRegisterRespRegisterStatus::AcceptedRequestedDefaultValueReturned => f.write_str("Accepted; requested default value returned"),
+            MsgSettingsRegisterRespRegisterStatus::AcceptedSettingFoundInPermanentStorageValueFromStorageReturned => f.write_str("Accepted; setting found in permanent storage, value from storage returned"),
+            MsgSettingsRegisterRespRegisterStatus::RejectedSettingAlreadyRegisteredValueFromMemoryReturned => f.write_str("Rejected; setting already registered, value from memory returned"),
+            MsgSettingsRegisterRespRegisterStatus::RejectedMalformedMessage => f.write_str("Rejected; malformed message"),
         }
     }
 }
@@ -681,6 +725,25 @@ pub struct MsgSettingsWriteResp {
     pub setting: SbpString<Vec<u8>, Multipart>,
 }
 
+impl MsgSettingsWriteResp {
+    pub fn write_status(&self) -> Option<MsgSettingsWriteRespWriteStatus> {
+        match get_bit_range!(self.status, u8, u8, 1, 0) {
+            0 => Some(MsgSettingsWriteRespWriteStatus::AcceptedValueUpdated),
+            1 => Some(MsgSettingsWriteRespWriteStatus::RejectedValueUnparsableOrOutOfRange),
+            2 => Some(MsgSettingsWriteRespWriteStatus::RejectedRequestedSettingDoesNotExist),
+            3 => Some(MsgSettingsWriteRespWriteStatus::RejectedSettingNameCouldNotBeParsed),
+            4 => Some(MsgSettingsWriteRespWriteStatus::RejectedSettingIsReadOnly),
+            5 => Some(MsgSettingsWriteRespWriteStatus::RejectedModificationIsTemporarilyDisabled),
+            6 => Some(MsgSettingsWriteRespWriteStatus::RejectedUnspecifiedError),
+            _ => None,
+        }
+    }
+
+    pub fn set_write_status(&mut self, write_status: MsgSettingsWriteRespWriteStatus) {
+        set_bit_range!(&mut self.status, write_status, u8, u8, 1, 0);
+    }
+}
+
 impl ConcreteMessage for MsgSettingsWriteResp {
     const MESSAGE_TYPE: u16 = 175;
     const MESSAGE_NAME: &'static str = "MSG_SETTINGS_WRITE_RESP";
@@ -729,6 +792,59 @@ impl WireFormat for MsgSettingsWriteResp {
             sender_id: None,
             status: WireFormat::parse_unchecked(buf),
             setting: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Write status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgSettingsWriteRespWriteStatus {
+    /// Accepted; value updated
+    AcceptedValueUpdated = 0,
+
+    /// Rejected; value unparsable or out-of-range
+    RejectedValueUnparsableOrOutOfRange = 1,
+
+    /// Rejected; requested setting does not exist
+    RejectedRequestedSettingDoesNotExist = 2,
+
+    /// Rejected; setting name could not be parsed
+    RejectedSettingNameCouldNotBeParsed = 3,
+
+    /// Rejected; setting is read only
+    RejectedSettingIsReadOnly = 4,
+
+    /// Rejected; modification is temporarily disabled
+    RejectedModificationIsTemporarilyDisabled = 5,
+
+    /// Rejected; unspecified error
+    RejectedUnspecifiedError = 6,
+}
+
+impl std::fmt::Display for MsgSettingsWriteRespWriteStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgSettingsWriteRespWriteStatus::AcceptedValueUpdated => {
+                f.write_str("Accepted; value updated")
+            }
+            MsgSettingsWriteRespWriteStatus::RejectedValueUnparsableOrOutOfRange => {
+                f.write_str("Rejected; value unparsable or out-of-range")
+            }
+            MsgSettingsWriteRespWriteStatus::RejectedRequestedSettingDoesNotExist => {
+                f.write_str("Rejected; requested setting does not exist")
+            }
+            MsgSettingsWriteRespWriteStatus::RejectedSettingNameCouldNotBeParsed => {
+                f.write_str("Rejected; setting name could not be parsed")
+            }
+            MsgSettingsWriteRespWriteStatus::RejectedSettingIsReadOnly => {
+                f.write_str("Rejected; setting is read only")
+            }
+            MsgSettingsWriteRespWriteStatus::RejectedModificationIsTemporarilyDisabled => {
+                f.write_str("Rejected; modification is temporarily disabled")
+            }
+            MsgSettingsWriteRespWriteStatus::RejectedUnspecifiedError => {
+                f.write_str("Rejected; unspecified error")
+            }
         }
     }
 }

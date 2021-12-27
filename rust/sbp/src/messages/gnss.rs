@@ -174,6 +174,30 @@ pub struct GnssSignal {
     pub code: u8,
 }
 
+impl GnssSignal {
+    pub fn code(&self) -> Option<GnssSignalcode> {
+        match get_bit_range!(self.code, u8, u8, 7, 0) {
+            0 => Some(GnssSignalcode::GpsL1Ca),
+            1 => Some(GnssSignalcode::GpsL2Cm),
+            2 => Some(GnssSignalcode::SbasL1Ca),
+            3 => Some(GnssSignalcode::GloL1Ca),
+            4 => Some(GnssSignalcode::GloL2Ca),
+            5 => Some(GnssSignalcode::GpsL1P),
+            6 => Some(GnssSignalcode::GpsL2P),
+            12 => Some(GnssSignalcode::Bds2B1),
+            13 => Some(GnssSignalcode::Bds2B2),
+            14 => Some(GnssSignalcode::GalE1B),
+            20 => Some(GnssSignalcode::GalE7I),
+            47 => Some(GnssSignalcode::Bds3B2A),
+            _ => None,
+        }
+    }
+
+    pub fn set_code(&mut self, code: GnssSignalcode) {
+        set_bit_range!(&mut self.code, code, u8, u8, 7, 0);
+    }
+}
+
 impl WireFormat for GnssSignal {
     const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
     fn len(&self) -> usize {
@@ -187,6 +211,64 @@ impl WireFormat for GnssSignal {
         GnssSignal {
             sat: WireFormat::parse_unchecked(buf),
             code: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GnssSignalcode {
+    /// GPS L1CA
+    GpsL1Ca = 0,
+
+    /// GPS L2CM
+    GpsL2Cm = 1,
+
+    /// SBAS L1CA
+    SbasL1Ca = 2,
+
+    /// GLO L1CA
+    GloL1Ca = 3,
+
+    /// GLO L2CA
+    GloL2Ca = 4,
+
+    /// GPS L1P
+    GpsL1P = 5,
+
+    /// GPS L2P
+    GpsL2P = 6,
+
+    /// BDS2 B1
+    Bds2B1 = 12,
+
+    /// BDS2 B2
+    Bds2B2 = 13,
+
+    /// GAL E1B
+    GalE1B = 14,
+
+    /// GAL E7I
+    GalE7I = 20,
+
+    /// BDS3 B2a
+    Bds3B2A = 47,
+}
+
+impl std::fmt::Display for GnssSignalcode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            GnssSignalcode::GpsL1Ca => f.write_str("GPS L1CA"),
+            GnssSignalcode::GpsL2Cm => f.write_str("GPS L2CM"),
+            GnssSignalcode::SbasL1Ca => f.write_str("SBAS L1CA"),
+            GnssSignalcode::GloL1Ca => f.write_str("GLO L1CA"),
+            GnssSignalcode::GloL2Ca => f.write_str("GLO L2CA"),
+            GnssSignalcode::GpsL1P => f.write_str("GPS L1P"),
+            GnssSignalcode::GpsL2P => f.write_str("GPS L2P"),
+            GnssSignalcode::Bds2B1 => f.write_str("BDS2 B1"),
+            GnssSignalcode::Bds2B2 => f.write_str("BDS2 B2"),
+            GnssSignalcode::GalE1B => f.write_str("GAL E1B"),
+            GnssSignalcode::GalE7I => f.write_str("GAL E7I"),
+            GnssSignalcode::Bds3B2A => f.write_str("BDS3 B2a"),
         }
     }
 }
@@ -212,6 +294,25 @@ pub struct GnssSignalDep {
     pub reserved: u8,
 }
 
+impl GnssSignalDep {
+    pub fn code(&self) -> Option<GnssSignalDepcode> {
+        match get_bit_range!(self.code, u8, u8, 7, 0) {
+            0 => Some(GnssSignalDepcode::GpsL1Ca),
+            1 => Some(GnssSignalDepcode::GpsL2Cm),
+            2 => Some(GnssSignalDepcode::SbasL1Ca),
+            3 => Some(GnssSignalDepcode::GloL1Ca),
+            4 => Some(GnssSignalDepcode::GloL2Ca),
+            5 => Some(GnssSignalDepcode::GpsL1P),
+            6 => Some(GnssSignalDepcode::GpsL2P),
+            _ => None,
+        }
+    }
+
+    pub fn set_code(&mut self, code: GnssSignalDepcode) {
+        set_bit_range!(&mut self.code, code, u8, u8, 7, 0);
+    }
+}
+
 impl WireFormat for GnssSignalDep {
     const MIN_LEN: usize =
         <u16 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
@@ -228,6 +329,44 @@ impl WireFormat for GnssSignalDep {
             sat: WireFormat::parse_unchecked(buf),
             code: WireFormat::parse_unchecked(buf),
             reserved: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum GnssSignalDepcode {
+    /// GPS L1CA
+    GpsL1Ca = 0,
+
+    /// GPS L2CM
+    GpsL2Cm = 1,
+
+    /// SBAS L1CA
+    SbasL1Ca = 2,
+
+    /// GLO L1CA
+    GloL1Ca = 3,
+
+    /// GLO L2CA
+    GloL2Ca = 4,
+
+    /// GPS L1P
+    GpsL1P = 5,
+
+    /// GPS L2P
+    GpsL2P = 6,
+}
+
+impl std::fmt::Display for GnssSignalDepcode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            GnssSignalDepcode::GpsL1Ca => f.write_str("GPS L1CA"),
+            GnssSignalDepcode::GpsL2Cm => f.write_str("GPS L2CM"),
+            GnssSignalDepcode::SbasL1Ca => f.write_str("SBAS L1CA"),
+            GnssSignalDepcode::GloL1Ca => f.write_str("GLO L1CA"),
+            GnssSignalDepcode::GloL2Ca => f.write_str("GLO L2CA"),
+            GnssSignalDepcode::GpsL1P => f.write_str("GPS L1P"),
+            GnssSignalDepcode::GpsL2P => f.write_str("GPS L2P"),
         }
     }
 }

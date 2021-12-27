@@ -19,8 +19,8 @@ from sbpg.targets.common import array_type, dict_type, float_type, is_empty, str
 from sbpg.targets.templating import JENV
 from sbpg.targets.rust import lower_acronyms, snake_case
 
-TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
-TEST_MAIN_TEMPLATE_NAME = "sbp_tests_main_template.rs"
+TEST_TEMPLATE_NAME = "rust/test/sbp_tests_template.rs"
+TEST_MAIN_TEMPLATE_NAME = "rust/test/sbp_tests_main_template.rs"
 
 def str_escape(value):
     return "\"{}\".to_string()".format(value)

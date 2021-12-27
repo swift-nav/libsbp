@@ -194,6 +194,22 @@ pub struct MsgBaselineEcef {
     pub flags: u8,
 }
 
+impl MsgBaselineEcef {
+    pub fn fix_mode(&self) -> Option<MsgBaselineEcefFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgBaselineEcefFixMode::Invalid),
+            2 => Some(MsgBaselineEcefFixMode::DifferentialGnss),
+            3 => Some(MsgBaselineEcefFixMode::FloatRtk),
+            4 => Some(MsgBaselineEcefFixMode::FixedRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgBaselineEcefFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgBaselineEcef {
     const MESSAGE_TYPE: u16 = 523;
     const MESSAGE_NAME: &'static str = "MSG_BASELINE_ECEF";
@@ -276,6 +292,33 @@ impl WireFormat for MsgBaselineEcef {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineEcefFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+}
+
+impl std::fmt::Display for MsgBaselineEcefFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineEcefFixMode::Invalid => f.write_str("Invalid"),
+            MsgBaselineEcefFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgBaselineEcefFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgBaselineEcefFixMode::FixedRtk => f.write_str("Fixed RTK"),
+        }
+    }
+}
+
 /// Baseline Position in ECEF
 ///
 /// This message reports the baseline solution in Earth Centered Earth Fixed
@@ -310,6 +353,47 @@ pub struct MsgBaselineEcefDepA {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgBaselineEcefDepA {
+    pub fn raim_repair_flag(&self) -> Option<MsgBaselineEcefDepARaimRepairFlag> {
+        match get_bit_range!(self.flags, u8, u8, 4, 0) {
+            0 => Some(MsgBaselineEcefDepARaimRepairFlag::NoRepair),
+            1 => Some(MsgBaselineEcefDepARaimRepairFlag::SolutionCameFromRaimRepair),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_repair_flag(&mut self, raim_repair_flag: MsgBaselineEcefDepARaimRepairFlag) {
+        set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+    }
+
+    pub fn raim_availability_flag(&self) -> Option<MsgBaselineEcefDepARaimAvailabilityFlag> {
+        match get_bit_range!( self.flags,  u8, u8, 3, 0 ) {
+            0 => Some( MsgBaselineEcefDepARaimAvailabilityFlag :: RaimCheckWasExplicitlyDisabledOrUnavailable ),
+            1 => Some( MsgBaselineEcefDepARaimAvailabilityFlag :: RaimCheckWasAvailable ),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_availability_flag(
+        &mut self,
+        raim_availability_flag: MsgBaselineEcefDepARaimAvailabilityFlag,
+    ) {
+        set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgBaselineEcefDepAFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgBaselineEcefDepAFixMode::FloatRtk),
+            1 => Some(MsgBaselineEcefDepAFixMode::FixedRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgBaselineEcefDepAFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgBaselineEcefDepA {
@@ -394,6 +478,65 @@ impl WireFormat for MsgBaselineEcefDepA {
     }
 }
 
+/// RAIM repair flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineEcefDepARaimRepairFlag {
+    /// No repair
+    NoRepair = 0,
+
+    /// Solution came from RAIM repair
+    SolutionCameFromRaimRepair = 1,
+}
+
+impl std::fmt::Display for MsgBaselineEcefDepARaimRepairFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineEcefDepARaimRepairFlag::NoRepair => f.write_str("No repair"),
+            MsgBaselineEcefDepARaimRepairFlag::SolutionCameFromRaimRepair => {
+                f.write_str("Solution came from RAIM repair")
+            }
+        }
+    }
+}
+
+/// RAIM availability flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineEcefDepARaimAvailabilityFlag {
+    /// RAIM check was explicitly disabled or unavailable
+    RaimCheckWasExplicitlyDisabledOrUnavailable = 0,
+
+    /// RAIM check was available
+    RaimCheckWasAvailable = 1,
+}
+
+impl std::fmt::Display for MsgBaselineEcefDepARaimAvailabilityFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineEcefDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable => f.write_str("RAIM check was explicitly disabled or unavailable"),
+            MsgBaselineEcefDepARaimAvailabilityFlag::RaimCheckWasAvailable => f.write_str("RAIM check was available"),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineEcefDepAFixMode {
+    /// Float RTK
+    FloatRtk = 0,
+
+    /// Fixed RTK
+    FixedRtk = 1,
+}
+
+impl std::fmt::Display for MsgBaselineEcefDepAFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineEcefDepAFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgBaselineEcefDepAFixMode::FixedRtk => f.write_str("Fixed RTK"),
+        }
+    }
+}
+
 /// Heading relative to True North
 ///
 /// This message reports the baseline heading pointing from the base station
@@ -418,6 +561,47 @@ pub struct MsgBaselineHeadingDepA {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgBaselineHeadingDepA {
+    pub fn raim_repair_flag(&self) -> Option<MsgBaselineHeadingDepARaimRepairFlag> {
+        match get_bit_range!(self.flags, u8, u8, 4, 0) {
+            0 => Some(MsgBaselineHeadingDepARaimRepairFlag::NoRepair),
+            1 => Some(MsgBaselineHeadingDepARaimRepairFlag::SolutionCameFromRaimRepair),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_repair_flag(&mut self, raim_repair_flag: MsgBaselineHeadingDepARaimRepairFlag) {
+        set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+    }
+
+    pub fn raim_availability_flag(&self) -> Option<MsgBaselineHeadingDepARaimAvailabilityFlag> {
+        match get_bit_range!( self.flags,  u8, u8, 3, 0 ) {
+            0 => Some( MsgBaselineHeadingDepARaimAvailabilityFlag :: RaimCheckWasExplicitlyDisabledOrUnavailable ),
+            1 => Some( MsgBaselineHeadingDepARaimAvailabilityFlag :: RaimCheckWasAvailable ),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_availability_flag(
+        &mut self,
+        raim_availability_flag: MsgBaselineHeadingDepARaimAvailabilityFlag,
+    ) {
+        set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgBaselineHeadingDepAFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgBaselineHeadingDepAFixMode::FloatRtk),
+            1 => Some(MsgBaselineHeadingDepAFixMode::FixedRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgBaselineHeadingDepAFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgBaselineHeadingDepA {
@@ -490,6 +674,65 @@ impl WireFormat for MsgBaselineHeadingDepA {
     }
 }
 
+/// RAIM repair flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineHeadingDepARaimRepairFlag {
+    /// No repair
+    NoRepair = 0,
+
+    /// Solution came from RAIM repair
+    SolutionCameFromRaimRepair = 1,
+}
+
+impl std::fmt::Display for MsgBaselineHeadingDepARaimRepairFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineHeadingDepARaimRepairFlag::NoRepair => f.write_str("No repair"),
+            MsgBaselineHeadingDepARaimRepairFlag::SolutionCameFromRaimRepair => {
+                f.write_str("Solution came from RAIM repair")
+            }
+        }
+    }
+}
+
+/// RAIM availability flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineHeadingDepARaimAvailabilityFlag {
+    /// RAIM check was explicitly disabled or unavailable
+    RaimCheckWasExplicitlyDisabledOrUnavailable = 0,
+
+    /// RAIM check was available
+    RaimCheckWasAvailable = 1,
+}
+
+impl std::fmt::Display for MsgBaselineHeadingDepARaimAvailabilityFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineHeadingDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable => f.write_str("RAIM check was explicitly disabled or unavailable"),
+            MsgBaselineHeadingDepARaimAvailabilityFlag::RaimCheckWasAvailable => f.write_str("RAIM check was available"),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineHeadingDepAFixMode {
+    /// Float RTK
+    FloatRtk = 0,
+
+    /// Fixed RTK
+    FixedRtk = 1,
+}
+
+impl std::fmt::Display for MsgBaselineHeadingDepAFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineHeadingDepAFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgBaselineHeadingDepAFixMode::FixedRtk => f.write_str("Fixed RTK"),
+        }
+    }
+}
+
 /// Baseline in NED
 ///
 /// This message reports the baseline solution in North East Down (NED)
@@ -529,6 +772,22 @@ pub struct MsgBaselineNed {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgBaselineNed {
+    pub fn fix_mode(&self) -> Option<MsgBaselineNedFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgBaselineNedFixMode::Invalid),
+            2 => Some(MsgBaselineNedFixMode::DifferentialGnss),
+            3 => Some(MsgBaselineNedFixMode::FloatRtk),
+            4 => Some(MsgBaselineNedFixMode::FixedRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgBaselineNedFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgBaselineNed {
@@ -617,6 +876,33 @@ impl WireFormat for MsgBaselineNed {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineNedFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+}
+
+impl std::fmt::Display for MsgBaselineNedFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineNedFixMode::Invalid => f.write_str("Invalid"),
+            MsgBaselineNedFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgBaselineNedFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgBaselineNedFixMode::FixedRtk => f.write_str("Fixed RTK"),
+        }
+    }
+}
+
 /// Baseline in NED
 ///
 /// This message reports the baseline solution in North East Down (NED)
@@ -656,6 +942,49 @@ pub struct MsgBaselineNedDepA {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgBaselineNedDepA {
+    pub fn raim_repair_flag(&self) -> Option<MsgBaselineNedDepARaimRepairFlag> {
+        match get_bit_range!(self.flags, u8, u8, 4, 0) {
+            0 => Some(MsgBaselineNedDepARaimRepairFlag::NoRepair),
+            1 => Some(MsgBaselineNedDepARaimRepairFlag::SolutionCameFromRaimRepair),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_repair_flag(&mut self, raim_repair_flag: MsgBaselineNedDepARaimRepairFlag) {
+        set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+    }
+
+    pub fn raim_availability_flag(&self) -> Option<MsgBaselineNedDepARaimAvailabilityFlag> {
+        match get_bit_range!(self.flags, u8, u8, 3, 0) {
+            0 => Some(
+                MsgBaselineNedDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable,
+            ),
+            1 => Some(MsgBaselineNedDepARaimAvailabilityFlag::RaimCheckWasAvailable),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_availability_flag(
+        &mut self,
+        raim_availability_flag: MsgBaselineNedDepARaimAvailabilityFlag,
+    ) {
+        set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgBaselineNedDepAFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgBaselineNedDepAFixMode::FloatRtk),
+            1 => Some(MsgBaselineNedDepAFixMode::FixedRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgBaselineNedDepAFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgBaselineNedDepA {
@@ -744,6 +1073,69 @@ impl WireFormat for MsgBaselineNedDepA {
     }
 }
 
+/// RAIM repair flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineNedDepARaimRepairFlag {
+    /// No repair
+    NoRepair = 0,
+
+    /// Solution came from RAIM repair
+    SolutionCameFromRaimRepair = 1,
+}
+
+impl std::fmt::Display for MsgBaselineNedDepARaimRepairFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineNedDepARaimRepairFlag::NoRepair => f.write_str("No repair"),
+            MsgBaselineNedDepARaimRepairFlag::SolutionCameFromRaimRepair => {
+                f.write_str("Solution came from RAIM repair")
+            }
+        }
+    }
+}
+
+/// RAIM availability flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineNedDepARaimAvailabilityFlag {
+    /// RAIM check was explicitly disabled or unavailable
+    RaimCheckWasExplicitlyDisabledOrUnavailable = 0,
+
+    /// RAIM check was available
+    RaimCheckWasAvailable = 1,
+}
+
+impl std::fmt::Display for MsgBaselineNedDepARaimAvailabilityFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineNedDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable => {
+                f.write_str("RAIM check was explicitly disabled or unavailable")
+            }
+            MsgBaselineNedDepARaimAvailabilityFlag::RaimCheckWasAvailable => {
+                f.write_str("RAIM check was available")
+            }
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgBaselineNedDepAFixMode {
+    /// Float RTK
+    FloatRtk = 0,
+
+    /// Fixed RTK
+    FixedRtk = 1,
+}
+
+impl std::fmt::Display for MsgBaselineNedDepAFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgBaselineNedDepAFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgBaselineNedDepAFixMode::FixedRtk => f.write_str("Fixed RTK"),
+        }
+    }
+}
+
 /// Dilution of Precision
 ///
 /// This dilution of precision (DOP) message describes the effect of
@@ -778,6 +1170,33 @@ pub struct MsgDops {
     /// Indicates the position solution with which the DOPS message corresponds
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgDops {
+    pub fn raim_repair_flag(&self) -> u8 {
+        get_bit_range!(self.flags, u8, u8, 7, 0)
+    }
+
+    pub fn set_raim_repair_flag(&mut self, raim_repair_flag: u8) {
+        set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 7, 0);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgDopsFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgDopsFixMode::Invalid),
+            1 => Some(MsgDopsFixMode::SinglePointPosition),
+            2 => Some(MsgDopsFixMode::DifferentialGnss),
+            3 => Some(MsgDopsFixMode::FloatRtk),
+            4 => Some(MsgDopsFixMode::FixedRtk),
+            5 => Some(MsgDopsFixMode::Undefined),
+            6 => Some(MsgDopsFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgDopsFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgDops {
@@ -858,6 +1277,45 @@ impl WireFormat for MsgDops {
             hdop: WireFormat::parse_unchecked(buf),
             vdop: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgDopsFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Undefined
+    Undefined = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgDopsFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgDopsFixMode::Invalid => f.write_str("Invalid"),
+            MsgDopsFixMode::SinglePointPosition => f.write_str("Single Point Position (SPP)"),
+            MsgDopsFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgDopsFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgDopsFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgDopsFixMode::Undefined => f.write_str("Undefined"),
+            MsgDopsFixMode::SbasPosition => f.write_str("SBAS Position"),
         }
     }
 }
@@ -1006,6 +1464,21 @@ pub struct MsgGpsTime {
     pub flags: u8,
 }
 
+impl MsgGpsTime {
+    pub fn time_source(&self) -> Option<MsgGpsTimeTimeSource> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgGpsTimeTimeSource::None),
+            1 => Some(MsgGpsTimeTimeSource::GnssSolution),
+            2 => Some(MsgGpsTimeTimeSource::Propagated),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_source(&mut self, time_source: MsgGpsTimeTimeSource) {
+        set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgGpsTime {
     const MESSAGE_TYPE: u16 = 258;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME";
@@ -1077,6 +1550,29 @@ impl WireFormat for MsgGpsTime {
             tow: WireFormat::parse_unchecked(buf),
             ns_residual: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Time source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgGpsTimeTimeSource {
+    /// None (invalid)
+    None = 0,
+
+    /// GNSS Solution
+    GnssSolution = 1,
+
+    /// Propagated
+    Propagated = 2,
+}
+
+impl std::fmt::Display for MsgGpsTimeTimeSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgGpsTimeTimeSource::None => f.write_str("None (invalid)"),
+            MsgGpsTimeTimeSource::GnssSolution => f.write_str("GNSS Solution"),
+            MsgGpsTimeTimeSource::Propagated => f.write_str("Propagated"),
         }
     }
 }
@@ -1226,6 +1722,21 @@ pub struct MsgGpsTimeGnss {
     pub flags: u8,
 }
 
+impl MsgGpsTimeGnss {
+    pub fn time_source(&self) -> Option<MsgGpsTimeGnssTimeSource> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgGpsTimeGnssTimeSource::None),
+            1 => Some(MsgGpsTimeGnssTimeSource::GnssSolution),
+            2 => Some(MsgGpsTimeGnssTimeSource::Propagated),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_source(&mut self, time_source: MsgGpsTimeGnssTimeSource) {
+        set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgGpsTimeGnss {
     const MESSAGE_TYPE: u16 = 260;
     const MESSAGE_NAME: &'static str = "MSG_GPS_TIME_GNSS";
@@ -1301,6 +1812,29 @@ impl WireFormat for MsgGpsTimeGnss {
     }
 }
 
+/// Time source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgGpsTimeGnssTimeSource {
+    /// None (invalid)
+    None = 0,
+
+    /// GNSS Solution
+    GnssSolution = 1,
+
+    /// Propagated
+    Propagated = 2,
+}
+
+impl std::fmt::Display for MsgGpsTimeGnssTimeSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgGpsTimeGnssTimeSource::None => f.write_str("None (invalid)"),
+            MsgGpsTimeGnssTimeSource::GnssSolution => f.write_str("GNSS Solution"),
+            MsgGpsTimeGnssTimeSource::Propagated => f.write_str("Propagated"),
+        }
+    }
+}
+
 /// Single-point position in ECEF
 ///
 /// The position solution message reports absolute Earth Centered Earth Fixed
@@ -1338,6 +1872,52 @@ pub struct MsgPosEcef {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosEcef {
+    pub fn tow_type(&self) -> Option<MsgPosEcefTowType> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgPosEcefTowType::TimeOfMeasurement),
+            1 => Some(MsgPosEcefTowType::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_tow_type(&mut self, tow_type: MsgPosEcefTowType) {
+        set_bit_range!(&mut self.flags, tow_type, u8, u8, 5, 5);
+    }
+
+    pub fn inertial_navigation_mode(&self) -> Option<MsgPosEcefInertialNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgPosEcefInertialNavigationMode::None),
+            1 => Some(MsgPosEcefInertialNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_inertial_navigation_mode(
+        &mut self,
+        inertial_navigation_mode: MsgPosEcefInertialNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgPosEcefFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosEcefFixMode::Invalid),
+            1 => Some(MsgPosEcefFixMode::SinglePointPosition),
+            2 => Some(MsgPosEcefFixMode::DifferentialGnss),
+            3 => Some(MsgPosEcefFixMode::FloatRtk),
+            4 => Some(MsgPosEcefFixMode::FixedRtk),
+            5 => Some(MsgPosEcefFixMode::DeadReckoning),
+            6 => Some(MsgPosEcefFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosEcefFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosEcef {
@@ -1422,6 +2002,83 @@ impl WireFormat for MsgPosEcef {
     }
 }
 
+/// TOW type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefTowType {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgPosEcefTowType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefTowType::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgPosEcefTowType::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// Inertial Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefInertialNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgPosEcefInertialNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefInertialNavigationMode::None => f.write_str("None"),
+            MsgPosEcefInertialNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Dead Reckoning
+    DeadReckoning = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosEcefFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosEcefFixMode::SinglePointPosition => f.write_str("Single Point Position (SPP)"),
+            MsgPosEcefFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosEcefFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosEcefFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosEcefFixMode::DeadReckoning => f.write_str("Dead Reckoning"),
+            MsgPosEcefFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// Single-point position in ECEF
 ///
 /// The position solution message reports absolute Earth Centered Earth Fixed
@@ -1475,6 +2132,55 @@ pub struct MsgPosEcefCov {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosEcefCov {
+    pub fn type_of_reported_tow(&self) -> Option<MsgPosEcefCovTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgPosEcefCovTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgPosEcefCovTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(
+        &mut self,
+        type_of_reported_tow: MsgPosEcefCovTypeOfReportedTow,
+    ) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn inertial_navigation_mode(&self) -> Option<MsgPosEcefCovInertialNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgPosEcefCovInertialNavigationMode::None),
+            1 => Some(MsgPosEcefCovInertialNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_inertial_navigation_mode(
+        &mut self,
+        inertial_navigation_mode: MsgPosEcefCovInertialNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgPosEcefCovFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosEcefCovFixMode::Invalid),
+            1 => Some(MsgPosEcefCovFixMode::SinglePointPosition),
+            2 => Some(MsgPosEcefCovFixMode::DifferentialGnss),
+            3 => Some(MsgPosEcefCovFixMode::FloatRtk),
+            4 => Some(MsgPosEcefCovFixMode::FixedRtk),
+            5 => Some(MsgPosEcefCovFixMode::DeadReckoning),
+            6 => Some(MsgPosEcefCovFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosEcefCovFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosEcefCov {
@@ -1579,6 +2285,83 @@ impl WireFormat for MsgPosEcefCov {
     }
 }
 
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefCovTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgPosEcefCovTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefCovTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgPosEcefCovTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// Inertial Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefCovInertialNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgPosEcefCovInertialNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefCovInertialNavigationMode::None => f.write_str("None"),
+            MsgPosEcefCovInertialNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefCovFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Dead Reckoning
+    DeadReckoning = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosEcefCovFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefCovFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosEcefCovFixMode::SinglePointPosition => f.write_str("Single Point Position (SPP)"),
+            MsgPosEcefCovFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosEcefCovFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosEcefCovFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosEcefCovFixMode::DeadReckoning => f.write_str("Dead Reckoning"),
+            MsgPosEcefCovFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// GNSS-only Position in ECEF
 ///
 /// The position solution message reports absolute Earth Centered Earth Fixed
@@ -1632,6 +2415,24 @@ pub struct MsgPosEcefCovGnss {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosEcefCovGnss {
+    pub fn fix_mode(&self) -> Option<MsgPosEcefCovGnssFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosEcefCovGnssFixMode::Invalid),
+            1 => Some(MsgPosEcefCovGnssFixMode::SinglePointPosition),
+            2 => Some(MsgPosEcefCovGnssFixMode::DifferentialGnss),
+            3 => Some(MsgPosEcefCovGnssFixMode::FloatRtk),
+            4 => Some(MsgPosEcefCovGnssFixMode::FixedRtk),
+            6 => Some(MsgPosEcefCovGnssFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosEcefCovGnssFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosEcefCovGnss {
@@ -1736,6 +2537,43 @@ impl WireFormat for MsgPosEcefCovGnss {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefCovGnssFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosEcefCovGnssFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefCovGnssFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosEcefCovGnssFixMode::SinglePointPosition => {
+                f.write_str("Single Point Position (SPP)")
+            }
+            MsgPosEcefCovGnssFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosEcefCovGnssFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosEcefCovGnssFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosEcefCovGnssFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// Single-point position in ECEF
 ///
 /// The position solution message reports absolute Earth Centered Earth Fixed
@@ -1773,6 +2611,50 @@ pub struct MsgPosEcefDepA {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosEcefDepA {
+    pub fn raim_repair_flag(&self) -> Option<MsgPosEcefDepARaimRepairFlag> {
+        match get_bit_range!(self.flags, u8, u8, 4, 0) {
+            0 => Some(MsgPosEcefDepARaimRepairFlag::NoRepair),
+            1 => Some(MsgPosEcefDepARaimRepairFlag::SolutionCameFromRaimRepair),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_repair_flag(&mut self, raim_repair_flag: MsgPosEcefDepARaimRepairFlag) {
+        set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+    }
+
+    pub fn raim_availability_flag(&self) -> Option<MsgPosEcefDepARaimAvailabilityFlag> {
+        match get_bit_range!(self.flags, u8, u8, 3, 0) {
+            0 => Some(
+                MsgPosEcefDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable,
+            ),
+            1 => Some(MsgPosEcefDepARaimAvailabilityFlag::RaimCheckWasAvailable),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_availability_flag(
+        &mut self,
+        raim_availability_flag: MsgPosEcefDepARaimAvailabilityFlag,
+    ) {
+        set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgPosEcefDepAFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosEcefDepAFixMode::SinglePointPositioning),
+            1 => Some(MsgPosEcefDepAFixMode::FixedRtk),
+            2 => Some(MsgPosEcefDepAFixMode::FloatRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosEcefDepAFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosEcefDepA {
@@ -1857,6 +2739,75 @@ impl WireFormat for MsgPosEcefDepA {
     }
 }
 
+/// RAIM repair flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefDepARaimRepairFlag {
+    /// No repair
+    NoRepair = 0,
+
+    /// Solution came from RAIM repair
+    SolutionCameFromRaimRepair = 1,
+}
+
+impl std::fmt::Display for MsgPosEcefDepARaimRepairFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefDepARaimRepairFlag::NoRepair => f.write_str("No repair"),
+            MsgPosEcefDepARaimRepairFlag::SolutionCameFromRaimRepair => {
+                f.write_str("Solution came from RAIM repair")
+            }
+        }
+    }
+}
+
+/// RAIM availability flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefDepARaimAvailabilityFlag {
+    /// RAIM check was explicitly disabled or unavailable
+    RaimCheckWasExplicitlyDisabledOrUnavailable = 0,
+
+    /// RAIM check was available
+    RaimCheckWasAvailable = 1,
+}
+
+impl std::fmt::Display for MsgPosEcefDepARaimAvailabilityFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable => {
+                f.write_str("RAIM check was explicitly disabled or unavailable")
+            }
+            MsgPosEcefDepARaimAvailabilityFlag::RaimCheckWasAvailable => {
+                f.write_str("RAIM check was available")
+            }
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefDepAFixMode {
+    /// Single Point Positioning (SPP)
+    SinglePointPositioning = 0,
+
+    /// Fixed RTK
+    FixedRtk = 1,
+
+    /// Float RTK
+    FloatRtk = 2,
+}
+
+impl std::fmt::Display for MsgPosEcefDepAFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefDepAFixMode::SinglePointPositioning => {
+                f.write_str("Single Point Positioning (SPP)")
+            }
+            MsgPosEcefDepAFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosEcefDepAFixMode::FloatRtk => f.write_str("Float RTK"),
+        }
+    }
+}
+
 /// GNSS-only Position in ECEF
 ///
 /// The position solution message reports absolute Earth Centered Earth Fixed
@@ -1894,6 +2845,24 @@ pub struct MsgPosEcefGnss {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosEcefGnss {
+    pub fn fix_mode(&self) -> Option<MsgPosEcefGnssFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosEcefGnssFixMode::Invalid),
+            1 => Some(MsgPosEcefGnssFixMode::SinglePointPosition),
+            2 => Some(MsgPosEcefGnssFixMode::DifferentialGnss),
+            3 => Some(MsgPosEcefGnssFixMode::FloatRtk),
+            4 => Some(MsgPosEcefGnssFixMode::FixedRtk),
+            6 => Some(MsgPosEcefGnssFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosEcefGnssFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosEcefGnss {
@@ -1978,6 +2947,43 @@ impl WireFormat for MsgPosEcefGnss {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosEcefGnssFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosEcefGnssFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosEcefGnssFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosEcefGnssFixMode::SinglePointPosition => {
+                f.write_str("Single Point Position (SPP)")
+            }
+            MsgPosEcefGnssFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosEcefGnssFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosEcefGnssFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosEcefGnssFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic coordinates
@@ -2018,6 +3024,52 @@ pub struct MsgPosLlh {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosLlh {
+    pub fn type_of_reported_tow(&self) -> Option<MsgPosLlhTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgPosLlhTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgPosLlhTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: MsgPosLlhTypeOfReportedTow) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn inertial_navigation_mode(&self) -> Option<MsgPosLlhInertialNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgPosLlhInertialNavigationMode::None),
+            1 => Some(MsgPosLlhInertialNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_inertial_navigation_mode(
+        &mut self,
+        inertial_navigation_mode: MsgPosLlhInertialNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgPosLlhFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosLlhFixMode::Invalid),
+            1 => Some(MsgPosLlhFixMode::SinglePointPosition),
+            2 => Some(MsgPosLlhFixMode::DifferentialGnss),
+            3 => Some(MsgPosLlhFixMode::FloatRtk),
+            4 => Some(MsgPosLlhFixMode::FixedRtk),
+            5 => Some(MsgPosLlhFixMode::DeadReckoning),
+            6 => Some(MsgPosLlhFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosLlhFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosLlh {
@@ -2106,6 +3158,83 @@ impl WireFormat for MsgPosLlh {
     }
 }
 
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgPosLlhTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// Inertial Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhInertialNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhInertialNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhInertialNavigationMode::None => f.write_str("None"),
+            MsgPosLlhInertialNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Dead Reckoning
+    DeadReckoning = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosLlhFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosLlhFixMode::SinglePointPosition => f.write_str("Single Point Position (SPP)"),
+            MsgPosLlhFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosLlhFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosLlhFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosLlhFixMode::DeadReckoning => f.write_str("Dead Reckoning"),
+            MsgPosLlhFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// Geodetic Position and Accuracy
 ///
 /// This position solution message reports the absolute geodetic coordinates
@@ -2172,6 +3301,88 @@ pub struct MsgPosLlhAcc {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosLlhAcc {
+    pub fn geoid_model(&self) -> Option<MsgPosLlhAccGeoidModel> {
+        match get_bit_range!(self.confidence_and_geoid, u8, u8, 6, 4) {
+            0 => Some(MsgPosLlhAccGeoidModel::NoModel),
+            1 => Some(MsgPosLlhAccGeoidModel::EGM96),
+            2 => Some(MsgPosLlhAccGeoidModel::EGM2008),
+            _ => None,
+        }
+    }
+
+    pub fn set_geoid_model(&mut self, geoid_model: MsgPosLlhAccGeoidModel) {
+        set_bit_range!(&mut self.confidence_and_geoid, geoid_model, u8, u8, 6, 4);
+    }
+
+    pub fn confidence_level(&self) -> Option<MsgPosLlhAccConfidenceLevel> {
+        match get_bit_range!(self.confidence_and_geoid, u8, u8, 3, 0) {
+            1 => Some(MsgPosLlhAccConfidenceLevel::_3935),
+            2 => Some(MsgPosLlhAccConfidenceLevel::_6827),
+            3 => Some(MsgPosLlhAccConfidenceLevel::_9545),
+            _ => None,
+        }
+    }
+
+    pub fn set_confidence_level(&mut self, confidence_level: MsgPosLlhAccConfidenceLevel) {
+        set_bit_range!(
+            &mut self.confidence_and_geoid,
+            confidence_level,
+            u8,
+            u8,
+            3,
+            0
+        );
+    }
+
+    pub fn type_of_reported_tow(&self) -> Option<MsgPosLlhAccTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgPosLlhAccTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgPosLlhAccTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(
+        &mut self,
+        type_of_reported_tow: MsgPosLlhAccTypeOfReportedTow,
+    ) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn inertial_navigation_mode(&self) -> Option<MsgPosLlhAccInertialNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgPosLlhAccInertialNavigationMode::None),
+            1 => Some(MsgPosLlhAccInertialNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_inertial_navigation_mode(
+        &mut self,
+        inertial_navigation_mode: MsgPosLlhAccInertialNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgPosLlhAccFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosLlhAccFixMode::Invalid),
+            1 => Some(MsgPosLlhAccFixMode::SinglePointPosition),
+            2 => Some(MsgPosLlhAccFixMode::DifferentialGnss),
+            3 => Some(MsgPosLlhAccFixMode::FloatRtk),
+            4 => Some(MsgPosLlhAccFixMode::FixedRtk),
+            5 => Some(MsgPosLlhAccFixMode::DeadReckoning),
+            6 => Some(MsgPosLlhAccFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosLlhAccFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosLlhAcc {
@@ -2280,6 +3491,129 @@ impl WireFormat for MsgPosLlhAcc {
     }
 }
 
+/// Geoid model
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhAccGeoidModel {
+    /// No model
+    NoModel = 0,
+
+    /// EGM96
+    EGM96 = 1,
+
+    /// EGM2008
+    EGM2008 = 2,
+}
+
+impl std::fmt::Display for MsgPosLlhAccGeoidModel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhAccGeoidModel::NoModel => f.write_str("No model"),
+            MsgPosLlhAccGeoidModel::EGM96 => f.write_str("EGM96"),
+            MsgPosLlhAccGeoidModel::EGM2008 => f.write_str("EGM2008"),
+        }
+    }
+}
+
+/// Confidence level
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhAccConfidenceLevel {
+    /// 39.35%
+    _3935 = 1,
+
+    /// 68.27%
+    _6827 = 2,
+
+    /// 95.45%
+    _9545 = 3,
+}
+
+impl std::fmt::Display for MsgPosLlhAccConfidenceLevel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhAccConfidenceLevel::_3935 => f.write_str("39.35%"),
+            MsgPosLlhAccConfidenceLevel::_6827 => f.write_str("68.27%"),
+            MsgPosLlhAccConfidenceLevel::_9545 => f.write_str("95.45%"),
+        }
+    }
+}
+
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhAccTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhAccTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhAccTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgPosLlhAccTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// Inertial Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhAccInertialNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhAccInertialNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhAccInertialNavigationMode::None => f.write_str("None"),
+            MsgPosLlhAccInertialNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhAccFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Dead Reckoning
+    DeadReckoning = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosLlhAccFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhAccFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosLlhAccFixMode::SinglePointPosition => f.write_str("Single Point Position (SPP)"),
+            MsgPosLlhAccFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosLlhAccFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosLlhAccFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosLlhAccFixMode::DeadReckoning => f.write_str("Dead Reckoning"),
+            MsgPosLlhAccFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic coordinates
@@ -2333,6 +3667,55 @@ pub struct MsgPosLlhCov {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosLlhCov {
+    pub fn type_of_reported_tow(&self) -> Option<MsgPosLlhCovTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgPosLlhCovTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgPosLlhCovTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(
+        &mut self,
+        type_of_reported_tow: MsgPosLlhCovTypeOfReportedTow,
+    ) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn inertial_navigation_mode(&self) -> Option<MsgPosLlhCovInertialNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgPosLlhCovInertialNavigationMode::None),
+            1 => Some(MsgPosLlhCovInertialNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_inertial_navigation_mode(
+        &mut self,
+        inertial_navigation_mode: MsgPosLlhCovInertialNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgPosLlhCovFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosLlhCovFixMode::Invalid),
+            1 => Some(MsgPosLlhCovFixMode::SinglePointPosition),
+            2 => Some(MsgPosLlhCovFixMode::DifferentialGnss),
+            3 => Some(MsgPosLlhCovFixMode::FloatRtk),
+            4 => Some(MsgPosLlhCovFixMode::FixedRtk),
+            5 => Some(MsgPosLlhCovFixMode::DeadReckoning),
+            6 => Some(MsgPosLlhCovFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosLlhCovFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosLlhCov {
@@ -2437,6 +3820,83 @@ impl WireFormat for MsgPosLlhCov {
     }
 }
 
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhCovTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhCovTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhCovTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgPosLlhCovTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// Inertial Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhCovInertialNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhCovInertialNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhCovInertialNavigationMode::None => f.write_str("None"),
+            MsgPosLlhCovInertialNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhCovFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Dead Reckoning
+    DeadReckoning = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosLlhCovFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhCovFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosLlhCovFixMode::SinglePointPosition => f.write_str("Single Point Position (SPP)"),
+            MsgPosLlhCovFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosLlhCovFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosLlhCovFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosLlhCovFixMode::DeadReckoning => f.write_str("Dead Reckoning"),
+            MsgPosLlhCovFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// GNSS-only Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic coordinates
@@ -2490,6 +3950,25 @@ pub struct MsgPosLlhCovGnss {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosLlhCovGnss {
+    pub fn fix_mode(&self) -> Option<MsgPosLlhCovGnssFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosLlhCovGnssFixMode::Invalid),
+            1 => Some(MsgPosLlhCovGnssFixMode::SinglePointPosition),
+            2 => Some(MsgPosLlhCovGnssFixMode::DifferentialGnss),
+            3 => Some(MsgPosLlhCovGnssFixMode::FloatRtk),
+            4 => Some(MsgPosLlhCovGnssFixMode::FixedRtk),
+            5 => Some(MsgPosLlhCovGnssFixMode::DeadReckoning),
+            6 => Some(MsgPosLlhCovGnssFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosLlhCovGnssFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosLlhCovGnss {
@@ -2594,6 +4073,47 @@ impl WireFormat for MsgPosLlhCovGnss {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhCovGnssFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Dead Reckoning
+    DeadReckoning = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosLlhCovGnssFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhCovGnssFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosLlhCovGnssFixMode::SinglePointPosition => {
+                f.write_str("Single Point Position (SPP)")
+            }
+            MsgPosLlhCovGnssFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosLlhCovGnssFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosLlhCovGnssFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosLlhCovGnssFixMode::DeadReckoning => f.write_str("Dead Reckoning"),
+            MsgPosLlhCovGnssFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic coordinates
@@ -2634,6 +4154,62 @@ pub struct MsgPosLlhDepA {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosLlhDepA {
+    pub fn raim_repair_flag(&self) -> Option<MsgPosLlhDepARaimRepairFlag> {
+        match get_bit_range!(self.flags, u8, u8, 5, 0) {
+            0 => Some(MsgPosLlhDepARaimRepairFlag::NoRepair),
+            1 => Some(MsgPosLlhDepARaimRepairFlag::SolutionCameFromRaimRepair),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_repair_flag(&mut self, raim_repair_flag: MsgPosLlhDepARaimRepairFlag) {
+        set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 5, 0);
+    }
+
+    pub fn raim_availability_flag(&self) -> Option<MsgPosLlhDepARaimAvailabilityFlag> {
+        match get_bit_range!(self.flags, u8, u8, 4, 0) {
+            0 => {
+                Some(MsgPosLlhDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable)
+            }
+            1 => Some(MsgPosLlhDepARaimAvailabilityFlag::RaimCheckWasAvailable),
+            _ => None,
+        }
+    }
+
+    pub fn set_raim_availability_flag(
+        &mut self,
+        raim_availability_flag: MsgPosLlhDepARaimAvailabilityFlag,
+    ) {
+        set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 4, 0);
+    }
+
+    pub fn height_mode(&self) -> Option<MsgPosLlhDepAHeightMode> {
+        match get_bit_range!(self.flags, u8, u8, 3, 0) {
+            0 => Some(MsgPosLlhDepAHeightMode::HeightAboveWgs84Ellipsoid),
+            1 => Some(MsgPosLlhDepAHeightMode::HeightAboveMeanSeaLevel),
+            _ => None,
+        }
+    }
+
+    pub fn set_height_mode(&mut self, height_mode: MsgPosLlhDepAHeightMode) {
+        set_bit_range!(&mut self.flags, height_mode, u8, u8, 3, 0);
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgPosLlhDepAFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosLlhDepAFixMode::SinglePointPositioning),
+            1 => Some(MsgPosLlhDepAFixMode::FixedRtk),
+            2 => Some(MsgPosLlhDepAFixMode::FloatRtk),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosLlhDepAFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosLlhDepA {
@@ -2722,6 +4298,98 @@ impl WireFormat for MsgPosLlhDepA {
     }
 }
 
+/// RAIM repair flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhDepARaimRepairFlag {
+    /// No repair
+    NoRepair = 0,
+
+    /// Solution came from RAIM repair
+    SolutionCameFromRaimRepair = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhDepARaimRepairFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhDepARaimRepairFlag::NoRepair => f.write_str("No repair"),
+            MsgPosLlhDepARaimRepairFlag::SolutionCameFromRaimRepair => {
+                f.write_str("Solution came from RAIM repair")
+            }
+        }
+    }
+}
+
+/// RAIM availability flag
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhDepARaimAvailabilityFlag {
+    /// RAIM check was explicitly disabled or unavailable
+    RaimCheckWasExplicitlyDisabledOrUnavailable = 0,
+
+    /// RAIM check was available
+    RaimCheckWasAvailable = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhDepARaimAvailabilityFlag {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhDepARaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable => {
+                f.write_str("RAIM check was explicitly disabled or unavailable")
+            }
+            MsgPosLlhDepARaimAvailabilityFlag::RaimCheckWasAvailable => {
+                f.write_str("RAIM check was available")
+            }
+        }
+    }
+}
+
+/// Height Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhDepAHeightMode {
+    /// Height above WGS84 ellipsoid
+    HeightAboveWgs84Ellipsoid = 0,
+
+    /// Height above mean sea level
+    HeightAboveMeanSeaLevel = 1,
+}
+
+impl std::fmt::Display for MsgPosLlhDepAHeightMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhDepAHeightMode::HeightAboveWgs84Ellipsoid => {
+                f.write_str("Height above WGS84 ellipsoid")
+            }
+            MsgPosLlhDepAHeightMode::HeightAboveMeanSeaLevel => {
+                f.write_str("Height above mean sea level")
+            }
+        }
+    }
+}
+
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhDepAFixMode {
+    /// Single Point Positioning (SPP)
+    SinglePointPositioning = 0,
+
+    /// Fixed RTK
+    FixedRtk = 1,
+
+    /// Float RTK
+    FloatRtk = 2,
+}
+
+impl std::fmt::Display for MsgPosLlhDepAFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhDepAFixMode::SinglePointPositioning => {
+                f.write_str("Single Point Positioning (SPP)")
+            }
+            MsgPosLlhDepAFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosLlhDepAFixMode::FloatRtk => f.write_str("Float RTK"),
+        }
+    }
+}
+
 /// GNSS-only Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic coordinates
@@ -2762,6 +4430,24 @@ pub struct MsgPosLlhGnss {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgPosLlhGnss {
+    pub fn fix_mode(&self) -> Option<MsgPosLlhGnssFixMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgPosLlhGnssFixMode::Invalid),
+            1 => Some(MsgPosLlhGnssFixMode::SinglePointPosition),
+            2 => Some(MsgPosLlhGnssFixMode::DifferentialGnss),
+            3 => Some(MsgPosLlhGnssFixMode::FloatRtk),
+            4 => Some(MsgPosLlhGnssFixMode::FixedRtk),
+            6 => Some(MsgPosLlhGnssFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgPosLlhGnssFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgPosLlhGnss {
@@ -2850,6 +4536,41 @@ impl WireFormat for MsgPosLlhGnss {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgPosLlhGnssFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgPosLlhGnssFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgPosLlhGnssFixMode::Invalid => f.write_str("Invalid"),
+            MsgPosLlhGnssFixMode::SinglePointPosition => f.write_str("Single Point Position (SPP)"),
+            MsgPosLlhGnssFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgPosLlhGnssFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgPosLlhGnssFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgPosLlhGnssFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
 /// Computed state and Protection Levels
 ///
 /// This message reports the protection levels associated to the given state
@@ -2927,6 +4648,155 @@ pub struct MsgProtectionLevel {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u32,
+}
+
+impl MsgProtectionLevel {
+    pub fn target_integrity_risk_tir_level(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 2, 0)
+    }
+
+    pub fn set_target_integrity_risk_tir_level(&mut self, target_integrity_risk_tir_level: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            target_integrity_risk_tir_level,
+            u32,
+            u8,
+            2,
+            0
+        );
+    }
+
+    pub fn fix_mode(&self) -> Option<MsgProtectionLevelFixMode> {
+        match get_bit_range!(self.flags, u32, u8, 17, 15) {
+            0 => Some(MsgProtectionLevelFixMode::Invalid),
+            1 => Some(MsgProtectionLevelFixMode::SinglePointPosition),
+            2 => Some(MsgProtectionLevelFixMode::DifferentialGnss),
+            3 => Some(MsgProtectionLevelFixMode::FloatRtk),
+            4 => Some(MsgProtectionLevelFixMode::FixedRtk),
+            5 => Some(MsgProtectionLevelFixMode::DeadReckoning),
+            6 => Some(MsgProtectionLevelFixMode::SbasPosition),
+            _ => None,
+        }
+    }
+
+    pub fn set_fix_mode(&mut self, fix_mode: MsgProtectionLevelFixMode) {
+        set_bit_range!(&mut self.flags, fix_mode, u32, u8, 17, 15);
+    }
+
+    pub fn inertial_navigation_mode(&self) -> Option<MsgProtectionLevelInertialNavigationMode> {
+        match get_bit_range!(self.flags, u32, u8, 19, 18) {
+            0 => Some(MsgProtectionLevelInertialNavigationMode::None),
+            1 => Some(MsgProtectionLevelInertialNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_inertial_navigation_mode(
+        &mut self,
+        inertial_navigation_mode: MsgProtectionLevelInertialNavigationMode,
+    ) {
+        set_bit_range!(&mut self.flags, inertial_navigation_mode, u32, u8, 19, 18);
+    }
+
+    pub fn time_status(&self) -> Option<MsgProtectionLevelTimeStatus> {
+        match get_bit_range!(self.flags, u32, u8, 20, 0) {
+            0 => Some(MsgProtectionLevelTimeStatus::GnssTimeOfValidity),
+            1 => Some(MsgProtectionLevelTimeStatus::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_status(&mut self, time_status: MsgProtectionLevelTimeStatus) {
+        set_bit_range!(&mut self.flags, time_status, u32, u8, 20, 0);
+    }
+
+    pub fn velocity_valid(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 21, 0)
+    }
+
+    pub fn set_velocity_valid(&mut self, velocity_valid: u8) {
+        set_bit_range!(&mut self.flags, velocity_valid, u32, u8, 21, 0);
+    }
+
+    pub fn attitude_valid(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 22, 0)
+    }
+
+    pub fn set_attitude_valid(&mut self, attitude_valid: u8) {
+        set_bit_range!(&mut self.flags, attitude_valid, u32, u8, 22, 0);
+    }
+
+    pub fn safe_state_hpl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 23, 0)
+    }
+
+    pub fn set_safe_state_hpl(&mut self, safe_state_hpl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_hpl, u32, u8, 23, 0);
+    }
+
+    pub fn safe_state_vpl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 24, 0)
+    }
+
+    pub fn set_safe_state_vpl(&mut self, safe_state_vpl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_vpl, u32, u8, 24, 0);
+    }
+
+    pub fn safe_state_atpl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 25, 0)
+    }
+
+    pub fn set_safe_state_atpl(&mut self, safe_state_atpl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_atpl, u32, u8, 25, 0);
+    }
+
+    pub fn safe_state_ctpl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 26, 0)
+    }
+
+    pub fn set_safe_state_ctpl(&mut self, safe_state_ctpl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_ctpl, u32, u8, 26, 0);
+    }
+
+    pub fn safe_state_hvpl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 27, 0)
+    }
+
+    pub fn set_safe_state_hvpl(&mut self, safe_state_hvpl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_hvpl, u32, u8, 27, 0);
+    }
+
+    pub fn safe_state_vvpl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 28, 0)
+    }
+
+    pub fn set_safe_state_vvpl(&mut self, safe_state_vvpl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_vvpl, u32, u8, 28, 0);
+    }
+
+    pub fn safe_state_hopl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 29, 0)
+    }
+
+    pub fn set_safe_state_hopl(&mut self, safe_state_hopl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_hopl, u32, u8, 29, 0);
+    }
+
+    pub fn safe_state_popl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 30, 0)
+    }
+
+    pub fn set_safe_state_popl(&mut self, safe_state_popl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_popl, u32, u8, 30, 0);
+    }
+
+    pub fn safe_state_ropl(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 31, 0)
+    }
+
+    pub fn set_safe_state_ropl(&mut self, safe_state_ropl: u8) {
+        set_bit_range!(&mut self.flags, safe_state_ropl, u32, u8, 31, 0);
+    }
 }
 
 impl ConcreteMessage for MsgProtectionLevel {
@@ -3072,6 +4942,87 @@ impl WireFormat for MsgProtectionLevel {
     }
 }
 
+/// Fix mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgProtectionLevelFixMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Single Point Position (SPP)
+    SinglePointPosition = 1,
+
+    /// Differential GNSS (DGNSS)
+    DifferentialGnss = 2,
+
+    /// Float RTK
+    FloatRtk = 3,
+
+    /// Fixed RTK
+    FixedRtk = 4,
+
+    /// Dead Reckoning
+    DeadReckoning = 5,
+
+    /// SBAS Position
+    SbasPosition = 6,
+}
+
+impl std::fmt::Display for MsgProtectionLevelFixMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgProtectionLevelFixMode::Invalid => f.write_str("Invalid"),
+            MsgProtectionLevelFixMode::SinglePointPosition => {
+                f.write_str("Single Point Position (SPP)")
+            }
+            MsgProtectionLevelFixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
+            MsgProtectionLevelFixMode::FloatRtk => f.write_str("Float RTK"),
+            MsgProtectionLevelFixMode::FixedRtk => f.write_str("Fixed RTK"),
+            MsgProtectionLevelFixMode::DeadReckoning => f.write_str("Dead Reckoning"),
+            MsgProtectionLevelFixMode::SbasPosition => f.write_str("SBAS Position"),
+        }
+    }
+}
+
+/// Inertial Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgProtectionLevelInertialNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgProtectionLevelInertialNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgProtectionLevelInertialNavigationMode::None => f.write_str("None"),
+            MsgProtectionLevelInertialNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Time status
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgProtectionLevelTimeStatus {
+    /// GNSS time of validity
+    GnssTimeOfValidity = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgProtectionLevelTimeStatus {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgProtectionLevelTimeStatus::GnssTimeOfValidity => {
+                f.write_str("GNSS time of validity")
+            }
+            MsgProtectionLevelTimeStatus::Other => f.write_str("Other"),
+        }
+    }
+}
+
 /// Computed Position and Protection Level
 ///
 /// This message reports the local vertical and horizontal protection levels
@@ -3105,6 +5056,34 @@ pub struct MsgProtectionLevelDepA {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgProtectionLevelDepA {
+    pub fn target_integrity_risk_tir_level(
+        &self,
+    ) -> Option<MsgProtectionLevelDepATargetIntegrityRiskTirLevel> {
+        match get_bit_range!( self.flags,  u8, u8, 2, 0 ) {
+            0 => Some( MsgProtectionLevelDepATargetIntegrityRiskTirLevel :: SafeStateProtectionLevelShallNotBeUsedForSafetyCriticalApplication ),
+            1 => Some( MsgProtectionLevelDepATargetIntegrityRiskTirLevel :: TirLevel1 ),
+            2 => Some( MsgProtectionLevelDepATargetIntegrityRiskTirLevel :: TirLevel2 ),
+            3 => Some( MsgProtectionLevelDepATargetIntegrityRiskTirLevel :: TirLevel3 ),
+            _ => None,
+        }
+    }
+
+    pub fn set_target_integrity_risk_tir_level(
+        &mut self,
+        target_integrity_risk_tir_level: MsgProtectionLevelDepATargetIntegrityRiskTirLevel,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            target_integrity_risk_tir_level,
+            u8,
+            u8,
+            2,
+            0
+        );
+    }
 }
 
 impl ConcreteMessage for MsgProtectionLevelDepA {
@@ -3189,6 +5168,34 @@ impl WireFormat for MsgProtectionLevelDepA {
     }
 }
 
+/// Target Integrity Risk (TIR) Level
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgProtectionLevelDepATargetIntegrityRiskTirLevel {
+    /// Safe state, protection level shall not be used for safety-critical
+    /// application
+    SafeStateProtectionLevelShallNotBeUsedForSafetyCriticalApplication = 0,
+
+    /// TIR Level 1
+    TirLevel1 = 1,
+
+    /// TIR Level 2
+    TirLevel2 = 2,
+
+    /// TIR Level 3
+    TirLevel3 = 3,
+}
+
+impl std::fmt::Display for MsgProtectionLevelDepATargetIntegrityRiskTirLevel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgProtectionLevelDepATargetIntegrityRiskTirLevel::SafeStateProtectionLevelShallNotBeUsedForSafetyCriticalApplication => f.write_str("Safe state, protection level shall not be used for safety-critical application"),
+            MsgProtectionLevelDepATargetIntegrityRiskTirLevel::TirLevel1 => f.write_str("TIR Level 1"),
+            MsgProtectionLevelDepATargetIntegrityRiskTirLevel::TirLevel2 => f.write_str("TIR Level 2"),
+            MsgProtectionLevelDepATargetIntegrityRiskTirLevel::TirLevel3 => f.write_str("TIR Level 3"),
+        }
+    }
+}
+
 /// UTC Time
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
@@ -3228,6 +5235,34 @@ pub struct MsgUtcTime {
     /// nanoseconds of second (range 0-999999999)
     #[cfg_attr(feature = "serde", serde(rename(serialize = "ns")))]
     pub ns: u32,
+}
+
+impl MsgUtcTime {
+    pub fn utc_offset_source(&self) -> Option<MsgUtcTimeUtcOffsetSource> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgUtcTimeUtcOffsetSource::FactoryDefault),
+            1 => Some(MsgUtcTimeUtcOffsetSource::NonVolatileMemory),
+            2 => Some(MsgUtcTimeUtcOffsetSource::DecodedThisSession),
+            _ => None,
+        }
+    }
+
+    pub fn set_utc_offset_source(&mut self, utc_offset_source: MsgUtcTimeUtcOffsetSource) {
+        set_bit_range!(&mut self.flags, utc_offset_source, u8, u8, 4, 3);
+    }
+
+    pub fn time_source(&self) -> Option<MsgUtcTimeTimeSource> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgUtcTimeTimeSource::None),
+            1 => Some(MsgUtcTimeTimeSource::GnssSolution),
+            2 => Some(MsgUtcTimeTimeSource::Propagated),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_source(&mut self, time_source: MsgUtcTimeTimeSource) {
+        set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgUtcTime {
@@ -3320,6 +5355,52 @@ impl WireFormat for MsgUtcTime {
     }
 }
 
+/// UTC offset source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgUtcTimeUtcOffsetSource {
+    /// Factory Default
+    FactoryDefault = 0,
+
+    /// Non Volatile Memory
+    NonVolatileMemory = 1,
+
+    /// Decoded this Session
+    DecodedThisSession = 2,
+}
+
+impl std::fmt::Display for MsgUtcTimeUtcOffsetSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgUtcTimeUtcOffsetSource::FactoryDefault => f.write_str("Factory Default"),
+            MsgUtcTimeUtcOffsetSource::NonVolatileMemory => f.write_str("Non Volatile Memory"),
+            MsgUtcTimeUtcOffsetSource::DecodedThisSession => f.write_str("Decoded this Session"),
+        }
+    }
+}
+
+/// Time source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgUtcTimeTimeSource {
+    /// None (invalid)
+    None = 0,
+
+    /// GNSS Solution
+    GnssSolution = 1,
+
+    /// Propagated
+    Propagated = 2,
+}
+
+impl std::fmt::Display for MsgUtcTimeTimeSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgUtcTimeTimeSource::None => f.write_str("None (invalid)"),
+            MsgUtcTimeTimeSource::GnssSolution => f.write_str("GNSS Solution"),
+            MsgUtcTimeTimeSource::Propagated => f.write_str("Propagated"),
+        }
+    }
+}
+
 /// UTC Time
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
@@ -3359,6 +5440,34 @@ pub struct MsgUtcTimeGnss {
     /// nanoseconds of second (range 0-999999999)
     #[cfg_attr(feature = "serde", serde(rename(serialize = "ns")))]
     pub ns: u32,
+}
+
+impl MsgUtcTimeGnss {
+    pub fn utc_offset_source(&self) -> Option<MsgUtcTimeGnssUtcOffsetSource> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgUtcTimeGnssUtcOffsetSource::FactoryDefault),
+            1 => Some(MsgUtcTimeGnssUtcOffsetSource::NonVolatileMemory),
+            2 => Some(MsgUtcTimeGnssUtcOffsetSource::DecodedThisSession),
+            _ => None,
+        }
+    }
+
+    pub fn set_utc_offset_source(&mut self, utc_offset_source: MsgUtcTimeGnssUtcOffsetSource) {
+        set_bit_range!(&mut self.flags, utc_offset_source, u8, u8, 4, 3);
+    }
+
+    pub fn time_source(&self) -> Option<MsgUtcTimeGnssTimeSource> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgUtcTimeGnssTimeSource::None),
+            1 => Some(MsgUtcTimeGnssTimeSource::GnssSolution),
+            2 => Some(MsgUtcTimeGnssTimeSource::Propagated),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_source(&mut self, time_source: MsgUtcTimeGnssTimeSource) {
+        set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgUtcTimeGnss {
@@ -3451,6 +5560,54 @@ impl WireFormat for MsgUtcTimeGnss {
     }
 }
 
+/// UTC offset source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgUtcTimeGnssUtcOffsetSource {
+    /// Factory Default
+    FactoryDefault = 0,
+
+    /// Non Volatile Memory
+    NonVolatileMemory = 1,
+
+    /// Decoded this Session
+    DecodedThisSession = 2,
+}
+
+impl std::fmt::Display for MsgUtcTimeGnssUtcOffsetSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgUtcTimeGnssUtcOffsetSource::FactoryDefault => f.write_str("Factory Default"),
+            MsgUtcTimeGnssUtcOffsetSource::NonVolatileMemory => f.write_str("Non Volatile Memory"),
+            MsgUtcTimeGnssUtcOffsetSource::DecodedThisSession => {
+                f.write_str("Decoded this Session")
+            }
+        }
+    }
+}
+
+/// Time source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgUtcTimeGnssTimeSource {
+    /// None (invalid)
+    None = 0,
+
+    /// GNSS Solution
+    GnssSolution = 1,
+
+    /// Propagated
+    Propagated = 2,
+}
+
+impl std::fmt::Display for MsgUtcTimeGnssTimeSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgUtcTimeGnssTimeSource::None => f.write_str("None (invalid)"),
+            MsgUtcTimeGnssTimeSource::GnssSolution => f.write_str("GNSS Solution"),
+            MsgUtcTimeGnssTimeSource::Propagated => f.write_str("Propagated"),
+        }
+    }
+}
+
 /// Velocity in User Frame
 ///
 /// This message reports the velocity in the Vehicle Body Frame. By
@@ -3505,6 +5662,34 @@ pub struct MsgVelBody {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgVelBody {
+    pub fn ins_navigation_mode(&self) -> Option<MsgVelBodyInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgVelBodyInsNavigationMode::None),
+            1 => Some(MsgVelBodyInsNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: MsgVelBodyInsNavigationMode) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn velocity_mode(&self) -> Option<MsgVelBodyVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelBodyVelocityMode::Invalid),
+            1 => Some(MsgVelBodyVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelBodyVelocityMode::ComputedDopplerDerived),
+            3 => Some(MsgVelBodyVelocityMode::DeadReckoning),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelBodyVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelBody {
@@ -3609,6 +5794,56 @@ impl WireFormat for MsgVelBody {
     }
 }
 
+/// INS Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelBodyInsNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgVelBodyInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelBodyInsNavigationMode::None => f.write_str("None"),
+            MsgVelBodyInsNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelBodyVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+
+    /// Dead Reckoning
+    DeadReckoning = 3,
+}
+
+impl std::fmt::Display for MsgVelBodyVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelBodyVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelBodyVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelBodyVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
+            MsgVelBodyVelocityMode::DeadReckoning => f.write_str("Dead Reckoning"),
+        }
+    }
+}
+
 /// Velocity expressed as course over ground
 ///
 /// This message reports the receiver course over ground (COG) and speed over
@@ -3653,6 +5888,73 @@ pub struct MsgVelCog {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u16,
+}
+
+impl MsgVelCog {
+    pub fn vertical_velocity_validity(&self) -> Option<MsgVelCogVerticalVelocityValidity> {
+        match get_bit_range!(self.flags, u8, u8, 5, 0) {
+            0 => Some(MsgVelCogVerticalVelocityValidity::Invalid),
+            1 => Some(MsgVelCogVerticalVelocityValidity::VerticalVelocityValid),
+            _ => None,
+        }
+    }
+
+    pub fn set_vertical_velocity_validity(
+        &mut self,
+        vertical_velocity_validity: MsgVelCogVerticalVelocityValidity,
+    ) {
+        set_bit_range!(&mut self.flags, vertical_velocity_validity, u8, u8, 5, 0);
+    }
+
+    pub fn sog_validity(&self) -> Option<MsgVelCogSogValidity> {
+        match get_bit_range!(self.flags, u8, u8, 4, 0) {
+            0 => Some(MsgVelCogSogValidity::Invalid),
+            1 => Some(MsgVelCogSogValidity::SogValid),
+            _ => None,
+        }
+    }
+
+    pub fn set_sog_validity(&mut self, sog_validity: MsgVelCogSogValidity) {
+        set_bit_range!(&mut self.flags, sog_validity, u8, u8, 4, 0);
+    }
+
+    pub fn cog_validity(&self) -> Option<MsgVelCogCogValidity> {
+        match get_bit_range!(self.flags, u8, u8, 3, 0) {
+            0 => Some(MsgVelCogCogValidity::Invalid),
+            1 => Some(MsgVelCogCogValidity::CogValid),
+            _ => None,
+        }
+    }
+
+    pub fn set_cog_validity(&mut self, cog_validity: MsgVelCogCogValidity) {
+        set_bit_range!(&mut self.flags, cog_validity, u8, u8, 3, 0);
+    }
+
+    pub fn ins_navigation_mode(&self) -> Option<MsgVelCogInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelCogInsNavigationMode::None),
+            1 => Some(MsgVelCogInsNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: MsgVelCogInsNavigationMode) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
+    }
+
+    pub fn velocity_mode(&self) -> Option<MsgVelCogVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(MsgVelCogVelocityMode::Invalid),
+            1 => Some(MsgVelCogVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelCogVelocityMode::ComputedDopplerDerived),
+            3 => Some(MsgVelCogVelocityMode::DeadReckoning),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelCogVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 1, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelCog {
@@ -3741,6 +6043,115 @@ impl WireFormat for MsgVelCog {
     }
 }
 
+/// Vertical velocity validity
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelCogVerticalVelocityValidity {
+    /// Invalid
+    Invalid = 0,
+
+    /// Vertical velocity valid
+    VerticalVelocityValid = 1,
+}
+
+impl std::fmt::Display for MsgVelCogVerticalVelocityValidity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelCogVerticalVelocityValidity::Invalid => f.write_str("Invalid"),
+            MsgVelCogVerticalVelocityValidity::VerticalVelocityValid => {
+                f.write_str("Vertical velocity valid")
+            }
+        }
+    }
+}
+
+/// SOG validity
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelCogSogValidity {
+    /// Invalid
+    Invalid = 0,
+
+    /// SOG valid
+    SogValid = 1,
+}
+
+impl std::fmt::Display for MsgVelCogSogValidity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelCogSogValidity::Invalid => f.write_str("Invalid"),
+            MsgVelCogSogValidity::SogValid => f.write_str("SOG valid"),
+        }
+    }
+}
+
+/// COG validity
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelCogCogValidity {
+    /// Invalid
+    Invalid = 0,
+
+    /// COG valid
+    CogValid = 1,
+}
+
+impl std::fmt::Display for MsgVelCogCogValidity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelCogCogValidity::Invalid => f.write_str("Invalid"),
+            MsgVelCogCogValidity::CogValid => f.write_str("COG valid"),
+        }
+    }
+}
+
+/// INS Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelCogInsNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgVelCogInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelCogInsNavigationMode::None => f.write_str("None"),
+            MsgVelCogInsNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelCogVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+
+    /// Dead Reckoning
+    DeadReckoning = 3,
+}
+
+impl std::fmt::Display for MsgVelCogVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelCogVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelCogVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelCogVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
+            MsgVelCogVelocityMode::DeadReckoning => f.write_str("Dead Reckoning"),
+        }
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -3774,6 +6185,46 @@ pub struct MsgVelEcef {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgVelEcef {
+    pub fn type_of_reported_tow(&self) -> Option<MsgVelEcefTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgVelEcefTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgVelEcefTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: MsgVelEcefTypeOfReportedTow) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn ins_navigation_mode(&self) -> Option<MsgVelEcefInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgVelEcefInsNavigationMode::None),
+            1 => Some(MsgVelEcefInsNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: MsgVelEcefInsNavigationMode) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn velocity_mode(&self) -> Option<MsgVelEcefVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelEcefVelocityMode::Invalid),
+            1 => Some(MsgVelEcefVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelEcefVelocityMode::ComputedDopplerDerived),
+            3 => Some(MsgVelEcefVelocityMode::DeadReckoning),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelEcefVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelEcef {
@@ -3858,6 +6309,75 @@ impl WireFormat for MsgVelEcef {
     }
 }
 
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgVelEcefTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgVelEcefTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// INS Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefInsNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgVelEcefInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefInsNavigationMode::None => f.write_str("None"),
+            MsgVelEcefInsNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+
+    /// Dead Reckoning
+    DeadReckoning = 3,
+}
+
+impl std::fmt::Display for MsgVelEcefVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelEcefVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelEcefVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
+            MsgVelEcefVelocityMode::DeadReckoning => f.write_str("Dead Reckoning"),
+        }
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -3906,6 +6426,49 @@ pub struct MsgVelEcefCov {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgVelEcefCov {
+    pub fn type_of_reported_tow(&self) -> Option<MsgVelEcefCovTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgVelEcefCovTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgVelEcefCovTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(
+        &mut self,
+        type_of_reported_tow: MsgVelEcefCovTypeOfReportedTow,
+    ) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn ins_navigation_mode(&self) -> Option<MsgVelEcefCovInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgVelEcefCovInsNavigationMode::None),
+            1 => Some(MsgVelEcefCovInsNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: MsgVelEcefCovInsNavigationMode) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn velocity_mode(&self) -> Option<MsgVelEcefCovVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelEcefCovVelocityMode::Invalid),
+            1 => Some(MsgVelEcefCovVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelEcefCovVelocityMode::ComputedDopplerDerived),
+            3 => Some(MsgVelEcefCovVelocityMode::DeadReckoning),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelEcefCovVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelEcefCov {
@@ -4010,6 +6573,75 @@ impl WireFormat for MsgVelEcefCov {
     }
 }
 
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefCovTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgVelEcefCovTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefCovTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgVelEcefCovTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// INS Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefCovInsNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgVelEcefCovInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefCovInsNavigationMode::None => f.write_str("None"),
+            MsgVelEcefCovInsNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefCovVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+
+    /// Dead Reckoning
+    DeadReckoning = 3,
+}
+
+impl std::fmt::Display for MsgVelEcefCovVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefCovVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelEcefCovVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelEcefCovVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
+            MsgVelEcefCovVelocityMode::DeadReckoning => f.write_str("Dead Reckoning"),
+        }
+    }
+}
+
 /// GNSS-only Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed (ECEF)
@@ -4058,6 +6690,21 @@ pub struct MsgVelEcefCovGnss {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgVelEcefCovGnss {
+    pub fn velocity_mode(&self) -> Option<MsgVelEcefCovGnssVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelEcefCovGnssVelocityMode::Invalid),
+            1 => Some(MsgVelEcefCovGnssVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelEcefCovGnssVelocityMode::ComputedDopplerDerived),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelEcefCovGnssVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelEcefCovGnss {
@@ -4158,6 +6805,33 @@ impl WireFormat for MsgVelEcefCovGnss {
             cov_z_z: WireFormat::parse_unchecked(buf),
             n_sats: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefCovGnssVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+}
+
+impl std::fmt::Display for MsgVelEcefCovGnssVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefCovGnssVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelEcefCovGnssVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelEcefCovGnssVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
         }
     }
 }
@@ -4314,6 +6988,21 @@ pub struct MsgVelEcefGnss {
     pub flags: u8,
 }
 
+impl MsgVelEcefGnss {
+    pub fn velocity_mode(&self) -> Option<MsgVelEcefGnssVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelEcefGnssVelocityMode::Invalid),
+            1 => Some(MsgVelEcefGnssVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelEcefGnssVelocityMode::ComputedDopplerDerived),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelEcefGnssVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgVelEcefGnss {
     const MESSAGE_TYPE: u16 = 557;
     const MESSAGE_NAME: &'static str = "MSG_VEL_ECEF_GNSS";
@@ -4396,6 +7085,33 @@ impl WireFormat for MsgVelEcefGnss {
     }
 }
 
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelEcefGnssVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+}
+
+impl std::fmt::Display for MsgVelEcefGnssVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelEcefGnssVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelEcefGnssVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelEcefGnssVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
+        }
+    }
+}
+
 /// Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
@@ -4433,6 +7149,46 @@ pub struct MsgVelNed {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgVelNed {
+    pub fn type_of_reported_tow(&self) -> Option<MsgVelNedTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgVelNedTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgVelNedTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: MsgVelNedTypeOfReportedTow) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn ins_navigation_mode(&self) -> Option<MsgVelNedInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgVelNedInsNavigationMode::None),
+            1 => Some(MsgVelNedInsNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: MsgVelNedInsNavigationMode) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn velocity_mode(&self) -> Option<MsgVelNedVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelNedVelocityMode::Invalid),
+            1 => Some(MsgVelNedVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelNedVelocityMode::ComputedDopplerDerived),
+            3 => Some(MsgVelNedVelocityMode::DeadReckoning),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelNedVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelNed {
@@ -4521,6 +7277,75 @@ impl WireFormat for MsgVelNed {
     }
 }
 
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgVelNedTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgVelNedTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// INS Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedInsNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgVelNedInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedInsNavigationMode::None => f.write_str("None"),
+            MsgVelNedInsNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+
+    /// Dead Reckoning
+    DeadReckoning = 3,
+}
+
+impl std::fmt::Display for MsgVelNedVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelNedVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelNedVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
+            MsgVelNedVelocityMode::DeadReckoning => f.write_str("Dead Reckoning"),
+        }
+    }
+}
+
 /// Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
@@ -4572,6 +7397,49 @@ pub struct MsgVelNedCov {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgVelNedCov {
+    pub fn type_of_reported_tow(&self) -> Option<MsgVelNedCovTypeOfReportedTow> {
+        match get_bit_range!(self.flags, u8, u8, 5, 5) {
+            0 => Some(MsgVelNedCovTypeOfReportedTow::TimeOfMeasurement),
+            1 => Some(MsgVelNedCovTypeOfReportedTow::Other),
+            _ => None,
+        }
+    }
+
+    pub fn set_type_of_reported_tow(
+        &mut self,
+        type_of_reported_tow: MsgVelNedCovTypeOfReportedTow,
+    ) {
+        set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
+    }
+
+    pub fn ins_navigation_mode(&self) -> Option<MsgVelNedCovInsNavigationMode> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgVelNedCovInsNavigationMode::None),
+            1 => Some(MsgVelNedCovInsNavigationMode::InsUsed),
+            _ => None,
+        }
+    }
+
+    pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: MsgVelNedCovInsNavigationMode) {
+        set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
+    }
+
+    pub fn velocity_mode(&self) -> Option<MsgVelNedCovVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelNedCovVelocityMode::Invalid),
+            1 => Some(MsgVelNedCovVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelNedCovVelocityMode::ComputedDopplerDerived),
+            3 => Some(MsgVelNedCovVelocityMode::DeadReckoning),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelNedCovVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelNedCov {
@@ -4676,6 +7544,75 @@ impl WireFormat for MsgVelNedCov {
     }
 }
 
+/// Type of reported TOW
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedCovTypeOfReportedTow {
+    /// Time of Measurement
+    TimeOfMeasurement = 0,
+
+    /// Other
+    Other = 1,
+}
+
+impl std::fmt::Display for MsgVelNedCovTypeOfReportedTow {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedCovTypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+            MsgVelNedCovTypeOfReportedTow::Other => f.write_str("Other"),
+        }
+    }
+}
+
+/// INS Navigation Mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedCovInsNavigationMode {
+    /// None
+    None = 0,
+
+    /// INS used
+    InsUsed = 1,
+}
+
+impl std::fmt::Display for MsgVelNedCovInsNavigationMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedCovInsNavigationMode::None => f.write_str("None"),
+            MsgVelNedCovInsNavigationMode::InsUsed => f.write_str("INS used"),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedCovVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+
+    /// Dead Reckoning
+    DeadReckoning = 3,
+}
+
+impl std::fmt::Display for MsgVelNedCovVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedCovVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelNedCovVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelNedCovVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
+            MsgVelNedCovVelocityMode::DeadReckoning => f.write_str("Dead Reckoning"),
+        }
+    }
+}
+
 /// GNSS-only Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
@@ -4727,6 +7664,21 @@ pub struct MsgVelNedCovGnss {
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
     pub flags: u8,
+}
+
+impl MsgVelNedCovGnss {
+    pub fn velocity_mode(&self) -> Option<MsgVelNedCovGnssVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelNedCovGnssVelocityMode::Invalid),
+            1 => Some(MsgVelNedCovGnssVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelNedCovGnssVelocityMode::ComputedDopplerDerived),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelNedCovGnssVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
 }
 
 impl ConcreteMessage for MsgVelNedCovGnss {
@@ -4827,6 +7779,33 @@ impl WireFormat for MsgVelNedCovGnss {
             cov_d_d: WireFormat::parse_unchecked(buf),
             n_sats: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedCovGnssVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+}
+
+impl std::fmt::Display for MsgVelNedCovGnssVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedCovGnssVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelNedCovGnssVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelNedCovGnssVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
         }
     }
 }
@@ -4995,6 +7974,21 @@ pub struct MsgVelNedGnss {
     pub flags: u8,
 }
 
+impl MsgVelNedGnss {
+    pub fn velocity_mode(&self) -> Option<MsgVelNedGnssVelocityMode> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgVelNedGnssVelocityMode::Invalid),
+            1 => Some(MsgVelNedGnssVelocityMode::MeasuredDopplerDerived),
+            2 => Some(MsgVelNedGnssVelocityMode::ComputedDopplerDerived),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_mode(&mut self, velocity_mode: MsgVelNedGnssVelocityMode) {
+        set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgVelNedGnss {
     const MESSAGE_TYPE: u16 = 558;
     const MESSAGE_NAME: &'static str = "MSG_VEL_NED_GNSS";
@@ -5077,6 +8071,33 @@ impl WireFormat for MsgVelNedGnss {
             v_accuracy: WireFormat::parse_unchecked(buf),
             n_sats: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Velocity mode
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgVelNedGnssVelocityMode {
+    /// Invalid
+    Invalid = 0,
+
+    /// Measured Doppler derived
+    MeasuredDopplerDerived = 1,
+
+    /// Computed Doppler derived
+    ComputedDopplerDerived = 2,
+}
+
+impl std::fmt::Display for MsgVelNedGnssVelocityMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgVelNedGnssVelocityMode::Invalid => f.write_str("Invalid"),
+            MsgVelNedGnssVelocityMode::MeasuredDopplerDerived => {
+                f.write_str("Measured Doppler derived")
+            }
+            MsgVelNedGnssVelocityMode::ComputedDopplerDerived => {
+                f.write_str("Computed Doppler derived")
+            }
         }
     }
 }

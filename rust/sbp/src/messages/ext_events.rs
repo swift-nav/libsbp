@@ -46,6 +46,32 @@ pub struct MsgExtEvent {
     pub pin: u8,
 }
 
+impl MsgExtEvent {
+    pub fn time_quality(&self) -> Option<MsgExtEventTimeQuality> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(MsgExtEventTimeQuality::UnknownDontHaveNavSolution),
+            1 => Some(MsgExtEventTimeQuality::Good),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_quality(&mut self, time_quality: MsgExtEventTimeQuality) {
+        set_bit_range!(&mut self.flags, time_quality, u8, u8, 1, 0);
+    }
+
+    pub fn new_level_of_pin(&self) -> Option<MsgExtEventNewLevelOfPin> {
+        match get_bit_range!(self.flags, u8, u8, 0, 0) {
+            0 => Some(MsgExtEventNewLevelOfPin::Low),
+            1 => Some(MsgExtEventNewLevelOfPin::High),
+            _ => None,
+        }
+    }
+
+    pub fn set_new_level_of_pin(&mut self, new_level_of_pin: MsgExtEventNewLevelOfPin) {
+        set_bit_range!(&mut self.flags, new_level_of_pin, u8, u8, 0, 0);
+    }
+}
+
 impl ConcreteMessage for MsgExtEvent {
     const MESSAGE_TYPE: u16 = 257;
     const MESSAGE_NAME: &'static str = "MSG_EXT_EVENT";
@@ -121,6 +147,46 @@ impl WireFormat for MsgExtEvent {
             ns_residual: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
             pin: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Time quality
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgExtEventTimeQuality {
+    /// Unknown - don't have nav solution
+    UnknownDontHaveNavSolution = 0,
+
+    /// Good (< 1 microsecond)
+    Good = 1,
+}
+
+impl std::fmt::Display for MsgExtEventTimeQuality {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgExtEventTimeQuality::UnknownDontHaveNavSolution => {
+                f.write_str("Unknown - don't have nav solution")
+            }
+            MsgExtEventTimeQuality::Good => f.write_str("Good (< 1 microsecond)"),
+        }
+    }
+}
+
+/// New level of pin
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgExtEventNewLevelOfPin {
+    /// Low (falling edge)
+    Low = 0,
+
+    /// High (rising edge)
+    High = 1,
+}
+
+impl std::fmt::Display for MsgExtEventNewLevelOfPin {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgExtEventNewLevelOfPin::Low => f.write_str("Low (falling edge)"),
+            MsgExtEventNewLevelOfPin::High => f.write_str("High (rising edge)"),
         }
     }
 }

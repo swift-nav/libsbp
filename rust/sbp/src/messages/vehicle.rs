@@ -47,6 +47,49 @@ pub struct MsgOdometry {
     pub flags: u8,
 }
 
+impl MsgOdometry {
+    pub fn vehicle_metadata(&self) -> Option<MsgOdometryVehicleMetadata> {
+        match get_bit_range!(self.flags, u8, u8, 6, 5) {
+            0 => Some(MsgOdometryVehicleMetadata::Unavailable),
+            1 => Some(MsgOdometryVehicleMetadata::Forward),
+            2 => Some(MsgOdometryVehicleMetadata::Reverse),
+            3 => Some(MsgOdometryVehicleMetadata::Park),
+            _ => None,
+        }
+    }
+
+    pub fn set_vehicle_metadata(&mut self, vehicle_metadata: MsgOdometryVehicleMetadata) {
+        set_bit_range!(&mut self.flags, vehicle_metadata, u8, u8, 6, 5);
+    }
+
+    pub fn velocity_source(&self) -> Option<MsgOdometryVelocitySource> {
+        match get_bit_range!(self.flags, u8, u8, 4, 3) {
+            0 => Some(MsgOdometryVelocitySource::Source0),
+            1 => Some(MsgOdometryVelocitySource::Source1),
+            2 => Some(MsgOdometryVelocitySource::Source2),
+            3 => Some(MsgOdometryVelocitySource::Source3),
+            _ => None,
+        }
+    }
+
+    pub fn set_velocity_source(&mut self, velocity_source: MsgOdometryVelocitySource) {
+        set_bit_range!(&mut self.flags, velocity_source, u8, u8, 4, 3);
+    }
+
+    pub fn time_source(&self) -> Option<MsgOdometryTimeSource> {
+        match get_bit_range!(self.flags, u8, u8, 2, 0) {
+            0 => Some(MsgOdometryTimeSource::None),
+            1 => Some(MsgOdometryTimeSource::GpsSolution),
+            2 => Some(MsgOdometryTimeSource::ProcessorTime),
+            _ => None,
+        }
+    }
+
+    pub fn set_time_source(&mut self, time_source: MsgOdometryTimeSource) {
+        set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
+    }
+}
+
 impl ConcreteMessage for MsgOdometry {
     const MESSAGE_TYPE: u16 = 2307;
     const MESSAGE_NAME: &'static str = "MSG_ODOMETRY";
@@ -110,6 +153,83 @@ impl WireFormat for MsgOdometry {
     }
 }
 
+/// Vehicle Metadata
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgOdometryVehicleMetadata {
+    /// Unavailable
+    Unavailable = 0,
+
+    /// Forward
+    Forward = 1,
+
+    /// Reverse
+    Reverse = 2,
+
+    /// Park
+    Park = 3,
+}
+
+impl std::fmt::Display for MsgOdometryVehicleMetadata {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgOdometryVehicleMetadata::Unavailable => f.write_str("Unavailable"),
+            MsgOdometryVehicleMetadata::Forward => f.write_str("Forward"),
+            MsgOdometryVehicleMetadata::Reverse => f.write_str("Reverse"),
+            MsgOdometryVehicleMetadata::Park => f.write_str("Park"),
+        }
+    }
+}
+
+/// Velocity Source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgOdometryVelocitySource {
+    /// Source 0
+    Source0 = 0,
+
+    /// Source 1
+    Source1 = 1,
+
+    /// Source 2
+    Source2 = 2,
+
+    /// Source 3
+    Source3 = 3,
+}
+
+impl std::fmt::Display for MsgOdometryVelocitySource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgOdometryVelocitySource::Source0 => f.write_str("Source 0"),
+            MsgOdometryVelocitySource::Source1 => f.write_str("Source 1"),
+            MsgOdometryVelocitySource::Source2 => f.write_str("Source 2"),
+            MsgOdometryVelocitySource::Source3 => f.write_str("Source 3"),
+        }
+    }
+}
+
+/// Time source
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgOdometryTimeSource {
+    /// None (invalid)
+    None = 0,
+
+    /// GPS Solution (ms in week)
+    GpsSolution = 1,
+
+    /// Processor Time
+    ProcessorTime = 2,
+}
+
+impl std::fmt::Display for MsgOdometryTimeSource {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgOdometryTimeSource::None => f.write_str("None (invalid)"),
+            MsgOdometryTimeSource::GpsSolution => f.write_str("GPS Solution (ms in week)"),
+            MsgOdometryTimeSource::ProcessorTime => f.write_str("Processor Time"),
+        }
+    }
+}
+
 /// Accumulated wheeltick count message
 ///
 /// Message containing the accumulated distance travelled by a wheel located
@@ -147,6 +267,38 @@ pub struct MsgWheeltick {
     /// decrementing when travelling in the opposite direction.
     #[cfg_attr(feature = "serde", serde(rename(serialize = "ticks")))]
     pub ticks: i32,
+}
+
+impl MsgWheeltick {
+    pub fn vehicle_metadata(&self) -> Option<MsgWheeltickVehicleMetadata> {
+        match get_bit_range!(self.flags, u8, u8, 3, 2) {
+            0 => Some(MsgWheeltickVehicleMetadata::Unavailable),
+            1 => Some(MsgWheeltickVehicleMetadata::Forward),
+            2 => Some(MsgWheeltickVehicleMetadata::Reverse),
+            3 => Some(MsgWheeltickVehicleMetadata::Park),
+            _ => None,
+        }
+    }
+
+    pub fn set_vehicle_metadata(&mut self, vehicle_metadata: MsgWheeltickVehicleMetadata) {
+        set_bit_range!(&mut self.flags, vehicle_metadata, u8, u8, 3, 2);
+    }
+
+    pub fn synchronization_type(&self) -> Option<MsgWheeltickSynchronizationType> {
+        match get_bit_range!(self.flags, u8, u8, 1, 0) {
+            0 => Some(MsgWheeltickSynchronizationType::MicrosecondsSinceLastPps),
+            1 => Some(MsgWheeltickSynchronizationType::MicrosecondsInGpsWeek),
+            2 => Some(MsgWheeltickSynchronizationType::LocalCpuTimeInNominalMicroseconds),
+            _ => None,
+        }
+    }
+
+    pub fn set_synchronization_type(
+        &mut self,
+        synchronization_type: MsgWheeltickSynchronizationType,
+    ) {
+        set_bit_range!(&mut self.flags, synchronization_type, u8, u8, 1, 0);
+    }
 }
 
 impl ConcreteMessage for MsgWheeltick {
@@ -219,6 +371,62 @@ impl WireFormat for MsgWheeltick {
             flags: WireFormat::parse_unchecked(buf),
             source: WireFormat::parse_unchecked(buf),
             ticks: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Vehicle Metadata
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgWheeltickVehicleMetadata {
+    /// Unavailable
+    Unavailable = 0,
+
+    /// Forward
+    Forward = 1,
+
+    /// Reverse
+    Reverse = 2,
+
+    /// Park
+    Park = 3,
+}
+
+impl std::fmt::Display for MsgWheeltickVehicleMetadata {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgWheeltickVehicleMetadata::Unavailable => f.write_str("Unavailable"),
+            MsgWheeltickVehicleMetadata::Forward => f.write_str("Forward"),
+            MsgWheeltickVehicleMetadata::Reverse => f.write_str("Reverse"),
+            MsgWheeltickVehicleMetadata::Park => f.write_str("Park"),
+        }
+    }
+}
+
+/// Synchronization type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgWheeltickSynchronizationType {
+    /// microseconds since last PPS
+    MicrosecondsSinceLastPps = 0,
+
+    /// microseconds in GPS week
+    MicrosecondsInGpsWeek = 1,
+
+    /// local CPU time in nominal microseconds
+    LocalCpuTimeInNominalMicroseconds = 2,
+}
+
+impl std::fmt::Display for MsgWheeltickSynchronizationType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgWheeltickSynchronizationType::MicrosecondsSinceLastPps => {
+                f.write_str("microseconds since last PPS")
+            }
+            MsgWheeltickSynchronizationType::MicrosecondsInGpsWeek => {
+                f.write_str("microseconds in GPS week")
+            }
+            MsgWheeltickSynchronizationType::LocalCpuTimeInNominalMicroseconds => {
+                f.write_str("local CPU time in nominal microseconds")
+            }
         }
     }
 }

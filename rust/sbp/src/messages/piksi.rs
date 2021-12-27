@@ -848,6 +848,35 @@ pub struct MsgMaskSatellite {
     pub sid: GnssSignal,
 }
 
+impl MsgMaskSatellite {
+    pub fn tracking_channels(&self) -> Option<MsgMaskSatelliteTrackingChannels> {
+        match get_bit_range!(self.mask, u8, u8, 1, 0) {
+            0 => Some(MsgMaskSatelliteTrackingChannels::Enabled),
+            1 => Some(MsgMaskSatelliteTrackingChannels::DropThisPrnIfCurrentlyTracking),
+            _ => None,
+        }
+    }
+
+    pub fn set_tracking_channels(&mut self, tracking_channels: MsgMaskSatelliteTrackingChannels) {
+        set_bit_range!(&mut self.mask, tracking_channels, u8, u8, 1, 0);
+    }
+
+    pub fn acquisition_channel(&self) -> Option<MsgMaskSatelliteAcquisitionChannel> {
+        match get_bit_range!(self.mask, u8, u8, 0, 0) {
+            0 => Some(MsgMaskSatelliteAcquisitionChannel::Enabled),
+            1 => Some(MsgMaskSatelliteAcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
+            _ => None,
+        }
+    }
+
+    pub fn set_acquisition_channel(
+        &mut self,
+        acquisition_channel: MsgMaskSatelliteAcquisitionChannel,
+    ) {
+        set_bit_range!(&mut self.mask, acquisition_channel, u8, u8, 0, 0);
+    }
+}
+
 impl ConcreteMessage for MsgMaskSatellite {
     const MESSAGE_TYPE: u16 = 43;
     const MESSAGE_NAME: &'static str = "MSG_MASK_SATELLITE";
@@ -899,6 +928,48 @@ impl WireFormat for MsgMaskSatellite {
     }
 }
 
+/// Tracking channels
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgMaskSatelliteTrackingChannels {
+    /// Enabled
+    Enabled = 0,
+
+    /// Drop this PRN if currently tracking
+    DropThisPrnIfCurrentlyTracking = 1,
+}
+
+impl std::fmt::Display for MsgMaskSatelliteTrackingChannels {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgMaskSatelliteTrackingChannels::Enabled => f.write_str("Enabled"),
+            MsgMaskSatelliteTrackingChannels::DropThisPrnIfCurrentlyTracking => {
+                f.write_str("Drop this PRN if currently tracking")
+            }
+        }
+    }
+}
+
+/// Acquisition channel
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgMaskSatelliteAcquisitionChannel {
+    /// Enabled
+    Enabled = 0,
+
+    /// Skip this satellite on future acquisitions
+    SkipThisSatelliteOnFutureAcquisitions = 1,
+}
+
+impl std::fmt::Display for MsgMaskSatelliteAcquisitionChannel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgMaskSatelliteAcquisitionChannel::Enabled => f.write_str("Enabled"),
+            MsgMaskSatelliteAcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions => {
+                f.write_str("Skip this satellite on future acquisitions")
+            }
+        }
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -915,6 +986,38 @@ pub struct MsgMaskSatelliteDep {
     /// GNSS signal for which the mask is applied
     #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
     pub sid: GnssSignalDep,
+}
+
+impl MsgMaskSatelliteDep {
+    pub fn tracking_channels(&self) -> Option<MsgMaskSatelliteDepTrackingChannels> {
+        match get_bit_range!(self.mask, u8, u8, 1, 0) {
+            0 => Some(MsgMaskSatelliteDepTrackingChannels::Enabled),
+            1 => Some(MsgMaskSatelliteDepTrackingChannels::DropThisPrnIfCurrentlyTracking),
+            _ => None,
+        }
+    }
+
+    pub fn set_tracking_channels(
+        &mut self,
+        tracking_channels: MsgMaskSatelliteDepTrackingChannels,
+    ) {
+        set_bit_range!(&mut self.mask, tracking_channels, u8, u8, 1, 0);
+    }
+
+    pub fn acquisition_channel(&self) -> Option<MsgMaskSatelliteDepAcquisitionChannel> {
+        match get_bit_range!(self.mask, u8, u8, 0, 0) {
+            0 => Some(MsgMaskSatelliteDepAcquisitionChannel::Enabled),
+            1 => Some(MsgMaskSatelliteDepAcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
+            _ => None,
+        }
+    }
+
+    pub fn set_acquisition_channel(
+        &mut self,
+        acquisition_channel: MsgMaskSatelliteDepAcquisitionChannel,
+    ) {
+        set_bit_range!(&mut self.mask, acquisition_channel, u8, u8, 0, 0);
+    }
 }
 
 impl ConcreteMessage for MsgMaskSatelliteDep {
@@ -964,6 +1067,48 @@ impl WireFormat for MsgMaskSatelliteDep {
             sender_id: None,
             mask: WireFormat::parse_unchecked(buf),
             sid: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Tracking channels
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgMaskSatelliteDepTrackingChannels {
+    /// Enabled
+    Enabled = 0,
+
+    /// Drop this PRN if currently tracking
+    DropThisPrnIfCurrentlyTracking = 1,
+}
+
+impl std::fmt::Display for MsgMaskSatelliteDepTrackingChannels {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgMaskSatelliteDepTrackingChannels::Enabled => f.write_str("Enabled"),
+            MsgMaskSatelliteDepTrackingChannels::DropThisPrnIfCurrentlyTracking => {
+                f.write_str("Drop this PRN if currently tracking")
+            }
+        }
+    }
+}
+
+/// Acquisition channel
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgMaskSatelliteDepAcquisitionChannel {
+    /// Enabled
+    Enabled = 0,
+
+    /// Skip this satellite on future acquisitions
+    SkipThisSatelliteOnFutureAcquisitions = 1,
+}
+
+impl std::fmt::Display for MsgMaskSatelliteDepAcquisitionChannel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgMaskSatelliteDepAcquisitionChannel::Enabled => f.write_str("Enabled"),
+            MsgMaskSatelliteDepAcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions => {
+                f.write_str("Skip this satellite on future acquisitions")
+            }
         }
     }
 }
@@ -1126,6 +1271,271 @@ pub struct MsgNetworkStateResp {
     pub flags: u32,
 }
 
+impl MsgNetworkStateResp {
+    pub fn iff_multicast_supports_multicast(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 15, 0)
+    }
+
+    pub fn set_iff_multicast_supports_multicast(&mut self, iff_multicast_supports_multicast: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_multicast_supports_multicast,
+            u32,
+            u8,
+            15,
+            0
+        );
+    }
+
+    pub fn iff_link2_per_link_layer_defined_bit(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 14, 0)
+    }
+
+    pub fn set_iff_link2_per_link_layer_defined_bit(
+        &mut self,
+        iff_link2_per_link_layer_defined_bit: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_link2_per_link_layer_defined_bit,
+            u32,
+            u8,
+            14,
+            0
+        );
+    }
+
+    pub fn iff_link1_per_link_layer_defined_bit(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 13, 0)
+    }
+
+    pub fn set_iff_link1_per_link_layer_defined_bit(
+        &mut self,
+        iff_link1_per_link_layer_defined_bit: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_link1_per_link_layer_defined_bit,
+            u32,
+            u8,
+            13,
+            0
+        );
+    }
+
+    pub fn iff_link0_per_link_layer_defined_bit(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 12, 0)
+    }
+
+    pub fn set_iff_link0_per_link_layer_defined_bit(
+        &mut self,
+        iff_link0_per_link_layer_defined_bit: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_link0_per_link_layer_defined_bit,
+            u32,
+            u8,
+            12,
+            0
+        );
+    }
+
+    pub fn iff_simplex_cant_hear_own_transmissions(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 11, 0)
+    }
+
+    pub fn set_iff_simplex_cant_hear_own_transmissions(
+        &mut self,
+        iff_simplex_cant_hear_own_transmissions: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_simplex_cant_hear_own_transmissions,
+            u32,
+            u8,
+            11,
+            0
+        );
+    }
+
+    pub fn iff_oactive_transmission_in_progress(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 10, 0)
+    }
+
+    pub fn set_iff_oactive_transmission_in_progress(
+        &mut self,
+        iff_oactive_transmission_in_progress: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_oactive_transmission_in_progress,
+            u32,
+            u8,
+            10,
+            0
+        );
+    }
+
+    pub fn iff_allmulti_receive_all_multicast_packets(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 9, 0)
+    }
+
+    pub fn set_iff_allmulti_receive_all_multicast_packets(
+        &mut self,
+        iff_allmulti_receive_all_multicast_packets: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_allmulti_receive_all_multicast_packets,
+            u32,
+            u8,
+            9,
+            0
+        );
+    }
+
+    pub fn iff_promisc_receive_all_packets(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 8, 0)
+    }
+
+    pub fn set_iff_promisc_receive_all_packets(&mut self, iff_promisc_receive_all_packets: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_promisc_receive_all_packets,
+            u32,
+            u8,
+            8,
+            0
+        );
+    }
+
+    pub fn iff_noarp_no_address_resolution_protocol(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 7, 0)
+    }
+
+    pub fn set_iff_noarp_no_address_resolution_protocol(
+        &mut self,
+        iff_noarp_no_address_resolution_protocol: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_noarp_no_address_resolution_protocol,
+            u32,
+            u8,
+            7,
+            0
+        );
+    }
+
+    pub fn iff_running_resources_allocated(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 6, 0)
+    }
+
+    pub fn set_iff_running_resources_allocated(&mut self, iff_running_resources_allocated: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_running_resources_allocated,
+            u32,
+            u8,
+            6,
+            0
+        );
+    }
+
+    pub fn iff_notrailers_avoid_use_of_trailers(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 5, 0)
+    }
+
+    pub fn set_iff_notrailers_avoid_use_of_trailers(
+        &mut self,
+        iff_notrailers_avoid_use_of_trailers: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_notrailers_avoid_use_of_trailers,
+            u32,
+            u8,
+            5,
+            0
+        );
+    }
+
+    pub fn iff_pointopoint_interface_is_pointtopoint_link(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 4, 0)
+    }
+
+    pub fn set_iff_pointopoint_interface_is_pointtopoint_link(
+        &mut self,
+        iff_pointopoint_interface_is_pointtopoint_link: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_pointopoint_interface_is_pointtopoint_link,
+            u32,
+            u8,
+            4,
+            0
+        );
+    }
+
+    pub fn iff_loopback_is_a_loopback_net(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 3, 0)
+    }
+
+    pub fn set_iff_loopback_is_a_loopback_net(&mut self, iff_loopback_is_a_loopback_net: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_loopback_is_a_loopback_net,
+            u32,
+            u8,
+            3,
+            0
+        );
+    }
+
+    pub fn iff_debug_broadcast_address_valid(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 2, 0)
+    }
+
+    pub fn set_iff_debug_broadcast_address_valid(&mut self, iff_debug_broadcast_address_valid: u8) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_debug_broadcast_address_valid,
+            u32,
+            u8,
+            2,
+            0
+        );
+    }
+
+    pub fn iff_broadcast_broadcast_address_valid(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 1, 0)
+    }
+
+    pub fn set_iff_broadcast_broadcast_address_valid(
+        &mut self,
+        iff_broadcast_broadcast_address_valid: u8,
+    ) {
+        set_bit_range!(
+            &mut self.flags,
+            iff_broadcast_broadcast_address_valid,
+            u32,
+            u8,
+            1,
+            0
+        );
+    }
+
+    pub fn iff_up_interface_is_up(&self) -> u8 {
+        get_bit_range!(self.flags, u32, u8, 0, 0)
+    }
+
+    pub fn set_iff_up_interface_is_up(&mut self, iff_up_interface_is_up: u8) {
+        set_bit_range!(&mut self.flags, iff_up_interface_is_up, u32, u8, 0, 0);
+    }
+}
+
 impl ConcreteMessage for MsgNetworkStateResp {
     const MESSAGE_TYPE: u16 = 187;
     const MESSAGE_NAME: &'static str = "MSG_NETWORK_STATE_RESP";
@@ -1218,6 +1628,20 @@ pub struct MsgReset {
     pub flags: u32,
 }
 
+impl MsgReset {
+    pub fn default_settings(&self) -> Option<MsgResetDefaultSettings> {
+        match get_bit_range!(self.flags, u32, u8, 0, 0) {
+            0 => Some(MsgResetDefaultSettings::PreserveExistingSettings),
+            1 => Some(MsgResetDefaultSettings::ResoreDefaultSettings),
+            _ => None,
+        }
+    }
+
+    pub fn set_default_settings(&mut self, default_settings: MsgResetDefaultSettings) {
+        set_bit_range!(&mut self.flags, default_settings, u32, u8, 0, 0);
+    }
+}
+
 impl ConcreteMessage for MsgReset {
     const MESSAGE_TYPE: u16 = 182;
     const MESSAGE_NAME: &'static str = "MSG_RESET";
@@ -1263,6 +1687,29 @@ impl WireFormat for MsgReset {
         MsgReset {
             sender_id: None,
             flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Default settings.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgResetDefaultSettings {
+    /// Preserve existing settings.
+    PreserveExistingSettings = 0,
+
+    /// Resore default settings.
+    ResoreDefaultSettings = 1,
+}
+
+impl std::fmt::Display for MsgResetDefaultSettings {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgResetDefaultSettings::PreserveExistingSettings => {
+                f.write_str("Preserve existing settings.")
+            }
+            MsgResetDefaultSettings::ResoreDefaultSettings => {
+                f.write_str("Resore default settings.")
+            }
         }
     }
 }
@@ -1339,6 +1786,24 @@ pub struct MsgResetFilters {
     pub filter: u8,
 }
 
+impl MsgResetFilters {
+    pub fn filter_or_process_to_reset(&self) -> Option<MsgResetFiltersFilterOrProcessToReset> {
+        match get_bit_range!(self.filter, u8, u8, 1, 0) {
+            0 => Some(MsgResetFiltersFilterOrProcessToReset::DgnssFilter),
+            1 => Some(MsgResetFiltersFilterOrProcessToReset::IarProcess),
+            2 => Some(MsgResetFiltersFilterOrProcessToReset::InertialFilter),
+            _ => None,
+        }
+    }
+
+    pub fn set_filter_or_process_to_reset(
+        &mut self,
+        filter_or_process_to_reset: MsgResetFiltersFilterOrProcessToReset,
+    ) {
+        set_bit_range!(&mut self.filter, filter_or_process_to_reset, u8, u8, 1, 0);
+    }
+}
+
 impl ConcreteMessage for MsgResetFilters {
     const MESSAGE_TYPE: u16 = 34;
     const MESSAGE_NAME: &'static str = "MSG_RESET_FILTERS";
@@ -1384,6 +1849,29 @@ impl WireFormat for MsgResetFilters {
         MsgResetFilters {
             sender_id: None,
             filter: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Filter or process to reset
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MsgResetFiltersFilterOrProcessToReset {
+    /// DGNSS filter
+    DgnssFilter = 0,
+
+    /// IAR process
+    IarProcess = 1,
+
+    /// Inertial filter
+    InertialFilter = 2,
+}
+
+impl std::fmt::Display for MsgResetFiltersFilterOrProcessToReset {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            MsgResetFiltersFilterOrProcessToReset::DgnssFilter => f.write_str("DGNSS filter"),
+            MsgResetFiltersFilterOrProcessToReset::IarProcess => f.write_str("IAR process"),
+            MsgResetFiltersFilterOrProcessToReset::InertialFilter => f.write_str("Inertial filter"),
         }
     }
 }

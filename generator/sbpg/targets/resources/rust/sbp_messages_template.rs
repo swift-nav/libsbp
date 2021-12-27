@@ -22,6 +22,7 @@ use super::(((i)))::*;
 use super::lib::*;
 
 ((* for m in msgs *))
+
 ((*- if m.desc *))
 /// (((m.short_desc)))
 ///
@@ -32,7 +33,7 @@ use super::lib::*;
 ((*- endif *))
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
-pub struct (((m.identifier|camel_case))) {
+pub struct (((m.msg_name))) {
     ((*- if m.is_real_message *))
     /// The message sender_id
     #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -43,17 +44,54 @@ pub struct (((m.identifier|camel_case))) {
     /// (((f.desc | commentify(indent=2) )))
     ((*- endif *))
     #[cfg_attr(feature = "serde", serde(rename(serialize = "(((f.identifier)))")))]
-    pub (((f.identifier|snake_case))): (((f|type_map))),
+    pub (((f.field_name))): (((f.type))),
     ((*- endfor *))
 }
 
+((= create getters/setters for bitfields if appropriate =))
+
+((* if m.has_bitfield *))
+impl (((m.msg_name))) {
+((* for f in m.fields *))
+((* for b in f.bitfield *))
+
+((* if b.vals|length > 0 *))
+    pub fn (((b.field_name))) (&self) -> Option<(((b.type_name)))> {
+        match get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) ) {
+            ((*- for v in b.vals *))
+            (((v.value))) => Some( (((b.type_name))) :: (((v.name))) ),
+            ((*- endfor *))
+            _ => None,
+        }
+    }
+
+    pub fn set_(((b.field_name))) (&mut self, (((b.field_name))): (((b.type_name)))) {
+        set_bit_range!(&mut self.(((b.field))), (((b.field_name))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) );
+    }
+((* else *))
+    pub fn (((b.field_name))) (&self) -> (((b.type))) {
+        get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) )
+    }
+
+    pub fn set_(((b.field_name))) (&mut self, (((b.field_name))): (((b.type)))) {
+        set_bit_range!(&mut self.(((b.field))), (((b.field_name))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) );
+    }
+((* endif *))
+
+((* endfor *))
+((* endfor *))
+}
+((* endif *))
+
+((= implement various traits for the message  =))
+
 ((* if m.is_real_message *))
-impl ConcreteMessage for (((m.identifier|camel_case))) {
+impl ConcreteMessage for (((m.msg_name))) {
     const MESSAGE_TYPE: u16 = (((m.sbp_id)));
     const MESSAGE_NAME: &'static str = "(((m.identifier)))";
 }
 
-impl SbpMessage for (((m.identifier|camel_case))) {
+impl SbpMessage for (((m.msg_name))) {
     fn message_name(&self) -> &'static str {
         <Self as ConcreteMessage>::MESSAGE_NAME
     }
@@ -69,54 +107,86 @@ impl SbpMessage for (((m.identifier|camel_case))) {
     fn encoded_len(&self) -> usize {
         WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
     }
-    (((m|gps_time(msgs))))
+    (((m.gps_time_fn)))
 }
 
-impl TryFrom<Sbp> for (((m.identifier|camel_case))) {
+impl TryFrom<Sbp> for (((m.msg_name))) {
     type Error = TryFromSbpError;
     fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
-            Sbp::(((m.identifier|camel_case)))(m) => Ok(m),
+            Sbp::(((m.msg_name)))(m) => Ok(m),
             _ => Err(TryFromSbpError),
         }
     }
 }
 ((* endif *))
 
-impl WireFormat for (((m.identifier|camel_case))) {
+impl WireFormat for (((m.msg_name))) {
     const MIN_LEN: usize =
     ((*- if not m.fields *))
     0
     ((*- else *))
-    < (((m.fields[0]|type_map))) as WireFormat>::MIN_LEN
+    < (((m.fields[0].type))) as WireFormat>::MIN_LEN
     ((*- for f in m.fields[1:] *))
-    + < (((f|type_map))) as WireFormat>::MIN_LEN
+    + < (((f.type))) as WireFormat>::MIN_LEN
     ((*- endfor *))
     ((*- endif *));
     fn len(&self) -> usize {
         ((*- if not m.fields *))
         0
         ((*- else *))
-        WireFormat::len( &self.(((m.fields[0].identifier|snake_case))) )
+        WireFormat::len( &self.(((m.fields[0].field_name))) )
         ((*- for f in m.fields[1:] *))
-        + WireFormat::len( &self.(((f.identifier|snake_case))) )
+        + WireFormat::len( &self.(((f.field_name))) )
         ((*- endfor *))
         ((*- endif *))
     }
     fn write<B: BufMut>(&self, ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut B) {
         ((*- for f in m.fields *))
-        WireFormat::write( &self.(((f.identifier|snake_case))), buf);
+        WireFormat::write( &self.(((f.field_name))), buf);
         ((*- endfor *))
     }
     fn parse_unchecked<B: Buf>( ((*- if not m.fields *)) _buf ((*- else *)) buf ((*- endif *)): &mut B) -> Self {
-        (((m.identifier|camel_case))) {
+        (((m.msg_name))) {
         ((*- if m.is_real_message *))
         sender_id: None,
         ((*- endif *))
         ((*- for f in m.fields *))
-        (((f.identifier|snake_case))): WireFormat::parse_unchecked(buf),
+        (((f.field_name))): WireFormat::parse_unchecked(buf),
         ((*- endfor *))
         }
     }
 }
+
+((= create types for bitfields if appropriate =))
+
+((* if m.has_bitfield *))
+((* for f in m.fields *))
+((* for b in f.bitfield *))
+((* if b.vals|length > 0 *))
+((*- if b.desc *))
+/// (((b.desc | commentify)))
+((*- endif *))
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum (((b.type_name))) {
+    ((* for v in b.vals *))
+    /// (((v.desc | commentify(indent=2) )))
+    (((v.name))) = (((v.value))),
+    ((* endfor *))
+}
+
+impl std::fmt::Display for (((b.type_name))) {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ((*- for v in b.vals *))
+            (((b.type_name)))::(((v.name))) => f.write_str("(((v.desc)))"),
+            ((*- endfor *))
+        }
+    }
+}
+((* endif *))
+((* endfor *))
+((* endfor *))
+((* endif *))
+
 ((* endfor *))

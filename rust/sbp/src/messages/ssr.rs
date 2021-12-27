@@ -1823,6 +1823,38 @@ pub struct SatelliteAPC {
     pub pcv: [i8; 21],
 }
 
+impl SatelliteAPC {
+    pub fn satellite_type(&self) -> Option<SatelliteAPCSatelliteType> {
+        match get_bit_range!(self.sat_info, u8, u8, 4, 0) {
+            0 => Some(SatelliteAPCSatelliteType::UnknownType),
+            1 => Some(SatelliteAPCSatelliteType::GpsI),
+            2 => Some(SatelliteAPCSatelliteType::GpsIi),
+            3 => Some(SatelliteAPCSatelliteType::GpsIia),
+            4 => Some(SatelliteAPCSatelliteType::GpsIir),
+            5 => Some(SatelliteAPCSatelliteType::GpsIif),
+            6 => Some(SatelliteAPCSatelliteType::GpsIii),
+            7 => Some(SatelliteAPCSatelliteType::GLONASS),
+            8 => Some(SatelliteAPCSatelliteType::GlonassM),
+            9 => Some(SatelliteAPCSatelliteType::GlonassK1),
+            10 => Some(SatelliteAPCSatelliteType::GALILEO),
+            11 => Some(SatelliteAPCSatelliteType::Beidou2G),
+            12 => Some(SatelliteAPCSatelliteType::Beidou2I),
+            13 => Some(SatelliteAPCSatelliteType::Beidou2M),
+            14 => Some(SatelliteAPCSatelliteType::Beidou3MSecm),
+            15 => Some(SatelliteAPCSatelliteType::Beidou3GSecm),
+            16 => Some(SatelliteAPCSatelliteType::Beidou3MCast),
+            17 => Some(SatelliteAPCSatelliteType::Beidou3GCast),
+            18 => Some(SatelliteAPCSatelliteType::Beidou3ICast),
+            19 => Some(SatelliteAPCSatelliteType::QZSS),
+            _ => None,
+        }
+    }
+
+    pub fn set_satellite_type(&mut self, satellite_type: SatelliteAPCSatelliteType) {
+        set_bit_range!(&mut self.sat_info, satellite_type, u8, u8, 4, 0);
+    }
+}
+
 impl WireFormat for SatelliteAPC {
     const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
         + <u8 as WireFormat>::MIN_LEN
@@ -1850,6 +1882,97 @@ impl WireFormat for SatelliteAPC {
             svn: WireFormat::parse_unchecked(buf),
             pco: WireFormat::parse_unchecked(buf),
             pcv: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
+/// Satellite Type
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SatelliteAPCSatelliteType {
+    /// Unknown Type
+    UnknownType = 0,
+
+    /// GPS I
+    GpsI = 1,
+
+    /// GPS II
+    GpsIi = 2,
+
+    /// GPS IIA
+    GpsIia = 3,
+
+    /// GPS IIR
+    GpsIir = 4,
+
+    /// GPS IIF
+    GpsIif = 5,
+
+    /// GPS III
+    GpsIii = 6,
+
+    /// GLONASS
+    GLONASS = 7,
+
+    /// GLONASS M
+    GlonassM = 8,
+
+    /// GLONASS K1
+    GlonassK1 = 9,
+
+    /// GALILEO
+    GALILEO = 10,
+
+    /// BEIDOU 2G
+    Beidou2G = 11,
+
+    /// BEIDOU 2I
+    Beidou2I = 12,
+
+    /// BEIDOU 2M
+    Beidou2M = 13,
+
+    /// BEIDOU 3M, SECM
+    Beidou3MSecm = 14,
+
+    /// BEIDOU 3G, SECM
+    Beidou3GSecm = 15,
+
+    /// BEIDOU 3M, CAST
+    Beidou3MCast = 16,
+
+    /// BEIDOU 3G, CAST
+    Beidou3GCast = 17,
+
+    /// BEIDOU 3I, CAST
+    Beidou3ICast = 18,
+
+    /// QZSS
+    QZSS = 19,
+}
+
+impl std::fmt::Display for SatelliteAPCSatelliteType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SatelliteAPCSatelliteType::UnknownType => f.write_str("Unknown Type"),
+            SatelliteAPCSatelliteType::GpsI => f.write_str("GPS I"),
+            SatelliteAPCSatelliteType::GpsIi => f.write_str("GPS II"),
+            SatelliteAPCSatelliteType::GpsIia => f.write_str("GPS IIA"),
+            SatelliteAPCSatelliteType::GpsIir => f.write_str("GPS IIR"),
+            SatelliteAPCSatelliteType::GpsIif => f.write_str("GPS IIF"),
+            SatelliteAPCSatelliteType::GpsIii => f.write_str("GPS III"),
+            SatelliteAPCSatelliteType::GLONASS => f.write_str("GLONASS"),
+            SatelliteAPCSatelliteType::GlonassM => f.write_str("GLONASS M"),
+            SatelliteAPCSatelliteType::GlonassK1 => f.write_str("GLONASS K1"),
+            SatelliteAPCSatelliteType::GALILEO => f.write_str("GALILEO"),
+            SatelliteAPCSatelliteType::Beidou2G => f.write_str("BEIDOU 2G"),
+            SatelliteAPCSatelliteType::Beidou2I => f.write_str("BEIDOU 2I"),
+            SatelliteAPCSatelliteType::Beidou2M => f.write_str("BEIDOU 2M"),
+            SatelliteAPCSatelliteType::Beidou3MSecm => f.write_str("BEIDOU 3M, SECM"),
+            SatelliteAPCSatelliteType::Beidou3GSecm => f.write_str("BEIDOU 3G, SECM"),
+            SatelliteAPCSatelliteType::Beidou3MCast => f.write_str("BEIDOU 3M, CAST"),
+            SatelliteAPCSatelliteType::Beidou3GCast => f.write_str("BEIDOU 3G, CAST"),
+            SatelliteAPCSatelliteType::Beidou3ICast => f.write_str("BEIDOU 3I, CAST"),
+            SatelliteAPCSatelliteType::QZSS => f.write_str("QZSS"),
         }
     }
 }
