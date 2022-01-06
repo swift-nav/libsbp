@@ -1679,6 +1679,10 @@ definitions:
       ground (SOG) based on the horizontal (N-E) components of the NED velocity 
       vector. It also includes the vertical velocity in the form of the
       D-component of the NED velocity vector.
+      A flag is provided to indicate whether the COG value has been frozen. When 
+      the flag is set to true, the COG field is set to its last valid value until 
+      the system exceeds the minimum velocity threshold. No other fields are 
+      affected by this flag. 
       The NED coordinate system is defined as the local WGS84 tangent 
       plane centered at the current position. The full GPS time is given by the 
       preceding MSG_GPS_TIME with the matching time-of-week (tow).
@@ -1721,8 +1725,13 @@ definitions:
               type: u16
               desc: Status flags
               fields:
-                - 9-15:
+                - 10-15:
                     desc: Reserved
+                - 9: 
+                    desc: COG frozen
+                    values:
+                        - 0: Not frozen
+                        - 1: Frozen
                 - 8:
                     desc: Vertical velocity validity
                     values:
