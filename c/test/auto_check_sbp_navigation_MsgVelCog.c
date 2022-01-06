@@ -116,9 +116,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelCog) {
 
     test_msg.vel_cog.tow = 326825520;
 
-    test_msg.vel_cog.vel_d = 3000;
+    test_msg.vel_cog.v_up = 3000;
 
-    test_msg.vel_cog.vel_d_accuracy = 6000;
+    test_msg.vel_cog.v_up_accuracy = 6000;
 
     sbp_message_send(&sbp_state, SbpMsgVelCog, 35027, &test_msg, &dummy_write);
 
@@ -171,14 +171,14 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelCog) {
                   last_msg.msg.vel_cog.tow);
 
     ck_assert_msg(
-        last_msg.msg.vel_cog.vel_d == 3000,
-        "incorrect value for last_msg.msg.vel_cog.vel_d, expected 3000, is %d",
-        last_msg.msg.vel_cog.vel_d);
+        last_msg.msg.vel_cog.v_up == 3000,
+        "incorrect value for last_msg.msg.vel_cog.v_up, expected 3000, is %d",
+        last_msg.msg.vel_cog.v_up);
 
-    ck_assert_msg(last_msg.msg.vel_cog.vel_d_accuracy == 6000,
-                  "incorrect value for last_msg.msg.vel_cog.vel_d_accuracy, "
+    ck_assert_msg(last_msg.msg.vel_cog.v_up_accuracy == 6000,
+                  "incorrect value for last_msg.msg.vel_cog.v_up_accuracy, "
                   "expected 6000, is %d",
-                  last_msg.msg.vel_cog.vel_d_accuracy);
+                  last_msg.msg.vel_cog.v_up_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -218,9 +218,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelCog) {
 
     test_msg.vel_cog.tow = 326825520;
 
-    test_msg.vel_cog.vel_d = -1000;
+    test_msg.vel_cog.v_up = -1000;
 
-    test_msg.vel_cog.vel_d_accuracy = 100;
+    test_msg.vel_cog.v_up_accuracy = 100;
 
     sbp_message_send(&sbp_state, SbpMsgVelCog, 35027, &test_msg, &dummy_write);
 
@@ -273,14 +273,14 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelCog) {
                   last_msg.msg.vel_cog.tow);
 
     ck_assert_msg(
-        last_msg.msg.vel_cog.vel_d == -1000,
-        "incorrect value for last_msg.msg.vel_cog.vel_d, expected -1000, is %d",
-        last_msg.msg.vel_cog.vel_d);
+        last_msg.msg.vel_cog.v_up == -1000,
+        "incorrect value for last_msg.msg.vel_cog.v_up, expected -1000, is %d",
+        last_msg.msg.vel_cog.v_up);
 
-    ck_assert_msg(last_msg.msg.vel_cog.vel_d_accuracy == 100,
-                  "incorrect value for last_msg.msg.vel_cog.vel_d_accuracy, "
+    ck_assert_msg(last_msg.msg.vel_cog.v_up_accuracy == 100,
+                  "incorrect value for last_msg.msg.vel_cog.v_up_accuracy, "
                   "expected 100, is %d",
-                  last_msg.msg.vel_cog.vel_d_accuracy);
+                  last_msg.msg.vel_cog.v_up_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -319,9 +319,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelCog) {
 
     test_msg.vel_cog.tow = 326825520;
 
-    test_msg.vel_cog.vel_d = 0;
+    test_msg.vel_cog.v_up = 0;
 
-    test_msg.vel_cog.vel_d_accuracy = 0;
+    test_msg.vel_cog.v_up_accuracy = 0;
 
     sbp_message_send(&sbp_state, SbpMsgVelCog, 35027, &test_msg, &dummy_write);
 
@@ -374,14 +374,14 @@ START_TEST(test_auto_check_sbp_navigation_MsgVelCog) {
                   last_msg.msg.vel_cog.tow);
 
     ck_assert_msg(
-        last_msg.msg.vel_cog.vel_d == 0,
-        "incorrect value for last_msg.msg.vel_cog.vel_d, expected 0, is %d",
-        last_msg.msg.vel_cog.vel_d);
+        last_msg.msg.vel_cog.v_up == 0,
+        "incorrect value for last_msg.msg.vel_cog.v_up, expected 0, is %d",
+        last_msg.msg.vel_cog.v_up);
 
-    ck_assert_msg(last_msg.msg.vel_cog.vel_d_accuracy == 0,
-                  "incorrect value for last_msg.msg.vel_cog.vel_d_accuracy, "
+    ck_assert_msg(last_msg.msg.vel_cog.v_up_accuracy == 0,
+                  "incorrect value for last_msg.msg.vel_cog.v_up_accuracy, "
                   "expected 0, is %d",
-                  last_msg.msg.vel_cog.vel_d_accuracy);
+                  last_msg.msg.vel_cog.v_up_accuracy);
   }
 }
 END_TEST

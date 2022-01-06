@@ -140,8 +140,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     test_msg->sog = 2000;
     test_msg->sog_accuracy = 5000;
     test_msg->tow = 326825520;
-    test_msg->vel_d = 3000;
-    test_msg->vel_d_accuracy = 6000;
+    test_msg->v_up = 3000;
+    test_msg->v_up_accuracy = 6000;
     sbp_payload_send(&sbp_state, 0x21C, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -214,12 +214,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     ck_assert_msg(check_msg->tow == 326825520,
                   "incorrect value for tow, expected 326825520, is %d",
                   check_msg->tow);
-    ck_assert_msg(check_msg->vel_d == 3000,
-                  "incorrect value for vel_d, expected 3000, is %d",
-                  check_msg->vel_d);
-    ck_assert_msg(check_msg->vel_d_accuracy == 6000,
-                  "incorrect value for vel_d_accuracy, expected 6000, is %d",
-                  check_msg->vel_d_accuracy);
+    ck_assert_msg(check_msg->v_up == 3000,
+                  "incorrect value for v_up, expected 3000, is %d",
+                  check_msg->v_up);
+    ck_assert_msg(check_msg->v_up_accuracy == 6000,
+                  "incorrect value for v_up_accuracy, expected 6000, is %d",
+                  check_msg->v_up_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -257,8 +257,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     test_msg->sog = 456;
     test_msg->sog_accuracy = 100;
     test_msg->tow = 326825520;
-    test_msg->vel_d = -1000;
-    test_msg->vel_d_accuracy = 100;
+    test_msg->v_up = -1000;
+    test_msg->v_up_accuracy = 100;
     sbp_payload_send(&sbp_state, 0x21C, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -331,12 +331,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     ck_assert_msg(check_msg->tow == 326825520,
                   "incorrect value for tow, expected 326825520, is %d",
                   check_msg->tow);
-    ck_assert_msg(check_msg->vel_d == -1000,
-                  "incorrect value for vel_d, expected -1000, is %d",
-                  check_msg->vel_d);
-    ck_assert_msg(check_msg->vel_d_accuracy == 100,
-                  "incorrect value for vel_d_accuracy, expected 100, is %d",
-                  check_msg->vel_d_accuracy);
+    ck_assert_msg(check_msg->v_up == -1000,
+                  "incorrect value for v_up, expected -1000, is %d",
+                  check_msg->v_up);
+    ck_assert_msg(check_msg->v_up_accuracy == 100,
+                  "incorrect value for v_up_accuracy, expected 100, is %d",
+                  check_msg->v_up_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -373,8 +373,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     test_msg->sog = 0;
     test_msg->sog_accuracy = 0;
     test_msg->tow = 326825520;
-    test_msg->vel_d = 0;
-    test_msg->vel_d_accuracy = 0;
+    test_msg->v_up = 0;
+    test_msg->v_up_accuracy = 0;
     sbp_payload_send(&sbp_state, 0x21C, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -445,12 +445,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgVelCog) {
     ck_assert_msg(check_msg->tow == 326825520,
                   "incorrect value for tow, expected 326825520, is %d",
                   check_msg->tow);
-    ck_assert_msg(check_msg->vel_d == 0,
-                  "incorrect value for vel_d, expected 0, is %d",
-                  check_msg->vel_d);
-    ck_assert_msg(check_msg->vel_d_accuracy == 0,
-                  "incorrect value for vel_d_accuracy, expected 0, is %d",
-                  check_msg->vel_d_accuracy);
+    ck_assert_msg(check_msg->v_up == 0,
+                  "incorrect value for v_up, expected 0, is %d",
+                  check_msg->v_up);
+    ck_assert_msg(check_msg->v_up_accuracy == 0,
+                  "incorrect value for v_up_accuracy, expected 0, is %d",
+                  check_msg->v_up_accuracy);
   }
 }
 END_TEST
