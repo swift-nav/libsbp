@@ -1620,28 +1620,31 @@ msgVelCog = 0x021C
 --
 -- This message reports the receiver course over ground (COG) and speed over
 -- ground (SOG) based on the horizontal (N-E) components of the NED velocity
--- vector. It also includes the vertical velocity in the form of the
--- D-component of the NED velocity vector. The NED coordinate system is
--- defined as the local WGS84 tangent  plane centered at the current position.
--- The full GPS time is given by the  preceding MSG_GPS_TIME with the matching
--- time-of-week (tow). Note: course over ground represents the receiver's
--- direction of travel,  but not necessarily the device heading.
+-- vector. It also includes the vertical velocity coordinate. A flag is
+-- provided to indicate whether the COG value has been frozen. When  the flag
+-- is set to true, the COG field is set to its last valid value until  the
+-- system exceeds a minimum velocity threshold. No other fields are  affected
+-- by this flag.  The NED coordinate system is defined as the local WGS84
+-- tangent  plane centered at the current position. The full GPS time is given
+-- by the  preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
+-- course over ground represents the receiver's direction of travel,  but not
+-- necessarily the device heading.
 data MsgVelCog = MsgVelCog
-  { _msgVelCog_tow          :: !Word32
+  { _msgVelCog_tow         :: !Word32
     -- ^ GPS Time of Week
-  , _msgVelCog_cog          :: !Word32
-    -- ^ Course over ground relative to local north
-  , _msgVelCog_sog          :: !Word32
-    -- ^ Speed over ground
-  , _msgVelCog_vel_d        :: !Int32
-    -- ^ Velocity Down coordinate
+  , _msgVelCog_cog         :: !Word32
+    -- ^ Course over ground relative to north direction
+  , _msgVelCog_sog         :: !Word32
+    -- ^ Speed over ground (based on horizontal velocity)
+  , _msgVelCog_v_up        :: !Int32
+    -- ^ Vertical velocity component (positive up)
   , _msgVelCog_cog_accuracy :: !Word32
     -- ^ Course over ground estimated standard deviation
   , _msgVelCog_sog_accuracy :: !Word32
     -- ^ Speed over ground estimated standard deviation
-  , _msgVelCog_vel_d_accuracy :: !Word32
+  , _msgVelCog_v_up_accuracy :: !Word32
     -- ^ Vertical velocity estimated standard deviation
-  , _msgVelCog_flags        :: !Word8
+  , _msgVelCog_flags       :: !Word16
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -1650,22 +1653,22 @@ instance Binary MsgVelCog where
     _msgVelCog_tow <- getWord32le
     _msgVelCog_cog <- getWord32le
     _msgVelCog_sog <- getWord32le
-    _msgVelCog_vel_d <- (fromIntegral <$> getWord32le)
+    _msgVelCog_v_up <- (fromIntegral <$> getWord32le)
     _msgVelCog_cog_accuracy <- getWord32le
     _msgVelCog_sog_accuracy <- getWord32le
-    _msgVelCog_vel_d_accuracy <- getWord32le
-    _msgVelCog_flags <- getWord8
+    _msgVelCog_v_up_accuracy <- getWord32le
+    _msgVelCog_flags <- getWord16le
     pure MsgVelCog {..}
 
   put MsgVelCog {..} = do
     putWord32le _msgVelCog_tow
     putWord32le _msgVelCog_cog
     putWord32le _msgVelCog_sog
-    (putWord32le . fromIntegral) _msgVelCog_vel_d
+    (putWord32le . fromIntegral) _msgVelCog_v_up
     putWord32le _msgVelCog_cog_accuracy
     putWord32le _msgVelCog_sog_accuracy
-    putWord32le _msgVelCog_vel_d_accuracy
-    putWord8 _msgVelCog_flags
+    putWord32le _msgVelCog_v_up_accuracy
+    putWord16le _msgVelCog_flags
 
 $(makeSBP 'msgVelCog ''MsgVelCog)
 $(makeJSON "_msgVelCog_" ''MsgVelCog)

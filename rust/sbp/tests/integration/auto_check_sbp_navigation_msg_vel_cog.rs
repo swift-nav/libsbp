@@ -73,14 +73,14 @@ fn test_auto_check_sbp_navigation_msg_vel_cog() {
                     msg.tow
                 );
                 assert_eq!(
-                    msg.vel_d, 3000,
-                    "incorrect value for vel_d, expected 3000, is {}",
-                    msg.vel_d
+                    msg.v_up, 3000,
+                    "incorrect value for v_up, expected 3000, is {}",
+                    msg.v_up
                 );
                 assert_eq!(
-                    msg.vel_d_accuracy, 6000,
-                    "incorrect value for vel_d_accuracy, expected 6000, is {}",
-                    msg.vel_d_accuracy
+                    msg.v_up_accuracy, 6000,
+                    "incorrect value for v_up_accuracy, expected 6000, is {}",
+                    msg.v_up_accuracy
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgVelCog"),
@@ -146,14 +146,14 @@ fn test_auto_check_sbp_navigation_msg_vel_cog() {
                     msg.tow
                 );
                 assert_eq!(
-                    msg.vel_d, -1000,
-                    "incorrect value for vel_d, expected -1000, is {}",
-                    msg.vel_d
+                    msg.v_up, -1000,
+                    "incorrect value for v_up, expected -1000, is {}",
+                    msg.v_up
                 );
                 assert_eq!(
-                    msg.vel_d_accuracy, 100,
-                    "incorrect value for vel_d_accuracy, expected 100, is {}",
-                    msg.vel_d_accuracy
+                    msg.v_up_accuracy, 100,
+                    "incorrect value for v_up_accuracy, expected 100, is {}",
+                    msg.v_up_accuracy
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgVelCog"),
@@ -219,14 +219,14 @@ fn test_auto_check_sbp_navigation_msg_vel_cog() {
                     msg.tow
                 );
                 assert_eq!(
-                    msg.vel_d, 0,
-                    "incorrect value for vel_d, expected 0, is {}",
-                    msg.vel_d
+                    msg.v_up, 0,
+                    "incorrect value for v_up, expected 0, is {}",
+                    msg.v_up
                 );
                 assert_eq!(
-                    msg.vel_d_accuracy, 0,
-                    "incorrect value for vel_d_accuracy, expected 0, is {}",
-                    msg.vel_d_accuracy
+                    msg.v_up_accuracy, 0,
+                    "incorrect value for v_up_accuracy, expected 0, is {}",
+                    msg.v_up_accuracy
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgVelCog"),
