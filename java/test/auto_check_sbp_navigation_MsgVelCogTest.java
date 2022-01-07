@@ -34,7 +34,7 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
                     (byte) 0, (byte) 208, (byte) 7, (byte) 0, (byte) 0, (byte) 184, (byte) 11,
                     (byte) 0, (byte) 0, (byte) 160, (byte) 15, (byte) 0, (byte) 0, (byte) 136,
                     (byte) 19, (byte) 0, (byte) 0, (byte) 112, (byte) 23, (byte) 0, (byte) 0,
-                    (byte) 62,
+                    (byte) 62, (byte) 0,
                 };
         SBPMessage sbp = new SBPMessage(0x88D3, 0x21C, payload);
         MsgVelCog msg = new MsgVelCog(sbp);
@@ -98,20 +98,20 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
             expected = 326825520L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.vel_d;
+        value = msg.v_up;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.vel_d + "' != '" + 3000 + "'",
+                    "'" + msg.v_up + "' != '" + 3000 + "'",
                     value.equals(BigInteger.valueOf(3000L)));
         } else {
             value = value.longValue();
             expected = 3000L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.vel_d_accuracy;
+        value = msg.v_up_accuracy;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.vel_d_accuracy + "' != '" + 6000 + "'",
+                    "'" + msg.v_up_accuracy + "' != '" + 6000 + "'",
                     value.equals(BigInteger.valueOf(6000L)));
         } else {
             value = value.longValue();
@@ -129,7 +129,7 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
                     (byte) 0, (byte) 200, (byte) 1, (byte) 0, (byte) 0, (byte) 24, (byte) 252,
                     (byte) 255, (byte) 255, (byte) 0, (byte) 149, (byte) 186, (byte) 10, (byte) 100,
                     (byte) 0, (byte) 0, (byte) 0, (byte) 100, (byte) 0, (byte) 0, (byte) 0,
-                    (byte) 0,
+                    (byte) 0, (byte) 0,
                 };
         SBPMessage sbp = new SBPMessage(0x88D3, 0x21C, payload);
         MsgVelCog msg = new MsgVelCog(sbp);
@@ -193,20 +193,20 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
             expected = 326825520L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.vel_d;
+        value = msg.v_up;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.vel_d + "' != '" + -1000 + "'",
+                    "'" + msg.v_up + "' != '" + -1000 + "'",
                     value.equals(BigInteger.valueOf(-1000L)));
         } else {
             value = value.longValue();
             expected = -1000L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.vel_d_accuracy;
+        value = msg.v_up_accuracy;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.vel_d_accuracy + "' != '" + 100 + "'",
+                    "'" + msg.v_up_accuracy + "' != '" + 100 + "'",
                     value.equals(BigInteger.valueOf(100L)));
         } else {
             value = value.longValue();
@@ -224,6 +224,7 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
                     (byte) 246,
                     (byte) 122,
                     (byte) 19,
+                    (byte) 0,
                     (byte) 0,
                     (byte) 0,
                     (byte) 0,
@@ -312,19 +313,19 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
             expected = 326825520L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.vel_d;
+        value = msg.v_up;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.vel_d + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
+                    "'" + msg.v_up + "' != '" + 0 + "'", value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.vel_d_accuracy;
+        value = msg.v_up_accuracy;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.vel_d_accuracy + "' != '" + 0 + "'",
+                    "'" + msg.v_up_accuracy + "' != '" + 0 + "'",
                     value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
