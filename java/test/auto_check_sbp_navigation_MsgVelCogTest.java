@@ -34,7 +34,7 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
                     (byte) 0, (byte) 208, (byte) 7, (byte) 0, (byte) 0, (byte) 184, (byte) 11,
                     (byte) 0, (byte) 0, (byte) 160, (byte) 15, (byte) 0, (byte) 0, (byte) 136,
                     (byte) 19, (byte) 0, (byte) 0, (byte) 112, (byte) 23, (byte) 0, (byte) 0,
-                    (byte) 62,
+                    (byte) 62, (byte) 0,
                 };
         SBPMessage sbp = new SBPMessage(0x88D3, 0x21C, payload);
         MsgVelCog msg = new MsgVelCog(sbp);
@@ -129,7 +129,7 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
                     (byte) 0, (byte) 200, (byte) 1, (byte) 0, (byte) 0, (byte) 24, (byte) 252,
                     (byte) 255, (byte) 255, (byte) 0, (byte) 149, (byte) 186, (byte) 10, (byte) 100,
                     (byte) 0, (byte) 0, (byte) 0, (byte) 100, (byte) 0, (byte) 0, (byte) 0,
-                    (byte) 0,
+                    (byte) 0, (byte) 0,
                 };
         SBPMessage sbp = new SBPMessage(0x88D3, 0x21C, payload);
         MsgVelCog msg = new MsgVelCog(sbp);
@@ -224,6 +224,7 @@ public class auto_check_sbp_navigation_MsgVelCogTest {
                     (byte) 246,
                     (byte) 122,
                     (byte) 19,
+                    (byte) 0,
                     (byte) 0,
                     (byte) 0,
                     (byte) 0,

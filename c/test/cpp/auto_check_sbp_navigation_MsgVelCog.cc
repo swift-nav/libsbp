@@ -76,9 +76,9 @@ class Test_auto_check_sbp_navigation_MsgVelCog0
 
 TEST_F(Test_auto_check_sbp_navigation_MsgVelCog0, Test) {
   uint8_t encoded_frame[] = {
-      85,  28,  2, 211, 136, 29,  48, 246, 122, 19,  232, 3, 0,
-      0,   208, 7, 0,   0,   184, 11, 0,   0,   160, 15,  0, 0,
-      136, 19,  0, 0,   112, 23,  0,  0,   62,  170, 74,
+      85,  28,  2, 211, 136, 30,  48, 246, 122, 19,  232, 3,   0,
+      0,   208, 7, 0,   0,   184, 11, 0,   0,   160, 15,  0,   0,
+      136, 19,  0, 0,   112, 23,  0,  0,   62,  0,   212, 193,
   };
 
   sbp_msg_vel_cog_t test_msg{};
@@ -185,9 +185,9 @@ class Test_auto_check_sbp_navigation_MsgVelCog1
 
 TEST_F(Test_auto_check_sbp_navigation_MsgVelCog1, Test) {
   uint8_t encoded_frame[] = {
-      85,  28,  2, 211, 136, 29, 48,  246, 122, 19,  123, 0,   0,
-      0,   200, 1, 0,   0,   24, 252, 255, 255, 0,   149, 186, 10,
-      100, 0,   0, 0,   100, 0,  0,   0,   0,   240, 0,
+      85,  28,  2, 211, 136, 30, 48,  246, 122, 19, 123, 0,   0,
+      0,   200, 1, 0,   0,   24, 252, 255, 255, 0,  149, 186, 10,
+      100, 0,   0, 0,   100, 0,  0,   0,   0,   0,  90,  114,
   };
 
   sbp_msg_vel_cog_t test_msg{};
@@ -294,8 +294,8 @@ class Test_auto_check_sbp_navigation_MsgVelCog2
 
 TEST_F(Test_auto_check_sbp_navigation_MsgVelCog2, Test) {
   uint8_t encoded_frame[] = {
-      85, 28, 2, 211, 136, 29, 48, 246, 122, 19, 0, 0, 0, 0, 0, 0, 0,  0,   0,
-      0,  0,  0, 0,   0,   0,  0,  0,   0,   0,  0, 0, 0, 0, 0, 0, 94, 119,
+      85, 28, 2, 211, 136, 30, 48, 246, 122, 19, 0, 0, 0, 0, 0, 0, 0, 0,  0,
+      0,  0,  0, 0,   0,   0,  0,  0,   0,   0,  0, 0, 0, 0, 0, 0, 0, 42, 210,
   };
 
   sbp_msg_vel_cog_t test_msg{};
