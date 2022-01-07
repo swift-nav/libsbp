@@ -3483,12 +3483,15 @@ class MsgVelCog(SBP):
   
   This message reports the receiver course over ground (COG) and speed over
   ground (SOG) based on the horizontal (N-E) components of the NED velocity
-  vector. It also includes the vertical velocity in the form of the
-  D-component of the NED velocity vector. The NED coordinate system is defined
-  as the local WGS84 tangent  plane centered at the current position. The full
-  GPS time is given by the  preceding MSG_GPS_TIME with the matching time-of-
-  week (tow). Note: course over ground represents the receiver's direction of
-  travel,  but not necessarily the device heading.
+  vector. It also includes the vertical velocity coordinate. A flag is
+  provided to indicate whether the COG value has been frozen. When  the flag
+  is set to true, the COG field is set to its last valid value until  the
+  system exceeds a minimum velocity threshold. No other fields are  affected
+  by this flag.  The NED coordinate system is defined as the local WGS84
+  tangent  plane centered at the current position. The full GPS time is given
+  by the  preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
+  course over ground represents the receiver's direction of travel,  but not
+  necessarily the device heading.
 
   Parameters
   ----------
@@ -3497,16 +3500,16 @@ class MsgVelCog(SBP):
   tow : int
     GPS Time of Week
   cog : int
-    Course over ground relative to local north
+    Course over ground relative to north direction
   sog : int
-    Speed over ground
-  vel_d : int
-    Velocity Down coordinate
+    Speed over ground (based on horizontal velocity)
+  v_up : int
+    Vertical velocity component (positive up)
   cog_accuracy : int
     Course over ground estimated standard deviation
   sog_accuracy : int
     Speed over ground estimated standard deviation
-  vel_d_accuracy : int
+  v_up_accuracy : int
     Vertical velocity estimated standard deviation
   flags : int
     Status flags
@@ -3518,19 +3521,19 @@ class MsgVelCog(SBP):
                    'tow' / construct.Int32ul,
                    'cog' / construct.Int32ul,
                    'sog' / construct.Int32ul,
-                   'vel_d' / construct.Int32sl,
+                   'v_up' / construct.Int32sl,
                    'cog_accuracy' / construct.Int32ul,
                    'sog_accuracy' / construct.Int32ul,
-                   'vel_d_accuracy' / construct.Int32ul,
-                   'flags' / construct.Int8ul,)
+                   'v_up_accuracy' / construct.Int32ul,
+                   'flags' / construct.Int16ul,)
   __slots__ = [
                'tow',
                'cog',
                'sog',
-               'vel_d',
+               'v_up',
                'cog_accuracy',
                'sog_accuracy',
-               'vel_d_accuracy',
+               'v_up_accuracy',
                'flags',
               ]
 
@@ -3547,10 +3550,10 @@ class MsgVelCog(SBP):
       self.tow = kwargs.pop('tow')
       self.cog = kwargs.pop('cog')
       self.sog = kwargs.pop('sog')
-      self.vel_d = kwargs.pop('vel_d')
+      self.v_up = kwargs.pop('v_up')
       self.cog_accuracy = kwargs.pop('cog_accuracy')
       self.sog_accuracy = kwargs.pop('sog_accuracy')
-      self.vel_d_accuracy = kwargs.pop('vel_d_accuracy')
+      self.v_up_accuracy = kwargs.pop('v_up_accuracy')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):

@@ -78,9 +78,9 @@ class Test_legacy_auto_check_sbp_navigation_MsgVelCog0
 
 TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog0, Test) {
   uint8_t encoded_frame[] = {
-      85,  28,  2, 211, 136, 29,  48, 246, 122, 19,  232, 3, 0,
-      0,   208, 7, 0,   0,   184, 11, 0,   0,   160, 15,  0, 0,
-      136, 19,  0, 0,   112, 23,  0,  0,   62,  170, 74,
+      85,  28,  2, 211, 136, 30,  48, 246, 122, 19,  232, 3,   0,
+      0,   208, 7, 0,   0,   184, 11, 0,   0,   160, 15,  0,   0,
+      136, 19,  0, 0,   112, 23,  0,  0,   62,  0,   212, 193,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -93,8 +93,8 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog0, Test) {
   test_msg->sog = 2000;
   test_msg->sog_accuracy = 5000;
   test_msg->tow = 326825520;
-  test_msg->vel_d = 3000;
-  test_msg->vel_d_accuracy = 6000;
+  test_msg->v_up = 3000;
+  test_msg->v_up_accuracy = 6000;
 
   EXPECT_EQ(send_message(0x21C, 35027, test_msg_len, test_msg_storage), SBP_OK);
 
@@ -122,11 +122,11 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog0, Test) {
       << last_msg_->sog_accuracy;
   EXPECT_EQ(last_msg_->tow, 326825520)
       << "incorrect value for tow, expected 326825520, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vel_d, 3000)
-      << "incorrect value for vel_d, expected 3000, is " << last_msg_->vel_d;
-  EXPECT_EQ(last_msg_->vel_d_accuracy, 6000)
-      << "incorrect value for vel_d_accuracy, expected 6000, is "
-      << last_msg_->vel_d_accuracy;
+  EXPECT_EQ(last_msg_->v_up, 3000)
+      << "incorrect value for v_up, expected 3000, is " << last_msg_->v_up;
+  EXPECT_EQ(last_msg_->v_up_accuracy, 6000)
+      << "incorrect value for v_up_accuracy, expected 6000, is "
+      << last_msg_->v_up_accuracy;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgVelCog1
     : public ::testing::Test,
@@ -188,9 +188,9 @@ class Test_legacy_auto_check_sbp_navigation_MsgVelCog1
 
 TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog1, Test) {
   uint8_t encoded_frame[] = {
-      85,  28,  2, 211, 136, 29, 48,  246, 122, 19,  123, 0,   0,
-      0,   200, 1, 0,   0,   24, 252, 255, 255, 0,   149, 186, 10,
-      100, 0,   0, 0,   100, 0,  0,   0,   0,   240, 0,
+      85,  28,  2, 211, 136, 30, 48,  246, 122, 19, 123, 0,   0,
+      0,   200, 1, 0,   0,   24, 252, 255, 255, 0,  149, 186, 10,
+      100, 0,   0, 0,   100, 0,  0,   0,   0,   0,  90,  114,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -203,8 +203,8 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog1, Test) {
   test_msg->sog = 456;
   test_msg->sog_accuracy = 100;
   test_msg->tow = 326825520;
-  test_msg->vel_d = -1000;
-  test_msg->vel_d_accuracy = 100;
+  test_msg->v_up = -1000;
+  test_msg->v_up_accuracy = 100;
 
   EXPECT_EQ(send_message(0x21C, 35027, test_msg_len, test_msg_storage), SBP_OK);
 
@@ -232,11 +232,11 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog1, Test) {
       << last_msg_->sog_accuracy;
   EXPECT_EQ(last_msg_->tow, 326825520)
       << "incorrect value for tow, expected 326825520, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vel_d, -1000)
-      << "incorrect value for vel_d, expected -1000, is " << last_msg_->vel_d;
-  EXPECT_EQ(last_msg_->vel_d_accuracy, 100)
-      << "incorrect value for vel_d_accuracy, expected 100, is "
-      << last_msg_->vel_d_accuracy;
+  EXPECT_EQ(last_msg_->v_up, -1000)
+      << "incorrect value for v_up, expected -1000, is " << last_msg_->v_up;
+  EXPECT_EQ(last_msg_->v_up_accuracy, 100)
+      << "incorrect value for v_up_accuracy, expected 100, is "
+      << last_msg_->v_up_accuracy;
 }
 class Test_legacy_auto_check_sbp_navigation_MsgVelCog2
     : public ::testing::Test,
@@ -298,8 +298,8 @@ class Test_legacy_auto_check_sbp_navigation_MsgVelCog2
 
 TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog2, Test) {
   uint8_t encoded_frame[] = {
-      85, 28, 2, 211, 136, 29, 48, 246, 122, 19, 0, 0, 0, 0, 0, 0, 0,  0,   0,
-      0,  0,  0, 0,   0,   0,  0,  0,   0,   0,  0, 0, 0, 0, 0, 0, 94, 119,
+      85, 28, 2, 211, 136, 30, 48, 246, 122, 19, 0, 0, 0, 0, 0, 0, 0, 0,  0,
+      0,  0,  0, 0,   0,   0,  0,  0,   0,   0,  0, 0, 0, 0, 0, 0, 0, 42, 210,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -312,8 +312,8 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog2, Test) {
   test_msg->sog = 0;
   test_msg->sog_accuracy = 0;
   test_msg->tow = 326825520;
-  test_msg->vel_d = 0;
-  test_msg->vel_d_accuracy = 0;
+  test_msg->v_up = 0;
+  test_msg->v_up_accuracy = 0;
 
   EXPECT_EQ(send_message(0x21C, 35027, test_msg_len, test_msg_storage), SBP_OK);
 
@@ -341,9 +341,9 @@ TEST_F(Test_legacy_auto_check_sbp_navigation_MsgVelCog2, Test) {
       << last_msg_->sog_accuracy;
   EXPECT_EQ(last_msg_->tow, 326825520)
       << "incorrect value for tow, expected 326825520, is " << last_msg_->tow;
-  EXPECT_EQ(last_msg_->vel_d, 0)
-      << "incorrect value for vel_d, expected 0, is " << last_msg_->vel_d;
-  EXPECT_EQ(last_msg_->vel_d_accuracy, 0)
-      << "incorrect value for vel_d_accuracy, expected 0, is "
-      << last_msg_->vel_d_accuracy;
+  EXPECT_EQ(last_msg_->v_up, 0)
+      << "incorrect value for v_up, expected 0, is " << last_msg_->v_up;
+  EXPECT_EQ(last_msg_->v_up_accuracy, 0)
+      << "incorrect value for v_up_accuracy, expected 0, is "
+      << last_msg_->v_up_accuracy;
 }

@@ -42,12 +42,15 @@ extern "C" {
  *
  * This message reports the receiver course over ground (COG) and speed over
  * ground (SOG) based on the horizontal (N-E) components of the NED velocity
- * vector. It also includes the vertical velocity in the form of the D-component
- * of the NED velocity vector. The NED coordinate system is defined as the local
- * WGS84 tangent  plane centered at the current position. The full GPS time is
- * given by the  preceding MSG_GPS_TIME with the matching time-of-week (tow).
- * Note: course over ground represents the receiver's direction of travel,  but
- * not necessarily the device heading.
+ * vector. It also includes the vertical velocity coordinate. A flag is provided
+ * to indicate whether the COG value has been frozen. When  the flag is set to
+ * true, the COG field is set to its last valid value until  the system exceeds
+ * a minimum velocity threshold. No other fields are  affected by this flag. The
+ * NED coordinate system is defined as the local WGS84 tangent  plane centered
+ * at the current position. The full GPS time is given by the  preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). Note: course over ground
+ * represents the receiver's direction of travel,  but not necessarily the
+ * device heading.
  */
 typedef struct {
   /**
@@ -56,19 +59,19 @@ typedef struct {
   u32 tow;
 
   /**
-   * Course over ground relative to local north [microdegrees]
+   * Course over ground relative to north direction [microdegrees]
    */
   u32 cog;
 
   /**
-   * Speed over ground [mm/s]
+   * Speed over ground (based on horizontal velocity) [mm/s]
    */
   u32 sog;
 
   /**
-   * Velocity Down coordinate [mm/s]
+   * Vertical velocity component (positive up) [mm/s]
    */
-  s32 vel_d;
+  s32 v_up;
 
   /**
    * Course over ground estimated standard deviation [microdegrees]
@@ -83,12 +86,12 @@ typedef struct {
   /**
    * Vertical velocity estimated standard deviation [mm/s]
    */
-  u32 vel_d_accuracy;
+  u32 v_up_accuracy;
 
   /**
    * Status flags
    */
-  u8 flags;
+  u16 flags;
 } sbp_msg_vel_cog_t;
 
 /**

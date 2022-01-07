@@ -3613,12 +3613,15 @@ impl WireFormat for MsgVelBody {
 ///
 /// This message reports the receiver course over ground (COG) and speed over
 /// ground (SOG) based on the horizontal (N-E) components of the NED velocity
-/// vector. It also includes the vertical velocity in the form of the
-/// D-component of the NED velocity vector. The NED coordinate system is
-/// defined as the local WGS84 tangent  plane centered at the current
-/// position. The full GPS time is given by the  preceding MSG_GPS_TIME with
-/// the matching time-of-week (tow). Note: course over ground represents the
-/// receiver's direction of travel,  but not necessarily the device heading.
+/// vector. It also includes the vertical velocity coordinate. A flag is
+/// provided to indicate whether the COG value has been frozen. When  the flag
+/// is set to true, the COG field is set to its last valid value until  the
+/// system exceeds a minimum velocity threshold. No other fields are  affected
+/// by this flag.  The NED coordinate system is defined as the local WGS84
+/// tangent  plane centered at the current position. The full GPS time is
+/// given by the  preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// Note: course over ground represents the receiver's direction of travel,
+/// but not necessarily the device heading.
 ///
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3629,15 +3632,15 @@ pub struct MsgVelCog {
     /// GPS Time of Week
     #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
     pub tow: u32,
-    /// Course over ground relative to local north
+    /// Course over ground relative to north direction
     #[cfg_attr(feature = "serde", serde(rename(serialize = "cog")))]
     pub cog: u32,
-    /// Speed over ground
+    /// Speed over ground (based on horizontal velocity)
     #[cfg_attr(feature = "serde", serde(rename(serialize = "sog")))]
     pub sog: u32,
-    /// Velocity Down coordinate
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel_d")))]
-    pub vel_d: i32,
+    /// Vertical velocity component (positive up)
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_up")))]
+    pub v_up: i32,
     /// Course over ground estimated standard deviation
     #[cfg_attr(feature = "serde", serde(rename(serialize = "cog_accuracy")))]
     pub cog_accuracy: u32,
@@ -3645,11 +3648,11 @@ pub struct MsgVelCog {
     #[cfg_attr(feature = "serde", serde(rename(serialize = "sog_accuracy")))]
     pub sog_accuracy: u32,
     /// Vertical velocity estimated standard deviation
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "vel_d_accuracy")))]
-    pub vel_d_accuracy: u32,
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "v_up_accuracy")))]
+    pub v_up_accuracy: u32,
     /// Status flags
     #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
-    pub flags: u8,
+    pub flags: u16,
 }
 
 impl ConcreteMessage for MsgVelCog {
@@ -3702,25 +3705,25 @@ impl WireFormat for MsgVelCog {
         + <u32 as WireFormat>::MIN_LEN
         + <u32 as WireFormat>::MIN_LEN
         + <u32 as WireFormat>::MIN_LEN
-        + <u8 as WireFormat>::MIN_LEN;
+        + <u16 as WireFormat>::MIN_LEN;
     fn len(&self) -> usize {
         WireFormat::len(&self.tow)
             + WireFormat::len(&self.cog)
             + WireFormat::len(&self.sog)
-            + WireFormat::len(&self.vel_d)
+            + WireFormat::len(&self.v_up)
             + WireFormat::len(&self.cog_accuracy)
             + WireFormat::len(&self.sog_accuracy)
-            + WireFormat::len(&self.vel_d_accuracy)
+            + WireFormat::len(&self.v_up_accuracy)
             + WireFormat::len(&self.flags)
     }
     fn write<B: BufMut>(&self, buf: &mut B) {
         WireFormat::write(&self.tow, buf);
         WireFormat::write(&self.cog, buf);
         WireFormat::write(&self.sog, buf);
-        WireFormat::write(&self.vel_d, buf);
+        WireFormat::write(&self.v_up, buf);
         WireFormat::write(&self.cog_accuracy, buf);
         WireFormat::write(&self.sog_accuracy, buf);
-        WireFormat::write(&self.vel_d_accuracy, buf);
+        WireFormat::write(&self.v_up_accuracy, buf);
         WireFormat::write(&self.flags, buf);
     }
     fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
@@ -3729,10 +3732,10 @@ impl WireFormat for MsgVelCog {
             tow: WireFormat::parse_unchecked(buf),
             cog: WireFormat::parse_unchecked(buf),
             sog: WireFormat::parse_unchecked(buf),
-            vel_d: WireFormat::parse_unchecked(buf),
+            v_up: WireFormat::parse_unchecked(buf),
             cog_accuracy: WireFormat::parse_unchecked(buf),
             sog_accuracy: WireFormat::parse_unchecked(buf),
-            vel_d_accuracy: WireFormat::parse_unchecked(buf),
+            v_up_accuracy: WireFormat::parse_unchecked(buf),
             flags: WireFormat::parse_unchecked(buf),
         }
     }
