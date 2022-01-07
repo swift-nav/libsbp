@@ -26,9 +26,11 @@ import org.json.JSONObject;
  *
  * <p>This message reports the receiver course over ground (COG) and speed over ground (SOG) based
  * on the horizontal (N-E) components of the NED velocity vector. It also includes the vertical
- * velocity in the form of the D-component of the NED velocity vector. The NED coordinate system is
- * defined as the local WGS84 tangent plane centered at the current position. The full GPS time is
- * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). Note: course over
+ * velocity coordinate. A flag is provided to indicate whether the COG value has been frozen. When
+ * the flag is set to true, the COG field is set to its last valid value until the system exceeds a
+ * minimum velocity threshold. No other fields are affected by this flag. The NED coordinate system
+ * is defined as the local WGS84 tangent plane centered at the current position. The full GPS time
+ * is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). Note: course over
  * ground represents the receiver's direction of travel, but not necessarily the device heading.
  */
 public class MsgVelCog extends SBPMessage {
@@ -37,14 +39,14 @@ public class MsgVelCog extends SBPMessage {
     /** GPS Time of Week */
     public long tow;
 
-    /** Course over ground relative to local north */
+    /** Course over ground relative to north direction */
     public long cog;
 
-    /** Speed over ground */
+    /** Speed over ground (based on horizontal velocity) */
     public long sog;
 
-    /** Velocity Down coordinate */
-    public int vel_d;
+    /** Vertical velocity component (positive up) */
+    public int v_up;
 
     /** Course over ground estimated standard deviation */
     public long cog_accuracy;
@@ -53,7 +55,7 @@ public class MsgVelCog extends SBPMessage {
     public long sog_accuracy;
 
     /** Vertical velocity estimated standard deviation */
-    public long vel_d_accuracy;
+    public long v_up_accuracy;
 
     /** Status flags */
     public int flags;
@@ -77,11 +79,11 @@ public class MsgVelCog extends SBPMessage {
         tow = parser.getU32();
         cog = parser.getU32();
         sog = parser.getU32();
-        vel_d = parser.getS32();
+        v_up = parser.getS32();
         cog_accuracy = parser.getU32();
         sog_accuracy = parser.getU32();
-        vel_d_accuracy = parser.getU32();
-        flags = parser.getU8();
+        v_up_accuracy = parser.getU32();
+        flags = parser.getU16();
     }
 
     @Override
@@ -89,11 +91,11 @@ public class MsgVelCog extends SBPMessage {
         builder.putU32(tow);
         builder.putU32(cog);
         builder.putU32(sog);
-        builder.putS32(vel_d);
+        builder.putS32(v_up);
         builder.putU32(cog_accuracy);
         builder.putU32(sog_accuracy);
-        builder.putU32(vel_d_accuracy);
-        builder.putU8(flags);
+        builder.putU32(v_up_accuracy);
+        builder.putU16(flags);
     }
 
     @Override
@@ -102,10 +104,10 @@ public class MsgVelCog extends SBPMessage {
         obj.put("tow", tow);
         obj.put("cog", cog);
         obj.put("sog", sog);
-        obj.put("vel_d", vel_d);
+        obj.put("v_up", v_up);
         obj.put("cog_accuracy", cog_accuracy);
         obj.put("sog_accuracy", sog_accuracy);
-        obj.put("vel_d_accuracy", vel_d_accuracy);
+        obj.put("v_up_accuracy", v_up_accuracy);
         obj.put("flags", flags);
         return obj;
     }

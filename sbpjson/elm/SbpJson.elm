@@ -2773,13 +2773,15 @@ type alias MsgVelBody =
     , z : Int
     }
 
-{-| This message reports the receiver course over ground (COG) and speed over ground (SOG)
-based on the horizontal (N-E) components of the NED velocity vector. It also includes the
-vertical velocity in the form of the D-component of the NED velocity vector. The NED
-coordinate system is defined as the local WGS84 tangent plane centered at the current
-position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
-time-of-week (tow). Note: course over ground represents the receiver's direction of
-travel, but not necessarily the device heading.
+{-| This message reports the receiver course over ground (COG) and speed over  ground (SOG)
+based on the horizontal (N-E) components of the NED velocity  vector. It also includes
+the vertical velocity coordinate. A flag is provided to indicate whether the COG value
+has been frozen. When  the flag is set to true, the COG field is set to its last valid
+value until  the system exceeds a minimum velocity threshold. No other fields are
+affected by this flag.  The NED coordinate system is defined as the local WGS84 tangent
+plane centered at the current position. The full GPS time is given by the  preceding
+MSG_GPS_TIME with the matching time-of-week (tow). Note: course over ground represents
+the receiver's direction of travel,  but not necessarily the device heading.
 -}
 type alias MsgVelCog =
     { cog : Int
@@ -2788,8 +2790,8 @@ type alias MsgVelCog =
     , sog : Int
     , sogAccuracy : Int
     , tow : Int
-    , velD : Int
-    , velDAccuracy : Int
+    , vUp : Int
+    , vUpAccuracy : Int
     }
 
 {-| This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The
@@ -6671,8 +6673,8 @@ msgVelCog =
         |> Jpipe.required "sog" Jdec.int
         |> Jpipe.required "sog_accuracy" Jdec.int
         |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "vel_d" Jdec.int
-        |> Jpipe.required "vel_d_accuracy" Jdec.int
+        |> Jpipe.required "v_up" Jdec.int
+        |> Jpipe.required "v_up_accuracy" Jdec.int
 
 encodeMsgVelCog : MsgVelCog -> Jenc.Value
 encodeMsgVelCog x =
@@ -6683,8 +6685,8 @@ encodeMsgVelCog x =
         , ("sog", Jenc.int x.sog)
         , ("sog_accuracy", Jenc.int x.sogAccuracy)
         , ("tow", Jenc.int x.tow)
-        , ("vel_d", Jenc.int x.velD)
-        , ("vel_d_accuracy", Jenc.int x.velDAccuracy)
+        , ("v_up", Jenc.int x.vUp)
+        , ("v_up_accuracy", Jenc.int x.vUpAccuracy)
         ]
 
 msgVelECEF : Jdec.Decoder MsgVelECEF

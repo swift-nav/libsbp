@@ -1376,16 +1376,31 @@ typedef struct SBP_ATTR_PACKED {
  *
  * This message reports the receiver course over ground (COG) and speed over
  * ground (SOG) based on the horizontal (N-E) components of the NED velocity
- * vector. It also includes the vertical velocity in the form of the
- * D-component of the NED velocity vector. The NED coordinate system is
- * defined as the local WGS84 tangent plane centered at the current position.
- * The full GPS time is given by the preceding MSG_GPS_TIME with the matching
- * time-of-week (tow). Note: course over ground represents the receiver's
- * direction of travel, but not necessarily the device heading.
+ * vector. It also includes the vertical velocity coordinate. A flag is
+ * provided to indicate whether the COG value has been frozen. When  the flag
+ * is set to true, the COG field is set to its last valid value until  the
+ * system exceeds a minimum velocity threshold. No other fields are  affected
+ * by this flag.  The NED coordinate system is defined as the local WGS84
+ * tangent  plane centered at the current position. The full GPS time is given
+ * by the  preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
+ * course over ground represents the receiver's direction of travel,  but not
+ * necessarily the device heading.
  */
 #define SBP_MSG_VEL_COG 0x021C
+#define SBP_VEL_COG_COG_FROZEN_MASK (0x1)
+#define SBP_VEL_COG_COG_FROZEN_SHIFT (9u)
+#define SBP_VEL_COG_COG_FROZEN_GET(flags) \
+  (((flags) >> SBP_VEL_COG_COG_FROZEN_SHIFT) & SBP_VEL_COG_COG_FROZEN_MASK)
+#define SBP_VEL_COG_COG_FROZEN_SET(flags, val)           \
+  do {                                                   \
+    ((flags) |= (((val) & (SBP_VEL_COG_COG_FROZEN_MASK)) \
+                 << (SBP_VEL_COG_COG_FROZEN_SHIFT)));    \
+  } while (0)
+
+#define SBP_VEL_COG_COG_FROZEN_NOT_FROZEN (0)
+#define SBP_VEL_COG_COG_FROZEN_FROZEN (1)
 #define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_MASK (0x1)
-#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_SHIFT (5u)
+#define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_SHIFT (8u)
 #define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_GET(flags)      \
   (((flags) >> SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_SHIFT) & \
    SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_MASK)
@@ -1398,7 +1413,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_INVALID (0)
 #define SBP_VEL_COG_VERTICAL_VELOCITY_VALIDITY_VERTICAL_VELOCITY_VALID (1)
 #define SBP_VEL_COG_SOG_VALIDITY_MASK (0x1)
-#define SBP_VEL_COG_SOG_VALIDITY_SHIFT (4u)
+#define SBP_VEL_COG_SOG_VALIDITY_SHIFT (7u)
 #define SBP_VEL_COG_SOG_VALIDITY_GET(flags) \
   (((flags) >> SBP_VEL_COG_SOG_VALIDITY_SHIFT) & SBP_VEL_COG_SOG_VALIDITY_MASK)
 #define SBP_VEL_COG_SOG_VALIDITY_SET(flags, val)           \
@@ -1410,7 +1425,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_COG_SOG_VALIDITY_INVALID (0)
 #define SBP_VEL_COG_SOG_VALIDITY_SOG_VALID (1)
 #define SBP_VEL_COG_COG_VALIDITY_MASK (0x1)
-#define SBP_VEL_COG_COG_VALIDITY_SHIFT (3u)
+#define SBP_VEL_COG_COG_VALIDITY_SHIFT (6u)
 #define SBP_VEL_COG_COG_VALIDITY_GET(flags) \
   (((flags) >> SBP_VEL_COG_COG_VALIDITY_SHIFT) & SBP_VEL_COG_COG_VALIDITY_MASK)
 #define SBP_VEL_COG_COG_VALIDITY_SET(flags, val)           \
@@ -1421,8 +1436,21 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_VEL_COG_COG_VALIDITY_INVALID (0)
 #define SBP_VEL_COG_COG_VALIDITY_COG_VALID (1)
-#define SBP_VEL_COG_INS_NAVIGATION_MODE_MASK (0x1)
-#define SBP_VEL_COG_INS_NAVIGATION_MODE_SHIFT (2u)
+#define SBP_VEL_COG_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_VEL_COG_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_VEL_COG_TYPE_OF_REPORTED_TOW_GET(flags)      \
+  (((flags) >> SBP_VEL_COG_TYPE_OF_REPORTED_TOW_SHIFT) & \
+   SBP_VEL_COG_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_VEL_COG_TYPE_OF_REPORTED_TOW_SET(flags, val)           \
+  do {                                                             \
+    ((flags) |= (((val) & (SBP_VEL_COG_TYPE_OF_REPORTED_TOW_MASK)) \
+                 << (SBP_VEL_COG_TYPE_OF_REPORTED_TOW_SHIFT)));    \
+  } while (0)
+
+#define SBP_VEL_COG_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_VEL_COG_TYPE_OF_REPORTED_TOW_OTHER (1)
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_VEL_COG_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_COG_INS_NAVIGATION_MODE_GET(flags)      \
   (((flags) >> SBP_VEL_COG_INS_NAVIGATION_MODE_SHIFT) & \
    SBP_VEL_COG_INS_NAVIGATION_MODE_MASK)
@@ -1434,7 +1462,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_VEL_COG_INS_NAVIGATION_MODE_NONE (0)
 #define SBP_VEL_COG_INS_NAVIGATION_MODE_INS_USED (1)
-#define SBP_VEL_COG_VELOCITY_MODE_MASK (0x3)
+#define SBP_VEL_COG_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_COG_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_COG_VELOCITY_MODE_GET(flags)      \
   (((flags) >> SBP_VEL_COG_VELOCITY_MODE_SHIFT) & \
@@ -1451,17 +1479,17 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_VEL_COG_VELOCITY_MODE_DEAD_RECKONING (3)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;   /**< GPS Time of Week [ms] */
-  u32 cog;   /**< Course over ground relative to local north [microdegrees] */
-  u32 sog;   /**< Speed over ground [mm/s] */
-  s32 vel_d; /**< Velocity Down coordinate [mm/s] */
-  u32 cog_accuracy;   /**< Course over ground estimated standard deviation
-                         [microdegrees] */
-  u32 sog_accuracy;   /**< Speed over ground estimated standard deviation [mm/s]
-                       */
-  u32 vel_d_accuracy; /**< Vertical velocity estimated standard deviation [mm/s]
-                       */
-  u8 flags;           /**< Status flags */
+  u32 tow; /**< GPS Time of Week [ms] */
+  u32 cog; /**< Course over ground relative to north direction [microdegrees] */
+  u32 sog; /**< Speed over ground (based on horizontal velocity) [mm/s] */
+  s32 v_up;          /**< Vertical velocity component (positive up) [mm/s] */
+  u32 cog_accuracy;  /**< Course over ground estimated standard deviation
+                        [microdegrees] */
+  u32 sog_accuracy;  /**< Speed over ground estimated standard deviation [mm/s]
+                      */
+  u32 v_up_accuracy; /**< Vertical velocity estimated standard deviation [mm/s]
+                      */
+  u16 flags;         /**< Status flags */
 } msg_vel_cog_t;
 
 /** Age of corrections

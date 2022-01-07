@@ -2979,8 +2979,8 @@ const typeMap = {
         { json: "sog", js: "sog", typ: 0 },
         { json: "sog_accuracy", js: "sog_accuracy", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
-        { json: "vel_d", js: "vel_d", typ: 0 },
-        { json: "vel_d_accuracy", js: "vel_d_accuracy", typ: 0 },
+        { json: "v_up", js: "v_up", typ: 0 },
+        { json: "v_up_accuracy", js: "v_up_accuracy", typ: 0 },
     ], "any"),
     "MsgVelECEF": o([
         { json: "accuracy", js: "accuracy", typ: 0 },

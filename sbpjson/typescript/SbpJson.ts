@@ -2365,23 +2365,25 @@ export interface MsgVelBody {
 }
 
 /**
- * This message reports the receiver course over ground (COG) and speed over ground (SOG)
- * based on the horizontal (N-E) components of the NED velocity vector. It also includes the
- * vertical velocity in the form of the D-component of the NED velocity vector. The NED
- * coordinate system is defined as the local WGS84 tangent plane centered at the current
- * position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
- * time-of-week (tow). Note: course over ground represents the receiver's direction of
- * travel, but not necessarily the device heading.
+ * This message reports the receiver course over ground (COG) and speed over  ground (SOG)
+ * based on the horizontal (N-E) components of the NED velocity  vector. It also includes
+ * the vertical velocity coordinate. A flag is provided to indicate whether the COG value
+ * has been frozen. When  the flag is set to true, the COG field is set to its last valid
+ * value until  the system exceeds a minimum velocity threshold. No other fields are
+ * affected by this flag.  The NED coordinate system is defined as the local WGS84 tangent
+ * plane centered at the current position. The full GPS time is given by the  preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). Note: course over ground represents
+ * the receiver's direction of travel,  but not necessarily the device heading.
  */
 export interface MsgVelCog {
-    cog:            number;
-    cog_accuracy:   number;
-    flags:          number;
-    sog:            number;
-    sog_accuracy:   number;
-    tow:            number;
-    vel_d:          number;
-    vel_d_accuracy: number;
+    cog:           number;
+    cog_accuracy:  number;
+    flags:         number;
+    sog:           number;
+    sog_accuracy:  number;
+    tow:           number;
+    v_up:          number;
+    v_up_accuracy: number;
 }
 
 /**
@@ -5342,8 +5344,8 @@ const typeMap: any = {
         { json: "sog", js: "sog", typ: 0 },
         { json: "sog_accuracy", js: "sog_accuracy", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
-        { json: "vel_d", js: "vel_d", typ: 0 },
-        { json: "vel_d_accuracy", js: "vel_d_accuracy", typ: 0 },
+        { json: "v_up", js: "v_up", typ: 0 },
+        { json: "v_up_accuracy", js: "v_up_accuracy", typ: 0 },
     ], "any"),
     "MsgVelECEF": o([
         { json: "accuracy", js: "accuracy", typ: 0 },

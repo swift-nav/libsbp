@@ -3706,12 +3706,15 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
 ///
 /// This message reports the receiver course over ground (COG) and speed over
 /// ground (SOG) based on the horizontal (N-E) components of the NED velocity
-/// vector. It also includes the vertical velocity in the form of the
-/// D-component of the NED velocity vector. The NED coordinate system is
-/// defined as the local WGS84 tangent plane centered at the current position.
-/// The full GPS time is given by the preceding MSG_GPS_TIME with the matching
-/// time-of-week (tow). Note: course over ground represents the receiver's
-/// direction of travel, but not necessarily the device heading.
+/// vector. It also includes the vertical velocity coordinate. A flag is
+/// provided to indicate whether the COG value has been frozen. When  the flag
+/// is set to true, the COG field is set to its last valid value until  the
+/// system exceeds a minimum velocity threshold. No other fields are  affected
+/// by this flag.  The NED coordinate system is defined as the local WGS84
+/// tangent  plane centered at the current position. The full GPS time is
+/// given by the  preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// Note: course over ground represents the receiver's direction of travel,
+/// but not necessarily the device heading.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -3721,20 +3724,20 @@ pub struct MsgVelCog {
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,
-    /// Course over ground relative to local north
+    /// Course over ground relative to north direction
     pub cog: u32,
-    /// Speed over ground
+    /// Speed over ground (based on horizontal velocity)
     pub sog: u32,
-    /// Velocity Down coordinate
-    pub vel_d: i32,
+    /// Vertical velocity component (positive up)
+    pub v_up: i32,
     /// Course over ground estimated standard deviation
     pub cog_accuracy: u32,
     /// Speed over ground estimated standard deviation
     pub sog_accuracy: u32,
     /// Vertical velocity estimated standard deviation
-    pub vel_d_accuracy: u32,
+    pub v_up_accuracy: u32,
     /// Status flags
-    pub flags: u8,
+    pub flags: u16,
 }
 
 impl MsgVelCog {
@@ -3745,11 +3748,11 @@ impl MsgVelCog {
             tow: _buf.read_u32::<LittleEndian>()?,
             cog: _buf.read_u32::<LittleEndian>()?,
             sog: _buf.read_u32::<LittleEndian>()?,
-            vel_d: _buf.read_i32::<LittleEndian>()?,
+            v_up: _buf.read_i32::<LittleEndian>()?,
             cog_accuracy: _buf.read_u32::<LittleEndian>()?,
             sog_accuracy: _buf.read_u32::<LittleEndian>()?,
-            vel_d_accuracy: _buf.read_u32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            v_up_accuracy: _buf.read_u32::<LittleEndian>()?,
+            flags: _buf.read_u16::<LittleEndian>()?,
         } )
     }
 }
@@ -3813,10 +3816,10 @@ impl crate::serialize::SbpSerialize for MsgVelCog {
         self.tow.append_to_sbp_buffer(buf);
         self.cog.append_to_sbp_buffer(buf);
         self.sog.append_to_sbp_buffer(buf);
-        self.vel_d.append_to_sbp_buffer(buf);
+        self.v_up.append_to_sbp_buffer(buf);
         self.cog_accuracy.append_to_sbp_buffer(buf);
         self.sog_accuracy.append_to_sbp_buffer(buf);
-        self.vel_d_accuracy.append_to_sbp_buffer(buf);
+        self.v_up_accuracy.append_to_sbp_buffer(buf);
         self.flags.append_to_sbp_buffer(buf);
     }
 
@@ -3825,10 +3828,10 @@ impl crate::serialize::SbpSerialize for MsgVelCog {
         size += self.tow.sbp_size();
         size += self.cog.sbp_size();
         size += self.sog.sbp_size();
-        size += self.vel_d.sbp_size();
+        size += self.v_up.sbp_size();
         size += self.cog_accuracy.sbp_size();
         size += self.sog_accuracy.sbp_size();
-        size += self.vel_d_accuracy.sbp_size();
+        size += self.v_up_accuracy.sbp_size();
         size += self.flags.sbp_size();
         size
     }
