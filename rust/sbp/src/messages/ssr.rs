@@ -2024,29 +2024,7 @@ pub mod satellite_apc {
 
     impl SatelliteAPC {
         pub fn satellite_type(&self) -> Option<SatelliteType> {
-            match get_bit_range!(self.sat_info, u8, u8, 4, 0) {
-                0 => Some(SatelliteType::UnknownType),
-                1 => Some(SatelliteType::GpsI),
-                2 => Some(SatelliteType::GpsIi),
-                3 => Some(SatelliteType::GpsIia),
-                4 => Some(SatelliteType::GpsIir),
-                5 => Some(SatelliteType::GpsIif),
-                6 => Some(SatelliteType::GpsIii),
-                7 => Some(SatelliteType::GLONASS),
-                8 => Some(SatelliteType::GlonassM),
-                9 => Some(SatelliteType::GlonassK1),
-                10 => Some(SatelliteType::GALILEO),
-                11 => Some(SatelliteType::Beidou2G),
-                12 => Some(SatelliteType::Beidou2I),
-                13 => Some(SatelliteType::Beidou2M),
-                14 => Some(SatelliteType::Beidou3MSecm),
-                15 => Some(SatelliteType::Beidou3GSecm),
-                16 => Some(SatelliteType::Beidou3MCast),
-                17 => Some(SatelliteType::Beidou3GCast),
-                18 => Some(SatelliteType::Beidou3ICast),
-                19 => Some(SatelliteType::QZSS),
-                _ => None,
-            }
+            get_bit_range!(self.sat_info, u8, u8, 4, 0).try_into().ok()
         }
 
         pub fn set_satellite_type(&mut self, satellite_type: SatelliteType) {
@@ -2086,7 +2064,7 @@ pub mod satellite_apc {
     }
 
     /// Satellite Type
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum SatelliteType {
         /// Unknown Type
         UnknownType = 0,
@@ -2172,6 +2150,35 @@ pub mod satellite_apc {
                 SatelliteType::Beidou3GCast => f.write_str("BEIDOU 3G, CAST"),
                 SatelliteType::Beidou3ICast => f.write_str("BEIDOU 3I, CAST"),
                 SatelliteType::QZSS => f.write_str("QZSS"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for SatelliteType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(SatelliteType::UnknownType),
+                1 => Ok(SatelliteType::GpsI),
+                2 => Ok(SatelliteType::GpsIi),
+                3 => Ok(SatelliteType::GpsIia),
+                4 => Ok(SatelliteType::GpsIir),
+                5 => Ok(SatelliteType::GpsIif),
+                6 => Ok(SatelliteType::GpsIii),
+                7 => Ok(SatelliteType::GLONASS),
+                8 => Ok(SatelliteType::GlonassM),
+                9 => Ok(SatelliteType::GlonassK1),
+                10 => Ok(SatelliteType::GALILEO),
+                11 => Ok(SatelliteType::Beidou2G),
+                12 => Ok(SatelliteType::Beidou2I),
+                13 => Ok(SatelliteType::Beidou2M),
+                14 => Ok(SatelliteType::Beidou3MSecm),
+                15 => Ok(SatelliteType::Beidou3GSecm),
+                16 => Ok(SatelliteType::Beidou3MCast),
+                17 => Ok(SatelliteType::Beidou3GCast),
+                18 => Ok(SatelliteType::Beidou3ICast),
+                19 => Ok(SatelliteType::QZSS),
+                _ => Err(TryFromIntError),
             }
         }
     }

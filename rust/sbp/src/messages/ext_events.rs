@@ -53,11 +53,7 @@ pub mod msg_ext_event {
 
     impl MsgExtEvent {
         pub fn time_quality(&self) -> Option<TimeQuality> {
-            match get_bit_range!(self.flags, u8, u8, 1, 0) {
-                0 => Some(TimeQuality::UnknownDontHaveNavSolution),
-                1 => Some(TimeQuality::Good),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_time_quality(&mut self, time_quality: TimeQuality) {
@@ -65,11 +61,7 @@ pub mod msg_ext_event {
         }
 
         pub fn new_level_of_pin(&self) -> Option<NewLevelOfPin> {
-            match get_bit_range!(self.flags, u8, u8, 0, 0) {
-                0 => Some(NewLevelOfPin::Low),
-                1 => Some(NewLevelOfPin::High),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_new_level_of_pin(&mut self, new_level_of_pin: NewLevelOfPin) {
@@ -157,7 +149,7 @@ pub mod msg_ext_event {
     }
 
     /// Time quality
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TimeQuality {
         /// Unknown - don't have nav solution
         UnknownDontHaveNavSolution = 0,
@@ -177,8 +169,19 @@ pub mod msg_ext_event {
         }
     }
 
+    impl TryFrom<u8> for TimeQuality {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TimeQuality::UnknownDontHaveNavSolution),
+                1 => Ok(TimeQuality::Good),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// New level of pin
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum NewLevelOfPin {
         /// Low (falling edge)
         Low = 0,
@@ -192,6 +195,17 @@ pub mod msg_ext_event {
             match self {
                 NewLevelOfPin::Low => f.write_str("Low (falling edge)"),
                 NewLevelOfPin::High => f.write_str("High (rising edge)"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for NewLevelOfPin {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(NewLevelOfPin::Low),
+                1 => Ok(NewLevelOfPin::High),
+                _ => Err(TryFromIntError),
             }
         }
     }

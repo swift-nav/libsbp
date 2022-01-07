@@ -978,11 +978,7 @@ pub mod msg_mask_satellite {
 
     impl MsgMaskSatellite {
         pub fn tracking_channels(&self) -> Option<TrackingChannels> {
-            match get_bit_range!(self.mask, u8, u8, 1, 0) {
-                0 => Some(TrackingChannels::Enabled),
-                1 => Some(TrackingChannels::DropThisPrnIfCurrentlyTracking),
-                _ => None,
-            }
+            get_bit_range!(self.mask, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_tracking_channels(&mut self, tracking_channels: TrackingChannels) {
@@ -990,11 +986,7 @@ pub mod msg_mask_satellite {
         }
 
         pub fn acquisition_channel(&self) -> Option<AcquisitionChannel> {
-            match get_bit_range!(self.mask, u8, u8, 0, 0) {
-                0 => Some(AcquisitionChannel::Enabled),
-                1 => Some(AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
-                _ => None,
-            }
+            get_bit_range!(self.mask, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_acquisition_channel(&mut self, acquisition_channel: AcquisitionChannel) {
@@ -1054,7 +1046,7 @@ pub mod msg_mask_satellite {
     }
 
     /// Tracking channels
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingChannels {
         /// Enabled
         Enabled = 0,
@@ -1074,8 +1066,19 @@ pub mod msg_mask_satellite {
         }
     }
 
+    impl TryFrom<u8> for TrackingChannels {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingChannels::Enabled),
+                1 => Ok(TrackingChannels::DropThisPrnIfCurrentlyTracking),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Acquisition channel
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum AcquisitionChannel {
         /// Enabled
         Enabled = 0,
@@ -1091,6 +1094,17 @@ pub mod msg_mask_satellite {
                 AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions => {
                     f.write_str("Skip this satellite on future acquisitions")
                 }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for AcquisitionChannel {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(AcquisitionChannel::Enabled),
+                1 => Ok(AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -1123,11 +1137,7 @@ pub mod msg_mask_satellite_dep {
 
     impl MsgMaskSatelliteDep {
         pub fn tracking_channels(&self) -> Option<TrackingChannels> {
-            match get_bit_range!(self.mask, u8, u8, 1, 0) {
-                0 => Some(TrackingChannels::Enabled),
-                1 => Some(TrackingChannels::DropThisPrnIfCurrentlyTracking),
-                _ => None,
-            }
+            get_bit_range!(self.mask, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_tracking_channels(&mut self, tracking_channels: TrackingChannels) {
@@ -1135,11 +1145,7 @@ pub mod msg_mask_satellite_dep {
         }
 
         pub fn acquisition_channel(&self) -> Option<AcquisitionChannel> {
-            match get_bit_range!(self.mask, u8, u8, 0, 0) {
-                0 => Some(AcquisitionChannel::Enabled),
-                1 => Some(AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
-                _ => None,
-            }
+            get_bit_range!(self.mask, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_acquisition_channel(&mut self, acquisition_channel: AcquisitionChannel) {
@@ -1199,7 +1205,7 @@ pub mod msg_mask_satellite_dep {
     }
 
     /// Tracking channels
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingChannels {
         /// Enabled
         Enabled = 0,
@@ -1219,8 +1225,19 @@ pub mod msg_mask_satellite_dep {
         }
     }
 
+    impl TryFrom<u8> for TrackingChannels {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingChannels::Enabled),
+                1 => Ok(TrackingChannels::DropThisPrnIfCurrentlyTracking),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Acquisition channel
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum AcquisitionChannel {
         /// Enabled
         Enabled = 0,
@@ -1236,6 +1253,17 @@ pub mod msg_mask_satellite_dep {
                 AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions => {
                     f.write_str("Skip this satellite on future acquisitions")
                 }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for AcquisitionChannel {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(AcquisitionChannel::Enabled),
+                1 => Ok(AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -1795,11 +1823,7 @@ pub mod msg_reset {
 
     impl MsgReset {
         pub fn default_settings(&self) -> Option<DefaultSettings> {
-            match get_bit_range!(self.flags, u32, u8, 0, 0) {
-                0 => Some(DefaultSettings::PreserveExistingSettings),
-                1 => Some(DefaultSettings::ResoreDefaultSettings),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u32, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_default_settings(&mut self, default_settings: DefaultSettings) {
@@ -1857,7 +1881,7 @@ pub mod msg_reset {
     }
 
     /// Default settings.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum DefaultSettings {
         /// Preserve existing settings.
         PreserveExistingSettings = 0,
@@ -1873,6 +1897,17 @@ pub mod msg_reset {
                     f.write_str("Preserve existing settings.")
                 }
                 DefaultSettings::ResoreDefaultSettings => f.write_str("Resore default settings."),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for DefaultSettings {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(DefaultSettings::PreserveExistingSettings),
+                1 => Ok(DefaultSettings::ResoreDefaultSettings),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -1967,12 +2002,7 @@ pub mod msg_reset_filters {
 
     impl MsgResetFilters {
         pub fn filter_or_process_to_reset(&self) -> Option<FilterOrProcessToReset> {
-            match get_bit_range!(self.filter, u8, u8, 1, 0) {
-                0 => Some(FilterOrProcessToReset::DgnssFilter),
-                1 => Some(FilterOrProcessToReset::IarProcess),
-                2 => Some(FilterOrProcessToReset::InertialFilter),
-                _ => None,
-            }
+            get_bit_range!(self.filter, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_filter_or_process_to_reset(
@@ -2033,7 +2063,7 @@ pub mod msg_reset_filters {
     }
 
     /// Filter or process to reset
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FilterOrProcessToReset {
         /// DGNSS filter
         DgnssFilter = 0,
@@ -2051,6 +2081,18 @@ pub mod msg_reset_filters {
                 FilterOrProcessToReset::DgnssFilter => f.write_str("DGNSS filter"),
                 FilterOrProcessToReset::IarProcess => f.write_str("IAR process"),
                 FilterOrProcessToReset::InertialFilter => f.write_str("Inertial filter"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for FilterOrProcessToReset {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FilterOrProcessToReset::DgnssFilter),
+                1 => Ok(FilterOrProcessToReset::IarProcess),
+                2 => Ok(FilterOrProcessToReset::InertialFilter),
+                _ => Err(TryFromIntError),
             }
         }
     }

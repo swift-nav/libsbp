@@ -55,13 +55,7 @@ pub mod msg_odometry {
 
     impl MsgOdometry {
         pub fn vehicle_metadata(&self) -> Option<VehicleMetadata> {
-            match get_bit_range!(self.flags, u8, u8, 6, 5) {
-                0 => Some(VehicleMetadata::Unavailable),
-                1 => Some(VehicleMetadata::Forward),
-                2 => Some(VehicleMetadata::Reverse),
-                3 => Some(VehicleMetadata::Park),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 6, 5).try_into().ok()
         }
 
         pub fn set_vehicle_metadata(&mut self, vehicle_metadata: VehicleMetadata) {
@@ -69,13 +63,7 @@ pub mod msg_odometry {
         }
 
         pub fn velocity_source(&self) -> Option<VelocitySource> {
-            match get_bit_range!(self.flags, u8, u8, 4, 3) {
-                0 => Some(VelocitySource::Source0),
-                1 => Some(VelocitySource::Source1),
-                2 => Some(VelocitySource::Source2),
-                3 => Some(VelocitySource::Source3),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
         }
 
         pub fn set_velocity_source(&mut self, velocity_source: VelocitySource) {
@@ -83,12 +71,7 @@ pub mod msg_odometry {
         }
 
         pub fn time_source(&self) -> Option<TimeSource> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(TimeSource::None),
-                1 => Some(TimeSource::GpsSolution),
-                2 => Some(TimeSource::ProcessorTime),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_time_source(&mut self, time_source: TimeSource) {
@@ -163,7 +146,7 @@ pub mod msg_odometry {
     }
 
     /// Vehicle Metadata
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum VehicleMetadata {
         /// Unavailable
         Unavailable = 0,
@@ -189,8 +172,21 @@ pub mod msg_odometry {
         }
     }
 
+    impl TryFrom<u8> for VehicleMetadata {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(VehicleMetadata::Unavailable),
+                1 => Ok(VehicleMetadata::Forward),
+                2 => Ok(VehicleMetadata::Reverse),
+                3 => Ok(VehicleMetadata::Park),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Velocity Source
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum VelocitySource {
         /// Source 0
         Source0 = 0,
@@ -216,8 +212,21 @@ pub mod msg_odometry {
         }
     }
 
+    impl TryFrom<u8> for VelocitySource {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(VelocitySource::Source0),
+                1 => Ok(VelocitySource::Source1),
+                2 => Ok(VelocitySource::Source2),
+                3 => Ok(VelocitySource::Source3),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Time source
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TimeSource {
         /// None (invalid)
         None = 0,
@@ -235,6 +244,18 @@ pub mod msg_odometry {
                 TimeSource::None => f.write_str("None (invalid)"),
                 TimeSource::GpsSolution => f.write_str("GPS Solution (ms in week)"),
                 TimeSource::ProcessorTime => f.write_str("Processor Time"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimeSource {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TimeSource::None),
+                1 => Ok(TimeSource::GpsSolution),
+                2 => Ok(TimeSource::ProcessorTime),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -287,13 +308,7 @@ pub mod msg_wheeltick {
 
     impl MsgWheeltick {
         pub fn vehicle_metadata(&self) -> Option<VehicleMetadata> {
-            match get_bit_range!(self.flags, u8, u8, 3, 2) {
-                0 => Some(VehicleMetadata::Unavailable),
-                1 => Some(VehicleMetadata::Forward),
-                2 => Some(VehicleMetadata::Reverse),
-                3 => Some(VehicleMetadata::Park),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 3, 2).try_into().ok()
         }
 
         pub fn set_vehicle_metadata(&mut self, vehicle_metadata: VehicleMetadata) {
@@ -301,12 +316,7 @@ pub mod msg_wheeltick {
         }
 
         pub fn synchronization_type(&self) -> Option<SynchronizationType> {
-            match get_bit_range!(self.flags, u8, u8, 1, 0) {
-                0 => Some(SynchronizationType::MicrosecondsSinceLastPps),
-                1 => Some(SynchronizationType::MicrosecondsInGpsWeek),
-                2 => Some(SynchronizationType::LocalCpuTimeInNominalMicroseconds),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_synchronization_type(&mut self, synchronization_type: SynchronizationType) {
@@ -389,7 +399,7 @@ pub mod msg_wheeltick {
     }
 
     /// Vehicle Metadata
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum VehicleMetadata {
         /// Unavailable
         Unavailable = 0,
@@ -415,8 +425,21 @@ pub mod msg_wheeltick {
         }
     }
 
+    impl TryFrom<u8> for VehicleMetadata {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(VehicleMetadata::Unavailable),
+                1 => Ok(VehicleMetadata::Forward),
+                2 => Ok(VehicleMetadata::Reverse),
+                3 => Ok(VehicleMetadata::Park),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Synchronization type
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum SynchronizationType {
         /// microseconds since last PPS
         MicrosecondsSinceLastPps = 0,
@@ -440,6 +463,18 @@ pub mod msg_wheeltick {
                 SynchronizationType::LocalCpuTimeInNominalMicroseconds => {
                     f.write_str("local CPU time in nominal microseconds")
                 }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for SynchronizationType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(SynchronizationType::MicrosecondsSinceLastPps),
+                1 => Ok(SynchronizationType::MicrosecondsInGpsWeek),
+                2 => Ok(SynchronizationType::LocalCpuTimeInNominalMicroseconds),
+                _ => Err(TryFromIntError),
             }
         }
     }

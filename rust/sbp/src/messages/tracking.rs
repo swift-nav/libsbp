@@ -671,13 +671,9 @@ pub mod msg_tracking_state_detailed_dep {
 
     impl MsgTrackingStateDetailedDep {
         pub fn synchronization_status(&self) -> Option<SynchronizationStatus> {
-            match get_bit_range!(self.sync_flags, u8, u8, 2, 0) {
-                0 => Some(SynchronizationStatus::NoSynchronization),
-                1 => Some(SynchronizationStatus::BitSynchronization),
-                2 => Some(SynchronizationStatus::WordSynchronization),
-                3 => Some(SynchronizationStatus::SubFrameSynchronizationMessageSynchronization),
-                _ => None,
-            }
+            get_bit_range!(self.sync_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_synchronization_status(
@@ -688,11 +684,7 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn week_number_validity_status(&self) -> Option<WeekNumberValidityStatus> {
-            match get_bit_range!(self.tow_flags, u8, u8, 3, 0) {
-                0 => Some(WeekNumberValidityStatus::WeekNumberIsNotValid),
-                1 => Some(WeekNumberValidityStatus::WeekNumberIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.tow_flags, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_week_number_validity_status(
@@ -710,12 +702,7 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn tow_status(&self) -> Option<TowStatus> {
-            match get_bit_range!(self.tow_flags, u8, u8, 2, 0) {
-                0 => Some(TowStatus::TowIsNotAvailable),
-                1 => Some(TowStatus::DecodedTowIsAvailable),
-                2 => Some(TowStatus::PropagatedTowIsAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.tow_flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_tow_status(&mut self, tow_status: TowStatus) {
@@ -723,11 +710,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn fll_status(&self) -> Option<FllStatus> {
-            match get_bit_range!(self.track_flags, u8, u8, 4, 0) {
-                0 => Some(FllStatus::FllIsInactive),
-                1 => Some(FllStatus::FllIsActive),
-                _ => None,
-            }
+            get_bit_range!(self.track_flags, u8, u8, 4, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_fll_status(&mut self, fll_status: FllStatus) {
@@ -735,11 +720,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn pll_status(&self) -> Option<PllStatus> {
-            match get_bit_range!(self.track_flags, u8, u8, 3, 0) {
-                0 => Some(PllStatus::PllIsInactive),
-                1 => Some(PllStatus::PllIsActive),
-                _ => None,
-            }
+            get_bit_range!(self.track_flags, u8, u8, 3, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_pll_status(&mut self, pll_status: PllStatus) {
@@ -747,13 +730,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn tracking_loop_status(&self) -> Option<TrackingLoopStatus> {
-            match get_bit_range!(self.track_flags, u8, u8, 2, 0) {
-                0 => Some(TrackingLoopStatus::NoLocks),
-                1 => Some(TrackingLoopStatus::FlldllLock),
-                2 => Some(TrackingLoopStatus::PllOptimisticLock),
-                3 => Some(TrackingLoopStatus::PllPessimisticLock),
-                _ => None,
-            }
+            get_bit_range!(self.track_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_tracking_loop_status(&mut self, tracking_loop_status: TrackingLoopStatus) {
@@ -761,11 +740,7 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn almanac_availability_status(&self) -> Option<AlmanacAvailabilityStatus> {
-            match get_bit_range!(self.nav_flags, u8, u8, 4, 0) {
-                0 => Some(AlmanacAvailabilityStatus::AlmanacIsNotAvailable),
-                1 => Some(AlmanacAvailabilityStatus::AlmanacIsAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.nav_flags, u8, u8, 4, 0).try_into().ok()
         }
 
         pub fn set_almanac_availability_status(
@@ -783,11 +758,7 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn ephemeris_availability_status(&self) -> Option<EphemerisAvailabilityStatus> {
-            match get_bit_range!(self.nav_flags, u8, u8, 3, 0) {
-                0 => Some(EphemerisAvailabilityStatus::EphemerisIsNotAvailable),
-                1 => Some(EphemerisAvailabilityStatus::EphemerisIsAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.nav_flags, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_ephemeris_availability_status(
@@ -805,12 +776,7 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn health_status(&self) -> Option<HealthStatus> {
-            match get_bit_range!(self.nav_flags, u8, u8, 2, 0) {
-                0 => Some(HealthStatus::HealthIsUnknown),
-                1 => Some(HealthStatus::SignalIsUnhealthy),
-                2 => Some(HealthStatus::SignalIsHealthy),
-                _ => None,
-            }
+            get_bit_range!(self.nav_flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_health_status(&mut self, health_status: HealthStatus) {
@@ -818,13 +784,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn parameter_sets(&self) -> Option<ParameterSets> {
-            match get_bit_range!(self.pset_flags, u8, u8, 2, 0) {
-                0 => Some(ParameterSets::_1MsIntegrationTime),
-                1 => Some(ParameterSets::_5MsIntegrationTime),
-                2 => Some(ParameterSets::_10MsIntegrationTime),
-                3 => Some(ParameterSets::_20MsIntegrationTime),
-                _ => None,
-            }
+            get_bit_range!(self.pset_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_parameter_sets(&mut self, parameter_sets: ParameterSets) {
@@ -832,11 +794,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn clock_validity_status(&self) -> Option<ClockValidityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 5, 0) {
-                0 => Some(ClockValidityStatus::ClockOffsetAndDriftIsNotValid),
-                1 => Some(ClockValidityStatus::ClockOffsetAndDriftIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 5, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_clock_validity_status(&mut self, clock_validity_status: ClockValidityStatus) {
@@ -844,11 +804,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn pseudorange_validity_status(&self) -> Option<PseudorangeValidityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 4, 0) {
-                0 => Some(PseudorangeValidityStatus::PseudorangeIsNotValid),
-                1 => Some(PseudorangeValidityStatus::PseudorangeIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 4, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_pseudorange_validity_status(
@@ -866,11 +824,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn acceleration_validity_status(&self) -> Option<AccelerationValidityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 3, 0) {
-                0 => Some(AccelerationValidityStatus::AccelerationIsNotValid),
-                1 => Some(AccelerationValidityStatus::AccelerationIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 3, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_acceleration_validity_status(
@@ -890,11 +846,9 @@ pub mod msg_tracking_state_detailed_dep {
         pub fn carrier_half_cycle_ambiguity_status(
             &self,
         ) -> Option<CarrierHalfCycleAmbiguityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 2, 0) {
-                0 => Some(CarrierHalfCycleAmbiguityStatus::Unresolved),
-                1 => Some(CarrierHalfCycleAmbiguityStatus::Resolved),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_carrier_half_cycle_ambiguity_status(
@@ -912,11 +866,9 @@ pub mod msg_tracking_state_detailed_dep {
         }
 
         pub fn tracking_channel_status(&self) -> Option<TrackingChannelStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 1, 0) {
-                0 => Some(TrackingChannelStatus::ReAcquisition),
-                1 => Some(TrackingChannelStatus::Running),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 1, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_tracking_channel_status(
@@ -1057,7 +1009,7 @@ pub mod msg_tracking_state_detailed_dep {
     }
 
     /// Synchronization status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum SynchronizationStatus {
         /// No synchronization
         NoSynchronization = 0,
@@ -1089,8 +1041,21 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for SynchronizationStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(SynchronizationStatus::NoSynchronization),
+                1 => Ok(SynchronizationStatus::BitSynchronization),
+                2 => Ok(SynchronizationStatus::WordSynchronization),
+                3 => Ok(SynchronizationStatus::SubFrameSynchronizationMessageSynchronization),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Week number validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum WeekNumberValidityStatus {
         /// Week number is not valid
         WeekNumberIsNotValid = 0,
@@ -1110,8 +1075,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for WeekNumberValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(WeekNumberValidityStatus::WeekNumberIsNotValid),
+                1 => Ok(WeekNumberValidityStatus::WeekNumberIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// TOW status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TowStatus {
         /// TOW is not available
         TowIsNotAvailable = 0,
@@ -1133,8 +1109,20 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for TowStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TowStatus::TowIsNotAvailable),
+                1 => Ok(TowStatus::DecodedTowIsAvailable),
+                2 => Ok(TowStatus::PropagatedTowIsAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// FLL status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FllStatus {
         /// FLL is inactive
         FllIsInactive = 0,
@@ -1152,8 +1140,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for FllStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FllStatus::FllIsInactive),
+                1 => Ok(FllStatus::FllIsActive),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// PLL status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum PllStatus {
         /// PLL is inactive
         PllIsInactive = 0,
@@ -1171,8 +1170,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for PllStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(PllStatus::PllIsInactive),
+                1 => Ok(PllStatus::PllIsActive),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Tracking loop status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingLoopStatus {
         /// No locks
         NoLocks = 0,
@@ -1198,8 +1208,21 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for TrackingLoopStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingLoopStatus::NoLocks),
+                1 => Ok(TrackingLoopStatus::FlldllLock),
+                2 => Ok(TrackingLoopStatus::PllOptimisticLock),
+                3 => Ok(TrackingLoopStatus::PllPessimisticLock),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Almanac availability status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum AlmanacAvailabilityStatus {
         /// Almanac is not available
         AlmanacIsNotAvailable = 0,
@@ -1221,8 +1244,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for AlmanacAvailabilityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(AlmanacAvailabilityStatus::AlmanacIsNotAvailable),
+                1 => Ok(AlmanacAvailabilityStatus::AlmanacIsAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Ephemeris availability status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EphemerisAvailabilityStatus {
         /// Ephemeris is not available
         EphemerisIsNotAvailable = 0,
@@ -1244,8 +1278,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for EphemerisAvailabilityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(EphemerisAvailabilityStatus::EphemerisIsNotAvailable),
+                1 => Ok(EphemerisAvailabilityStatus::EphemerisIsAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Health status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum HealthStatus {
         /// Health is unknown
         HealthIsUnknown = 0,
@@ -1267,8 +1312,20 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for HealthStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(HealthStatus::HealthIsUnknown),
+                1 => Ok(HealthStatus::SignalIsUnhealthy),
+                2 => Ok(HealthStatus::SignalIsHealthy),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Parameter sets.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum ParameterSets {
         /// 1 ms integration time
         _1MsIntegrationTime = 0,
@@ -1294,8 +1351,21 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for ParameterSets {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(ParameterSets::_1MsIntegrationTime),
+                1 => Ok(ParameterSets::_5MsIntegrationTime),
+                2 => Ok(ParameterSets::_10MsIntegrationTime),
+                3 => Ok(ParameterSets::_20MsIntegrationTime),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Clock validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum ClockValidityStatus {
         /// Clock offset and drift is not valid
         ClockOffsetAndDriftIsNotValid = 0,
@@ -1317,8 +1387,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for ClockValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(ClockValidityStatus::ClockOffsetAndDriftIsNotValid),
+                1 => Ok(ClockValidityStatus::ClockOffsetAndDriftIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Pseudorange validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum PseudorangeValidityStatus {
         /// Pseudorange is not valid
         PseudorangeIsNotValid = 0,
@@ -1340,8 +1421,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for PseudorangeValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(PseudorangeValidityStatus::PseudorangeIsNotValid),
+                1 => Ok(PseudorangeValidityStatus::PseudorangeIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Acceleration validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum AccelerationValidityStatus {
         /// Acceleration is not valid
         AccelerationIsNotValid = 0,
@@ -1363,8 +1455,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for AccelerationValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(AccelerationValidityStatus::AccelerationIsNotValid),
+                1 => Ok(AccelerationValidityStatus::AccelerationIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Carrier half cycle ambiguity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum CarrierHalfCycleAmbiguityStatus {
         /// Unresolved
         Unresolved = 0,
@@ -1382,8 +1485,19 @@ pub mod msg_tracking_state_detailed_dep {
         }
     }
 
+    impl TryFrom<u8> for CarrierHalfCycleAmbiguityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(CarrierHalfCycleAmbiguityStatus::Unresolved),
+                1 => Ok(CarrierHalfCycleAmbiguityStatus::Resolved),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Tracking channel status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingChannelStatus {
         /// Re-acquisition
         ReAcquisition = 0,
@@ -1397,6 +1511,17 @@ pub mod msg_tracking_state_detailed_dep {
             match self {
                 TrackingChannelStatus::ReAcquisition => f.write_str("Re-acquisition"),
                 TrackingChannelStatus::Running => f.write_str("Running"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TrackingChannelStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingChannelStatus::ReAcquisition),
+                1 => Ok(TrackingChannelStatus::Running),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -1493,13 +1618,9 @@ pub mod msg_tracking_state_detailed_dep_a {
 
     impl MsgTrackingStateDetailedDepA {
         pub fn synchronization_status(&self) -> Option<SynchronizationStatus> {
-            match get_bit_range!(self.sync_flags, u8, u8, 2, 0) {
-                0 => Some(SynchronizationStatus::NoSynchronization),
-                1 => Some(SynchronizationStatus::BitSynchronization),
-                2 => Some(SynchronizationStatus::WordSynchronization),
-                3 => Some(SynchronizationStatus::SubFrameSynchronizationMessageSynchronization),
-                _ => None,
-            }
+            get_bit_range!(self.sync_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_synchronization_status(
@@ -1510,11 +1631,7 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn week_number_validity_status(&self) -> Option<WeekNumberValidityStatus> {
-            match get_bit_range!(self.tow_flags, u8, u8, 3, 0) {
-                0 => Some(WeekNumberValidityStatus::WeekNumberIsNotValid),
-                1 => Some(WeekNumberValidityStatus::WeekNumberIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.tow_flags, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_week_number_validity_status(
@@ -1532,12 +1649,7 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn tow_status(&self) -> Option<TowStatus> {
-            match get_bit_range!(self.tow_flags, u8, u8, 2, 0) {
-                0 => Some(TowStatus::TowIsNotAvailable),
-                1 => Some(TowStatus::DecodedTowIsAvailable),
-                2 => Some(TowStatus::PropagatedTowIsAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.tow_flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_tow_status(&mut self, tow_status: TowStatus) {
@@ -1545,11 +1657,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn fll_status(&self) -> Option<FllStatus> {
-            match get_bit_range!(self.track_flags, u8, u8, 4, 0) {
-                0 => Some(FllStatus::FllIsInactive),
-                1 => Some(FllStatus::FllIsActive),
-                _ => None,
-            }
+            get_bit_range!(self.track_flags, u8, u8, 4, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_fll_status(&mut self, fll_status: FllStatus) {
@@ -1557,11 +1667,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn pll_status(&self) -> Option<PllStatus> {
-            match get_bit_range!(self.track_flags, u8, u8, 3, 0) {
-                0 => Some(PllStatus::PllIsInactive),
-                1 => Some(PllStatus::PllIsActive),
-                _ => None,
-            }
+            get_bit_range!(self.track_flags, u8, u8, 3, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_pll_status(&mut self, pll_status: PllStatus) {
@@ -1569,13 +1677,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn tracking_loop_status(&self) -> Option<TrackingLoopStatus> {
-            match get_bit_range!(self.track_flags, u8, u8, 2, 0) {
-                0 => Some(TrackingLoopStatus::NoLocks),
-                1 => Some(TrackingLoopStatus::FlldllLock),
-                2 => Some(TrackingLoopStatus::PllOptimisticLock),
-                3 => Some(TrackingLoopStatus::PllPessimisticLock),
-                _ => None,
-            }
+            get_bit_range!(self.track_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_tracking_loop_status(&mut self, tracking_loop_status: TrackingLoopStatus) {
@@ -1583,11 +1687,7 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn almanac_availability_status(&self) -> Option<AlmanacAvailabilityStatus> {
-            match get_bit_range!(self.nav_flags, u8, u8, 4, 0) {
-                0 => Some(AlmanacAvailabilityStatus::AlmanacIsNotAvailable),
-                1 => Some(AlmanacAvailabilityStatus::AlmanacIsAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.nav_flags, u8, u8, 4, 0).try_into().ok()
         }
 
         pub fn set_almanac_availability_status(
@@ -1605,11 +1705,7 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn ephemeris_availability_status(&self) -> Option<EphemerisAvailabilityStatus> {
-            match get_bit_range!(self.nav_flags, u8, u8, 3, 0) {
-                0 => Some(EphemerisAvailabilityStatus::EphemerisIsNotAvailable),
-                1 => Some(EphemerisAvailabilityStatus::EphemerisIsAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.nav_flags, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_ephemeris_availability_status(
@@ -1627,12 +1723,7 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn health_status(&self) -> Option<HealthStatus> {
-            match get_bit_range!(self.nav_flags, u8, u8, 2, 0) {
-                0 => Some(HealthStatus::HealthIsUnknown),
-                1 => Some(HealthStatus::SignalIsUnhealthy),
-                2 => Some(HealthStatus::SignalIsHealthy),
-                _ => None,
-            }
+            get_bit_range!(self.nav_flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_health_status(&mut self, health_status: HealthStatus) {
@@ -1640,13 +1731,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn parameter_sets(&self) -> Option<ParameterSets> {
-            match get_bit_range!(self.pset_flags, u8, u8, 2, 0) {
-                0 => Some(ParameterSets::_1MsIntegrationTime),
-                1 => Some(ParameterSets::_5MsIntegrationTime),
-                2 => Some(ParameterSets::_10MsIntegrationTime),
-                3 => Some(ParameterSets::_20MsIntegrationTime),
-                _ => None,
-            }
+            get_bit_range!(self.pset_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_parameter_sets(&mut self, parameter_sets: ParameterSets) {
@@ -1654,11 +1741,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn clock_validity_status(&self) -> Option<ClockValidityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 5, 0) {
-                0 => Some(ClockValidityStatus::ClockOffsetAndDriftIsNotValid),
-                1 => Some(ClockValidityStatus::ClockOffsetAndDriftIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 5, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_clock_validity_status(&mut self, clock_validity_status: ClockValidityStatus) {
@@ -1666,11 +1751,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn pseudorange_validity_status(&self) -> Option<PseudorangeValidityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 4, 0) {
-                0 => Some(PseudorangeValidityStatus::PseudorangeIsNotValid),
-                1 => Some(PseudorangeValidityStatus::PseudorangeIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 4, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_pseudorange_validity_status(
@@ -1688,11 +1771,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn acceleration_validity_status(&self) -> Option<AccelerationValidityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 3, 0) {
-                0 => Some(AccelerationValidityStatus::AccelerationIsNotValid),
-                1 => Some(AccelerationValidityStatus::AccelerationIsValid),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 3, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_acceleration_validity_status(
@@ -1712,11 +1793,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         pub fn carrier_half_cycle_ambiguity_status(
             &self,
         ) -> Option<CarrierHalfCycleAmbiguityStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 2, 0) {
-                0 => Some(CarrierHalfCycleAmbiguityStatus::Unresolved),
-                1 => Some(CarrierHalfCycleAmbiguityStatus::Resolved),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_carrier_half_cycle_ambiguity_status(
@@ -1734,11 +1813,9 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
 
         pub fn tracking_channel_status(&self) -> Option<TrackingChannelStatus> {
-            match get_bit_range!(self.misc_flags, u8, u8, 1, 0) {
-                0 => Some(TrackingChannelStatus::ReAcquisition),
-                1 => Some(TrackingChannelStatus::Running),
-                _ => None,
-            }
+            get_bit_range!(self.misc_flags, u8, u8, 1, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_tracking_channel_status(
@@ -1879,7 +1956,7 @@ pub mod msg_tracking_state_detailed_dep_a {
     }
 
     /// Synchronization status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum SynchronizationStatus {
         /// No synchronization
         NoSynchronization = 0,
@@ -1911,8 +1988,21 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for SynchronizationStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(SynchronizationStatus::NoSynchronization),
+                1 => Ok(SynchronizationStatus::BitSynchronization),
+                2 => Ok(SynchronizationStatus::WordSynchronization),
+                3 => Ok(SynchronizationStatus::SubFrameSynchronizationMessageSynchronization),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Week number validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum WeekNumberValidityStatus {
         /// Week number is not valid
         WeekNumberIsNotValid = 0,
@@ -1932,8 +2022,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for WeekNumberValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(WeekNumberValidityStatus::WeekNumberIsNotValid),
+                1 => Ok(WeekNumberValidityStatus::WeekNumberIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// TOW status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TowStatus {
         /// TOW is not available
         TowIsNotAvailable = 0,
@@ -1955,8 +2056,20 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for TowStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TowStatus::TowIsNotAvailable),
+                1 => Ok(TowStatus::DecodedTowIsAvailable),
+                2 => Ok(TowStatus::PropagatedTowIsAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// FLL status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FllStatus {
         /// FLL is inactive
         FllIsInactive = 0,
@@ -1974,8 +2087,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for FllStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FllStatus::FllIsInactive),
+                1 => Ok(FllStatus::FllIsActive),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// PLL status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum PllStatus {
         /// PLL is inactive
         PllIsInactive = 0,
@@ -1993,8 +2117,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for PllStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(PllStatus::PllIsInactive),
+                1 => Ok(PllStatus::PllIsActive),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Tracking loop status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingLoopStatus {
         /// No locks
         NoLocks = 0,
@@ -2020,8 +2155,21 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for TrackingLoopStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingLoopStatus::NoLocks),
+                1 => Ok(TrackingLoopStatus::FlldllLock),
+                2 => Ok(TrackingLoopStatus::PllOptimisticLock),
+                3 => Ok(TrackingLoopStatus::PllPessimisticLock),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Almanac availability status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum AlmanacAvailabilityStatus {
         /// Almanac is not available
         AlmanacIsNotAvailable = 0,
@@ -2043,8 +2191,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for AlmanacAvailabilityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(AlmanacAvailabilityStatus::AlmanacIsNotAvailable),
+                1 => Ok(AlmanacAvailabilityStatus::AlmanacIsAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Ephemeris availability status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EphemerisAvailabilityStatus {
         /// Ephemeris is not available
         EphemerisIsNotAvailable = 0,
@@ -2066,8 +2225,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for EphemerisAvailabilityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(EphemerisAvailabilityStatus::EphemerisIsNotAvailable),
+                1 => Ok(EphemerisAvailabilityStatus::EphemerisIsAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Health status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum HealthStatus {
         /// Health is unknown
         HealthIsUnknown = 0,
@@ -2089,8 +2259,20 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for HealthStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(HealthStatus::HealthIsUnknown),
+                1 => Ok(HealthStatus::SignalIsUnhealthy),
+                2 => Ok(HealthStatus::SignalIsHealthy),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Parameter sets.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum ParameterSets {
         /// 1 ms integration time
         _1MsIntegrationTime = 0,
@@ -2116,8 +2298,21 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for ParameterSets {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(ParameterSets::_1MsIntegrationTime),
+                1 => Ok(ParameterSets::_5MsIntegrationTime),
+                2 => Ok(ParameterSets::_10MsIntegrationTime),
+                3 => Ok(ParameterSets::_20MsIntegrationTime),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Clock validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum ClockValidityStatus {
         /// Clock offset and drift is not valid
         ClockOffsetAndDriftIsNotValid = 0,
@@ -2139,8 +2334,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for ClockValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(ClockValidityStatus::ClockOffsetAndDriftIsNotValid),
+                1 => Ok(ClockValidityStatus::ClockOffsetAndDriftIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Pseudorange validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum PseudorangeValidityStatus {
         /// Pseudorange is not valid
         PseudorangeIsNotValid = 0,
@@ -2162,8 +2368,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for PseudorangeValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(PseudorangeValidityStatus::PseudorangeIsNotValid),
+                1 => Ok(PseudorangeValidityStatus::PseudorangeIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Acceleration validity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum AccelerationValidityStatus {
         /// Acceleration is not valid
         AccelerationIsNotValid = 0,
@@ -2185,8 +2402,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for AccelerationValidityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(AccelerationValidityStatus::AccelerationIsNotValid),
+                1 => Ok(AccelerationValidityStatus::AccelerationIsValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Carrier half cycle ambiguity status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum CarrierHalfCycleAmbiguityStatus {
         /// Unresolved
         Unresolved = 0,
@@ -2204,8 +2432,19 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
     }
 
+    impl TryFrom<u8> for CarrierHalfCycleAmbiguityStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(CarrierHalfCycleAmbiguityStatus::Unresolved),
+                1 => Ok(CarrierHalfCycleAmbiguityStatus::Resolved),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Tracking channel status.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingChannelStatus {
         /// Re-acquisition
         ReAcquisition = 0,
@@ -2219,6 +2458,17 @@ pub mod msg_tracking_state_detailed_dep_a {
             match self {
                 TrackingChannelStatus::ReAcquisition => f.write_str("Re-acquisition"),
                 TrackingChannelStatus::Running => f.write_str("Running"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TrackingChannelStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingChannelStatus::ReAcquisition),
+                1 => Ok(TrackingChannelStatus::Running),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -2423,11 +2673,7 @@ pub mod tracking_channel_state_dep_a {
 
     impl TrackingChannelStateDepA {
         pub fn tracking_mode(&self) -> Option<TrackingMode> {
-            match get_bit_range!(self.state, u8, u8, 1, 0) {
-                0 => Some(TrackingMode::Disabled),
-                1 => Some(TrackingMode::Running),
-                _ => None,
-            }
+            get_bit_range!(self.state, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_tracking_mode(&mut self, tracking_mode: TrackingMode) {
@@ -2457,7 +2703,7 @@ pub mod tracking_channel_state_dep_a {
     }
 
     /// Tracking mode
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingMode {
         /// Disabled
         Disabled = 0,
@@ -2471,6 +2717,17 @@ pub mod tracking_channel_state_dep_a {
             match self {
                 TrackingMode::Disabled => f.write_str("Disabled"),
                 TrackingMode::Running => f.write_str("Running"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TrackingMode {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingMode::Disabled),
+                1 => Ok(TrackingMode::Running),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -2503,11 +2760,7 @@ pub mod tracking_channel_state_dep_b {
 
     impl TrackingChannelStateDepB {
         pub fn tracking_mode(&self) -> Option<TrackingMode> {
-            match get_bit_range!(self.state, u8, u8, 1, 0) {
-                0 => Some(TrackingMode::Disabled),
-                1 => Some(TrackingMode::Running),
-                _ => None,
-            }
+            get_bit_range!(self.state, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_tracking_mode(&mut self, tracking_mode: TrackingMode) {
@@ -2537,7 +2790,7 @@ pub mod tracking_channel_state_dep_b {
     }
 
     /// Tracking mode
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TrackingMode {
         /// Disabled
         Disabled = 0,
@@ -2551,6 +2804,17 @@ pub mod tracking_channel_state_dep_b {
             match self {
                 TrackingMode::Disabled => f.write_str("Disabled"),
                 TrackingMode::Running => f.write_str("Running"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TrackingMode {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TrackingMode::Disabled),
+                1 => Ok(TrackingMode::Running),
+                _ => Err(TryFromIntError),
             }
         }
     }

@@ -6351,11 +6351,7 @@ pub mod packed_obs_content {
 
     impl PackedObsContent {
         pub fn raim_exclusion(&self) -> Option<RaimExclusion> {
-            match get_bit_range!(self.flags, u8, u8, 7, 0) {
-                0 => Some(RaimExclusion::NoExclusion),
-                1 => Some(RaimExclusion::MeasurementWasExcludedBySppRaimUseWithCare),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 7, 0).try_into().ok()
         }
 
         pub fn set_raim_exclusion(&mut self, raim_exclusion: RaimExclusion) {
@@ -6363,11 +6359,7 @@ pub mod packed_obs_content {
         }
 
         pub fn doppler_valid(&self) -> Option<DopplerValid> {
-            match get_bit_range!(self.flags, u8, u8, 3, 0) {
-                0 => Some(DopplerValid::InvalidDopplerMeasurement),
-                1 => Some(DopplerValid::ValidDopplerMeasurement),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_doppler_valid(&mut self, doppler_valid: DopplerValid) {
@@ -6375,11 +6367,7 @@ pub mod packed_obs_content {
         }
 
         pub fn halfcycle_ambiguity(&self) -> Option<HalfCycleAmbiguity> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityUnresolved),
-                1 => Some(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityResolved),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_halfcycle_ambiguity(&mut self, halfcycle_ambiguity: HalfCycleAmbiguity) {
@@ -6387,11 +6375,7 @@ pub mod packed_obs_content {
         }
 
         pub fn carrier_phase_valid(&self) -> Option<CarrierPhaseValid> {
-            match get_bit_range!(self.flags, u8, u8, 1, 0) {
-                0 => Some(CarrierPhaseValid::InvalidCarrierPhaseMeasurement),
-                1 => Some(CarrierPhaseValid::ValidCarrierPhaseMeasurement),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_carrier_phase_valid(&mut self, carrier_phase_valid: CarrierPhaseValid) {
@@ -6399,11 +6383,7 @@ pub mod packed_obs_content {
         }
 
         pub fn pseudorange_valid(&self) -> Option<PseudorangeValid> {
-            match get_bit_range!(self.flags, u8, u8, 0, 0) {
-                0 => Some(PseudorangeValid::InvalidPseudorangeMeasurement),
-                1 => Some(PseudorangeValid::ValidPseudorangeMeasurementAndCoarseTowDecoded),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_pseudorange_valid(&mut self, pseudorange_valid: PseudorangeValid) {
@@ -6451,7 +6431,7 @@ pub mod packed_obs_content {
     }
 
     /// RAIM exclusion
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum RaimExclusion {
         /// No exclusion
         NoExclusion = 0,
@@ -6471,8 +6451,19 @@ pub mod packed_obs_content {
         }
     }
 
+    impl TryFrom<u8> for RaimExclusion {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(RaimExclusion::NoExclusion),
+                1 => Ok(RaimExclusion::MeasurementWasExcludedBySppRaimUseWithCare),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Doppler valid
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum DopplerValid {
         /// Invalid doppler measurement
         InvalidDopplerMeasurement = 0,
@@ -6492,8 +6483,19 @@ pub mod packed_obs_content {
         }
     }
 
+    impl TryFrom<u8> for DopplerValid {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(DopplerValid::InvalidDopplerMeasurement),
+                1 => Ok(DopplerValid::ValidDopplerMeasurement),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Half-cycle ambiguity
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum HalfCycleAmbiguity {
         /// Half cycle phase ambiguity unresolved
         HalfCyclePhaseAmbiguityUnresolved = 0,
@@ -6515,8 +6517,19 @@ pub mod packed_obs_content {
         }
     }
 
+    impl TryFrom<u8> for HalfCycleAmbiguity {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityUnresolved),
+                1 => Ok(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityResolved),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Carrier phase valid
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum CarrierPhaseValid {
         /// Invalid carrier phase measurement
         InvalidCarrierPhaseMeasurement = 0,
@@ -6538,8 +6551,19 @@ pub mod packed_obs_content {
         }
     }
 
+    impl TryFrom<u8> for CarrierPhaseValid {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(CarrierPhaseValid::InvalidCarrierPhaseMeasurement),
+                1 => Ok(CarrierPhaseValid::ValidCarrierPhaseMeasurement),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Pseudorange valid
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum PseudorangeValid {
         /// Invalid pseudorange measurement
         InvalidPseudorangeMeasurement = 0,
@@ -6557,6 +6581,17 @@ pub mod packed_obs_content {
                 PseudorangeValid::ValidPseudorangeMeasurementAndCoarseTowDecoded => {
                     f.write_str("Valid pseudorange measurement and coarse TOW decoded")
                 }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for PseudorangeValid {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(PseudorangeValid::InvalidPseudorangeMeasurement),
+                1 => Ok(PseudorangeValid::ValidPseudorangeMeasurementAndCoarseTowDecoded),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -6807,11 +6842,7 @@ pub mod packed_osr_content {
 
     impl PackedOsrContent {
         pub fn invalid_phase_corrections(&self) -> Option<InvalidPhaseCorrections> {
-            match get_bit_range!(self.flags, u8, u8, 4, 0) {
-                0 => Some(InvalidPhaseCorrections::ValidPhaseCorrections),
-                1 => Some(InvalidPhaseCorrections::DoNotUsePhaseCorrections),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
         }
 
         pub fn set_invalid_phase_corrections(
@@ -6822,11 +6853,7 @@ pub mod packed_osr_content {
         }
 
         pub fn invalid_code_corrections(&self) -> Option<InvalidCodeCorrections> {
-            match get_bit_range!(self.flags, u8, u8, 3, 0) {
-                0 => Some(InvalidCodeCorrections::ValidCodeCorrections),
-                1 => Some(InvalidCodeCorrections::DoNotUseCodeCorrections),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_invalid_code_corrections(
@@ -6837,11 +6864,7 @@ pub mod packed_osr_content {
         }
 
         pub fn full_fixing_flag(&self) -> Option<FullFixingFlag> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(FullFixingFlag::FullFixingUnavailable),
-                1 => Some(FullFixingFlag::FullFixingAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_full_fixing_flag(&mut self, full_fixing_flag: FullFixingFlag) {
@@ -6849,11 +6872,7 @@ pub mod packed_osr_content {
         }
 
         pub fn partial_fixing_flag(&self) -> Option<PartialFixingFlag> {
-            match get_bit_range!(self.flags, u8, u8, 1, 0) {
-                0 => Some(PartialFixingFlag::PartialFixingUnavailable),
-                1 => Some(PartialFixingFlag::PartialFixingAvailable),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_partial_fixing_flag(&mut self, partial_fixing_flag: PartialFixingFlag) {
@@ -6861,11 +6880,7 @@ pub mod packed_osr_content {
         }
 
         pub fn correction_validity(&self) -> Option<CorrectionValidity> {
-            match get_bit_range!(self.flags, u8, u8, 0, 0) {
-                0 => Some(CorrectionValidity::DoNotUseSignal),
-                1 => Some(CorrectionValidity::ValidSignal),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_correction_validity(&mut self, correction_validity: CorrectionValidity) {
@@ -6917,7 +6932,7 @@ pub mod packed_osr_content {
     }
 
     /// Invalid phase corrections
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum InvalidPhaseCorrections {
         /// Valid phase corrections
         ValidPhaseCorrections = 0,
@@ -6939,8 +6954,19 @@ pub mod packed_osr_content {
         }
     }
 
+    impl TryFrom<u8> for InvalidPhaseCorrections {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(InvalidPhaseCorrections::ValidPhaseCorrections),
+                1 => Ok(InvalidPhaseCorrections::DoNotUsePhaseCorrections),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Invalid code corrections
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum InvalidCodeCorrections {
         /// Valid code corrections
         ValidCodeCorrections = 0,
@@ -6962,8 +6988,19 @@ pub mod packed_osr_content {
         }
     }
 
+    impl TryFrom<u8> for InvalidCodeCorrections {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(InvalidCodeCorrections::ValidCodeCorrections),
+                1 => Ok(InvalidCodeCorrections::DoNotUseCodeCorrections),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Full fixing flag
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FullFixingFlag {
         /// Full fixing unavailable
         FullFixingUnavailable = 0,
@@ -6981,8 +7018,19 @@ pub mod packed_osr_content {
         }
     }
 
+    impl TryFrom<u8> for FullFixingFlag {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FullFixingFlag::FullFixingUnavailable),
+                1 => Ok(FullFixingFlag::FullFixingAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Partial fixing flag
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum PartialFixingFlag {
         /// Partial fixing unavailable
         PartialFixingUnavailable = 0,
@@ -7004,8 +7052,19 @@ pub mod packed_osr_content {
         }
     }
 
+    impl TryFrom<u8> for PartialFixingFlag {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(PartialFixingFlag::PartialFixingUnavailable),
+                1 => Ok(PartialFixingFlag::PartialFixingAvailable),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Correction validity
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum CorrectionValidity {
         /// Do not use signal
         DoNotUseSignal = 0,
@@ -7019,6 +7078,17 @@ pub mod packed_osr_content {
             match self {
                 CorrectionValidity::DoNotUseSignal => f.write_str("Do not use signal"),
                 CorrectionValidity::ValidSignal => f.write_str("Valid signal"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for CorrectionValidity {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(CorrectionValidity::DoNotUseSignal),
+                1 => Ok(CorrectionValidity::ValidSignal),
+                _ => Err(TryFromIntError),
             }
         }
     }

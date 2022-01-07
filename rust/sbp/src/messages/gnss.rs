@@ -218,21 +218,7 @@ pub mod gnss_signal {
 
     impl GnssSignal {
         pub fn code(&self) -> Option<Code> {
-            match get_bit_range!(self.code, u8, u8, 7, 0) {
-                0 => Some(Code::GpsL1Ca),
-                1 => Some(Code::GpsL2Cm),
-                2 => Some(Code::SbasL1Ca),
-                3 => Some(Code::GloL1Ca),
-                4 => Some(Code::GloL2Ca),
-                5 => Some(Code::GpsL1P),
-                6 => Some(Code::GpsL2P),
-                12 => Some(Code::Bds2B1),
-                13 => Some(Code::Bds2B2),
-                14 => Some(Code::GalE1B),
-                20 => Some(Code::GalE7I),
-                47 => Some(Code::Bds3B2A),
-                _ => None,
-            }
+            get_bit_range!(self.code, u8, u8, 7, 0).try_into().ok()
         }
 
         pub fn set_code(&mut self, code: Code) {
@@ -257,7 +243,7 @@ pub mod gnss_signal {
         }
     }
 
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum Code {
         /// GPS L1CA
         GpsL1Ca = 0,
@@ -314,6 +300,27 @@ pub mod gnss_signal {
             }
         }
     }
+
+    impl TryFrom<u8> for Code {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(Code::GpsL1Ca),
+                1 => Ok(Code::GpsL2Cm),
+                2 => Ok(Code::SbasL1Ca),
+                3 => Ok(Code::GloL1Ca),
+                4 => Ok(Code::GloL2Ca),
+                5 => Ok(Code::GpsL1P),
+                6 => Ok(Code::GpsL2P),
+                12 => Ok(Code::Bds2B1),
+                13 => Ok(Code::Bds2B2),
+                14 => Ok(Code::GalE1B),
+                20 => Ok(Code::GalE7I),
+                47 => Ok(Code::Bds3B2A),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
 }
 
 pub mod gnss_signal_dep {
@@ -345,16 +352,7 @@ pub mod gnss_signal_dep {
 
     impl GnssSignalDep {
         pub fn code(&self) -> Option<Code> {
-            match get_bit_range!(self.code, u8, u8, 7, 0) {
-                0 => Some(Code::GpsL1Ca),
-                1 => Some(Code::GpsL2Cm),
-                2 => Some(Code::SbasL1Ca),
-                3 => Some(Code::GloL1Ca),
-                4 => Some(Code::GloL2Ca),
-                5 => Some(Code::GpsL1P),
-                6 => Some(Code::GpsL2P),
-                _ => None,
-            }
+            get_bit_range!(self.code, u8, u8, 7, 0).try_into().ok()
         }
 
         pub fn set_code(&mut self, code: Code) {
@@ -385,7 +383,7 @@ pub mod gnss_signal_dep {
         }
     }
 
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum Code {
         /// GPS L1CA
         GpsL1Ca = 0,
@@ -419,6 +417,22 @@ pub mod gnss_signal_dep {
                 Code::GloL2Ca => f.write_str("GLO L2CA"),
                 Code::GpsL1P => f.write_str("GPS L1P"),
                 Code::GpsL2P => f.write_str("GPS L2P"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Code {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(Code::GpsL1Ca),
+                1 => Ok(Code::GpsL2Cm),
+                2 => Ok(Code::SbasL1Ca),
+                3 => Ok(Code::GloL1Ca),
+                4 => Ok(Code::GloL2Ca),
+                5 => Ok(Code::GpsL1P),
+                6 => Ok(Code::GpsL2P),
+                _ => Err(TryFromIntError),
             }
         }
     }

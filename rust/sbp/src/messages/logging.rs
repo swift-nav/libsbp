@@ -137,17 +137,7 @@ pub mod msg_log {
 
     impl MsgLog {
         pub fn logging_level(&self) -> Option<LoggingLevel> {
-            match get_bit_range!(self.level, u8, u8, 2, 0) {
-                0 => Some(LoggingLevel::EMERG),
-                1 => Some(LoggingLevel::ALERT),
-                2 => Some(LoggingLevel::CRIT),
-                3 => Some(LoggingLevel::ERROR),
-                4 => Some(LoggingLevel::WARN),
-                5 => Some(LoggingLevel::NOTICE),
-                6 => Some(LoggingLevel::INFO),
-                7 => Some(LoggingLevel::DEBUG),
-                _ => None,
-            }
+            get_bit_range!(self.level, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_logging_level(&mut self, logging_level: LoggingLevel) {
@@ -208,7 +198,7 @@ pub mod msg_log {
     }
 
     /// Logging level
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum LoggingLevel {
         /// EMERG
         EMERG = 0,
@@ -246,6 +236,23 @@ pub mod msg_log {
                 LoggingLevel::NOTICE => f.write_str("NOTICE"),
                 LoggingLevel::INFO => f.write_str("INFO"),
                 LoggingLevel::DEBUG => f.write_str("DEBUG"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for LoggingLevel {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(LoggingLevel::EMERG),
+                1 => Ok(LoggingLevel::ALERT),
+                2 => Ok(LoggingLevel::CRIT),
+                3 => Ok(LoggingLevel::ERROR),
+                4 => Ok(LoggingLevel::WARN),
+                5 => Ok(LoggingLevel::NOTICE),
+                6 => Ok(LoggingLevel::INFO),
+                7 => Ok(LoggingLevel::DEBUG),
+                _ => Err(TryFromIntError),
             }
         }
     }

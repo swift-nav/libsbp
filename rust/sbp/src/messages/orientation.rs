@@ -61,11 +61,7 @@ pub mod msg_angular_rate {
 
     impl MsgAngularRate {
         pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(InsNavigationMode::Invalid),
-                1 => Some(InsNavigationMode::Valid),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
@@ -148,7 +144,7 @@ pub mod msg_angular_rate {
     }
 
     /// INS Navigation mode
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum InsNavigationMode {
         /// Invalid
         Invalid = 0,
@@ -162,6 +158,17 @@ pub mod msg_angular_rate {
             match self {
                 InsNavigationMode::Invalid => f.write_str("Invalid"),
                 InsNavigationMode::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for InsNavigationMode {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(InsNavigationMode::Invalid),
+                1 => Ok(InsNavigationMode::Valid),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -203,13 +210,7 @@ pub mod msg_baseline_heading {
 
     impl MsgBaselineHeading {
         pub fn fix_mode(&self) -> Option<FixMode> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(FixMode::Invalid),
-                2 => Some(FixMode::DifferentialGnss),
-                3 => Some(FixMode::FloatRtk),
-                4 => Some(FixMode::FixedRtk),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -288,7 +289,7 @@ pub mod msg_baseline_heading {
     }
 
     /// Fix mode
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FixMode {
         /// Invalid
         Invalid = 0,
@@ -310,6 +311,19 @@ pub mod msg_baseline_heading {
                 FixMode::DifferentialGnss => f.write_str("Differential GNSS (DGNSS)"),
                 FixMode::FloatRtk => f.write_str("Float RTK"),
                 FixMode::FixedRtk => f.write_str("Fixed RTK"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for FixMode {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FixMode::Invalid),
+                2 => Ok(FixMode::DifferentialGnss),
+                3 => Ok(FixMode::FloatRtk),
+                4 => Ok(FixMode::FixedRtk),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -364,11 +378,7 @@ pub mod msg_orient_euler {
 
     impl MsgOrientEuler {
         pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(InsNavigationMode::Invalid),
-                1 => Some(InsNavigationMode::Valid),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
@@ -463,7 +473,7 @@ pub mod msg_orient_euler {
     }
 
     /// INS Navigation mode
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum InsNavigationMode {
         /// Invalid
         Invalid = 0,
@@ -477,6 +487,17 @@ pub mod msg_orient_euler {
             match self {
                 InsNavigationMode::Invalid => f.write_str("Invalid"),
                 InsNavigationMode::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for InsNavigationMode {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(InsNavigationMode::Invalid),
+                1 => Ok(InsNavigationMode::Valid),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -537,11 +558,7 @@ pub mod msg_orient_quat {
 
     impl MsgOrientQuat {
         pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(InsNavigationMode::Invalid),
-                1 => Some(InsNavigationMode::Valid),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
@@ -644,7 +661,7 @@ pub mod msg_orient_quat {
     }
 
     /// INS Navigation mode
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum InsNavigationMode {
         /// Invalid
         Invalid = 0,
@@ -658,6 +675,17 @@ pub mod msg_orient_quat {
             match self {
                 InsNavigationMode::Invalid => f.write_str("Invalid"),
                 InsNavigationMode::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for InsNavigationMode {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(InsNavigationMode::Invalid),
+                1 => Ok(InsNavigationMode::Valid),
+                _ => Err(TryFromIntError),
             }
         }
     }

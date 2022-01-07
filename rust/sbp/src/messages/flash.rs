@@ -53,15 +53,7 @@ pub mod msg_flash_done {
 
     impl MsgFlashDone {
         pub fn response_code(&self) -> Option<ResponseCode> {
-            match get_bit_range!(self.response, u8, u8, 2, 0) {
-                0 => Some(ResponseCode::FlashOk),
-                1 => Some(ResponseCode::FlashInvalidFlash),
-                2 => Some(ResponseCode::FlashInvalidLen),
-                3 => Some(ResponseCode::FlashInvalidAddr),
-                4 => Some(ResponseCode::FlashInvalidRange),
-                5 => Some(ResponseCode::FlashInvalidSector),
-                _ => None,
-            }
+            get_bit_range!(self.response, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_response_code(&mut self, response_code: ResponseCode) {
@@ -119,7 +111,7 @@ pub mod msg_flash_done {
     }
 
     /// Response code
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum ResponseCode {
         /// FLASH_OK
         FlashOk = 0,
@@ -149,6 +141,21 @@ pub mod msg_flash_done {
                 ResponseCode::FlashInvalidAddr => f.write_str("FLASH_INVALID_ADDR"),
                 ResponseCode::FlashInvalidRange => f.write_str("FLASH_INVALID_RANGE"),
                 ResponseCode::FlashInvalidSector => f.write_str("FLASH_INVALID_SECTOR"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for ResponseCode {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(ResponseCode::FlashOk),
+                1 => Ok(ResponseCode::FlashInvalidFlash),
+                2 => Ok(ResponseCode::FlashInvalidLen),
+                3 => Ok(ResponseCode::FlashInvalidAddr),
+                4 => Ok(ResponseCode::FlashInvalidRange),
+                5 => Ok(ResponseCode::FlashInvalidSector),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -183,11 +190,7 @@ pub mod msg_flash_erase {
 
     impl MsgFlashErase {
         pub fn flash_target_to_read(&self) -> Option<FlashTargetToRead> {
-            match get_bit_range!(self.target, u8, u8, 0, 0) {
-                0 => Some(FlashTargetToRead::FlashStm),
-                1 => Some(FlashTargetToRead::FlashM25),
-                _ => None,
-            }
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
@@ -247,7 +250,7 @@ pub mod msg_flash_erase {
     }
 
     /// Flash target to read
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FlashTargetToRead {
         /// FLASH_STM
         FlashStm = 0,
@@ -261,6 +264,17 @@ pub mod msg_flash_erase {
             match self {
                 FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
                 FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -302,11 +316,7 @@ pub mod msg_flash_program {
 
     impl MsgFlashProgram {
         pub fn flash_target_to_read(&self) -> Option<FlashTargetToRead> {
-            match get_bit_range!(self.target, u8, u8, 0, 0) {
-                0 => Some(FlashTargetToRead::FlashStm),
-                1 => Some(FlashTargetToRead::FlashM25),
-                _ => None,
-            }
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
@@ -376,7 +386,7 @@ pub mod msg_flash_program {
     }
 
     /// Flash target to read
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FlashTargetToRead {
         /// FLASH_STM
         FlashStm = 0,
@@ -390,6 +400,17 @@ pub mod msg_flash_program {
             match self {
                 FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
                 FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -429,11 +450,7 @@ pub mod msg_flash_read_req {
 
     impl MsgFlashReadReq {
         pub fn flash_target_to_read(&self) -> Option<FlashTargetToRead> {
-            match get_bit_range!(self.target, u8, u8, 0, 0) {
-                0 => Some(FlashTargetToRead::FlashStm),
-                1 => Some(FlashTargetToRead::FlashM25),
-                _ => None,
-            }
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
@@ -499,7 +516,7 @@ pub mod msg_flash_read_req {
     }
 
     /// Flash target to read
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FlashTargetToRead {
         /// FLASH_STM
         FlashStm = 0,
@@ -513,6 +530,17 @@ pub mod msg_flash_read_req {
             match self {
                 FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
                 FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -552,11 +580,7 @@ pub mod msg_flash_read_resp {
 
     impl MsgFlashReadResp {
         pub fn flash_target_to_read(&self) -> Option<FlashTargetToRead> {
-            match get_bit_range!(self.target, u8, u8, 0, 0) {
-                0 => Some(FlashTargetToRead::FlashStm),
-                1 => Some(FlashTargetToRead::FlashM25),
-                _ => None,
-            }
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into().ok()
         }
 
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
@@ -622,7 +646,7 @@ pub mod msg_flash_read_resp {
     }
 
     /// Flash target to read
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum FlashTargetToRead {
         /// FLASH_STM
         FlashStm = 0,
@@ -636,6 +660,17 @@ pub mod msg_flash_read_resp {
             match self {
                 FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
                 FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                _ => Err(TryFromIntError),
             }
         }
     }

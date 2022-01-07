@@ -67,13 +67,7 @@ pub mod msg_ndb_event {
 
     impl MsgNdbEvent {
         pub fn event_type(&self) -> Option<EventType> {
-            match get_bit_range!(self.event, u8, u8, 1, 0) {
-                0 => Some(EventType::UNKNOWN),
-                1 => Some(EventType::STORE),
-                2 => Some(EventType::FETCH),
-                3 => Some(EventType::ERASE),
-                _ => None,
-            }
+            get_bit_range!(self.event, u8, u8, 1, 0).try_into().ok()
         }
 
         pub fn set_event_type(&mut self, event_type: EventType) {
@@ -81,16 +75,9 @@ pub mod msg_ndb_event {
         }
 
         pub fn event_object_type(&self) -> Option<EventObjectType> {
-            match get_bit_range!(self.object_type, u8, u8, 2, 0) {
-                0 => Some(EventObjectType::UNKNOWN),
-                1 => Some(EventObjectType::EPHEMERIS),
-                2 => Some(EventObjectType::ALMANAC),
-                3 => Some(EventObjectType::AlmanacWn),
-                4 => Some(EventObjectType::IoNO),
-                5 => Some(EventObjectType::L2CCap),
-                6 => Some(EventObjectType::LGF),
-                _ => None,
-            }
+            get_bit_range!(self.object_type, u8, u8, 2, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_event_object_type(&mut self, event_object_type: EventObjectType) {
@@ -98,20 +85,7 @@ pub mod msg_ndb_event {
         }
 
         pub fn event_result(&self) -> Option<EventResult> {
-            match get_bit_range!(self.result, u8, u8, 3, 0) {
-                0 => Some(EventResult::NdbErrNone),
-                1 => Some(EventResult::NdbErrMissingIe),
-                2 => Some(EventResult::NdbErrUnsupported),
-                3 => Some(EventResult::NdbErrFileIo),
-                4 => Some(EventResult::NdbErrInitDone),
-                5 => Some(EventResult::NdbErrBadParam),
-                6 => Some(EventResult::NdbErrUnreliableData),
-                7 => Some(EventResult::NdbErrAlgorithmError),
-                8 => Some(EventResult::NdbErrNoData),
-                9 => Some(EventResult::NdbErrNoChange),
-                10 => Some(EventResult::NdbErrOlderData),
-                _ => None,
-            }
+            get_bit_range!(self.result, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_event_result(&mut self, event_result: EventResult) {
@@ -119,13 +93,9 @@ pub mod msg_ndb_event {
         }
 
         pub fn data_source(&self) -> Option<DataSource> {
-            match get_bit_range!(self.data_source, u8, u8, 1, 0) {
-                0 => Some(DataSource::NdbDsUndefined),
-                1 => Some(DataSource::NdbDsInit),
-                2 => Some(DataSource::NdbDsReceiver),
-                3 => Some(DataSource::NdbDsSbp),
-                _ => None,
-            }
+            get_bit_range!(self.data_source, u8, u8, 1, 0)
+                .try_into()
+                .ok()
         }
 
         pub fn set_data_source(&mut self, data_source: DataSource) {
@@ -211,7 +181,7 @@ pub mod msg_ndb_event {
     }
 
     /// Event type.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EventType {
         /// UNKNOWN
         UNKNOWN = 0,
@@ -237,8 +207,21 @@ pub mod msg_ndb_event {
         }
     }
 
+    impl TryFrom<u8> for EventType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(EventType::UNKNOWN),
+                1 => Ok(EventType::STORE),
+                2 => Ok(EventType::FETCH),
+                3 => Ok(EventType::ERASE),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Event object type.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EventObjectType {
         /// UNKNOWN
         UNKNOWN = 0,
@@ -276,8 +259,24 @@ pub mod msg_ndb_event {
         }
     }
 
+    impl TryFrom<u8> for EventObjectType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(EventObjectType::UNKNOWN),
+                1 => Ok(EventObjectType::EPHEMERIS),
+                2 => Ok(EventObjectType::ALMANAC),
+                3 => Ok(EventObjectType::AlmanacWn),
+                4 => Ok(EventObjectType::IoNO),
+                5 => Ok(EventObjectType::L2CCap),
+                6 => Ok(EventObjectType::LGF),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Event result.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EventResult {
         /// NDB_ERR_NONE
         NdbErrNone = 0,
@@ -331,8 +330,28 @@ pub mod msg_ndb_event {
         }
     }
 
+    impl TryFrom<u8> for EventResult {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(EventResult::NdbErrNone),
+                1 => Ok(EventResult::NdbErrMissingIe),
+                2 => Ok(EventResult::NdbErrUnsupported),
+                3 => Ok(EventResult::NdbErrFileIo),
+                4 => Ok(EventResult::NdbErrInitDone),
+                5 => Ok(EventResult::NdbErrBadParam),
+                6 => Ok(EventResult::NdbErrUnreliableData),
+                7 => Ok(EventResult::NdbErrAlgorithmError),
+                8 => Ok(EventResult::NdbErrNoData),
+                9 => Ok(EventResult::NdbErrNoChange),
+                10 => Ok(EventResult::NdbErrOlderData),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Data source.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum DataSource {
         /// NDB_DS_UNDEFINED
         NdbDsUndefined = 0,
@@ -354,6 +373,19 @@ pub mod msg_ndb_event {
                 DataSource::NdbDsInit => f.write_str("NDB_DS_INIT"),
                 DataSource::NdbDsReceiver => f.write_str("NDB_DS_RECEIVER"),
                 DataSource::NdbDsSbp => f.write_str("NDB_DS_SBP"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for DataSource {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(DataSource::NdbDsUndefined),
+                1 => Ok(DataSource::NdbDsInit),
+                2 => Ok(DataSource::NdbDsReceiver),
+                3 => Ok(DataSource::NdbDsSbp),
+                _ => Err(TryFromIntError),
             }
         }
     }

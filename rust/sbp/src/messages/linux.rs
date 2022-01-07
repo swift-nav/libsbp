@@ -67,11 +67,7 @@ pub mod msg_linux_cpu_state {
 
     impl MsgLinuxCpuState {
         pub fn timestamp_type(&self) -> Option<TimestampType> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(TimestampType::SystemTimeInSeconds),
-                1 => Some(TimestampType::GpsTowInMilliseconds),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_timestamp_type(&mut self, timestamp_type: TimestampType) {
@@ -153,7 +149,7 @@ pub mod msg_linux_cpu_state {
     }
 
     /// timestamp type
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TimestampType {
         /// System time in seconds
         SystemTimeInSeconds = 0,
@@ -167,6 +163,17 @@ pub mod msg_linux_cpu_state {
             match self {
                 TimestampType::SystemTimeInSeconds => f.write_str("System time in seconds"),
                 TimestampType::GpsTowInMilliseconds => f.write_str("GPS TOW in milliseconds"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimestampType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TimestampType::SystemTimeInSeconds),
+                1 => Ok(TimestampType::GpsTowInMilliseconds),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -314,11 +321,7 @@ pub mod msg_linux_mem_state {
 
     impl MsgLinuxMemState {
         pub fn timestamp_type(&self) -> Option<TimestampType> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(TimestampType::SystemTimeInSeconds),
-                1 => Some(TimestampType::GpsTowInMilliseconds),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_timestamp_type(&mut self, timestamp_type: TimestampType) {
@@ -400,7 +403,7 @@ pub mod msg_linux_mem_state {
     }
 
     /// timestamp type
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TimestampType {
         /// System time in seconds
         SystemTimeInSeconds = 0,
@@ -414,6 +417,17 @@ pub mod msg_linux_mem_state {
             match self {
                 TimestampType::SystemTimeInSeconds => f.write_str("System time in seconds"),
                 TimestampType::GpsTowInMilliseconds => f.write_str("GPS TOW in milliseconds"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimestampType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TimestampType::SystemTimeInSeconds),
+                1 => Ok(TimestampType::GpsTowInMilliseconds),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -1068,11 +1082,7 @@ pub mod msg_linux_sys_state {
 
     impl MsgLinuxSysState {
         pub fn timestamp_type(&self) -> Option<TimestampType> {
-            match get_bit_range!(self.flags, u8, u8, 2, 0) {
-                0 => Some(TimestampType::SystemTimeInSeconds),
-                1 => Some(TimestampType::GpsTowInMilliseconds),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_timestamp_type(&mut self, timestamp_type: TimestampType) {
@@ -1158,7 +1168,7 @@ pub mod msg_linux_sys_state {
     }
 
     /// timestamp type
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TimestampType {
         /// System time in seconds
         SystemTimeInSeconds = 0,
@@ -1172,6 +1182,17 @@ pub mod msg_linux_sys_state {
             match self {
                 TimestampType::SystemTimeInSeconds => f.write_str("System time in seconds"),
                 TimestampType::GpsTowInMilliseconds => f.write_str("GPS TOW in milliseconds"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimestampType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TimestampType::SystemTimeInSeconds),
+                1 => Ok(TimestampType::GpsTowInMilliseconds),
+                _ => Err(TryFromIntError),
             }
         }
     }

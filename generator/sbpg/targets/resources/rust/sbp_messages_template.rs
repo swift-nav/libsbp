@@ -67,12 +67,7 @@ impl (((m.msg_name))) {
 
 ((* if b.vals|length > 0 *))
     pub fn (((b.field_name))) (&self) -> Option<(((b.type_name)))> {
-        match get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) ) {
-            ((*- for v in b.vals *))
-            (((v.value))) => Some( (((b.type_name))) :: (((v.name))) ),
-            ((*- endfor *))
-            _ => None,
-        }
+        get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) ).try_into().ok()
     }
 
     pub fn set_(((b.field_name))) (&mut self, (((b.field_name))): (((b.type_name)))) {
@@ -177,7 +172,7 @@ impl WireFormat for (((m.msg_name))) {
 ((*- if b.desc *))
 /// (((b.desc | commentify)))
 ((*- endif *))
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum (((b.type_name))) {
     ((* for v in b.vals *))
     /// (((v.desc | commentify(indent=2) )))
@@ -191,6 +186,18 @@ impl std::fmt::Display for (((b.type_name))) {
             ((*- for v in b.vals *))
             (((b.type_name)))::(((v.name))) => f.write_str("(((v.desc)))"),
             ((*- endfor *))
+        }
+    }
+}
+
+impl TryFrom<(((b.type)))> for (((b.type_name))) {
+    type Error = TryFromIntError;
+    fn try_from(i: (((b.type))) ) -> Result<Self, Self::Error> {
+        match i {
+            ((*- for v in b.vals *))
+            (((v.value))) => Ok( (((b.type_name))) :: (((v.name))) ),
+            ((*- endfor *))
+            _ => Err(TryFromIntError),
         }
     }
 }

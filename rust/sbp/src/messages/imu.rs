@@ -47,11 +47,7 @@ pub mod msg_imu_aux {
 
     impl MsgImuAux {
         pub fn imu_type(&self) -> Option<ImuType> {
-            match get_bit_range!(self.imu_type, u8, u8, 7, 0) {
-                0 => Some(ImuType::BoschBmi160),
-                1 => Some(ImuType::StMicroelectronicsAsm330Llh),
-                _ => None,
-            }
+            get_bit_range!(self.imu_type, u8, u8, 7, 0).try_into().ok()
         }
 
         pub fn set_imu_type(&mut self, imu_type: ImuType) {
@@ -59,14 +55,7 @@ pub mod msg_imu_aux {
         }
 
         pub fn gyroscope_range(&self) -> Option<GyroscopeRange> {
-            match get_bit_range!(self.imu_conf, u8, u8, 7, 4) {
-                0 => Some(GyroscopeRange::_2000DegS),
-                1 => Some(GyroscopeRange::_1000DegS),
-                2 => Some(GyroscopeRange::_500DegS),
-                3 => Some(GyroscopeRange::_250DegS),
-                4 => Some(GyroscopeRange::_125DegS),
-                _ => None,
-            }
+            get_bit_range!(self.imu_conf, u8, u8, 7, 4).try_into().ok()
         }
 
         pub fn set_gyroscope_range(&mut self, gyroscope_range: GyroscopeRange) {
@@ -74,13 +63,7 @@ pub mod msg_imu_aux {
         }
 
         pub fn accelerometer_range(&self) -> Option<AccelerometerRange> {
-            match get_bit_range!(self.imu_conf, u8, u8, 3, 0) {
-                0 => Some(AccelerometerRange::_2G),
-                1 => Some(AccelerometerRange::_4G),
-                2 => Some(AccelerometerRange::_8G),
-                3 => Some(AccelerometerRange::_16G),
-                _ => None,
-            }
+            get_bit_range!(self.imu_conf, u8, u8, 3, 0).try_into().ok()
         }
 
         pub fn set_accelerometer_range(&mut self, accelerometer_range: AccelerometerRange) {
@@ -146,7 +129,7 @@ pub mod msg_imu_aux {
     }
 
     /// IMU Type
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum ImuType {
         /// Bosch BMI160
         BoschBmi160 = 0,
@@ -166,8 +149,19 @@ pub mod msg_imu_aux {
         }
     }
 
+    impl TryFrom<u8> for ImuType {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(ImuType::BoschBmi160),
+                1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Gyroscope Range
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum GyroscopeRange {
         /// +/- 2000 deg / s
         _2000DegS = 0,
@@ -197,8 +191,22 @@ pub mod msg_imu_aux {
         }
     }
 
+    impl TryFrom<u8> for GyroscopeRange {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(GyroscopeRange::_2000DegS),
+                1 => Ok(GyroscopeRange::_1000DegS),
+                2 => Ok(GyroscopeRange::_500DegS),
+                3 => Ok(GyroscopeRange::_250DegS),
+                4 => Ok(GyroscopeRange::_125DegS),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
     /// Accelerometer Range
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum AccelerometerRange {
         /// +/- 2g
         _2G = 0,
@@ -220,6 +228,19 @@ pub mod msg_imu_aux {
                 AccelerometerRange::_4G => f.write_str("+/- 4g"),
                 AccelerometerRange::_8G => f.write_str("+/- 8g"),
                 AccelerometerRange::_16G => f.write_str("+/- 16g"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for AccelerometerRange {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(AccelerometerRange::_2G),
+                1 => Ok(AccelerometerRange::_4G),
+                2 => Ok(AccelerometerRange::_8G),
+                3 => Ok(AccelerometerRange::_16G),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -278,13 +299,7 @@ pub mod msg_imu_raw {
 
     impl MsgImuRaw {
         pub fn time_status(&self) -> Option<TimeStatus> {
-            match get_bit_range!(self.tow, u32, u8, 31, 30) {
-                0 => Some(TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
-                1 => Some(TimeStatus::ReferenceEpochIsTimeOfSystemStartup),
-                2 => Some(TimeStatus::ReferenceEpochIsUnknown),
-                3 => Some(TimeStatus::ReferenceEpochIsLastPps),
-                _ => None,
-            }
+            get_bit_range!(self.tow, u32, u8, 31, 30).try_into().ok()
         }
 
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
@@ -401,7 +416,7 @@ pub mod msg_imu_raw {
     }
 
     /// Time status
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum TimeStatus {
         /// Reference epoch is start of current GPS week
         ReferenceEpochIsStartOfCurrentGpsWeek = 0,
@@ -427,6 +442,19 @@ pub mod msg_imu_raw {
                 }
                 TimeStatus::ReferenceEpochIsUnknown => f.write_str("Reference epoch is unknown"),
                 TimeStatus::ReferenceEpochIsLastPps => f.write_str("Reference epoch is last PPS"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimeStatus {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
+                1 => Ok(TimeStatus::ReferenceEpochIsTimeOfSystemStartup),
+                2 => Ok(TimeStatus::ReferenceEpochIsUnknown),
+                3 => Ok(TimeStatus::ReferenceEpochIsLastPps),
+                _ => Err(TryFromIntError),
             }
         }
     }
