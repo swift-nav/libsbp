@@ -16,7 +16,7 @@ pub mod unknown;
 
 ((*- for m in msgs *))
 ((*- if m.is_real_message *))
-use self::(((m.mod_name)))::(((m.msg_name)));
+use self::(((m.parent_mod_name)))::(((m.mod_name)))::(((m.msg_name)));
 ((*- endif *))
 ((*- endfor *))
 use self::unknown::Unknown;

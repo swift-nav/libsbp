@@ -234,9 +234,9 @@ use self::tracking::MsgTrackingStateDepB;
 use self::tracking::MsgTrackingStateDetailedDep;
 use self::tracking::MsgTrackingStateDetailedDepA;
 use self::unknown::Unknown;
-use self::user::MsgUserData;
-use self::vehicle::MsgOdometry;
-use self::vehicle::MsgWheeltick;
+use self::user::msg_user_data::MsgUserData;
+use self::vehicle::msg_odometry::MsgOdometry;
+use self::vehicle::msg_wheeltick::MsgWheeltick;
 
 mod lib {
     //! Common imports so we can just `use super::lib::*` in all the message files

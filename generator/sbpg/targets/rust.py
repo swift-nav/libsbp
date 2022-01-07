@@ -91,6 +91,8 @@ def camel_case(s):
     Makes a classname.
     """
     if "_" not in s:
+        if s[0].islower():
+            s = s[0].upper() + s[1:]
         return lower_acronyms(s)
     s = re.sub("([a-z])([A-Z])", r"\1_\2", s)
     return "".join(w.title() for w in s.split("_"))
@@ -238,13 +240,12 @@ def gps_time_fn(msg):
   """.strip()
 
 
-def get_bitfield_basename(item, field, msg):
-    msg_name = camel_case(msg.identifier)
+def get_bitfield_basename(item, field):
     if item.get("desc", False):
         basename = camel_case(item.get("desc", "").replace(" ", "_"))
     else:
         basename = camel_case(field.identifier)
-    basename = re.sub("[^A-Za-z0-9_]+", "", msg_name + basename)
+    basename = re.sub("[^A-Za-z0-9_]+", "", basename)
     return basename
 
 
@@ -278,10 +279,10 @@ def get_bitfield_values(item):
     return vals
 
 
-def get_bitfield(field, msg):
+def get_bitfield(field):
     items = []
     for item in field.options["fields"].value:
-        type_name = get_bitfield_basename(item, field, msg)
+        type_name = get_bitfield_basename(item, field)
         if type_name.endswith("Reserved"):
             continue
         vals = get_bitfield_values(item)
@@ -333,13 +334,14 @@ class FieldItem(object):
                     self.has_gps_time = True
         self.bitfield = []
         if self.options.get("fields", False):
-            self.bitfield = get_bitfield(self, msg)
+            self.bitfield = get_bitfield(self)
 
 
 class MsgItem(object):
     def __init__(self, msg, package, package_specs):
         self.msg_name = camel_case(msg.identifier)
-        self.mod_name = package.mod_name
+        self.parent_mod_name = package.mod_name
+        self.mod_name = snake_case(msg.identifier)
         self.identifier = msg.identifier
         self.sbp_id = msg.sbp_id
         self.desc = msg.desc

@@ -15,15 +15,25 @@
 
 //! (((description | commentify(prefix="//! ") )))
 
-((* for i in includes *))
-use super::(((i)))::*;
-((* endfor *))
 
-use super::lib::*;
+((*- for m in msgs *))
+pub use (((m.mod_name)))::(((m.msg_name)));
+((*- endfor *))
+
+
 
 ((* for m in msgs *))
+pub mod (((m.mod_name))) {
+#![allow(unused_imports)]
+
+use super::*;
+use crate::messages::lib::*;
+((*- for i in includes *))
+use crate::messages::(((i)))::*;
+((*- endfor *))
 
 ((*- if m.desc *))
+
 /// (((m.short_desc)))
 ///
 /// (((m.desc | commentify)))
@@ -188,5 +198,7 @@ impl std::fmt::Display for (((b.type_name))) {
 ((* endfor *))
 ((* endfor *))
 ((* endif *))
+
+}
 
 ((* endfor *))
