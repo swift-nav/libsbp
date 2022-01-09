@@ -6453,11 +6453,7 @@ pub mod msg_vel_cog {
 
     impl MsgVelCog {
         pub fn cog_frozen(&self) -> Option<CogFrozen> {
-            match get_bit_range!(self.flags, u16, u8, 9, 0) {
-                0 => Some(CogFrozen::NotFrozen),
-                1 => Some(CogFrozen::Frozen),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u16, u8, 9, 0).try_into().ok()
         }
 
         pub fn set_cog_frozen(&mut self, cog_frozen: CogFrozen) {
@@ -6465,7 +6461,7 @@ pub mod msg_vel_cog {
         }
 
         pub fn vertical_velocity_validity(&self) -> Option<VerticalVelocityValidity> {
-            get_bit_range!(self.flags, u8, u8, 5, 0).try_into().ok()
+            get_bit_range!(self.flags, u16, u8, 8, 0).try_into().ok()
         }
 
         pub fn set_vertical_velocity_validity(
@@ -6476,7 +6472,7 @@ pub mod msg_vel_cog {
         }
 
         pub fn sog_validity(&self) -> Option<SogValidity> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
+            get_bit_range!(self.flags, u16, u8, 7, 0).try_into().ok()
         }
 
         pub fn set_sog_validity(&mut self, sog_validity: SogValidity) {
@@ -6484,7 +6480,7 @@ pub mod msg_vel_cog {
         }
 
         pub fn cog_validity(&self) -> Option<CogValidity> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+            get_bit_range!(self.flags, u16, u8, 6, 0).try_into().ok()
         }
 
         pub fn set_cog_validity(&mut self, cog_validity: CogValidity) {
@@ -6492,11 +6488,7 @@ pub mod msg_vel_cog {
         }
 
         pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            match get_bit_range!(self.flags, u16, u8, 5, 0) {
-                0 => Some(TypeOfReportedTow::TimeOfMeasurement),
-                1 => Some(TypeOfReportedTow::Other),
-                _ => None,
-            }
+            get_bit_range!(self.flags, u16, u8, 5, 0).try_into().ok()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
@@ -6504,7 +6496,7 @@ pub mod msg_vel_cog {
         }
 
         pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+            get_bit_range!(self.flags, u16, u8, 4, 3).try_into().ok()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
@@ -6512,7 +6504,7 @@ pub mod msg_vel_cog {
         }
 
         pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+            get_bit_range!(self.flags, u16, u8, 2, 0).try_into().ok()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -6607,7 +6599,7 @@ pub mod msg_vel_cog {
     }
 
     /// COG frozen
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum CogFrozen {
         /// Not frozen
         NotFrozen = 0,
@@ -6621,6 +6613,17 @@ pub mod msg_vel_cog {
             match self {
                 CogFrozen::NotFrozen => f.write_str("Not frozen"),
                 CogFrozen::Frozen => f.write_str("Frozen"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for CogFrozen {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(CogFrozen::NotFrozen),
+                1 => Ok(CogFrozen::Frozen),
+                _ => Err(TryFromIntError),
             }
         }
     }
@@ -6712,6 +6715,36 @@ pub mod msg_vel_cog {
             match i {
                 0 => Ok(CogValidity::Invalid),
                 1 => Ok(CogValidity::CogValid),
+                _ => Err(TryFromIntError),
+            }
+        }
+    }
+
+    /// Type of reported TOW
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum TypeOfReportedTow {
+        /// Time of Measurement
+        TimeOfMeasurement = 0,
+
+        /// Other
+        Other = 1,
+    }
+
+    impl std::fmt::Display for TypeOfReportedTow {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                TypeOfReportedTow::TimeOfMeasurement => f.write_str("Time of Measurement"),
+                TypeOfReportedTow::Other => f.write_str("Other"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TypeOfReportedTow {
+        type Error = TryFromIntError;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
+                1 => Ok(TypeOfReportedTow::Other),
                 _ => Err(TryFromIntError),
             }
         }
