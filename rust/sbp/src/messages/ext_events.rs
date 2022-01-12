@@ -52,16 +52,16 @@ pub mod msg_ext_event {
     }
 
     impl MsgExtEvent {
-        pub fn time_quality(&self) -> Option<TimeQuality> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn time_quality(&self) -> Result<TimeQuality, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_time_quality(&mut self, time_quality: TimeQuality) {
             set_bit_range!(&mut self.flags, time_quality, u8, u8, 1, 0);
         }
 
-        pub fn new_level_of_pin(&self) -> Option<NewLevelOfPin> {
-            get_bit_range!(self.flags, u8, u8, 0, 0).try_into().ok()
+        pub fn new_level_of_pin(&self) -> Result<NewLevelOfPin, u8> {
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
         }
 
         pub fn set_new_level_of_pin(&mut self, new_level_of_pin: NewLevelOfPin) {
@@ -170,12 +170,12 @@ pub mod msg_ext_event {
     }
 
     impl TryFrom<u8> for TimeQuality {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeQuality::UnknownDontHaveNavSolution),
                 1 => Ok(TimeQuality::Good),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -200,12 +200,12 @@ pub mod msg_ext_event {
     }
 
     impl TryFrom<u8> for NewLevelOfPin {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(NewLevelOfPin::Low),
                 1 => Ok(NewLevelOfPin::High),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

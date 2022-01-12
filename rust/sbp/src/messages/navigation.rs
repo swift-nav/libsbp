@@ -252,8 +252,8 @@ pub mod msg_baseline_ecef {
     }
 
     impl MsgBaselineEcef {
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -371,14 +371,14 @@ pub mod msg_baseline_ecef {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 2 => Ok(FixMode::DifferentialGnss),
                 3 => Ok(FixMode::FloatRtk),
                 4 => Ok(FixMode::FixedRtk),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -427,24 +427,24 @@ pub mod msg_baseline_ecef_dep_a {
     }
 
     impl MsgBaselineEcefDepA {
-        pub fn raim_repair_flag(&self) -> Option<RaimRepairFlag> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
+        pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
         }
 
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
             set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
         }
 
-        pub fn raim_availability_flag(&self) -> Option<RaimAvailabilityFlag> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
             set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -556,12 +556,12 @@ pub mod msg_baseline_ecef_dep_a {
     }
 
     impl TryFrom<u8> for RaimRepairFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -590,12 +590,12 @@ pub mod msg_baseline_ecef_dep_a {
     }
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -620,12 +620,12 @@ pub mod msg_baseline_ecef_dep_a {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::FloatRtk),
                 1 => Ok(FixMode::FixedRtk),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -664,24 +664,24 @@ pub mod msg_baseline_heading_dep_a {
     }
 
     impl MsgBaselineHeadingDepA {
-        pub fn raim_repair_flag(&self) -> Option<RaimRepairFlag> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
+        pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
         }
 
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
             set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
         }
 
-        pub fn raim_availability_flag(&self) -> Option<RaimAvailabilityFlag> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
             set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -781,12 +781,12 @@ pub mod msg_baseline_heading_dep_a {
     }
 
     impl TryFrom<u8> for RaimRepairFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -815,12 +815,12 @@ pub mod msg_baseline_heading_dep_a {
     }
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -845,12 +845,12 @@ pub mod msg_baseline_heading_dep_a {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::FloatRtk),
                 1 => Ok(FixMode::FixedRtk),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -904,8 +904,8 @@ pub mod msg_baseline_ned {
     }
 
     impl MsgBaselineNed {
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -1027,14 +1027,14 @@ pub mod msg_baseline_ned {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 2 => Ok(FixMode::DifferentialGnss),
                 3 => Ok(FixMode::FloatRtk),
                 4 => Ok(FixMode::FixedRtk),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1088,24 +1088,24 @@ pub mod msg_baseline_ned_dep_a {
     }
 
     impl MsgBaselineNedDepA {
-        pub fn raim_repair_flag(&self) -> Option<RaimRepairFlag> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
+        pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
         }
 
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
             set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
         }
 
-        pub fn raim_availability_flag(&self) -> Option<RaimAvailabilityFlag> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
             set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -1221,12 +1221,12 @@ pub mod msg_baseline_ned_dep_a {
     }
 
     impl TryFrom<u8> for RaimRepairFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1255,12 +1255,12 @@ pub mod msg_baseline_ned_dep_a {
     }
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1285,12 +1285,12 @@ pub mod msg_baseline_ned_dep_a {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::FloatRtk),
                 1 => Ok(FixMode::FixedRtk),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1347,8 +1347,8 @@ pub mod msg_dops {
             set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 7, 0);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -1478,7 +1478,7 @@ pub mod msg_dops {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -1488,7 +1488,7 @@ pub mod msg_dops {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::Undefined),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1652,8 +1652,8 @@ pub mod msg_gps_time {
     }
 
     impl MsgGpsTime {
-        pub fn time_source(&self) -> Option<TimeSource> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn time_source(&self) -> Result<TimeSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_time_source(&mut self, time_source: TimeSource) {
@@ -1760,13 +1760,13 @@ pub mod msg_gps_time {
     }
 
     impl TryFrom<u8> for TimeSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
                 2 => Ok(TimeSource::Propagated),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1931,8 +1931,8 @@ pub mod msg_gps_time_gnss {
     }
 
     impl MsgGpsTimeGnss {
-        pub fn time_source(&self) -> Option<TimeSource> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn time_source(&self) -> Result<TimeSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_time_source(&mut self, time_source: TimeSource) {
@@ -2039,13 +2039,13 @@ pub mod msg_gps_time_gnss {
     }
 
     impl TryFrom<u8> for TimeSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
                 2 => Ok(TimeSource::Propagated),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2097,16 +2097,16 @@ pub mod msg_pos_ecef {
     }
 
     impl MsgPosEcef {
-        pub fn tow_type(&self) -> Option<TowType> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn tow_type(&self) -> Result<TowType, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_tow_type(&mut self, tow_type: TowType) {
             set_bit_range!(&mut self.flags, tow_type, u8, u8, 5, 5);
         }
 
-        pub fn inertial_navigation_mode(&self) -> Option<InertialNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_inertial_navigation_mode(
@@ -2116,8 +2116,8 @@ pub mod msg_pos_ecef {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -2227,12 +2227,12 @@ pub mod msg_pos_ecef {
     }
 
     impl TryFrom<u8> for TowType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TowType::TimeOfMeasurement),
                 1 => Ok(TowType::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2257,12 +2257,12 @@ pub mod msg_pos_ecef {
     }
 
     impl TryFrom<u8> for InertialNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2307,7 +2307,7 @@ pub mod msg_pos_ecef {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -2317,7 +2317,7 @@ pub mod msg_pos_ecef {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::DeadReckoning),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2385,16 +2385,16 @@ pub mod msg_pos_ecef_cov {
     }
 
     impl MsgPosEcefCov {
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn inertial_navigation_mode(&self) -> Option<InertialNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_inertial_navigation_mode(
@@ -2404,8 +2404,8 @@ pub mod msg_pos_ecef_cov {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -2535,12 +2535,12 @@ pub mod msg_pos_ecef_cov {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2565,12 +2565,12 @@ pub mod msg_pos_ecef_cov {
     }
 
     impl TryFrom<u8> for InertialNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2615,7 +2615,7 @@ pub mod msg_pos_ecef_cov {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -2625,7 +2625,7 @@ pub mod msg_pos_ecef_cov {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::DeadReckoning),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2693,8 +2693,8 @@ pub mod msg_pos_ecef_cov_gnss {
     }
 
     impl MsgPosEcefCovGnss {
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -2840,7 +2840,7 @@ pub mod msg_pos_ecef_cov_gnss {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -2849,7 +2849,7 @@ pub mod msg_pos_ecef_cov_gnss {
                 3 => Ok(FixMode::FloatRtk),
                 4 => Ok(FixMode::FixedRtk),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2901,24 +2901,24 @@ pub mod msg_pos_ecef_dep_a {
     }
 
     impl MsgPosEcefDepA {
-        pub fn raim_repair_flag(&self) -> Option<RaimRepairFlag> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
+        pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
         }
 
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
             set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
         }
 
-        pub fn raim_availability_flag(&self) -> Option<RaimAvailabilityFlag> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
             set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -3030,12 +3030,12 @@ pub mod msg_pos_ecef_dep_a {
     }
 
     impl TryFrom<u8> for RaimRepairFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3064,12 +3064,12 @@ pub mod msg_pos_ecef_dep_a {
     }
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3098,13 +3098,13 @@ pub mod msg_pos_ecef_dep_a {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::SinglePointPositioning),
                 1 => Ok(FixMode::FixedRtk),
                 2 => Ok(FixMode::FloatRtk),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3156,8 +3156,8 @@ pub mod msg_pos_ecef_gnss {
     }
 
     impl MsgPosEcefGnss {
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -3283,7 +3283,7 @@ pub mod msg_pos_ecef_gnss {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -3292,7 +3292,7 @@ pub mod msg_pos_ecef_gnss {
                 3 => Ok(FixMode::FloatRtk),
                 4 => Ok(FixMode::FixedRtk),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3347,16 +3347,16 @@ pub mod msg_pos_llh {
     }
 
     impl MsgPosLlh {
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn inertial_navigation_mode(&self) -> Option<InertialNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_inertial_navigation_mode(
@@ -3366,8 +3366,8 @@ pub mod msg_pos_llh {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -3481,12 +3481,12 @@ pub mod msg_pos_llh {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3511,12 +3511,12 @@ pub mod msg_pos_llh {
     }
 
     impl TryFrom<u8> for InertialNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3561,7 +3561,7 @@ pub mod msg_pos_llh {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -3571,7 +3571,7 @@ pub mod msg_pos_llh {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::DeadReckoning),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3652,20 +3652,16 @@ pub mod msg_pos_llh_acc {
     }
 
     impl MsgPosLlhAcc {
-        pub fn geoid_model(&self) -> Option<GeoidModel> {
-            get_bit_range!(self.confidence_and_geoid, u8, u8, 6, 4)
-                .try_into()
-                .ok()
+        pub fn geoid_model(&self) -> Result<GeoidModel, u8> {
+            get_bit_range!(self.confidence_and_geoid, u8, u8, 6, 4).try_into()
         }
 
         pub fn set_geoid_model(&mut self, geoid_model: GeoidModel) {
             set_bit_range!(&mut self.confidence_and_geoid, geoid_model, u8, u8, 6, 4);
         }
 
-        pub fn confidence_level(&self) -> Option<ConfidenceLevel> {
-            get_bit_range!(self.confidence_and_geoid, u8, u8, 3, 0)
-                .try_into()
-                .ok()
+        pub fn confidence_level(&self) -> Result<ConfidenceLevel, u8> {
+            get_bit_range!(self.confidence_and_geoid, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_confidence_level(&mut self, confidence_level: ConfidenceLevel) {
@@ -3679,16 +3675,16 @@ pub mod msg_pos_llh_acc {
             );
         }
 
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn inertial_navigation_mode(&self) -> Option<InertialNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_inertial_navigation_mode(
@@ -3698,8 +3694,8 @@ pub mod msg_pos_llh_acc {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -3837,13 +3833,13 @@ pub mod msg_pos_llh_acc {
     }
 
     impl TryFrom<u8> for GeoidModel {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(GeoidModel::NoModel),
                 1 => Ok(GeoidModel::EGM96),
                 2 => Ok(GeoidModel::EGM2008),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3872,13 +3868,13 @@ pub mod msg_pos_llh_acc {
     }
 
     impl TryFrom<u8> for ConfidenceLevel {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 1 => Ok(ConfidenceLevel::_3935),
                 2 => Ok(ConfidenceLevel::_6827),
                 3 => Ok(ConfidenceLevel::_9545),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3903,12 +3899,12 @@ pub mod msg_pos_llh_acc {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3933,12 +3929,12 @@ pub mod msg_pos_llh_acc {
     }
 
     impl TryFrom<u8> for InertialNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -3983,7 +3979,7 @@ pub mod msg_pos_llh_acc {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -3993,7 +3989,7 @@ pub mod msg_pos_llh_acc {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::DeadReckoning),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4061,16 +4057,16 @@ pub mod msg_pos_llh_cov {
     }
 
     impl MsgPosLlhCov {
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn inertial_navigation_mode(&self) -> Option<InertialNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_inertial_navigation_mode(
@@ -4080,8 +4076,8 @@ pub mod msg_pos_llh_cov {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -4211,12 +4207,12 @@ pub mod msg_pos_llh_cov {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4241,12 +4237,12 @@ pub mod msg_pos_llh_cov {
     }
 
     impl TryFrom<u8> for InertialNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4291,7 +4287,7 @@ pub mod msg_pos_llh_cov {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -4301,7 +4297,7 @@ pub mod msg_pos_llh_cov {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::DeadReckoning),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4369,8 +4365,8 @@ pub mod msg_pos_llh_cov_gnss {
     }
 
     impl MsgPosLlhCovGnss {
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -4520,7 +4516,7 @@ pub mod msg_pos_llh_cov_gnss {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -4530,7 +4526,7 @@ pub mod msg_pos_llh_cov_gnss {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::DeadReckoning),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4585,32 +4581,32 @@ pub mod msg_pos_llh_dep_a {
     }
 
     impl MsgPosLlhDepA {
-        pub fn raim_repair_flag(&self) -> Option<RaimRepairFlag> {
-            get_bit_range!(self.flags, u8, u8, 5, 0).try_into().ok()
+        pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 0).try_into()
         }
 
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
             set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 5, 0);
         }
 
-        pub fn raim_availability_flag(&self) -> Option<RaimAvailabilityFlag> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
+        pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
         }
 
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
             set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 4, 0);
         }
 
-        pub fn height_mode(&self) -> Option<HeightMode> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn height_mode(&self) -> Result<HeightMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_height_mode(&mut self, height_mode: HeightMode) {
             set_bit_range!(&mut self.flags, height_mode, u8, u8, 3, 0);
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -4726,12 +4722,12 @@ pub mod msg_pos_llh_dep_a {
     }
 
     impl TryFrom<u8> for RaimRepairFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4760,12 +4756,12 @@ pub mod msg_pos_llh_dep_a {
     }
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4792,12 +4788,12 @@ pub mod msg_pos_llh_dep_a {
     }
 
     impl TryFrom<u8> for HeightMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(HeightMode::HeightAboveWgs84Ellipsoid),
                 1 => Ok(HeightMode::HeightAboveMeanSeaLevel),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4826,13 +4822,13 @@ pub mod msg_pos_llh_dep_a {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::SinglePointPositioning),
                 1 => Ok(FixMode::FixedRtk),
                 2 => Ok(FixMode::FloatRtk),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -4887,8 +4883,8 @@ pub mod msg_pos_llh_gnss {
     }
 
     impl MsgPosLlhGnss {
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
@@ -5018,7 +5014,7 @@ pub mod msg_pos_llh_gnss {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -5027,7 +5023,7 @@ pub mod msg_pos_llh_gnss {
                 3 => Ok(FixMode::FloatRtk),
                 4 => Ok(FixMode::FixedRtk),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -5134,16 +5130,16 @@ pub mod msg_protection_level {
             );
         }
 
-        pub fn fix_mode(&self) -> Option<FixMode> {
-            get_bit_range!(self.flags, u32, u8, 17, 15).try_into().ok()
+        pub fn fix_mode(&self) -> Result<FixMode, u8> {
+            get_bit_range!(self.flags, u32, u8, 17, 15).try_into()
         }
 
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u32, u8, 17, 15);
         }
 
-        pub fn inertial_navigation_mode(&self) -> Option<InertialNavigationMode> {
-            get_bit_range!(self.flags, u32, u8, 19, 18).try_into().ok()
+        pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
+            get_bit_range!(self.flags, u32, u8, 19, 18).try_into()
         }
 
         pub fn set_inertial_navigation_mode(
@@ -5153,8 +5149,8 @@ pub mod msg_protection_level {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u32, u8, 19, 18);
         }
 
-        pub fn time_status(&self) -> Option<TimeStatus> {
-            get_bit_range!(self.flags, u32, u8, 20, 0).try_into().ok()
+        pub fn time_status(&self) -> Result<TimeStatus, u8> {
+            get_bit_range!(self.flags, u32, u8, 20, 0).try_into()
         }
 
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
@@ -5433,7 +5429,7 @@ pub mod msg_protection_level {
     }
 
     impl TryFrom<u8> for FixMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FixMode::Invalid),
@@ -5443,7 +5439,7 @@ pub mod msg_protection_level {
                 4 => Ok(FixMode::FixedRtk),
                 5 => Ok(FixMode::DeadReckoning),
                 6 => Ok(FixMode::SbasPosition),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -5468,12 +5464,12 @@ pub mod msg_protection_level {
     }
 
     impl TryFrom<u8> for InertialNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -5498,12 +5494,12 @@ pub mod msg_protection_level {
     }
 
     impl TryFrom<u8> for TimeStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeStatus::GnssTimeOfValidity),
                 1 => Ok(TimeStatus::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -5551,8 +5547,8 @@ pub mod msg_protection_level_dep_a {
     }
 
     impl MsgProtectionLevelDepA {
-        pub fn target_integrity_risk_tir_level(&self) -> Option<TargetIntegrityRiskTirLevel> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn target_integrity_risk_tir_level(&self) -> Result<TargetIntegrityRiskTirLevel, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_target_integrity_risk_tir_level(
@@ -5681,14 +5677,14 @@ pub mod msg_protection_level_dep_a {
     }
 
     impl TryFrom<u8> for TargetIntegrityRiskTirLevel {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
             0 => Ok( TargetIntegrityRiskTirLevel :: SafeStateProtectionLevelShallNotBeUsedForSafetyCriticalApplication ),
             1 => Ok( TargetIntegrityRiskTirLevel :: TirLevel1 ),
             2 => Ok( TargetIntegrityRiskTirLevel :: TirLevel2 ),
             3 => Ok( TargetIntegrityRiskTirLevel :: TirLevel3 ),
-            _ => Err(TryFromIntError),
+            i => Err(i),
         }
         }
     }
@@ -5742,16 +5738,16 @@ pub mod msg_utc_time {
     }
 
     impl MsgUtcTime {
-        pub fn utc_offset_source(&self) -> Option<UtcOffsetSource> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn utc_offset_source(&self) -> Result<UtcOffsetSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_utc_offset_source(&mut self, utc_offset_source: UtcOffsetSource) {
             set_bit_range!(&mut self.flags, utc_offset_source, u8, u8, 4, 3);
         }
 
-        pub fn time_source(&self) -> Option<TimeSource> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn time_source(&self) -> Result<TimeSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_time_source(&mut self, time_source: TimeSource) {
@@ -5873,13 +5869,13 @@ pub mod msg_utc_time {
     }
 
     impl TryFrom<u8> for UtcOffsetSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(UtcOffsetSource::FactoryDefault),
                 1 => Ok(UtcOffsetSource::NonVolatileMemory),
                 2 => Ok(UtcOffsetSource::DecodedThisSession),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -5908,13 +5904,13 @@ pub mod msg_utc_time {
     }
 
     impl TryFrom<u8> for TimeSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
                 2 => Ok(TimeSource::Propagated),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -5968,16 +5964,16 @@ pub mod msg_utc_time_gnss {
     }
 
     impl MsgUtcTimeGnss {
-        pub fn utc_offset_source(&self) -> Option<UtcOffsetSource> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn utc_offset_source(&self) -> Result<UtcOffsetSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_utc_offset_source(&mut self, utc_offset_source: UtcOffsetSource) {
             set_bit_range!(&mut self.flags, utc_offset_source, u8, u8, 4, 3);
         }
 
-        pub fn time_source(&self) -> Option<TimeSource> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn time_source(&self) -> Result<TimeSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_time_source(&mut self, time_source: TimeSource) {
@@ -6099,13 +6095,13 @@ pub mod msg_utc_time_gnss {
     }
 
     impl TryFrom<u8> for UtcOffsetSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(UtcOffsetSource::FactoryDefault),
                 1 => Ok(UtcOffsetSource::NonVolatileMemory),
                 2 => Ok(UtcOffsetSource::DecodedThisSession),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6134,13 +6130,13 @@ pub mod msg_utc_time_gnss {
     }
 
     impl TryFrom<u8> for TimeSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
                 2 => Ok(TimeSource::Propagated),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6209,16 +6205,16 @@ pub mod msg_vel_body {
     }
 
     impl MsgVelBody {
-        pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -6348,12 +6344,12 @@ pub mod msg_vel_body {
     }
 
     impl TryFrom<u8> for InsNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6386,14 +6382,14 @@ pub mod msg_vel_body {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
                 3 => Ok(VelocityMode::DeadReckoning),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6452,16 +6448,16 @@ pub mod msg_vel_cog {
     }
 
     impl MsgVelCog {
-        pub fn cog_frozen(&self) -> Option<CogFrozen> {
-            get_bit_range!(self.flags, u16, u8, 9, 0).try_into().ok()
+        pub fn cog_frozen(&self) -> Result<CogFrozen, u8> {
+            get_bit_range!(self.flags, u16, u8, 9, 0).try_into()
         }
 
         pub fn set_cog_frozen(&mut self, cog_frozen: CogFrozen) {
             set_bit_range!(&mut self.flags, cog_frozen, u16, u8, 9, 0);
         }
 
-        pub fn vertical_velocity_validity(&self) -> Option<VerticalVelocityValidity> {
-            get_bit_range!(self.flags, u16, u8, 8, 0).try_into().ok()
+        pub fn vertical_velocity_validity(&self) -> Result<VerticalVelocityValidity, u8> {
+            get_bit_range!(self.flags, u16, u8, 8, 0).try_into()
         }
 
         pub fn set_vertical_velocity_validity(
@@ -6471,40 +6467,40 @@ pub mod msg_vel_cog {
             set_bit_range!(&mut self.flags, vertical_velocity_validity, u16, u8, 8, 0);
         }
 
-        pub fn sog_validity(&self) -> Option<SogValidity> {
-            get_bit_range!(self.flags, u16, u8, 7, 0).try_into().ok()
+        pub fn sog_validity(&self) -> Result<SogValidity, u8> {
+            get_bit_range!(self.flags, u16, u8, 7, 0).try_into()
         }
 
         pub fn set_sog_validity(&mut self, sog_validity: SogValidity) {
             set_bit_range!(&mut self.flags, sog_validity, u16, u8, 7, 0);
         }
 
-        pub fn cog_validity(&self) -> Option<CogValidity> {
-            get_bit_range!(self.flags, u16, u8, 6, 0).try_into().ok()
+        pub fn cog_validity(&self) -> Result<CogValidity, u8> {
+            get_bit_range!(self.flags, u16, u8, 6, 0).try_into()
         }
 
         pub fn set_cog_validity(&mut self, cog_validity: CogValidity) {
             set_bit_range!(&mut self.flags, cog_validity, u16, u8, 6, 0);
         }
 
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u16, u8, 5, 0).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u16, u8, 5, 0).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u16, u8, 5, 0);
         }
 
-        pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            get_bit_range!(self.flags, u16, u8, 4, 3).try_into().ok()
+        pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
+            get_bit_range!(self.flags, u16, u8, 4, 3).try_into()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u16, u8, 4, 3);
         }
 
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u16, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u16, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -6618,12 +6614,12 @@ pub mod msg_vel_cog {
     }
 
     impl TryFrom<u8> for CogFrozen {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(CogFrozen::NotFrozen),
                 1 => Ok(CogFrozen::Frozen),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6650,12 +6646,12 @@ pub mod msg_vel_cog {
     }
 
     impl TryFrom<u8> for VerticalVelocityValidity {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VerticalVelocityValidity::Invalid),
                 1 => Ok(VerticalVelocityValidity::VerticalVelocityValid),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6680,12 +6676,12 @@ pub mod msg_vel_cog {
     }
 
     impl TryFrom<u8> for SogValidity {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SogValidity::Invalid),
                 1 => Ok(SogValidity::SogValid),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6710,12 +6706,12 @@ pub mod msg_vel_cog {
     }
 
     impl TryFrom<u8> for CogValidity {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(CogValidity::Invalid),
                 1 => Ok(CogValidity::CogValid),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6740,12 +6736,12 @@ pub mod msg_vel_cog {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6770,12 +6766,12 @@ pub mod msg_vel_cog {
     }
 
     impl TryFrom<u8> for InsNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6808,14 +6804,14 @@ pub mod msg_vel_cog {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
                 3 => Ok(VelocityMode::DeadReckoning),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6863,24 +6859,24 @@ pub mod msg_vel_ecef {
     }
 
     impl MsgVelEcef {
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -6990,12 +6986,12 @@ pub mod msg_vel_ecef {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7020,12 +7016,12 @@ pub mod msg_vel_ecef {
     }
 
     impl TryFrom<u8> for InsNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7058,14 +7054,14 @@ pub mod msg_vel_ecef {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
                 3 => Ok(VelocityMode::DeadReckoning),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7128,24 +7124,24 @@ pub mod msg_vel_ecef_cov {
     }
 
     impl MsgVelEcefCov {
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -7275,12 +7271,12 @@ pub mod msg_vel_ecef_cov {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7305,12 +7301,12 @@ pub mod msg_vel_ecef_cov {
     }
 
     impl TryFrom<u8> for InsNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7343,14 +7339,14 @@ pub mod msg_vel_ecef_cov {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
                 3 => Ok(VelocityMode::DeadReckoning),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7413,8 +7409,8 @@ pub mod msg_vel_ecef_cov_gnss {
     }
 
     impl MsgVelEcefCovGnss {
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -7548,13 +7544,13 @@ pub mod msg_vel_ecef_cov_gnss {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7726,8 +7722,8 @@ pub mod msg_vel_ecef_gnss {
     }
 
     impl MsgVelEcefGnss {
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -7841,13 +7837,13 @@ pub mod msg_vel_ecef_gnss {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7899,24 +7895,24 @@ pub mod msg_vel_ned {
     }
 
     impl MsgVelNed {
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -8030,12 +8026,12 @@ pub mod msg_vel_ned {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -8060,12 +8056,12 @@ pub mod msg_vel_ned {
     }
 
     impl TryFrom<u8> for InsNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -8098,14 +8094,14 @@ pub mod msg_vel_ned {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
                 3 => Ok(VelocityMode::DeadReckoning),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -8171,24 +8167,24 @@ pub mod msg_vel_ned_cov {
     }
 
     impl MsgVelNedCov {
-        pub fn type_of_reported_tow(&self) -> Option<TypeOfReportedTow> {
-            get_bit_range!(self.flags, u8, u8, 5, 5).try_into().ok()
+        pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
-        pub fn ins_navigation_mode(&self) -> Option<InsNavigationMode> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -8318,12 +8314,12 @@ pub mod msg_vel_ned_cov {
     }
 
     impl TryFrom<u8> for TypeOfReportedTow {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -8348,12 +8344,12 @@ pub mod msg_vel_ned_cov {
     }
 
     impl TryFrom<u8> for InsNavigationMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -8386,14 +8382,14 @@ pub mod msg_vel_ned_cov {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
                 3 => Ok(VelocityMode::DeadReckoning),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -8459,8 +8455,8 @@ pub mod msg_vel_ned_cov_gnss {
     }
 
     impl MsgVelNedCovGnss {
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -8594,13 +8590,13 @@ pub mod msg_vel_ned_cov_gnss {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -8784,8 +8780,8 @@ pub mod msg_vel_ned_gnss {
     }
 
     impl MsgVelNedGnss {
-        pub fn velocity_mode(&self) -> Option<VelocityMode> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
@@ -8903,13 +8899,13 @@ pub mod msg_vel_ned_gnss {
     }
 
     impl TryFrom<u8> for VelocityMode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
                 2 => Ok(VelocityMode::ComputedDopplerDerived),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

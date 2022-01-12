@@ -217,8 +217,8 @@ pub mod gnss_signal {
     }
 
     impl GnssSignal {
-        pub fn code(&self) -> Option<Code> {
-            get_bit_range!(self.code, u8, u8, 7, 0).try_into().ok()
+        pub fn code(&self) -> Result<Code, u8> {
+            get_bit_range!(self.code, u8, u8, 7, 0).try_into()
         }
 
         pub fn set_code(&mut self, code: Code) {
@@ -302,7 +302,7 @@ pub mod gnss_signal {
     }
 
     impl TryFrom<u8> for Code {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(Code::GpsL1Ca),
@@ -317,7 +317,7 @@ pub mod gnss_signal {
                 14 => Ok(Code::GalE1B),
                 20 => Ok(Code::GalE7I),
                 47 => Ok(Code::Bds3B2A),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -351,8 +351,8 @@ pub mod gnss_signal_dep {
     }
 
     impl GnssSignalDep {
-        pub fn code(&self) -> Option<Code> {
-            get_bit_range!(self.code, u8, u8, 7, 0).try_into().ok()
+        pub fn code(&self) -> Result<Code, u8> {
+            get_bit_range!(self.code, u8, u8, 7, 0).try_into()
         }
 
         pub fn set_code(&mut self, code: Code) {
@@ -422,7 +422,7 @@ pub mod gnss_signal_dep {
     }
 
     impl TryFrom<u8> for Code {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(Code::GpsL1Ca),
@@ -432,7 +432,7 @@ pub mod gnss_signal_dep {
                 4 => Ok(Code::GloL2Ca),
                 5 => Ok(Code::GpsL1P),
                 6 => Ok(Code::GpsL2P),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

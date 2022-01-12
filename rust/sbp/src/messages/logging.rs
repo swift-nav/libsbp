@@ -136,8 +136,8 @@ pub mod msg_log {
     }
 
     impl MsgLog {
-        pub fn logging_level(&self) -> Option<LoggingLevel> {
-            get_bit_range!(self.level, u8, u8, 2, 0).try_into().ok()
+        pub fn logging_level(&self) -> Result<LoggingLevel, u8> {
+            get_bit_range!(self.level, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_logging_level(&mut self, logging_level: LoggingLevel) {
@@ -241,7 +241,7 @@ pub mod msg_log {
     }
 
     impl TryFrom<u8> for LoggingLevel {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(LoggingLevel::EMERG),
@@ -252,7 +252,7 @@ pub mod msg_log {
                 5 => Ok(LoggingLevel::NOTICE),
                 6 => Ok(LoggingLevel::INFO),
                 7 => Ok(LoggingLevel::DEBUG),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

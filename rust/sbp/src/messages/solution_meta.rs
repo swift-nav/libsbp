@@ -41,8 +41,8 @@ pub mod gnss_input_type {
     }
 
     impl GnssInputType {
-        pub fn type_of_gnss_measurement(&self) -> Option<TypeOfGnssMeasurement> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn type_of_gnss_measurement(&self) -> Result<TypeOfGnssMeasurement, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_type_of_gnss_measurement(
@@ -94,13 +94,13 @@ pub mod gnss_input_type {
     }
 
     impl TryFrom<u8> for TypeOfGnssMeasurement {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TypeOfGnssMeasurement::GnssPosition),
                 1 => Ok(TypeOfGnssMeasurement::GnssVelocityDoppler),
                 2 => Ok(TypeOfGnssMeasurement::GnssVelocityDisplacement),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -127,24 +127,24 @@ pub mod imu_input_type {
     }
 
     impl ImuInputType {
-        pub fn time_status(&self) -> Option<TimeStatus> {
-            get_bit_range!(self.flags, u8, u8, 5, 4).try_into().ok()
+        pub fn time_status(&self) -> Result<TimeStatus, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 4).try_into()
         }
 
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
             set_bit_range!(&mut self.flags, time_status, u8, u8, 5, 4);
         }
 
-        pub fn imu_grade(&self) -> Option<ImuGrade> {
-            get_bit_range!(self.flags, u8, u8, 3, 2).try_into().ok()
+        pub fn imu_grade(&self) -> Result<ImuGrade, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
         }
 
         pub fn set_imu_grade(&mut self, imu_grade: ImuGrade) {
             set_bit_range!(&mut self.flags, imu_grade, u8, u8, 3, 2);
         }
 
-        pub fn imu_architecture(&self) -> Option<ImuArchitecture> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn imu_architecture(&self) -> Result<ImuArchitecture, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_imu_architecture(&mut self, imu_architecture: ImuArchitecture) {
@@ -199,14 +199,14 @@ pub mod imu_input_type {
     }
 
     impl TryFrom<u8> for TimeStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
                 1 => Ok(TimeStatus::ReferenceEpochIsTimeOfSystemStartup),
                 2 => Ok(TimeStatus::ReferenceEpochIsUnknown),
                 3 => Ok(TimeStatus::ReferenceEpochIsLastPps),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -239,14 +239,14 @@ pub mod imu_input_type {
     }
 
     impl TryFrom<u8> for ImuGrade {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(ImuGrade::ConsumerGrade),
                 1 => Ok(ImuGrade::TacticalGrade),
                 2 => Ok(ImuGrade::IntermediateGrade),
                 3 => Ok(ImuGrade::SuperiorGrade),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -271,12 +271,12 @@ pub mod imu_input_type {
     }
 
     impl TryFrom<u8> for ImuArchitecture {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(ImuArchitecture::_6AxisMems),
                 1 => Ok(ImuArchitecture::OtherType),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -338,10 +338,8 @@ pub mod msg_soln_meta {
     }
 
     impl MsgSolnMeta {
-        pub fn time_status(&self) -> Option<TimeStatus> {
-            get_bit_range!(self.age_gnss, u32, u8, 31, 30)
-                .try_into()
-                .ok()
+        pub fn time_status(&self) -> Result<TimeStatus, u8> {
+            get_bit_range!(self.age_gnss, u32, u8, 31, 30).try_into()
         }
 
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
@@ -473,12 +471,12 @@ pub mod msg_soln_meta {
     }
 
     impl TryFrom<u8> for TimeStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeStatus::AgeCanNotBeUsedToRetrieveTom),
                 1 => Ok(TimeStatus::AgeCanBeUsedToRetrieveTom),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -542,10 +540,8 @@ pub mod msg_soln_meta_dep_a {
     }
 
     impl MsgSolnMetaDepA {
-        pub fn alignment_status(&self) -> Option<AlignmentStatus> {
-            get_bit_range!(self.alignment_status, u8, u8, 2, 0)
-                .try_into()
-                .ok()
+        pub fn alignment_status(&self) -> Result<AlignmentStatus, u8> {
+            get_bit_range!(self.alignment_status, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_alignment_status(&mut self, alignment_status: AlignmentStatus) {
@@ -676,7 +672,7 @@ pub mod msg_soln_meta_dep_a {
     }
 
     impl TryFrom<u8> for AlignmentStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(AlignmentStatus::UnknownReasonOrAlreadyAligned),
@@ -684,7 +680,7 @@ pub mod msg_soln_meta_dep_a {
                 2 => Ok(AlignmentStatus::NoSeedValuesAndAlignmentInProgress),
                 3 => Ok(AlignmentStatus::SeedValuesLoadedButNoGnssMeasurements),
                 4 => Ok(AlignmentStatus::NoSeedValuesNorGnssMeasurements),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -711,24 +707,24 @@ pub mod odo_input_type {
     }
 
     impl OdoInputType {
-        pub fn rate(&self) -> Option<Rate> {
-            get_bit_range!(self.flags, u8, u8, 5, 4).try_into().ok()
+        pub fn rate(&self) -> Result<Rate, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 4).try_into()
         }
 
         pub fn set_rate(&mut self, rate: Rate) {
             set_bit_range!(&mut self.flags, rate, u8, u8, 5, 4);
         }
 
-        pub fn odometer_grade(&self) -> Option<OdometerGrade> {
-            get_bit_range!(self.flags, u8, u8, 3, 2).try_into().ok()
+        pub fn odometer_grade(&self) -> Result<OdometerGrade, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
         }
 
         pub fn set_odometer_grade(&mut self, odometer_grade: OdometerGrade) {
             set_bit_range!(&mut self.flags, odometer_grade, u8, u8, 3, 2);
         }
 
-        pub fn odometer_class(&self) -> Option<OdometerClass> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn odometer_class(&self) -> Result<OdometerClass, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_odometer_class(&mut self, odometer_class: OdometerClass) {
@@ -773,12 +769,12 @@ pub mod odo_input_type {
     }
 
     impl TryFrom<u8> for Rate {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(Rate::FixedIncomingRate),
                 1 => Ok(Rate::TriggeredByMinimumDistanceOrSpeed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -807,13 +803,13 @@ pub mod odo_input_type {
     }
 
     impl TryFrom<u8> for OdometerGrade {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(OdometerGrade::LowGrade),
                 1 => Ok(OdometerGrade::MediumGrade),
                 2 => Ok(OdometerGrade::SuperiorGrade),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -846,14 +842,14 @@ pub mod odo_input_type {
     }
 
     impl TryFrom<u8> for OdometerClass {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(OdometerClass::SingleOrAveragedTicks),
                 1 => Ok(OdometerClass::SingleOrAveragedSpeed),
                 2 => Ok(OdometerClass::MultiDimensionalTicks),
                 3 => Ok(OdometerClass::MultiDimensionalSpeed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -887,20 +883,16 @@ pub mod solution_input_type {
     }
 
     impl SolutionInputType {
-        pub fn sensor_usage(&self) -> Option<SensorUsage> {
-            get_bit_range!(self.sensor_type, u8, u8, 4, 3)
-                .try_into()
-                .ok()
+        pub fn sensor_usage(&self) -> Result<SensorUsage, u8> {
+            get_bit_range!(self.sensor_type, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_sensor_usage(&mut self, sensor_usage: SensorUsage) {
             set_bit_range!(&mut self.sensor_type, sensor_usage, u8, u8, 4, 3);
         }
 
-        pub fn sensor_type(&self) -> Option<SensorType> {
-            get_bit_range!(self.sensor_type, u8, u8, 2, 0)
-                .try_into()
-                .ok()
+        pub fn sensor_type(&self) -> Result<SensorType, u8> {
+            get_bit_range!(self.sensor_type, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_sensor_type(&mut self, sensor_type: SensorType) {
@@ -949,13 +941,13 @@ pub mod solution_input_type {
     }
 
     impl TryFrom<u8> for SensorUsage {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SensorUsage::Unknown),
                 1 => Ok(SensorUsage::ReceivedAndUsed),
                 2 => Ok(SensorUsage::ReceivedButNotUsed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1004,7 +996,7 @@ pub mod solution_input_type {
     }
 
     impl TryFrom<u8> for SensorType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SensorType::Invalid),
@@ -1014,7 +1006,7 @@ pub mod solution_input_type {
                 4 => Ok(SensorType::OdometryTicks),
                 5 => Ok(SensorType::OdometrySpeed),
                 6 => Ok(SensorType::ImuSensor),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

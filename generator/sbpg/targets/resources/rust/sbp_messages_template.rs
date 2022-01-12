@@ -66,8 +66,8 @@ impl (((m.msg_name))) {
 ((* for b in f.bitfield *))
 
 ((* if b.vals|length > 0 *))
-    pub fn (((b.field_name))) (&self) -> Option<(((b.type_name)))> {
-        get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) ).try_into().ok()
+    pub fn (((b.field_name))) (&self) -> Result<(((b.type_name))), (((b.type)))> {
+        get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) ).try_into()
     }
 
     pub fn set_(((b.field_name))) (&mut self, (((b.field_name))): (((b.type_name)))) {
@@ -191,13 +191,13 @@ impl std::fmt::Display for (((b.type_name))) {
 }
 
 impl TryFrom<(((b.type)))> for (((b.type_name))) {
-    type Error = TryFromIntError;
+    type Error = (((b.type)));
     fn try_from(i: (((b.type))) ) -> Result<Self, Self::Error> {
         match i {
             ((*- for v in b.vals *))
             (((v.value))) => Ok( (((b.type_name))) :: (((v.name))) ),
             ((*- endfor *))
-            _ => Err(TryFromIntError),
+            i => Err(i),
         }
     }
 }

@@ -2023,8 +2023,8 @@ pub mod satellite_apc {
     }
 
     impl SatelliteAPC {
-        pub fn satellite_type(&self) -> Option<SatelliteType> {
-            get_bit_range!(self.sat_info, u8, u8, 4, 0).try_into().ok()
+        pub fn satellite_type(&self) -> Result<SatelliteType, u8> {
+            get_bit_range!(self.sat_info, u8, u8, 4, 0).try_into()
         }
 
         pub fn set_satellite_type(&mut self, satellite_type: SatelliteType) {
@@ -2155,7 +2155,7 @@ pub mod satellite_apc {
     }
 
     impl TryFrom<u8> for SatelliteType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SatelliteType::UnknownType),
@@ -2178,7 +2178,7 @@ pub mod satellite_apc {
                 17 => Ok(SatelliteType::Beidou3GCast),
                 18 => Ok(SatelliteType::Beidou3ICast),
                 19 => Ok(SatelliteType::QZSS),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

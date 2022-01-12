@@ -66,36 +66,32 @@ pub mod msg_ndb_event {
     }
 
     impl MsgNdbEvent {
-        pub fn event_type(&self) -> Option<EventType> {
-            get_bit_range!(self.event, u8, u8, 1, 0).try_into().ok()
+        pub fn event_type(&self) -> Result<EventType, u8> {
+            get_bit_range!(self.event, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_event_type(&mut self, event_type: EventType) {
             set_bit_range!(&mut self.event, event_type, u8, u8, 1, 0);
         }
 
-        pub fn event_object_type(&self) -> Option<EventObjectType> {
-            get_bit_range!(self.object_type, u8, u8, 2, 0)
-                .try_into()
-                .ok()
+        pub fn event_object_type(&self) -> Result<EventObjectType, u8> {
+            get_bit_range!(self.object_type, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_event_object_type(&mut self, event_object_type: EventObjectType) {
             set_bit_range!(&mut self.object_type, event_object_type, u8, u8, 2, 0);
         }
 
-        pub fn event_result(&self) -> Option<EventResult> {
-            get_bit_range!(self.result, u8, u8, 3, 0).try_into().ok()
+        pub fn event_result(&self) -> Result<EventResult, u8> {
+            get_bit_range!(self.result, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_event_result(&mut self, event_result: EventResult) {
             set_bit_range!(&mut self.result, event_result, u8, u8, 3, 0);
         }
 
-        pub fn data_source(&self) -> Option<DataSource> {
-            get_bit_range!(self.data_source, u8, u8, 1, 0)
-                .try_into()
-                .ok()
+        pub fn data_source(&self) -> Result<DataSource, u8> {
+            get_bit_range!(self.data_source, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_data_source(&mut self, data_source: DataSource) {
@@ -208,14 +204,14 @@ pub mod msg_ndb_event {
     }
 
     impl TryFrom<u8> for EventType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(EventType::UNKNOWN),
                 1 => Ok(EventType::STORE),
                 2 => Ok(EventType::FETCH),
                 3 => Ok(EventType::ERASE),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -260,7 +256,7 @@ pub mod msg_ndb_event {
     }
 
     impl TryFrom<u8> for EventObjectType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(EventObjectType::UNKNOWN),
@@ -270,7 +266,7 @@ pub mod msg_ndb_event {
                 4 => Ok(EventObjectType::IoNO),
                 5 => Ok(EventObjectType::L2CCap),
                 6 => Ok(EventObjectType::LGF),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -331,7 +327,7 @@ pub mod msg_ndb_event {
     }
 
     impl TryFrom<u8> for EventResult {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(EventResult::NdbErrNone),
@@ -345,7 +341,7 @@ pub mod msg_ndb_event {
                 8 => Ok(EventResult::NdbErrNoData),
                 9 => Ok(EventResult::NdbErrNoChange),
                 10 => Ok(EventResult::NdbErrOlderData),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -378,14 +374,14 @@ pub mod msg_ndb_event {
     }
 
     impl TryFrom<u8> for DataSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(DataSource::NdbDsUndefined),
                 1 => Ok(DataSource::NdbDsInit),
                 2 => Ok(DataSource::NdbDsReceiver),
                 3 => Ok(DataSource::NdbDsSbp),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

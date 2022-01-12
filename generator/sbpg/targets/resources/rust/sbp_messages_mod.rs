@@ -33,7 +33,7 @@ mod lib {
     pub use crate::time;
     pub use crate::wire_format::{PayloadParseError, WireFormat};
 
-    pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError, TryFromIntError};
+    pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError};
 
     pub use bytes::{Buf, BufMut};
 
@@ -104,18 +104,6 @@ impl std::fmt::Display for TryFromSbpError {
 }
 
 impl std::error::Error for TryFromSbpError {}
-
-/// The error returned when using [TryFrom] to convert an invalid integer to a bitfield type.
-#[derive(Debug, Clone)]
-pub struct TryFromIntError;
-
-impl std::fmt::Display for TryFromIntError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "int does not match any bitfield values")
-    }
-}
-
-impl std::error::Error for TryFromIntError {}
 
 /// Represents any SBP message.
 #[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]

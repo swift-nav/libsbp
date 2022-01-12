@@ -219,8 +219,8 @@ pub mod msg_dgnss_status {
     }
 
     impl MsgDgnssStatus {
-        pub fn differential_type(&self) -> Option<DifferentialType> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn differential_type(&self) -> Result<DifferentialType, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_differential_type(&mut self, differential_type: DifferentialType) {
@@ -313,13 +313,13 @@ pub mod msg_dgnss_status {
     }
 
     impl TryFrom<u8> for DifferentialType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(DifferentialType::Invalid),
                 1 => Ok(DifferentialType::CodeDifference),
                 2 => Ok(DifferentialType::RTK),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -453,8 +453,8 @@ pub mod msg_group_meta {
     }
 
     impl MsgGroupMeta {
-        pub fn solution_group_type(&self) -> Option<SolutionGroupType> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn solution_group_type(&self) -> Result<SolutionGroupType, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_solution_group_type(&mut self, solution_group_type: SolutionGroupType) {
@@ -547,13 +547,13 @@ pub mod msg_group_meta {
     }
 
     impl TryFrom<u8> for SolutionGroupType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SolutionGroupType::None),
                 1 => Ok(SolutionGroupType::GnssOnly),
                 2 => Ok(SolutionGroupType::GnssINS),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -589,8 +589,8 @@ pub mod msg_heartbeat {
     }
 
     impl MsgHeartbeat {
-        pub fn external_antenna_present(&self) -> Option<ExternalAntennaPresent> {
-            get_bit_range!(self.flags, u32, u8, 31, 0).try_into().ok()
+        pub fn external_antenna_present(&self) -> Result<ExternalAntennaPresent, u8> {
+            get_bit_range!(self.flags, u32, u8, 31, 0).try_into()
         }
 
         pub fn set_external_antenna_present(
@@ -600,8 +600,8 @@ pub mod msg_heartbeat {
             set_bit_range!(&mut self.flags, external_antenna_present, u32, u8, 31, 0);
         }
 
-        pub fn external_antenna_short(&self) -> Option<ExternalAntennaShort> {
-            get_bit_range!(self.flags, u32, u8, 30, 0).try_into().ok()
+        pub fn external_antenna_short(&self) -> Result<ExternalAntennaShort, u8> {
+            get_bit_range!(self.flags, u32, u8, 30, 0).try_into()
         }
 
         pub fn set_external_antenna_short(&mut self, external_antenna_short: ExternalAntennaShort) {
@@ -644,24 +644,24 @@ pub mod msg_heartbeat {
             );
         }
 
-        pub fn swift_nap_error(&self) -> Option<SwiftNapError> {
-            get_bit_range!(self.flags, u32, u8, 2, 0).try_into().ok()
+        pub fn swift_nap_error(&self) -> Result<SwiftNapError, u8> {
+            get_bit_range!(self.flags, u32, u8, 2, 0).try_into()
         }
 
         pub fn set_swift_nap_error(&mut self, swift_nap_error: SwiftNapError) {
             set_bit_range!(&mut self.flags, swift_nap_error, u32, u8, 2, 0);
         }
 
-        pub fn io_error(&self) -> Option<IoError> {
-            get_bit_range!(self.flags, u32, u8, 1, 0).try_into().ok()
+        pub fn io_error(&self) -> Result<IoError, u8> {
+            get_bit_range!(self.flags, u32, u8, 1, 0).try_into()
         }
 
         pub fn set_io_error(&mut self, io_error: IoError) {
             set_bit_range!(&mut self.flags, io_error, u32, u8, 1, 0);
         }
 
-        pub fn system_error_flag(&self) -> Option<SystemErrorFlag> {
-            get_bit_range!(self.flags, u32, u8, 0, 0).try_into().ok()
+        pub fn system_error_flag(&self) -> Result<SystemErrorFlag, u8> {
+            get_bit_range!(self.flags, u32, u8, 0, 0).try_into()
         }
 
         pub fn set_system_error_flag(&mut self, system_error_flag: SystemErrorFlag) {
@@ -742,12 +742,12 @@ pub mod msg_heartbeat {
     }
 
     impl TryFrom<u8> for ExternalAntennaPresent {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(ExternalAntennaPresent::NoExternalAntennaDetected),
                 1 => Ok(ExternalAntennaPresent::ExternalAntennaIsPresent),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -772,12 +772,12 @@ pub mod msg_heartbeat {
     }
 
     impl TryFrom<u8> for ExternalAntennaShort {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(ExternalAntennaShort::NoShortDetected),
                 1 => Ok(ExternalAntennaShort::ShortDetected),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -804,12 +804,12 @@ pub mod msg_heartbeat {
     }
 
     impl TryFrom<u8> for SwiftNapError {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SwiftNapError::SystemHealthy),
                 1 => Ok(SwiftNapError::AnErrorHasOccurredInTheSwiftNap),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -834,12 +834,12 @@ pub mod msg_heartbeat {
     }
 
     impl TryFrom<u8> for IoError {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(IoError::SystemHealthy),
                 1 => Ok(IoError::AnIoErrorHasOccurred),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -864,12 +864,12 @@ pub mod msg_heartbeat {
     }
 
     impl TryFrom<u8> for SystemErrorFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SystemErrorFlag::SystemHealthy),
                 1 => Ok(SystemErrorFlag::AnErrorHasOccurred),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -898,56 +898,56 @@ pub mod msg_ins_status {
     }
 
     impl MsgInsStatus {
-        pub fn ins_type(&self) -> Option<InsType> {
-            get_bit_range!(self.flags, u32, u8, 31, 29).try_into().ok()
+        pub fn ins_type(&self) -> Result<InsType, u8> {
+            get_bit_range!(self.flags, u32, u8, 31, 29).try_into()
         }
 
         pub fn set_ins_type(&mut self, ins_type: InsType) {
             set_bit_range!(&mut self.flags, ins_type, u32, u8, 31, 29);
         }
 
-        pub fn motion_state(&self) -> Option<MotionState> {
-            get_bit_range!(self.flags, u32, u8, 13, 11).try_into().ok()
+        pub fn motion_state(&self) -> Result<MotionState, u8> {
+            get_bit_range!(self.flags, u32, u8, 13, 11).try_into()
         }
 
         pub fn set_motion_state(&mut self, motion_state: MotionState) {
             set_bit_range!(&mut self.flags, motion_state, u32, u8, 13, 11);
         }
 
-        pub fn odometry_synch(&self) -> Option<OdometrySynch> {
-            get_bit_range!(self.flags, u32, u8, 10, 0).try_into().ok()
+        pub fn odometry_synch(&self) -> Result<OdometrySynch, u8> {
+            get_bit_range!(self.flags, u32, u8, 10, 0).try_into()
         }
 
         pub fn set_odometry_synch(&mut self, odometry_synch: OdometrySynch) {
             set_bit_range!(&mut self.flags, odometry_synch, u32, u8, 10, 0);
         }
 
-        pub fn odometry_status(&self) -> Option<OdometryStatus> {
-            get_bit_range!(self.flags, u32, u8, 9, 8).try_into().ok()
+        pub fn odometry_status(&self) -> Result<OdometryStatus, u8> {
+            get_bit_range!(self.flags, u32, u8, 9, 8).try_into()
         }
 
         pub fn set_odometry_status(&mut self, odometry_status: OdometryStatus) {
             set_bit_range!(&mut self.flags, odometry_status, u32, u8, 9, 8);
         }
 
-        pub fn ins_error(&self) -> Option<InsError> {
-            get_bit_range!(self.flags, u32, u8, 7, 4).try_into().ok()
+        pub fn ins_error(&self) -> Result<InsError, u8> {
+            get_bit_range!(self.flags, u32, u8, 7, 4).try_into()
         }
 
         pub fn set_ins_error(&mut self, ins_error: InsError) {
             set_bit_range!(&mut self.flags, ins_error, u32, u8, 7, 4);
         }
 
-        pub fn gnss_fix(&self) -> Option<GnssFix> {
-            get_bit_range!(self.flags, u32, u8, 3, 0).try_into().ok()
+        pub fn gnss_fix(&self) -> Result<GnssFix, u8> {
+            get_bit_range!(self.flags, u32, u8, 3, 0).try_into()
         }
 
         pub fn set_gnss_fix(&mut self, gnss_fix: GnssFix) {
             set_bit_range!(&mut self.flags, gnss_fix, u32, u8, 3, 0);
         }
 
-        pub fn mode(&self) -> Option<Mode> {
-            get_bit_range!(self.flags, u32, u8, 2, 0).try_into().ok()
+        pub fn mode(&self) -> Result<Mode, u8> {
+            get_bit_range!(self.flags, u32, u8, 2, 0).try_into()
         }
 
         pub fn set_mode(&mut self, mode: Mode) {
@@ -1024,12 +1024,12 @@ pub mod msg_ins_status {
     }
 
     impl TryFrom<u8> for InsType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InsType::SmoothposeLooselyCoupled),
                 1 => Ok(InsType::Starling),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1062,14 +1062,14 @@ pub mod msg_ins_status {
     }
 
     impl TryFrom<u8> for MotionState {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(MotionState::UnknownOrInit),
                 1 => Ok(MotionState::ArbitraryMotion),
                 2 => Ok(MotionState::StraightMotion),
                 3 => Ok(MotionState::Stationary),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1098,12 +1098,12 @@ pub mod msg_ins_status {
     }
 
     impl TryFrom<u8> for OdometrySynch {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(OdometrySynch::OdometryTimestampNominal),
                 1 => Ok(OdometrySynch::OdometryTimestampOutOfBounds),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1136,13 +1136,13 @@ pub mod msg_ins_status {
     }
 
     impl TryFrom<u8> for OdometryStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(OdometryStatus::NoOdometry),
                 1 => Ok(OdometryStatus::OdometryReceivedWithinLastSecond),
                 2 => Ok(OdometryStatus::OdometryNotReceivedWithinLastSecond),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1171,13 +1171,13 @@ pub mod msg_ins_status {
     }
 
     impl TryFrom<u8> for InsError {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 1 => Ok(InsError::ImuDataError),
                 2 => Ok(InsError::InsLicenseError),
                 3 => Ok(InsError::ImuCalibrationDataError),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1202,12 +1202,12 @@ pub mod msg_ins_status {
     }
 
     impl TryFrom<u8> for GnssFix {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(GnssFix::NoGnssFixAvailable),
                 1 => Ok(GnssFix::GnssFix),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1256,7 +1256,7 @@ pub mod msg_ins_status {
     }
 
     impl TryFrom<u8> for Mode {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(Mode::AwaitingInitialization),
@@ -1266,7 +1266,7 @@ pub mod msg_ins_status {
                 4 => Ok(Mode::FastStartSeeding),
                 5 => Ok(Mode::FastStartValidating),
                 6 => Ok(Mode::ValidatingUnsafeFastStartSeed),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1658,8 +1658,8 @@ pub mod msg_pps_time {
             set_bit_range!(&mut self.flags, reserved_set_to_zero, u8, u8, 7, 2);
         }
 
-        pub fn time_uncertainty(&self) -> Option<TimeUncertainty> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn time_uncertainty(&self) -> Result<TimeUncertainty, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_time_uncertainty(&mut self, time_uncertainty: TimeUncertainty) {
@@ -1834,14 +1834,14 @@ impl WireFormat for MsgSensorAidEvent {
     }
 
     impl TryFrom<u8> for TimeUncertainty {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeUncertainty::Unknown),
                 1 => Ok(TimeUncertainty::_10Milliseconds),
                 2 => Ok(TimeUncertainty::_10Microseconds),
                 3 => Ok(TimeUncertainty::_1Microseconds),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -1877,18 +1877,16 @@ pub mod msg_startup {
     }
 
     impl MsgStartup {
-        pub fn cause_of_startup(&self) -> Option<CauseOfStartup> {
-            get_bit_range!(self.cause, u8, u8, 8, 0).try_into().ok()
+        pub fn cause_of_startup(&self) -> Result<CauseOfStartup, u8> {
+            get_bit_range!(self.cause, u8, u8, 8, 0).try_into()
         }
 
         pub fn set_cause_of_startup(&mut self, cause_of_startup: CauseOfStartup) {
             set_bit_range!(&mut self.cause, cause_of_startup, u8, u8, 8, 0);
         }
 
-        pub fn startup_type(&self) -> Option<StartupType> {
-            get_bit_range!(self.startup_type, u8, u8, 8, 0)
-                .try_into()
-                .ok()
+        pub fn startup_type(&self) -> Result<StartupType, u8> {
+            get_bit_range!(self.startup_type, u8, u8, 8, 0).try_into()
         }
 
         pub fn set_startup_type(&mut self, startup_type: StartupType) {
@@ -1977,13 +1975,13 @@ pub mod msg_startup {
     }
 
     impl TryFrom<u8> for CauseOfStartup {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(CauseOfStartup::PowerOn),
                 1 => Ok(CauseOfStartup::SoftwareReset),
                 2 => Ok(CauseOfStartup::WatchdogReset),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2011,13 +2009,13 @@ pub mod msg_startup {
     }
 
     impl TryFrom<u8> for StartupType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(StartupType::ColdStart),
                 1 => Ok(StartupType::WarmStart),
                 2 => Ok(StartupType::HotStart),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2064,10 +2062,8 @@ pub mod msg_status_report {
     }
 
     impl MsgStatusReport {
-        pub fn system(&self) -> Option<System> {
-            get_bit_range!(self.reporting_system, u16, u16, 15, 0)
-                .try_into()
-                .ok()
+        pub fn system(&self) -> Result<System, u16> {
+            get_bit_range!(self.reporting_system, u16, u16, 15, 0).try_into()
         }
 
         pub fn set_system(&mut self, system: System) {
@@ -2196,12 +2192,12 @@ pub mod msg_status_report {
     }
 
     impl TryFrom<u16> for System {
-        type Error = TryFromIntError;
+        type Error = u16;
         fn try_from(i: u16) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(System::Starling),
                 1 => Ok(System::PrecisionGnssModule),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2233,18 +2229,16 @@ pub mod sub_system_report {
     }
 
     impl SubSystemReport {
-        pub fn subsystem(&self) -> Option<Subsystem> {
-            get_bit_range!(self.component, u16, u16, 15, 0)
-                .try_into()
-                .ok()
+        pub fn subsystem(&self) -> Result<Subsystem, u16> {
+            get_bit_range!(self.component, u16, u16, 15, 0).try_into()
         }
 
         pub fn set_subsystem(&mut self, subsystem: Subsystem) {
             set_bit_range!(&mut self.component, subsystem, u16, u16, 15, 0);
         }
 
-        pub fn generic(&self) -> Option<Generic> {
-            get_bit_range!(self.generic, u8, u8, 7, 0).try_into().ok()
+        pub fn generic(&self) -> Result<Generic, u8> {
+            get_bit_range!(self.generic, u8, u8, 7, 0).try_into()
         }
 
         pub fn set_generic(&mut self, generic: Generic) {
@@ -2315,7 +2309,7 @@ pub mod sub_system_report {
     }
 
     impl TryFrom<u16> for Subsystem {
-        type Error = TryFromIntError;
+        type Error = u16;
         fn try_from(i: u16) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(Subsystem::PrimaryGnssAntenna),
@@ -2325,7 +2319,7 @@ pub mod sub_system_report {
                 4 => Ok(Subsystem::CAN),
                 5 => Ok(Subsystem::WheelOdometry),
                 6 => Ok(Subsystem::SensorFusionEngine),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -2362,7 +2356,7 @@ pub mod sub_system_report {
     }
 
     impl TryFrom<u8> for Generic {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(Generic::OKNominal),
@@ -2370,7 +2364,7 @@ pub mod sub_system_report {
                 2 => Ok(Generic::Unknown),
                 3 => Ok(Generic::Degraded),
                 4 => Ok(Generic::Unusable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

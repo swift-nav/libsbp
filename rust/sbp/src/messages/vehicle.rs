@@ -54,24 +54,24 @@ pub mod msg_odometry {
     }
 
     impl MsgOdometry {
-        pub fn vehicle_metadata(&self) -> Option<VehicleMetadata> {
-            get_bit_range!(self.flags, u8, u8, 6, 5).try_into().ok()
+        pub fn vehicle_metadata(&self) -> Result<VehicleMetadata, u8> {
+            get_bit_range!(self.flags, u8, u8, 6, 5).try_into()
         }
 
         pub fn set_vehicle_metadata(&mut self, vehicle_metadata: VehicleMetadata) {
             set_bit_range!(&mut self.flags, vehicle_metadata, u8, u8, 6, 5);
         }
 
-        pub fn velocity_source(&self) -> Option<VelocitySource> {
-            get_bit_range!(self.flags, u8, u8, 4, 3).try_into().ok()
+        pub fn velocity_source(&self) -> Result<VelocitySource, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
         pub fn set_velocity_source(&mut self, velocity_source: VelocitySource) {
             set_bit_range!(&mut self.flags, velocity_source, u8, u8, 4, 3);
         }
 
-        pub fn time_source(&self) -> Option<TimeSource> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn time_source(&self) -> Result<TimeSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_time_source(&mut self, time_source: TimeSource) {
@@ -173,14 +173,14 @@ pub mod msg_odometry {
     }
 
     impl TryFrom<u8> for VehicleMetadata {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VehicleMetadata::Unavailable),
                 1 => Ok(VehicleMetadata::Forward),
                 2 => Ok(VehicleMetadata::Reverse),
                 3 => Ok(VehicleMetadata::Park),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -213,14 +213,14 @@ pub mod msg_odometry {
     }
 
     impl TryFrom<u8> for VelocitySource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VelocitySource::Source0),
                 1 => Ok(VelocitySource::Source1),
                 2 => Ok(VelocitySource::Source2),
                 3 => Ok(VelocitySource::Source3),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -249,13 +249,13 @@ pub mod msg_odometry {
     }
 
     impl TryFrom<u8> for TimeSource {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GpsSolution),
                 2 => Ok(TimeSource::ProcessorTime),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -307,16 +307,16 @@ pub mod msg_wheeltick {
     }
 
     impl MsgWheeltick {
-        pub fn vehicle_metadata(&self) -> Option<VehicleMetadata> {
-            get_bit_range!(self.flags, u8, u8, 3, 2).try_into().ok()
+        pub fn vehicle_metadata(&self) -> Result<VehicleMetadata, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
         }
 
         pub fn set_vehicle_metadata(&mut self, vehicle_metadata: VehicleMetadata) {
             set_bit_range!(&mut self.flags, vehicle_metadata, u8, u8, 3, 2);
         }
 
-        pub fn synchronization_type(&self) -> Option<SynchronizationType> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn synchronization_type(&self) -> Result<SynchronizationType, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_synchronization_type(&mut self, synchronization_type: SynchronizationType) {
@@ -426,14 +426,14 @@ pub mod msg_wheeltick {
     }
 
     impl TryFrom<u8> for VehicleMetadata {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(VehicleMetadata::Unavailable),
                 1 => Ok(VehicleMetadata::Forward),
                 2 => Ok(VehicleMetadata::Reverse),
                 3 => Ok(VehicleMetadata::Park),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -468,13 +468,13 @@ pub mod msg_wheeltick {
     }
 
     impl TryFrom<u8> for SynchronizationType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(SynchronizationType::MicrosecondsSinceLastPps),
                 1 => Ok(SynchronizationType::MicrosecondsInGpsWeek),
                 2 => Ok(SynchronizationType::LocalCpuTimeInNominalMicroseconds),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

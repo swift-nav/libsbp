@@ -533,8 +533,8 @@ pub mod msg_settings_register_resp {
     }
 
     impl MsgSettingsRegisterResp {
-        pub fn register_status(&self) -> Option<RegisterStatus> {
-            get_bit_range!(self.status, u8, u8, 1, 0).try_into().ok()
+        pub fn register_status(&self) -> Result<RegisterStatus, u8> {
+            get_bit_range!(self.status, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_register_status(&mut self, register_status: RegisterStatus) {
@@ -632,7 +632,7 @@ pub mod msg_settings_register_resp {
     }
 
     impl TryFrom<u8> for RegisterStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RegisterStatus::AcceptedRequestedDefaultValueReturned),
@@ -641,7 +641,7 @@ pub mod msg_settings_register_resp {
                 ),
                 2 => Ok(RegisterStatus::RejectedSettingAlreadyRegisteredValueFromMemoryReturned),
                 3 => Ok(RegisterStatus::RejectedMalformedMessage),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -821,8 +821,8 @@ pub mod msg_settings_write_resp {
     }
 
     impl MsgSettingsWriteResp {
-        pub fn write_status(&self) -> Option<WriteStatus> {
-            get_bit_range!(self.status, u8, u8, 1, 0).try_into().ok()
+        pub fn write_status(&self) -> Result<WriteStatus, u8> {
+            get_bit_range!(self.status, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_write_status(&mut self, write_status: WriteStatus) {
@@ -932,7 +932,7 @@ pub mod msg_settings_write_resp {
     }
 
     impl TryFrom<u8> for WriteStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(WriteStatus::AcceptedValueUpdated),
@@ -942,7 +942,7 @@ pub mod msg_settings_write_resp {
                 4 => Ok(WriteStatus::RejectedSettingIsReadOnly),
                 5 => Ok(WriteStatus::RejectedModificationIsTemporarilyDisabled),
                 6 => Ok(WriteStatus::RejectedUnspecifiedError),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

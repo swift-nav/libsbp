@@ -6350,40 +6350,40 @@ pub mod packed_obs_content {
     }
 
     impl PackedObsContent {
-        pub fn raim_exclusion(&self) -> Option<RaimExclusion> {
-            get_bit_range!(self.flags, u8, u8, 7, 0).try_into().ok()
+        pub fn raim_exclusion(&self) -> Result<RaimExclusion, u8> {
+            get_bit_range!(self.flags, u8, u8, 7, 0).try_into()
         }
 
         pub fn set_raim_exclusion(&mut self, raim_exclusion: RaimExclusion) {
             set_bit_range!(&mut self.flags, raim_exclusion, u8, u8, 7, 0);
         }
 
-        pub fn doppler_valid(&self) -> Option<DopplerValid> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn doppler_valid(&self) -> Result<DopplerValid, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_doppler_valid(&mut self, doppler_valid: DopplerValid) {
             set_bit_range!(&mut self.flags, doppler_valid, u8, u8, 3, 0);
         }
 
-        pub fn halfcycle_ambiguity(&self) -> Option<HalfCycleAmbiguity> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn halfcycle_ambiguity(&self) -> Result<HalfCycleAmbiguity, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_halfcycle_ambiguity(&mut self, halfcycle_ambiguity: HalfCycleAmbiguity) {
             set_bit_range!(&mut self.flags, halfcycle_ambiguity, u8, u8, 2, 0);
         }
 
-        pub fn carrier_phase_valid(&self) -> Option<CarrierPhaseValid> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn carrier_phase_valid(&self) -> Result<CarrierPhaseValid, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_carrier_phase_valid(&mut self, carrier_phase_valid: CarrierPhaseValid) {
             set_bit_range!(&mut self.flags, carrier_phase_valid, u8, u8, 1, 0);
         }
 
-        pub fn pseudorange_valid(&self) -> Option<PseudorangeValid> {
-            get_bit_range!(self.flags, u8, u8, 0, 0).try_into().ok()
+        pub fn pseudorange_valid(&self) -> Result<PseudorangeValid, u8> {
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
         }
 
         pub fn set_pseudorange_valid(&mut self, pseudorange_valid: PseudorangeValid) {
@@ -6452,12 +6452,12 @@ pub mod packed_obs_content {
     }
 
     impl TryFrom<u8> for RaimExclusion {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(RaimExclusion::NoExclusion),
                 1 => Ok(RaimExclusion::MeasurementWasExcludedBySppRaimUseWithCare),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6484,12 +6484,12 @@ pub mod packed_obs_content {
     }
 
     impl TryFrom<u8> for DopplerValid {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(DopplerValid::InvalidDopplerMeasurement),
                 1 => Ok(DopplerValid::ValidDopplerMeasurement),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6518,12 +6518,12 @@ pub mod packed_obs_content {
     }
 
     impl TryFrom<u8> for HalfCycleAmbiguity {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityUnresolved),
                 1 => Ok(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityResolved),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6552,12 +6552,12 @@ pub mod packed_obs_content {
     }
 
     impl TryFrom<u8> for CarrierPhaseValid {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(CarrierPhaseValid::InvalidCarrierPhaseMeasurement),
                 1 => Ok(CarrierPhaseValid::ValidCarrierPhaseMeasurement),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6586,12 +6586,12 @@ pub mod packed_obs_content {
     }
 
     impl TryFrom<u8> for PseudorangeValid {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(PseudorangeValid::InvalidPseudorangeMeasurement),
                 1 => Ok(PseudorangeValid::ValidPseudorangeMeasurementAndCoarseTowDecoded),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6841,8 +6841,8 @@ pub mod packed_osr_content {
     }
 
     impl PackedOsrContent {
-        pub fn invalid_phase_corrections(&self) -> Option<InvalidPhaseCorrections> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into().ok()
+        pub fn invalid_phase_corrections(&self) -> Result<InvalidPhaseCorrections, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
         }
 
         pub fn set_invalid_phase_corrections(
@@ -6852,8 +6852,8 @@ pub mod packed_osr_content {
             set_bit_range!(&mut self.flags, invalid_phase_corrections, u8, u8, 4, 0);
         }
 
-        pub fn invalid_code_corrections(&self) -> Option<InvalidCodeCorrections> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into().ok()
+        pub fn invalid_code_corrections(&self) -> Result<InvalidCodeCorrections, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_invalid_code_corrections(
@@ -6863,24 +6863,24 @@ pub mod packed_osr_content {
             set_bit_range!(&mut self.flags, invalid_code_corrections, u8, u8, 3, 0);
         }
 
-        pub fn full_fixing_flag(&self) -> Option<FullFixingFlag> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into().ok()
+        pub fn full_fixing_flag(&self) -> Result<FullFixingFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
         pub fn set_full_fixing_flag(&mut self, full_fixing_flag: FullFixingFlag) {
             set_bit_range!(&mut self.flags, full_fixing_flag, u8, u8, 2, 0);
         }
 
-        pub fn partial_fixing_flag(&self) -> Option<PartialFixingFlag> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into().ok()
+        pub fn partial_fixing_flag(&self) -> Result<PartialFixingFlag, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
         pub fn set_partial_fixing_flag(&mut self, partial_fixing_flag: PartialFixingFlag) {
             set_bit_range!(&mut self.flags, partial_fixing_flag, u8, u8, 1, 0);
         }
 
-        pub fn correction_validity(&self) -> Option<CorrectionValidity> {
-            get_bit_range!(self.flags, u8, u8, 0, 0).try_into().ok()
+        pub fn correction_validity(&self) -> Result<CorrectionValidity, u8> {
+            get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
         }
 
         pub fn set_correction_validity(&mut self, correction_validity: CorrectionValidity) {
@@ -6955,12 +6955,12 @@ pub mod packed_osr_content {
     }
 
     impl TryFrom<u8> for InvalidPhaseCorrections {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InvalidPhaseCorrections::ValidPhaseCorrections),
                 1 => Ok(InvalidPhaseCorrections::DoNotUsePhaseCorrections),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -6989,12 +6989,12 @@ pub mod packed_osr_content {
     }
 
     impl TryFrom<u8> for InvalidCodeCorrections {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(InvalidCodeCorrections::ValidCodeCorrections),
                 1 => Ok(InvalidCodeCorrections::DoNotUseCodeCorrections),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7019,12 +7019,12 @@ pub mod packed_osr_content {
     }
 
     impl TryFrom<u8> for FullFixingFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(FullFixingFlag::FullFixingUnavailable),
                 1 => Ok(FullFixingFlag::FullFixingAvailable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7053,12 +7053,12 @@ pub mod packed_osr_content {
     }
 
     impl TryFrom<u8> for PartialFixingFlag {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(PartialFixingFlag::PartialFixingUnavailable),
                 1 => Ok(PartialFixingFlag::PartialFixingAvailable),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -7083,12 +7083,12 @@ pub mod packed_osr_content {
     }
 
     impl TryFrom<u8> for CorrectionValidity {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(CorrectionValidity::DoNotUseSignal),
                 1 => Ok(CorrectionValidity::ValidSignal),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }

@@ -46,24 +46,24 @@ pub mod msg_imu_aux {
     }
 
     impl MsgImuAux {
-        pub fn imu_type(&self) -> Option<ImuType> {
-            get_bit_range!(self.imu_type, u8, u8, 7, 0).try_into().ok()
+        pub fn imu_type(&self) -> Result<ImuType, u8> {
+            get_bit_range!(self.imu_type, u8, u8, 7, 0).try_into()
         }
 
         pub fn set_imu_type(&mut self, imu_type: ImuType) {
             set_bit_range!(&mut self.imu_type, imu_type, u8, u8, 7, 0);
         }
 
-        pub fn gyroscope_range(&self) -> Option<GyroscopeRange> {
-            get_bit_range!(self.imu_conf, u8, u8, 7, 4).try_into().ok()
+        pub fn gyroscope_range(&self) -> Result<GyroscopeRange, u8> {
+            get_bit_range!(self.imu_conf, u8, u8, 7, 4).try_into()
         }
 
         pub fn set_gyroscope_range(&mut self, gyroscope_range: GyroscopeRange) {
             set_bit_range!(&mut self.imu_conf, gyroscope_range, u8, u8, 7, 4);
         }
 
-        pub fn accelerometer_range(&self) -> Option<AccelerometerRange> {
-            get_bit_range!(self.imu_conf, u8, u8, 3, 0).try_into().ok()
+        pub fn accelerometer_range(&self) -> Result<AccelerometerRange, u8> {
+            get_bit_range!(self.imu_conf, u8, u8, 3, 0).try_into()
         }
 
         pub fn set_accelerometer_range(&mut self, accelerometer_range: AccelerometerRange) {
@@ -150,12 +150,12 @@ pub mod msg_imu_aux {
     }
 
     impl TryFrom<u8> for ImuType {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(ImuType::BoschBmi160),
                 1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -192,7 +192,7 @@ pub mod msg_imu_aux {
     }
 
     impl TryFrom<u8> for GyroscopeRange {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(GyroscopeRange::_2000DegS),
@@ -200,7 +200,7 @@ pub mod msg_imu_aux {
                 2 => Ok(GyroscopeRange::_500DegS),
                 3 => Ok(GyroscopeRange::_250DegS),
                 4 => Ok(GyroscopeRange::_125DegS),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -233,14 +233,14 @@ pub mod msg_imu_aux {
     }
 
     impl TryFrom<u8> for AccelerometerRange {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(AccelerometerRange::_2G),
                 1 => Ok(AccelerometerRange::_4G),
                 2 => Ok(AccelerometerRange::_8G),
                 3 => Ok(AccelerometerRange::_16G),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
@@ -298,8 +298,8 @@ pub mod msg_imu_raw {
     }
 
     impl MsgImuRaw {
-        pub fn time_status(&self) -> Option<TimeStatus> {
-            get_bit_range!(self.tow, u32, u8, 31, 30).try_into().ok()
+        pub fn time_status(&self) -> Result<TimeStatus, u8> {
+            get_bit_range!(self.tow, u32, u8, 31, 30).try_into()
         }
 
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
@@ -447,14 +447,14 @@ pub mod msg_imu_raw {
     }
 
     impl TryFrom<u8> for TimeStatus {
-        type Error = TryFromIntError;
+        type Error = u8;
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
                 1 => Ok(TimeStatus::ReferenceEpochIsTimeOfSystemStartup),
                 2 => Ok(TimeStatus::ReferenceEpochIsUnknown),
                 3 => Ok(TimeStatus::ReferenceEpochIsLastPps),
-                _ => Err(TryFromIntError),
+                i => Err(i),
             }
         }
     }
