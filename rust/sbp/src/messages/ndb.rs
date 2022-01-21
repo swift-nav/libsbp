@@ -66,34 +66,58 @@ pub mod msg_ndb_event {
     }
 
     impl MsgNdbEvent {
+        /// Gets the [EventType][self::EventType] stored in the `event` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `EventType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `EventType` were added.
         pub fn event_type(&self) -> Result<EventType, u8> {
             get_bit_range!(self.event, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [EventType][EventType] of the `event` bitfield.
         pub fn set_event_type(&mut self, event_type: EventType) {
             set_bit_range!(&mut self.event, event_type, u8, u8, 1, 0);
         }
 
+        /// Gets the [EventObjectType][self::EventObjectType] stored in the `object_type` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `EventObjectType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `EventObjectType` were added.
         pub fn event_object_type(&self) -> Result<EventObjectType, u8> {
             get_bit_range!(self.object_type, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [EventObjectType][EventObjectType] of the `object_type` bitfield.
         pub fn set_event_object_type(&mut self, event_object_type: EventObjectType) {
             set_bit_range!(&mut self.object_type, event_object_type, u8, u8, 2, 0);
         }
 
+        /// Gets the [EventResult][self::EventResult] stored in the `result` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `EventResult` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `EventResult` were added.
         pub fn event_result(&self) -> Result<EventResult, u8> {
             get_bit_range!(self.result, u8, u8, 3, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [EventResult][EventResult] of the `result` bitfield.
         pub fn set_event_result(&mut self, event_result: EventResult) {
             set_bit_range!(&mut self.result, event_result, u8, u8, 3, 0);
         }
 
+        /// Gets the [DataSource][self::DataSource] stored in the `data_source` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `DataSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `DataSource` were added.
         pub fn data_source(&self) -> Result<DataSource, u8> {
             get_bit_range!(self.data_source, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [DataSource][DataSource] of the `data_source` bitfield.
         pub fn set_data_source(&mut self, data_source: DataSource) {
             set_bit_range!(&mut self.data_source, data_source, u8, u8, 1, 0);
         }

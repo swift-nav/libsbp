@@ -219,10 +219,16 @@ pub mod msg_dgnss_status {
     }
 
     impl MsgDgnssStatus {
+        /// Gets the [DifferentialType][self::DifferentialType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `DifferentialType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `DifferentialType` were added.
         pub fn differential_type(&self) -> Result<DifferentialType, u8> {
             get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [DifferentialType][DifferentialType] of the `flags` bitfield.
         pub fn set_differential_type(&mut self, differential_type: DifferentialType) {
             set_bit_range!(&mut self.flags, differential_type, u8, u8, 3, 0);
         }
@@ -453,10 +459,16 @@ pub mod msg_group_meta {
     }
 
     impl MsgGroupMeta {
+        /// Gets the [SolutionGroupType][self::SolutionGroupType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SolutionGroupType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SolutionGroupType` were added.
         pub fn solution_group_type(&self) -> Result<SolutionGroupType, u8> {
             get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SolutionGroupType][SolutionGroupType] of the `flags` bitfield.
         pub fn set_solution_group_type(&mut self, solution_group_type: SolutionGroupType) {
             set_bit_range!(&mut self.flags, solution_group_type, u8, u8, 1, 0);
         }
@@ -589,29 +601,43 @@ pub mod msg_heartbeat {
     }
 
     impl MsgHeartbeat {
+        /// Gets the [ExternalAntennaPresent][self::ExternalAntennaPresent] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ExternalAntennaPresent` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ExternalAntennaPresent` were added.
         pub fn external_antenna_present(&self) -> Result<ExternalAntennaPresent, u8> {
-            get_bit_range!(self.flags, u32, u8, 31, 0).try_into()
+            get_bit_range!(self.flags, u32, u8, 31, 31).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ExternalAntennaPresent][ExternalAntennaPresent] of the `flags` bitfield.
         pub fn set_external_antenna_present(
             &mut self,
             external_antenna_present: ExternalAntennaPresent,
         ) {
-            set_bit_range!(&mut self.flags, external_antenna_present, u32, u8, 31, 0);
+            set_bit_range!(&mut self.flags, external_antenna_present, u32, u8, 31, 31);
         }
 
+        /// Gets the [ExternalAntennaShort][self::ExternalAntennaShort] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ExternalAntennaShort` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ExternalAntennaShort` were added.
         pub fn external_antenna_short(&self) -> Result<ExternalAntennaShort, u8> {
-            get_bit_range!(self.flags, u32, u8, 30, 0).try_into()
+            get_bit_range!(self.flags, u32, u8, 30, 30).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ExternalAntennaShort][ExternalAntennaShort] of the `flags` bitfield.
         pub fn set_external_antenna_short(&mut self, external_antenna_short: ExternalAntennaShort) {
-            set_bit_range!(&mut self.flags, external_antenna_short, u32, u8, 30, 0);
+            set_bit_range!(&mut self.flags, external_antenna_short, u32, u8, 30, 30);
         }
 
+        /// Gets the `sbp_major_protocol_version_number` stored in `flags`.
         pub fn sbp_major_protocol_version_number(&self) -> u8 {
             get_bit_range!(self.flags, u32, u8, 23, 16)
         }
 
+        /// Sets the `sbp_major_protocol_version_number` bitrange of `flags`.
         pub fn set_sbp_major_protocol_version_number(
             &mut self,
             sbp_major_protocol_version_number: u8,
@@ -626,10 +652,12 @@ pub mod msg_heartbeat {
             );
         }
 
+        /// Gets the `sbp_minor_protocol_version_number` stored in `flags`.
         pub fn sbp_minor_protocol_version_number(&self) -> u8 {
             get_bit_range!(self.flags, u32, u8, 15, 8)
         }
 
+        /// Sets the `sbp_minor_protocol_version_number` bitrange of `flags`.
         pub fn set_sbp_minor_protocol_version_number(
             &mut self,
             sbp_minor_protocol_version_number: u8,
@@ -644,26 +672,44 @@ pub mod msg_heartbeat {
             );
         }
 
+        /// Gets the [SwiftNapError][self::SwiftNapError] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SwiftNapError` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SwiftNapError` were added.
         pub fn swift_nap_error(&self) -> Result<SwiftNapError, u8> {
-            get_bit_range!(self.flags, u32, u8, 2, 0).try_into()
+            get_bit_range!(self.flags, u32, u8, 2, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SwiftNapError][SwiftNapError] of the `flags` bitfield.
         pub fn set_swift_nap_error(&mut self, swift_nap_error: SwiftNapError) {
-            set_bit_range!(&mut self.flags, swift_nap_error, u32, u8, 2, 0);
+            set_bit_range!(&mut self.flags, swift_nap_error, u32, u8, 2, 2);
         }
 
+        /// Gets the [IoError][self::IoError] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `IoError` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `IoError` were added.
         pub fn io_error(&self) -> Result<IoError, u8> {
-            get_bit_range!(self.flags, u32, u8, 1, 0).try_into()
+            get_bit_range!(self.flags, u32, u8, 1, 1).try_into()
         }
 
+        /// Set the bitrange corresponding to the [IoError][IoError] of the `flags` bitfield.
         pub fn set_io_error(&mut self, io_error: IoError) {
-            set_bit_range!(&mut self.flags, io_error, u32, u8, 1, 0);
+            set_bit_range!(&mut self.flags, io_error, u32, u8, 1, 1);
         }
 
+        /// Gets the [SystemErrorFlag][self::SystemErrorFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SystemErrorFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SystemErrorFlag` were added.
         pub fn system_error_flag(&self) -> Result<SystemErrorFlag, u8> {
             get_bit_range!(self.flags, u32, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SystemErrorFlag][SystemErrorFlag] of the `flags` bitfield.
         pub fn set_system_error_flag(&mut self, system_error_flag: SystemErrorFlag) {
             set_bit_range!(&mut self.flags, system_error_flag, u32, u8, 0, 0);
         }
@@ -898,58 +944,100 @@ pub mod msg_ins_status {
     }
 
     impl MsgInsStatus {
+        /// Gets the [InsType][self::InsType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsType` were added.
         pub fn ins_type(&self) -> Result<InsType, u8> {
             get_bit_range!(self.flags, u32, u8, 31, 29).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsType][InsType] of the `flags` bitfield.
         pub fn set_ins_type(&mut self, ins_type: InsType) {
             set_bit_range!(&mut self.flags, ins_type, u32, u8, 31, 29);
         }
 
+        /// Gets the [MotionState][self::MotionState] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `MotionState` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `MotionState` were added.
         pub fn motion_state(&self) -> Result<MotionState, u8> {
             get_bit_range!(self.flags, u32, u8, 13, 11).try_into()
         }
 
+        /// Set the bitrange corresponding to the [MotionState][MotionState] of the `flags` bitfield.
         pub fn set_motion_state(&mut self, motion_state: MotionState) {
             set_bit_range!(&mut self.flags, motion_state, u32, u8, 13, 11);
         }
 
+        /// Gets the [OdometrySynch][self::OdometrySynch] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `OdometrySynch` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `OdometrySynch` were added.
         pub fn odometry_synch(&self) -> Result<OdometrySynch, u8> {
-            get_bit_range!(self.flags, u32, u8, 10, 0).try_into()
+            get_bit_range!(self.flags, u32, u8, 10, 10).try_into()
         }
 
+        /// Set the bitrange corresponding to the [OdometrySynch][OdometrySynch] of the `flags` bitfield.
         pub fn set_odometry_synch(&mut self, odometry_synch: OdometrySynch) {
-            set_bit_range!(&mut self.flags, odometry_synch, u32, u8, 10, 0);
+            set_bit_range!(&mut self.flags, odometry_synch, u32, u8, 10, 10);
         }
 
+        /// Gets the [OdometryStatus][self::OdometryStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `OdometryStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `OdometryStatus` were added.
         pub fn odometry_status(&self) -> Result<OdometryStatus, u8> {
             get_bit_range!(self.flags, u32, u8, 9, 8).try_into()
         }
 
+        /// Set the bitrange corresponding to the [OdometryStatus][OdometryStatus] of the `flags` bitfield.
         pub fn set_odometry_status(&mut self, odometry_status: OdometryStatus) {
             set_bit_range!(&mut self.flags, odometry_status, u32, u8, 9, 8);
         }
 
+        /// Gets the [InsError][self::InsError] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsError` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsError` were added.
         pub fn ins_error(&self) -> Result<InsError, u8> {
             get_bit_range!(self.flags, u32, u8, 7, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsError][InsError] of the `flags` bitfield.
         pub fn set_ins_error(&mut self, ins_error: InsError) {
             set_bit_range!(&mut self.flags, ins_error, u32, u8, 7, 4);
         }
 
+        /// Gets the [GnssFix][self::GnssFix] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `GnssFix` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `GnssFix` were added.
         pub fn gnss_fix(&self) -> Result<GnssFix, u8> {
-            get_bit_range!(self.flags, u32, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u32, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [GnssFix][GnssFix] of the `flags` bitfield.
         pub fn set_gnss_fix(&mut self, gnss_fix: GnssFix) {
-            set_bit_range!(&mut self.flags, gnss_fix, u32, u8, 3, 0);
+            set_bit_range!(&mut self.flags, gnss_fix, u32, u8, 3, 3);
         }
 
+        /// Gets the [Mode][self::Mode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Mode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Mode` were added.
         pub fn mode(&self) -> Result<Mode, u8> {
             get_bit_range!(self.flags, u32, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [Mode][Mode] of the `flags` bitfield.
         pub fn set_mode(&mut self, mode: Mode) {
             set_bit_range!(&mut self.flags, mode, u32, u8, 2, 0);
         }
@@ -1314,10 +1402,12 @@ pub mod msg_ins_updates {
     }
 
     impl MsgInsUpdates {
+        /// Gets the `number_of_attempted_gnss_position_updates_since_last_message` stored in `gnsspos`.
         pub fn number_of_attempted_gnss_position_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.gnsspos, u8, u8, 7, 4)
         }
 
+        /// Sets the `number_of_attempted_gnss_position_updates_since_last_message` bitrange of `gnsspos`.
         pub fn set_number_of_attempted_gnss_position_updates_since_last_message(
             &mut self,
             number_of_attempted_gnss_position_updates_since_last_message: u8,
@@ -1332,10 +1422,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_rejected_gnss_position_updates_since_last_message` stored in `gnsspos`.
         pub fn number_of_rejected_gnss_position_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.gnsspos, u8, u8, 3, 0)
         }
 
+        /// Sets the `number_of_rejected_gnss_position_updates_since_last_message` bitrange of `gnsspos`.
         pub fn set_number_of_rejected_gnss_position_updates_since_last_message(
             &mut self,
             number_of_rejected_gnss_position_updates_since_last_message: u8,
@@ -1350,10 +1442,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_attempted_gnss_velocity_updates_since_last_message` stored in `gnssvel`.
         pub fn number_of_attempted_gnss_velocity_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.gnssvel, u8, u8, 7, 4)
         }
 
+        /// Sets the `number_of_attempted_gnss_velocity_updates_since_last_message` bitrange of `gnssvel`.
         pub fn set_number_of_attempted_gnss_velocity_updates_since_last_message(
             &mut self,
             number_of_attempted_gnss_velocity_updates_since_last_message: u8,
@@ -1368,10 +1462,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_rejected_gnss_velocity_updates_since_last_message` stored in `gnssvel`.
         pub fn number_of_rejected_gnss_velocity_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.gnssvel, u8, u8, 3, 0)
         }
 
+        /// Sets the `number_of_rejected_gnss_velocity_updates_since_last_message` bitrange of `gnssvel`.
         pub fn set_number_of_rejected_gnss_velocity_updates_since_last_message(
             &mut self,
             number_of_rejected_gnss_velocity_updates_since_last_message: u8,
@@ -1386,10 +1482,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_attempted_wheeltick_updates_since_last_message` stored in `wheelticks`.
         pub fn number_of_attempted_wheeltick_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.wheelticks, u8, u8, 7, 4)
         }
 
+        /// Sets the `number_of_attempted_wheeltick_updates_since_last_message` bitrange of `wheelticks`.
         pub fn set_number_of_attempted_wheeltick_updates_since_last_message(
             &mut self,
             number_of_attempted_wheeltick_updates_since_last_message: u8,
@@ -1404,10 +1502,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_rejected_wheeltick_updates_since_last_message` stored in `wheelticks`.
         pub fn number_of_rejected_wheeltick_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.wheelticks, u8, u8, 3, 0)
         }
 
+        /// Sets the `number_of_rejected_wheeltick_updates_since_last_message` bitrange of `wheelticks`.
         pub fn set_number_of_rejected_wheeltick_updates_since_last_message(
             &mut self,
             number_of_rejected_wheeltick_updates_since_last_message: u8,
@@ -1422,10 +1522,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_attempted_speed_updates_since_last_message` stored in `speed`.
         pub fn number_of_attempted_speed_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.speed, u8, u8, 7, 4)
         }
 
+        /// Sets the `number_of_attempted_speed_updates_since_last_message` bitrange of `speed`.
         pub fn set_number_of_attempted_speed_updates_since_last_message(
             &mut self,
             number_of_attempted_speed_updates_since_last_message: u8,
@@ -1440,10 +1542,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_rejected_speed_updates_since_last_message` stored in `speed`.
         pub fn number_of_rejected_speed_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.speed, u8, u8, 3, 0)
         }
 
+        /// Sets the `number_of_rejected_speed_updates_since_last_message` bitrange of `speed`.
         pub fn set_number_of_rejected_speed_updates_since_last_message(
             &mut self,
             number_of_rejected_speed_updates_since_last_message: u8,
@@ -1458,10 +1562,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_attempted_nhc_updates_since_last_message` stored in `nhc`.
         pub fn number_of_attempted_nhc_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.nhc, u8, u8, 7, 4)
         }
 
+        /// Sets the `number_of_attempted_nhc_updates_since_last_message` bitrange of `nhc`.
         pub fn set_number_of_attempted_nhc_updates_since_last_message(
             &mut self,
             number_of_attempted_nhc_updates_since_last_message: u8,
@@ -1476,10 +1582,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_rejected_nhc_updates_since_last_message` stored in `nhc`.
         pub fn number_of_rejected_nhc_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.nhc, u8, u8, 3, 0)
         }
 
+        /// Sets the `number_of_rejected_nhc_updates_since_last_message` bitrange of `nhc`.
         pub fn set_number_of_rejected_nhc_updates_since_last_message(
             &mut self,
             number_of_rejected_nhc_updates_since_last_message: u8,
@@ -1494,10 +1602,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_attempted_zero_velocity_updates_since_last_message` stored in `zerovel`.
         pub fn number_of_attempted_zero_velocity_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.zerovel, u8, u8, 7, 4)
         }
 
+        /// Sets the `number_of_attempted_zero_velocity_updates_since_last_message` bitrange of `zerovel`.
         pub fn set_number_of_attempted_zero_velocity_updates_since_last_message(
             &mut self,
             number_of_attempted_zero_velocity_updates_since_last_message: u8,
@@ -1512,10 +1622,12 @@ pub mod msg_ins_updates {
             );
         }
 
+        /// Gets the `number_of_rejected_zero_velocity_updates_since_last_message` stored in `zerovel`.
         pub fn number_of_rejected_zero_velocity_updates_since_last_message(&self) -> u8 {
             get_bit_range!(self.zerovel, u8, u8, 3, 0)
         }
 
+        /// Sets the `number_of_rejected_zero_velocity_updates_since_last_message` bitrange of `zerovel`.
         pub fn set_number_of_rejected_zero_velocity_updates_since_last_message(
             &mut self,
             number_of_rejected_zero_velocity_updates_since_last_message: u8,
@@ -1650,18 +1762,26 @@ pub mod msg_pps_time {
     }
 
     impl MsgPpsTime {
+        /// Gets the `reserved_set_to_zero` stored in `flags`.
         pub fn reserved_set_to_zero(&self) -> u8 {
             get_bit_range!(self.flags, u8, u8, 7, 2)
         }
 
+        /// Sets the `reserved_set_to_zero` bitrange of `flags`.
         pub fn set_reserved_set_to_zero(&mut self, reserved_set_to_zero: u8) {
             set_bit_range!(&mut self.flags, reserved_set_to_zero, u8, u8, 7, 2);
         }
 
+        /// Gets the [TimeUncertainty][self::TimeUncertainty] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeUncertainty` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeUncertainty` were added.
         pub fn time_uncertainty(&self) -> Result<TimeUncertainty, u8> {
             get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeUncertainty][TimeUncertainty] of the `flags` bitfield.
         pub fn set_time_uncertainty(&mut self, time_uncertainty: TimeUncertainty) {
             set_bit_range!(&mut self.flags, time_uncertainty, u8, u8, 1, 0);
         }
@@ -1877,18 +1997,30 @@ pub mod msg_startup {
     }
 
     impl MsgStartup {
+        /// Gets the [CauseOfStartup][self::CauseOfStartup] stored in the `cause` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CauseOfStartup` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CauseOfStartup` were added.
         pub fn cause_of_startup(&self) -> Result<CauseOfStartup, u8> {
             get_bit_range!(self.cause, u8, u8, 8, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [CauseOfStartup][CauseOfStartup] of the `cause` bitfield.
         pub fn set_cause_of_startup(&mut self, cause_of_startup: CauseOfStartup) {
             set_bit_range!(&mut self.cause, cause_of_startup, u8, u8, 8, 0);
         }
 
+        /// Gets the [StartupType][self::StartupType] stored in the `startup_type` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `StartupType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `StartupType` were added.
         pub fn startup_type(&self) -> Result<StartupType, u8> {
             get_bit_range!(self.startup_type, u8, u8, 8, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [StartupType][StartupType] of the `startup_type` bitfield.
         pub fn set_startup_type(&mut self, startup_type: StartupType) {
             set_bit_range!(&mut self.startup_type, startup_type, u8, u8, 8, 0);
         }
@@ -2062,18 +2194,26 @@ pub mod msg_status_report {
     }
 
     impl MsgStatusReport {
+        /// Gets the [System][self::System] stored in the `reporting_system` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `System` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u16)`. This may be because of a malformed message,
+        /// or because new variants of `System` were added.
         pub fn system(&self) -> Result<System, u16> {
             get_bit_range!(self.reporting_system, u16, u16, 15, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [System][System] of the `reporting_system` bitfield.
         pub fn set_system(&mut self, system: System) {
             set_bit_range!(&mut self.reporting_system, system, u16, u16, 15, 0);
         }
 
+        /// Gets the `sbp_major_protocol_version_number` stored in `sbp_version`.
         pub fn sbp_major_protocol_version_number(&self) -> u8 {
             get_bit_range!(self.sbp_version, u16, u8, 16, 8)
         }
 
+        /// Sets the `sbp_major_protocol_version_number` bitrange of `sbp_version`.
         pub fn set_sbp_major_protocol_version_number(
             &mut self,
             sbp_major_protocol_version_number: u8,
@@ -2088,10 +2228,12 @@ pub mod msg_status_report {
             );
         }
 
+        /// Gets the `sbp_minor_protocol_version_number` stored in `sbp_version`.
         pub fn sbp_minor_protocol_version_number(&self) -> u8 {
             get_bit_range!(self.sbp_version, u16, u8, 7, 0)
         }
 
+        /// Sets the `sbp_minor_protocol_version_number` bitrange of `sbp_version`.
         pub fn set_sbp_minor_protocol_version_number(
             &mut self,
             sbp_minor_protocol_version_number: u8,
@@ -2229,18 +2371,30 @@ pub mod sub_system_report {
     }
 
     impl SubSystemReport {
+        /// Gets the [Subsystem][self::Subsystem] stored in the `component` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Subsystem` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u16)`. This may be because of a malformed message,
+        /// or because new variants of `Subsystem` were added.
         pub fn subsystem(&self) -> Result<Subsystem, u16> {
             get_bit_range!(self.component, u16, u16, 15, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [Subsystem][Subsystem] of the `component` bitfield.
         pub fn set_subsystem(&mut self, subsystem: Subsystem) {
             set_bit_range!(&mut self.component, subsystem, u16, u16, 15, 0);
         }
 
+        /// Gets the [Generic][self::Generic] stored in the `generic` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Generic` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Generic` were added.
         pub fn generic(&self) -> Result<Generic, u8> {
             get_bit_range!(self.generic, u8, u8, 7, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [Generic][Generic] of the `generic` bitfield.
         pub fn set_generic(&mut self, generic: Generic) {
             set_bit_range!(&mut self.generic, generic, u8, u8, 7, 0);
         }

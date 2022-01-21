@@ -6350,42 +6350,72 @@ pub mod packed_obs_content {
     }
 
     impl PackedObsContent {
+        /// Gets the [RaimExclusion][self::RaimExclusion] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimExclusion` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimExclusion` were added.
         pub fn raim_exclusion(&self) -> Result<RaimExclusion, u8> {
-            get_bit_range!(self.flags, u8, u8, 7, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 7, 7).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimExclusion][RaimExclusion] of the `flags` bitfield.
         pub fn set_raim_exclusion(&mut self, raim_exclusion: RaimExclusion) {
-            set_bit_range!(&mut self.flags, raim_exclusion, u8, u8, 7, 0);
+            set_bit_range!(&mut self.flags, raim_exclusion, u8, u8, 7, 7);
         }
 
+        /// Gets the [DopplerValid][self::DopplerValid] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `DopplerValid` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `DopplerValid` were added.
         pub fn doppler_valid(&self) -> Result<DopplerValid, u8> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [DopplerValid][DopplerValid] of the `flags` bitfield.
         pub fn set_doppler_valid(&mut self, doppler_valid: DopplerValid) {
-            set_bit_range!(&mut self.flags, doppler_valid, u8, u8, 3, 0);
+            set_bit_range!(&mut self.flags, doppler_valid, u8, u8, 3, 3);
         }
 
+        /// Gets the [HalfCycleAmbiguity][self::HalfCycleAmbiguity] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `HalfCycleAmbiguity` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `HalfCycleAmbiguity` were added.
         pub fn halfcycle_ambiguity(&self) -> Result<HalfCycleAmbiguity, u8> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 2, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [HalfCycleAmbiguity][HalfCycleAmbiguity] of the `flags` bitfield.
         pub fn set_halfcycle_ambiguity(&mut self, halfcycle_ambiguity: HalfCycleAmbiguity) {
-            set_bit_range!(&mut self.flags, halfcycle_ambiguity, u8, u8, 2, 0);
+            set_bit_range!(&mut self.flags, halfcycle_ambiguity, u8, u8, 2, 2);
         }
 
+        /// Gets the [CarrierPhaseValid][self::CarrierPhaseValid] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CarrierPhaseValid` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CarrierPhaseValid` were added.
         pub fn carrier_phase_valid(&self) -> Result<CarrierPhaseValid, u8> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 1, 1).try_into()
         }
 
+        /// Set the bitrange corresponding to the [CarrierPhaseValid][CarrierPhaseValid] of the `flags` bitfield.
         pub fn set_carrier_phase_valid(&mut self, carrier_phase_valid: CarrierPhaseValid) {
-            set_bit_range!(&mut self.flags, carrier_phase_valid, u8, u8, 1, 0);
+            set_bit_range!(&mut self.flags, carrier_phase_valid, u8, u8, 1, 1);
         }
 
+        /// Gets the [PseudorangeValid][self::PseudorangeValid] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PseudorangeValid` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PseudorangeValid` were added.
         pub fn pseudorange_valid(&self) -> Result<PseudorangeValid, u8> {
             get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [PseudorangeValid][PseudorangeValid] of the `flags` bitfield.
         pub fn set_pseudorange_valid(&mut self, pseudorange_valid: PseudorangeValid) {
             set_bit_range!(&mut self.flags, pseudorange_valid, u8, u8, 0, 0);
         }
@@ -6841,48 +6871,78 @@ pub mod packed_osr_content {
     }
 
     impl PackedOsrContent {
+        /// Gets the [InvalidPhaseCorrections][self::InvalidPhaseCorrections] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InvalidPhaseCorrections` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InvalidPhaseCorrections` were added.
         pub fn invalid_phase_corrections(&self) -> Result<InvalidPhaseCorrections, u8> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InvalidPhaseCorrections][InvalidPhaseCorrections] of the `flags` bitfield.
         pub fn set_invalid_phase_corrections(
             &mut self,
             invalid_phase_corrections: InvalidPhaseCorrections,
         ) {
-            set_bit_range!(&mut self.flags, invalid_phase_corrections, u8, u8, 4, 0);
+            set_bit_range!(&mut self.flags, invalid_phase_corrections, u8, u8, 4, 4);
         }
 
+        /// Gets the [InvalidCodeCorrections][self::InvalidCodeCorrections] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InvalidCodeCorrections` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InvalidCodeCorrections` were added.
         pub fn invalid_code_corrections(&self) -> Result<InvalidCodeCorrections, u8> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InvalidCodeCorrections][InvalidCodeCorrections] of the `flags` bitfield.
         pub fn set_invalid_code_corrections(
             &mut self,
             invalid_code_corrections: InvalidCodeCorrections,
         ) {
-            set_bit_range!(&mut self.flags, invalid_code_corrections, u8, u8, 3, 0);
+            set_bit_range!(&mut self.flags, invalid_code_corrections, u8, u8, 3, 3);
         }
 
+        /// Gets the [FullFixingFlag][self::FullFixingFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FullFixingFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FullFixingFlag` were added.
         pub fn full_fixing_flag(&self) -> Result<FullFixingFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 2, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FullFixingFlag][FullFixingFlag] of the `flags` bitfield.
         pub fn set_full_fixing_flag(&mut self, full_fixing_flag: FullFixingFlag) {
-            set_bit_range!(&mut self.flags, full_fixing_flag, u8, u8, 2, 0);
+            set_bit_range!(&mut self.flags, full_fixing_flag, u8, u8, 2, 2);
         }
 
+        /// Gets the [PartialFixingFlag][self::PartialFixingFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PartialFixingFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PartialFixingFlag` were added.
         pub fn partial_fixing_flag(&self) -> Result<PartialFixingFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 1, 1).try_into()
         }
 
+        /// Set the bitrange corresponding to the [PartialFixingFlag][PartialFixingFlag] of the `flags` bitfield.
         pub fn set_partial_fixing_flag(&mut self, partial_fixing_flag: PartialFixingFlag) {
-            set_bit_range!(&mut self.flags, partial_fixing_flag, u8, u8, 1, 0);
+            set_bit_range!(&mut self.flags, partial_fixing_flag, u8, u8, 1, 1);
         }
 
+        /// Gets the [CorrectionValidity][self::CorrectionValidity] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CorrectionValidity` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CorrectionValidity` were added.
         pub fn correction_validity(&self) -> Result<CorrectionValidity, u8> {
             get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [CorrectionValidity][CorrectionValidity] of the `flags` bitfield.
         pub fn set_correction_validity(&mut self, correction_validity: CorrectionValidity) {
             set_bit_range!(&mut self.flags, correction_validity, u8, u8, 0, 0);
         }

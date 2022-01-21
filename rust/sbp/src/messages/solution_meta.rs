@@ -41,10 +41,16 @@ pub mod gnss_input_type {
     }
 
     impl GnssInputType {
+        /// Gets the [TypeOfGnssMeasurement][self::TypeOfGnssMeasurement] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfGnssMeasurement` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfGnssMeasurement` were added.
         pub fn type_of_gnss_measurement(&self) -> Result<TypeOfGnssMeasurement, u8> {
             get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfGnssMeasurement][TypeOfGnssMeasurement] of the `flags` bitfield.
         pub fn set_type_of_gnss_measurement(
             &mut self,
             type_of_gnss_measurement: TypeOfGnssMeasurement,
@@ -127,26 +133,44 @@ pub mod imu_input_type {
     }
 
     impl ImuInputType {
+        /// Gets the [TimeStatus][self::TimeStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeStatus` were added.
         pub fn time_status(&self) -> Result<TimeStatus, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeStatus][TimeStatus] of the `flags` bitfield.
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
             set_bit_range!(&mut self.flags, time_status, u8, u8, 5, 4);
         }
 
+        /// Gets the [ImuGrade][self::ImuGrade] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ImuGrade` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ImuGrade` were added.
         pub fn imu_grade(&self) -> Result<ImuGrade, u8> {
             get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ImuGrade][ImuGrade] of the `flags` bitfield.
         pub fn set_imu_grade(&mut self, imu_grade: ImuGrade) {
             set_bit_range!(&mut self.flags, imu_grade, u8, u8, 3, 2);
         }
 
+        /// Gets the [ImuArchitecture][self::ImuArchitecture] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ImuArchitecture` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ImuArchitecture` were added.
         pub fn imu_architecture(&self) -> Result<ImuArchitecture, u8> {
             get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ImuArchitecture][ImuArchitecture] of the `flags` bitfield.
         pub fn set_imu_architecture(&mut self, imu_architecture: ImuArchitecture) {
             set_bit_range!(&mut self.flags, imu_architecture, u8, u8, 1, 0);
         }
@@ -338,18 +362,26 @@ pub mod msg_soln_meta {
     }
 
     impl MsgSolnMeta {
+        /// Gets the [TimeStatus][self::TimeStatus] stored in the `age_gnss` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeStatus` were added.
         pub fn time_status(&self) -> Result<TimeStatus, u8> {
             get_bit_range!(self.age_gnss, u32, u8, 31, 30).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeStatus][TimeStatus] of the `age_gnss` bitfield.
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
             set_bit_range!(&mut self.age_gnss, time_status, u32, u8, 31, 30);
         }
 
+        /// Gets the `age_of_the_last_received_valid_gnss_solution` stored in `age_gnss`.
         pub fn age_of_the_last_received_valid_gnss_solution(&self) -> u32 {
             get_bit_range!(self.age_gnss, u32, u32, 29, 0)
         }
 
+        /// Sets the `age_of_the_last_received_valid_gnss_solution` bitrange of `age_gnss`.
         pub fn set_age_of_the_last_received_valid_gnss_solution(
             &mut self,
             age_of_the_last_received_valid_gnss_solution: u32,
@@ -540,10 +572,16 @@ pub mod msg_soln_meta_dep_a {
     }
 
     impl MsgSolnMetaDepA {
+        /// Gets the [AlignmentStatus][self::AlignmentStatus] stored in the `alignment_status` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AlignmentStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AlignmentStatus` were added.
         pub fn alignment_status(&self) -> Result<AlignmentStatus, u8> {
             get_bit_range!(self.alignment_status, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AlignmentStatus][AlignmentStatus] of the `alignment_status` bitfield.
         pub fn set_alignment_status(&mut self, alignment_status: AlignmentStatus) {
             set_bit_range!(&mut self.alignment_status, alignment_status, u8, u8, 2, 0);
         }
@@ -707,26 +745,44 @@ pub mod odo_input_type {
     }
 
     impl OdoInputType {
+        /// Gets the [Rate][self::Rate] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Rate` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Rate` were added.
         pub fn rate(&self) -> Result<Rate, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [Rate][Rate] of the `flags` bitfield.
         pub fn set_rate(&mut self, rate: Rate) {
             set_bit_range!(&mut self.flags, rate, u8, u8, 5, 4);
         }
 
+        /// Gets the [OdometerGrade][self::OdometerGrade] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `OdometerGrade` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `OdometerGrade` were added.
         pub fn odometer_grade(&self) -> Result<OdometerGrade, u8> {
             get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [OdometerGrade][OdometerGrade] of the `flags` bitfield.
         pub fn set_odometer_grade(&mut self, odometer_grade: OdometerGrade) {
             set_bit_range!(&mut self.flags, odometer_grade, u8, u8, 3, 2);
         }
 
+        /// Gets the [OdometerClass][self::OdometerClass] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `OdometerClass` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `OdometerClass` were added.
         pub fn odometer_class(&self) -> Result<OdometerClass, u8> {
             get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [OdometerClass][OdometerClass] of the `flags` bitfield.
         pub fn set_odometer_class(&mut self, odometer_class: OdometerClass) {
             set_bit_range!(&mut self.flags, odometer_class, u8, u8, 1, 0);
         }
@@ -883,18 +939,30 @@ pub mod solution_input_type {
     }
 
     impl SolutionInputType {
+        /// Gets the [SensorUsage][self::SensorUsage] stored in the `sensor_type` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SensorUsage` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SensorUsage` were added.
         pub fn sensor_usage(&self) -> Result<SensorUsage, u8> {
             get_bit_range!(self.sensor_type, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SensorUsage][SensorUsage] of the `sensor_type` bitfield.
         pub fn set_sensor_usage(&mut self, sensor_usage: SensorUsage) {
             set_bit_range!(&mut self.sensor_type, sensor_usage, u8, u8, 4, 3);
         }
 
+        /// Gets the [SensorType][self::SensorType] stored in the `sensor_type` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SensorType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SensorType` were added.
         pub fn sensor_type(&self) -> Result<SensorType, u8> {
             get_bit_range!(self.sensor_type, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SensorType][SensorType] of the `sensor_type` bitfield.
         pub fn set_sensor_type(&mut self, sensor_type: SensorType) {
             set_bit_range!(&mut self.sensor_type, sensor_type, u8, u8, 2, 0);
         }

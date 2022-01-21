@@ -252,10 +252,16 @@ pub mod msg_baseline_ecef {
     }
 
     impl MsgBaselineEcef {
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -427,26 +433,44 @@ pub mod msg_baseline_ecef_dep_a {
     }
 
     impl MsgBaselineEcefDepA {
+        /// Gets the [RaimRepairFlag][self::RaimRepairFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimRepairFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimRepairFlag` were added.
         pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimRepairFlag][RaimRepairFlag] of the `flags` bitfield.
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
-            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 4);
         }
 
+        /// Gets the [RaimAvailabilityFlag][self::RaimAvailabilityFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimAvailabilityFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimAvailabilityFlag` were added.
         pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimAvailabilityFlag][RaimAvailabilityFlag] of the `flags` bitfield.
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
-            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -664,26 +688,44 @@ pub mod msg_baseline_heading_dep_a {
     }
 
     impl MsgBaselineHeadingDepA {
+        /// Gets the [RaimRepairFlag][self::RaimRepairFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimRepairFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimRepairFlag` were added.
         pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimRepairFlag][RaimRepairFlag] of the `flags` bitfield.
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
-            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 4);
         }
 
+        /// Gets the [RaimAvailabilityFlag][self::RaimAvailabilityFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimAvailabilityFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimAvailabilityFlag` were added.
         pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimAvailabilityFlag][RaimAvailabilityFlag] of the `flags` bitfield.
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
-            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -904,10 +946,16 @@ pub mod msg_baseline_ned {
     }
 
     impl MsgBaselineNed {
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -1088,26 +1136,44 @@ pub mod msg_baseline_ned_dep_a {
     }
 
     impl MsgBaselineNedDepA {
+        /// Gets the [RaimRepairFlag][self::RaimRepairFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimRepairFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimRepairFlag` were added.
         pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimRepairFlag][RaimRepairFlag] of the `flags` bitfield.
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
-            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 4);
         }
 
+        /// Gets the [RaimAvailabilityFlag][self::RaimAvailabilityFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimAvailabilityFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimAvailabilityFlag` were added.
         pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimAvailabilityFlag][RaimAvailabilityFlag] of the `flags` bitfield.
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
-            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -1339,18 +1405,26 @@ pub mod msg_dops {
     }
 
     impl MsgDops {
-        pub fn raim_repair_flag(&self) -> u8 {
-            get_bit_range!(self.flags, u8, u8, 7, 0)
+        /// Gets the `raim_repair_flag` flag.
+        pub fn raim_repair_flag(&self) -> bool {
+            ((self.flags >> 7) & 1) == 1
         }
 
-        pub fn set_raim_repair_flag(&mut self, raim_repair_flag: u8) {
-            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 7, 0);
+        /// Sets the `raim_repair_flag` flag.
+        pub fn set_raim_repair_flag(&mut self, raim_repair_flag: bool) {
+            self.flags ^= (!(raim_repair_flag as u8)) & (1 << 7)
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -1652,10 +1726,16 @@ pub mod msg_gps_time {
     }
 
     impl MsgGpsTime {
+        /// Gets the [TimeSource][self::TimeSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeSource` were added.
         pub fn time_source(&self) -> Result<TimeSource, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeSource][TimeSource] of the `flags` bitfield.
         pub fn set_time_source(&mut self, time_source: TimeSource) {
             set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
         }
@@ -1931,10 +2011,16 @@ pub mod msg_gps_time_gnss {
     }
 
     impl MsgGpsTimeGnss {
+        /// Gets the [TimeSource][self::TimeSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeSource` were added.
         pub fn time_source(&self) -> Result<TimeSource, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeSource][TimeSource] of the `flags` bitfield.
         pub fn set_time_source(&mut self, time_source: TimeSource) {
             set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
         }
@@ -2097,18 +2183,30 @@ pub mod msg_pos_ecef {
     }
 
     impl MsgPosEcef {
+        /// Gets the [TowType][self::TowType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TowType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TowType` were added.
         pub fn tow_type(&self) -> Result<TowType, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TowType][TowType] of the `flags` bitfield.
         pub fn set_tow_type(&mut self, tow_type: TowType) {
             set_bit_range!(&mut self.flags, tow_type, u8, u8, 5, 5);
         }
 
+        /// Gets the [InertialNavigationMode][self::InertialNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InertialNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InertialNavigationMode` were added.
         pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InertialNavigationMode][InertialNavigationMode] of the `flags` bitfield.
         pub fn set_inertial_navigation_mode(
             &mut self,
             inertial_navigation_mode: InertialNavigationMode,
@@ -2116,10 +2214,16 @@ pub mod msg_pos_ecef {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -2385,18 +2489,30 @@ pub mod msg_pos_ecef_cov {
     }
 
     impl MsgPosEcefCov {
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InertialNavigationMode][self::InertialNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InertialNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InertialNavigationMode` were added.
         pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InertialNavigationMode][InertialNavigationMode] of the `flags` bitfield.
         pub fn set_inertial_navigation_mode(
             &mut self,
             inertial_navigation_mode: InertialNavigationMode,
@@ -2404,10 +2520,16 @@ pub mod msg_pos_ecef_cov {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -2693,10 +2815,16 @@ pub mod msg_pos_ecef_cov_gnss {
     }
 
     impl MsgPosEcefCovGnss {
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -2901,26 +3029,44 @@ pub mod msg_pos_ecef_dep_a {
     }
 
     impl MsgPosEcefDepA {
+        /// Gets the [RaimRepairFlag][self::RaimRepairFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimRepairFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimRepairFlag` were added.
         pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimRepairFlag][RaimRepairFlag] of the `flags` bitfield.
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
-            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 0);
+            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 4, 4);
         }
 
+        /// Gets the [RaimAvailabilityFlag][self::RaimAvailabilityFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimAvailabilityFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimAvailabilityFlag` were added.
         pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimAvailabilityFlag][RaimAvailabilityFlag] of the `flags` bitfield.
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
-            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 0);
+            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 3, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -3156,10 +3302,16 @@ pub mod msg_pos_ecef_gnss {
     }
 
     impl MsgPosEcefGnss {
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -3347,18 +3499,30 @@ pub mod msg_pos_llh {
     }
 
     impl MsgPosLlh {
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InertialNavigationMode][self::InertialNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InertialNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InertialNavigationMode` were added.
         pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InertialNavigationMode][InertialNavigationMode] of the `flags` bitfield.
         pub fn set_inertial_navigation_mode(
             &mut self,
             inertial_navigation_mode: InertialNavigationMode,
@@ -3366,10 +3530,16 @@ pub mod msg_pos_llh {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -3652,18 +3822,30 @@ pub mod msg_pos_llh_acc {
     }
 
     impl MsgPosLlhAcc {
+        /// Gets the [GeoidModel][self::GeoidModel] stored in the `confidence_and_geoid` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `GeoidModel` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `GeoidModel` were added.
         pub fn geoid_model(&self) -> Result<GeoidModel, u8> {
             get_bit_range!(self.confidence_and_geoid, u8, u8, 6, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [GeoidModel][GeoidModel] of the `confidence_and_geoid` bitfield.
         pub fn set_geoid_model(&mut self, geoid_model: GeoidModel) {
             set_bit_range!(&mut self.confidence_and_geoid, geoid_model, u8, u8, 6, 4);
         }
 
+        /// Gets the [ConfidenceLevel][self::ConfidenceLevel] stored in the `confidence_and_geoid` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ConfidenceLevel` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ConfidenceLevel` were added.
         pub fn confidence_level(&self) -> Result<ConfidenceLevel, u8> {
             get_bit_range!(self.confidence_and_geoid, u8, u8, 3, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ConfidenceLevel][ConfidenceLevel] of the `confidence_and_geoid` bitfield.
         pub fn set_confidence_level(&mut self, confidence_level: ConfidenceLevel) {
             set_bit_range!(
                 &mut self.confidence_and_geoid,
@@ -3675,18 +3857,30 @@ pub mod msg_pos_llh_acc {
             );
         }
 
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InertialNavigationMode][self::InertialNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InertialNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InertialNavigationMode` were added.
         pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InertialNavigationMode][InertialNavigationMode] of the `flags` bitfield.
         pub fn set_inertial_navigation_mode(
             &mut self,
             inertial_navigation_mode: InertialNavigationMode,
@@ -3694,10 +3888,16 @@ pub mod msg_pos_llh_acc {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -4057,18 +4257,30 @@ pub mod msg_pos_llh_cov {
     }
 
     impl MsgPosLlhCov {
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InertialNavigationMode][self::InertialNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InertialNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InertialNavigationMode` were added.
         pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InertialNavigationMode][InertialNavigationMode] of the `flags` bitfield.
         pub fn set_inertial_navigation_mode(
             &mut self,
             inertial_navigation_mode: InertialNavigationMode,
@@ -4076,10 +4288,16 @@ pub mod msg_pos_llh_cov {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -4365,10 +4583,16 @@ pub mod msg_pos_llh_cov_gnss {
     }
 
     impl MsgPosLlhCovGnss {
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -4581,34 +4805,58 @@ pub mod msg_pos_llh_dep_a {
     }
 
     impl MsgPosLlhDepA {
+        /// Gets the [RaimRepairFlag][self::RaimRepairFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimRepairFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimRepairFlag` were added.
         pub fn raim_repair_flag(&self) -> Result<RaimRepairFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 5, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimRepairFlag][RaimRepairFlag] of the `flags` bitfield.
         pub fn set_raim_repair_flag(&mut self, raim_repair_flag: RaimRepairFlag) {
-            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 5, 0);
+            set_bit_range!(&mut self.flags, raim_repair_flag, u8, u8, 5, 5);
         }
 
+        /// Gets the [RaimAvailabilityFlag][self::RaimAvailabilityFlag] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RaimAvailabilityFlag` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RaimAvailabilityFlag` were added.
         pub fn raim_availability_flag(&self) -> Result<RaimAvailabilityFlag, u8> {
-            get_bit_range!(self.flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RaimAvailabilityFlag][RaimAvailabilityFlag] of the `flags` bitfield.
         pub fn set_raim_availability_flag(&mut self, raim_availability_flag: RaimAvailabilityFlag) {
-            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 4, 0);
+            set_bit_range!(&mut self.flags, raim_availability_flag, u8, u8, 4, 4);
         }
 
+        /// Gets the [HeightMode][self::HeightMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `HeightMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `HeightMode` were added.
         pub fn height_mode(&self) -> Result<HeightMode, u8> {
-            get_bit_range!(self.flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [HeightMode][HeightMode] of the `flags` bitfield.
         pub fn set_height_mode(&mut self, height_mode: HeightMode) {
-            set_bit_range!(&mut self.flags, height_mode, u8, u8, 3, 0);
+            set_bit_range!(&mut self.flags, height_mode, u8, u8, 3, 3);
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -4883,10 +5131,16 @@ pub mod msg_pos_llh_gnss {
     }
 
     impl MsgPosLlhGnss {
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -5115,10 +5369,12 @@ pub mod msg_protection_level {
     }
 
     impl MsgProtectionLevel {
+        /// Gets the `target_integrity_risk_tir_level` stored in `flags`.
         pub fn target_integrity_risk_tir_level(&self) -> u8 {
             get_bit_range!(self.flags, u32, u8, 2, 0)
         }
 
+        /// Sets the `target_integrity_risk_tir_level` bitrange of `flags`.
         pub fn set_target_integrity_risk_tir_level(&mut self, target_integrity_risk_tir_level: u8) {
             set_bit_range!(
                 &mut self.flags,
@@ -5130,18 +5386,30 @@ pub mod msg_protection_level {
             );
         }
 
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u32, u8, 17, 15).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u32, u8, 17, 15);
         }
 
+        /// Gets the [InertialNavigationMode][self::InertialNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InertialNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InertialNavigationMode` were added.
         pub fn inertial_navigation_mode(&self) -> Result<InertialNavigationMode, u8> {
             get_bit_range!(self.flags, u32, u8, 19, 18).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InertialNavigationMode][InertialNavigationMode] of the `flags` bitfield.
         pub fn set_inertial_navigation_mode(
             &mut self,
             inertial_navigation_mode: InertialNavigationMode,
@@ -5149,100 +5417,128 @@ pub mod msg_protection_level {
             set_bit_range!(&mut self.flags, inertial_navigation_mode, u32, u8, 19, 18);
         }
 
+        /// Gets the [TimeStatus][self::TimeStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeStatus` were added.
         pub fn time_status(&self) -> Result<TimeStatus, u8> {
-            get_bit_range!(self.flags, u32, u8, 20, 0).try_into()
+            get_bit_range!(self.flags, u32, u8, 20, 20).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeStatus][TimeStatus] of the `flags` bitfield.
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
-            set_bit_range!(&mut self.flags, time_status, u32, u8, 20, 0);
+            set_bit_range!(&mut self.flags, time_status, u32, u8, 20, 20);
         }
 
-        pub fn velocity_valid(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 21, 0)
+        /// Gets the `velocity_valid` flag.
+        pub fn velocity_valid(&self) -> bool {
+            ((self.flags >> 21) & 1) == 1
         }
 
-        pub fn set_velocity_valid(&mut self, velocity_valid: u8) {
-            set_bit_range!(&mut self.flags, velocity_valid, u32, u8, 21, 0);
+        /// Sets the `velocity_valid` flag.
+        pub fn set_velocity_valid(&mut self, velocity_valid: bool) {
+            self.flags ^= (!(velocity_valid as u32)) & (1 << 21)
         }
 
-        pub fn attitude_valid(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 22, 0)
+        /// Gets the `attitude_valid` flag.
+        pub fn attitude_valid(&self) -> bool {
+            ((self.flags >> 22) & 1) == 1
         }
 
-        pub fn set_attitude_valid(&mut self, attitude_valid: u8) {
-            set_bit_range!(&mut self.flags, attitude_valid, u32, u8, 22, 0);
+        /// Sets the `attitude_valid` flag.
+        pub fn set_attitude_valid(&mut self, attitude_valid: bool) {
+            self.flags ^= (!(attitude_valid as u32)) & (1 << 22)
         }
 
-        pub fn safe_state_hpl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 23, 0)
+        /// Gets the `safe_state_hpl` flag.
+        pub fn safe_state_hpl(&self) -> bool {
+            ((self.flags >> 23) & 1) == 1
         }
 
-        pub fn set_safe_state_hpl(&mut self, safe_state_hpl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_hpl, u32, u8, 23, 0);
+        /// Sets the `safe_state_hpl` flag.
+        pub fn set_safe_state_hpl(&mut self, safe_state_hpl: bool) {
+            self.flags ^= (!(safe_state_hpl as u32)) & (1 << 23)
         }
 
-        pub fn safe_state_vpl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 24, 0)
+        /// Gets the `safe_state_vpl` flag.
+        pub fn safe_state_vpl(&self) -> bool {
+            ((self.flags >> 24) & 1) == 1
         }
 
-        pub fn set_safe_state_vpl(&mut self, safe_state_vpl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_vpl, u32, u8, 24, 0);
+        /// Sets the `safe_state_vpl` flag.
+        pub fn set_safe_state_vpl(&mut self, safe_state_vpl: bool) {
+            self.flags ^= (!(safe_state_vpl as u32)) & (1 << 24)
         }
 
-        pub fn safe_state_atpl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 25, 0)
+        /// Gets the `safe_state_atpl` flag.
+        pub fn safe_state_atpl(&self) -> bool {
+            ((self.flags >> 25) & 1) == 1
         }
 
-        pub fn set_safe_state_atpl(&mut self, safe_state_atpl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_atpl, u32, u8, 25, 0);
+        /// Sets the `safe_state_atpl` flag.
+        pub fn set_safe_state_atpl(&mut self, safe_state_atpl: bool) {
+            self.flags ^= (!(safe_state_atpl as u32)) & (1 << 25)
         }
 
-        pub fn safe_state_ctpl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 26, 0)
+        /// Gets the `safe_state_ctpl` flag.
+        pub fn safe_state_ctpl(&self) -> bool {
+            ((self.flags >> 26) & 1) == 1
         }
 
-        pub fn set_safe_state_ctpl(&mut self, safe_state_ctpl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_ctpl, u32, u8, 26, 0);
+        /// Sets the `safe_state_ctpl` flag.
+        pub fn set_safe_state_ctpl(&mut self, safe_state_ctpl: bool) {
+            self.flags ^= (!(safe_state_ctpl as u32)) & (1 << 26)
         }
 
-        pub fn safe_state_hvpl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 27, 0)
+        /// Gets the `safe_state_hvpl` flag.
+        pub fn safe_state_hvpl(&self) -> bool {
+            ((self.flags >> 27) & 1) == 1
         }
 
-        pub fn set_safe_state_hvpl(&mut self, safe_state_hvpl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_hvpl, u32, u8, 27, 0);
+        /// Sets the `safe_state_hvpl` flag.
+        pub fn set_safe_state_hvpl(&mut self, safe_state_hvpl: bool) {
+            self.flags ^= (!(safe_state_hvpl as u32)) & (1 << 27)
         }
 
-        pub fn safe_state_vvpl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 28, 0)
+        /// Gets the `safe_state_vvpl` flag.
+        pub fn safe_state_vvpl(&self) -> bool {
+            ((self.flags >> 28) & 1) == 1
         }
 
-        pub fn set_safe_state_vvpl(&mut self, safe_state_vvpl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_vvpl, u32, u8, 28, 0);
+        /// Sets the `safe_state_vvpl` flag.
+        pub fn set_safe_state_vvpl(&mut self, safe_state_vvpl: bool) {
+            self.flags ^= (!(safe_state_vvpl as u32)) & (1 << 28)
         }
 
-        pub fn safe_state_hopl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 29, 0)
+        /// Gets the `safe_state_hopl` flag.
+        pub fn safe_state_hopl(&self) -> bool {
+            ((self.flags >> 29) & 1) == 1
         }
 
-        pub fn set_safe_state_hopl(&mut self, safe_state_hopl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_hopl, u32, u8, 29, 0);
+        /// Sets the `safe_state_hopl` flag.
+        pub fn set_safe_state_hopl(&mut self, safe_state_hopl: bool) {
+            self.flags ^= (!(safe_state_hopl as u32)) & (1 << 29)
         }
 
-        pub fn safe_state_popl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 30, 0)
+        /// Gets the `safe_state_popl` flag.
+        pub fn safe_state_popl(&self) -> bool {
+            ((self.flags >> 30) & 1) == 1
         }
 
-        pub fn set_safe_state_popl(&mut self, safe_state_popl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_popl, u32, u8, 30, 0);
+        /// Sets the `safe_state_popl` flag.
+        pub fn set_safe_state_popl(&mut self, safe_state_popl: bool) {
+            self.flags ^= (!(safe_state_popl as u32)) & (1 << 30)
         }
 
-        pub fn safe_state_ropl(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 31, 0)
+        /// Gets the `safe_state_ropl` flag.
+        pub fn safe_state_ropl(&self) -> bool {
+            ((self.flags >> 31) & 1) == 1
         }
 
-        pub fn set_safe_state_ropl(&mut self, safe_state_ropl: u8) {
-            set_bit_range!(&mut self.flags, safe_state_ropl, u32, u8, 31, 0);
+        /// Sets the `safe_state_ropl` flag.
+        pub fn set_safe_state_ropl(&mut self, safe_state_ropl: bool) {
+            self.flags ^= (!(safe_state_ropl as u32)) & (1 << 31)
         }
     }
 
@@ -5547,10 +5843,16 @@ pub mod msg_protection_level_dep_a {
     }
 
     impl MsgProtectionLevelDepA {
+        /// Gets the [TargetIntegrityRiskTirLevel][self::TargetIntegrityRiskTirLevel] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TargetIntegrityRiskTirLevel` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TargetIntegrityRiskTirLevel` were added.
         pub fn target_integrity_risk_tir_level(&self) -> Result<TargetIntegrityRiskTirLevel, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TargetIntegrityRiskTirLevel][TargetIntegrityRiskTirLevel] of the `flags` bitfield.
         pub fn set_target_integrity_risk_tir_level(
             &mut self,
             target_integrity_risk_tir_level: TargetIntegrityRiskTirLevel,
@@ -5738,18 +6040,30 @@ pub mod msg_utc_time {
     }
 
     impl MsgUtcTime {
+        /// Gets the [UtcOffsetSource][self::UtcOffsetSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UtcOffsetSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UtcOffsetSource` were added.
         pub fn utc_offset_source(&self) -> Result<UtcOffsetSource, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [UtcOffsetSource][UtcOffsetSource] of the `flags` bitfield.
         pub fn set_utc_offset_source(&mut self, utc_offset_source: UtcOffsetSource) {
             set_bit_range!(&mut self.flags, utc_offset_source, u8, u8, 4, 3);
         }
 
+        /// Gets the [TimeSource][self::TimeSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeSource` were added.
         pub fn time_source(&self) -> Result<TimeSource, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeSource][TimeSource] of the `flags` bitfield.
         pub fn set_time_source(&mut self, time_source: TimeSource) {
             set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
         }
@@ -5964,18 +6278,30 @@ pub mod msg_utc_time_gnss {
     }
 
     impl MsgUtcTimeGnss {
+        /// Gets the [UtcOffsetSource][self::UtcOffsetSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `UtcOffsetSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `UtcOffsetSource` were added.
         pub fn utc_offset_source(&self) -> Result<UtcOffsetSource, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [UtcOffsetSource][UtcOffsetSource] of the `flags` bitfield.
         pub fn set_utc_offset_source(&mut self, utc_offset_source: UtcOffsetSource) {
             set_bit_range!(&mut self.flags, utc_offset_source, u8, u8, 4, 3);
         }
 
+        /// Gets the [TimeSource][self::TimeSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeSource` were added.
         pub fn time_source(&self) -> Result<TimeSource, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeSource][TimeSource] of the `flags` bitfield.
         pub fn set_time_source(&mut self, time_source: TimeSource) {
             set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
         }
@@ -6205,18 +6531,30 @@ pub mod msg_vel_body {
     }
 
     impl MsgVelBody {
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -6448,61 +6786,103 @@ pub mod msg_vel_cog {
     }
 
     impl MsgVelCog {
+        /// Gets the [CogFrozen][self::CogFrozen] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CogFrozen` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CogFrozen` were added.
         pub fn cog_frozen(&self) -> Result<CogFrozen, u8> {
-            get_bit_range!(self.flags, u16, u8, 9, 0).try_into()
+            get_bit_range!(self.flags, u16, u8, 9, 9).try_into()
         }
 
+        /// Set the bitrange corresponding to the [CogFrozen][CogFrozen] of the `flags` bitfield.
         pub fn set_cog_frozen(&mut self, cog_frozen: CogFrozen) {
-            set_bit_range!(&mut self.flags, cog_frozen, u16, u8, 9, 0);
+            set_bit_range!(&mut self.flags, cog_frozen, u16, u8, 9, 9);
         }
 
+        /// Gets the [VerticalVelocityValidity][self::VerticalVelocityValidity] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VerticalVelocityValidity` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VerticalVelocityValidity` were added.
         pub fn vertical_velocity_validity(&self) -> Result<VerticalVelocityValidity, u8> {
-            get_bit_range!(self.flags, u16, u8, 8, 0).try_into()
+            get_bit_range!(self.flags, u16, u8, 8, 8).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VerticalVelocityValidity][VerticalVelocityValidity] of the `flags` bitfield.
         pub fn set_vertical_velocity_validity(
             &mut self,
             vertical_velocity_validity: VerticalVelocityValidity,
         ) {
-            set_bit_range!(&mut self.flags, vertical_velocity_validity, u16, u8, 8, 0);
+            set_bit_range!(&mut self.flags, vertical_velocity_validity, u16, u8, 8, 8);
         }
 
+        /// Gets the [SogValidity][self::SogValidity] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SogValidity` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SogValidity` were added.
         pub fn sog_validity(&self) -> Result<SogValidity, u8> {
-            get_bit_range!(self.flags, u16, u8, 7, 0).try_into()
+            get_bit_range!(self.flags, u16, u8, 7, 7).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SogValidity][SogValidity] of the `flags` bitfield.
         pub fn set_sog_validity(&mut self, sog_validity: SogValidity) {
-            set_bit_range!(&mut self.flags, sog_validity, u16, u8, 7, 0);
+            set_bit_range!(&mut self.flags, sog_validity, u16, u8, 7, 7);
         }
 
+        /// Gets the [CogValidity][self::CogValidity] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CogValidity` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CogValidity` were added.
         pub fn cog_validity(&self) -> Result<CogValidity, u8> {
-            get_bit_range!(self.flags, u16, u8, 6, 0).try_into()
+            get_bit_range!(self.flags, u16, u8, 6, 6).try_into()
         }
 
+        /// Set the bitrange corresponding to the [CogValidity][CogValidity] of the `flags` bitfield.
         pub fn set_cog_validity(&mut self, cog_validity: CogValidity) {
-            set_bit_range!(&mut self.flags, cog_validity, u16, u8, 6, 0);
+            set_bit_range!(&mut self.flags, cog_validity, u16, u8, 6, 6);
         }
 
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
-            get_bit_range!(self.flags, u16, u8, 5, 0).try_into()
+            get_bit_range!(self.flags, u16, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
-            set_bit_range!(&mut self.flags, type_of_reported_tow, u16, u8, 5, 0);
+            set_bit_range!(&mut self.flags, type_of_reported_tow, u16, u8, 5, 5);
         }
 
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u16, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u16, u8, 4, 3);
         }
 
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u16, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u16, u8, 2, 0);
         }
@@ -6859,26 +7239,44 @@ pub mod msg_vel_ecef {
     }
 
     impl MsgVelEcef {
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -7124,26 +7522,44 @@ pub mod msg_vel_ecef_cov {
     }
 
     impl MsgVelEcefCov {
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -7409,10 +7825,16 @@ pub mod msg_vel_ecef_cov_gnss {
     }
 
     impl MsgVelEcefCovGnss {
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -7722,10 +8144,16 @@ pub mod msg_vel_ecef_gnss {
     }
 
     impl MsgVelEcefGnss {
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -7895,26 +8323,44 @@ pub mod msg_vel_ned {
     }
 
     impl MsgVelNed {
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -8167,26 +8613,44 @@ pub mod msg_vel_ned_cov {
     }
 
     impl MsgVelNedCov {
+        /// Gets the [TypeOfReportedTow][self::TypeOfReportedTow] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeOfReportedTow` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeOfReportedTow` were added.
         pub fn type_of_reported_tow(&self) -> Result<TypeOfReportedTow, u8> {
             get_bit_range!(self.flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TypeOfReportedTow][TypeOfReportedTow] of the `flags` bitfield.
         pub fn set_type_of_reported_tow(&mut self, type_of_reported_tow: TypeOfReportedTow) {
             set_bit_range!(&mut self.flags, type_of_reported_tow, u8, u8, 5, 5);
         }
 
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 4, 3);
         }
 
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -8455,10 +8919,16 @@ pub mod msg_vel_ned_cov_gnss {
     }
 
     impl MsgVelNedCovGnss {
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }
@@ -8780,10 +9250,16 @@ pub mod msg_vel_ned_gnss {
     }
 
     impl MsgVelNedGnss {
+        /// Gets the [VelocityMode][self::VelocityMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocityMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocityMode` were added.
         pub fn velocity_mode(&self) -> Result<VelocityMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocityMode][VelocityMode] of the `flags` bitfield.
         pub fn set_velocity_mode(&mut self, velocity_mode: VelocityMode) {
             set_bit_range!(&mut self.flags, velocity_mode, u8, u8, 2, 0);
         }

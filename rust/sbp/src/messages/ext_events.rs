@@ -52,18 +52,30 @@ pub mod msg_ext_event {
     }
 
     impl MsgExtEvent {
+        /// Gets the [TimeQuality][self::TimeQuality] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeQuality` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeQuality` were added.
         pub fn time_quality(&self) -> Result<TimeQuality, u8> {
-            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
+            get_bit_range!(self.flags, u8, u8, 1, 1).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeQuality][TimeQuality] of the `flags` bitfield.
         pub fn set_time_quality(&mut self, time_quality: TimeQuality) {
-            set_bit_range!(&mut self.flags, time_quality, u8, u8, 1, 0);
+            set_bit_range!(&mut self.flags, time_quality, u8, u8, 1, 1);
         }
 
+        /// Gets the [NewLevelOfPin][self::NewLevelOfPin] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `NewLevelOfPin` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `NewLevelOfPin` were added.
         pub fn new_level_of_pin(&self) -> Result<NewLevelOfPin, u8> {
             get_bit_range!(self.flags, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [NewLevelOfPin][NewLevelOfPin] of the `flags` bitfield.
         pub fn set_new_level_of_pin(&mut self, new_level_of_pin: NewLevelOfPin) {
             set_bit_range!(&mut self.flags, new_level_of_pin, u8, u8, 0, 0);
         }

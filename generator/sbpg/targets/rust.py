@@ -295,12 +295,14 @@ def get_bitfield(field):
             field_name = snake_case(field.identifier)
         field_name = re.sub("__", "_", field_name)
         bitrange = item.get("range").split(":")
+        is_bool = False
         if len(bitrange) == 1:
-            msb = bitrange[0]
-            lsb = 0
+            msb = int(bitrange[0])
+            lsb = msb
+            is_bool = len(vals) == 0
         else:
-            msb = bitrange[1]
-            lsb = bitrange[0]
+            msb = int(bitrange[1])
+            lsb = int(bitrange[0])
         items.append(
             {
                 "desc": item.get("desc"),
@@ -308,8 +310,8 @@ def get_bitfield(field):
                 "msb": msb,
                 "lsb": lsb,
                 "type_name": type_name,
-                "type": calc_item_size(item, field),
-                "field_name": field_name,
+                "type": "bool" if is_bool else calc_item_size(item, field),
+                "bitrange_name": field_name,
                 "vals": vals,
             }
         )
@@ -326,6 +328,7 @@ class FieldItem(object):
         self.field_name = snake_case(self.identifier)
         self.type = type_map(field)
         self.has_gps_time = False
+        self.msg = msg
         for pkg in package_specs:
             for m in pkg.definitions:
                 if m.identifier == self.type_id and any(

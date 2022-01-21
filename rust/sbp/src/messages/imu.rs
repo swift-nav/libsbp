@@ -46,26 +46,44 @@ pub mod msg_imu_aux {
     }
 
     impl MsgImuAux {
+        /// Gets the [ImuType][self::ImuType] stored in the `imu_type` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ImuType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ImuType` were added.
         pub fn imu_type(&self) -> Result<ImuType, u8> {
             get_bit_range!(self.imu_type, u8, u8, 7, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ImuType][ImuType] of the `imu_type` bitfield.
         pub fn set_imu_type(&mut self, imu_type: ImuType) {
             set_bit_range!(&mut self.imu_type, imu_type, u8, u8, 7, 0);
         }
 
+        /// Gets the [GyroscopeRange][self::GyroscopeRange] stored in the `imu_conf` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `GyroscopeRange` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `GyroscopeRange` were added.
         pub fn gyroscope_range(&self) -> Result<GyroscopeRange, u8> {
             get_bit_range!(self.imu_conf, u8, u8, 7, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [GyroscopeRange][GyroscopeRange] of the `imu_conf` bitfield.
         pub fn set_gyroscope_range(&mut self, gyroscope_range: GyroscopeRange) {
             set_bit_range!(&mut self.imu_conf, gyroscope_range, u8, u8, 7, 4);
         }
 
+        /// Gets the [AccelerometerRange][self::AccelerometerRange] stored in the `imu_conf` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AccelerometerRange` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AccelerometerRange` were added.
         pub fn accelerometer_range(&self) -> Result<AccelerometerRange, u8> {
             get_bit_range!(self.imu_conf, u8, u8, 3, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AccelerometerRange][AccelerometerRange] of the `imu_conf` bitfield.
         pub fn set_accelerometer_range(&mut self, accelerometer_range: AccelerometerRange) {
             set_bit_range!(&mut self.imu_conf, accelerometer_range, u8, u8, 3, 0);
         }
@@ -298,18 +316,26 @@ pub mod msg_imu_raw {
     }
 
     impl MsgImuRaw {
+        /// Gets the [TimeStatus][self::TimeStatus] stored in the `tow` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeStatus` were added.
         pub fn time_status(&self) -> Result<TimeStatus, u8> {
             get_bit_range!(self.tow, u32, u8, 31, 30).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeStatus][TimeStatus] of the `tow` bitfield.
         pub fn set_time_status(&mut self, time_status: TimeStatus) {
             set_bit_range!(&mut self.tow, time_status, u32, u8, 31, 30);
         }
 
+        /// Gets the `time_since_reference_epoch_in_milliseconds` stored in `tow`.
         pub fn time_since_reference_epoch_in_milliseconds(&self) -> u32 {
             get_bit_range!(self.tow, u32, u32, 29, 0)
         }
 
+        /// Sets the `time_since_reference_epoch_in_milliseconds` bitrange of `tow`.
         pub fn set_time_since_reference_epoch_in_milliseconds(
             &mut self,
             time_since_reference_epoch_in_milliseconds: u32,

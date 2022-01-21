@@ -66,20 +66,38 @@ impl (((m.msg_name))) {
 ((* for b in f.bitfield *))
 
 ((* if b.vals|length > 0 *))
-    pub fn (((b.field_name))) (&self) -> Result<(((b.type_name))), (((b.type)))> {
+    /// Gets the [(((b.type_name)))][self::(((b.type_name)))] stored in the `(((b.field)))` bitfield.
+    ///
+    /// Returns `Ok` if the bitrange contains a known `(((b.type_name)))` variant.
+    /// Otherwise the value of the bitrange is returned as an `Err((( '(' )))(((b.type)))((( ')' )))`. This may be because of a malformed message,
+    /// or because new variants of `(((b.type_name)))` were added.
+    pub fn (((b.bitrange_name))) (&self) -> Result<(((b.type_name))), (((b.type)))> {
         get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) ).try_into()
     }
 
-    pub fn set_(((b.field_name))) (&mut self, (((b.field_name))): (((b.type_name)))) {
-        set_bit_range!(&mut self.(((b.field))), (((b.field_name))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) );
+    /// Set the bitrange corresponding to the [(((b.type_name)))][(((b.type_name)))] of the `(((b.field)))` bitfield.
+    pub fn set_(((b.bitrange_name))) (&mut self, (((b.bitrange_name))): (((b.type_name)))) {
+        set_bit_range!(&mut self.(((b.field))), (((b.bitrange_name))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) );
+    }
+((* elif b.type == "bool" *))
+    /// Gets the `(((b.bitrange_name)))` flag.
+    pub fn (((b.bitrange_name))) (&self) -> bool {
+        ( ( self.(((b.field))) >> (((b.msb))) ) & 1) == 1
+    }
+
+    /// Sets the `(((b.bitrange_name)))` flag.
+    pub fn set_(((b.bitrange_name))) (&mut self, (((b.bitrange_name))): (((b.type)))) {
+        self.(((b.field))) ^= ( !( (((b.bitrange_name))) as (((f.type))) ) ) & (1 << (((b.msb))) )
     }
 ((* else *))
-    pub fn (((b.field_name))) (&self) -> (((b.type))) {
+    /// Gets the `(((b.bitrange_name)))` stored in `(((b.field)))`.
+    pub fn (((b.bitrange_name))) (&self) -> (((b.type))) {
         get_bit_range!( self.(((b.field))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) )
     }
 
-    pub fn set_(((b.field_name))) (&mut self, (((b.field_name))): (((b.type)))) {
-        set_bit_range!(&mut self.(((b.field))), (((b.field_name))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) );
+    /// Sets the `(((b.bitrange_name)))` bitrange of `(((b.field)))`.
+    pub fn set_(((b.bitrange_name))) (&mut self, (((b.bitrange_name))): (((b.type)))) {
+        set_bit_range!(&mut self.(((b.field))), (((b.bitrange_name))),  (((f.type))), (((b.type))), (((b.msb))), (((b.lsb))) );
     }
 ((* endif *))
 
@@ -167,7 +185,9 @@ impl WireFormat for (((m.msg_name))) {
 
 ((* if m.has_bitfield *))
 ((* for f in m.fields *))
+
 ((* for b in f.bitfield *))
+
 ((* if b.vals|length > 0 *))
 ((*- if b.desc *))
 /// (((b.desc | commentify)))
@@ -202,7 +222,9 @@ impl TryFrom<(((b.type)))> for (((b.type_name))) {
     }
 }
 ((* endif *))
+
 ((* endfor *))
+
 ((* endfor *))
 ((* endif *))
 

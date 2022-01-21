@@ -136,10 +136,16 @@ pub mod msg_log {
     }
 
     impl MsgLog {
+        /// Gets the [LoggingLevel][self::LoggingLevel] stored in the `level` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `LoggingLevel` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `LoggingLevel` were added.
         pub fn logging_level(&self) -> Result<LoggingLevel, u8> {
             get_bit_range!(self.level, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [LoggingLevel][LoggingLevel] of the `level` bitfield.
         pub fn set_logging_level(&mut self, logging_level: LoggingLevel) {
             set_bit_range!(&mut self.level, logging_level, u8, u8, 2, 0);
         }

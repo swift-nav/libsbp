@@ -2023,10 +2023,16 @@ pub mod satellite_apc {
     }
 
     impl SatelliteAPC {
+        /// Gets the [SatelliteType][self::SatelliteType] stored in the `sat_info` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SatelliteType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SatelliteType` were added.
         pub fn satellite_type(&self) -> Result<SatelliteType, u8> {
             get_bit_range!(self.sat_info, u8, u8, 4, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SatelliteType][SatelliteType] of the `sat_info` bitfield.
         pub fn set_satellite_type(&mut self, satellite_type: SatelliteType) {
             set_bit_range!(&mut self.sat_info, satellite_type, u8, u8, 4, 0);
         }

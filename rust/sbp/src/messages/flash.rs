@@ -52,10 +52,16 @@ pub mod msg_flash_done {
     }
 
     impl MsgFlashDone {
+        /// Gets the [ResponseCode][self::ResponseCode] stored in the `response` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ResponseCode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ResponseCode` were added.
         pub fn response_code(&self) -> Result<ResponseCode, u8> {
             get_bit_range!(self.response, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ResponseCode][ResponseCode] of the `response` bitfield.
         pub fn set_response_code(&mut self, response_code: ResponseCode) {
             set_bit_range!(&mut self.response, response_code, u8, u8, 2, 0);
         }
@@ -189,10 +195,16 @@ pub mod msg_flash_erase {
     }
 
     impl MsgFlashErase {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
         pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
             get_bit_range!(self.target, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
             set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
         }
@@ -315,10 +327,16 @@ pub mod msg_flash_program {
     }
 
     impl MsgFlashProgram {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
         pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
             get_bit_range!(self.target, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
             set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
         }
@@ -449,10 +467,16 @@ pub mod msg_flash_read_req {
     }
 
     impl MsgFlashReadReq {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
         pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
             get_bit_range!(self.target, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
             set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
         }
@@ -579,10 +603,16 @@ pub mod msg_flash_read_resp {
     }
 
     impl MsgFlashReadResp {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
         pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
             get_bit_range!(self.target, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
         pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
             set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
         }

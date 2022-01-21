@@ -60,10 +60,16 @@ pub mod msg_angular_rate {
     }
 
     impl MsgAngularRate {
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
         }
@@ -209,10 +215,16 @@ pub mod msg_baseline_heading {
     }
 
     impl MsgBaselineHeading {
+        /// Gets the [FixMode][self::FixMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FixMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FixMode` were added.
         pub fn fix_mode(&self) -> Result<FixMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FixMode][FixMode] of the `flags` bitfield.
         pub fn set_fix_mode(&mut self, fix_mode: FixMode) {
             set_bit_range!(&mut self.flags, fix_mode, u8, u8, 2, 0);
         }
@@ -377,10 +389,16 @@ pub mod msg_orient_euler {
     }
 
     impl MsgOrientEuler {
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
         }
@@ -557,10 +575,16 @@ pub mod msg_orient_quat {
     }
 
     impl MsgOrientQuat {
+        /// Gets the [InsNavigationMode][self::InsNavigationMode] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `InsNavigationMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `InsNavigationMode` were added.
         pub fn ins_navigation_mode(&self) -> Result<InsNavigationMode, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [InsNavigationMode][InsNavigationMode] of the `flags` bitfield.
         pub fn set_ins_navigation_mode(&mut self, ins_navigation_mode: InsNavigationMode) {
             set_bit_range!(&mut self.flags, ins_navigation_mode, u8, u8, 2, 0);
         }

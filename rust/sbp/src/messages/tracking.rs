@@ -670,10 +670,16 @@ pub mod msg_tracking_state_detailed_dep {
     }
 
     impl MsgTrackingStateDetailedDep {
+        /// Gets the [SynchronizationStatus][self::SynchronizationStatus] stored in the `sync_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SynchronizationStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SynchronizationStatus` were added.
         pub fn synchronization_status(&self) -> Result<SynchronizationStatus, u8> {
             get_bit_range!(self.sync_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SynchronizationStatus][SynchronizationStatus] of the `sync_flags` bitfield.
         pub fn set_synchronization_status(
             &mut self,
             synchronization_status: SynchronizationStatus,
@@ -681,10 +687,16 @@ pub mod msg_tracking_state_detailed_dep {
             set_bit_range!(&mut self.sync_flags, synchronization_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [WeekNumberValidityStatus][self::WeekNumberValidityStatus] stored in the `tow_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `WeekNumberValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `WeekNumberValidityStatus` were added.
         pub fn week_number_validity_status(&self) -> Result<WeekNumberValidityStatus, u8> {
-            get_bit_range!(self.tow_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.tow_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [WeekNumberValidityStatus][WeekNumberValidityStatus] of the `tow_flags` bitfield.
         pub fn set_week_number_validity_status(
             &mut self,
             week_number_validity_status: WeekNumberValidityStatus,
@@ -695,46 +707,76 @@ pub mod msg_tracking_state_detailed_dep {
                 u8,
                 u8,
                 3,
-                0
+                3
             );
         }
 
+        /// Gets the [TowStatus][self::TowStatus] stored in the `tow_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TowStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TowStatus` were added.
         pub fn tow_status(&self) -> Result<TowStatus, u8> {
             get_bit_range!(self.tow_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TowStatus][TowStatus] of the `tow_flags` bitfield.
         pub fn set_tow_status(&mut self, tow_status: TowStatus) {
             set_bit_range!(&mut self.tow_flags, tow_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [FllStatus][self::FllStatus] stored in the `track_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FllStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FllStatus` were added.
         pub fn fll_status(&self) -> Result<FllStatus, u8> {
-            get_bit_range!(self.track_flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.track_flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FllStatus][FllStatus] of the `track_flags` bitfield.
         pub fn set_fll_status(&mut self, fll_status: FllStatus) {
-            set_bit_range!(&mut self.track_flags, fll_status, u8, u8, 4, 0);
+            set_bit_range!(&mut self.track_flags, fll_status, u8, u8, 4, 4);
         }
 
+        /// Gets the [PllStatus][self::PllStatus] stored in the `track_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PllStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PllStatus` were added.
         pub fn pll_status(&self) -> Result<PllStatus, u8> {
-            get_bit_range!(self.track_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.track_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [PllStatus][PllStatus] of the `track_flags` bitfield.
         pub fn set_pll_status(&mut self, pll_status: PllStatus) {
-            set_bit_range!(&mut self.track_flags, pll_status, u8, u8, 3, 0);
+            set_bit_range!(&mut self.track_flags, pll_status, u8, u8, 3, 3);
         }
 
+        /// Gets the [TrackingLoopStatus][self::TrackingLoopStatus] stored in the `track_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingLoopStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingLoopStatus` were added.
         pub fn tracking_loop_status(&self) -> Result<TrackingLoopStatus, u8> {
             get_bit_range!(self.track_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingLoopStatus][TrackingLoopStatus] of the `track_flags` bitfield.
         pub fn set_tracking_loop_status(&mut self, tracking_loop_status: TrackingLoopStatus) {
             set_bit_range!(&mut self.track_flags, tracking_loop_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [AlmanacAvailabilityStatus][self::AlmanacAvailabilityStatus] stored in the `nav_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AlmanacAvailabilityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AlmanacAvailabilityStatus` were added.
         pub fn almanac_availability_status(&self) -> Result<AlmanacAvailabilityStatus, u8> {
-            get_bit_range!(self.nav_flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.nav_flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AlmanacAvailabilityStatus][AlmanacAvailabilityStatus] of the `nav_flags` bitfield.
         pub fn set_almanac_availability_status(
             &mut self,
             almanac_availability_status: AlmanacAvailabilityStatus,
@@ -745,14 +787,20 @@ pub mod msg_tracking_state_detailed_dep {
                 u8,
                 u8,
                 4,
-                0
+                4
             );
         }
 
+        /// Gets the [EphemerisAvailabilityStatus][self::EphemerisAvailabilityStatus] stored in the `nav_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `EphemerisAvailabilityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `EphemerisAvailabilityStatus` were added.
         pub fn ephemeris_availability_status(&self) -> Result<EphemerisAvailabilityStatus, u8> {
-            get_bit_range!(self.nav_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.nav_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [EphemerisAvailabilityStatus][EphemerisAvailabilityStatus] of the `nav_flags` bitfield.
         pub fn set_ephemeris_availability_status(
             &mut self,
             ephemeris_availability_status: EphemerisAvailabilityStatus,
@@ -763,38 +811,62 @@ pub mod msg_tracking_state_detailed_dep {
                 u8,
                 u8,
                 3,
-                0
+                3
             );
         }
 
+        /// Gets the [HealthStatus][self::HealthStatus] stored in the `nav_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `HealthStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `HealthStatus` were added.
         pub fn health_status(&self) -> Result<HealthStatus, u8> {
             get_bit_range!(self.nav_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [HealthStatus][HealthStatus] of the `nav_flags` bitfield.
         pub fn set_health_status(&mut self, health_status: HealthStatus) {
             set_bit_range!(&mut self.nav_flags, health_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [ParameterSets][self::ParameterSets] stored in the `pset_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ParameterSets` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ParameterSets` were added.
         pub fn parameter_sets(&self) -> Result<ParameterSets, u8> {
             get_bit_range!(self.pset_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ParameterSets][ParameterSets] of the `pset_flags` bitfield.
         pub fn set_parameter_sets(&mut self, parameter_sets: ParameterSets) {
             set_bit_range!(&mut self.pset_flags, parameter_sets, u8, u8, 2, 0);
         }
 
+        /// Gets the [ClockValidityStatus][self::ClockValidityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ClockValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ClockValidityStatus` were added.
         pub fn clock_validity_status(&self) -> Result<ClockValidityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 5, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ClockValidityStatus][ClockValidityStatus] of the `misc_flags` bitfield.
         pub fn set_clock_validity_status(&mut self, clock_validity_status: ClockValidityStatus) {
-            set_bit_range!(&mut self.misc_flags, clock_validity_status, u8, u8, 5, 0);
+            set_bit_range!(&mut self.misc_flags, clock_validity_status, u8, u8, 5, 5);
         }
 
+        /// Gets the [PseudorangeValidityStatus][self::PseudorangeValidityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PseudorangeValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PseudorangeValidityStatus` were added.
         pub fn pseudorange_validity_status(&self) -> Result<PseudorangeValidityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [PseudorangeValidityStatus][PseudorangeValidityStatus] of the `misc_flags` bitfield.
         pub fn set_pseudorange_validity_status(
             &mut self,
             pseudorange_validity_status: PseudorangeValidityStatus,
@@ -805,14 +877,20 @@ pub mod msg_tracking_state_detailed_dep {
                 u8,
                 u8,
                 4,
-                0
+                4
             );
         }
 
+        /// Gets the [AccelerationValidityStatus][self::AccelerationValidityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AccelerationValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AccelerationValidityStatus` were added.
         pub fn acceleration_validity_status(&self) -> Result<AccelerationValidityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AccelerationValidityStatus][AccelerationValidityStatus] of the `misc_flags` bitfield.
         pub fn set_acceleration_validity_status(
             &mut self,
             acceleration_validity_status: AccelerationValidityStatus,
@@ -823,16 +901,22 @@ pub mod msg_tracking_state_detailed_dep {
                 u8,
                 u8,
                 3,
-                0
+                3
             );
         }
 
+        /// Gets the [CarrierHalfCycleAmbiguityStatus][self::CarrierHalfCycleAmbiguityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CarrierHalfCycleAmbiguityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CarrierHalfCycleAmbiguityStatus` were added.
         pub fn carrier_half_cycle_ambiguity_status(
             &self,
         ) -> Result<CarrierHalfCycleAmbiguityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 2, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 2, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [CarrierHalfCycleAmbiguityStatus][CarrierHalfCycleAmbiguityStatus] of the `misc_flags` bitfield.
         pub fn set_carrier_half_cycle_ambiguity_status(
             &mut self,
             carrier_half_cycle_ambiguity_status: CarrierHalfCycleAmbiguityStatus,
@@ -843,14 +927,20 @@ pub mod msg_tracking_state_detailed_dep {
                 u8,
                 u8,
                 2,
-                0
+                2
             );
         }
 
+        /// Gets the [TrackingChannelStatus][self::TrackingChannelStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingChannelStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingChannelStatus` were added.
         pub fn tracking_channel_status(&self) -> Result<TrackingChannelStatus, u8> {
             get_bit_range!(self.misc_flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingChannelStatus][TrackingChannelStatus] of the `misc_flags` bitfield.
         pub fn set_tracking_channel_status(
             &mut self,
             tracking_channel_status: TrackingChannelStatus,
@@ -1597,10 +1687,16 @@ pub mod msg_tracking_state_detailed_dep_a {
     }
 
     impl MsgTrackingStateDetailedDepA {
+        /// Gets the [SynchronizationStatus][self::SynchronizationStatus] stored in the `sync_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SynchronizationStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SynchronizationStatus` were added.
         pub fn synchronization_status(&self) -> Result<SynchronizationStatus, u8> {
             get_bit_range!(self.sync_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SynchronizationStatus][SynchronizationStatus] of the `sync_flags` bitfield.
         pub fn set_synchronization_status(
             &mut self,
             synchronization_status: SynchronizationStatus,
@@ -1608,10 +1704,16 @@ pub mod msg_tracking_state_detailed_dep_a {
             set_bit_range!(&mut self.sync_flags, synchronization_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [WeekNumberValidityStatus][self::WeekNumberValidityStatus] stored in the `tow_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `WeekNumberValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `WeekNumberValidityStatus` were added.
         pub fn week_number_validity_status(&self) -> Result<WeekNumberValidityStatus, u8> {
-            get_bit_range!(self.tow_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.tow_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [WeekNumberValidityStatus][WeekNumberValidityStatus] of the `tow_flags` bitfield.
         pub fn set_week_number_validity_status(
             &mut self,
             week_number_validity_status: WeekNumberValidityStatus,
@@ -1622,46 +1724,76 @@ pub mod msg_tracking_state_detailed_dep_a {
                 u8,
                 u8,
                 3,
-                0
+                3
             );
         }
 
+        /// Gets the [TowStatus][self::TowStatus] stored in the `tow_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TowStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TowStatus` were added.
         pub fn tow_status(&self) -> Result<TowStatus, u8> {
             get_bit_range!(self.tow_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TowStatus][TowStatus] of the `tow_flags` bitfield.
         pub fn set_tow_status(&mut self, tow_status: TowStatus) {
             set_bit_range!(&mut self.tow_flags, tow_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [FllStatus][self::FllStatus] stored in the `track_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FllStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FllStatus` were added.
         pub fn fll_status(&self) -> Result<FllStatus, u8> {
-            get_bit_range!(self.track_flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.track_flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FllStatus][FllStatus] of the `track_flags` bitfield.
         pub fn set_fll_status(&mut self, fll_status: FllStatus) {
-            set_bit_range!(&mut self.track_flags, fll_status, u8, u8, 4, 0);
+            set_bit_range!(&mut self.track_flags, fll_status, u8, u8, 4, 4);
         }
 
+        /// Gets the [PllStatus][self::PllStatus] stored in the `track_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PllStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PllStatus` were added.
         pub fn pll_status(&self) -> Result<PllStatus, u8> {
-            get_bit_range!(self.track_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.track_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [PllStatus][PllStatus] of the `track_flags` bitfield.
         pub fn set_pll_status(&mut self, pll_status: PllStatus) {
-            set_bit_range!(&mut self.track_flags, pll_status, u8, u8, 3, 0);
+            set_bit_range!(&mut self.track_flags, pll_status, u8, u8, 3, 3);
         }
 
+        /// Gets the [TrackingLoopStatus][self::TrackingLoopStatus] stored in the `track_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingLoopStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingLoopStatus` were added.
         pub fn tracking_loop_status(&self) -> Result<TrackingLoopStatus, u8> {
             get_bit_range!(self.track_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingLoopStatus][TrackingLoopStatus] of the `track_flags` bitfield.
         pub fn set_tracking_loop_status(&mut self, tracking_loop_status: TrackingLoopStatus) {
             set_bit_range!(&mut self.track_flags, tracking_loop_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [AlmanacAvailabilityStatus][self::AlmanacAvailabilityStatus] stored in the `nav_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AlmanacAvailabilityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AlmanacAvailabilityStatus` were added.
         pub fn almanac_availability_status(&self) -> Result<AlmanacAvailabilityStatus, u8> {
-            get_bit_range!(self.nav_flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.nav_flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AlmanacAvailabilityStatus][AlmanacAvailabilityStatus] of the `nav_flags` bitfield.
         pub fn set_almanac_availability_status(
             &mut self,
             almanac_availability_status: AlmanacAvailabilityStatus,
@@ -1672,14 +1804,20 @@ pub mod msg_tracking_state_detailed_dep_a {
                 u8,
                 u8,
                 4,
-                0
+                4
             );
         }
 
+        /// Gets the [EphemerisAvailabilityStatus][self::EphemerisAvailabilityStatus] stored in the `nav_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `EphemerisAvailabilityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `EphemerisAvailabilityStatus` were added.
         pub fn ephemeris_availability_status(&self) -> Result<EphemerisAvailabilityStatus, u8> {
-            get_bit_range!(self.nav_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.nav_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [EphemerisAvailabilityStatus][EphemerisAvailabilityStatus] of the `nav_flags` bitfield.
         pub fn set_ephemeris_availability_status(
             &mut self,
             ephemeris_availability_status: EphemerisAvailabilityStatus,
@@ -1690,38 +1828,62 @@ pub mod msg_tracking_state_detailed_dep_a {
                 u8,
                 u8,
                 3,
-                0
+                3
             );
         }
 
+        /// Gets the [HealthStatus][self::HealthStatus] stored in the `nav_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `HealthStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `HealthStatus` were added.
         pub fn health_status(&self) -> Result<HealthStatus, u8> {
             get_bit_range!(self.nav_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [HealthStatus][HealthStatus] of the `nav_flags` bitfield.
         pub fn set_health_status(&mut self, health_status: HealthStatus) {
             set_bit_range!(&mut self.nav_flags, health_status, u8, u8, 2, 0);
         }
 
+        /// Gets the [ParameterSets][self::ParameterSets] stored in the `pset_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ParameterSets` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ParameterSets` were added.
         pub fn parameter_sets(&self) -> Result<ParameterSets, u8> {
             get_bit_range!(self.pset_flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ParameterSets][ParameterSets] of the `pset_flags` bitfield.
         pub fn set_parameter_sets(&mut self, parameter_sets: ParameterSets) {
             set_bit_range!(&mut self.pset_flags, parameter_sets, u8, u8, 2, 0);
         }
 
+        /// Gets the [ClockValidityStatus][self::ClockValidityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ClockValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ClockValidityStatus` were added.
         pub fn clock_validity_status(&self) -> Result<ClockValidityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 5, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 5, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [ClockValidityStatus][ClockValidityStatus] of the `misc_flags` bitfield.
         pub fn set_clock_validity_status(&mut self, clock_validity_status: ClockValidityStatus) {
-            set_bit_range!(&mut self.misc_flags, clock_validity_status, u8, u8, 5, 0);
+            set_bit_range!(&mut self.misc_flags, clock_validity_status, u8, u8, 5, 5);
         }
 
+        /// Gets the [PseudorangeValidityStatus][self::PseudorangeValidityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PseudorangeValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PseudorangeValidityStatus` were added.
         pub fn pseudorange_validity_status(&self) -> Result<PseudorangeValidityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 4, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 4, 4).try_into()
         }
 
+        /// Set the bitrange corresponding to the [PseudorangeValidityStatus][PseudorangeValidityStatus] of the `misc_flags` bitfield.
         pub fn set_pseudorange_validity_status(
             &mut self,
             pseudorange_validity_status: PseudorangeValidityStatus,
@@ -1732,14 +1894,20 @@ pub mod msg_tracking_state_detailed_dep_a {
                 u8,
                 u8,
                 4,
-                0
+                4
             );
         }
 
+        /// Gets the [AccelerationValidityStatus][self::AccelerationValidityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AccelerationValidityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AccelerationValidityStatus` were added.
         pub fn acceleration_validity_status(&self) -> Result<AccelerationValidityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 3, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 3, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AccelerationValidityStatus][AccelerationValidityStatus] of the `misc_flags` bitfield.
         pub fn set_acceleration_validity_status(
             &mut self,
             acceleration_validity_status: AccelerationValidityStatus,
@@ -1750,16 +1918,22 @@ pub mod msg_tracking_state_detailed_dep_a {
                 u8,
                 u8,
                 3,
-                0
+                3
             );
         }
 
+        /// Gets the [CarrierHalfCycleAmbiguityStatus][self::CarrierHalfCycleAmbiguityStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CarrierHalfCycleAmbiguityStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CarrierHalfCycleAmbiguityStatus` were added.
         pub fn carrier_half_cycle_ambiguity_status(
             &self,
         ) -> Result<CarrierHalfCycleAmbiguityStatus, u8> {
-            get_bit_range!(self.misc_flags, u8, u8, 2, 0).try_into()
+            get_bit_range!(self.misc_flags, u8, u8, 2, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [CarrierHalfCycleAmbiguityStatus][CarrierHalfCycleAmbiguityStatus] of the `misc_flags` bitfield.
         pub fn set_carrier_half_cycle_ambiguity_status(
             &mut self,
             carrier_half_cycle_ambiguity_status: CarrierHalfCycleAmbiguityStatus,
@@ -1770,14 +1944,20 @@ pub mod msg_tracking_state_detailed_dep_a {
                 u8,
                 u8,
                 2,
-                0
+                2
             );
         }
 
+        /// Gets the [TrackingChannelStatus][self::TrackingChannelStatus] stored in the `misc_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingChannelStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingChannelStatus` were added.
         pub fn tracking_channel_status(&self) -> Result<TrackingChannelStatus, u8> {
             get_bit_range!(self.misc_flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingChannelStatus][TrackingChannelStatus] of the `misc_flags` bitfield.
         pub fn set_tracking_channel_status(
             &mut self,
             tracking_channel_status: TrackingChannelStatus,
@@ -2632,10 +2812,16 @@ pub mod tracking_channel_state_dep_a {
     }
 
     impl TrackingChannelStateDepA {
+        /// Gets the [TrackingMode][self::TrackingMode] stored in the `state` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingMode` were added.
         pub fn tracking_mode(&self) -> Result<TrackingMode, u8> {
             get_bit_range!(self.state, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingMode][TrackingMode] of the `state` bitfield.
         pub fn set_tracking_mode(&mut self, tracking_mode: TrackingMode) {
             set_bit_range!(&mut self.state, tracking_mode, u8, u8, 1, 0);
         }
@@ -2719,10 +2905,16 @@ pub mod tracking_channel_state_dep_b {
     }
 
     impl TrackingChannelStateDepB {
+        /// Gets the [TrackingMode][self::TrackingMode] stored in the `state` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingMode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingMode` were added.
         pub fn tracking_mode(&self) -> Result<TrackingMode, u8> {
             get_bit_range!(self.state, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingMode][TrackingMode] of the `state` bitfield.
         pub fn set_tracking_mode(&mut self, tracking_mode: TrackingMode) {
             set_bit_range!(&mut self.state, tracking_mode, u8, u8, 1, 0);
         }

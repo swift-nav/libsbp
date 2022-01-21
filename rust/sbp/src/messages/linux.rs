@@ -66,10 +66,16 @@ pub mod msg_linux_cpu_state {
     }
 
     impl MsgLinuxCpuState {
+        /// Gets the [TimestampType][self::TimestampType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimestampType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimestampType` were added.
         pub fn timestamp_type(&self) -> Result<TimestampType, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimestampType][TimestampType] of the `flags` bitfield.
         pub fn set_timestamp_type(&mut self, timestamp_type: TimestampType) {
             set_bit_range!(&mut self.flags, timestamp_type, u8, u8, 2, 0);
         }
@@ -320,10 +326,16 @@ pub mod msg_linux_mem_state {
     }
 
     impl MsgLinuxMemState {
+        /// Gets the [TimestampType][self::TimestampType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimestampType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimestampType` were added.
         pub fn timestamp_type(&self) -> Result<TimestampType, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimestampType][TimestampType] of the `flags` bitfield.
         pub fn set_timestamp_type(&mut self, timestamp_type: TimestampType) {
             set_bit_range!(&mut self.flags, timestamp_type, u8, u8, 2, 0);
         }
@@ -1081,10 +1093,16 @@ pub mod msg_linux_sys_state {
     }
 
     impl MsgLinuxSysState {
+        /// Gets the [TimestampType][self::TimestampType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimestampType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimestampType` were added.
         pub fn timestamp_type(&self) -> Result<TimestampType, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimestampType][TimestampType] of the `flags` bitfield.
         pub fn set_timestamp_type(&mut self, timestamp_type: TimestampType) {
             set_bit_range!(&mut self.flags, timestamp_type, u8, u8, 2, 0);
         }

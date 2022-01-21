@@ -977,18 +977,30 @@ pub mod msg_mask_satellite {
     }
 
     impl MsgMaskSatellite {
+        /// Gets the [TrackingChannels][self::TrackingChannels] stored in the `mask` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingChannels` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingChannels` were added.
         pub fn tracking_channels(&self) -> Result<TrackingChannels, u8> {
-            get_bit_range!(self.mask, u8, u8, 1, 0).try_into()
+            get_bit_range!(self.mask, u8, u8, 1, 1).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingChannels][TrackingChannels] of the `mask` bitfield.
         pub fn set_tracking_channels(&mut self, tracking_channels: TrackingChannels) {
-            set_bit_range!(&mut self.mask, tracking_channels, u8, u8, 1, 0);
+            set_bit_range!(&mut self.mask, tracking_channels, u8, u8, 1, 1);
         }
 
+        /// Gets the [AcquisitionChannel][self::AcquisitionChannel] stored in the `mask` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AcquisitionChannel` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AcquisitionChannel` were added.
         pub fn acquisition_channel(&self) -> Result<AcquisitionChannel, u8> {
             get_bit_range!(self.mask, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AcquisitionChannel][AcquisitionChannel] of the `mask` bitfield.
         pub fn set_acquisition_channel(&mut self, acquisition_channel: AcquisitionChannel) {
             set_bit_range!(&mut self.mask, acquisition_channel, u8, u8, 0, 0);
         }
@@ -1136,18 +1148,30 @@ pub mod msg_mask_satellite_dep {
     }
 
     impl MsgMaskSatelliteDep {
+        /// Gets the [TrackingChannels][self::TrackingChannels] stored in the `mask` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TrackingChannels` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TrackingChannels` were added.
         pub fn tracking_channels(&self) -> Result<TrackingChannels, u8> {
-            get_bit_range!(self.mask, u8, u8, 1, 0).try_into()
+            get_bit_range!(self.mask, u8, u8, 1, 1).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TrackingChannels][TrackingChannels] of the `mask` bitfield.
         pub fn set_tracking_channels(&mut self, tracking_channels: TrackingChannels) {
-            set_bit_range!(&mut self.mask, tracking_channels, u8, u8, 1, 0);
+            set_bit_range!(&mut self.mask, tracking_channels, u8, u8, 1, 1);
         }
 
+        /// Gets the [AcquisitionChannel][self::AcquisitionChannel] stored in the `mask` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `AcquisitionChannel` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `AcquisitionChannel` were added.
         pub fn acquisition_channel(&self) -> Result<AcquisitionChannel, u8> {
             get_bit_range!(self.mask, u8, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [AcquisitionChannel][AcquisitionChannel] of the `mask` bitfield.
         pub fn set_acquisition_channel(&mut self, acquisition_channel: AcquisitionChannel) {
             set_bit_range!(&mut self.mask, acquisition_channel, u8, u8, 0, 0);
         }
@@ -1451,273 +1475,206 @@ pub mod msg_network_state_resp {
     }
 
     impl MsgNetworkStateResp {
-        pub fn iff_multicast_supports_multicast(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 15, 0)
+        /// Gets the `iff_multicast_supports_multicast` flag.
+        pub fn iff_multicast_supports_multicast(&self) -> bool {
+            ((self.flags >> 15) & 1) == 1
         }
 
+        /// Sets the `iff_multicast_supports_multicast` flag.
         pub fn set_iff_multicast_supports_multicast(
             &mut self,
-            iff_multicast_supports_multicast: u8,
+            iff_multicast_supports_multicast: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_multicast_supports_multicast,
-                u32,
-                u8,
-                15,
-                0
-            );
+            self.flags ^= (!(iff_multicast_supports_multicast as u32)) & (1 << 15)
         }
 
-        pub fn iff_link2_per_link_layer_defined_bit(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 14, 0)
+        /// Gets the `iff_link2_per_link_layer_defined_bit` flag.
+        pub fn iff_link2_per_link_layer_defined_bit(&self) -> bool {
+            ((self.flags >> 14) & 1) == 1
         }
 
+        /// Sets the `iff_link2_per_link_layer_defined_bit` flag.
         pub fn set_iff_link2_per_link_layer_defined_bit(
             &mut self,
-            iff_link2_per_link_layer_defined_bit: u8,
+            iff_link2_per_link_layer_defined_bit: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_link2_per_link_layer_defined_bit,
-                u32,
-                u8,
-                14,
-                0
-            );
+            self.flags ^= (!(iff_link2_per_link_layer_defined_bit as u32)) & (1 << 14)
         }
 
-        pub fn iff_link1_per_link_layer_defined_bit(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 13, 0)
+        /// Gets the `iff_link1_per_link_layer_defined_bit` flag.
+        pub fn iff_link1_per_link_layer_defined_bit(&self) -> bool {
+            ((self.flags >> 13) & 1) == 1
         }
 
+        /// Sets the `iff_link1_per_link_layer_defined_bit` flag.
         pub fn set_iff_link1_per_link_layer_defined_bit(
             &mut self,
-            iff_link1_per_link_layer_defined_bit: u8,
+            iff_link1_per_link_layer_defined_bit: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_link1_per_link_layer_defined_bit,
-                u32,
-                u8,
-                13,
-                0
-            );
+            self.flags ^= (!(iff_link1_per_link_layer_defined_bit as u32)) & (1 << 13)
         }
 
-        pub fn iff_link0_per_link_layer_defined_bit(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 12, 0)
+        /// Gets the `iff_link0_per_link_layer_defined_bit` flag.
+        pub fn iff_link0_per_link_layer_defined_bit(&self) -> bool {
+            ((self.flags >> 12) & 1) == 1
         }
 
+        /// Sets the `iff_link0_per_link_layer_defined_bit` flag.
         pub fn set_iff_link0_per_link_layer_defined_bit(
             &mut self,
-            iff_link0_per_link_layer_defined_bit: u8,
+            iff_link0_per_link_layer_defined_bit: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_link0_per_link_layer_defined_bit,
-                u32,
-                u8,
-                12,
-                0
-            );
+            self.flags ^= (!(iff_link0_per_link_layer_defined_bit as u32)) & (1 << 12)
         }
 
-        pub fn iff_simplex_cant_hear_own_transmissions(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 11, 0)
+        /// Gets the `iff_simplex_cant_hear_own_transmissions` flag.
+        pub fn iff_simplex_cant_hear_own_transmissions(&self) -> bool {
+            ((self.flags >> 11) & 1) == 1
         }
 
+        /// Sets the `iff_simplex_cant_hear_own_transmissions` flag.
         pub fn set_iff_simplex_cant_hear_own_transmissions(
             &mut self,
-            iff_simplex_cant_hear_own_transmissions: u8,
+            iff_simplex_cant_hear_own_transmissions: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_simplex_cant_hear_own_transmissions,
-                u32,
-                u8,
-                11,
-                0
-            );
+            self.flags ^= (!(iff_simplex_cant_hear_own_transmissions as u32)) & (1 << 11)
         }
 
-        pub fn iff_oactive_transmission_in_progress(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 10, 0)
+        /// Gets the `iff_oactive_transmission_in_progress` flag.
+        pub fn iff_oactive_transmission_in_progress(&self) -> bool {
+            ((self.flags >> 10) & 1) == 1
         }
 
+        /// Sets the `iff_oactive_transmission_in_progress` flag.
         pub fn set_iff_oactive_transmission_in_progress(
             &mut self,
-            iff_oactive_transmission_in_progress: u8,
+            iff_oactive_transmission_in_progress: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_oactive_transmission_in_progress,
-                u32,
-                u8,
-                10,
-                0
-            );
+            self.flags ^= (!(iff_oactive_transmission_in_progress as u32)) & (1 << 10)
         }
 
-        pub fn iff_allmulti_receive_all_multicast_packets(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 9, 0)
+        /// Gets the `iff_allmulti_receive_all_multicast_packets` flag.
+        pub fn iff_allmulti_receive_all_multicast_packets(&self) -> bool {
+            ((self.flags >> 9) & 1) == 1
         }
 
+        /// Sets the `iff_allmulti_receive_all_multicast_packets` flag.
         pub fn set_iff_allmulti_receive_all_multicast_packets(
             &mut self,
-            iff_allmulti_receive_all_multicast_packets: u8,
+            iff_allmulti_receive_all_multicast_packets: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_allmulti_receive_all_multicast_packets,
-                u32,
-                u8,
-                9,
-                0
-            );
+            self.flags ^= (!(iff_allmulti_receive_all_multicast_packets as u32)) & (1 << 9)
         }
 
-        pub fn iff_promisc_receive_all_packets(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 8, 0)
+        /// Gets the `iff_promisc_receive_all_packets` flag.
+        pub fn iff_promisc_receive_all_packets(&self) -> bool {
+            ((self.flags >> 8) & 1) == 1
         }
 
-        pub fn set_iff_promisc_receive_all_packets(&mut self, iff_promisc_receive_all_packets: u8) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_promisc_receive_all_packets,
-                u32,
-                u8,
-                8,
-                0
-            );
+        /// Sets the `iff_promisc_receive_all_packets` flag.
+        pub fn set_iff_promisc_receive_all_packets(
+            &mut self,
+            iff_promisc_receive_all_packets: bool,
+        ) {
+            self.flags ^= (!(iff_promisc_receive_all_packets as u32)) & (1 << 8)
         }
 
-        pub fn iff_noarp_no_address_resolution_protocol(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 7, 0)
+        /// Gets the `iff_noarp_no_address_resolution_protocol` flag.
+        pub fn iff_noarp_no_address_resolution_protocol(&self) -> bool {
+            ((self.flags >> 7) & 1) == 1
         }
 
+        /// Sets the `iff_noarp_no_address_resolution_protocol` flag.
         pub fn set_iff_noarp_no_address_resolution_protocol(
             &mut self,
-            iff_noarp_no_address_resolution_protocol: u8,
+            iff_noarp_no_address_resolution_protocol: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_noarp_no_address_resolution_protocol,
-                u32,
-                u8,
-                7,
-                0
-            );
+            self.flags ^= (!(iff_noarp_no_address_resolution_protocol as u32)) & (1 << 7)
         }
 
-        pub fn iff_running_resources_allocated(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 6, 0)
+        /// Gets the `iff_running_resources_allocated` flag.
+        pub fn iff_running_resources_allocated(&self) -> bool {
+            ((self.flags >> 6) & 1) == 1
         }
 
-        pub fn set_iff_running_resources_allocated(&mut self, iff_running_resources_allocated: u8) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_running_resources_allocated,
-                u32,
-                u8,
-                6,
-                0
-            );
+        /// Sets the `iff_running_resources_allocated` flag.
+        pub fn set_iff_running_resources_allocated(
+            &mut self,
+            iff_running_resources_allocated: bool,
+        ) {
+            self.flags ^= (!(iff_running_resources_allocated as u32)) & (1 << 6)
         }
 
-        pub fn iff_notrailers_avoid_use_of_trailers(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 5, 0)
+        /// Gets the `iff_notrailers_avoid_use_of_trailers` flag.
+        pub fn iff_notrailers_avoid_use_of_trailers(&self) -> bool {
+            ((self.flags >> 5) & 1) == 1
         }
 
+        /// Sets the `iff_notrailers_avoid_use_of_trailers` flag.
         pub fn set_iff_notrailers_avoid_use_of_trailers(
             &mut self,
-            iff_notrailers_avoid_use_of_trailers: u8,
+            iff_notrailers_avoid_use_of_trailers: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_notrailers_avoid_use_of_trailers,
-                u32,
-                u8,
-                5,
-                0
-            );
+            self.flags ^= (!(iff_notrailers_avoid_use_of_trailers as u32)) & (1 << 5)
         }
 
-        pub fn iff_pointopoint_interface_is_pointtopoint_link(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 4, 0)
+        /// Gets the `iff_pointopoint_interface_is_pointtopoint_link` flag.
+        pub fn iff_pointopoint_interface_is_pointtopoint_link(&self) -> bool {
+            ((self.flags >> 4) & 1) == 1
         }
 
+        /// Sets the `iff_pointopoint_interface_is_pointtopoint_link` flag.
         pub fn set_iff_pointopoint_interface_is_pointtopoint_link(
             &mut self,
-            iff_pointopoint_interface_is_pointtopoint_link: u8,
+            iff_pointopoint_interface_is_pointtopoint_link: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_pointopoint_interface_is_pointtopoint_link,
-                u32,
-                u8,
-                4,
-                0
-            );
+            self.flags ^= (!(iff_pointopoint_interface_is_pointtopoint_link as u32)) & (1 << 4)
         }
 
-        pub fn iff_loopback_is_a_loopback_net(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 3, 0)
+        /// Gets the `iff_loopback_is_a_loopback_net` flag.
+        pub fn iff_loopback_is_a_loopback_net(&self) -> bool {
+            ((self.flags >> 3) & 1) == 1
         }
 
-        pub fn set_iff_loopback_is_a_loopback_net(&mut self, iff_loopback_is_a_loopback_net: u8) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_loopback_is_a_loopback_net,
-                u32,
-                u8,
-                3,
-                0
-            );
+        /// Sets the `iff_loopback_is_a_loopback_net` flag.
+        pub fn set_iff_loopback_is_a_loopback_net(&mut self, iff_loopback_is_a_loopback_net: bool) {
+            self.flags ^= (!(iff_loopback_is_a_loopback_net as u32)) & (1 << 3)
         }
 
-        pub fn iff_debug_broadcast_address_valid(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 2, 0)
+        /// Gets the `iff_debug_broadcast_address_valid` flag.
+        pub fn iff_debug_broadcast_address_valid(&self) -> bool {
+            ((self.flags >> 2) & 1) == 1
         }
 
+        /// Sets the `iff_debug_broadcast_address_valid` flag.
         pub fn set_iff_debug_broadcast_address_valid(
             &mut self,
-            iff_debug_broadcast_address_valid: u8,
+            iff_debug_broadcast_address_valid: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_debug_broadcast_address_valid,
-                u32,
-                u8,
-                2,
-                0
-            );
+            self.flags ^= (!(iff_debug_broadcast_address_valid as u32)) & (1 << 2)
         }
 
-        pub fn iff_broadcast_broadcast_address_valid(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 1, 0)
+        /// Gets the `iff_broadcast_broadcast_address_valid` flag.
+        pub fn iff_broadcast_broadcast_address_valid(&self) -> bool {
+            ((self.flags >> 1) & 1) == 1
         }
 
+        /// Sets the `iff_broadcast_broadcast_address_valid` flag.
         pub fn set_iff_broadcast_broadcast_address_valid(
             &mut self,
-            iff_broadcast_broadcast_address_valid: u8,
+            iff_broadcast_broadcast_address_valid: bool,
         ) {
-            set_bit_range!(
-                &mut self.flags,
-                iff_broadcast_broadcast_address_valid,
-                u32,
-                u8,
-                1,
-                0
-            );
+            self.flags ^= (!(iff_broadcast_broadcast_address_valid as u32)) & (1 << 1)
         }
 
-        pub fn iff_up_interface_is_up(&self) -> u8 {
-            get_bit_range!(self.flags, u32, u8, 0, 0)
+        /// Gets the `iff_up_interface_is_up` flag.
+        pub fn iff_up_interface_is_up(&self) -> bool {
+            ((self.flags >> 0) & 1) == 1
         }
 
-        pub fn set_iff_up_interface_is_up(&mut self, iff_up_interface_is_up: u8) {
-            set_bit_range!(&mut self.flags, iff_up_interface_is_up, u32, u8, 0, 0);
+        /// Sets the `iff_up_interface_is_up` flag.
+        pub fn set_iff_up_interface_is_up(&mut self, iff_up_interface_is_up: bool) {
+            self.flags ^= (!(iff_up_interface_is_up as u32)) & (1 << 0)
         }
     }
 
@@ -1822,10 +1779,16 @@ pub mod msg_reset {
     }
 
     impl MsgReset {
+        /// Gets the [DefaultSettings][self::DefaultSettings] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `DefaultSettings` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `DefaultSettings` were added.
         pub fn default_settings(&self) -> Result<DefaultSettings, u8> {
             get_bit_range!(self.flags, u32, u8, 0, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [DefaultSettings][DefaultSettings] of the `flags` bitfield.
         pub fn set_default_settings(&mut self, default_settings: DefaultSettings) {
             set_bit_range!(&mut self.flags, default_settings, u32, u8, 0, 0);
         }
@@ -2001,10 +1964,16 @@ pub mod msg_reset_filters {
     }
 
     impl MsgResetFilters {
+        /// Gets the [FilterOrProcessToReset][self::FilterOrProcessToReset] stored in the `filter` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FilterOrProcessToReset` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FilterOrProcessToReset` were added.
         pub fn filter_or_process_to_reset(&self) -> Result<FilterOrProcessToReset, u8> {
             get_bit_range!(self.filter, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [FilterOrProcessToReset][FilterOrProcessToReset] of the `filter` bitfield.
         pub fn set_filter_or_process_to_reset(
             &mut self,
             filter_or_process_to_reset: FilterOrProcessToReset,

@@ -217,10 +217,16 @@ pub mod gnss_signal {
     }
 
     impl GnssSignal {
+        /// Gets the [Code][self::Code] stored in the `code` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Code` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Code` were added.
         pub fn code(&self) -> Result<Code, u8> {
             get_bit_range!(self.code, u8, u8, 7, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [Code][Code] of the `code` bitfield.
         pub fn set_code(&mut self, code: Code) {
             set_bit_range!(&mut self.code, code, u8, u8, 7, 0);
         }
@@ -351,10 +357,16 @@ pub mod gnss_signal_dep {
     }
 
     impl GnssSignalDep {
+        /// Gets the [Code][self::Code] stored in the `code` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Code` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Code` were added.
         pub fn code(&self) -> Result<Code, u8> {
             get_bit_range!(self.code, u8, u8, 7, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [Code][Code] of the `code` bitfield.
         pub fn set_code(&mut self, code: Code) {
             set_bit_range!(&mut self.code, code, u8, u8, 7, 0);
         }

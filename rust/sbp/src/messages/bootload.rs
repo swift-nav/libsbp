@@ -188,10 +188,12 @@ pub mod msg_bootloader_handshake_resp {
     }
 
     impl MsgBootloaderHandshakeResp {
+        /// Gets the `sbp_major_protocol_version_number` stored in `flags`.
         pub fn sbp_major_protocol_version_number(&self) -> u8 {
             get_bit_range!(self.flags, u32, u8, 15, 8)
         }
 
+        /// Sets the `sbp_major_protocol_version_number` bitrange of `flags`.
         pub fn set_sbp_major_protocol_version_number(
             &mut self,
             sbp_major_protocol_version_number: u8,
@@ -206,10 +208,12 @@ pub mod msg_bootloader_handshake_resp {
             );
         }
 
+        /// Gets the `sbp_minor_protocol_version_number` stored in `flags`.
         pub fn sbp_minor_protocol_version_number(&self) -> u8 {
             get_bit_range!(self.flags, u32, u8, 7, 0)
         }
 
+        /// Sets the `sbp_minor_protocol_version_number` bitrange of `flags`.
         pub fn set_sbp_minor_protocol_version_number(
             &mut self,
             sbp_minor_protocol_version_number: u8,

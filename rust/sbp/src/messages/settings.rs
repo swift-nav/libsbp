@@ -533,10 +533,16 @@ pub mod msg_settings_register_resp {
     }
 
     impl MsgSettingsRegisterResp {
+        /// Gets the [RegisterStatus][self::RegisterStatus] stored in the `status` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RegisterStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RegisterStatus` were added.
         pub fn register_status(&self) -> Result<RegisterStatus, u8> {
             get_bit_range!(self.status, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [RegisterStatus][RegisterStatus] of the `status` bitfield.
         pub fn set_register_status(&mut self, register_status: RegisterStatus) {
             set_bit_range!(&mut self.status, register_status, u8, u8, 1, 0);
         }
@@ -821,10 +827,16 @@ pub mod msg_settings_write_resp {
     }
 
     impl MsgSettingsWriteResp {
+        /// Gets the [WriteStatus][self::WriteStatus] stored in the `status` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `WriteStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `WriteStatus` were added.
         pub fn write_status(&self) -> Result<WriteStatus, u8> {
             get_bit_range!(self.status, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [WriteStatus][WriteStatus] of the `status` bitfield.
         pub fn set_write_status(&mut self, write_status: WriteStatus) {
             set_bit_range!(&mut self.status, write_status, u8, u8, 1, 0);
         }

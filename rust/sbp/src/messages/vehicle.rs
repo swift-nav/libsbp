@@ -54,26 +54,44 @@ pub mod msg_odometry {
     }
 
     impl MsgOdometry {
+        /// Gets the [VehicleMetadata][self::VehicleMetadata] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VehicleMetadata` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VehicleMetadata` were added.
         pub fn vehicle_metadata(&self) -> Result<VehicleMetadata, u8> {
             get_bit_range!(self.flags, u8, u8, 6, 5).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VehicleMetadata][VehicleMetadata] of the `flags` bitfield.
         pub fn set_vehicle_metadata(&mut self, vehicle_metadata: VehicleMetadata) {
             set_bit_range!(&mut self.flags, vehicle_metadata, u8, u8, 6, 5);
         }
 
+        /// Gets the [VelocitySource][self::VelocitySource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VelocitySource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VelocitySource` were added.
         pub fn velocity_source(&self) -> Result<VelocitySource, u8> {
             get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VelocitySource][VelocitySource] of the `flags` bitfield.
         pub fn set_velocity_source(&mut self, velocity_source: VelocitySource) {
             set_bit_range!(&mut self.flags, velocity_source, u8, u8, 4, 3);
         }
 
+        /// Gets the [TimeSource][self::TimeSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeSource` were added.
         pub fn time_source(&self) -> Result<TimeSource, u8> {
             get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [TimeSource][TimeSource] of the `flags` bitfield.
         pub fn set_time_source(&mut self, time_source: TimeSource) {
             set_bit_range!(&mut self.flags, time_source, u8, u8, 2, 0);
         }
@@ -307,18 +325,30 @@ pub mod msg_wheeltick {
     }
 
     impl MsgWheeltick {
+        /// Gets the [VehicleMetadata][self::VehicleMetadata] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `VehicleMetadata` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `VehicleMetadata` were added.
         pub fn vehicle_metadata(&self) -> Result<VehicleMetadata, u8> {
             get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
         }
 
+        /// Set the bitrange corresponding to the [VehicleMetadata][VehicleMetadata] of the `flags` bitfield.
         pub fn set_vehicle_metadata(&mut self, vehicle_metadata: VehicleMetadata) {
             set_bit_range!(&mut self.flags, vehicle_metadata, u8, u8, 3, 2);
         }
 
+        /// Gets the [SynchronizationType][self::SynchronizationType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SynchronizationType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SynchronizationType` were added.
         pub fn synchronization_type(&self) -> Result<SynchronizationType, u8> {
             get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
         }
 
+        /// Set the bitrange corresponding to the [SynchronizationType][SynchronizationType] of the `flags` bitfield.
         pub fn set_synchronization_type(&mut self, synchronization_type: SynchronizationType) {
             set_bit_range!(&mut self.flags, synchronization_type, u8, u8, 1, 0);
         }
