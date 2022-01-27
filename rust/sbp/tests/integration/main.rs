@@ -87,6 +87,7 @@ mod auto_check_sbp_system_msg_group_meta;
 mod auto_check_sbp_system_msg_heartbeat;
 mod auto_check_sbp_system_msg_ins_status;
 mod auto_check_sbp_system_msg_ins_updates;
+mod auto_check_sbp_system_msg_sensor_aid_event;
 mod auto_check_sbp_system_msg_startup;
 mod auto_check_sbp_tracking_msg_measurement_state;
 mod auto_check_sbp_tracking_msg_tracking_state;

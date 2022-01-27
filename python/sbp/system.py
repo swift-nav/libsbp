@@ -1129,11 +1129,11 @@ class MsgSensorAidEvent(SBP):
   sensor_state : int
     Reserved for future use
   n_available_meas : int
-    Number of available measurement updates in this epoch
+    Number of available measurements in this epoch
   n_attempted_meas : int
-    Number of attempted measurement updates in this epoch
+    Number of attempted measurements in this epoch
   n_accepted_meas : int
-    Number of accepted measurement updates in this epoch
+    Number of accepted measurements in this epoch
   flags : int
     Reserved for future use
   sender : int

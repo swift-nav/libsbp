@@ -436,11 +436,11 @@ data MsgSensorAidEvent = MsgSensorAidEvent
   , _msgSensorAidEvent_sensor_state   :: !Word8
     -- ^ Reserved for future use
   , _msgSensorAidEvent_n_available_meas :: !Word8
-    -- ^ Number of available measurement updates in this epoch
+    -- ^ Number of available measurements in this epoch
   , _msgSensorAidEvent_n_attempted_meas :: !Word8
-    -- ^ Number of attempted measurement updates in this epoch
+    -- ^ Number of attempted measurements in this epoch
   , _msgSensorAidEvent_n_accepted_meas :: !Word8
-    -- ^ Number of accepted measurement updates in this epoch
+    -- ^ Number of accepted measurements in this epoch
   , _msgSensorAidEvent_flags          :: !Word32
     -- ^ Reserved for future use
   } deriving ( Show, Read, Eq )

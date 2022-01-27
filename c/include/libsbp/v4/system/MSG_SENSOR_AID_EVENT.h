@@ -67,17 +67,17 @@ typedef struct {
   u8 sensor_state;
 
   /**
-   * Number of available measurement updates in this epoch
+   * Number of available measurements in this epoch
    */
   u8 n_available_meas;
 
   /**
-   * Number of attempted measurement updates in this epoch
+   * Number of attempted measurements in this epoch
    */
   u8 n_attempted_meas;
 
   /**
-   * Number of accepted measurement updates in this epoch
+   * Number of accepted measurements in this epoch
    */
   u8 n_accepted_meas;
 

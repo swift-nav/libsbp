@@ -209,12 +209,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 sensor_type;      /**< Sensor type */
   u16 sensor_id;       /**< Sensor identifier */
   u8 sensor_state;     /**< Reserved for future use */
-  u8 n_available_meas; /**< Number of available measurement updates in this
-                            epoch */
-  u8 n_attempted_meas; /**< Number of attempted measurement updates in this
-                            epoch */
-  u8 n_accepted_meas;  /**< Number of accepted measurement updates in this
-                            epoch */
+  u8 n_available_meas; /**< Number of available measurements in this epoch */
+  u8 n_attempted_meas; /**< Number of attempted measurements in this epoch */
+  u8 n_accepted_meas;  /**< Number of accepted measurements in this epoch */
   u32 flags;           /**< Reserved for future use */
 } msg_sensor_aid_event_t;
 

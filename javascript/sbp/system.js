@@ -433,9 +433,9 @@ MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field sensor_type number (unsigned 8-bit int, 1 byte) Sensor type
  * @field sensor_id number (unsigned 16-bit int, 2 bytes) Sensor identifier
  * @field sensor_state number (unsigned 8-bit int, 1 byte) Reserved for future use
- * @field n_available_meas number (unsigned 8-bit int, 1 byte) Number of available measurement updates in this epoch
- * @field n_attempted_meas number (unsigned 8-bit int, 1 byte) Number of attempted measurement updates in this epoch
- * @field n_accepted_meas number (unsigned 8-bit int, 1 byte) Number of accepted measurement updates in this epoch
+ * @field n_available_meas number (unsigned 8-bit int, 1 byte) Number of available measurements in this epoch
+ * @field n_attempted_meas number (unsigned 8-bit int, 1 byte) Number of attempted measurements in this epoch
+ * @field n_accepted_meas number (unsigned 8-bit int, 1 byte) Number of accepted measurements in this epoch
  * @field flags number (unsigned 32-bit int, 4 bytes) Reserved for future use
  *
  * @param sbp An SBP object with a payload to be decoded.

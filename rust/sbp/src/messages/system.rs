@@ -783,13 +783,13 @@ pub struct MsgSensorAidEvent {
     /// Reserved for future use
     #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_state")))]
     pub sensor_state: u8,
-    /// Number of available measurement updates in this epoch
+    /// Number of available measurements in this epoch
     #[cfg_attr(feature = "serde", serde(rename(serialize = "n_available_meas")))]
     pub n_available_meas: u8,
-    /// Number of attempted measurement updates in this epoch
+    /// Number of attempted measurements in this epoch
     #[cfg_attr(feature = "serde", serde(rename(serialize = "n_attempted_meas")))]
     pub n_attempted_meas: u8,
-    /// Number of accepted measurement updates in this epoch
+    /// Number of accepted measurements in this epoch
     #[cfg_attr(feature = "serde", serde(rename(serialize = "n_accepted_meas")))]
     pub n_accepted_meas: u8,
     /// Reserved for future use
