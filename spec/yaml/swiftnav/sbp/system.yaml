@@ -465,13 +465,13 @@ definitions:
             desc: Reserved for future use
         - n_available_meas:
             type: u8
-            desc: Number of available measurement updates in this epoch
+            desc: Number of available measurements in this epoch
         - n_attempted_meas:
             type: u8
-            desc: Number of attempted measurement updates in this epoch
+            desc: Number of attempted measurements in this epoch
         - n_accepted_meas:
             type: u8
-            desc: Number of accepted measurement updates in this epoch
+            desc: Number of accepted measurements in this epoch
         - flags:
             type: u32
             desc: Reserved for future use
