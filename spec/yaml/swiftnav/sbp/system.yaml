@@ -436,7 +436,7 @@ definitions:
     desc: >
       This diagnostic message contains state and update status information for
       all sensors that are being used by the fusion engine. This message will
-      be generated asycnhronously to the solution messages and will be emitted
+      be generated asynchronously to the solution messages and will be emitted
       anytime a sensor update is being processed.
     fields:
         - time:
