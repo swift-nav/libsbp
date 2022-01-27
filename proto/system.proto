@@ -169,6 +169,24 @@ message MsgPpsTime {
     uint32 flags = 2;
 }
 
+/** Sensor state and update status data
+ *
+ * This diagnostic message contains state and update status information for
+ * all sensors that are being used by the fusion engine. This message will be
+ * generated asynchronously to the solution messages and will be emitted
+ * anytime a sensor update is being processed.
+ */
+message MsgSensorAidEvent {
+    uint32 time = 1;
+    uint32 sensor_type = 2;
+    uint32 sensor_id = 3;
+    uint32 sensor_state = 4;
+    uint32 n_available_meas = 5;
+    uint32 n_attempted_meas = 6;
+    uint32 n_accepted_meas = 7;
+    uint32 flags = 8;
+}
+
 /** Solution Group Metadata
  *
  * This leading message lists the time metadata of the Solution Group. It also

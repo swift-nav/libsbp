@@ -121,6 +121,7 @@
 //   const msgReset = Convert.toMsgReset(json);
 //   const msgResetFilters = Convert.toMsgResetFilters(json);
 //   const msgSbasRaw = Convert.toMsgSbasRaw(json);
+//   const msgSensorAidEvent = Convert.toMsgSensorAidEvent(json);
 //   const msgSetTime = Convert.toMsgSetTime(json);
 //   const msgSettingsReadByIndexDone = Convert.toMsgSettingsReadByIndexDone(json);
 //   const msgSettingsReadByIndexReq = Convert.toMsgSettingsReadByIndexReq(json);
@@ -1143,6 +1144,14 @@ function toMsgSbasRaw(json) {
 
 function msgSbasRawToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSbasRaw")), null, 2);
+}
+
+function toMsgSensorAidEvent(json) {
+    return cast(JSON.parse(json), r("MsgSensorAidEvent"));
+}
+
+function msgSensorAidEventToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSensorAidEvent")), null, 2);
 }
 
 function toMsgSetTime(json) {
@@ -2661,6 +2670,16 @@ const typeMap = {
         { json: "sid", js: "sid", typ: r("GnssSignal") },
         { json: "tow", js: "tow", typ: 0 },
     ], "any"),
+    "MsgSensorAidEvent": o([
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "n_accepted_meas", js: "n_accepted_meas", typ: 0 },
+        { json: "n_attempted_meas", js: "n_attempted_meas", typ: 0 },
+        { json: "n_available_meas", js: "n_available_meas", typ: 0 },
+        { json: "sensor_id", js: "sensor_id", typ: 0 },
+        { json: "sensor_state", js: "sensor_state", typ: 0 },
+        { json: "sensor_type", js: "sensor_type", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
+    ], "any"),
     "MsgSettingsReadByIndexReq": o([
         { json: "index", js: "index", typ: 0 },
     ], "any"),
@@ -2938,8 +2957,8 @@ const typeMap = {
         { json: "sog", js: "sog", typ: 0 },
         { json: "sog_accuracy", js: "sog_accuracy", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
-        { json: "vel_d", js: "vel_d", typ: 0 },
-        { json: "vel_d_accuracy", js: "vel_d_accuracy", typ: 0 },
+        { json: "v_up", js: "v_up", typ: 0 },
+        { json: "v_up_accuracy", js: "v_up_accuracy", typ: 0 },
     ], "any"),
     "MsgVelECEF": o([
         { json: "accuracy", js: "accuracy", typ: 0 },
@@ -3285,6 +3304,8 @@ module.exports = {
     "toMsgResetFilters": toMsgResetFilters,
     "msgSbasRawToJson": msgSbasRawToJson,
     "toMsgSbasRaw": toMsgSbasRaw,
+    "msgSensorAidEventToJson": msgSensorAidEventToJson,
+    "toMsgSensorAidEvent": toMsgSensorAidEvent,
     "msgSetTimeToJson": msgSetTimeToJson,
     "toMsgSetTime": toMsgSetTime,
     "msgSettingsReadByIndexDoneToJson": msgSettingsReadByIndexDoneToJson,

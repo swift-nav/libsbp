@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGriddedCorrection, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGriddedCorrection, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -121,6 +121,7 @@
 //   const msgReset = Convert.toMsgReset(json);
 //   const msgResetFilters = Convert.toMsgResetFilters(json);
 //   const msgSbasRaw = Convert.toMsgSbasRaw(json);
+//   const msgSensorAidEvent = Convert.toMsgSensorAidEvent(json);
 //   const msgSetTime = Convert.toMsgSetTime(json);
 //   const msgSettingsReadByIndexDone = Convert.toMsgSettingsReadByIndexDone(json);
 //   const msgSettingsReadByIndexReq = Convert.toMsgSettingsReadByIndexReq(json);
@@ -1781,6 +1782,22 @@ export interface MsgSbasRaw {
 }
 
 /**
+ * This diagnostic message contains state and update status information for all sensors that
+ * are being used by the fusion engine. This message will be generated asynchronously to the
+ * solution messages and will be emitted anytime a sensor update is being processed.
+ */
+export interface MsgSensorAidEvent {
+    flags:            number;
+    n_accepted_meas:  number;
+    n_attempted_meas: number;
+    n_available_meas: number;
+    sensor_id:        number;
+    sensor_state:     number;
+    sensor_type:      number;
+    time:             number;
+}
+
+/**
  * The settings message for iterating through the settings values. A device will respond to
  * this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
@@ -2335,21 +2352,23 @@ export interface MsgVelBody {
 /**
  * This message reports the receiver course over ground (COG) and speed over  ground (SOG)
  * based on the horizontal (N-E) components of the NED velocity  vector. It also includes
- * the vertical velocity in the form of the D-component of the NED velocity vector. The NED
- * coordinate system is defined as the local WGS84 tangent  plane centered at the current
- * position. The full GPS time is given by the  preceding MSG_GPS_TIME with the matching
- * time-of-week (tow). Note: course over ground represents the receiver's direction of
- * travel,  but not necessarily the device heading.
+ * the vertical velocity coordinate. A flag is provided to indicate whether the COG value
+ * has been frozen. When  the flag is set to true, the COG field is set to its last valid
+ * value until  the system exceeds a minimum velocity threshold. No other fields are
+ * affected by this flag.  The NED coordinate system is defined as the local WGS84 tangent
+ * plane centered at the current position. The full GPS time is given by the  preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow). Note: course over ground represents
+ * the receiver's direction of travel,  but not necessarily the device heading.
  */
 export interface MsgVelCog {
-    cog:            number;
-    cog_accuracy:   number;
-    flags:          number;
-    sog:            number;
-    sog_accuracy:   number;
-    tow:            number;
-    vel_d:          number;
-    vel_d_accuracy: number;
+    cog:           number;
+    cog_accuracy:  number;
+    flags:         number;
+    sog:           number;
+    sog_accuracy:  number;
+    tow:           number;
+    v_up:          number;
+    v_up_accuracy: number;
 }
 
 /**
@@ -3476,6 +3495,14 @@ export class Convert {
 
     public static msgSbasRawToJson(value: MsgSbasRaw): string {
         return JSON.stringify(uncast(value, r("MsgSbasRaw")), null, 2);
+    }
+
+    public static toMsgSensorAidEvent(json: string): MsgSensorAidEvent {
+        return cast(JSON.parse(json), r("MsgSensorAidEvent"));
+    }
+
+    public static msgSensorAidEventToJson(value: MsgSensorAidEvent): string {
+        return JSON.stringify(uncast(value, r("MsgSensorAidEvent")), null, 2);
     }
 
     public static toMsgSetTime(json: string): { [key: string]: any } {
@@ -4995,6 +5022,16 @@ const typeMap: any = {
         { json: "sid", js: "sid", typ: r("GnssSignal") },
         { json: "tow", js: "tow", typ: 0 },
     ], "any"),
+    "MsgSensorAidEvent": o([
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "n_accepted_meas", js: "n_accepted_meas", typ: 0 },
+        { json: "n_attempted_meas", js: "n_attempted_meas", typ: 0 },
+        { json: "n_available_meas", js: "n_available_meas", typ: 0 },
+        { json: "sensor_id", js: "sensor_id", typ: 0 },
+        { json: "sensor_state", js: "sensor_state", typ: 0 },
+        { json: "sensor_type", js: "sensor_type", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
+    ], "any"),
     "MsgSettingsReadByIndexReq": o([
         { json: "index", js: "index", typ: 0 },
     ], "any"),
@@ -5272,8 +5309,8 @@ const typeMap: any = {
         { json: "sog", js: "sog", typ: 0 },
         { json: "sog_accuracy", js: "sog_accuracy", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
-        { json: "vel_d", js: "vel_d", typ: 0 },
-        { json: "vel_d_accuracy", js: "vel_d_accuracy", typ: 0 },
+        { json: "v_up", js: "v_up", typ: 0 },
+        { json: "v_up_accuracy", js: "v_up_accuracy", typ: 0 },
     ], "any"),
     "MsgVelECEF": o([
         { json: "accuracy", js: "accuracy", typ: 0 },

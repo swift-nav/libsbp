@@ -196,6 +196,28 @@ typedef struct SBP_ATTR_PACKED {
   u8 flags; /**< Status flags */
 } msg_pps_time_t;
 
+/** Sensor state and update status data
+ *
+ * This diagnostic message contains state and update status information for
+ * all sensors that are being used by the fusion engine. This message will be
+ * generated asynchronously to the solution messages and will be emitted
+ * anytime a sensor update is being processed.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u32 time;            /**< Update timestamp in milliseconds. [milliseconds] */
+  u8 sensor_type;      /**< Sensor type */
+  u16 sensor_id;       /**< Sensor identifier */
+  u8 sensor_state;     /**< Reserved for future use */
+  u8 n_available_meas; /**< Number of available measurement updates in this
+                            epoch */
+  u8 n_attempted_meas; /**< Number of attempted measurement updates in this
+                            epoch */
+  u8 n_accepted_meas;  /**< Number of accepted measurement updates in this
+                            epoch */
+  u32 flags;           /**< Reserved for future use */
+} msg_sensor_aid_event_t;
+
 /** Solution Group Metadata
  *
  * This leading message lists the time metadata of the Solution Group. It also

@@ -188,6 +188,7 @@ typedef enum {
   SbpMsgResetFilters = SBP_MSG_RESET_FILTERS,
   SbpMsgReset = SBP_MSG_RESET,
   SbpMsgSbasRaw = SBP_MSG_SBAS_RAW,
+  SbpMsgSensorAidEvent = SBP_MSG_SENSOR_AID_EVENT,
   SbpMsgSetTime = SBP_MSG_SET_TIME,
   SbpMsgSettingsReadByIndexDone = SBP_MSG_SETTINGS_READ_BY_INDEX_DONE,
   SbpMsgSettingsReadByIndexReq = SBP_MSG_SETTINGS_READ_BY_INDEX_REQ,

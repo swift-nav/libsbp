@@ -744,6 +744,33 @@
  */
 #define SBP_MSG_PPS_TIME_ENCODED_LEN 9u
 
+#define SBP_MSG_SENSOR_AID_EVENT 0xFF09
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_MASK (0xff)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_SHIFT (0u)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_GET(flags)           \
+  ((u8)(((flags) >> SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_SHIFT) & \
+        SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_MASK))
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_SET(flags, val)                  \
+  do {                                                                        \
+    (flags) =                                                                 \
+        (u8)((flags) | (((val) & (SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_MASK)) \
+                        << (SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_SHIFT)));    \
+  } while (0)
+
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_GNSS_POSITION (0)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_GNSS_AVERAGE_VELOCITY (1)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_GNSS_INSTANTANEOUS_VELOCITY (2)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_WHEEL_TICKS (3)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_WHEEL_SPEED (4)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_IMU (5)
+#define SBP_SENSOR_AID_EVENT_TYPE_IDENTIFIER_TIME_DIFFERENCES_OF_CARRIER_PHASE \
+  (6)
+/**
+ * Encoded length of sbp_msg_sensor_aid_event_t (V4 API) and
+ * msg_sensor_aid_event_t (legacy API)
+ */
+#define SBP_MSG_SENSOR_AID_EVENT_ENCODED_LEN 15u
+
 #define SBP_MSG_GROUP_META 0xFF0A
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)

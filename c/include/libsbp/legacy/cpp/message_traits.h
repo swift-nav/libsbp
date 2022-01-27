@@ -1177,6 +1177,12 @@ struct MessageTraits<msg_pps_time_t> {
 
 
 template<>
+struct MessageTraits<msg_sensor_aid_event_t> {
+  static constexpr u16 id = 65289;
+};
+
+
+template<>
 struct MessageTraits<msg_group_meta_t> {
   static constexpr u16 id = 65290;
 };

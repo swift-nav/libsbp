@@ -758,6 +758,122 @@ impl WireFormat for MsgPpsTime {
     }
 }
 
+/// Sensor state and update status data
+///
+/// This diagnostic message contains state and update status information for
+/// all sensors that are being used by the fusion engine. This message will be
+/// generated asynchronously to the solution messages and will be emitted
+/// anytime a sensor update is being processed.
+///
+#[cfg_attr(feature = "serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+pub struct MsgSensorAidEvent {
+    /// The message sender_id
+    #[cfg_attr(feature = "serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// Update timestamp in milliseconds.
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+    pub time: u32,
+    /// Sensor type
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_type")))]
+    pub sensor_type: u8,
+    /// Sensor identifier
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_id")))]
+    pub sensor_id: u16,
+    /// Reserved for future use
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_state")))]
+    pub sensor_state: u8,
+    /// Number of available measurement updates in this epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_available_meas")))]
+    pub n_available_meas: u8,
+    /// Number of attempted measurement updates in this epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_attempted_meas")))]
+    pub n_attempted_meas: u8,
+    /// Number of accepted measurement updates in this epoch
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_accepted_meas")))]
+    pub n_accepted_meas: u8,
+    /// Reserved for future use
+    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+    pub flags: u32,
+}
+
+impl ConcreteMessage for MsgSensorAidEvent {
+    const MESSAGE_TYPE: u16 = 65289;
+    const MESSAGE_NAME: &'static str = "MSG_SENSOR_AID_EVENT";
+}
+
+impl SbpMessage for MsgSensorAidEvent {
+    fn message_name(&self) -> &'static str {
+        <Self as ConcreteMessage>::MESSAGE_NAME
+    }
+    fn message_type(&self) -> u16 {
+        <Self as ConcreteMessage>::MESSAGE_TYPE
+    }
+    fn sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+    fn encoded_len(&self) -> usize {
+        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+    }
+}
+
+impl TryFrom<Sbp> for MsgSensorAidEvent {
+    type Error = TryFromSbpError;
+    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+        match msg {
+            Sbp::MsgSensorAidEvent(m) => Ok(m),
+            _ => Err(TryFromSbpError),
+        }
+    }
+}
+
+impl WireFormat for MsgSensorAidEvent {
+    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u16 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u8 as WireFormat>::MIN_LEN
+        + <u32 as WireFormat>::MIN_LEN;
+    fn len(&self) -> usize {
+        WireFormat::len(&self.time)
+            + WireFormat::len(&self.sensor_type)
+            + WireFormat::len(&self.sensor_id)
+            + WireFormat::len(&self.sensor_state)
+            + WireFormat::len(&self.n_available_meas)
+            + WireFormat::len(&self.n_attempted_meas)
+            + WireFormat::len(&self.n_accepted_meas)
+            + WireFormat::len(&self.flags)
+    }
+    fn write<B: BufMut>(&self, buf: &mut B) {
+        WireFormat::write(&self.time, buf);
+        WireFormat::write(&self.sensor_type, buf);
+        WireFormat::write(&self.sensor_id, buf);
+        WireFormat::write(&self.sensor_state, buf);
+        WireFormat::write(&self.n_available_meas, buf);
+        WireFormat::write(&self.n_attempted_meas, buf);
+        WireFormat::write(&self.n_accepted_meas, buf);
+        WireFormat::write(&self.flags, buf);
+    }
+    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+        MsgSensorAidEvent {
+            sender_id: None,
+            time: WireFormat::parse_unchecked(buf),
+            sensor_type: WireFormat::parse_unchecked(buf),
+            sensor_id: WireFormat::parse_unchecked(buf),
+            sensor_state: WireFormat::parse_unchecked(buf),
+            n_available_meas: WireFormat::parse_unchecked(buf),
+            n_attempted_meas: WireFormat::parse_unchecked(buf),
+            n_accepted_meas: WireFormat::parse_unchecked(buf),
+            flags: WireFormat::parse_unchecked(buf),
+        }
+    }
+}
+
 /// System start-up message
 ///
 /// The system start-up message is sent once on system start-up. It notifies
