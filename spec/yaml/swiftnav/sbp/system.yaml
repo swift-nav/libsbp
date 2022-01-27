@@ -446,14 +446,17 @@ definitions:
         - sensor_type:
             type: u8
             desc: Sensor type
-            values:
-                - 0: GNSS position
-                - 1: GNSS average velocity
-                - 2: GNSS instantaneous velocity
-                - 3: Wheel ticks
-                - 4: Wheel speed
-                - 5: IMU
-                - 6: Time differences of carrier phase
+            fields:
+                - 0-7:
+                    desc: Type identifier
+                    values:
+                        - 0: GNSS position
+                        - 1: GNSS average velocity
+                        - 2: GNSS instantaneous velocity
+                        - 3: Wheel ticks
+                        - 4: Wheel speed
+                        - 5: IMU
+                        - 6: Time differences of carrier phase
         - sensor_id:
             type: u16
             desc: Sensor identifier
