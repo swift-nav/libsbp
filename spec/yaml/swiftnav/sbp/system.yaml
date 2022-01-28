@@ -431,7 +431,7 @@ definitions:
                     - 3: < 1 microseconds
 
  - MSG_SENSOR_AID_EVENT:
-    id: 0xFF09
+    id: 0xFF09 # 65289
     short_desc: Sensor state and update status data
     desc: >
       This diagnostic message contains state and update status information for
