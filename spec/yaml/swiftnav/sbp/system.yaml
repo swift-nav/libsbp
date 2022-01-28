@@ -430,6 +430,52 @@ definitions:
                     - 2: +/- 10 microseconds
                     - 3: < 1 microseconds
 
+ - MSG_SENSOR_AID_EVENT:
+    id: 0xFF09 # 65289
+    short_desc: Sensor state and update status data
+    desc: >
+      This diagnostic message contains state and update status information for
+      all sensors that are being used by the fusion engine. This message will
+      be generated asynchronously to the solution messages and will be emitted
+      anytime a sensor update is being processed.
+    fields:
+        - time:
+            type: u32
+            units: milliseconds
+            desc: Update timestamp in milliseconds.
+        - sensor_type:
+            type: u8
+            desc: Sensor type
+            fields:
+                - 0-7:
+                    desc: Type identifier
+                    values:
+                        - 0: GNSS position
+                        - 1: GNSS average velocity
+                        - 2: GNSS instantaneous velocity
+                        - 3: Wheel ticks
+                        - 4: Wheel speed
+                        - 5: IMU
+                        - 6: Time differences of carrier phase
+        - sensor_id:
+            type: u16
+            desc: Sensor identifier
+        - sensor_state:
+            type: u8
+            desc: Reserved for future use
+        - n_available_meas:
+            type: u8
+            desc: Number of available measurements in this epoch
+        - n_attempted_meas:
+            type: u8
+            desc: Number of attempted measurements in this epoch
+        - n_accepted_meas:
+            type: u8
+            desc: Number of accepted measurements in this epoch
+        - flags:
+            type: u32
+            desc: Reserved for future use
+
  - MSG_GROUP_META:
      id: 0xFF0A  # 65290
      short_desc: Solution Group Metadata

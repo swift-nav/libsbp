@@ -196,6 +196,7 @@ data SBPMsg =
    | SBPMsgResetDep MsgResetDep Msg
    | SBPMsgResetFilters MsgResetFilters Msg
    | SBPMsgSbasRaw MsgSbasRaw Msg
+   | SBPMsgSensorAidEvent MsgSensorAidEvent Msg
    | SBPMsgSetTime MsgSetTime Msg
    | SBPMsgSettingsReadByIndexDone MsgSettingsReadByIndexDone Msg
    | SBPMsgSettingsReadByIndexReq MsgSettingsReadByIndexReq Msg
@@ -412,6 +413,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSbasRaw = SBPMsgSbasRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSensorAidEvent = SBPMsgSensorAidEvent (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSetTime = SBPMsgSetTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -620,6 +622,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgResetDep _ m) = put m
       encoder (SBPMsgResetFilters _ m) = put m
       encoder (SBPMsgSbasRaw _ m) = put m
+      encoder (SBPMsgSensorAidEvent _ m) = put m
       encoder (SBPMsgSetTime _ m) = put m
       encoder (SBPMsgSettingsReadByIndexDone _ m) = put m
       encoder (SBPMsgSettingsReadByIndexReq _ m) = put m
@@ -832,6 +835,7 @@ instance FromJSON SBPMsg where
         | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSbasRaw = SBPMsgSbasRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSensorAidEvent = SBPMsgSensorAidEvent <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSetTime = SBPMsgSetTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsReadByIndexDone = SBPMsgSettingsReadByIndexDone <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsReadByIndexReq = SBPMsgSettingsReadByIndexReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1045,6 +1049,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgResetDep _ m) = toJSON m
   toJSON (SBPMsgResetFilters n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSbasRaw n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSensorAidEvent n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSetTime _ m) = toJSON m
   toJSON (SBPMsgSettingsReadByIndexDone _ m) = toJSON m
   toJSON (SBPMsgSettingsReadByIndexReq n m) = toJSON n <<>> toJSON m
@@ -1252,6 +1257,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgResetDep n m) = SBPMsgResetDep n <$> f m
   msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m
   msg f (SBPMsgSbasRaw n m) = SBPMsgSbasRaw n <$> f m
+  msg f (SBPMsgSensorAidEvent n m) = SBPMsgSensorAidEvent n <$> f m
   msg f (SBPMsgSetTime n m) = SBPMsgSetTime n <$> f m
   msg f (SBPMsgSettingsReadByIndexDone n m) = SBPMsgSettingsReadByIndexDone n <$> f m
   msg f (SBPMsgSettingsReadByIndexReq n m) = SBPMsgSettingsReadByIndexReq n <$> f m

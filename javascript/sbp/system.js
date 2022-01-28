@@ -421,6 +421,57 @@ MsgPpsTime.prototype.fieldSpec.push(['time', 'writeUInt64LE', 8]);
 MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
+ *
+ * This diagnostic message contains state and update status information for all
+ * sensors that are being used by the fusion engine. This message will be generated
+ * asynchronously to the solution messages and will be emitted anytime a sensor
+ * update is being processed.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time number (unsigned 32-bit int, 4 bytes) Update timestamp in milliseconds.
+ * @field sensor_type number (unsigned 8-bit int, 1 byte) Sensor type
+ * @field sensor_id number (unsigned 16-bit int, 2 bytes) Sensor identifier
+ * @field sensor_state number (unsigned 8-bit int, 1 byte) Reserved for future use
+ * @field n_available_meas number (unsigned 8-bit int, 1 byte) Number of available measurements in this epoch
+ * @field n_attempted_meas number (unsigned 8-bit int, 1 byte) Number of attempted measurements in this epoch
+ * @field n_accepted_meas number (unsigned 8-bit int, 1 byte) Number of accepted measurements in this epoch
+ * @field flags number (unsigned 32-bit int, 4 bytes) Reserved for future use
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSensorAidEvent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SENSOR_AID_EVENT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSensorAidEvent.prototype = Object.create(SBP.prototype);
+MsgSensorAidEvent.prototype.messageType = "MSG_SENSOR_AID_EVENT";
+MsgSensorAidEvent.prototype.msg_type = 0xFF09;
+MsgSensorAidEvent.prototype.constructor = MsgSensorAidEvent;
+MsgSensorAidEvent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('time')
+  .uint8('sensor_type')
+  .uint16('sensor_id')
+  .uint8('sensor_state')
+  .uint8('n_available_meas')
+  .uint8('n_attempted_meas')
+  .uint8('n_accepted_meas')
+  .uint32('flags');
+MsgSensorAidEvent.prototype.fieldSpec = [];
+MsgSensorAidEvent.prototype.fieldSpec.push(['time', 'writeUInt32LE', 4]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_type', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_id', 'writeUInt16LE', 2]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_state', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_available_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_attempted_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_accepted_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
+
+/**
  * SBP class for message MSG_GROUP_META (0xFF0A).
  *
  * This leading message lists the time metadata of the Solution Group. It also
@@ -481,6 +532,8 @@ module.exports = {
   MsgGnssTimeOffset: MsgGnssTimeOffset,
   0xFF08: MsgPpsTime,
   MsgPpsTime: MsgPpsTime,
+  0xFF09: MsgSensorAidEvent,
+  MsgSensorAidEvent: MsgSensorAidEvent,
   0xFF0A: MsgGroupMeta,
   MsgGroupMeta: MsgGroupMeta,
 }

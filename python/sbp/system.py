@@ -1102,6 +1102,133 @@ class MsgPpsTime(SBP):
     d.update(j)
     return d
     
+SBP_MSG_SENSOR_AID_EVENT = 0xFF09
+class MsgSensorAidEvent(SBP):
+  """SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
+
+  You can have MSG_SENSOR_AID_EVENT inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This diagnostic message contains state and update status information for all
+  sensors that are being used by the fusion engine. This message will be
+  generated asynchronously to the solution messages and will be emitted
+  anytime a sensor update is being processed.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  time : int
+    Update timestamp in milliseconds.
+  sensor_type : int
+    Sensor type
+  sensor_id : int
+    Sensor identifier
+  sensor_state : int
+    Reserved for future use
+  n_available_meas : int
+    Number of available measurements in this epoch
+  n_attempted_meas : int
+    Number of attempted measurements in this epoch
+  n_accepted_meas : int
+    Number of accepted measurements in this epoch
+  flags : int
+    Reserved for future use
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'time' / construct.Int32ul,
+                   'sensor_type' / construct.Int8ul,
+                   'sensor_id' / construct.Int16ul,
+                   'sensor_state' / construct.Int8ul,
+                   'n_available_meas' / construct.Int8ul,
+                   'n_attempted_meas' / construct.Int8ul,
+                   'n_accepted_meas' / construct.Int8ul,
+                   'flags' / construct.Int32ul,)
+  __slots__ = [
+               'time',
+               'sensor_type',
+               'sensor_id',
+               'sensor_state',
+               'n_available_meas',
+               'n_attempted_meas',
+               'n_accepted_meas',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSensorAidEvent,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSensorAidEvent, self).__init__()
+      self.msg_type = SBP_MSG_SENSOR_AID_EVENT
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.time = kwargs.pop('time')
+      self.sensor_type = kwargs.pop('sensor_type')
+      self.sensor_id = kwargs.pop('sensor_id')
+      self.sensor_state = kwargs.pop('sensor_state')
+      self.n_available_meas = kwargs.pop('n_available_meas')
+      self.n_attempted_meas = kwargs.pop('n_attempted_meas')
+      self.n_accepted_meas = kwargs.pop('n_accepted_meas')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSensorAidEvent.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSensorAidEvent(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSensorAidEvent._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSensorAidEvent._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSensorAidEvent._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSensorAidEvent, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_GROUP_META = 0xFF0A
 class MsgGroupMeta(SBP):
   """SBP class for message MSG_GROUP_META (0xFF0A).
@@ -1221,5 +1348,6 @@ msg_classes = {
   0xFF06: MsgInsUpdates,
   0xFF07: MsgGnssTimeOffset,
   0xFF08: MsgPpsTime,
+  0xFF09: MsgSensorAidEvent,
   0xFF0A: MsgGroupMeta,
 }

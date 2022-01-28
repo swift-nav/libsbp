@@ -105,6 +105,7 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_system_MsgHeartbeat_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgInsStatus_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgInsUpdates_suite());
+  srunner_add_suite(sr, auto_check_sbp_system_MsgSensorAidEvent_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgStartup_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_MsgMeasurementState_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_MsgTrackingState_suite());

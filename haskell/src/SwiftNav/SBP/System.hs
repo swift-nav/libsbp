@@ -417,6 +417,60 @@ $(makeSBP 'msgPpsTime ''MsgPpsTime)
 $(makeJSON "_msgPpsTime_" ''MsgPpsTime)
 $(makeLenses ''MsgPpsTime)
 
+msgSensorAidEvent :: Word16
+msgSensorAidEvent = 0xFF09
+
+-- | SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
+--
+-- This diagnostic message contains state and update status information for
+-- all sensors that are being used by the fusion engine. This message will be
+-- generated asynchronously to the solution messages and will be emitted
+-- anytime a sensor update is being processed.
+data MsgSensorAidEvent = MsgSensorAidEvent
+  { _msgSensorAidEvent_time           :: !Word32
+    -- ^ Update timestamp in milliseconds.
+  , _msgSensorAidEvent_sensor_type    :: !Word8
+    -- ^ Sensor type
+  , _msgSensorAidEvent_sensor_id      :: !Word16
+    -- ^ Sensor identifier
+  , _msgSensorAidEvent_sensor_state   :: !Word8
+    -- ^ Reserved for future use
+  , _msgSensorAidEvent_n_available_meas :: !Word8
+    -- ^ Number of available measurements in this epoch
+  , _msgSensorAidEvent_n_attempted_meas :: !Word8
+    -- ^ Number of attempted measurements in this epoch
+  , _msgSensorAidEvent_n_accepted_meas :: !Word8
+    -- ^ Number of accepted measurements in this epoch
+  , _msgSensorAidEvent_flags          :: !Word32
+    -- ^ Reserved for future use
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSensorAidEvent where
+  get = do
+    _msgSensorAidEvent_time <- getWord32le
+    _msgSensorAidEvent_sensor_type <- getWord8
+    _msgSensorAidEvent_sensor_id <- getWord16le
+    _msgSensorAidEvent_sensor_state <- getWord8
+    _msgSensorAidEvent_n_available_meas <- getWord8
+    _msgSensorAidEvent_n_attempted_meas <- getWord8
+    _msgSensorAidEvent_n_accepted_meas <- getWord8
+    _msgSensorAidEvent_flags <- getWord32le
+    pure MsgSensorAidEvent {..}
+
+  put MsgSensorAidEvent {..} = do
+    putWord32le _msgSensorAidEvent_time
+    putWord8 _msgSensorAidEvent_sensor_type
+    putWord16le _msgSensorAidEvent_sensor_id
+    putWord8 _msgSensorAidEvent_sensor_state
+    putWord8 _msgSensorAidEvent_n_available_meas
+    putWord8 _msgSensorAidEvent_n_attempted_meas
+    putWord8 _msgSensorAidEvent_n_accepted_meas
+    putWord32le _msgSensorAidEvent_flags
+
+$(makeSBP 'msgSensorAidEvent ''MsgSensorAidEvent)
+$(makeJSON "_msgSensorAidEvent_" ''MsgSensorAidEvent)
+$(makeLenses ''MsgSensorAidEvent)
+
 msgGroupMeta :: Word16
 msgGroupMeta = 0xFF0A
 

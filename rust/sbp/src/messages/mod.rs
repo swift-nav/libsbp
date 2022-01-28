@@ -221,6 +221,7 @@ use self::system::MsgHeartbeat;
 use self::system::MsgInsStatus;
 use self::system::MsgInsUpdates;
 use self::system::MsgPpsTime;
+use self::system::MsgSensorAidEvent;
 use self::system::MsgStartup;
 use self::system::MsgStatusReport;
 use self::tracking::MsgMeasurementState;
@@ -697,6 +698,8 @@ pub enum Sbp {
     MsgGnssTimeOffset(MsgGnssTimeOffset),
     /// Local time at detection of PPS pulse
     MsgPpsTime(MsgPpsTime),
+    /// Sensor state and update status data
+    MsgSensorAidEvent(MsgSensorAidEvent),
     /// Solution Group Metadata
     MsgGroupMeta(MsgGroupMeta),
     /// Solution Sensors Metadata
@@ -1729,6 +1732,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgPpsTime(msg))
             }
+            MsgSensorAidEvent::MESSAGE_TYPE => {
+                let mut msg = MsgSensorAidEvent::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSensorAidEvent(msg))
+            }
             MsgGroupMeta::MESSAGE_TYPE => {
                 let mut msg = MsgGroupMeta::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1964,6 +1972,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgInsUpdates(msg) => msg.message_name(),
             Sbp::MsgGnssTimeOffset(msg) => msg.message_name(),
             Sbp::MsgPpsTime(msg) => msg.message_name(),
+            Sbp::MsgSensorAidEvent(msg) => msg.message_name(),
             Sbp::MsgGroupMeta(msg) => msg.message_name(),
             Sbp::MsgSolnMeta(msg) => msg.message_name(),
             Sbp::MsgSolnMetaDepA(msg) => msg.message_name(),
@@ -2173,6 +2182,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgInsUpdates(msg) => msg.message_type(),
             Sbp::MsgGnssTimeOffset(msg) => msg.message_type(),
             Sbp::MsgPpsTime(msg) => msg.message_type(),
+            Sbp::MsgSensorAidEvent(msg) => msg.message_type(),
             Sbp::MsgGroupMeta(msg) => msg.message_type(),
             Sbp::MsgSolnMeta(msg) => msg.message_type(),
             Sbp::MsgSolnMetaDepA(msg) => msg.message_type(),
@@ -2382,6 +2392,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgInsUpdates(msg) => msg.sender_id(),
             Sbp::MsgGnssTimeOffset(msg) => msg.sender_id(),
             Sbp::MsgPpsTime(msg) => msg.sender_id(),
+            Sbp::MsgSensorAidEvent(msg) => msg.sender_id(),
             Sbp::MsgGroupMeta(msg) => msg.sender_id(),
             Sbp::MsgSolnMeta(msg) => msg.sender_id(),
             Sbp::MsgSolnMetaDepA(msg) => msg.sender_id(),
@@ -2591,6 +2602,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgInsUpdates(msg) => msg.set_sender_id(new_id),
             Sbp::MsgGnssTimeOffset(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPpsTime(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSensorAidEvent(msg) => msg.set_sender_id(new_id),
             Sbp::MsgGroupMeta(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSolnMeta(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSolnMetaDepA(msg) => msg.set_sender_id(new_id),
@@ -2800,6 +2812,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgInsUpdates(msg) => msg.encoded_len(),
             Sbp::MsgGnssTimeOffset(msg) => msg.encoded_len(),
             Sbp::MsgPpsTime(msg) => msg.encoded_len(),
+            Sbp::MsgSensorAidEvent(msg) => msg.encoded_len(),
             Sbp::MsgGroupMeta(msg) => msg.encoded_len(),
             Sbp::MsgSolnMeta(msg) => msg.encoded_len(),
             Sbp::MsgSolnMetaDepA(msg) => msg.encoded_len(),
@@ -3012,6 +3025,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgInsUpdates(msg) => msg.gps_time(),
             Sbp::MsgGnssTimeOffset(msg) => msg.gps_time(),
             Sbp::MsgPpsTime(msg) => msg.gps_time(),
+            Sbp::MsgSensorAidEvent(msg) => msg.gps_time(),
             Sbp::MsgGroupMeta(msg) => msg.gps_time(),
             Sbp::MsgSolnMeta(msg) => msg.gps_time(),
             Sbp::MsgSolnMetaDepA(msg) => msg.gps_time(),
@@ -3229,6 +3243,7 @@ impl WireFormat for Sbp {
             Sbp::MsgInsUpdates(msg) => WireFormat::write(msg, buf),
             Sbp::MsgGnssTimeOffset(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPpsTime(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSensorAidEvent(msg) => WireFormat::write(msg, buf),
             Sbp::MsgGroupMeta(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSolnMeta(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSolnMetaDepA(msg) => WireFormat::write(msg, buf),
@@ -3438,6 +3453,7 @@ impl WireFormat for Sbp {
             Sbp::MsgInsUpdates(msg) => WireFormat::len(msg),
             Sbp::MsgGnssTimeOffset(msg) => WireFormat::len(msg),
             Sbp::MsgPpsTime(msg) => WireFormat::len(msg),
+            Sbp::MsgSensorAidEvent(msg) => WireFormat::len(msg),
             Sbp::MsgGroupMeta(msg) => WireFormat::len(msg),
             Sbp::MsgSolnMeta(msg) => WireFormat::len(msg),
             Sbp::MsgSolnMetaDepA(msg) => WireFormat::len(msg),
@@ -4633,6 +4649,12 @@ impl From<MsgGnssTimeOffset> for Sbp {
 impl From<MsgPpsTime> for Sbp {
     fn from(msg: MsgPpsTime) -> Self {
         Sbp::MsgPpsTime(msg)
+    }
+}
+
+impl From<MsgSensorAidEvent> for Sbp {
+    fn from(msg: MsgSensorAidEvent) -> Self {
+        Sbp::MsgSensorAidEvent(msg)
     }
 }
 

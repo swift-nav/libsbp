@@ -197,6 +197,7 @@ typedef union {
   sbp_msg_reset_filters_t reset_filters;
   sbp_msg_reset_t reset;
   sbp_msg_sbas_raw_t sbas_raw;
+  sbp_msg_sensor_aid_event_t sensor_aid_event;
   sbp_msg_set_time_t set_time;
   sbp_msg_settings_read_by_index_done_t settings_read_by_index_done;
   sbp_msg_settings_read_by_index_req_t settings_read_by_index_req;
@@ -657,6 +658,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_reset_encode(buf, len, n_written, &msg->reset);
     case SbpMsgSbasRaw:
       return sbp_msg_sbas_raw_encode(buf, len, n_written, &msg->sbas_raw);
+    case SbpMsgSensorAidEvent:
+      return sbp_msg_sensor_aid_event_encode(buf, len, n_written,
+                                             &msg->sensor_aid_event);
     case SbpMsgSetTime:
       return sbp_msg_set_time_encode(buf, len, n_written, &msg->set_time);
     case SbpMsgSettingsReadByIndexDone:
@@ -1219,6 +1223,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_reset_decode(buf, len, n_read, &msg->reset);
     case SbpMsgSbasRaw:
       return sbp_msg_sbas_raw_decode(buf, len, n_read, &msg->sbas_raw);
+    case SbpMsgSensorAidEvent:
+      return sbp_msg_sensor_aid_event_decode(buf, len, n_read,
+                                             &msg->sensor_aid_event);
     case SbpMsgSetTime:
       return sbp_msg_set_time_decode(buf, len, n_read, &msg->set_time);
     case SbpMsgSettingsReadByIndexDone:
@@ -1703,6 +1710,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_reset_encoded_len(&msg->reset);
     case SbpMsgSbasRaw:
       return sbp_msg_sbas_raw_encoded_len(&msg->sbas_raw);
+    case SbpMsgSensorAidEvent:
+      return sbp_msg_sensor_aid_event_encoded_len(&msg->sensor_aid_event);
     case SbpMsgSetTime:
       return sbp_msg_set_time_encoded_len(&msg->set_time);
     case SbpMsgSettingsReadByIndexDone:
@@ -2209,6 +2218,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_reset_cmp(&a->reset, &b->reset);
     case SbpMsgSbasRaw:
       return sbp_msg_sbas_raw_cmp(&a->sbas_raw, &b->sbas_raw);
+    case SbpMsgSensorAidEvent:
+      return sbp_msg_sensor_aid_event_cmp(&a->sensor_aid_event,
+                                          &b->sensor_aid_event);
     case SbpMsgSetTime:
       return sbp_msg_set_time_cmp(&a->set_time, &b->set_time);
     case SbpMsgSettingsReadByIndexDone:

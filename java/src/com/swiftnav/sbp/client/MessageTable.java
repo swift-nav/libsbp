@@ -202,6 +202,7 @@ import com.swiftnav.sbp.system.MsgHeartbeat;
 import com.swiftnav.sbp.system.MsgInsStatus;
 import com.swiftnav.sbp.system.MsgInsUpdates;
 import com.swiftnav.sbp.system.MsgPpsTime;
+import com.swiftnav.sbp.system.MsgSensorAidEvent;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgStatusReport;
 import com.swiftnav.sbp.tracking.MsgMeasurementState;
@@ -600,6 +601,8 @@ final class MessageTable {
                 return new MsgGnssTimeOffset(msg);
             case MsgPpsTime.TYPE:
                 return new MsgPpsTime(msg);
+            case MsgSensorAidEvent.TYPE:
+                return new MsgSensorAidEvent(msg);
             case MsgGroupMeta.TYPE:
                 return new MsgGroupMeta(msg);
             case MsgTrackingStateDetailedDepA.TYPE:

@@ -1,0 +1,29 @@
+description: Unit tests for swiftnav.sbp.system MsgSensorAidEvent
+generated_on: '2022-01-27 22:13:32.214821'
+package: sbp.system
+tests:
+- msg:
+    fields:
+      flags: 0
+      n_accepted_meas: 0
+      n_attempted_meas: 0
+      n_available_meas: 0
+      sensor_id: 0
+      sensor_state: 0
+      sensor_type: 0
+      time: 326825520
+    module: sbp.system
+    name: MsgSensorAidEvent
+  msg_type: '0xFF09'
+  raw_json: '{"preamble": 85, "msg_type": 65289, "sender": 35027, "length": 15, "payload":
+    "MPZ6EwAAAAAAAAAAAAAA", "crc": 60449, "time": 326825520, "sensor_type": 0, "sensor_id":
+    0, "sensor_state": 0, "n_available_meas": 0, "n_attempted_meas": 0, "n_accepted_meas":
+    0, "flags": 0}'
+  raw_packet: VQn/04gPMPZ6EwAAAAAAAAAAAAAAIew=
+  sbp:
+    crc: '0xEC21'
+    length: 15
+    msg_type: '0xFF09'
+    payload: MPZ6EwAAAAAAAAAAAAAA
+    preamble: '0x55'
+    sender: '0x88D3'
