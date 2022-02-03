@@ -22,6 +22,7 @@ pub use msg_heartbeat::MsgHeartbeat;
 pub use msg_ins_status::MsgInsStatus;
 pub use msg_ins_updates::MsgInsUpdates;
 pub use msg_pps_time::MsgPpsTime;
+pub use msg_sensor_aid_event::MsgSensorAidEvent;
 pub use msg_startup::MsgStartup;
 pub use msg_status_report::MsgStatusReport;
 pub use sub_system_report::SubSystemReport;
@@ -1838,118 +1839,30 @@ pub mod msg_pps_time {
         }
     }
 
-/// Sensor state and update status data
-///
-/// This diagnostic message contains state and update status information for
-/// all sensors that are being used by the fusion engine. This message will be
-/// generated asynchronously to the solution messages and will be emitted
-/// anytime a sensor update is being processed.
-///
-#[cfg_attr(feature = "serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-pub struct MsgSensorAidEvent {
-    /// The message sender_id
-    #[cfg_attr(feature = "serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Update timestamp in milliseconds.
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
-    pub time: u32,
-    /// Sensor type
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_type")))]
-    pub sensor_type: u8,
-    /// Sensor identifier
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_id")))]
-    pub sensor_id: u16,
-    /// Reserved for future use
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_state")))]
-    pub sensor_state: u8,
-    /// Number of available measurements in this epoch
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_available_meas")))]
-    pub n_available_meas: u8,
-    /// Number of attempted measurements in this epoch
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_attempted_meas")))]
-    pub n_attempted_meas: u8,
-    /// Number of accepted measurements in this epoch
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "n_accepted_meas")))]
-    pub n_accepted_meas: u8,
-    /// Reserved for future use
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
-    pub flags: u32,
-}
+    /// Time uncertainty
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum TimeUncertainty {
+        /// Unknown
+        Unknown = 0,
 
-impl ConcreteMessage for MsgSensorAidEvent {
-    const MESSAGE_TYPE: u16 = 65289;
-    const MESSAGE_NAME: &'static str = "MSG_SENSOR_AID_EVENT";
-}
+        /// +/- 10 milliseconds
+        _10Milliseconds = 1,
 
-impl SbpMessage for MsgSensorAidEvent {
-    fn message_name(&self) -> &'static str {
-        <Self as ConcreteMessage>::MESSAGE_NAME
-    }
-    fn message_type(&self) -> u16 {
-        <Self as ConcreteMessage>::MESSAGE_TYPE
-    }
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-    fn encoded_len(&self) -> usize {
-        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
-    }
-}
+        /// +/- 10 microseconds
+        _10Microseconds = 2,
 
-impl TryFrom<Sbp> for MsgSensorAidEvent {
-    type Error = TryFromSbpError;
-    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
-        match msg {
-            Sbp::MsgSensorAidEvent(m) => Ok(m),
-            _ => Err(TryFromSbpError),
-        }
+        /// < 1 microseconds
+        _1Microseconds = 3,
     }
-}
 
-impl WireFormat for MsgSensorAidEvent {
-    const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
-        + <u8 as WireFormat>::MIN_LEN
-        + <u16 as WireFormat>::MIN_LEN
-        + <u8 as WireFormat>::MIN_LEN
-        + <u8 as WireFormat>::MIN_LEN
-        + <u8 as WireFormat>::MIN_LEN
-        + <u8 as WireFormat>::MIN_LEN
-        + <u32 as WireFormat>::MIN_LEN;
-    fn len(&self) -> usize {
-        WireFormat::len(&self.time)
-            + WireFormat::len(&self.sensor_type)
-            + WireFormat::len(&self.sensor_id)
-            + WireFormat::len(&self.sensor_state)
-            + WireFormat::len(&self.n_available_meas)
-            + WireFormat::len(&self.n_attempted_meas)
-            + WireFormat::len(&self.n_accepted_meas)
-            + WireFormat::len(&self.flags)
-    }
-    fn write<B: BufMut>(&self, buf: &mut B) {
-        WireFormat::write(&self.time, buf);
-        WireFormat::write(&self.sensor_type, buf);
-        WireFormat::write(&self.sensor_id, buf);
-        WireFormat::write(&self.sensor_state, buf);
-        WireFormat::write(&self.n_available_meas, buf);
-        WireFormat::write(&self.n_attempted_meas, buf);
-        WireFormat::write(&self.n_accepted_meas, buf);
-        WireFormat::write(&self.flags, buf);
-    }
-    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-        MsgSensorAidEvent {
-            sender_id: None,
-            time: WireFormat::parse_unchecked(buf),
-            sensor_type: WireFormat::parse_unchecked(buf),
-            sensor_id: WireFormat::parse_unchecked(buf),
-            sensor_state: WireFormat::parse_unchecked(buf),
-            n_available_meas: WireFormat::parse_unchecked(buf),
-            n_attempted_meas: WireFormat::parse_unchecked(buf),
-            n_accepted_meas: WireFormat::parse_unchecked(buf),
-            flags: WireFormat::parse_unchecked(buf),
+    impl std::fmt::Display for TimeUncertainty {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                TimeUncertainty::Unknown => f.write_str("Unknown"),
+                TimeUncertainty::_10Milliseconds => f.write_str("+/- 10 milliseconds"),
+                TimeUncertainty::_10Microseconds => f.write_str("+/- 10 microseconds"),
+                TimeUncertainty::_1Microseconds => f.write_str("< 1 microseconds"),
+            }
         }
     }
 
@@ -1961,6 +1874,204 @@ impl WireFormat for MsgSensorAidEvent {
                 1 => Ok(TimeUncertainty::_10Milliseconds),
                 2 => Ok(TimeUncertainty::_10Microseconds),
                 3 => Ok(TimeUncertainty::_1Microseconds),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_sensor_aid_event {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Sensor state and update status data
+    ///
+    /// This diagnostic message contains state and update status information for
+    /// all sensors that are being used by the fusion engine. This message will be
+    /// generated asynchronously to the solution messages and will be emitted
+    /// anytime a sensor update is being processed.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSensorAidEvent {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Update timestamp in milliseconds.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        pub time: u32,
+        /// Sensor type
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_type")))]
+        pub sensor_type: u8,
+        /// Sensor identifier
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_id")))]
+        pub sensor_id: u16,
+        /// Reserved for future use
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_state")))]
+        pub sensor_state: u8,
+        /// Number of available measurements in this epoch
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_available_meas")))]
+        pub n_available_meas: u8,
+        /// Number of attempted measurements in this epoch
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_attempted_meas")))]
+        pub n_attempted_meas: u8,
+        /// Number of accepted measurements in this epoch
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_accepted_meas")))]
+        pub n_accepted_meas: u8,
+        /// Reserved for future use
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        pub flags: u32,
+    }
+
+    impl MsgSensorAidEvent {
+        /// Gets the [TypeIdentifier][self::TypeIdentifier] stored in the `sensor_type` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TypeIdentifier` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TypeIdentifier` were added.
+        pub fn type_identifier(&self) -> Result<TypeIdentifier, u8> {
+            get_bit_range!(self.sensor_type, u8, u8, 7, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [TypeIdentifier][TypeIdentifier] of the `sensor_type` bitfield.
+        pub fn set_type_identifier(&mut self, type_identifier: TypeIdentifier) {
+            set_bit_range!(&mut self.sensor_type, type_identifier, u8, u8, 7, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgSensorAidEvent {
+        const MESSAGE_TYPE: u16 = 65289;
+        const MESSAGE_NAME: &'static str = "MSG_SENSOR_AID_EVENT";
+    }
+
+    impl SbpMessage for MsgSensorAidEvent {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSensorAidEvent {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSensorAidEvent(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSensorAidEvent {
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.time)
+                + WireFormat::len(&self.sensor_type)
+                + WireFormat::len(&self.sensor_id)
+                + WireFormat::len(&self.sensor_state)
+                + WireFormat::len(&self.n_available_meas)
+                + WireFormat::len(&self.n_attempted_meas)
+                + WireFormat::len(&self.n_accepted_meas)
+                + WireFormat::len(&self.flags)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.time, buf);
+            WireFormat::write(&self.sensor_type, buf);
+            WireFormat::write(&self.sensor_id, buf);
+            WireFormat::write(&self.sensor_state, buf);
+            WireFormat::write(&self.n_available_meas, buf);
+            WireFormat::write(&self.n_attempted_meas, buf);
+            WireFormat::write(&self.n_accepted_meas, buf);
+            WireFormat::write(&self.flags, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSensorAidEvent {
+                sender_id: None,
+                time: WireFormat::parse_unchecked(buf),
+                sensor_type: WireFormat::parse_unchecked(buf),
+                sensor_id: WireFormat::parse_unchecked(buf),
+                sensor_state: WireFormat::parse_unchecked(buf),
+                n_available_meas: WireFormat::parse_unchecked(buf),
+                n_attempted_meas: WireFormat::parse_unchecked(buf),
+                n_accepted_meas: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Type identifier
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum TypeIdentifier {
+        /// GNSS position
+        GnssPosition = 0,
+
+        /// GNSS average velocity
+        GnssAverageVelocity = 1,
+
+        /// GNSS instantaneous velocity
+        GnssInstantaneousVelocity = 2,
+
+        /// Wheel ticks
+        WheelTicks = 3,
+
+        /// Wheel speed
+        WheelSpeed = 4,
+
+        /// IMU
+        Imu = 5,
+
+        /// Time differences of carrier phase
+        TimeDifferencesOfCarrierPhase = 6,
+    }
+
+    impl std::fmt::Display for TypeIdentifier {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                TypeIdentifier::GnssPosition => f.write_str("GNSS position"),
+                TypeIdentifier::GnssAverageVelocity => f.write_str("GNSS average velocity"),
+                TypeIdentifier::GnssInstantaneousVelocity => {
+                    f.write_str("GNSS instantaneous velocity")
+                }
+                TypeIdentifier::WheelTicks => f.write_str("Wheel ticks"),
+                TypeIdentifier::WheelSpeed => f.write_str("Wheel speed"),
+                TypeIdentifier::Imu => f.write_str("IMU"),
+                TypeIdentifier::TimeDifferencesOfCarrierPhase => {
+                    f.write_str("Time differences of carrier phase")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TypeIdentifier {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(TypeIdentifier::GnssPosition),
+                1 => Ok(TypeIdentifier::GnssAverageVelocity),
+                2 => Ok(TypeIdentifier::GnssInstantaneousVelocity),
+                3 => Ok(TypeIdentifier::WheelTicks),
+                4 => Ok(TypeIdentifier::WheelSpeed),
+                5 => Ok(TypeIdentifier::Imu),
+                6 => Ok(TypeIdentifier::TimeDifferencesOfCarrierPhase),
                 i => Err(i),
             }
         }
