@@ -64,6 +64,83 @@
 //!         process::exit(1);
 //!     }
 //! }
+//!
+//! ```
+//!
+//! # Bitfield Types
+//!
+//! A number of messages have fields that encode multiple values using a [bitfield](https://en.wikipedia.org/wiki/Bit_field).
+//! This crate provides getters and setters on messages with these values. The getters and setters
+//! have slightly different semantics that can be grouped into three categories.
+//!
+//! ## Enumerations
+//!
+//! Most bitfield members are mapped to a dataless enum. The setter accepts a variant of that enum.
+//! The getter will return a variant of this enum wrapped in a `Result`. The getter returns `Ok`
+//! if the bitfield member contains a known variant of the enum. Otherwise, the integral value of the
+//! bitfield member is returned in the `Err` variant. This may be because of a malformed message,
+//! or because you're SBP client is outdated and new variants of the enum were added.
+//!
+//! ```
+//! # use sbp::messages::navigation::msg_pos_llh::{FixMode, MsgPosLlh};
+//! # let msg = MsgPosLlh {
+//! #     sender_id: None,
+//! #     tow: 0,
+//! #     lat: 0.,
+//! #     lon: 0.,
+//! #     height: 0.,
+//! #     h_accuracy: 0,
+//! #     v_accuracy: 0,
+//! #     n_sats: 0,
+//! #     flags: 0,
+//! # }.into();
+//! let mut msg = MsgPosLlh::from(msg);
+//! msg.set_fix_mode(FixMode::DeadReckoning);
+//! assert_eq!(msg.fix_mode(), Ok(FixMode::DeadReckoning));
+//! ```
+//!
+//! ## Integral
+//!
+//! Some bitfield members are represented by an integral type. In this case, the getter accepts the
+//! smallest integer type that can contain the bitfield member. For example, if the bitfield member
+//! spans 6 bits, the setter will accept a `u8`, and mask off any extra bits when setting the value.
+//! The getter will return the integer value, again using the smallest integer type that will contain
+//! the bitfield member.
+//!
+//! ```
+//! # use sbp::messages::system::MsgStatusReport;
+//! # let msg = MsgStatusReport {
+//! #     sender_id: None,
+//! #     reporting_system: 0,
+//! #     sbp_version: 0,
+//! #     sequence: 0,
+//! #     uptime: 0,
+//! #     status: Vec::new(),
+//! # }.into();
+//! let mut msg = MsgStatusReport::from(msg);
+//! msg.set_sbp_major_protocol_version_number(3);
+//! assert_eq!(msg.sbp_major_protocol_version_number(), 3);
+//! ```
+//!
+//! ## Boolean
+//!
+//! If the bitfield members is represented by a single bit, getters and setters use `bool`s.
+//!
+//! ```
+//! # use sbp::messages::navigation::MsgDops;
+//! # let msg = MsgDops {
+//! #     sender_id: None,
+//! #     tow: 0,
+//! #     gdop: 0,
+//! #     pdop: 0,
+//! #     tdop: 0,
+//! #     hdop: 0,
+//! #     vdop: 0,
+//! #     flags: 0,
+//! # }.into();
+//! let mut msg = MsgDops::from(msg);
+//! msg.set_raim_repair_flag(true);
+//! assert!(msg.raim_repair_flag());
 //! ```
 
 pub mod messages;

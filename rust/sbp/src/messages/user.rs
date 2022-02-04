@@ -13,70 +13,76 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages reserved for use by the user.
+pub use msg_user_data::MsgUserData;
 
-use super::lib::*;
+pub mod msg_user_data {
+    #![allow(unused_imports)]
 
-/// User data
-///
-/// This message can contain any application specific user data up to a
-/// maximum length of 255 bytes per message.
-///
-#[cfg_attr(feature = "serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-pub struct MsgUserData {
-    /// The message sender_id
-    #[cfg_attr(feature = "serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// User data payload
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
-    pub contents: Vec<u8>,
-}
+    use super::*;
+    use crate::messages::lib::*;
 
-impl ConcreteMessage for MsgUserData {
-    const MESSAGE_TYPE: u16 = 2048;
-    const MESSAGE_NAME: &'static str = "MSG_USER_DATA";
-}
+    /// User data
+    ///
+    /// This message can contain any application specific user data up to a
+    /// maximum length of 255 bytes per message.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgUserData {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// User data payload
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
+        pub contents: Vec<u8>,
+    }
 
-impl SbpMessage for MsgUserData {
-    fn message_name(&self) -> &'static str {
-        <Self as ConcreteMessage>::MESSAGE_NAME
+    impl ConcreteMessage for MsgUserData {
+        const MESSAGE_TYPE: u16 = 2048;
+        const MESSAGE_NAME: &'static str = "MSG_USER_DATA";
     }
-    fn message_type(&self) -> u16 {
-        <Self as ConcreteMessage>::MESSAGE_TYPE
-    }
-    fn sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-    fn encoded_len(&self) -> usize {
-        WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
-    }
-}
 
-impl TryFrom<Sbp> for MsgUserData {
-    type Error = TryFromSbpError;
-    fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
-        match msg {
-            Sbp::MsgUserData(m) => Ok(m),
-            _ => Err(TryFromSbpError),
+    impl SbpMessage for MsgUserData {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
     }
-}
 
-impl WireFormat for MsgUserData {
-    const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
-    fn len(&self) -> usize {
-        WireFormat::len(&self.contents)
+    impl TryFrom<Sbp> for MsgUserData {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgUserData(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
-    fn write<B: BufMut>(&self, buf: &mut B) {
-        WireFormat::write(&self.contents, buf);
-    }
-    fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-        MsgUserData {
-            sender_id: None,
-            contents: WireFormat::parse_unchecked(buf),
+
+    impl WireFormat for MsgUserData {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.contents)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.contents, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgUserData {
+                sender_id: None,
+                contents: WireFormat::parse_unchecked(buf),
+            }
         }
     }
 }

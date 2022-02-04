@@ -14,12 +14,10 @@ pub mod (((m)));
 ((*- endfor *))
 pub mod unknown;
 
-((*- for p in packages *))
-((*- for m in p.definitions *))
+((*- for m in msgs *))
 ((*- if m.is_real_message *))
-use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
+use self::(((m.parent_mod_name)))::(((m.mod_name)))::(((m.msg_name)));
 ((*- endif *))
-((*- endfor *))
 ((*- endfor *))
 use self::unknown::Unknown;
 
@@ -28,14 +26,41 @@ mod lib {
 
     pub use std::convert::{TryFrom, TryInto};
 
-    pub use crate::wire_format::{WireFormat, PayloadParseError};
-    pub use crate::sbp_string::{SbpString, Unterminated, NullTerminated, Multipart, DoubleNullTerminated};
+    pub use crate::sbp_string::{
+        DoubleNullTerminated, Multipart, NullTerminated, SbpString, Unterminated,
+    };
     #[cfg(feature = "swiftnav")]
     pub use crate::time;
+    pub use crate::wire_format::{PayloadParseError, WireFormat};
 
     pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError};
 
     pub use bytes::{Buf, BufMut};
+
+    macro_rules! get_bit_range {
+        ($bitrange:expr, $source_ty:ty, $target_ty:ty, $msb:expr, $lsb:expr) => {{
+            let source_bit_len = std::mem::size_of::<$source_ty>() * 8;
+            let target_bit_len = std::mem::size_of::<$target_ty>() * 8;
+            let result =
+                (($bitrange << (source_bit_len - $msb - 1)) >> (source_bit_len - $msb - 1 + $lsb)) as $target_ty;
+            result << (target_bit_len - ($msb - $lsb + 1)) >> (target_bit_len - ($msb - $lsb + 1))
+        }};
+    }
+
+    macro_rules! set_bit_range {
+        ($bitrange:expr, $value: expr, $source_ty:ty, $target_ty:ty, $msb:expr, $lsb:expr) => {
+            let source_bit_len = std::mem::size_of::<$source_ty>() * 8;
+            let mask: $source_ty = !(0 as $source_ty)
+                << (source_bit_len - $msb - 1)
+                >> (source_bit_len - $msb - 1 + $lsb)
+                << ($lsb);
+            *$bitrange &= !mask;
+            *$bitrange |= ($value as $source_ty << $lsb) & mask;
+        };
+    }
+
+    pub(crate) use get_bit_range;
+    pub(crate) use set_bit_range;
 }
 
 use lib::*;
@@ -87,7 +112,7 @@ impl std::error::Error for TryFromSbpError {}
 pub enum Sbp {
     ((*- for m in msgs *))
     /// (((m.short_desc | commentify(indent=2) )))
-    (((m.identifier|camel_case)))( (((m.identifier|camel_case))) ),
+    (((m.msg_name)))( (((m.msg_name))) ),
     ((*- endfor *))
     /// Unknown message type
     Unknown( Unknown ),
@@ -122,10 +147,10 @@ impl Sbp {
     pub fn from_frame<B: Buf>(mut frame: crate::Frame<B>) -> Result<Sbp, PayloadParseError> {
         match frame.msg_type {
             ((*- for m in msgs *))
-            (((m.identifier|camel_case)))::MESSAGE_TYPE => {
-                let mut msg = (((m.identifier|camel_case)))::parse(&mut frame.payload)?;
+            (((m.msg_name)))::MESSAGE_TYPE => {
+                let mut msg = (((m.msg_name)))::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
-                Ok(Sbp::(((m.identifier|camel_case)))(msg))
+                Ok(Sbp::(((m.msg_name)))(msg))
             },
             ((*- endfor *))
             _ => {
@@ -141,7 +166,7 @@ impl SbpMessage for Sbp {
     fn message_name(&self) -> &'static str {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 msg.message_name()
             },
             ((*- endfor *))
@@ -154,7 +179,7 @@ impl SbpMessage for Sbp {
     fn message_type(&self) -> u16 {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 msg.message_type()
             },
             ((*- endfor *))
@@ -167,7 +192,7 @@ impl SbpMessage for Sbp {
     fn sender_id(&self) -> Option<u16> {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 msg.sender_id()
             },
             ((*- endfor *))
@@ -180,7 +205,7 @@ impl SbpMessage for Sbp {
     fn set_sender_id(&mut self, new_id: u16) {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 msg.set_sender_id(new_id)
             },
             ((*- endfor *))
@@ -193,7 +218,7 @@ impl SbpMessage for Sbp {
     fn encoded_len(&self) -> usize {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 msg.encoded_len()
             },
             ((*- endfor *))
@@ -207,7 +232,7 @@ impl SbpMessage for Sbp {
     fn gps_time(&self) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 msg.gps_time()
             },
             ((*- endfor *))
@@ -228,7 +253,7 @@ impl WireFormat for Sbp {
     fn write<B: BufMut>(&self, buf: &mut B) {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 WireFormat::write(msg, buf)
             },
             ((*- endfor *))
@@ -241,7 +266,7 @@ impl WireFormat for Sbp {
     fn len(&self) -> usize {
         match self {
             ((*- for m in msgs *))
-            Sbp::(((m.identifier|camel_case)))(msg) => {
+            Sbp::(((m.msg_name)))(msg) => {
                 WireFormat::len(msg)
             },
             ((*- endfor *))
@@ -253,9 +278,9 @@ impl WireFormat for Sbp {
 }
 
 ((* for m in msgs *))
-impl From<(((m.identifier|camel_case)))> for Sbp {
-    fn from(msg: (((m.identifier|camel_case)))) -> Self {
-        Sbp::(((m.identifier|camel_case)))(msg)
+impl From<(((m.msg_name)))> for Sbp {
+    fn from(msg: (((m.msg_name)))) -> Self {
+        Sbp::(((m.msg_name)))(msg)
     }
 
 }
