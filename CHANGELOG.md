@@ -1,5 +1,30 @@
 # Change Log
 
+## [v4.1.3](https://github.com/swift-nav/libsbp/tree/HEAD)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.13...HEAD)
+
+**Merged pull requests:**
+
+- Add new update status message \[ASF-128\] [\#1095](https://github.com/swift-nav/libsbp/pull/1095) ([reimerix](https://github.com/reimerix))
+- Improvements to MSG\_VEL\_COG \[TES-129\] [\#1093](https://github.com/swift-nav/libsbp/pull/1093) ([lloydmaza](https://github.com/lloydmaza))
+
+## [v3.4.13](https://github.com/swift-nav/libsbp/tree/v3.4.13) (2022-01-10)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.2...v3.4.13)
+
+**Merged pull requests:**
+
+- Improvements to MSG\_VEL\_COG \[TES-129\] [\#1094](https://github.com/swift-nav/libsbp/pull/1094) ([lloydmaza](https://github.com/lloydmaza))
+
+## [v4.1.2](https://github.com/swift-nav/libsbp/tree/v4.1.2) (2021-12-22)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.12...v4.1.2)
+
+## [v3.4.12](https://github.com/swift-nav/libsbp/tree/v3.4.12) (2021-12-13)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.1...v3.4.12)
+
 ## [v4.1.1](https://github.com/swift-nav/libsbp/tree/v4.1.1) (2021-12-11)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.12...v4.1.1)
