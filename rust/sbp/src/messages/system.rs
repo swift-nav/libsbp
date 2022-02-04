@@ -2321,7 +2321,7 @@ pub mod msg_status_report {
 
         /// Gets the `sbp_major_protocol_version_number` stored in `sbp_version`.
         pub fn sbp_major_protocol_version_number(&self) -> u8 {
-            get_bit_range!(self.sbp_version, u16, u8, 16, 8)
+            get_bit_range!(self.sbp_version, u16, u8, 15, 8)
         }
 
         /// Sets the `sbp_major_protocol_version_number` bitrange of `sbp_version`.
@@ -2334,7 +2334,7 @@ pub mod msg_status_report {
                 sbp_major_protocol_version_number,
                 u16,
                 u8,
-                16,
+                15,
                 8
             );
         }
