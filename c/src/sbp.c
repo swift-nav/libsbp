@@ -670,7 +670,7 @@ s8 sbp_all_message_callback_register(sbp_state_t *s,
                                  sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.decoded = cb;
-  return sbp_register_callback_generic(s, SBP_MSG_ALL, callback,
+  return sbp_register_callback_generic(s, (sbp_msg_type_t) SBP_MSG_ALL, callback,
                                        SBP_DECODED_CALLBACK, context, node);
 }
 
@@ -738,7 +738,7 @@ s8 sbp_payload_callback_register(sbp_state_t* s, u16 msg_type, sbp_msg_callback_
 {
   sbp_callback_t callback;
   callback.msg = cb;
-  return sbp_register_callback_generic(s, msg_type, callback,
+  return sbp_register_callback_generic(s, (sbp_msg_type_t) msg_type, callback,
                                        SBP_MSG_CALLBACK, context, node);
 }
 
@@ -748,7 +748,7 @@ s8 sbp_frame_callback_register(sbp_state_t* s, u16 msg_type,
 {
   sbp_callback_t callback;
   callback.frame = cb;
-  return sbp_register_callback_generic(s, msg_type, callback,
+  return sbp_register_callback_generic(s, (sbp_msg_type_t) msg_type, callback,
                                        SBP_FRAME_CALLBACK, context, node);
 }
 
@@ -766,7 +766,7 @@ s8 sbp_frame_process(sbp_state_t *s, u16 sender_id, u16 msg_type,
 
 s8 sbp_payload_process(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                        u8 payload[]) {
-  return process_frame(s, sender_id, msg_type, msg_len, payload,
+  return process_frame(s, sender_id, (sbp_msg_type_t) msg_type, msg_len, payload,
                           0, 0, SBP_CALLBACK_FLAG(SBP_MSG_CALLBACK) | SBP_CALLBACK_FLAG(SBP_DECODED_CALLBACK));
 }
 
