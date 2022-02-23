@@ -46,6 +46,9 @@
 extern "C" {
 #endif
 
+/** SBP_MSG_ID to use to register frame callback for ALL messages. */
+#define SBP_MSG_ALL 0
+
 typedef enum {
   SbpMsgAcqResultDepA = SBP_MSG_ACQ_RESULT_DEP_A,
   SbpMsgAcqResultDepB = SBP_MSG_ACQ_RESULT_DEP_B,
@@ -252,6 +255,7 @@ typedef enum {
   SbpMsgVelNedGnss = SBP_MSG_VEL_NED_GNSS,
   SbpMsgVelNed = SBP_MSG_VEL_NED,
   SbpMsgWheeltick = SBP_MSG_WHEELTICK,
+  SbpMsgAll = SBP_MSG_ALL,
 } sbp_msg_type_t;
 
 #ifdef __cplusplus
