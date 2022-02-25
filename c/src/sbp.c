@@ -166,7 +166,7 @@
  *
  * \param s        Pointer to sbp_state
  * \param msg_type Message type on which to fire callback.
- *                 SBP_MSG_ALL will fire for every message, but only
+ *                 SbpMsgAll will fire for every message, but only
  *                 for callbacks of type SBP_FRAME_CALLBACK.
  * \param cb       Pointer to message callback function
  * \param cb_type  sbp_cb_type indicating what kind of cb is in use.
@@ -381,7 +381,7 @@ static s8 process_frame(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
   bool unpacked_successfully = false;
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
     if ((SBP_CALLBACK_FLAG(node->cb_type) & cb_mask) &&
-        ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
+        ((node->msg_type == msg_type) || (node->msg_type == SbpMsgAll))) {
         switch (node->cb_type) {
         case SBP_FRAME_CALLBACK:
         {
@@ -670,7 +670,7 @@ s8 sbp_all_message_callback_register(sbp_state_t *s,
                                  sbp_msg_callbacks_node_t *node) {
   sbp_callback_t callback;
   callback.decoded = cb;
-  return sbp_register_callback_generic(s, (sbp_msg_type_t) SBP_MSG_ALL, callback,
+  return sbp_register_callback_generic(s, SbpMsgAll, callback,
                                        SBP_DECODED_CALLBACK, context, node);
 }
 
@@ -692,7 +692,7 @@ s8 sbp_message_process(sbp_state_t *s, u16 sender_id, sbp_msg_type_t msg_type,
 
   s8 ret = SBP_OK_CALLBACK_UNDEFINED;
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
-    if (((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
+    if (((node->msg_type == msg_type) || (node->msg_type == SbpMsgAll))) {
       switch (node->cb_type) {
         case SBP_FRAME_CALLBACK:
         case SBP_MSG_CALLBACK:

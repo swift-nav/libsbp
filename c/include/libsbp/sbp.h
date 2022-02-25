@@ -77,9 +77,6 @@ extern "C" {
 /** Get message payload pointer from frame */
 #define SBP_FRAME_MSG_PAYLOAD(frame_ptr) (&((frame_ptr)[SBP_FRAME_OFFSET_MSG]))
 
-/** SBP_MSG_ID to use to register frame callback for ALL messages. */
-#define SBP_MSG_ALL 0
-
 /** SBP callback function prototype definitions. */
 typedef union {
   sbp_msg_callback_t msg;

@@ -26,10 +26,14 @@
 extern "C" {
 #endif
 
+/** SBP_MSG_ID to use to register frame callback for ALL messages. */
+#define SBP_MSG_ALL 0
+
 typedef enum {
 ((*- for m in real_messages *))
   (((m.v4_msg_type))) = (((m.legacy_msg_type))),
 ((*- endfor *))
+  SbpMsgAll = SBP_MSG_ALL,
 } sbp_msg_type_t;
 
 #ifdef __cplusplus
