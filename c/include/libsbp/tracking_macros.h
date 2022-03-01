@@ -25,14 +25,16 @@
   ((u8)(((flags) >>                                                         \
          SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SET(flags,     \
-                                                                     val)       \
-  do {                                                                          \
-    (flags) = (u8)(                                                             \
-        (flags) |                                                               \
-        (((val) &                                                               \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SET(flags,        \
+                                                                     val)          \
+  do {                                                                             \
+    (flags) = (u8)(                                                                \
+        (flags &                                                                   \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SHIFT))) | \
+        (((val) &                                                                  \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_SYNCHRONIZATION_STATUS_NO_SYNCHRONIZATION \
@@ -51,14 +53,16 @@
       ((flags) >>                                                             \
        SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_SET(           \
-    flags, val)                                                                      \
-  do {                                                                               \
-    (flags) = (u8)(                                                                  \
-        (flags) |                                                                    \
-        (((val) &                                                                    \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_SET(              \
+    flags, val)                                                                         \
+  do {                                                                                  \
+    (flags) = (u8)(                                                                     \
+        (flags &                                                                        \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                                       \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_WEEK_NUMBER_VALIDITY_STATUS_WEEK_NUMBER_IS_NOT_VALID \
@@ -70,12 +74,13 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_SHIFT) & \
         SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_SET(flags, val)        \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags) |                                                      \
-             (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_MASK)) \
-              << (SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_SHIFT)));    \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_SET(flags, val)           \
+  do {                                                                         \
+    (flags) = (u8)(                                                            \
+        (flags & (~(SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_MASK          \
+                    << SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_SHIFT))) | \
+        (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TOW_STATUS_TOW_IS_NOT_AVAILABLE (0)
@@ -88,12 +93,13 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_SHIFT) & \
         SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_SET(flags, val)        \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags) |                                                      \
-             (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_MASK)) \
-              << (SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_SHIFT)));    \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_SET(flags, val)           \
+  do {                                                                         \
+    (flags) = (u8)(                                                            \
+        (flags & (~(SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_MASK          \
+                    << SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_SHIFT))) | \
+        (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_FLL_STATUS_FLL_IS_INACTIVE (0)
@@ -103,12 +109,13 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_SHIFT) & \
         SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_SET(flags, val)        \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags) |                                                      \
-             (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_MASK)) \
-              << (SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_SHIFT)));    \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_SET(flags, val)           \
+  do {                                                                         \
+    (flags) = (u8)(                                                            \
+        (flags & (~(SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_MASK          \
+                    << SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_SHIFT))) | \
+        (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PLL_STATUS_PLL_IS_INACTIVE (0)
@@ -119,13 +126,15 @@
   ((u8)(((flags) >>                                                       \
          SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_SET(flags, val) \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) |                                                              \
-        (((val) &                                                              \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_MASK))       \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_SHIFT)));  \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_SET(flags, val)   \
+  do {                                                                           \
+    (flags) = (u8)(                                                              \
+        (flags &                                                                 \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_SHIFT))) | \
+        (((val) &                                                                \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_LOOP_STATUS_NO_LOCKS (0)
@@ -142,14 +151,16 @@
       ((flags) >>                                                             \
        SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_SET(           \
-    flags, val)                                                                      \
-  do {                                                                               \
-    (flags) = (u8)(                                                                  \
-        (flags) |                                                                    \
-        (((val) &                                                                    \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_SET(              \
+    flags, val)                                                                         \
+  do {                                                                                  \
+    (flags) = (u8)(                                                                     \
+        (flags &                                                                        \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_SHIFT))) | \
+        (((val) &                                                                       \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_ALMANAC_AVAILABILITY_STATUS_ALMANAC_IS_NOT_AVAILABLE \
@@ -166,14 +177,16 @@
       ((flags) >>                                                               \
        SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_SET(           \
-    flags, val)                                                                        \
-  do {                                                                                 \
-    (flags) = (u8)(                                                                    \
-        (flags) |                                                                      \
-        (((val) &                                                                      \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_SET(              \
+    flags, val)                                                                           \
+  do {                                                                                    \
+    (flags) = (u8)(                                                                       \
+        (flags &                                                                          \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_SHIFT))) | \
+        (((val) &                                                                         \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_EPHEMERIS_AVAILABILITY_STATUS_EPHEMERIS_IS_NOT_AVAILABLE \
@@ -188,7 +201,9 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_SET(flags, val)        \
   do {                                                                         \
     (flags) =                                                                  \
-        (u8)((flags) |                                                         \
+        (u8)((flags &                                                          \
+              (~(SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_MASK          \
+                 << SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_SHIFT))) | \
              (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_MASK)) \
               << (SBP_TRACKING_STATE_DETAILED_DEP_A_HEALTH_STATUS_SHIFT)));    \
   } while (0)
@@ -204,7 +219,9 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_SET(flags, val)   \
   do {                                                                     \
     (flags) = (u8)(                                                        \
-        (flags) |                                                          \
+        (flags &                                                           \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_SHIFT))) | \
         (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_MASK)) \
          << (SBP_TRACKING_STATE_DETAILED_DEP_A_PARAMETER_SETS_SHIFT)));    \
   } while (0)
@@ -223,14 +240,16 @@
   ((u8)(((flags) >>                                                        \
          SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_SET(flags,     \
-                                                                    val)       \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) |                                                              \
-        (((val) &                                                              \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_SET(flags,        \
+                                                                    val)          \
+  do {                                                                            \
+    (flags) = (u8)(                                                               \
+        (flags &                                                                  \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                                 \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_CLOCK_VALIDITY_STATUS_CLOCK_OFFSET_AND_DRIFT_IS_NOT_VALID \
@@ -245,14 +264,16 @@
       ((flags) >>                                                             \
        SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_SET(           \
-    flags, val)                                                                      \
-  do {                                                                               \
-    (flags) = (u8)(                                                                  \
-        (flags) |                                                                    \
-        (((val) &                                                                    \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_SET(              \
+    flags, val)                                                                         \
+  do {                                                                                  \
+    (flags) = (u8)(                                                                     \
+        (flags &                                                                        \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                                       \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_PSEUDORANGE_VALIDITY_STATUS_PSEUDORANGE_IS_NOT_VALID \
@@ -269,14 +290,16 @@
       ((flags) >>                                                              \
        SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_SET(           \
-    flags, val)                                                                       \
-  do {                                                                                \
-    (flags) = (u8)(                                                                   \
-        (flags) |                                                                     \
-        (((val) &                                                                     \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_SET(              \
+    flags, val)                                                                          \
+  do {                                                                                   \
+    (flags) = (u8)(                                                                      \
+        (flags &                                                                         \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                                        \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_ACCELERATION_VALIDITY_STATUS_ACCELERATION_IS_NOT_VALID \
@@ -293,14 +316,16 @@
       ((flags) >>                                                                     \
        SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SET(           \
-    flags, val)                                                                              \
-  do {                                                                                       \
-    (flags) = (u8)(                                                                          \
-        (flags) |                                                                            \
-        (((val) &                                                                            \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SET(              \
+    flags, val)                                                                                 \
+  do {                                                                                          \
+    (flags) = (u8)(                                                                             \
+        (flags &                                                                                \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT))) | \
+        (((val) &                                                                               \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_UNRESOLVED \
@@ -313,14 +338,16 @@
   ((u8)(((flags) >>                                                          \
          SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_SET(flags,     \
-                                                                      val)       \
-  do {                                                                           \
-    (flags) = (u8)(                                                              \
-        (flags) |                                                                \
-        (((val) &                                                                \
-          (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_SET(flags,        \
+                                                                      val)          \
+  do {                                                                              \
+    (flags) = (u8)(                                                                 \
+        (flags &                                                                    \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_SHIFT))) | \
+        (((val) &                                                                   \
+          (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_A_TRACKING_CHANNEL_STATUS_RE_ACQUISITION \
@@ -339,13 +366,15 @@
   ((u8)(((flags) >>                                                       \
          SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SET(flags, val) \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) |                                                              \
-        (((val) &                                                              \
-          (SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK))       \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SHIFT)));  \
+#define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SET(flags, val)   \
+  do {                                                                           \
+    (flags) = (u8)(                                                              \
+        (flags &                                                                 \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SHIFT))) | \
+        (((val) &                                                                \
+          (SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_SYNCHRONIZATION_STATUS_NO_SYNCHRONIZATION \
@@ -362,14 +391,16 @@
   ((u8)(((flags) >>                                                            \
          SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_SET(flags,     \
-                                                                        val)       \
-  do {                                                                             \
-    (flags) = (u8)(                                                                \
-        (flags) |                                                                  \
-        (((val) &                                                                  \
-          (SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_SET(flags,        \
+                                                                        val)          \
+  do {                                                                                \
+    (flags) = (u8)(                                                                   \
+        (flags &                                                                      \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                                     \
+          (SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_WEEK_NUMBER_VALIDITY_STATUS_WEEK_NUMBER_IS_NOT_VALID \
@@ -381,11 +412,13 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_SHIFT) & \
         SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_SET(flags, val)             \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) | (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_MASK)) \
-                   << (SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_SHIFT)));    \
+#define SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_MASK          \
+                    << SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_SHIFT))) | \
+        (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_TOW_STATUS_TOW_IS_NOT_AVAILABLE (0)
@@ -397,11 +430,13 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_SHIFT) & \
         SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_SET(flags, val)             \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) | (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_MASK)) \
-                   << (SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_SHIFT)));    \
+#define SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_MASK          \
+                    << SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_SHIFT))) | \
+        (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_FLL_STATUS_FLL_IS_INACTIVE (0)
@@ -411,11 +446,13 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_SHIFT) & \
         SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_SET(flags, val)             \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) | (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_MASK)) \
-                   << (SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_SHIFT)));    \
+#define SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_MASK          \
+                    << SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_SHIFT))) | \
+        (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_PLL_STATUS_PLL_IS_INACTIVE (0)
@@ -429,7 +466,9 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_SET(flags, val)   \
   do {                                                                         \
     (flags) = (u8)(                                                            \
-        (flags) |                                                              \
+        (flags &                                                               \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_SHIFT))) | \
         (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_MASK)) \
          << (SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_LOOP_STATUS_SHIFT)));    \
   } while (0)
@@ -446,14 +485,16 @@
   ((u8)(((flags) >>                                                            \
          SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_SET(flags,     \
-                                                                        val)       \
-  do {                                                                             \
-    (flags) = (u8)(                                                                \
-        (flags) |                                                                  \
-        (((val) &                                                                  \
-          (SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_SET(flags,        \
+                                                                        val)          \
+  do {                                                                                \
+    (flags) = (u8)(                                                                   \
+        (flags &                                                                      \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_SHIFT))) | \
+        (((val) &                                                                     \
+          (SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_ALMANAC_AVAILABILITY_STATUS_ALMANAC_IS_NOT_AVAILABLE \
@@ -468,14 +509,16 @@
       ((flags) >>                                                             \
        SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_SET(           \
-    flags, val)                                                                      \
-  do {                                                                               \
-    (flags) = (u8)(                                                                  \
-        (flags) |                                                                    \
-        (((val) &                                                                    \
-          (SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_SET(              \
+    flags, val)                                                                         \
+  do {                                                                                  \
+    (flags) = (u8)(                                                                     \
+        (flags &                                                                        \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_SHIFT))) | \
+        (((val) &                                                                       \
+          (SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_EPHEMERIS_AVAILABILITY_STATUS_EPHEMERIS_IS_NOT_AVAILABLE \
@@ -490,7 +533,9 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_SET(flags, val)        \
   do {                                                                       \
     (flags) =                                                                \
-        (u8)((flags) |                                                       \
+        (u8)((flags &                                                        \
+              (~(SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_MASK          \
+                 << SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_SHIFT))) | \
              (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_MASK)) \
               << (SBP_TRACKING_STATE_DETAILED_DEP_HEALTH_STATUS_SHIFT)));    \
   } while (0)
@@ -506,7 +551,9 @@
 #define SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_SET(flags, val)        \
   do {                                                                        \
     (flags) =                                                                 \
-        (u8)((flags) |                                                        \
+        (u8)((flags &                                                         \
+              (~(SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_MASK          \
+                 << SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_SHIFT))) | \
              (((val) & (SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_MASK)) \
               << (SBP_TRACKING_STATE_DETAILED_DEP_PARAMETER_SETS_SHIFT)));    \
   } while (0)
@@ -523,13 +570,15 @@
   ((u8)(((flags) >>                                                      \
          SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_SET(flags, val) \
-  do {                                                                        \
-    (flags) = (u8)(                                                           \
-        (flags) |                                                             \
-        (((val) &                                                             \
-          (SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_MASK))       \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_SHIFT)));  \
+#define SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_SET(flags, val)   \
+  do {                                                                          \
+    (flags) = (u8)(                                                             \
+        (flags &                                                                \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                               \
+          (SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_CLOCK_VALIDITY_STATUS_CLOCK_OFFSET_AND_DRIFT_IS_NOT_VALID \
@@ -542,14 +591,16 @@
   ((u8)(((flags) >>                                                            \
          SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_SET(flags,     \
-                                                                        val)       \
-  do {                                                                             \
-    (flags) = (u8)(                                                                \
-        (flags) |                                                                  \
-        (((val) &                                                                  \
-          (SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_SET(flags,        \
+                                                                        val)          \
+  do {                                                                                \
+    (flags) = (u8)(                                                                   \
+        (flags &                                                                      \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                                     \
+          (SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_PSEUDORANGE_VALIDITY_STATUS_PSEUDORANGE_IS_NOT_VALID \
@@ -563,14 +614,16 @@
   ((u8)(((flags) >>                                                            \
          SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_SHIFT) & \
         SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_SET(           \
-    flags, val)                                                                     \
-  do {                                                                              \
-    (flags) = (u8)(                                                                 \
-        (flags) |                                                                   \
-        (((val) &                                                                   \
-          (SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_SET(              \
+    flags, val)                                                                        \
+  do {                                                                                 \
+    (flags) = (u8)(                                                                    \
+        (flags &                                                                       \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_SHIFT))) | \
+        (((val) &                                                                      \
+          (SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_ACCELERATION_VALIDITY_STATUS_ACCELERATION_IS_NOT_VALID \
@@ -587,14 +640,16 @@
       ((flags) >>                                                                   \
        SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT) & \
       SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SET(           \
-    flags, val)                                                                            \
-  do {                                                                                     \
-    (flags) = (u8)(                                                                        \
-        (flags) |                                                                          \
-        (((val) &                                                                          \
-          (SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SET(              \
+    flags, val)                                                                               \
+  do {                                                                                        \
+    (flags) = (u8)(                                                                           \
+        (flags &                                                                              \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT))) | \
+        (((val) &                                                                             \
+          (SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_CARRIER_HALF_CYCLE_AMBIGUITY_STATUS_UNRESOLVED \
@@ -607,14 +662,16 @@
   ((u8)(((flags) >>                                                        \
          SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_SHIFT) &  \
         SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_MASK))
-#define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_SET(flags,     \
-                                                                    val)       \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) |                                                              \
-        (((val) &                                                              \
-          (SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_MASK))      \
-         << (SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_SHIFT))); \
+#define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_SET(flags,        \
+                                                                    val)          \
+  do {                                                                            \
+    (flags) = (u8)(                                                               \
+        (flags &                                                                  \
+         (~(SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_MASK          \
+            << SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_SHIFT))) | \
+        (((val) &                                                                 \
+          (SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_MASK))         \
+         << (SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_SHIFT)));    \
   } while (0)
 
 #define SBP_TRACKING_STATE_DETAILED_DEP_TRACKING_CHANNEL_STATUS_RE_ACQUISITION \
@@ -744,11 +801,13 @@
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SHIFT) & \
         SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK))
-#define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SET(flags, val)             \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) | (((val) & (SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK)) \
-                   << (SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SHIFT)));    \
+#define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK          \
+                    << SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SHIFT))) | \
+        (((val) & (SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_MASK))         \
+         << (SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKINGCHANNELSTATEDEPA_TRACKING_MODE_DISABLED (0)
@@ -788,11 +847,13 @@
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_GET(flags)           \
   ((u8)(((flags) >> SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SHIFT) & \
         SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK))
-#define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SET(flags, val)             \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) | (((val) & (SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK)) \
-                   << (SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SHIFT)));    \
+#define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK          \
+                    << SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SHIFT))) | \
+        (((val) & (SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_MASK))         \
+         << (SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_SHIFT)));            \
   } while (0)
 
 #define SBP_TRACKINGCHANNELSTATEDEPB_TRACKING_MODE_DISABLED (0)

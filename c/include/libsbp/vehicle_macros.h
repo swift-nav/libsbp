@@ -24,10 +24,12 @@
 #define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags)           \
   ((u8)(((flags) >> SBP_ODOMETRY_VEHICLE_METADATA_SHIFT) & \
         SBP_ODOMETRY_VEHICLE_METADATA_MASK))
-#define SBP_ODOMETRY_VEHICLE_METADATA_SET(flags, val)                        \
-  do {                                                                       \
-    (flags) = (u8)((flags) | (((val) & (SBP_ODOMETRY_VEHICLE_METADATA_MASK)) \
-                              << (SBP_ODOMETRY_VEHICLE_METADATA_SHIFT)));    \
+#define SBP_ODOMETRY_VEHICLE_METADATA_SET(flags, val)                      \
+  do {                                                                     \
+    (flags) = (u8)((flags & (~(SBP_ODOMETRY_VEHICLE_METADATA_MASK          \
+                               << SBP_ODOMETRY_VEHICLE_METADATA_SHIFT))) | \
+                   (((val) & (SBP_ODOMETRY_VEHICLE_METADATA_MASK))         \
+                    << (SBP_ODOMETRY_VEHICLE_METADATA_SHIFT)));            \
   } while (0)
 
 #define SBP_ODOMETRY_VEHICLE_METADATA_UNAVAILABLE (0)
@@ -39,10 +41,12 @@
 #define SBP_ODOMETRY_VELOCITY_SOURCE_GET(flags)           \
   ((u8)(((flags) >> SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT) & \
         SBP_ODOMETRY_VELOCITY_SOURCE_MASK))
-#define SBP_ODOMETRY_VELOCITY_SOURCE_SET(flags, val)                        \
-  do {                                                                      \
-    (flags) = (u8)((flags) | (((val) & (SBP_ODOMETRY_VELOCITY_SOURCE_MASK)) \
-                              << (SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT)));    \
+#define SBP_ODOMETRY_VELOCITY_SOURCE_SET(flags, val)                      \
+  do {                                                                    \
+    (flags) = (u8)((flags & (~(SBP_ODOMETRY_VELOCITY_SOURCE_MASK          \
+                               << SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT))) | \
+                   (((val) & (SBP_ODOMETRY_VELOCITY_SOURCE_MASK))         \
+                    << (SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT)));            \
   } while (0)
 
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SOURCE_0 (0)
@@ -54,10 +58,12 @@
 #define SBP_ODOMETRY_TIME_SOURCE_GET(flags)           \
   ((u8)(((flags) >> SBP_ODOMETRY_TIME_SOURCE_SHIFT) & \
         SBP_ODOMETRY_TIME_SOURCE_MASK))
-#define SBP_ODOMETRY_TIME_SOURCE_SET(flags, val)                        \
-  do {                                                                  \
-    (flags) = (u8)((flags) | (((val) & (SBP_ODOMETRY_TIME_SOURCE_MASK)) \
-                              << (SBP_ODOMETRY_TIME_SOURCE_SHIFT)));    \
+#define SBP_ODOMETRY_TIME_SOURCE_SET(flags, val)                      \
+  do {                                                                \
+    (flags) = (u8)((flags & (~(SBP_ODOMETRY_TIME_SOURCE_MASK          \
+                               << SBP_ODOMETRY_TIME_SOURCE_SHIFT))) | \
+                   (((val) & (SBP_ODOMETRY_TIME_SOURCE_MASK))         \
+                    << (SBP_ODOMETRY_TIME_SOURCE_SHIFT)));            \
   } while (0)
 
 #define SBP_ODOMETRY_TIME_SOURCE_NONE (0)
@@ -75,10 +81,12 @@
 #define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags)           \
   ((u8)(((flags) >> SBP_WHEELTICK_VEHICLE_METADATA_SHIFT) & \
         SBP_WHEELTICK_VEHICLE_METADATA_MASK))
-#define SBP_WHEELTICK_VEHICLE_METADATA_SET(flags, val)                        \
-  do {                                                                        \
-    (flags) = (u8)((flags) | (((val) & (SBP_WHEELTICK_VEHICLE_METADATA_MASK)) \
-                              << (SBP_WHEELTICK_VEHICLE_METADATA_SHIFT)));    \
+#define SBP_WHEELTICK_VEHICLE_METADATA_SET(flags, val)                      \
+  do {                                                                      \
+    (flags) = (u8)((flags & (~(SBP_WHEELTICK_VEHICLE_METADATA_MASK          \
+                               << SBP_WHEELTICK_VEHICLE_METADATA_SHIFT))) | \
+                   (((val) & (SBP_WHEELTICK_VEHICLE_METADATA_MASK))         \
+                    << (SBP_WHEELTICK_VEHICLE_METADATA_SHIFT)));            \
   } while (0)
 
 #define SBP_WHEELTICK_VEHICLE_METADATA_UNAVAILABLE (0)
@@ -90,11 +98,13 @@
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_GET(flags)           \
   ((u8)(((flags) >> SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT) & \
         SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK))
-#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SET(flags, val)                  \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags) | (((val) & (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK)) \
-                        << (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT)));    \
+#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SET(flags, val)                \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u8)((flags & (~(SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK          \
+                         << SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT))) | \
+             (((val) & (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK))         \
+              << (SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT)));            \
   } while (0)
 
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MICROSECONDS_SINCE_LAST_PPS (0)

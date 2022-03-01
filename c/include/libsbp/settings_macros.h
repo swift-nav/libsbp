@@ -54,11 +54,13 @@
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT) & \
         SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK))
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SET(flags, val)                  \
-  do {                                                                        \
-    (flags) =                                                                 \
-        (u8)((flags) | (((val) & (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)) \
-                        << (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT)));    \
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SET(flags, val)                \
+  do {                                                                      \
+    (flags) =                                                               \
+        (u8)((flags & (~(SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK          \
+                         << SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT))) | \
+             (((val) & (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK))         \
+              << (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_ACCEPTED_VALUE_UPDATED (0)
@@ -211,11 +213,13 @@
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags)           \
   ((u8)(((flags) >> SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT) & \
         SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK))
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SET(flags, val)             \
-  do {                                                                         \
-    (flags) = (u8)(                                                            \
-        (flags) | (((val) & (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)) \
-                   << (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT)));    \
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK          \
+                    << SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT))) | \
+        (((val) & (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK))         \
+         << (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT)));            \
   } while (0)
 
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_REQUESTED_DEFAULT_VALUE_RETURNED \
