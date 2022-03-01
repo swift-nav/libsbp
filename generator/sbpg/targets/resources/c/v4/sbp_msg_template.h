@@ -60,6 +60,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_writte
     case (((m.v4_msg_type))):
       return (((m.public_encode_fn)))(buf, len, n_written, &msg->(((m.union_member_name))));
 ((*- endfor *))
+    case SbpMsgAll:
+      break;
     default:
       break;
   }
@@ -83,6 +85,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_
     case (((m.v4_msg_type))):
       return (((m.public_decode_fn)))(buf, len, n_read, &msg->(((m.union_member_name))));
 ((*- endfor *))
+    case SbpMsgAll:
+      break;
     default:
       break;
   }
@@ -101,6 +105,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type, const sbp_
     case (((m.v4_msg_type))):
       return (((m.encoded_len_fn)))(&msg->(((m.union_member_name))));
 ((*- endfor *))
+    case SbpMsgAll:
+      break;
     default:
       break;
   }
@@ -122,6 +128,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a, c
     case (((m.v4_msg_type))):
       return (((m.cmp_fn)))(&a->(((m.union_member_name))), &b->(((m.union_member_name))));
     ((*- endfor *))
+    case SbpMsgAll:
+      break;
     default:
       break;
   }
