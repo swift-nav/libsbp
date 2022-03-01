@@ -1,6 +1,16 @@
-# Change Log
+# Changelog
 
-## [v4.1.3](https://github.com/swift-nav/libsbp/tree/HEAD)
+## [v4.1.4](https://github.com/swift-nav/libsbp/tree/v4.1.4) (2022-03-01)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.3...v4.1.4)
+
+**Merged pull requests:**
+
+- build\(deps\): bump ajv from 6.6.1 to 6.12.6 [\#1097](https://github.com/swift-nav/libsbp/pull/1097) ([dependabot[bot]](https://github.com/apps/dependabot))
+- build\(deps\): bump simple-get from 3.1.0 to 3.1.1 [\#1096](https://github.com/swift-nav/libsbp/pull/1096) ([dependabot[bot]](https://github.com/apps/dependabot))
+- rust: add bitfield types \[DEVINFRA-615\] [\#1092](https://github.com/swift-nav/libsbp/pull/1092) ([notoriaga](https://github.com/notoriaga))
+
+## [v4.1.3](https://github.com/swift-nav/libsbp/tree/v4.1.3) (2022-02-04)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.13...HEAD)
 
