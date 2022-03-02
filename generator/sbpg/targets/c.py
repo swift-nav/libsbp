@@ -316,7 +316,7 @@ def create_bitfield_macros(field, msg):
             bitrange = (item.get("range")).split(":")
             start_bit = int(bitrange[0])
             ret_list.append(
-                "#define {}_MASK ({})".format(base_string, hex((1 << nbits) - 1))
+                "#define {}_MASK ({}u)".format(base_string, hex((1 << nbits) - 1))
             )
             ret_list.append("#define {}_SHIFT ({}u)".format(base_string, start_bit))
             ret_list.append(
