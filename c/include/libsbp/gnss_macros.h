@@ -18,7 +18,7 @@
 #ifndef LIBSBP_GNSS_MACROS_H
 #define LIBSBP_GNSS_MACROS_H
 
-#define SBP_GNSSSIGNAL__MASK (0xff)
+#define SBP_GNSSSIGNAL__MASK (0xffu)
 #define SBP_GNSSSIGNAL__SHIFT (0u)
 #define SBP_GNSSSIGNAL__GET(flags) \
   ((u8)(((flags) >> SBP_GNSSSIGNAL__SHIFT) & SBP_GNSSSIGNAL__MASK))
@@ -53,7 +53,7 @@
  */
 #define SBP_SV_ID_ENCODED_LEN 2u
 
-#define SBP_GNSSSIGNALDEP__MASK (0xff)
+#define SBP_GNSSSIGNALDEP__MASK (0xffu)
 #define SBP_GNSSSIGNALDEP__SHIFT (0u)
 #define SBP_GNSSSIGNALDEP__GET(flags) \
   ((u8)(((flags) >> SBP_GNSSSIGNALDEP__SHIFT) & SBP_GNSSSIGNALDEP__MASK))
