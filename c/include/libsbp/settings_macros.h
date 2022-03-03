@@ -51,8 +51,8 @@
 #define SBP_MSG_SETTINGS_WRITE_RESP 0x00AF
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3u)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags)           \
-  ((u8)(((flags) >> SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT) & \
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT) & \
         SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK))
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SET(flags, val)                \
   do {                                                                      \
@@ -210,8 +210,8 @@
 #define SBP_MSG_SETTINGS_REGISTER_RESP 0x01AF
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3u)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags)           \
-  ((u8)(((flags) >> SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT) & \
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT) & \
         SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK))
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SET(flags, val)           \
   do {                                                                       \

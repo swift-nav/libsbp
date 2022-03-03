@@ -21,8 +21,8 @@
 #define SBP_MSG_IMU_RAW 0x0900
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3u)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
-#define SBP_IMU_RAW_TIME_STATUS_GET(flags)            \
-  ((u32)(((flags) >> SBP_IMU_RAW_TIME_STATUS_SHIFT) & \
+#define SBP_IMU_RAW_TIME_STATUS_GET(flags)                 \
+  ((u32)((u32)((flags) >> SBP_IMU_RAW_TIME_STATUS_SHIFT) & \
          SBP_IMU_RAW_TIME_STATUS_MASK))
 #define SBP_IMU_RAW_TIME_STATUS_SET(flags, val)                       \
   do {                                                                \
@@ -39,9 +39,9 @@
 #define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK \
   (0x3fffffffu)
 #define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT (0u)
-#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_GET(flags) \
-  ((u32)(((flags) >>                                                      \
-          SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT) & \
+#define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_GET(flags)      \
+  ((u32)((u32)((flags) >>                                                      \
+               SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT) & \
          SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_MASK))
 #define SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SET(flags, val)   \
   do {                                                                           \
@@ -63,8 +63,9 @@
 #define SBP_MSG_IMU_AUX 0x0901
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xffu)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
-#define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
-  ((u8)(((flags) >> SBP_IMU_AUX_IMU_TYPE_SHIFT) & SBP_IMU_AUX_IMU_TYPE_MASK))
+#define SBP_IMU_AUX_IMU_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_IMU_AUX_IMU_TYPE_SHIFT) & \
+        SBP_IMU_AUX_IMU_TYPE_MASK))
 #define SBP_IMU_AUX_IMU_TYPE_SET(flags, val)                      \
   do {                                                            \
     (flags) = (u8)((flags & (~(SBP_IMU_AUX_IMU_TYPE_MASK          \
@@ -77,8 +78,8 @@
 #define SBP_IMU_AUX_IMU_TYPE_ST_MICROELECTRONICS_ASM330LLH (1)
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_MASK (0xfu)
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT (4u)
-#define SBP_IMU_AUX_GYROSCOPE_RANGE_GET(flags)           \
-  ((u8)(((flags) >> SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT) & \
+#define SBP_IMU_AUX_GYROSCOPE_RANGE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_IMU_AUX_GYROSCOPE_RANGE_SHIFT) & \
         SBP_IMU_AUX_GYROSCOPE_RANGE_MASK))
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_SET(flags, val)                      \
   do {                                                                   \
@@ -100,8 +101,8 @@
 #define SBP_IMU_AUX_GYROSCOPE_RANGE_125_DEG_S (4)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK (0xfu)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT (0u)
-#define SBP_IMU_AUX_ACCELEROMETER_RANGE_GET(flags)           \
-  ((u8)(((flags) >> SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT) & \
+#define SBP_IMU_AUX_ACCELEROMETER_RANGE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_IMU_AUX_ACCELEROMETER_RANGE_SHIFT) & \
         SBP_IMU_AUX_ACCELEROMETER_RANGE_MASK))
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE_SET(flags, val)                      \
   do {                                                                       \

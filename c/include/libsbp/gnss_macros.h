@@ -21,7 +21,7 @@
 #define SBP_GNSSSIGNAL__MASK (0xffu)
 #define SBP_GNSSSIGNAL__SHIFT (0u)
 #define SBP_GNSSSIGNAL__GET(flags) \
-  ((u8)(((flags) >> SBP_GNSSSIGNAL__SHIFT) & SBP_GNSSSIGNAL__MASK))
+  ((u8)((u8)((flags) >> SBP_GNSSSIGNAL__SHIFT) & SBP_GNSSSIGNAL__MASK))
 #define SBP_GNSSSIGNAL__SET(flags, val)                                      \
   do {                                                                       \
     (flags) =                                                                \
@@ -56,7 +56,7 @@
 #define SBP_GNSSSIGNALDEP__MASK (0xffu)
 #define SBP_GNSSSIGNALDEP__SHIFT (0u)
 #define SBP_GNSSSIGNALDEP__GET(flags) \
-  ((u8)(((flags) >> SBP_GNSSSIGNALDEP__SHIFT) & SBP_GNSSSIGNALDEP__MASK))
+  ((u8)((u8)((flags) >> SBP_GNSSSIGNALDEP__SHIFT) & SBP_GNSSSIGNALDEP__MASK))
 #define SBP_GNSSSIGNALDEP__SET(flags, val)                                    \
   do {                                                                        \
     (flags) = (u8)(                                                           \

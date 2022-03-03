@@ -21,8 +21,8 @@
 #define SBP_MSG_ODOMETRY 0x0903
 #define SBP_ODOMETRY_VEHICLE_METADATA_MASK (0x3u)
 #define SBP_ODOMETRY_VEHICLE_METADATA_SHIFT (5u)
-#define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags)           \
-  ((u8)(((flags) >> SBP_ODOMETRY_VEHICLE_METADATA_SHIFT) & \
+#define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_ODOMETRY_VEHICLE_METADATA_SHIFT) & \
         SBP_ODOMETRY_VEHICLE_METADATA_MASK))
 #define SBP_ODOMETRY_VEHICLE_METADATA_SET(flags, val)                      \
   do {                                                                     \
@@ -38,8 +38,8 @@
 #define SBP_ODOMETRY_VEHICLE_METADATA_PARK (3)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_MASK (0x3u)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT (3u)
-#define SBP_ODOMETRY_VELOCITY_SOURCE_GET(flags)           \
-  ((u8)(((flags) >> SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT) & \
+#define SBP_ODOMETRY_VELOCITY_SOURCE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT) & \
         SBP_ODOMETRY_VELOCITY_SOURCE_MASK))
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SET(flags, val)                      \
   do {                                                                    \
@@ -55,8 +55,8 @@
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SOURCE_3 (3)
 #define SBP_ODOMETRY_TIME_SOURCE_MASK (0x7u)
 #define SBP_ODOMETRY_TIME_SOURCE_SHIFT (0u)
-#define SBP_ODOMETRY_TIME_SOURCE_GET(flags)           \
-  ((u8)(((flags) >> SBP_ODOMETRY_TIME_SOURCE_SHIFT) & \
+#define SBP_ODOMETRY_TIME_SOURCE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_ODOMETRY_TIME_SOURCE_SHIFT) & \
         SBP_ODOMETRY_TIME_SOURCE_MASK))
 #define SBP_ODOMETRY_TIME_SOURCE_SET(flags, val)                      \
   do {                                                                \
@@ -78,8 +78,8 @@
 #define SBP_MSG_WHEELTICK 0x0904
 #define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3u)
 #define SBP_WHEELTICK_VEHICLE_METADATA_SHIFT (2u)
-#define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags)           \
-  ((u8)(((flags) >> SBP_WHEELTICK_VEHICLE_METADATA_SHIFT) & \
+#define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_WHEELTICK_VEHICLE_METADATA_SHIFT) & \
         SBP_WHEELTICK_VEHICLE_METADATA_MASK))
 #define SBP_WHEELTICK_VEHICLE_METADATA_SET(flags, val)                      \
   do {                                                                      \
@@ -95,8 +95,8 @@
 #define SBP_WHEELTICK_VEHICLE_METADATA_PARK (3)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK (0x3u)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT (0u)
-#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_GET(flags)           \
-  ((u8)(((flags) >> SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT) & \
+#define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT) & \
         SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK))
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SET(flags, val)                \
   do {                                                                    \
