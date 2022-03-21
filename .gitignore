@@ -79,3 +79,7 @@ rust/sbp/Cargo.lock
 rust/sbp/target
 
 python/sbp/_version.py
+
+# Spec Validation
+previous-spec/
+current-spec/

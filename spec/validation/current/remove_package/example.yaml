@@ -1,0 +1,116 @@
+# Packages define a logical collection of SBP messages. Packages can
+# in turn include other packages in the directory hierarchy. A package
+# identifier specifies a directory path for the generated code,
+# followed by an optional description used for documentation. By
+# convention, packages marked as "stable" are unlikely to change much
+# in the future, whereas unstable messages may change with future
+# firmware development. Some packages are purely informative and are
+# omitted from code generation using "render_source".
+
+package: example
+description: Geodetic navigation messages and friends.
+render_source: True
+stable: True
+include:
+  # types.yaml defines common primitives used in the spec.
+  - types.yaml
+
+# The definitions in a package can contain both SBP messages and
+# struct definitions.
+
+definitions:
+
+ # A definition contains a series of named keys, many of which are
+ # optional, such as "short_desc", "id", etc. By default, any
+ # definition containing the 'id' field is considered an SBP message;
+ # the 'id' field uniquely identifies the message type of the payload
+ # contents. Defined fields layout the structure of an SBP payload.
+ #
+ # For example, an SBP message with a message type_id 0x0203 is a
+ # MSG_BASELINE_NED instance, with a payload containing 'tow', 'n',
+ # 'e', 'd', etc. data fields consumed by the user.
+
+ - MSG_BASELINE_NED:
+    id: 0x0203
+    short_desc: Baseline in NED
+    desc: |
+        Baseline in local North East Down (NED) coordinates.
+
+    # Each message definition has a series of fields, not unlike a C
+    # struct. Each field has a type, which is either a primitive (e.g.,
+    # u32 for 32-bit unsigned integer) or a more complex, predefined
+    # type. You can optionally include units or a description.
+
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm
+              desc: Baseline North coordinate
+          - e:
+              type: s32
+              units: mm
+              desc: Baseline East coordinate
+          - d:
+              type: s32
+              units: mm
+              desc: Baseline Down coordinate
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+
+          # Fields that contain fields themselves denote bitfields.
+
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Float RTK
+                        - 1: Fixed RTK
+
+ # Defitions lacking an id are not treated as SBP messages, but are
+ # structured types that can be embedded into SBP definitions. Here,
+ # UARTChannel is a struct composed of primitive types...
+
+ - UARTChannel:
+    desc: State of the UART channel.
+    fields:
+        - tx_throughput:
+            type: float
+            desc: UART transmit throughput.
+        - crc_error_count:
+            type: u16
+            desc: UART CRC error count.
+        - tx_buffer_level:
+            type: u8
+            desc: UART transmit usage percentage.
+
+ # ... that can be used as a field in an actual SBP message...
+
+ - MSG_UART_STATE:
+    id: 0x0018
+    desc: Piksi message about the state of UART0.
+    fields:
+        - uart0:
+            type: UARTChannel
+            desc: State of the UART0 channel.
+
+        # You can also define fixed-size strings and
+        # fixed/variable-size arrays!
+
+        - info:
+            type: string
+            size: 20
+            desc: Info string of length 20 (bytes).
+        - remaining_uart_array:
+            type: array
+            fill: UARTChannel
+            desc: Array of UART channels.

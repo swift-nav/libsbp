@@ -1,0 +1,2429 @@
+# Copyright (C) 2015-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.navigation
+description: >
+  Geodetic navigation messages reporting GPS time, position, velocity,
+  and baseline position solutions. For position solutions, these
+  messages define several different position solutions: single-point
+  (SPP), RTK, and pseudo-absolute position solutions.
+
+
+  The SPP is the standalone, absolute GPS position solution using only
+  a single receiver. The RTK solution is the differential GPS
+  solution, which can use either a fixed/integer or floating carrier
+  phase ambiguity. The pseudo-absolute position solution uses a
+  user-provided, well-surveyed base station position (if available)
+  and the RTK solution in tandem.
+
+
+  When the inertial navigation mode indicates that the IMU is used,
+  all messages are reported in the vehicle body frame as defined by
+  device settings.  By default, the vehicle body frame is configured to be
+  coincident with the antenna phase center.  When there is no inertial
+  navigation, the solution will be reported at the phase center of the antenna.
+  There is no inertial navigation capability on Piksi Multi or Duro.
+
+
+  The tow field, when valid, is most often the Time of Measurement. When this
+  is the case, the 5th bit of flags is set to the default value of 0.
+  When this is not the case, the tow may be a time of arrival or a local
+  system timestamp, irrespective of the time reference (GPS Week or else),
+  but not a Time of Measurement.
+
+stable: True
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - MSG_GPS_TIME:
+    id: 0x0102
+    short_desc: GPS Time
+    desc: >
+      This message reports the GPS time, representing the time since
+      the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+      counts the weeks and seconds of the week. The weeks begin at the
+      Saturday/Sunday transition. GPS week 0 began at the beginning of
+      the GPS time scale.
+
+
+      Within each week number, the GPS time of the week is between
+      between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+      does not accumulate leap seconds, and as of now, has a small
+      offset from UTC. In a message stream, this message precedes a
+      set of other navigation messages referenced to the same time
+      (but lacking the ns field) and indicates a more precise time of
+      these messages.
+    fields:
+        - wn:
+            type: u16
+            units: weeks
+            desc: GPS week number
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time of week rounded to the nearest millisecond
+        - ns_residual:
+            type: s32
+            units: ns
+            desc: >
+              Nanosecond residual of millisecond-rounded TOW (ranges
+              from -500000 to 500000)
+        - flags:
+            type: u8
+            desc: Status flags (reserved)
+            fields:
+                  - 3-7:
+                      desc: Reserved
+                  - 0-2:
+                      desc: Time source
+                      values:
+                          - 0: None (invalid)
+                          - 1: GNSS Solution
+                          - 2: Propagated
+
+ - MSG_GPS_TIME_GNSS:
+    id: 0x0104
+    short_desc: GPS Time
+    desc: >
+      This message reports the GPS time, representing the time since
+      the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+      counts the weeks and seconds of the week. The weeks begin at the
+      Saturday/Sunday transition. GPS week 0 began at the beginning of
+      the GPS time scale.
+
+
+      Within each week number, the GPS time of the week is between
+      between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+      does not accumulate leap seconds, and as of now, has a small
+      offset from UTC. In a message stream, this message precedes a
+      set of other navigation messages referenced to the same time
+      (but lacking the ns field) and indicates a more precise time of
+      these messages.
+    fields:
+        - wn:
+            type: u16
+            units: weeks
+            desc: GPS week number
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time of week rounded to the nearest millisecond
+        - ns_residual:
+            type: s32
+            units: ns
+            desc: >
+              Nanosecond residual of millisecond-rounded TOW (ranges
+              from -500000 to 500000)
+        - flags:
+            type: u8
+            desc: Status flags (reserved)
+            fields:
+                  - 3-7:
+                      desc: Reserved
+                  - 0-2:
+                      desc: Time source
+                      values:
+                          - 0: None (invalid)
+                          - 1: GNSS Solution
+                          - 2: Propagated
+
+ - MSG_UTC_TIME:
+    id: 0x0103
+    short_desc: UTC Time
+    desc: >
+      This message reports the Universal Coordinated Time (UTC).  Note the flags
+      which indicate the source of the UTC offset value and source of the time fix.
+    fields:
+        - flags:
+            type: u8
+            desc: Indicates source and time validity
+            fields:
+                - 5-7:
+                    desc: Reserved
+                - 3-4:
+                    desc: UTC offset source
+                    values:
+                        - 0: Factory Default
+                        - 1: Non Volatile Memory
+                        - 2: Decoded this Session
+                - 0-2:
+                    desc: Time source
+                    values:
+                          - 0: None (invalid)
+                          - 1: GNSS Solution
+                          - 2: Propagated
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time of week rounded to the nearest millisecond
+        - year:
+            type: u16
+            units: year
+            desc: Year
+        - month:
+            type: u8
+            units: months
+            desc: Month (range 1 .. 12)
+        - day:
+            type: u8
+            units: day
+            desc: days in the month (range 1-31)
+        - hours:
+            type: u8
+            units: hours
+            desc: hours of day (range 0-23)
+        - minutes:
+            type: u8
+            units: minutes
+            desc: minutes of hour (range 0-59)
+        - seconds:
+            type: u8
+            units: seconds
+            desc: seconds of minute (range 0-60) rounded down
+        - ns:
+            type: u32
+            units: nanoseconds
+            desc: nanoseconds of second
+                  (range 0-999999999)
+
+ - MSG_UTC_TIME_GNSS:
+    id: 0x0105
+    short_desc: UTC Time
+    desc: >
+      This message reports the Universal Coordinated Time (UTC).  Note the flags
+      which indicate the source of the UTC offset value and source of the time fix.
+    fields:
+        - flags:
+            type: u8
+            desc: Indicates source and time validity
+            fields:
+                - 5-7:
+                    desc: Reserved
+                - 3-4:
+                    desc: UTC offset source
+                    values:
+                        - 0: Factory Default
+                        - 1: Non Volatile Memory
+                        - 2: Decoded this Session
+                - 0-2:
+                    desc: Time source
+                    values:
+                          - 0: None (invalid)
+                          - 1: GNSS Solution
+                          - 2: Propagated
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time of week rounded to the nearest millisecond
+        - year:
+            type: u16
+            units: year
+            desc: Year
+        - month:
+            type: u8
+            units: months
+            desc: Month (range 1 .. 12)
+        - day:
+            type: u8
+            units: day
+            desc: days in the month (range 1-31)
+        - hours:
+            type: u8
+            units: hours
+            desc: hours of day (range 0-23)
+        - minutes:
+            type: u8
+            units: minutes
+            desc: minutes of hour (range 0-59)
+        - seconds:
+            type: u8
+            units: seconds
+            desc: seconds of minute (range 0-60) rounded down
+        - ns:
+            type: u32
+            units: nanoseconds
+            desc: nanoseconds of second
+                  (range 0-999999999)
+
+ - MSG_DOPS:
+    id: 0x0208
+    short_desc: Dilution of Precision
+    desc: >
+      This dilution of precision (DOP) message describes the effect of
+      navigation satellite geometry on positional measurement
+      precision.  The flags field indicated whether the DOP reported
+      corresponds to differential or SPP solution.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - gdop:
+            type: u16
+            units: 0.01
+            desc: Geometric Dilution of Precision
+        - pdop:
+            type: u16
+            units: 0.01
+            desc: Position Dilution of Precision
+        - tdop:
+            type: u16
+            units: 0.01
+            desc: Time Dilution of Precision
+        - hdop:
+            type: u16
+            units: 0.01
+            desc: Horizontal Dilution of Precision
+        - vdop:
+            type: u16
+            units: 0.01
+            desc: Vertical Dilution of Precision
+        - flags:
+            type: u8
+            desc: Indicates the position solution with which the DOPS message corresponds
+            fields:
+              - 7:
+                  desc: RAIM repair flag
+              - 3-6:
+                  desc: Reserved
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Undefined
+                      - 6: SBAS Position
+
+ - MSG_POS_ECEF:
+    id: 0x0209
+    short_desc: Single-point position in ECEF
+    desc: >
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. If the rover
+      receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - accuracy:
+            type: u16
+            units: mm
+            desc: Position estimated standard deviation
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 6-7:
+                  desc: Reserved
+              - 5-5:
+                  desc: TOW type
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+
+ - MSG_POS_ECEF_COV:
+    id: 0x0214
+    short_desc: Single-point position in ECEF
+    desc: >
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. The message also
+      reports the upper triangular portion of the 3x3 covariance matrix.
+      If the receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - cov_x_x:
+            type: float
+            units: m^2
+            desc: Estimated variance of x
+        - cov_x_y:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and y
+        - cov_x_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and z
+        - cov_y_y:
+            type: float
+            units: m^2
+            desc: Estimated variance of y
+        - cov_y_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of y and z
+        - cov_z_z:
+            type: float
+            units: m^2
+            desc: Estimated variance of z
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 6-7:
+                  desc: Reserved
+              - 5-5:
+                  desc: Type of reported TOW
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+
+ - MSG_POS_LLH:
+    id: 0x020A
+    short_desc: Geodetic Position
+    desc: >
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution. If the rover receiver knows the
+      surveyed position of the base station and has an RTK solution,
+      this reports a pseudo-absolute position solution using the base
+      station position and the rover's RTK baseline vector. The full
+      GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - h_accuracy:
+            type: u16
+            units: mm
+            desc: Horizontal position estimated standard deviation
+        - v_accuracy:
+            type: u16
+            units: mm
+            desc: Vertical position estimated standard deviation
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 6-7:
+                  desc: Reserved
+              - 5-5:
+                  desc: Type of reported TOW
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+
+
+ - MSG_POS_LLH_COV:
+    id: 0x0211
+    short_desc: Geodetic Position
+    desc: >
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution as well as the upper triangle of the 3x3
+      covariance matrix.  The position information and Fix Mode flags follow the
+      MSG_POS_LLH message.  Since the covariance matrix is computed in the
+      local-level North, East, Down frame, the covariance terms follow that
+      convention. Thus, covariances are reported against the "downward"
+      measurement and care should be taken with the sign convention.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - cov_n_n:
+            type: float
+            units: m^2
+            desc: Estimated variance of northing
+        - cov_n_e:
+            type: float
+            units: m^2
+            desc: Covariance of northing and easting
+        - cov_n_d:
+            type: float
+            units: m^2
+            desc: Covariance of northing and downward measurement
+        - cov_e_e:
+            type: float
+            units: m^2
+            desc: Estimated variance of easting
+        - cov_e_d:
+            type: float
+            units: m^2
+            desc: Covariance of easting and downward measurement
+        - cov_d_d:
+            type: float
+            units: m^2
+            desc: Estimated variance of downward measurement
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 6-7:
+                  desc: Reserved
+              - 5-5:
+                  desc: Type of reported TOW
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+
+
+ - EstimatedHorizontalErrorEllipse:
+     short_desc: Horizontal estimated error ellipse
+     fields:
+       - semi_major:
+           type: float
+           units: m
+           desc: >
+             The semi major axis of the estimated horizontal error ellipse at
+             the user-configured confidence level; zero implies invalid.
+       - semi_minor:
+           type: float
+           units: m
+           desc: >
+             The semi minor axis of the estimated horizontal error ellipse at
+             the user-configured confidence level; zero implies invalid.
+       - orientation:
+           type: float
+           units: deg
+           desc: >
+             The orientation of the semi major axis of the estimated horizontal
+             error ellipse with respect to North.
+
+
+ - MSG_POS_LLH_ACC:
+    id: 0x0218
+    short_desc: Geodetic Position and Accuracy
+    desc: >
+      This position solution message reports the absolute geodetic coordinates
+      and the status (single point vs pseudo-absolute RTK) of the position
+      solution as well as the estimated horizontal, vertical, cross-track and
+      along-track errors.  The position information and Fix Mode flags  follow
+      the MSG_POS_LLH message. Since the covariance matrix is computed in the
+      local-level North, East, Down frame, the estimated error terms follow that
+      convention.
+
+
+      The estimated errors are reported at a user-configurable confidence level.
+      The user-configured percentile is encoded in the percentile field.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - orthometric_height:
+            type: double
+            units: m
+            desc: Height above the geoid (i.e. height above mean sea level). See confidence_and_geoid for geoid model used.
+        - h_accuracy:
+            type: float
+            units: m
+            desc: Estimated horizontal error at the user-configured confidence level; zero implies invalid.
+        - v_accuracy:
+            type: float
+            units: m
+            desc: Estimated vertical error at the user-configured confidence level; zero implies invalid.
+        - ct_accuracy:
+            type: float
+            units: m
+            desc: Estimated cross-track error at the user-configured confidence level; zero implies invalid.
+        - at_accuracy:
+            type: float
+            units: m
+            desc: Estimated along-track error at the user-configured confidence level; zero implies invalid.
+        - h_ellipse:
+            type: EstimatedHorizontalErrorEllipse
+            desc: The estimated horizontal error ellipse at the user-configured confidence level.
+        - confidence_and_geoid:
+            type: u8
+            desc: The lower bits describe the configured confidence level for the estimated position error. The middle bits describe the geoid model used to calculate the orthometric height.
+            fields:
+              - 7-7:
+                  desc: Reserved
+              - 4-6:
+                  desc: Geoid model
+                  values:
+                    - 0: No model
+                    - 1: EGM96
+                    - 2: EGM2008
+              - 0-3:
+                  desc: Confidence level
+                  values:
+                    - 0: reserved
+                    - 1: 39.35%
+                    - 2: 68.27%
+                    - 3: 95.45%
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 6-7:
+                  desc: Reserved
+              - 5-5:
+                  desc: Type of reported TOW
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
+              - 3-4:
+                  desc: Inertial Navigation Mode
+                  values:
+                      - 0: None
+                      - 1: INS used
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+
+ - MSG_BASELINE_ECEF:
+    id: 0x020B
+    short_desc: Baseline Position in ECEF
+    desc: >
+      This message reports the baseline solution in Earth Centered
+      Earth Fixed (ECEF) coordinates. This baseline is the relative
+      vector distance from the base station to the rover receiver. The
+      full GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm
+              desc: Baseline ECEF X coordinate
+          - y:
+              type: s32
+              units: mm
+              desc: Baseline ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm
+              desc: Baseline ECEF Z coordinate
+          - accuracy:
+              type: u16
+              units: mm
+              desc: Position estimated standard deviation
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Invalid
+                        - 1: Reserved
+                        - 2: Differential GNSS (DGNSS)
+                        - 3: Float RTK
+                        - 4: Fixed RTK
+                        - 5: Reserved
+                        - 6: Reserved
+
+ - MSG_BASELINE_NED:
+    id: 0x020C
+    short_desc: Baseline in NED
+    desc: >
+      This message reports the baseline solution in North East Down
+      (NED) coordinates. This baseline is the relative vector distance
+      from the base station to the rover receiver, and NED coordinate
+      system is defined at the local WGS84 tangent plane centered at the
+      base station position.  The full GPS time is given by the
+      preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm
+              desc: Baseline North coordinate
+          - e:
+              type: s32
+              units: mm
+              desc: Baseline East coordinate
+          - d:
+              type: s32
+              units: mm
+              desc: Baseline Down coordinate
+          - h_accuracy:
+              type: u16
+              units: mm
+              desc: Horizontal position estimated standard deviation
+          - v_accuracy:
+              type: u16
+              units: mm
+              desc: Vertical position estimated standard deviation
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Invalid
+                        - 1: Reserved
+                        - 2: Differential GNSS (DGNSS)
+                        - 3: Float RTK
+                        - 4: Fixed RTK
+                        - 5: Reserved
+                        - 6: Reserved
+
+ - MSG_VEL_ECEF:
+    id: 0x020D
+    short_desc: Velocity in ECEF
+    desc: >
+      This message reports the velocity in Earth Centered Earth Fixed
+      (ECEF) coordinates. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF X coordinate
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Z coordinate
+          - accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Velocity estimated standard deviation
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 6-7:
+                    desc: Reserved
+                - 5-5:
+                    desc: Type of reported TOW
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
+                - 3-4:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
+
+ - MSG_VEL_ECEF_COV:
+    id: 0x0215
+    short_desc: Velocity in ECEF
+    desc: >
+      This message reports the velocity in Earth Centered Earth Fixed
+      (ECEF) coordinates. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF X coordinate
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Z coordinate
+          - cov_x_x:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of x
+          - cov_x_y:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of x and y
+          - cov_x_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of x and z
+          - cov_y_y:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of y
+          - cov_y_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of y and z
+          - cov_z_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of z
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 6-7:
+                    desc: Reserved
+                - 5-5:
+                    desc: Type of reported TOW
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
+                - 3-4:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
+
+ - MSG_VEL_NED:
+    id: 0x020E
+    short_desc: Velocity in NED
+    desc: >
+      This message reports the velocity in local North East Down (NED)
+      coordinates. The NED coordinate system is defined as the local WGS84
+      tangent plane centered at the current position. The full GPS time is
+      given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm/s
+              desc: Velocity North coordinate
+          - e:
+              type: s32
+              units: mm/s
+              desc: Velocity East coordinate
+          - d:
+              type: s32
+              units: mm/s
+              desc: Velocity Down coordinate
+          - h_accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Horizontal velocity estimated standard deviation
+          - v_accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Vertical velocity estimated standard deviation
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 6-7:
+                    desc: Reserved
+                - 5-5:
+                    desc: Type of reported TOW
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
+                - 3-4:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
+
+ - MSG_VEL_NED_COV:
+    id: 0x0212
+    short_desc: Velocity in NED
+    desc: >
+      This message reports the velocity in local North East Down (NED)
+      coordinates. The NED coordinate system is defined as the local WGS84
+      tangent plane centered at the current position. The full GPS time is
+      given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+      This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+      portion of the 3x3 covariance matrix.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm/s
+              desc: Velocity North coordinate
+          - e:
+              type: s32
+              units: mm/s
+              desc: Velocity East coordinate
+          - d:
+              type: s32
+              units: mm/s
+              desc: Velocity Down coordinate
+          - cov_n_n:
+              type: float
+              units: m^2
+              desc: Estimated variance of northward measurement
+          - cov_n_e:
+              type: float
+              units: m^2
+              desc: Covariance of northward and eastward measurement
+          - cov_n_d:
+              type: float
+              units: m^2
+              desc: Covariance of northward and downward measurement
+          - cov_e_e:
+              type: float
+              units: m^2
+              desc: Estimated variance of eastward measurement
+          - cov_e_d:
+              type: float
+              units: m^2
+              desc: Covariance of eastward and downward measurement
+          - cov_d_d:
+              type: float
+              units: m^2
+              desc: Estimated variance of downward measurement
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 6-7:
+                    desc: Reserved
+                - 5-5:
+                    desc: Type of reported TOW
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
+                - 3-4:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
+
+ - MSG_POS_ECEF_GNSS:
+    id: 0x0229
+    short_desc: GNSS-only Position in ECEF
+    desc: >
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. If the rover
+      receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - accuracy:
+            type: u16
+            units: mm
+            desc: Position estimated standard deviation
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 3-7:
+                  desc: Reserved
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Reserved
+                      - 6: SBAS Position
+
+ - MSG_POS_ECEF_COV_GNSS:
+    id: 0x0234
+    short_desc: GNSS-only Position in ECEF
+    desc: >
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. The message also
+      reports the upper triangular portion of the 3x3 covariance matrix.
+      If the receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - cov_x_x:
+            type: float
+            units: m^2
+            desc: Estimated variance of x
+        - cov_x_y:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and y
+        - cov_x_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of x and z
+        - cov_y_y:
+            type: float
+            units: m^2
+            desc: Estimated variance of y
+        - cov_y_z:
+            type: float
+            units: m^2
+            desc: Estimated covariance of y and z
+        - cov_z_z:
+            type: float
+            units: m^2
+            desc: Estimated variance of z
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 3-7:
+                  desc: Reserved
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Reserved
+                      - 6: SBAS Position
+
+ - MSG_POS_LLH_GNSS:
+    id: 0x022A
+    short_desc: GNSS-only Geodetic Position
+    desc: >
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution. If the rover receiver knows the
+      surveyed position of the base station and has an RTK solution,
+      this reports a pseudo-absolute position solution using the base
+      station position and the rover's RTK baseline vector. The full
+      GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - h_accuracy:
+            type: u16
+            units: mm
+            desc: Horizontal position estimated standard deviation
+        - v_accuracy:
+            type: u16
+            units: mm
+            desc: Vertical position estimated standard deviation
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 3-7:
+                  desc: Reserved
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Reserved
+                      - 6: SBAS Position
+
+ - MSG_POS_LLH_COV_GNSS:
+    id: 0x0231
+    short_desc: GNSS-only Geodetic Position
+    desc: >
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution as well as the upper triangle of the 3x3
+      covariance matrix.  The position information and Fix Mode flags should
+      follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+      in the local-level North, East, Down frame, the covariance terms follow
+      with that convention. Thus, covariances are reported against the "downward"
+      measurement and care should be taken with the sign convention.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height above WGS84 ellipsoid
+        - cov_n_n:
+            type: float
+            units: m^2
+            desc: Estimated variance of northing
+        - cov_n_e:
+            type: float
+            units: m^2
+            desc: Covariance of northing and easting
+        - cov_n_d:
+            type: float
+            units: m^2
+            desc: Covariance of northing and downward measurement
+        - cov_e_e:
+            type: float
+            units: m^2
+            desc: Estimated variance of easting
+        - cov_e_d:
+            type: float
+            units: m^2
+            desc: Covariance of easting and downward measurement
+        - cov_d_d:
+            type: float
+            units: m^2
+            desc: Estimated variance of downward measurement
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 3-7:
+                  desc: Reserved
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+
+ - MSG_VEL_ECEF_GNSS:
+    id: 0x022D
+    short_desc: GNSS-only Velocity in ECEF
+    desc: >
+      This message reports the velocity in Earth Centered Earth Fixed
+      (ECEF) coordinates. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF X coordinate
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Z coordinate
+          - accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Velocity estimated standard deviation
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Reserved
+
+ - MSG_VEL_ECEF_COV_GNSS:
+    id: 0x0235
+    short_desc: GNSS-only Velocity in ECEF
+    desc: >
+      This message reports the velocity in Earth Centered Earth Fixed
+      (ECEF) coordinates. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF X coordinate
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Z coordinate
+          - cov_x_x:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of x
+          - cov_x_y:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of x and y
+          - cov_x_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of x and z
+          - cov_y_y:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of y
+          - cov_y_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of y and z
+          - cov_z_z:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of z
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Reserved
+
+ - MSG_VEL_NED_GNSS:
+    id: 0x022E
+    short_desc: GNSS-only Velocity in NED
+    desc: >
+      This message reports the velocity in local North East Down (NED)
+      coordinates. The NED coordinate system is defined as the local WGS84
+      tangent plane centered at the current position. The full GPS time is
+      given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm/s
+              desc: Velocity North coordinate
+          - e:
+              type: s32
+              units: mm/s
+              desc: Velocity East coordinate
+          - d:
+              type: s32
+              units: mm/s
+              desc: Velocity Down coordinate
+          - h_accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Horizontal velocity estimated standard deviation
+          - v_accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Vertical velocity estimated standard deviation
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Reserved
+
+ - MSG_VEL_NED_COV_GNSS:
+    id: 0x0232
+    short_desc: GNSS-only Velocity in NED
+    desc: >
+      This message reports the velocity in local North East Down (NED)
+      coordinates. The NED coordinate system is defined as the local WGS84
+      tangent plane centered at the current position. The full GPS time is
+      given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+      This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+      portion of the 3x3 covariance matrix.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm/s
+              desc: Velocity North coordinate
+          - e:
+              type: s32
+              units: mm/s
+              desc: Velocity East coordinate
+          - d:
+              type: s32
+              units: mm/s
+              desc: Velocity Down coordinate
+          - cov_n_n:
+              type: float
+              units: m^2
+              desc: Estimated variance of northward measurement
+          - cov_n_e:
+              type: float
+              units: m^2
+              desc: Covariance of northward and eastward measurement
+          - cov_n_d:
+              type: float
+              units: m^2
+              desc: Covariance of northward and downward measurement
+          - cov_e_e:
+              type: float
+              units: m^2
+              desc: Estimated variance of eastward measurement
+          - cov_e_d:
+              type: float
+              units: m^2
+              desc: Covariance of eastward and downward measurement
+          - cov_d_d:
+              type: float
+              units: m^2
+              desc: Estimated variance of downward measurement
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 3-7:
+                    desc: Reserved
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Reserved
+
+ - MSG_VEL_BODY:
+    id: 0x0213
+    short_desc: Velocity in User Frame
+    desc: >
+      This message reports the velocity in the Vehicle Body Frame. By convention,
+      the x-axis should point out the nose of the vehicle and represent the forward
+      direction, while as the y-axis should point out the right hand side of the vehicle.
+      Since this is a right handed system, z should point out the bottom of the vehicle.
+      The orientation and origin of the Vehicle Body Frame are specified via the device settings.
+      The full GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow). This message is only produced by inertial versions of Swift
+      products and is not available from Piksi Multi or Duro.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity in x direction
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity in y direction
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity in z direction
+          - cov_x_x:
+              type: float
+              units: m^2
+              desc: Estimated variance of x
+          - cov_x_y:
+              type: float
+              units: m^2
+              desc: Covariance of x and y
+          - cov_x_z:
+              type: float
+              units: m^2
+              desc: Covariance of x and z
+          - cov_y_y:
+              type: float
+              units: m^2
+              desc: Estimated variance of y
+          - cov_y_z:
+              type: float
+              units: m^2
+              desc: Covariance of y and z
+          - cov_z_z:
+              type: float
+              units: m^2
+              desc: Estimated variance of z
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 3-4:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
+
+ - MSG_VEL_COG:
+    id: 0x021C
+    short_desc: Velocity expressed as course over ground
+    desc: >
+      This message reports the receiver course over ground (COG) and speed over 
+      ground (SOG) based on the horizontal (N-E) components of the NED velocity 
+      vector. It also includes the vertical velocity coordinate.
+      A flag is provided to indicate whether the COG value has been frozen. When 
+      the flag is set to true, the COG field is set to its last valid value until 
+      the system exceeds a minimum velocity threshold. No other fields are 
+      affected by this flag. 
+      The NED coordinate system is defined as the local WGS84 tangent 
+      plane centered at the current position. The full GPS time is given by the 
+      preceding MSG_GPS_TIME with the matching time-of-week (tow).
+      Note: course over ground represents the receiver's direction of travel, 
+      but not necessarily the device heading.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - cog:
+              type: u32
+              units: microdegrees
+              desc: Course over ground relative to north direction
+          - sog:
+              type: u32
+              units: mm/s
+              desc: >
+                Speed over ground (based on horizontal velocity)
+          - v_up:
+              type: s32
+              units: mm/s
+              desc: Vertical velocity component (positive up)
+          - cog_accuracy:
+              type: u32
+              units: microdegrees
+              desc: >
+                Course over ground estimated standard deviation
+          - sog_accuracy:
+              type: u32
+              units: mm/s
+              desc: >
+                Speed over ground estimated standard deviation
+          - v_up_accuracy:
+              type: u32
+              units: mm/s
+              desc: >
+                Vertical velocity estimated standard deviation
+          - flags:
+              type: u16
+              desc: Status flags
+              fields:
+                - 10-15:
+                    desc: Reserved
+                - 9: 
+                    desc: COG frozen
+                    values:
+                        - 0: Not frozen
+                        - 1: Frozen
+                - 8:
+                    desc: Vertical velocity validity
+                    values:
+                        - 0: Invalid
+                        - 1: Vertical velocity valid
+                - 7:
+                    desc: SOG validity
+                    values:
+                        - 0: Invalid
+                        - 1: SOG valid
+                - 6:
+                    desc: COG validity
+                    values:
+                        - 0: Invalid
+                        - 1: COG valid
+                - 5:
+                    desc: Type of reported TOW
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
+                - 3-4:
+                    desc: INS Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Velocity mode
+                    values:
+                        - 0: Invalid
+                        - 1: Measured Doppler derived
+                        - 2: Computed Doppler derived
+                        - 3: Dead Reckoning
+
+
+ - MSG_AGE_CORRECTIONS:
+    id: 0x0210
+    short_desc: Age of corrections
+    desc: >
+      This message reports the Age of the corrections used for the current
+      Differential solution.
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - age:
+              type: u16
+              units: deciseconds
+              desc: Age of the corrections (0xFFFF indicates invalid)
+
+
+ - MSG_GPS_TIME_DEP_A:
+    public: false
+    id: 0x0100
+    short_desc: GPS Time (v1.0)
+    desc: >
+      This message reports the GPS time, representing the time since
+      the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+      counts the weeks and seconds of the week. The weeks begin at the
+      Saturday/Sunday transition. GPS week 0 began at the beginning of
+      the GPS time scale.
+
+
+      Within each week number, the GPS time of the week is between
+      between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+      does not accumulate leap seconds, and as of now, has a small
+      offset from UTC. In a message stream, this message precedes a
+      set of other navigation messages referenced to the same time
+      (but lacking the ns field) and indicates a more precise time of
+      these messages.
+    fields:
+        - wn:
+            type: u16
+            units: weeks
+            desc: GPS week number
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time of week rounded to the nearest millisecond
+        - ns_residual:
+            type: s32
+            units: ns
+            desc: >
+              Nanosecond residual of millisecond-rounded TOW (ranges
+              from -500000 to 500000)
+        - flags:
+            type: u8
+            desc: Status flags (reserved)
+
+ - MSG_DOPS_DEP_A:
+    id: 0x0206
+    public: false
+    short_desc: Dilution of Precision
+    desc: >
+      This dilution of precision (DOP) message describes the effect of
+      navigation satellite geometry on positional measurement
+      precision.
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - gdop:
+            type: u16
+            units: 0.01
+            desc: Geometric Dilution of Precision
+        - pdop:
+            type: u16
+            units: 0.01
+            desc: Position Dilution of Precision
+        - tdop:
+            type: u16
+            units: 0.01
+            desc: Time Dilution of Precision
+        - hdop:
+            type: u16
+            units: 0.01
+            desc: Horizontal Dilution of Precision
+        - vdop:
+            type: u16
+            units: 0.01
+            desc: Vertical Dilution of Precision
+
+
+ - MSG_POS_ECEF_DEP_A:
+    id: 0x0200
+    public: false
+    short_desc: Single-point position in ECEF
+    desc: >
+      The position solution message reports absolute Earth Centered
+      Earth Fixed (ECEF) coordinates and the status (single point vs
+      pseudo-absolute RTK) of the position solution. If the rover
+      receiver knows the surveyed position of the base station and has
+      an RTK solution, this reports a pseudo-absolute position
+      solution using the base station position and the rover's RTK
+      baseline vector. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - x:
+            type: double
+            units: m
+            desc: ECEF X coordinate
+        - y:
+            type: double
+            units: m
+            desc: ECEF Y coordinate
+        - z:
+            type: double
+            units: m
+            desc: ECEF Z coordinate
+        - accuracy:
+            type: u16
+            units: mm
+            desc: >
+              Position accuracy estimate (not implemented). Defaults
+              to 0.
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 4:
+                  desc: RAIM repair flag
+                  values:
+                      - 0: No repair
+                      - 1: Solution came from RAIM repair
+              - 3:
+                  desc: RAIM availability flag
+                  values:
+                      - 0: RAIM check was explicitly disabled or unavailable
+                      - 1: RAIM check was available
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Single Point Positioning (SPP)
+                      - 1: Fixed RTK
+                      - 2: Float RTK
+
+ - MSG_POS_LLH_DEP_A:
+    id: 0x0201
+    public: false
+    short_desc: Geodetic Position
+    desc: >
+      This position solution message reports the absolute geodetic
+      coordinates and the status (single point vs pseudo-absolute RTK)
+      of the position solution. If the rover receiver knows the
+      surveyed position of the base station and has an RTK solution,
+      this reports a pseudo-absolute position solution using the base
+      station position and the rover's RTK baseline vector. The full
+      GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow).
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height
+        - h_accuracy:
+            type: u16
+            units: mm
+            desc: >
+              Horizontal position accuracy estimate (not
+              implemented). Defaults to 0.
+        - v_accuracy:
+            type: u16
+            units: mm
+            desc: >
+              Vertical position accuracy estimate (not
+              implemented). Defaults to 0.
+        - n_sats:
+            type: u8
+            desc: Number of satellites used in solution.
+        - flags:
+            type: u8
+            desc: Status flags
+            fields:
+              - 6-7:
+                  desc: Reserved
+              - 5:
+                  desc: RAIM repair flag
+                  values:
+                      - 0: No repair
+                      - 1: Solution came from RAIM repair
+              - 4:
+                  desc: RAIM availability flag
+                  values:
+                      - 0: RAIM check was explicitly disabled or unavailable
+                      - 1: RAIM check was available
+              - 3:
+                  desc: Height Mode
+                  values:
+                      - 0: Height above WGS84 ellipsoid
+                      - 1: Height above mean sea level
+              - 0-2:
+                  desc: Fix mode
+                  values:
+                      - 0: Single Point Positioning (SPP)
+                      - 1: Fixed RTK
+                      - 2: Float RTK
+
+ - MSG_BASELINE_ECEF_DEP_A:
+    id: 0x0202
+    public: false
+    short_desc: Baseline Position in ECEF
+    desc: >
+      This message reports the baseline solution in Earth Centered
+      Earth Fixed (ECEF) coordinates. This baseline is the relative
+      vector distance from the base station to the rover receiver. The
+      full GPS time is given by the preceding MSG_GPS_TIME with the
+      matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm
+              desc: Baseline ECEF X coordinate
+          - y:
+              type: s32
+              units: mm
+              desc: Baseline ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm
+              desc: Baseline ECEF Z coordinate
+          - accuracy:
+              type: u16
+              units: mm
+              desc: >
+                Position accuracy estimate
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 4:
+                    desc: RAIM repair flag
+                    values:
+                        - 0: No repair
+                        - 1: Solution came from RAIM repair
+                - 3:
+                    desc: RAIM availability flag
+                    values:
+                        - 0: RAIM check was explicitly disabled or unavailable
+                        - 1: RAIM check was available
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Float RTK
+                        - 1: Fixed RTK
+
+ - MSG_BASELINE_NED_DEP_A:
+    id: 0x0203
+    public: false
+    short_desc: Baseline in NED
+    desc: >
+      This message reports the baseline solution in North East Down
+      (NED) coordinates. This baseline is the relative vector distance
+      from the base station to the rover receiver, and NED coordinate
+      system is defined at the local WGS84 tangent plane centered at the
+      base station position.  The full GPS time is given by the
+      preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm
+              desc: Baseline North coordinate
+          - e:
+              type: s32
+              units: mm
+              desc: Baseline East coordinate
+          - d:
+              type: s32
+              units: mm
+              desc: Baseline Down coordinate
+          - h_accuracy:
+              type: u16
+              units: mm
+              desc: >
+                Horizontal position accuracy estimate (not
+                implemented). Defaults to 0.
+          - v_accuracy:
+              type: u16
+              units: mm
+              desc: >
+                Vertical position accuracy estimate (not
+                implemented). Defaults to 0.
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 4:
+                    desc: RAIM repair flag
+                    values:
+                        - 0: No repair
+                        - 1: Solution came from RAIM repair
+                - 3:
+                    desc: RAIM availability flag
+                    values:
+                        - 0: RAIM check was explicitly disabled or unavailable
+                        - 1: RAIM check was available
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Float RTK
+                        - 1: Fixed RTK
+
+ - MSG_VEL_ECEF_DEP_A:
+    id: 0x0204
+    public: false
+    short_desc: Velocity in ECEF
+    desc: >
+      This message reports the velocity in Earth Centered Earth Fixed
+      (ECEF) coordinates. The full GPS time is given by the preceding
+      MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF X coordinate
+          - y:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Y coordinate
+          - z:
+              type: s32
+              units: mm/s
+              desc: Velocity ECEF Z coordinate
+          - accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Velocity accuracy estimate (not implemented). Defaults
+                to 0.
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags (reserved)
+
+ - MSG_VEL_NED_DEP_A:
+    id: 0x0205
+    short_desc: Velocity in NED
+    public: False
+    desc: >
+      This message reports the velocity in local North East Down (NED)
+      coordinates. The NED coordinate system is defined as the local WGS84
+      tangent plane centered at the current position. The full GPS time is
+      given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - n:
+              type: s32
+              units: mm/s
+              desc: Velocity North coordinate
+          - e:
+              type: s32
+              units: mm/s
+              desc: Velocity East coordinate
+          - d:
+              type: s32
+              units: mm/s
+              desc: Velocity Down coordinate
+          - h_accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Horizontal velocity accuracy estimate (not
+                implemented). Defaults to 0.
+          - v_accuracy:
+              type: u16
+              units: mm/s
+              desc: >
+                Vertical velocity accuracy estimate (not
+                implemented). Defaults to 0.
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags (reserved)
+
+ - MSG_BASELINE_HEADING_DEP_A:
+    public: false
+    id: 0x0207
+    short_desc: Heading relative to True North
+    desc: >
+      This message reports the baseline heading pointing from the base station
+      to the rover relative to True North. The full GPS time is given by the
+      preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - heading:
+              type: u32
+              units: mdeg
+              desc: Heading
+          - n_sats:
+              type: u8
+              desc: Number of satellites used in solution
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 4:
+                    desc: RAIM repair flag
+                    values:
+                        - 0: No repair
+                        - 1: Solution came from RAIM repair
+                - 3:
+                    desc: RAIM availability flag
+                    values:
+                        - 0: RAIM check was explicitly disabled or unavailable
+                        - 1: RAIM check was available
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Float RTK
+                        - 1: Fixed RTK
+
+ - MSG_PROTECTION_LEVEL_DEP_A:
+    public: false
+    id: 0x0216
+    short_desc: Computed Position and Protection Level
+    desc: >
+      This message reports the local vertical and horizontal protection levels
+      associated with a given LLH position solution. The full GPS time is given
+      by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - vpl:
+              type: u16
+              units: cm
+              desc: Vertical protection level
+          - hpl:
+              type: u16
+              units: cm
+              desc: Horizontal protection level
+          - lat:
+              type: double
+              units: deg
+              desc: Latitude
+          - lon:
+              type: double
+              units: deg
+              desc: Longitude
+          - height:
+              type: double
+              units: m
+              desc: Height
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 0-2:
+                    desc: Target Integrity Risk (TIR) Level
+                    values:
+                        - 0: Safe state, protection level shall not be used for safety-critical application
+                        - 1: TIR Level 1
+                        - 2: TIR Level 2
+                        - 3: TIR Level 3
+                - 3-7:
+                    desc: Reserved
+
+ - MSG_PROTECTION_LEVEL:
+    public: false
+    id: 0x0217
+    short_desc: Computed state and Protection Levels
+    desc: >
+      This message reports the protection levels associated to the given
+      state estimate. The full GPS time is given by the preceding MSG_GPS_TIME
+      with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - wn:
+              type: s16
+              units: weeks
+              desc: GPS week number
+          - hpl:
+              type: u16
+              units: cm
+              desc: Horizontal protection level
+          - vpl:
+              type: u16
+              units: cm
+              desc: Vertical protection level
+          - atpl:
+              type: u16
+              units: cm
+              desc: Along-track position error protection level
+          - ctpl:
+              type: u16
+              units: cm
+              desc: Cross-track position error protection level
+          - hvpl:
+              type: u16
+              units: mm/s
+              desc: >
+                Protection level for the error vector between estimated and
+                true along/cross track velocity vector
+          - vvpl:
+              type: u16
+              units: mm/s
+              desc: >
+                Protection level for the velocity in vehicle upright direction
+                (different from vertical direction if on a slope)
+          - hopl:
+              type: u16
+              units: mdeg
+              desc: Heading orientation protection level
+          - popl:
+              type: u16
+              units: mdeg
+              desc: Pitch orientation protection level
+          - ropl:
+              type: u16
+              units: mdeg
+              desc: Roll orientation protection level
+          - lat:
+              type: double
+              units: deg
+              desc: Latitude
+          - lon:
+              type: double
+              units: deg
+              desc: Longitude
+          - height:
+              type: double
+              units: m
+              desc: Height
+          - v_x:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle x direction
+          - v_y:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle y direction
+          - v_z:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle z direction
+          - roll:
+              type: s32
+              units: udeg
+              desc: Roll angle
+          - pitch:
+              type: s32
+              units: udeg
+              desc: Pitch angle
+          - heading:
+              type: s32
+              units: udeg
+              desc: Heading angle
+          - flags:
+              type: u32
+              desc: Status flags
+              fields:
+                - 0-2:
+                    desc: Target Integrity Risk (TIR) Level
+                - 3-14:
+                    desc: Reserved
+                - 15-17:
+                    desc: Fix mode
+                    values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+                - 18-19:
+                    desc: Inertial Navigation Mode
+                    values:
+                      - 0: None
+                      - 1: INS used
+                - 20:
+                    desc: Time status
+                    values:
+                      - 0: GNSS time of validity
+                      - 1: Other
+                - 21:
+                    desc: Velocity valid
+                - 22:
+                    desc: Attitude valid
+                - 23:
+                    desc: Safe state HPL
+                - 24:
+                    desc: Safe state VPL
+                - 25:
+                    desc: Safe state ATPL
+                - 26:
+                    desc: Safe state CTPL
+                - 27:
+                    desc: Safe state HVPL
+                - 28:
+                    desc: Safe state VVPL
+                - 29:
+                    desc: Safe state HOPL
+                - 30:
+                    desc: Safe state POPL
+                - 31:
+                    desc: Safe state ROPL

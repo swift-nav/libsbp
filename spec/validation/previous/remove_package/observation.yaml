@@ -1,0 +1,127 @@
+# Copyright (C) 2015-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.observation
+description: Satellite observation messages from the device.
+             The SBP sender ID of 0 indicates remote observations
+             from a GNSS base station, correction network, or Skylark,
+             Swift's cloud GNSS correction product.
+stable: True
+public: True
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+
+ - ObservationHeader:
+    short_desc: Header for observation message
+    desc: Header of a GNSS observation message.
+    fields:
+        - t:
+            type: GPSTime
+            desc: GNSS time of this observation
+        - n_obs:
+            type: u8
+            desc: >
+              Total number of observations. First nibble is the size
+              of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
+ - Doppler:
+     short_desc: GNSS doppler measurement
+     desc: >
+       Doppler measurement in Hz represented as a 24-bit
+       fixed point number with Q16.8 layout, i.e. 16-bits of whole
+       doppler and 8-bits of fractional doppler. This doppler is defined
+       as positive for approaching satellites.
+     fields:
+         - i:
+             type: s16
+             units: Hz
+             desc: Doppler whole Hz
+         - f:
+             type: u8
+             units: Hz / 256
+             desc: Doppler fractional part
+
+ - PackedObsContent:
+    short_desc: GNSS observations for a particular satellite signal
+    desc: >
+      Pseudorange and carrier phase observation for a satellite being tracked.
+      The observations are interoperable with 3rd party receivers and conform with
+      typical RTCM 3.1 message GPS/GLO observations.
+
+
+      Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+      or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+      performed.
+
+    fields:
+        - P:
+            type: u32
+            units: 2 cm
+            desc: Pseudorange observation
+        - L:
+            type: CarrierPhase
+            units: cycles
+            desc: Carrier phase observation with typical sign convention.
+        - D:
+            type: Doppler
+            units: Hz
+            desc: Doppler observation with typical sign convention.
+        - cn0:
+            type: u8
+            units: dB Hz / 4
+            desc: Carrier-to-Noise density.  Zero implies invalid cn0.
+        - lock:
+            type: u8
+            desc: >
+              Lock timer. This value gives an indication of the time
+              for which a signal has maintained continuous phase lock.
+              Whenever a signal has lost and regained lock, this
+              value is reset to zero. It is encoded according to DF402 from
+              the RTCM 10403.2 Amendment 2 specification.  Valid values range
+              from 0 to 15 and the most significant nibble is reserved for future use.
+        - flags:
+            type: u8
+            desc: >
+              Measurement status flags. A bit field of flags providing the
+              status of this observation.  If this field is 0 it means only the Cn0
+              estimate for the signal is valid.
+            fields:
+              - 7:
+                  desc: RAIM exclusion
+                  values:
+                      - 0: No exclusion
+                      - 1: Measurement was excluded by SPP RAIM, use with care
+              - 4-6:
+                  desc: Reserved
+              - 3:
+                  desc: Doppler valid
+                  values:
+                      - 0: Invalid doppler measurement
+                      - 1: Valid doppler measurement
+              - 2:
+                  desc: Half-cycle ambiguity
+                  values:
+                      - 0: Half cycle phase ambiguity unresolved
+                      - 1: Half cycle phase ambiguity resolved
+              - 1:
+                  desc: Carrier phase valid
+                  values:
+                      - 0: Invalid carrier phase measurement
+                      - 1: Valid carrier phase measurement
+              - 0:
+                  desc: Pseudorange valid
+                  values:
+                      - 0: Invalid pseudorange measurement
+                      - 1: Valid pseudorange measurement and coarse TOW decoded
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)

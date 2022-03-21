@@ -1,0 +1,51 @@
+# Copyright (C) 2015-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.observation
+description: Satellite observation messages from the device.
+             The SBP sender ID of 0 indicates remote observations
+             from a GNSS base station, correction network, or Skylark,
+             Swift's cloud GNSS correction product.
+stable: True
+public: True
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+
+ - MSG_GLO_BIASES:
+    id: 0x0075
+    short_desc: GLONASS L1/L2 Code-Phase biases
+    desc: >
+      The GLONASS L1/L2 Code-Phase biases allows to perform
+      GPS+GLONASS integer ambiguity resolution for baselines
+      with mixed receiver types (e.g. receiver of different
+      manufacturers).
+    fields:
+        - mask:
+            type: u8
+            units: boolean
+            desc: GLONASS FDMA signals mask
+        - l1ca_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L1 C/A Code-Phase Bias
+        - l1p_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L1 P Code-Phase Bias
+        - l2ca_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L2 C/A Code-Phase Bias
+        - l2p_bias:
+            type: s16
+            units: m * 0.02
+            desc: GLONASS L2 P Code-Phase Bias
