@@ -1,5 +1,5 @@
 name:                  sbp
-version:               4.1.5-alpha
+version:               4.1.5
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
 license:               MIT
