@@ -1,5 +1,15 @@
 # Changelog
 
+## [v4.1.5](https://github.com/swift-nav/libsbp/tree/v4.1.5) (2022-03-29)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.4...v4.1.5)
+
+**Merged pull requests:**
+
+- Update CODEOWNERS [\#1101](https://github.com/swift-nav/libsbp/pull/1101) ([silverjam](https://github.com/silverjam))
+- introduce code owners, pull request template [\#1100](https://github.com/swift-nav/libsbp/pull/1100) ([silverjam](https://github.com/silverjam))
+- Make integer to enum conversion explicit [\#1098](https://github.com/swift-nav/libsbp/pull/1098) ([fpezzinosn](https://github.com/fpezzinosn))
+
 ## [v4.1.4](https://github.com/swift-nav/libsbp/tree/v4.1.4) (2022-03-01)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.3...v4.1.4)
@@ -8,36 +18,36 @@
 
 - build\(deps\): bump ajv from 6.6.1 to 6.12.6 [\#1097](https://github.com/swift-nav/libsbp/pull/1097) ([dependabot[bot]](https://github.com/apps/dependabot))
 - build\(deps\): bump simple-get from 3.1.0 to 3.1.1 [\#1096](https://github.com/swift-nav/libsbp/pull/1096) ([dependabot[bot]](https://github.com/apps/dependabot))
-- rust: add bitfield types \[DEVINFRA-615\] [\#1092](https://github.com/swift-nav/libsbp/pull/1092) ([notoriaga](https://github.com/notoriaga))
+- rust: add bitfield types [\#1092](https://github.com/swift-nav/libsbp/pull/1092) ([notoriaga](https://github.com/notoriaga))
 
 ## [v4.1.3](https://github.com/swift-nav/libsbp/tree/v4.1.3) (2022-02-04)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.13...HEAD)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.2...v4.1.3)
 
 **Merged pull requests:**
 
-- Add new update status message \[ASF-128\] [\#1095](https://github.com/swift-nav/libsbp/pull/1095) ([reimerix](https://github.com/reimerix))
-- Improvements to MSG\_VEL\_COG \[TES-129\] [\#1093](https://github.com/swift-nav/libsbp/pull/1093) ([lloydmaza](https://github.com/lloydmaza))
+- Add new update status message [\#1095](https://github.com/swift-nav/libsbp/pull/1095) ([reimerix](https://github.com/reimerix))
+- Improvements to MSG\_VEL\_COG [\#1093](https://github.com/swift-nav/libsbp/pull/1093) ([lloydmaza](https://github.com/lloydmaza))
 
 ## [v3.4.13](https://github.com/swift-nav/libsbp/tree/v3.4.13) (2022-01-10)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.2...v3.4.13)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.12...v3.4.13)
 
 **Merged pull requests:**
 
-- Improvements to MSG\_VEL\_COG \[TES-129\] [\#1094](https://github.com/swift-nav/libsbp/pull/1094) ([lloydmaza](https://github.com/lloydmaza))
+- Improvements to MSG\_VEL\_COG [\#1094](https://github.com/swift-nav/libsbp/pull/1094) ([lloydmaza](https://github.com/lloydmaza))
 
 ## [v4.1.2](https://github.com/swift-nav/libsbp/tree/v4.1.2) (2021-12-22)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.12...v4.1.2)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.1...v4.1.2)
 
 ## [v3.4.12](https://github.com/swift-nav/libsbp/tree/v3.4.12) (2021-12-13)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.1...v3.4.12)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.11...v3.4.12)
 
 ## [v4.1.1](https://github.com/swift-nav/libsbp/tree/v4.1.1) (2021-12-11)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.12...v4.1.1)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.0...v4.1.1)
 
 **Merged pull requests:**
 
