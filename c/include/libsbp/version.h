@@ -21,14 +21,14 @@
  * \{ */
 
 /** Protocol major version. */
-#define SBP_MAJOR_VERSION 3
+#define SBP_MAJOR_VERSION 4
 /** Protocol minor version. */
-#define SBP_MINOR_VERSION 4
+#define SBP_MINOR_VERSION 1
 /** Protocol patch version. */
-#define SBP_PATCH_VERSION 10
+#define SBP_PATCH_VERSION 5
 
 /** Full SBP version string. */
-#define SBP_VERSION "3.4.11-alpha"
+#define SBP_VERSION "4.1.6-alpha"
 
 /** \} */
 
