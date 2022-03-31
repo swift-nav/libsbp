@@ -34,6 +34,7 @@ typedef enum {
   (((m.v4_msg_type))) = (((m.legacy_msg_type))),
 ((*- endfor *))
   SbpMsgAll = SBP_MSG_ALL,
+  SbpMsgUnknown = SBP_MSG_ALL,
 } sbp_msg_type_t;
 
 #ifdef __cplusplus
