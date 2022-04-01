@@ -256,6 +256,7 @@ typedef enum {
   SbpMsgVelNed = SBP_MSG_VEL_NED,
   SbpMsgWheeltick = SBP_MSG_WHEELTICK,
   SbpMsgAll = SBP_MSG_ALL,
+  SbpMsgUnknown = SBP_MSG_ALL,
 } sbp_msg_type_t;
 
 #ifdef __cplusplus

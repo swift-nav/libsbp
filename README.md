@@ -100,10 +100,17 @@ but works on all platforms that Python itself supports.
 
 ## Building / installing
 
+Before you start, run 
+```
+git pull --tags
+```
+in you local libsbp repository to pull the tags. This will ensure the correct
+version number is generated.
+
 ### Using Docker
 
 Before you begin, make sure you have [Docker](https://docs.docker.com/docker-for-mac/install/) installed.
-Start [Docker desktop](https://docs.docker.com/docker-for-mac/). 
+Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 
 #### Fetching the prebuilt image from DockerHub
 
