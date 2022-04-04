@@ -2114,12 +2114,12 @@ pub mod msg_startup {
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
         /// or because new variants of `CauseOfStartup` were added.
         pub fn cause_of_startup(&self) -> Result<CauseOfStartup, u8> {
-            get_bit_range!(self.cause, u8, u8, 8, 0).try_into()
+            get_bit_range!(self.cause, u8, u8, 7, 0).try_into()
         }
 
         /// Set the bitrange corresponding to the [CauseOfStartup][CauseOfStartup] of the `cause` bitfield.
         pub fn set_cause_of_startup(&mut self, cause_of_startup: CauseOfStartup) {
-            set_bit_range!(&mut self.cause, cause_of_startup, u8, u8, 8, 0);
+            set_bit_range!(&mut self.cause, cause_of_startup, u8, u8, 7, 0);
         }
 
         /// Gets the [StartupType][self::StartupType] stored in the `startup_type` bitfield.
@@ -2128,12 +2128,12 @@ pub mod msg_startup {
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
         /// or because new variants of `StartupType` were added.
         pub fn startup_type(&self) -> Result<StartupType, u8> {
-            get_bit_range!(self.startup_type, u8, u8, 8, 0).try_into()
+            get_bit_range!(self.startup_type, u8, u8, 7, 0).try_into()
         }
 
         /// Set the bitrange corresponding to the [StartupType][StartupType] of the `startup_type` bitfield.
         pub fn set_startup_type(&mut self, startup_type: StartupType) {
-            set_bit_range!(&mut self.startup_type, startup_type, u8, u8, 8, 0);
+            set_bit_range!(&mut self.startup_type, startup_type, u8, u8, 7, 0);
         }
     }
 
