@@ -1,0 +1,38 @@
+name: Message Validation
+
+on:
+  pull_request:
+    paths:
+      - "spec/**"
+  push:
+    branches:
+      - 'starling-v*-release'
+      - 'v*-release'
+    tags:
+      - 'v*'
+    paths:
+      - "spec/**"
+
+jobs:
+  validation:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Current Spec
+        uses: actions/checkout@v2
+
+      - name: Checkout Previous Spec
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          path: previous
+
+      - name: Prepare Yaml Comparison
+        run: |
+          mkdir previous-spec
+          mkdir current-spec
+          cp previous/spec/yaml/swiftnav/sbp/*.yaml previous-spec/
+          cp spec/yaml/swiftnav/sbp/*.yaml current-spec/
+
+      - name: Validate Spec
+        run: |
+          bash scripts/validate.bash previous-spec current-spec
