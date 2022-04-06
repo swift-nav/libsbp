@@ -111,7 +111,9 @@ impl std::error::Error for TryFromSbpError {}
 #[non_exhaustive]
 pub enum Sbp {
     ((*- for m in msgs *))
+    ((*- if m.short_desc *))
     /// (((m.short_desc | commentify(indent=2) )))
+    ((*- endif *))
     (((m.msg_name)))( (((m.msg_name))) ),
     ((*- endfor *))
     /// Unknown message type

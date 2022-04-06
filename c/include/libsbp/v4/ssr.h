@@ -17,6 +17,7 @@
 
 #ifndef LIBSBP_V4_SSR_MESSAGES_H
 #define LIBSBP_V4_SSR_MESSAGES_H
+#include <libsbp/v4/ssr/BoundsHeader.h>
 #include <libsbp/v4/ssr/CodeBiasesContent.h>
 #include <libsbp/v4/ssr/GridDefinitionHeaderDepA.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeader.h>
@@ -27,12 +28,14 @@
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRID_DEFINITION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK.h>
+#include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_BOUNDS.h>
 #include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_PHASE_BIASES.h>
 #include <libsbp/v4/ssr/MSG_SSR_SATELLITE_APC.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION.h>
+#include <libsbp/v4/ssr/OrbitClockBound.h>
 #include <libsbp/v4/ssr/PhaseBiasesContent.h>
 #include <libsbp/v4/ssr/STECHeader.h>
 #include <libsbp/v4/ssr/STECHeaderDepA.h>

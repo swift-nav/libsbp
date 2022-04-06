@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Precise State Space Representation (SSR) corrections format
+pub use bounds_header::BoundsHeader;
 pub use code_biases_content::CodeBiasesContent;
 pub use grid_definition_header_dep_a::GridDefinitionHeaderDepA;
 pub use gridded_correction_header::GriddedCorrectionHeader;
@@ -23,12 +24,14 @@ pub use msg_ssr_gridded_correction::MsgSsrGriddedCorrection;
 pub use msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
 pub use msg_ssr_gridded_correction_no_std_dep_a::MsgSsrGriddedCorrectionNoStdDepA;
 pub use msg_ssr_orbit_clock::MsgSsrOrbitClock;
+pub use msg_ssr_orbit_clock_bounds::MsgSsrOrbitClockBounds;
 pub use msg_ssr_orbit_clock_dep_a::MsgSsrOrbitClockDepA;
 pub use msg_ssr_phase_biases::MsgSsrPhaseBiases;
 pub use msg_ssr_satellite_apc::MsgSsrSatelliteApc;
 pub use msg_ssr_stec_correction::MsgSsrStecCorrection;
 pub use msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
 pub use msg_ssr_tile_definition::MsgSsrTileDefinition;
+pub use orbit_clock_bound::OrbitClockBound;
 pub use phase_biases_content::PhaseBiasesContent;
 pub use satellite_apc::SatelliteAPC;
 pub use stec_header::STECHeader;
@@ -38,6 +41,65 @@ pub use stec_residual_no_std::STECResidualNoStd;
 pub use stec_sat_element::STECSatElement;
 pub use tropospheric_delay_correction::TroposphericDelayCorrection;
 pub use tropospheric_delay_correction_no_std::TroposphericDelayCorrectionNoStd;
+
+pub mod bounds_header {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Header for the Bounds messages
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct BoundsHeader {
+        /// GNSS reference time of the bound
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        pub time: GpsTimeSec,
+        /// Number of messages in the dataset
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        pub num_msgs: u8,
+        /// Position of this message in the dataset
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        pub seq_num: u8,
+        /// Update interval between consecutive bounds. Similar to RTCM DF391.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        pub update_interval: u8,
+        /// SSR Solution ID.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_id")))]
+        pub sol_id: u8,
+    }
+
+    impl WireFormat for BoundsHeader {
+        const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.time)
+                + WireFormat::len(&self.num_msgs)
+                + WireFormat::len(&self.seq_num)
+                + WireFormat::len(&self.update_interval)
+                + WireFormat::len(&self.sol_id)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.time, buf);
+            WireFormat::write(&self.num_msgs, buf);
+            WireFormat::write(&self.seq_num, buf);
+            WireFormat::write(&self.update_interval, buf);
+            WireFormat::write(&self.sol_id, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            BoundsHeader {
+                time: WireFormat::parse_unchecked(buf),
+                num_msgs: WireFormat::parse_unchecked(buf),
+                seq_num: WireFormat::parse_unchecked(buf),
+                update_interval: WireFormat::parse_unchecked(buf),
+                sol_id: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
 
 pub mod code_biases_content {
     #![allow(unused_imports)]
@@ -941,6 +1003,102 @@ pub mod msg_ssr_orbit_clock {
     }
 }
 
+pub mod msg_ssr_orbit_clock_bounds {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Combined Orbit and Clock Bound
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrOrbitClockBounds {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Header of a bounds message.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        pub header: BoundsHeader,
+        /// IOD of the SSR bound.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        pub ssr_iod: u8,
+        /// Constellation ID to which the SVs belong.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
+        pub const_id: u8,
+        /// Number of satellites.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        pub n_sats: u8,
+        /// Orbit and Clock Bounds per Satellite
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orbit_clock_bounds")))]
+        pub orbit_clock_bounds: Vec<OrbitClockBound>,
+    }
+
+    impl ConcreteMessage for MsgSsrOrbitClockBounds {
+        const MESSAGE_TYPE: u16 = 1502;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
+    }
+
+    impl SbpMessage for MsgSsrOrbitClockBounds {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrOrbitClockBounds {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrOrbitClockBounds(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrOrbitClockBounds {
+        const MIN_LEN: usize = <BoundsHeader as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <Vec<OrbitClockBound> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.header)
+                + WireFormat::len(&self.ssr_iod)
+                + WireFormat::len(&self.const_id)
+                + WireFormat::len(&self.n_sats)
+                + WireFormat::len(&self.orbit_clock_bounds)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.header, buf);
+            WireFormat::write(&self.ssr_iod, buf);
+            WireFormat::write(&self.const_id, buf);
+            WireFormat::write(&self.n_sats, buf);
+            WireFormat::write(&self.orbit_clock_bounds, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrOrbitClockBounds {
+                sender_id: None,
+                header: WireFormat::parse_unchecked(buf),
+                ssr_iod: WireFormat::parse_unchecked(buf),
+                const_id: WireFormat::parse_unchecked(buf),
+                n_sats: WireFormat::parse_unchecked(buf),
+                orbit_clock_bounds: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
 pub mod msg_ssr_orbit_clock_dep_a {
     #![allow(unused_imports)]
 
@@ -1628,6 +1786,106 @@ pub mod msg_ssr_tile_definition {
                 rows: WireFormat::parse_unchecked(buf),
                 cols: WireFormat::parse_unchecked(buf),
                 bitmask: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod orbit_clock_bound {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// None
+    ///
+    /// Orbit and clock bound.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct OrbitClockBound {
+        /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+        /// DF488 (BDS) depending on the constellation.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_id")))]
+        pub sat_id: u8,
+        /// Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_mu")))]
+        pub orb_radial_bound_mu: u8,
+        /// Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_mu")))]
+        pub orb_along_bound_mu: u8,
+        /// Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu")))]
+        pub orb_cross_bound_mu: u8,
+        /// Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_sig")))]
+        pub orb_radial_bound_sig: u8,
+        /// Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i
+        /// 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_sig")))]
+        pub orb_along_bound_sig: u8,
+        /// Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i
+        /// 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_sig")))]
+        pub orb_cross_bound_sig: u8,
+        /// Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu")))]
+        pub clock_bound_mu: u8,
+        /// Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i
+        /// 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig")))]
+        pub clock_bound_sig: u8,
+    }
+
+    impl WireFormat for OrbitClockBound {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.sat_id)
+                + WireFormat::len(&self.orb_radial_bound_mu)
+                + WireFormat::len(&self.orb_along_bound_mu)
+                + WireFormat::len(&self.orb_cross_bound_mu)
+                + WireFormat::len(&self.orb_radial_bound_sig)
+                + WireFormat::len(&self.orb_along_bound_sig)
+                + WireFormat::len(&self.orb_cross_bound_sig)
+                + WireFormat::len(&self.clock_bound_mu)
+                + WireFormat::len(&self.clock_bound_sig)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.sat_id, buf);
+            WireFormat::write(&self.orb_radial_bound_mu, buf);
+            WireFormat::write(&self.orb_along_bound_mu, buf);
+            WireFormat::write(&self.orb_cross_bound_mu, buf);
+            WireFormat::write(&self.orb_radial_bound_sig, buf);
+            WireFormat::write(&self.orb_along_bound_sig, buf);
+            WireFormat::write(&self.orb_cross_bound_sig, buf);
+            WireFormat::write(&self.clock_bound_mu, buf);
+            WireFormat::write(&self.clock_bound_sig, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            OrbitClockBound {
+                sat_id: WireFormat::parse_unchecked(buf),
+                orb_radial_bound_mu: WireFormat::parse_unchecked(buf),
+                orb_along_bound_mu: WireFormat::parse_unchecked(buf),
+                orb_cross_bound_mu: WireFormat::parse_unchecked(buf),
+                orb_radial_bound_sig: WireFormat::parse_unchecked(buf),
+                orb_along_bound_sig: WireFormat::parse_unchecked(buf),
+                orb_cross_bound_sig: WireFormat::parse_unchecked(buf),
+                clock_bound_mu: WireFormat::parse_unchecked(buf),
+                clock_bound_sig: WireFormat::parse_unchecked(buf),
             }
         }
     }

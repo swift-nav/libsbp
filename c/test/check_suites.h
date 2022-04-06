@@ -90,6 +90,7 @@ Suite* auto_check_sbp_piksi_MsgUartStateDepA_suite(void);
 Suite* auto_check_sbp_sbas_MsgSbasRaw_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsReadByIndexDone_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsReadByIndexResp_suite(void);
+Suite* auto_check_sbp_ssr_MsgSsrOrbitClockBounds_suite(void);
 Suite* auto_check_sbp_system_MsgDgnssStatus_suite(void);
 Suite* auto_check_sbp_system_MsgGroupMeta_suite(void);
 Suite* auto_check_sbp_system_MsgHeartbeat_suite(void);

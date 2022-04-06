@@ -82,6 +82,7 @@ mod auto_check_sbp_piksi_msg_uart_state_dep_a;
 mod auto_check_sbp_sbas_msg_sbas_raw;
 mod auto_check_sbp_settings_msg_settings_read_by_index_done;
 mod auto_check_sbp_settings_msg_settings_read_by_index_resp;
+mod auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds;
 mod auto_check_sbp_system_msg_dgnss_status;
 mod auto_check_sbp_system_msg_group_meta;
 mod auto_check_sbp_system_msg_heartbeat;

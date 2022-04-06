@@ -1,9 +1,10 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGriddedCorrection, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrGriddedCorrection, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
+//   const boundsHeader = Convert.toBoundsHeader(json);
 //   const carrierPhase = Convert.toCarrierPhase(json);
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
 //   const doppler = Convert.toDoppler(json);
@@ -138,12 +139,12 @@
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
+//   const msgSsrOrbitClockBounds = Convert.toMsgSsrOrbitClockBounds(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
 //   const msgSsrTileDefinition = Convert.toMsgSsrTileDefinition(json);
 //   const msgStartup = Convert.toMsgStartup(json);
-//   const msgStatusJournal = Convert.toMsgStatusJournal(json);
 //   const msgStatusReport = Convert.toMsgStatusReport(json);
 //   const msgStmFlashLockSector = Convert.toMsgStmFlashLockSector(json);
 //   const msgStmFlashUnlockSector = Convert.toMsgStmFlashUnlockSector(json);
@@ -171,6 +172,7 @@
 //   const networkUsage = Convert.toNetworkUsage(json);
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const odoInputType = Convert.toOdoInputType(json);
+//   const orbitClockBound = Convert.toOrbitClockBound(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
@@ -181,7 +183,6 @@
 //   const sTECSatElement = Convert.toSTECSatElement(json);
 //   const satelliteAPC = Convert.toSatelliteAPC(json);
 //   const solutionInputType = Convert.toSolutionInputType(json);
-//   const statusJournalItem = Convert.toStatusJournalItem(json);
 //   const subSystemReport = Convert.toSubSystemReport(json);
 //   const svAzEl = Convert.toSvAzEl(json);
 //   const svID = Convert.toSvID(json);
@@ -2005,6 +2006,37 @@ export interface MsgSsrOrbitClock {
     update_interval: number;
 }
 
+export interface MsgSsrOrbitClockBounds {
+    const_id:           number;
+    header:             BoundsHeader;
+    n_sats:             number;
+    orbit_clock_bounds: OrbitClockBound[];
+    ssr_iod:            number;
+}
+
+export interface BoundsHeader {
+    num_msgs:        number;
+    seq_num:         number;
+    sol_id:          number;
+    time:            GpsTimeSEC;
+    update_interval: number;
+}
+
+/**
+ * Orbit and clock bound.
+ */
+export interface OrbitClockBound {
+    clock_bound_mu:       number;
+    clock_bound_sig:      number;
+    orb_along_bound_mu:   number;
+    orb_along_bound_sig:  number;
+    orb_cross_bound_mu:   number;
+    orb_cross_bound_sig:  number;
+    orb_radial_bound_mu:  number;
+    orb_radial_bound_sig: number;
+    sat_id:               number;
+}
+
 /**
  * The precise phase biases message contains the biases to be added to the carrier phase of
  * the corresponding signal to get corrected carrier phase measurement, as well as the
@@ -2116,40 +2148,9 @@ export interface MsgStartup {
 }
 
 /**
- * The status journal message contains past status reports (see MSG_STATUS_REPORT) and
- * functions as a error/event storage for telemetry purposes.
- */
-export interface MsgStatusJournal {
-    journal:              StatusJournalItem[];
-    reporting_system:     number;
-    sbp_version:          number;
-    sequence_descriptor:  number;
-    total_status_reports: number;
-}
-
-/**
- * Reports the uptime and the state of a subsystem via generic and specific status codes.
- * If the generic state is reported as initializing, the specific state should be ignored.
- */
-export interface StatusJournalItem {
-    report: SubSystemReport;
-    uptime: number;
-}
-
-/**
- * Report the general and specific state of a subsystem.  If the generic state is reported
- * as initializing, the specific state should be ignored.
- */
-export interface SubSystemReport {
-    component: number;
-    generic:   number;
-    specific:  number;
-}
-
-/**
  * The status report is sent periodically to inform the host or other attached devices that
  * the system is running. It is used to monitor system malfunctions. It contains status
- * reports that indicate to the host the status of each subsystem and whether it is
+ * reports that indicate to the host the status of each sub-system and whether it is
  * operating correctly.,
  * ,
  * Interpretation of the subsystem specific status code is product dependent, but if the
@@ -2162,6 +2163,16 @@ export interface MsgStatusReport {
     sequence:         number;
     status:           SubSystemReport[];
     uptime:           number;
+}
+
+/**
+ * Report the general and specific state of a sub-system.  If the generic state is reported
+ * as initializing, the specific state should be ignored.
+ */
+export interface SubSystemReport {
+    component: number;
+    generic:   number;
+    specific:  number;
 }
 
 /**
@@ -2582,6 +2593,14 @@ export class Convert {
 
     public static almanacCommonContentToJson(value: AlmanacCommonContent): string {
         return JSON.stringify(uncast(value, r("AlmanacCommonContent")), null, 2);
+    }
+
+    public static toBoundsHeader(json: string): BoundsHeader {
+        return cast(JSON.parse(json), r("BoundsHeader"));
+    }
+
+    public static boundsHeaderToJson(value: BoundsHeader): string {
+        return JSON.stringify(uncast(value, r("BoundsHeader")), null, 2);
     }
 
     public static toCarrierPhase(json: string): CarrierPhase {
@@ -3656,6 +3675,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgSsrOrbitClock")), null, 2);
     }
 
+    public static toMsgSsrOrbitClockBounds(json: string): MsgSsrOrbitClockBounds {
+        return cast(JSON.parse(json), r("MsgSsrOrbitClockBounds"));
+    }
+
+    public static msgSsrOrbitClockBoundsToJson(value: MsgSsrOrbitClockBounds): string {
+        return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBounds")), null, 2);
+    }
+
     public static toMsgSsrPhaseBiases(json: string): MsgSsrPhaseBiases {
         return cast(JSON.parse(json), r("MsgSsrPhaseBiases"));
     }
@@ -3694,14 +3721,6 @@ export class Convert {
 
     public static msgStartupToJson(value: MsgStartup): string {
         return JSON.stringify(uncast(value, r("MsgStartup")), null, 2);
-    }
-
-    public static toMsgStatusJournal(json: string): MsgStatusJournal {
-        return cast(JSON.parse(json), r("MsgStatusJournal"));
-    }
-
-    public static msgStatusJournalToJson(value: MsgStatusJournal): string {
-        return JSON.stringify(uncast(value, r("MsgStatusJournal")), null, 2);
     }
 
     public static toMsgStatusReport(json: string): MsgStatusReport {
@@ -3920,6 +3939,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("OdoInputType")), null, 2);
     }
 
+    public static toOrbitClockBound(json: string): OrbitClockBound {
+        return cast(JSON.parse(json), r("OrbitClockBound"));
+    }
+
+    public static orbitClockBoundToJson(value: OrbitClockBound): string {
+        return JSON.stringify(uncast(value, r("OrbitClockBound")), null, 2);
+    }
+
     public static toPackedObsContent(json: string): PackedObsContent {
         return cast(JSON.parse(json), r("PackedObsContent"));
     }
@@ -3998,14 +4025,6 @@ export class Convert {
 
     public static solutionInputTypeToJson(value: SolutionInputType): string {
         return JSON.stringify(uncast(value, r("SolutionInputType")), null, 2);
-    }
-
-    public static toStatusJournalItem(json: string): StatusJournalItem {
-        return cast(JSON.parse(json), r("StatusJournalItem"));
-    }
-
-    public static statusJournalItemToJson(value: StatusJournalItem): string {
-        return JSON.stringify(uncast(value, r("StatusJournalItem")), null, 2);
     }
 
     public static toSubSystemReport(json: string): SubSystemReport {
@@ -5163,6 +5182,31 @@ const typeMap: any = {
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
+    "MsgSsrOrbitClockBounds": o([
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "orbit_clock_bounds", js: "orbit_clock_bounds", typ: a(r("OrbitClockBound")) },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "BoundsHeader": o([
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "OrbitClockBound": o([
+        { json: "clock_bound_mu", js: "clock_bound_mu", typ: 0 },
+        { json: "clock_bound_sig", js: "clock_bound_sig", typ: 0 },
+        { json: "orb_along_bound_mu", js: "orb_along_bound_mu", typ: 0 },
+        { json: "orb_along_bound_sig", js: "orb_along_bound_sig", typ: 0 },
+        { json: "orb_cross_bound_mu", js: "orb_cross_bound_mu", typ: 0 },
+        { json: "orb_cross_bound_sig", js: "orb_cross_bound_sig", typ: 0 },
+        { json: "orb_radial_bound_mu", js: "orb_radial_bound_mu", typ: 0 },
+        { json: "orb_radial_bound_sig", js: "orb_radial_bound_sig", typ: 0 },
+        { json: "sat_id", js: "sat_id", typ: 0 },
+    ], "any"),
     "MsgSsrPhaseBiases": o([
         { json: "biases", js: "biases", typ: a(r("PhaseBiasesContent")) },
         { json: "dispersive_bias", js: "dispersive_bias", typ: 0 },
@@ -5224,28 +5268,17 @@ const typeMap: any = {
         { json: "cause", js: "cause", typ: 0 },
         { json: "startup_type", js: "startup_type", typ: 0 },
     ], "any"),
-    "MsgStatusJournal": o([
-        { json: "journal", js: "journal", typ: a(r("StatusJournalItem")) },
-        { json: "reporting_system", js: "reporting_system", typ: 0 },
-        { json: "sbp_version", js: "sbp_version", typ: 0 },
-        { json: "sequence_descriptor", js: "sequence_descriptor", typ: 0 },
-        { json: "total_status_reports", js: "total_status_reports", typ: 0 },
-    ], "any"),
-    "StatusJournalItem": o([
-        { json: "report", js: "report", typ: r("SubSystemReport") },
-        { json: "uptime", js: "uptime", typ: 0 },
-    ], "any"),
-    "SubSystemReport": o([
-        { json: "component", js: "component", typ: 0 },
-        { json: "generic", js: "generic", typ: 0 },
-        { json: "specific", js: "specific", typ: 0 },
-    ], "any"),
     "MsgStatusReport": o([
         { json: "reporting_system", js: "reporting_system", typ: 0 },
         { json: "sbp_version", js: "sbp_version", typ: 0 },
         { json: "sequence", js: "sequence", typ: 0 },
         { json: "status", js: "status", typ: a(r("SubSystemReport")) },
         { json: "uptime", js: "uptime", typ: 0 },
+    ], "any"),
+    "SubSystemReport": o([
+        { json: "component", js: "component", typ: 0 },
+        { json: "generic", js: "generic", typ: 0 },
+        { json: "specific", js: "specific", typ: 0 },
     ], "any"),
     "MsgStmFlashLockSector": o([
         { json: "sector", js: "sector", typ: 0 },

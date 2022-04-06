@@ -206,6 +206,7 @@ use self::ssr::msg_ssr_gridded_correction::MsgSsrGriddedCorrection;
 use self::ssr::msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
 use self::ssr::msg_ssr_gridded_correction_no_std_dep_a::MsgSsrGriddedCorrectionNoStdDepA;
 use self::ssr::msg_ssr_orbit_clock::MsgSsrOrbitClock;
+use self::ssr::msg_ssr_orbit_clock_bounds::MsgSsrOrbitClockBounds;
 use self::ssr::msg_ssr_orbit_clock_dep_a::MsgSsrOrbitClockDepA;
 use self::ssr::msg_ssr_phase_biases::MsgSsrPhaseBiases;
 use self::ssr::msg_ssr_satellite_apc::MsgSsrSatelliteApc;
@@ -646,6 +647,8 @@ pub enum Sbp {
     MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),
     /// Precise orbit and clock correction
     MsgSsrOrbitClock(MsgSsrOrbitClock),
+    /// Combined Orbit and Clock Bound
+    MsgSsrOrbitClockBounds(MsgSsrOrbitClockBounds),
     /// Precise code biases correction
     MsgSsrCodeBiases(MsgSsrCodeBiases),
     /// Precise phase biases correction
@@ -1565,6 +1568,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrOrbitClock(msg))
             }
+            MsgSsrOrbitClockBounds::MESSAGE_TYPE => {
+                let mut msg = MsgSsrOrbitClockBounds::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrOrbitClockBounds(msg))
+            }
             MsgSsrCodeBiases::MESSAGE_TYPE => {
                 let mut msg = MsgSsrCodeBiases::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1966,6 +1974,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgFwd(msg) => msg.message_name(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.message_name(),
             Sbp::MsgSsrOrbitClock(msg) => msg.message_name(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.message_name(),
             Sbp::MsgSsrCodeBiases(msg) => msg.message_name(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.message_name(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.message_name(),
@@ -2177,6 +2186,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgFwd(msg) => msg.message_type(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.message_type(),
             Sbp::MsgSsrOrbitClock(msg) => msg.message_type(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.message_type(),
             Sbp::MsgSsrCodeBiases(msg) => msg.message_type(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.message_type(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.message_type(),
@@ -2388,6 +2398,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgFwd(msg) => msg.sender_id(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrOrbitClock(msg) => msg.sender_id(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.sender_id(),
             Sbp::MsgSsrCodeBiases(msg) => msg.sender_id(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.sender_id(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.sender_id(),
@@ -2599,6 +2610,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgFwd(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrOrbitClock(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrCodeBiases(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrPhaseBiases(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.set_sender_id(new_id),
@@ -2810,6 +2822,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgFwd(msg) => msg.encoded_len(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrOrbitClock(msg) => msg.encoded_len(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.encoded_len(),
             Sbp::MsgSsrCodeBiases(msg) => msg.encoded_len(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.encoded_len(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.encoded_len(),
@@ -3024,6 +3037,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgFwd(msg) => msg.gps_time(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrOrbitClock(msg) => msg.gps_time(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.gps_time(),
             Sbp::MsgSsrCodeBiases(msg) => msg.gps_time(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.gps_time(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.gps_time(),
@@ -3243,6 +3257,7 @@ impl WireFormat for Sbp {
             Sbp::MsgFwd(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrOrbitClockDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrOrbitClock(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrOrbitClockBounds(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrCodeBiases(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrPhaseBiases(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::write(msg, buf),
@@ -3454,6 +3469,7 @@ impl WireFormat for Sbp {
             Sbp::MsgFwd(msg) => WireFormat::len(msg),
             Sbp::MsgSsrOrbitClockDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrOrbitClock(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrOrbitClockBounds(msg) => WireFormat::len(msg),
             Sbp::MsgSsrCodeBiases(msg) => WireFormat::len(msg),
             Sbp::MsgSsrPhaseBiases(msg) => WireFormat::len(msg),
             Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::len(msg),
@@ -4456,6 +4472,12 @@ impl From<MsgSsrOrbitClockDepA> for Sbp {
 impl From<MsgSsrOrbitClock> for Sbp {
     fn from(msg: MsgSsrOrbitClock) -> Self {
         Sbp::MsgSsrOrbitClock(msg)
+    }
+}
+
+impl From<MsgSsrOrbitClockBounds> for Sbp {
+    fn from(msg: MsgSsrOrbitClockBounds) -> Self {
+        Sbp::MsgSsrOrbitClockBounds(msg)
     }
 }
 

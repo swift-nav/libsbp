@@ -943,6 +943,12 @@ struct MessageTraits<msg_ssr_orbit_clock_t> {
 
 
 template<>
+struct MessageTraits<msg_ssr_orbit_clock_bounds_t> {
+  static constexpr u16 id = 1502;
+};
+
+
+template<>
 struct MessageTraits<msg_ssr_code_biases_t> {
   static constexpr u16 id = 1505;
 };
