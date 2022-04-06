@@ -13,6 +13,7 @@
 #include <check.h>
 #include <libsbp/legacy/imu.h>
 #include <libsbp/legacy/navigation.h>
+#include <libsbp/legacy/observation.h>
 #include <libsbp/legacy/system.h>
 #include <stdio.h>
 
@@ -49,6 +50,9 @@ START_TEST(test_imu_bitfields) {
       imu.tow,
       SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_TIME_OF_SYSTEM_STARTUP);
   fail_unless(imu.tow == (100 | 0x40000000));
+  SBP_IMU_RAW_TIME_STATUS_SET(
+      imu.tow, (u32)SBP_IMU_RAW_TIME_STATUS_REFERENCE_EPOCH_IS_UNKNOWN);
+  fail_unless(imu.tow == (100 | 0x80000000));
   uint32_t tow =
       SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_GET(imu.tow);
   fail_unless(tow == (100));
@@ -69,6 +73,16 @@ START_TEST(test_ins_status_bitfields) {
 }
 END_TEST
 
+START_TEST(test_packed_obs_bitfields) {
+  u8 flags = 0x0F;
+
+  SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SET(flags, 0x80);
+  fail_unless(flags == 0x0F);
+
+  SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SET(flags, 1);
+  fail_unless(flags == 0x8F);
+}
+
 Suite *bitfield_macros_suite(void) {
   Suite *s = suite_create("SBP_Bitfields");
 
@@ -77,6 +91,7 @@ Suite *bitfield_macros_suite(void) {
   tcase_add_test(tc_core_2, test_nav_bitfields);
   tcase_add_test(tc_core_2, test_imu_bitfields);
   tcase_add_test(tc_core_2, test_ins_status_bitfields);
+  tcase_add_test(tc_core_2, test_packed_obs_bitfields);
   suite_add_tcase(s, tc_core_2);
 
   return s;
