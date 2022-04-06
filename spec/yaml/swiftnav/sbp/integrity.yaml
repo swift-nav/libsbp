@@ -15,52 +15,52 @@ public: False
 include:
   - types.yaml
   - gnss.yaml
+definitions:
 
  - OrbitClockBound:
     short_desc: Orbit and clock bound
     fields:
       - sat_id:
           type: u8
-          desc: > 
+          desc: >
             Satellite ID. Encoded following either RTCM DF068 (GPS), DF252 (Galileo),
             or DF488 (BDS) according to the constellation.
       - orbit_mean_radial:
           type: u8
           units: m
-          short_desc: Mean Radial
+          desc: Mean Radial
       - orbit_mean_along_track:
           type: u8
           units: m
-          short_desc: Mean Along-Track
+          desc: Mean Along-Track
       - orbit_mean_cross_track:
           type: u8
           units: m
-          short_desc: Mean Cross-Track
+          desc: Mean Cross-Track
       - orbit_std_radial:
           type: u8
           units: m
-          short_desc: Standard Deviation Radial
+          desc: Standard Deviation Radial
       - orbit_std_along_track:
           type: u8
           units: m
-          short_desc: Standard Deviation Along-Track
+          desc: Standard Deviation Along-Track
       - orbit_std_cross_track:
           type: u8
           units: m
-          short_desc: Standard Deviation Cross-Track
+          desc: Standard Deviation Cross-Track
       - clock_mean:
           type: u8
           units: m
-          short_desc: Clock Bound Mean
+          desc: Clock Bound Mean
       - clock_std:
           type: u8
           units: m
-          short_desc: Clock Bound Standard Deviation
+          desc: Clock Bound Standard Deviation
 
  - MSG_SSR_ORBIT_CLOCK_BOUNDS:
-    id: TBA
-    short_desc: Combined Orbit and Clock Bound
-    desc:
+    id: 1234
+    desc: Combined Orbit and Clock Bound.
     fields:
       - time:
           type: GPSTimeSec
@@ -91,4 +91,4 @@ include:
       - orbit_clock_bounds:
           type: array
           fill: OrbitClockBound
-          short_desc: Orbit and Clock Bounds per Satellite
+          desc: Orbit and Clock Bounds per Satellite
