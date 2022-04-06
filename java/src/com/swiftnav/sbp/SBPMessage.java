@@ -92,6 +92,7 @@ public class SBPMessage {
     }
 
     /** There is no exposed access to this class outside of libsbp. */
+    @SuppressWarnings("unchecked")
     public class Parser {
         private ByteBuffer buf;
 
@@ -212,11 +213,11 @@ public class SBPMessage {
             LinkedList<T> l = new LinkedList<T>();
             while (true) {
                 try {
-                    T tmp = t.newInstance();
+                    T tmp = t.getDeclaredConstructor().newInstance();
                     tmp.parse(this);
                     l.add(tmp);
                 } catch (BufferUnderflowException e) {
-                    return (T[]) l.toArray((T[]) Array.newInstance(t, l.size()));
+                    return l.toArray((T[]) Array.newInstance(t, l.size()));
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
@@ -228,7 +229,7 @@ public class SBPMessage {
             T[] ret = (T[]) Array.newInstance(t, n);
             for (int i = 0; i < n; i++) {
                 try {
-                    ret[i] = t.newInstance();
+                    ret[i] = t.getDeclaredConstructor().newInstance();
                     ret[i].parse(this);
                 } catch (Exception e) {
                     e.printStackTrace();
