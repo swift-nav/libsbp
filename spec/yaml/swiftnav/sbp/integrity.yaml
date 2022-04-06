@@ -1,0 +1,94 @@
+# Copyright (C) 2015-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.integrity
+description: Over-the-air Integrity Messages
+stable: True
+public: False
+include:
+  - types.yaml
+  - gnss.yaml
+
+ - OrbitClockBound:
+    short_desc: Orbit and clock bound
+    fields:
+      - sat_id:
+          type: u8
+          desc: > 
+            Satellite ID. Encoded following either RTCM DF068 (GPS), DF252 (Galileo),
+            or DF488 (BDS) according to the constellation.
+      - orbit_mean_radial:
+          type: u8
+          units: m
+          short_desc: Mean Radial
+      - orbit_mean_along_track:
+          type: u8
+          units: m
+          short_desc: Mean Along-Track
+      - orbit_mean_cross_track:
+          type: u8
+          units: m
+          short_desc: Mean Cross-Track
+      - orbit_std_radial:
+          type: u8
+          units: m
+          short_desc: Standard Deviation Radial
+      - orbit_std_along_track:
+          type: u8
+          units: m
+          short_desc: Standard Deviation Along-Track
+      - orbit_std_cross_track:
+          type: u8
+          units: m
+          short_desc: Standard Deviation Cross-Track
+      - clock_mean:
+          type: u8
+          units: m
+          short_desc: Clock Bound Mean
+      - clock_std:
+          type: u8
+          units: m
+          short_desc: Clock Bound Standard Deviation
+
+ - MSG_SSR_ORBIT_CLOCK_BOUNDS:
+    id: TBA
+    short_desc: Combined Orbit and Clock Bound
+    desc:
+    fields:
+      - time:
+          type: GPSTimeSec
+          desc: GNSS reference time of the bound
+      - num_msgs:
+          type: u8
+          desc: Number of messages in the dataset
+      - seq_num:
+          type: u8
+          desc: Position of this message in the dataset
+      - update_interval:
+          type: u8
+          desc: >
+            Update interval between consecutive bounds. Encoded following
+            RTCM DF391 specification.
+      - iod_ssr:
+          type: u8
+          desc: IOD of the SSR bound. Encoded following RTCM DF413 specification.
+      - ssr_id:
+          type: u8
+          desc: SSR Solution ID. Encoded following RTCM DF415 specification.
+      - constellation:
+          type: u8
+          desc: Constellation ID to which the SVs belong.
+      - num_sat:
+          type: u8
+          desc: Number of satellites. Encoded following RTCM DF387 specification.
+      - orbit_clock_bounds:
+          type: array
+          fill: OrbitClockBound
+          short_desc: Orbit and Clock Bounds per Satellite
