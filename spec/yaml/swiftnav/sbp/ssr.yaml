@@ -804,7 +804,7 @@ definitions:
               valid and invalid (and vice versa) are encoded as u8 integers.
 
  - OrbitClockBound:
-     short_desc: Orbit and clock bound
+     desc: Orbit and clock bound.
      fields:
        - sat_id:
            type: u8

@@ -252,3 +252,35 @@ None
 message MsgSsrSatelliteApc {
     repeated SatelliteAPC apc = 1;
 }
+
+/** None
+ *
+ * Orbit and clock bound.
+ */
+message OrbitClockBound {
+    uint32 sat_id = 1;
+    uint32 orb_radial_bound_mu = 2;
+    uint32 orb_along_bound_mu = 3;
+    uint32 orb_cross_bound_mu = 4;
+    uint32 orb_radial_bound_sig = 5;
+    uint32 orb_along_bound_sig = 6;
+    uint32 orb_cross_bound_sig = 7;
+    uint32 clock_bound_mu = 8;
+    uint32 clock_bound_sig = 9;
+}
+
+/** None
+ *
+ * Combined Orbit and Clock Bound.
+ */
+message MsgSsrOrbitClockBounds {
+    gnss.GpsTimeSec time = 1;
+    uint32 nb_msg_dataset = 2;
+    uint32 id_msg_dataset = 3;
+    uint32 ssr_update_interval = 4;
+    uint32 ssr_iod = 5;
+    uint32 ssr_sol_id = 6;
+    uint32 const_id = 7;
+    uint32 nb_sat = 8;
+    repeated OrbitClockBound orbit_clock_bounds = 9;
+}

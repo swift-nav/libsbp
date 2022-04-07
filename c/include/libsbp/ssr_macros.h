@@ -383,4 +383,34 @@
  */
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A_ENCODED_OVERHEAD 9u
 
+/**
+ * Encoded length of sbp_orbit_clock_bound_t (V4 API) and
+ * orbit_clock_bound_t (legacy API)
+ */
+#define SBP_ORBIT_CLOCK_BOUND_ENCODED_LEN 9u
+
+#define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS 0x04D2
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_orbit_clock_bounds_t::orbit_clock_bounds (V4 API) or
+ * msg_ssr_orbit_clock_bounds_t::orbit_clock_bounds (legacy API) before the
+ * maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_ORBIT_CLOCK_BOUNDS_MAX 26u
+
+/**
+ * Encoded length of sbp_msg_ssr_orbit_clock_bounds_t (V4 API) and
+ * msg_ssr_orbit_clock_bounds_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_orbit_clock_bounds_encoded_len to determine the actual size of
+ * an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_ENCODED_OVERHEAD 13u
+
 #endif /* LIBSBP_SSR_MACROS_H */

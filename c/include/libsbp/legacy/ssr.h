@@ -520,6 +520,63 @@ typedef struct SBP_ATTR_PACKED {
                        are encoded as u8 integers. */
 } msg_ssr_grid_definition_dep_a_t;
 
+/** None
+ *
+ * Orbit and clock bound.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 sat_id;               /**< Satellite ID. Encoded following either RTCM
+                                DF068 (GPS), DF252 (Galileo), or DF488
+                                (BDS) according to the constellation. */
+  u8 orb_radial_bound_mu;  /**< Mean Radial (range 0-55) i<=200,
+                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+                                i>240, mean=25+2(i-240) [m] */
+  u8 orb_along_bound_mu;   /**< Mean Along-Track (range 0-55) i<=200,
+                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+                                i>240, mean=25+2(i-240) [m] */
+  u8 orb_cross_bound_mu;   /**< Mean Cross-Track (range 0-55) i<=200,
+                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+                                i>240, mean=25+2(i-240) [m] */
+  u8 orb_radial_bound_sig; /**< Standard Deviation Radial (range 0-55)
+                                i<=200, mean=0.0251i 200<i<=240,
+                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
+  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track (range 0-55)
+                                i<=200, mean=0.0251i 200<i<=240,
+                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
+  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track (range 0-55)
+                                i<=200, mean=0.0251i 200<i<=240,
+                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
+  u8 clock_bound_mu;       /**< Clock Bound Mean (range 0-55) i<=200,
+                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+                                i>240, mean=25+2(i-240) [m] */
+  u8 clock_bound_sig;      /**< Clock Bound Standard Deviation (range 0-55)
+                                i<=200, mean=0.0251i 200<i<=240,
+                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
+} orbit_clock_bound_t;
+
+/** None
+ *
+ * Combined Orbit and Clock Bound.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;    /**< GNSS reference time of the bound */
+  u8 nb_msg_dataset;      /**< Number of messages in the dataset */
+  u8 id_msg_dataset;      /**< Position of this message in the dataset */
+  u8 ssr_update_interval; /**< Update interval between consecutive bounds.
+                               Encoded following RTCM DF391 specification. */
+  u8 ssr_iod;             /**< IOD of the SSR bound. Encoded following RTCM
+                               DF413 specification. */
+  u8 ssr_sol_id;          /**< SSR Solution ID. Encoded following RTCM
+                               DF415 specification. */
+  u8 const_id;            /**< Constellation ID to which the SVs belong. */
+  u8 nb_sat;              /**< Number of satellites. Encoded following RTCM
+                               DF387 specification. */
+  orbit_clock_bound_t orbit_clock_bounds[0]; /**< Orbit and Clock Bounds per
+                                                  Satellite */
+} msg_ssr_orbit_clock_bounds_t;
+
 /** \} */
 
 SBP_PACK_END
