@@ -138,6 +138,7 @@
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
+//   const msgSsrOrbitClockBounds = Convert.toMsgSsrOrbitClockBounds(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
@@ -170,6 +171,7 @@
 //   const networkUsage = Convert.toNetworkUsage(json);
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const odoInputType = Convert.toOdoInputType(json);
+//   const orbitClockBound = Convert.toOrbitClockBound(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
@@ -1282,6 +1284,14 @@ function msgSsrOrbitClockToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrOrbitClock")), null, 2);
 }
 
+function toMsgSsrOrbitClockBounds(json) {
+    return cast(JSON.parse(json), r("MsgSsrOrbitClockBounds"));
+}
+
+function msgSsrOrbitClockBoundsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBounds")), null, 2);
+}
+
 function toMsgSsrPhaseBiases(json) {
     return cast(JSON.parse(json), r("MsgSsrPhaseBiases"));
 }
@@ -1536,6 +1546,14 @@ function toOdoInputType(json) {
 
 function odoInputTypeToJson(value) {
     return JSON.stringify(uncast(value, r("OdoInputType")), null, 2);
+}
+
+function toOrbitClockBound(json) {
+    return cast(JSON.parse(json), r("OrbitClockBound"));
+}
+
+function orbitClockBoundToJson(value) {
+    return JSON.stringify(uncast(value, r("OrbitClockBound")), null, 2);
 }
 
 function toPackedObsContent(json) {
@@ -2772,6 +2790,28 @@ const typeMap = {
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
+    "MsgSsrOrbitClockBounds": o([
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "id_msg_dataset", js: "id_msg_dataset", typ: 0 },
+        { json: "nb_msg_dataset", js: "nb_msg_dataset", typ: 0 },
+        { json: "nb_sat", js: "nb_sat", typ: 0 },
+        { json: "orbit_clock_bounds", js: "orbit_clock_bounds", typ: a(r("OrbitClockBound")) },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "ssr_update_interval", js: "ssr_update_interval", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+    ], "any"),
+    "OrbitClockBound": o([
+        { json: "clock_bound_mu", js: "clock_bound_mu", typ: 0 },
+        { json: "clock_bound_sig", js: "clock_bound_sig", typ: 0 },
+        { json: "orb_along_bound_mu", js: "orb_along_bound_mu", typ: 0 },
+        { json: "orb_along_bound_sig", js: "orb_along_bound_sig", typ: 0 },
+        { json: "orb_cross_bound_mu", js: "orb_cross_bound_mu", typ: 0 },
+        { json: "orb_cross_bound_sig", js: "orb_cross_bound_sig", typ: 0 },
+        { json: "orb_radial_bound_mu", js: "orb_radial_bound_mu", typ: 0 },
+        { json: "orb_radial_bound_sig", js: "orb_radial_bound_sig", typ: 0 },
+        { json: "sat_id", js: "sat_id", typ: 0 },
+    ], "any"),
     "MsgSsrPhaseBiases": o([
         { json: "biases", js: "biases", typ: a(r("PhaseBiasesContent")) },
         { json: "dispersive_bias", js: "dispersive_bias", typ: 0 },
@@ -3338,6 +3378,8 @@ module.exports = {
     "toMsgSsrGriddedCorrection": toMsgSsrGriddedCorrection,
     "msgSsrOrbitClockToJson": msgSsrOrbitClockToJson,
     "toMsgSsrOrbitClock": toMsgSsrOrbitClock,
+    "msgSsrOrbitClockBoundsToJson": msgSsrOrbitClockBoundsToJson,
+    "toMsgSsrOrbitClockBounds": toMsgSsrOrbitClockBounds,
     "msgSsrPhaseBiasesToJson": msgSsrPhaseBiasesToJson,
     "toMsgSsrPhaseBiases": toMsgSsrPhaseBiases,
     "msgSsrSatelliteApcToJson": msgSsrSatelliteApcToJson,
@@ -3402,6 +3444,8 @@ module.exports = {
     "toObservationHeader": toObservationHeader,
     "odoInputTypeToJson": odoInputTypeToJson,
     "toOdoInputType": toOdoInputType,
+    "orbitClockBoundToJson": orbitClockBoundToJson,
+    "toOrbitClockBound": toOrbitClockBound,
     "packedObsContentToJson": packedObsContentToJson,
     "toPackedObsContent": toPackedObsContent,
     "packedOsrContentToJson": packedOsrContentToJson,

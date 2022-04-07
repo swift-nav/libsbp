@@ -187,6 +187,7 @@ import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionNoStdDepA;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
+import com.swiftnav.sbp.ssr.MsgSsrOrbitClockBounds;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrSatelliteApc;
@@ -581,6 +582,8 @@ final class MessageTable {
                 return new MsgSsrGriddedCorrectionDepA(msg);
             case MsgSsrGridDefinitionDepA.TYPE:
                 return new MsgSsrGridDefinitionDepA(msg);
+            case MsgSsrOrbitClockBounds.TYPE:
+                return new MsgSsrOrbitClockBounds(msg);
             case MsgStartup.TYPE:
                 return new MsgStartup(msg);
             case MsgDgnssStatus.TYPE:

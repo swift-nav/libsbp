@@ -555,11 +555,6 @@ typedef struct SBP_ATTR_PACKED {
                                 mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
 } orbit_clock_bound_t;
 
-/** None
- *
- * Combined Orbit and Clock Bound.
- */
-
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;    /**< GNSS reference time of the bound */
   u8 nb_msg_dataset;      /**< Number of messages in the dataset */

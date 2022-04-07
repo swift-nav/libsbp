@@ -675,8 +675,9 @@ class GridDefinitionHeaderDepA(object):
     
 class OrbitClockBound(object):
   """OrbitClockBound.
-  
-  
+
+  Orbit and clock bound.
+
   Parameters
   ----------
   sat_id : int
@@ -746,12 +747,12 @@ class OrbitClockBound(object):
 
   def __repr__(self):
     return fmt_repr(self)
-  
+
   def from_binary(self, d):
     p = OrbitClockBound._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-    
+
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
   """SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
@@ -2181,8 +2182,7 @@ class MsgSsrOrbitClockBounds(SBP):
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
-  
-  Combined Orbit and Clock Bound.
+
 
   Parameters
   ----------
@@ -2269,7 +2269,7 @@ class MsgSsrOrbitClockBounds(SBP):
     sbp = SBP.from_json_dict(d)
     return MsgSsrOrbitClockBounds(sbp, **d)
 
- 
+
   def from_binary(self, d):
     """Given a binary payload d, update the appropriate payload fields of
     the message.
@@ -2302,7 +2302,7 @@ class MsgSsrOrbitClockBounds(SBP):
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
-    
+
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,

@@ -949,11 +949,7 @@ pub mod msg_ssr_orbit_clock_bounds {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
-
-    /// None
-    ///
-    /// Combined Orbit and Clock Bound.
-    ///
+    /// Combined Orbit and Clock Bound
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
     pub struct MsgSsrOrbitClockBounds {

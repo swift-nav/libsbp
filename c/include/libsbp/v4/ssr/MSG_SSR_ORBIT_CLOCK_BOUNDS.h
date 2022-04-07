@@ -40,10 +40,6 @@ extern "C" {
  * SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS
  *
  *****************************************************************************/
-/** None
- *
- * Combined Orbit and Clock Bound.
- */
 typedef struct {
   /**
    * GNSS reference time of the bound

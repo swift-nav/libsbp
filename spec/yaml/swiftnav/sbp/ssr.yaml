@@ -846,7 +846,7 @@ definitions:
        - orb_along_bound_sig:
            type: u8
            units: m
-           desc: > 
+           desc: >
              Standard Deviation Along-Track (range 0-55)
              i<=200, mean=0.0251i
              200<i<=240, mean=5+0.5(i-200)
@@ -862,7 +862,7 @@ definitions:
        - clock_bound_mu:
            type: u8
            units: m
-           desc: > 
+           desc: >
              Clock Bound Mean (range 0-55)
              i<=200, mean=0.0251i
              200<i<=240, mean=5+0.5(i-200)
@@ -878,7 +878,8 @@ definitions:
 
  - MSG_SSR_ORBIT_CLOCK_BOUNDS:
      id: 1234
-     desc: Combined Orbit and Clock Bound.
+     short_desc: Combined Orbit and Clock Bound
+     public: False
      fields:
        - time:
            type: GPSTimeSec

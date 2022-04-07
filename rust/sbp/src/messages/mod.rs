@@ -642,6 +642,7 @@ pub enum Sbp {
     MsgLog(MsgLog),
     /// Wrapper for FWD a separate stream of information over SBP
     MsgFwd(MsgFwd),
+    /// Combined Orbit and Clock Bound
     MsgSsrOrbitClockBounds(MsgSsrOrbitClockBounds),
     /// Deprecated
     MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),

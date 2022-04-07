@@ -1107,9 +1107,6 @@ $(makeLenses ''OrbitClockBound)
 msgSsrOrbitClockBounds :: Word16
 msgSsrOrbitClockBounds = 0x04D2
 
--- | SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x04D2).
---
--- Combined Orbit and Clock Bound.
 data MsgSsrOrbitClockBounds = MsgSsrOrbitClockBounds
   { _msgSsrOrbitClockBounds_time              :: !GpsTimeSec
     -- ^ GNSS reference time of the bound

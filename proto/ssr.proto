@@ -269,9 +269,9 @@ message OrbitClockBound {
     uint32 clock_bound_sig = 9;
 }
 
-/** None
+/** Combined Orbit and Clock Bound
  *
- * Combined Orbit and Clock Bound.
+None
  */
 message MsgSsrOrbitClockBounds {
     gnss.GpsTimeSec time = 1;
