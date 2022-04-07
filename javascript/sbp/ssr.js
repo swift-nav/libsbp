@@ -1058,6 +1058,116 @@ MsgSsrGridDefinitionDepA.prototype.fieldSpec = [];
 MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['header', GridDefinitionHeaderDepA.prototype.fieldSpec]);
 MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['rle_list', 'array', 'writeUInt8', function () { return 1; }, null]);
 
+/**
+ * SBP class for message fragment OrbitClockBound
+ *
+ * Orbit and clock bound.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sat_id number (unsigned 8-bit int, 1 byte) Satellite ID. Encoded following either RTCM DF068 (GPS), DF252 (Galileo), or
+ *   DF488 (BDS) according to the constellation.
+ * @field orb_radial_bound_mu number (unsigned 8-bit int, 1 byte) Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+ *   i>240, mean=25+2(i-240)
+ * @field orb_along_bound_mu number (unsigned 8-bit int, 1 byte) Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+ *   i>240, mean=25+2(i-240)
+ * @field orb_cross_bound_mu number (unsigned 8-bit int, 1 byte) Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+ *   i>240, mean=25+2(i-240)
+ * @field orb_radial_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+ *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+ * @field orb_along_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+ *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+ * @field orb_cross_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+ *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+ * @field clock_bound_mu number (unsigned 8-bit int, 1 byte) Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
+ *   i>240, mean=25+2(i-240)
+ * @field clock_bound_sig number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+ *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var OrbitClockBound = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "OrbitClockBound";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+OrbitClockBound.prototype = Object.create(SBP.prototype);
+OrbitClockBound.prototype.messageType = "OrbitClockBound";
+OrbitClockBound.prototype.constructor = OrbitClockBound;
+OrbitClockBound.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('sat_id')
+  .uint8('orb_radial_bound_mu')
+  .uint8('orb_along_bound_mu')
+  .uint8('orb_cross_bound_mu')
+  .uint8('orb_radial_bound_sig')
+  .uint8('orb_along_bound_sig')
+  .uint8('orb_cross_bound_sig')
+  .uint8('clock_bound_mu')
+  .uint8('clock_bound_sig');
+OrbitClockBound.prototype.fieldSpec = [];
+OrbitClockBound.prototype.fieldSpec.push(['sat_id', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_radial_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_along_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_cross_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_radial_bound_sig', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_along_bound_sig', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_cross_bound_sig', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['clock_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['clock_bound_sig', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x04D2).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the bound
+ * @field nb_msg_dataset number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
+ * @field id_msg_dataset number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
+ * @field ssr_update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive bounds. Encoded following RTCM DF391
+ *   specification.
+ * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound. Encoded following RTCM DF413 specification.
+ * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID. Encoded following RTCM DF415 specification.
+ * @field const_id number (unsigned 8-bit int, 1 byte) Constellation ID to which the SVs belong.
+ * @field nb_sat number (unsigned 8-bit int, 1 byte) Number of satellites. Encoded following RTCM DF387 specification.
+ * @field orbit_clock_bounds array Orbit and Clock Bounds per Satellite
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrOrbitClockBounds = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrOrbitClockBounds.prototype = Object.create(SBP.prototype);
+MsgSsrOrbitClockBounds.prototype.messageType = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
+MsgSsrOrbitClockBounds.prototype.msg_type = 0x04D2;
+MsgSsrOrbitClockBounds.prototype.constructor = MsgSsrOrbitClockBounds;
+MsgSsrOrbitClockBounds.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .uint8('nb_msg_dataset')
+  .uint8('id_msg_dataset')
+  .uint8('ssr_update_interval')
+  .uint8('ssr_iod')
+  .uint8('ssr_sol_id')
+  .uint8('const_id')
+  .uint8('nb_sat')
+  .array('orbit_clock_bounds', { type: OrbitClockBound.prototype.parser, readUntil: 'eof' });
+MsgSsrOrbitClockBounds.prototype.fieldSpec = [];
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['nb_msg_dataset', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['id_msg_dataset', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['const_id', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['nb_sat', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['orbit_clock_bounds', 'array', OrbitClockBound.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
 module.exports = {
   CodeBiasesContent: CodeBiasesContent,
   PhaseBiasesContent: PhaseBiasesContent,
@@ -1096,4 +1206,7 @@ module.exports = {
   MsgSsrGriddedCorrectionDepA: MsgSsrGriddedCorrectionDepA,
   0x05F5: MsgSsrGridDefinitionDepA,
   MsgSsrGridDefinitionDepA: MsgSsrGridDefinitionDepA,
+  OrbitClockBound: OrbitClockBound,
+  0x04D2: MsgSsrOrbitClockBounds,
+  MsgSsrOrbitClockBounds: MsgSsrOrbitClockBounds,
 }

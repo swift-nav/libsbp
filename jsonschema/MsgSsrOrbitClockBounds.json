@@ -1,0 +1,40 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrOrbitClockBounds",
+  "title":"MsgSsrOrbitClockBounds",
+  "description":"",
+  "type": "object",
+  "properties": {
+    "time": {"$ref": "GpsTimeSec.json"},
+    "nb_msg_dataset": {"type": "integer"},
+    "id_msg_dataset": {"type": "integer"},
+    "ssr_update_interval": {"type": "integer"},
+    "ssr_iod": {"type": "integer"},
+    "ssr_sol_id": {"type": "integer"},
+    "const_id": {"type": "integer"},
+    "nb_sat": {"type": "integer"},
+    "orbit_clock_bounds": {"type": "array", "items": {"$ref": "OrbitClockBound.json"}}
+  },
+  "required": [
+    "time",
+    "nb_msg_dataset",
+    "id_msg_dataset",
+    "ssr_update_interval",
+    "ssr_iod",
+    "ssr_sol_id",
+    "const_id",
+    "nb_sat",
+    "orbit_clock_bounds"
+  ]
+}
