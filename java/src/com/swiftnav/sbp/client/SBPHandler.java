@@ -197,7 +197,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
                     if (msg != null) {
                         return msg;
                     }
-                } catch (InterruptedException ignored) { //NOSONAR
+                } catch (InterruptedException ignored) { // NOSONAR
                 }
             }
             // If we get here finished is set to true so there are no more messages available
