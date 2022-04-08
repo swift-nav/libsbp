@@ -2,3 +2,4 @@
 .deps
 build*/
 .clang-tidy
+compile_commands.json

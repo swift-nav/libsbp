@@ -217,16 +217,18 @@
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY_ENCODED_OVERHEAD 4u
 
 #define SBP_MSG_LINUX_CPU_STATE 0x7F08
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK (0x7)
+#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK (0x7u)
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GET(flags)           \
-  ((u8)(((flags) >> SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT) & \
+#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT) & \
         SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK))
-#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SET(flags, val)                  \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags) | (((val) & (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK)) \
-                        << (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT)));    \
+#define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SET(flags, val)                \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u8)((flags & (~(SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK          \
+                         << SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT))) | \
+             (((val) & (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_MASK))         \
+              << (SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SHIFT)));            \
   } while (0)
 
 #define SBP_LINUX_CPU_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
@@ -261,16 +263,18 @@
 #define SBP_MSG_LINUX_CPU_STATE_ENCODED_OVERHEAD 24u
 
 #define SBP_MSG_LINUX_MEM_STATE 0x7F09
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK (0x7)
+#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK (0x7u)
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GET(flags)           \
-  ((u8)(((flags) >> SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT) & \
+#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT) & \
         SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK))
-#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SET(flags, val)                  \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags) | (((val) & (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK)) \
-                        << (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT)));    \
+#define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SET(flags, val)                \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u8)((flags & (~(SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK          \
+                         << SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT))) | \
+             (((val) & (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_MASK))         \
+              << (SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SHIFT)));            \
   } while (0)
 
 #define SBP_LINUX_MEM_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
@@ -305,16 +309,18 @@
 #define SBP_MSG_LINUX_MEM_STATE_ENCODED_OVERHEAD 24u
 
 #define SBP_MSG_LINUX_SYS_STATE 0x7F0A
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK (0x7)
+#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK (0x7u)
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT (0u)
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GET(flags)           \
-  ((u8)(((flags) >> SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT) & \
+#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT) & \
         SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK))
-#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SET(flags, val)                  \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags) | (((val) & (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK)) \
-                        << (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT)));    \
+#define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SET(flags, val)                \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u8)((flags & (~(SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK          \
+                         << SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT))) | \
+             (((val) & (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_MASK))         \
+              << (SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SHIFT)));            \
   } while (0)
 
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_SYSTEM_TIME_IN_SECONDS (0)
