@@ -116,11 +116,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
     public void removeCallback(SBPCallback cb) {
         synchronized (callbacks) {
             for (List<Reference<SBPCallback>> cblist : callbacks.values()) {
-                for (Reference<SBPCallback> ref : cblist) {
-                    if (ref.get() == cb) {
-                        cblist.remove(ref);
-                    }
-                }
+                cblist.removeIf(ref -> ref.get() == cb);
             }
             strongCallbacks.remove(cb);
         }
@@ -201,9 +197,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
                     if (msg != null) {
                         return msg;
                     }
-                    continue;
-                } catch (InterruptedException e) {
-                    continue;
+                } catch (InterruptedException ignored) { // NOSONAR
                 }
             }
             // If we get here finished is set to true so there are no more messages available

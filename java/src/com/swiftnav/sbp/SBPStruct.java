@@ -20,7 +20,7 @@ public abstract class SBPStruct {
 
     protected abstract void build(SBPMessage.Builder builder);
 
-    protected abstract <T> T parse(SBPMessage.Parser parser) throws SBPBinaryException;
+    protected abstract SBPStruct parse(SBPMessage.Parser parser) throws SBPBinaryException;
 
     protected abstract JSONObject toJSON();
 
