@@ -1,3 +1,5 @@
+package com.swiftnav.sbp.examples;
+
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.client.SBPFramer;
 import com.swiftnav.sbp.client.SBPHandler;
