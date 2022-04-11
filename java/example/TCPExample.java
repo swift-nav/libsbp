@@ -1,17 +1,15 @@
 package com.swiftnav.sbp.examples;
 
+
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.client.SBPFramer;
 import com.swiftnav.sbp.client.SBPHandler;
 import com.swiftnav.sbp.drivers.SBPDriverTCP;
-import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.navigation.MsgPosLLH;
-import com.swiftnav.sbp.tracking.MsgTrackingState;
-import com.swiftnav.sbp.tracking.TrackingChannelState;
 
 public class TCPExample {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("usage: TCPExample <server> <port>");
             return;
