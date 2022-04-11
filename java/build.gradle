@@ -12,9 +12,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.github.java-native:jssc:2.9.2'
-    implementation 'org.json:json:20210307'
-    testImplementation 'junit:junit:4.13'
+    implementation 'io.github.java-native:jssc:2.9.4'
+    implementation 'org.json:json:20220320'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 sourceSets {
@@ -72,7 +72,7 @@ spotless {
     endWithNewline()
     removeUnusedImports()
 
-    licenseHeader '/* Copyright (C) 2015-2021 Swift Navigation Inc.\n' +
+    licenseHeader '/* Copyright (C) 2015-2022 Swift Navigation Inc.\n' +
                   ' * Contact: https://support.swiftnav.com\n' +
                   ' *\n' +
                   ' * This source is subject to the license found in the file \'LICENSE\' which must\n' +

@@ -1,3 +1,13 @@
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
 package com.swiftnav.sbp.examples;
 
 
@@ -18,7 +28,6 @@ public class TCPExample {
         int port = Integer.parseInt(args[1]);
         new TCPExample().start(server, port);
     }
-
 
     public void start(String server, int port) {
         SBPFramer framer = new SBPFramer(new SBPDriverTCP(server, port));
