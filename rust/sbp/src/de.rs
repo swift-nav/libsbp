@@ -1,4 +1,7 @@
-use std::io;
+use std::{
+    io,
+    time::{Duration, Instant},
+};
 
 use bytes::{Buf, BytesMut};
 use dencode::{Decoder, FramedRead};
@@ -41,12 +44,29 @@ pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, 
     SbpDecoder::framed(input)
 }
 
+/// Deserialize the IO stream into an iterator of messages. Provide a timeout
+/// for the maximum allowed duration without a successful message.
+pub fn iter_messages_with_timeout<R: io::Read>(
+    input: R,
+    timeout_duration: Duration,
+) -> impl Iterator<Item = Result<Sbp, Error>> {
+    TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
+}
+
 /// Deserialize the async IO stream into an stream of messages.
 #[cfg(feature = "async")]
 pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     input: R,
 ) -> impl futures::Stream<Item = Result<Sbp, Error>> {
     SbpDecoder::framed(input)
+}
+
+#[cfg(feature = "async")]
+pub fn stream_messages_with_timeout<R: futures::AsyncRead + Unpin>(
+    input: R,
+    timeout_duration: Duration,
+) -> impl futures::Stream<Item = Result<Sbp, Error>> {
+    TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
 }
 
 pub fn parse_frame(buf: &mut BytesMut) -> Option<Result<Frame<BytesMut>, CrcError>> {
@@ -196,6 +216,58 @@ impl Decoder for SbpDecoder {
     }
 }
 
+#[derive(Debug)]
+pub struct TimeoutError;
+
+impl std::error::Error for TimeoutError {}
+impl std::fmt::Display for TimeoutError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "timeout waiting for valid message",)
+    }
+}
+
+struct TimeoutSbpDecoder {
+    decoder: SbpDecoder,
+    timeout_duration: Duration,
+    last_msg_received: Instant,
+}
+
+impl TimeoutSbpDecoder {
+    fn new(timeout_duration: Duration) -> Self {
+        Self {
+            decoder: SbpDecoder,
+            timeout_duration,
+            last_msg_received: Instant::now(),
+        }
+    }
+    fn framed_with_timeout<W>(
+        writer: W,
+        timeout_duration: Duration,
+    ) -> FramedRead<W, TimeoutSbpDecoder> {
+        FramedRead::new(writer, Self::new(timeout_duration))
+    }
+}
+
+impl Decoder for TimeoutSbpDecoder {
+    type Item = Sbp;
+    type Error = Error;
+
+    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
+        if self.last_msg_received.elapsed() > self.timeout_duration {
+            return Err(std::io::Error::new(std::io::ErrorKind::TimedOut, "timeout").into());
+        }
+        let res = self.decoder.decode(src);
+        if let Ok(Some(_)) = res {
+            self.last_msg_received = Instant::now();
+        }
+        res
+    }
+
+    fn decode_eof(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
+        self.decoder.decode_eof(buf)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use std::{convert::TryInto, io::Cursor};
@@ -205,6 +277,59 @@ mod tests {
     use crate::{messages::navigation::MsgBaselineEcef, wire_format::WireFormat};
 
     use super::*;
+
+    struct ZeroReader;
+
+    impl std::io::Read for ZeroReader {
+        fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
+            Ok(buf.len())
+        }
+    }
+
+    /// Test iter_messages_with_timeout for handling a zero reader.
+    #[test]
+    fn test_iter_messages_with_timeout_zero_reader() {
+        let rdr = ZeroReader;
+        let timeout_duration = Duration::from_secs(2);
+        let now = Instant::now();
+        let mut messages = iter_messages_with_timeout(rdr, timeout_duration);
+        for msg in &mut messages {
+            assert!(matches!(msg, Err(Error::IoError(_))));
+            break;
+        }
+        assert!(now.elapsed() >= timeout_duration);
+    }
+
+    struct NeverPreambleReader {
+        idx: usize,
+    }
+
+    impl std::io::Read for NeverPreambleReader {
+        fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
+            for b in buf.iter_mut() {
+                self.idx += 1;
+                if self.idx % PREAMBLE as usize == 0 {
+                    self.idx += 1;
+                }
+                *b = (self.idx % u8::MAX as usize) as u8;
+            }
+            Ok(buf.len())
+        }
+    }
+
+    /// Test iter_messages_with_timeout for handling a reader that never contains a preamble.
+    #[test]
+    fn test_iter_messages_with_timeout_never_preamble_reader() {
+        let rdr = NeverPreambleReader { idx: 0 };
+        let timeout_duration = Duration::from_secs(2);
+        let now = Instant::now();
+        let mut messages = iter_messages_with_timeout(rdr, timeout_duration);
+        for msg in &mut messages {
+            assert!(matches!(msg, Err(Error::IoError(_))));
+            break;
+        }
+        assert!(now.elapsed() >= timeout_duration);
+    }
 
     /// Test parsing when we don't have enough data for a frame message
     #[test]
