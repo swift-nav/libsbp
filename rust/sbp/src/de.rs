@@ -216,16 +216,6 @@ impl Decoder for SbpDecoder {
     }
 }
 
-#[derive(Debug)]
-pub struct TimeoutError;
-
-impl std::error::Error for TimeoutError {}
-impl std::fmt::Display for TimeoutError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "timeout waiting for valid message",)
-    }
-}
-
 struct TimeoutSbpDecoder {
     decoder: SbpDecoder,
     timeout_duration: Duration,
@@ -270,7 +260,10 @@ impl Decoder for TimeoutSbpDecoder {
 
 #[cfg(test)]
 mod tests {
-    use std::{convert::TryInto, io::Cursor};
+    use std::{
+        convert::TryInto,
+        io::{Cursor, Write},
+    };
 
     use bytes::BufMut;
 
@@ -278,49 +271,19 @@ mod tests {
 
     use super::*;
 
-    struct ZeroReader;
-
-    impl std::io::Read for ZeroReader {
-        fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
-            Ok(buf.len())
-        }
-    }
-
-    /// Test iter_messages_with_timeout for handling a zero reader.
-    #[test]
-    fn test_iter_messages_with_timeout_zero_reader() {
-        let rdr = ZeroReader;
-        let timeout_duration = Duration::from_secs(2);
-        let now = Instant::now();
-        let mut messages = iter_messages_with_timeout(rdr, timeout_duration);
-        for msg in &mut messages {
-            assert!(matches!(msg, Err(Error::IoError(_))));
-            break;
-        }
-        assert!(now.elapsed() >= timeout_duration);
-    }
-
-    struct NeverPreambleReader {
-        idx: usize,
-    }
+    struct NeverPreambleReader;
 
     impl std::io::Read for NeverPreambleReader {
-        fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
-            for b in buf.iter_mut() {
-                self.idx += 1;
-                if self.idx % PREAMBLE as usize == 0 {
-                    self.idx += 1;
-                }
-                *b = (self.idx % u8::MAX as usize) as u8;
-            }
-            Ok(buf.len())
+        fn read(&mut self, mut buf: &mut [u8]) -> std::io::Result<usize> {
+            buf.write_all(&[0])?;
+            Ok(1)
         }
     }
 
-    /// Test iter_messages_with_timeout for handling a reader that never contains a preamble.
+    /// Test iter_messages_with_timeout for handling a reader that never returns a PREAMBLE.
     #[test]
-    fn test_iter_messages_with_timeout_never_preamble_reader() {
-        let rdr = NeverPreambleReader { idx: 0 };
+    fn test_iter_messages_with_timeout() {
+        let rdr = NeverPreambleReader;
         let timeout_duration = Duration::from_secs(2);
         let now = Instant::now();
         let mut messages = iter_messages_with_timeout(rdr, timeout_duration);
