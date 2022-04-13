@@ -507,9 +507,9 @@ TEST(TestUnterminatedString, AppendPrintf)
   auto vprintf_wrapper = [&s, &n_written, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    size_t ret = sbp_unterminated_string_append_vprintf(&s, maxlen, false, &n_written, fmt, ap);
+    SBP_BOOL ret = sbp_unterminated_string_append_vprintf(&s, maxlen, false, &n_written, fmt, ap);
     va_end(ap);
-    return ret;
+    return ret == SBP_TRUE;
   };
 
   // Appending in to an empty buffer is a valid operation, essentially the same as calling set

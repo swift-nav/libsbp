@@ -348,9 +348,9 @@ TEST(TestNullTerminatedString, Printf)
   auto vprintf_wrapper = [&s, &n_written, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    size_t ret = sbp_null_terminated_string_vprintf(&s, maxlen, false, &n_written, fmt, ap);
+    SBP_BOOL ret = sbp_null_terminated_string_vprintf(&s, maxlen, false, &n_written, fmt, ap);
     va_end(ap);
-    return ret;
+    return ret == SBP_TRUE;
   };
 
   // A valid string
@@ -403,9 +403,9 @@ TEST(TestNullTerminatedString, PrintfTruncating)
   auto vprintf_wrapper = [&s, &n_written, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    size_t ret = sbp_null_terminated_string_vprintf(&s, maxlen, true, &n_written, fmt, ap);
+    SBP_BOOL ret = sbp_null_terminated_string_vprintf(&s, maxlen, true, &n_written, fmt, ap);
     va_end(ap);
-    return ret;
+    return ret == SBP_TRUE;
   };
 
   // A valid string
@@ -510,9 +510,9 @@ TEST(TestNullTerminatedString, AppendPrintf)
   auto vprintf_wrapper = [&s, &n_written, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    size_t ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, false, &n_written, fmt, ap);
+    SBP_BOOL ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, false, &n_written, fmt, ap);
     va_end(ap);
-    return ret;
+    return ret == SBP_TRUE;
   };
 
   // Appending in to an empty buffer is a valid operation, essentially the same as calling set
@@ -583,9 +583,9 @@ TEST(TestNullTerminatedString, AppendPrintfTruncating)
   auto vprintf_wrapper = [&s, &n_written, maxlen](const char *fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-    size_t ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, true, &n_written, fmt, ap);
+    SBP_BOOL ret = sbp_null_terminated_string_append_vprintf(&s, maxlen, true, &n_written, fmt, ap);
     va_end(ap);
-    return ret;
+    return ret == SBP_TRUE;
   };
 
   // Appending in to an empty buffer is a valid operation, essentially the same as calling set
