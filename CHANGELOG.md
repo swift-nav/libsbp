@@ -1,5 +1,20 @@
 # Changelog
 
+## [v4.1.6](https://github.com/swift-nav/libsbp/tree/v4.1.6) (2022-04-13)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.5...v4.1.6)
+
+**Merged pull requests:**
+
+- Add generated copyright messages [\#1114](https://github.com/swift-nav/libsbp/pull/1114) ([joelynch](https://github.com/joelynch))
+- Added TCPExample for Java client [\#1112](https://github.com/swift-nav/libsbp/pull/1112) ([adrian-kong](https://github.com/adrian-kong))
+- Add a rust sbp iterator variant with timeout [\#1111](https://github.com/swift-nav/libsbp/pull/1111) ([john-michaelburke](https://github.com/john-michaelburke))
+- Fix C Bitfield Macros [\#1110](https://github.com/swift-nav/libsbp/pull/1110) ([isaactorz](https://github.com/isaactorz))
+- Suppressed warnings and deprecation notices for Java [\#1107](https://github.com/swift-nav/libsbp/pull/1107) ([adrian-kong](https://github.com/adrian-kong))
+- Fix Bitfield Ranges in MSG\_STARTUP [\#1106](https://github.com/swift-nav/libsbp/pull/1106) ([isaactorz](https://github.com/isaactorz))
+- Add a SbpMsgUnknown type in for the sbp\_msg\_type\_t enum [\#1105](https://github.com/swift-nav/libsbp/pull/1105) ([lkloh](https://github.com/lkloh))
+- Add Message API Change Validation [\#1102](https://github.com/swift-nav/libsbp/pull/1102) ([isaactorz](https://github.com/isaactorz))
+
 ## [v4.1.5](https://github.com/swift-nav/libsbp/tree/v4.1.5) (2022-03-29)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.4...v4.1.5)
