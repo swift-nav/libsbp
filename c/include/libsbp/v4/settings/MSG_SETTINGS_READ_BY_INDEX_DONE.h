@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -56,11 +55,8 @@ typedef struct {
  * @param msg sbp_msg_settings_read_by_index_done_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_settings_read_by_index_done_encoded_len(
-    const sbp_msg_settings_read_by_index_done_t *msg) {
-  (void)msg;
-  return SBP_MSG_SETTINGS_READ_BY_INDEX_DONE_ENCODED_LEN;
-}
+size_t sbp_msg_settings_read_by_index_done_encoded_len(
+    const sbp_msg_settings_read_by_index_done_t *msg);
 
 /**
  * Encode an instance of sbp_msg_settings_read_by_index_done_t to wire
@@ -184,6 +180,6 @@ static inline bool operator>=(
   return sbp_msg_settings_read_by_index_done_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_READ_BY_INDEX_DONE_H */

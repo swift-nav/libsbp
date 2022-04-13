@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,22 +9,24 @@
 
 int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
                    size_t maxlen, const sbp_string_params_t *params) {
-  bool avalid = params->valid(a, maxlen);
-  bool bvalid = params->valid(b, maxlen);
+  SBP_BOOL avalid = params->valid(a, maxlen);
+  SBP_BOOL bvalid = params->valid(b, maxlen);
+  size_t cmp_len;
+  int ret;
   if (!avalid) {
     return bvalid ? -1 : 0;
   }
   if (!bvalid) {
     return avalid ? 1 : 0;
   }
-  size_t cmp_len = maxlen;
+  cmp_len = maxlen;
   if (a->encoded_len < cmp_len) {
     cmp_len = a->encoded_len;
   }
   if (b->encoded_len < cmp_len) {
     cmp_len = b->encoded_len;
   }
-  int ret = memcmp(a->data, b->data, cmp_len);
+  ret = memcmp(a->data, b->data, cmp_len);
   if (ret != 0) {
     return ret;
   }
@@ -35,35 +36,37 @@ int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
   return a->encoded_len > b->encoded_len ? 1 : -1;
 }
 
-static bool copy_str(char *buf, size_t *copied, size_t max, const char *str,
+static SBP_BOOL copy_str(char *buf, size_t *copied, size_t max, const char *str,
                      size_t str_len) {
   if (str_len >= max) {
-    return false;
+    return SBP_FALSE;
   }
   memcpy(buf, str, str_len);
   buf[str_len] = '\0';
   *copied = str_len + 1;
-  return true;
+  return SBP_TRUE;
 }
 
-bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
+SBP_BOOL sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
                             const char *str, size_t n) {
   return copy_str(buf, copied, max, str, n);
 }
 
-bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool should_trunc,
+SBP_BOOL sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, SBP_BOOL should_trunc,
                                const char *fmt, va_list ap) {
   char tmp[256];
-  int n = vsnprintf(tmp, sizeof(tmp), fmt, ap);
+  size_t trunc_len;
+  size_t len;
+  int n = vsprintf(tmp, fmt, ap);
   if (n < 0) {
-    return false;
+    return SBP_FALSE;
   }
-  size_t trunc_len = (max - 1) < (size_t)n ? (max - 1) : (size_t)n;
-  size_t len = should_trunc ? trunc_len : (size_t)n;
+  trunc_len = (max - 1) < (size_t)n ? (max - 1) : (size_t)n;
+  len = should_trunc ? trunc_len : (size_t)n;
   return copy_str(buf, copied, max, tmp, len);
 }
 
-bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_string_encode(const sbp_string_t *s, size_t maxlen,
                        sbp_encode_ctx_t *ctx,
                        const sbp_string_params_t *params) {
   const char *src;
@@ -76,24 +79,26 @@ bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
     copy_len = params->default_output_len;
   }
   if ((ctx->buf_len - ctx->offset) < copy_len) {
-    return false;
+    return SBP_FALSE;
   }
   memcpy(&ctx->buf[ctx->offset], src, copy_len);
   ctx->offset += copy_len;
-  return true;
+  return SBP_TRUE;
 }
 
-bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_string_decode(sbp_string_t *s, size_t maxlen,
                        sbp_decode_ctx_t *ctx,
                        const sbp_string_params_t *params) {
+  size_t available;
+
   params->init(s);
-  size_t available = ctx->buf_len - ctx->offset;
-  // Take everything or nothing
+  available = ctx->buf_len - ctx->offset;
+  /* Take everything or nothing */
   if (available > maxlen) {
-    return false;
+    return SBP_FALSE;
   }
   if (params->inject_missing_terminator && available == 0) {
-    return false;
+    return SBP_FALSE;
   }
   memcpy(s->data, ctx->buf + ctx->offset, available);
   s->encoded_len = available;
@@ -105,8 +110,8 @@ bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
   }
   if (!params->valid(s, maxlen)) {
     params->init(s);
-    return false;
+    return SBP_FALSE;
   }
   ctx->offset += available;
-  return true;
+  return SBP_TRUE;
 }

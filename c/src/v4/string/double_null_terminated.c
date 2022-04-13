@@ -9,11 +9,11 @@
 #define MINIMUM_ENCODED_LEN 2
 
 static const sbp_string_params_t params = {
-    .valid = sbp_double_null_terminated_string_valid,
-    .init = sbp_double_null_terminated_string_init,
-    .default_output = "\0", // Plus extra NULL terminator, total of 2 NULLs
-    .default_output_len = MINIMUM_ENCODED_LEN,
-    .inject_missing_terminator = false,
+    sbp_double_null_terminated_string_valid,
+    sbp_double_null_terminated_string_init,
+    "\0", /* Plus extra NULL terminator, total of 2 NULLs */
+    MINIMUM_ENCODED_LEN,
+    SBP_FALSE,
 };
 
 static void maybe_init(sbp_string_t *s, size_t maxlen) {
@@ -27,13 +27,13 @@ void sbp_double_null_terminated_string_init(sbp_string_t *s) {
   s->encoded_len = MINIMUM_ENCODED_LEN;
 }
 
-bool sbp_double_null_terminated_string_valid(const sbp_string_t *s,
+SBP_BOOL sbp_double_null_terminated_string_valid(const sbp_string_t *s,
                                              size_t maxlen) {
   if (s->encoded_len < MINIMUM_ENCODED_LEN) {
-    return false;
+    return SBP_FALSE;
   }
   if (s->encoded_len > maxlen) {
-    return false;
+    return SBP_FALSE;
   }
   return s->data[s->encoded_len - 1] == 0 && s->data[s->encoded_len - 2] == 0;
 }
@@ -60,16 +60,18 @@ size_t sbp_double_null_terminated_string_space_remaining(
 
 size_t sbp_double_null_terminated_string_count_sections(
     const sbp_string_t *s, size_t maxlen) {
+  size_t i;
+  size_t sections = 0;
   if (!sbp_double_null_terminated_string_valid(s, maxlen)) {
     return 0;
   }
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
     return 0;
   }
-  // Only count up to one less than the encoded len to avoid the extra NULL
-  // terminator, count NULL terminators
-  size_t sections = 0;
-  for (size_t i = 0; i < s->encoded_len - 1; i++) {
+  /* Only count up to one less than the encoded len to avoid the extra NULL
+   * terminator, count NULL terminators
+   */
+  for (i = 0; i < s->encoded_len - 1; i++) {
     if (s->data[i] == 0) {
       sections++;
     }
@@ -78,8 +80,9 @@ size_t sbp_double_null_terminated_string_count_sections(
 }
 
 static size_t section_offset(const sbp_string_t *s, size_t section) {
+  size_t i;
   size_t n_section = 0;
-  for (size_t i = 0; i < s->encoded_len - 1; i++) {
+  for (i = 0; i < s->encoded_len - 1; i++) {
     if (n_section == section) {
       return i;
     }
@@ -93,121 +96,123 @@ static size_t section_offset(const sbp_string_t *s, size_t section) {
 size_t sbp_double_null_terminated_string_section_strlen(const sbp_string_t *s,
                                                         size_t maxlen,
                                                         size_t section) {
+  size_t offset;
   if (!sbp_double_null_terminated_string_valid(s, maxlen)) {
     return 0;
   }
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
     return 0;
   }
-  size_t offset = section_offset(s, section);
+  offset = section_offset(s, section);
   if (offset == SIZE_MAX) {
     return 0;
   }
   return sbp_strnlen(s->data + offset, s->encoded_len - offset);
 }
 
-bool sbp_double_null_terminated_string_add_section(sbp_string_t *s,
+SBP_BOOL sbp_double_null_terminated_string_add_section(sbp_string_t *s,
                                                    size_t maxlen,
                                                    const char *str) {
+  size_t copied;
   maybe_init(s, maxlen);
 
-  size_t copied;
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
     if (!sbp_string_copy_to_buf(s->data, &copied, maxlen - 1, str, sbp_strnlen(str, maxlen))) {
-      return false;
+      return SBP_FALSE;
     }
-    s->encoded_len = copied + 1;  // Extra null terminator
-    return true;
+    s->encoded_len = copied + 1;  /* Extra null terminator */
+    return SBP_TRUE;
   }
 
   if (!sbp_string_copy_to_buf(s->data + s->encoded_len - 1, &copied,
                               maxlen - s->encoded_len + 1, str, sbp_strnlen(str, maxlen))) {
-    return false;
+    return SBP_FALSE;
   }
   s->encoded_len += copied;
-  return true;
+  return SBP_TRUE;
 }
 
-bool sbp_double_null_terminated_string_add_section_vprintf(
+SBP_BOOL sbp_double_null_terminated_string_add_section_vprintf(
     sbp_string_t *s, size_t maxlen, const char *fmt, va_list ap) {
+  size_t copied;
   maybe_init(s, maxlen);
 
-  size_t copied;
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
-    if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen - 1, false, fmt,
+    if (!sbp_string_vprintf_to_buf(s->data, &copied, maxlen - 1, SBP_FALSE, fmt,
                                    ap)) {
-      return false;
+      return SBP_FALSE;
     }
     s->encoded_len = copied + 1;
-    return true;
+    return SBP_TRUE;
   }
 
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len - 1, &copied,
-                                 maxlen - s->encoded_len + 1, false, fmt,
+                                 maxlen - s->encoded_len + 1, SBP_FALSE, fmt,
                                  ap)) {
-    return false;
+    return SBP_FALSE;
   }
   s->encoded_len += copied;
-  return true;
+  return SBP_TRUE;
 }
 
-bool sbp_double_null_terminated_string_append(sbp_string_t *s,
+SBP_BOOL sbp_double_null_terminated_string_append(sbp_string_t *s,
                                               size_t maxlen,
                                               const char *new_str) {
+  size_t copied;
   maybe_init(s, maxlen);
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
     return sbp_double_null_terminated_string_add_section(s, maxlen,
                                                          new_str);
   }
 
-  size_t copied;
   if (!sbp_string_copy_to_buf(s->data + s->encoded_len - 2, &copied,
                               maxlen - s->encoded_len + 1, new_str, sbp_strnlen(new_str, maxlen))) {
-    return false;
+    return SBP_FALSE;
   }
   s->encoded_len += copied - 1;
-  return true;
+  return SBP_TRUE;
 }
 
-bool sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
+SBP_BOOL sbp_double_null_terminated_string_append_vprintf(sbp_string_t *s,
                                                       size_t maxlen,
                                                       const char *fmt,
                                                       va_list ap) {
+  size_t copied;
   maybe_init(s, maxlen);
   if (s->encoded_len == MINIMUM_ENCODED_LEN) {
     return sbp_double_null_terminated_string_add_section_vprintf(
         s, maxlen, fmt, ap);
   }
 
-  size_t copied;
   if (!sbp_string_vprintf_to_buf(s->data + s->encoded_len - 2, &copied,
-                                 maxlen - s->encoded_len + 1, false, fmt,
+                                 maxlen - s->encoded_len + 1, SBP_FALSE, fmt,
                                  ap)) {
-    return false;
+    return SBP_FALSE;
   }
   s->encoded_len += copied - 1;
-  return true;
+  return SBP_TRUE;
 }
 
 const char *sbp_double_null_terminated_string_get_section(
     const sbp_string_t *s, size_t maxlen, size_t section) {
+  size_t offset;
   if (!sbp_double_null_terminated_string_valid(s, maxlen)) {
     return NULL;
   }
-  size_t offset = section_offset(s, section);
+  offset = section_offset(s, section);
   if (offset == SIZE_MAX) {
     return NULL;
   }
   return s->data + offset;
 }
 
-bool sbp_double_null_terminated_string_encode(const sbp_string_t *s,
+SBP_BOOL sbp_double_null_terminated_string_encode(const sbp_string_t *s,
                                               size_t maxlen,
                                               sbp_encode_ctx_t *ctx) {
   return sbp_string_encode(s, maxlen, ctx, &params);
 }
 
-bool sbp_double_null_terminated_string_decode(sbp_string_t *s,
+SBP_BOOL sbp_double_null_terminated_string_decode(sbp_string_t *s,
                                               size_t maxlen,
                                               sbp_decode_ctx_t *ctx) {
   return sbp_string_decode(s, maxlen, ctx, &params);

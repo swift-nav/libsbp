@@ -3,7 +3,6 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,11 +15,17 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/bootload.h>
 
-bool sbp_msg_bootloader_handshake_req_encode_internal(
+size_t sbp_msg_bootloader_handshake_req_encoded_len(
+    const sbp_msg_bootloader_handshake_req_t *msg) {
+  (void)msg;
+  return SBP_MSG_BOOTLOADER_HANDSHAKE_REQ_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_bootloader_handshake_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_req_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_handshake_req_encode(
@@ -39,11 +44,11 @@ s8 sbp_msg_bootloader_handshake_req_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_bootloader_handshake_req_decode_internal(
+SBP_BOOL sbp_msg_bootloader_handshake_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_req_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_handshake_req_decode(
@@ -79,9 +84,11 @@ s8 sbp_msg_bootloader_handshake_req_send(
 int sbp_msg_bootloader_handshake_req_cmp(
     const sbp_msg_bootloader_handshake_req_t *a,
     const sbp_msg_bootloader_handshake_req_t *b) {
+  int ret = 0;
+  uint8_t i;
+  (void)i;
   (void)a;
   (void)b;
-  int ret = 0;
   return ret;
 }
 
@@ -90,7 +97,7 @@ void sbp_msg_bootloader_handshake_resp_version_init(
   sbp_unterminated_string_init(&msg->version);
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_valid(
+SBP_BOOL sbp_msg_bootloader_handshake_resp_version_valid(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
   return sbp_unterminated_string_valid(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX);
@@ -114,56 +121,58 @@ size_t sbp_msg_bootloader_handshake_resp_version_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX);
 }
-bool sbp_msg_bootloader_handshake_resp_version_set(
+SBP_BOOL sbp_msg_bootloader_handshake_resp_version_set(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *new_str,
-    bool should_trunc, size_t *n_written) {
+    SBP_BOOL should_trunc, size_t *n_written) {
   return sbp_unterminated_string_set(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX,
       should_trunc, n_written, new_str);
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_set_raw(
+SBP_BOOL sbp_msg_bootloader_handshake_resp_version_set_raw(
     sbp_msg_bootloader_handshake_resp_t *msg, const char *new_buf,
-    size_t new_buf_len, bool should_trunc, size_t *n_written) {
+    size_t new_buf_len, SBP_BOOL should_trunc, size_t *n_written) {
   return sbp_unterminated_string_set_raw(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX,
       should_trunc, n_written, new_buf, new_buf_len);
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_printf(
-    sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_resp_version_printf(
+    sbp_msg_bootloader_handshake_resp_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(
+  ret = sbp_unterminated_string_vprintf(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX,
       should_trunc, n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_vprintf(
-    sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_resp_version_vprintf(
+    sbp_msg_bootloader_handshake_resp_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX,
       should_trunc, n_written, fmt, ap);
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_append_printf(
-    sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_resp_version_append_printf(
+    sbp_msg_bootloader_handshake_resp_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_append_vprintf(
+  ret = sbp_unterminated_string_append_vprintf(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX,
       should_trunc, n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_resp_version_append_vprintf(
-    sbp_msg_bootloader_handshake_resp_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_resp_version_append_vprintf(
+    sbp_msg_bootloader_handshake_resp_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX,
@@ -182,16 +191,24 @@ size_t sbp_msg_bootloader_handshake_resp_version_strlen(
       &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX);
 }
 
-bool sbp_msg_bootloader_handshake_resp_encode_internal(
+size_t sbp_msg_bootloader_handshake_resp_encoded_len(
+    const sbp_msg_bootloader_handshake_resp_t *msg) {
+  return SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_ENCODED_OVERHEAD +
+         sbp_msg_bootloader_handshake_resp_version_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_bootloader_handshake_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_resp_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u32_encode(ctx, &msg->flags)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_unterminated_string_encode(
           &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_handshake_resp_encode(
@@ -210,16 +227,18 @@ s8 sbp_msg_bootloader_handshake_resp_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_bootloader_handshake_resp_decode_internal(
+SBP_BOOL sbp_msg_bootloader_handshake_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_resp_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u32_decode(ctx, &msg->flags)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_unterminated_string_decode(
           &msg->version, SBP_MSG_BOOTLOADER_HANDSHAKE_RESP_VERSION_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_handshake_resp_decode(
@@ -256,6 +275,8 @@ int sbp_msg_bootloader_handshake_resp_cmp(
     const sbp_msg_bootloader_handshake_resp_t *a,
     const sbp_msg_bootloader_handshake_resp_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u32_cmp(&a->flags, &b->flags);
   if (ret != 0) {
@@ -269,12 +290,20 @@ int sbp_msg_bootloader_handshake_resp_cmp(
   return ret;
 }
 
-bool sbp_msg_bootloader_jump_to_app_encode_internal(
+size_t sbp_msg_bootloader_jump_to_app_encoded_len(
+    const sbp_msg_bootloader_jump_to_app_t *msg) {
+  (void)msg;
+  return SBP_MSG_BOOTLOADER_JUMP_TO_APP_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_bootloader_jump_to_app_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_jump_to_app_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u8_encode(ctx, &msg->jump)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_jump_to_app_encode(
@@ -293,12 +322,14 @@ s8 sbp_msg_bootloader_jump_to_app_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_bootloader_jump_to_app_decode_internal(
+SBP_BOOL sbp_msg_bootloader_jump_to_app_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_bootloader_jump_to_app_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u8_decode(ctx, &msg->jump)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_jump_to_app_decode(
@@ -335,6 +366,8 @@ int sbp_msg_bootloader_jump_to_app_cmp(
     const sbp_msg_bootloader_jump_to_app_t *a,
     const sbp_msg_bootloader_jump_to_app_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u8_cmp(&a->jump, &b->jump);
   if (ret != 0) {
@@ -343,11 +376,17 @@ int sbp_msg_bootloader_jump_to_app_cmp(
   return ret;
 }
 
-bool sbp_msg_nap_device_dna_req_encode_internal(
+size_t sbp_msg_nap_device_dna_req_encoded_len(
+    const sbp_msg_nap_device_dna_req_t *msg) {
+  (void)msg;
+  return SBP_MSG_NAP_DEVICE_DNA_REQ_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_nap_device_dna_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_req_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_nap_device_dna_req_encode(uint8_t *buf, uint8_t len,
@@ -366,11 +405,11 @@ s8 sbp_msg_nap_device_dna_req_encode(uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-bool sbp_msg_nap_device_dna_req_decode_internal(
+SBP_BOOL sbp_msg_nap_device_dna_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_req_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_nap_device_dna_req_decode(const uint8_t *buf, uint8_t len,
@@ -405,20 +444,30 @@ s8 sbp_msg_nap_device_dna_req_send(sbp_state_t *s, u16 sender_id,
 
 int sbp_msg_nap_device_dna_req_cmp(const sbp_msg_nap_device_dna_req_t *a,
                                    const sbp_msg_nap_device_dna_req_t *b) {
+  int ret = 0;
+  uint8_t i;
+  (void)i;
   (void)a;
   (void)b;
-  int ret = 0;
   return ret;
 }
 
-bool sbp_msg_nap_device_dna_resp_encode_internal(
+size_t sbp_msg_nap_device_dna_resp_encoded_len(
+    const sbp_msg_nap_device_dna_resp_t *msg) {
+  (void)msg;
+  return SBP_MSG_NAP_DEVICE_DNA_RESP_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_nap_device_dna_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_nap_device_dna_resp_t *msg) {
-  for (size_t i = 0; i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX; i++) {
+  size_t i;
+  (void)i;
+  for (i = 0; i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->dna[i])) {
-      return false;
+      return SBP_FALSE;
     }
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_nap_device_dna_resp_encode(
@@ -437,14 +486,16 @@ s8 sbp_msg_nap_device_dna_resp_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_nap_device_dna_resp_decode_internal(
+SBP_BOOL sbp_msg_nap_device_dna_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_nap_device_dna_resp_t *msg) {
-  for (uint8_t i = 0; i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX; i++) {
+  uint8_t i;
+  (void)i;
+  for (i = 0; i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->dna[i])) {
-      return false;
+      return SBP_FALSE;
     }
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_nap_device_dna_resp_decode(const uint8_t *buf, uint8_t len,
@@ -480,9 +531,10 @@ s8 sbp_msg_nap_device_dna_resp_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_nap_device_dna_resp_cmp(const sbp_msg_nap_device_dna_resp_t *a,
                                     const sbp_msg_nap_device_dna_resp_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX;
-       i++) {
+  for (i = 0; ret == 0 && i < SBP_MSG_NAP_DEVICE_DNA_RESP_DNA_MAX; i++) {
     ret = sbp_u8_cmp(&a->dna[i], &b->dna[i]);
   }
   if (ret != 0) {
@@ -496,7 +548,7 @@ void sbp_msg_bootloader_handshake_dep_a_handshake_init(
   sbp_unterminated_string_init(&msg->handshake);
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_valid(
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_handshake_valid(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
   return sbp_unterminated_string_valid(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX);
@@ -521,56 +573,58 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_space_remaining(
   return sbp_unterminated_string_space_remaining(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX);
 }
-bool sbp_msg_bootloader_handshake_dep_a_handshake_set(
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_handshake_set(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_str,
-    bool should_trunc, size_t *n_written) {
+    SBP_BOOL should_trunc, size_t *n_written) {
   return sbp_unterminated_string_set(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
       should_trunc, n_written, new_str);
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_set_raw(
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_handshake_set_raw(
     sbp_msg_bootloader_handshake_dep_a_t *msg, const char *new_buf,
-    size_t new_buf_len, bool should_trunc, size_t *n_written) {
+    size_t new_buf_len, SBP_BOOL should_trunc, size_t *n_written) {
   return sbp_unterminated_string_set_raw(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
       should_trunc, n_written, new_buf, new_buf_len);
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_printf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_handshake_printf(
+    sbp_msg_bootloader_handshake_dep_a_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_vprintf(
+  ret = sbp_unterminated_string_vprintf(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
       should_trunc, n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_handshake_vprintf(
+    sbp_msg_bootloader_handshake_dep_a_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, va_list ap) {
   return sbp_unterminated_string_vprintf(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
       should_trunc, n_written, fmt, ap);
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_handshake_append_printf(
+    sbp_msg_bootloader_handshake_dep_a_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_unterminated_string_append_vprintf(
+  ret = sbp_unterminated_string_append_vprintf(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
       should_trunc, n_written, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
-    sbp_msg_bootloader_handshake_dep_a_t *msg, bool should_trunc,
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_handshake_append_vprintf(
+    sbp_msg_bootloader_handshake_dep_a_t *msg, SBP_BOOL should_trunc,
     size_t *n_written, const char *fmt, va_list ap) {
   return sbp_unterminated_string_append_vprintf(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
@@ -589,14 +643,22 @@ size_t sbp_msg_bootloader_handshake_dep_a_handshake_strlen(
       &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX);
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_encode_internal(
+size_t sbp_msg_bootloader_handshake_dep_a_encoded_len(
+    const sbp_msg_bootloader_handshake_dep_a_t *msg) {
+  return SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_ENCODED_OVERHEAD +
+         sbp_msg_bootloader_handshake_dep_a_handshake_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_bootloader_handshake_dep_a_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_unterminated_string_encode(
           &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
           ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_handshake_dep_a_encode(
@@ -615,14 +677,16 @@ s8 sbp_msg_bootloader_handshake_dep_a_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_bootloader_handshake_dep_a_decode_internal(
+SBP_BOOL sbp_msg_bootloader_handshake_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_bootloader_handshake_dep_a_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_unterminated_string_decode(
           &msg->handshake, SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A_HANDSHAKE_MAX,
           ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_bootloader_handshake_dep_a_decode(
@@ -659,6 +723,8 @@ int sbp_msg_bootloader_handshake_dep_a_cmp(
     const sbp_msg_bootloader_handshake_dep_a_t *a,
     const sbp_msg_bootloader_handshake_dep_a_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_msg_bootloader_handshake_dep_a_handshake_strcmp(a, b);
   if (ret != 0) {

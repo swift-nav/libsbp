@@ -18,8 +18,6 @@
 #ifndef LIBSBP_INTERNAL_V4_LOGGING_H
 #define LIBSBP_INTERNAL_V4_LOGGING_H
 
-#include <stdbool.h>
-
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/logging.h>
 
@@ -32,58 +30,58 @@ extern "C" {
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_log_encode_internal(sbp_encode_ctx_t *ctx,
-                                 const sbp_msg_log_t *msg);
+SBP_BOOL sbp_msg_log_encode_internal(sbp_encode_ctx_t *ctx,
+                                     const sbp_msg_log_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_log_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_log_t *msg);
+SBP_BOOL sbp_msg_log_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_log_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fwd_encode_internal(sbp_encode_ctx_t *ctx,
-                                 const sbp_msg_fwd_t *msg);
+SBP_BOOL sbp_msg_fwd_encode_internal(sbp_encode_ctx_t *ctx,
+                                     const sbp_msg_fwd_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fwd_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fwd_t *msg);
+SBP_BOOL sbp_msg_fwd_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_fwd_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_print_dep_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_msg_print_dep_t *msg);
+SBP_BOOL sbp_msg_print_dep_encode_internal(sbp_encode_ctx_t *ctx,
+                                           const sbp_msg_print_dep_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_print_dep_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_msg_print_dep_t *msg);
+SBP_BOOL sbp_msg_print_dep_decode_internal(sbp_decode_ctx_t *ctx,
+                                           sbp_msg_print_dep_t *msg);
 
 #ifdef __cplusplus
 }

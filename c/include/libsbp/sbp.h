@@ -100,7 +100,7 @@ enum sbp_cb_type {
   SBP_MSG_CALLBACK = 0,
   SBP_FRAME_CALLBACK = 1,
   SBP_DECODED_CALLBACK = 2,
-  SBP_CALLBACK_TYPE_COUNT = 3,
+  SBP_CALLBACK_TYPE_COUNT = 3
 };
 
 #define SBP_CALLBACK_FLAG(cb_type) (1u << (cb_type))

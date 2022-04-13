@@ -3,7 +3,6 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,33 +15,40 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/imu.h>
 
-bool sbp_msg_imu_raw_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_msg_imu_raw_t *msg) {
+size_t sbp_msg_imu_raw_encoded_len(const sbp_msg_imu_raw_t *msg) {
+  (void)msg;
+  return SBP_MSG_IMU_RAW_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_imu_raw_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_imu_raw_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u32_encode(ctx, &msg->tow)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->tow_f)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->acc_x)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->acc_y)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->acc_z)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->gyr_x)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->gyr_y)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->gyr_z)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_imu_raw_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -60,33 +66,35 @@ s8 sbp_msg_imu_raw_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_imu_raw_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_msg_imu_raw_t *msg) {
+SBP_BOOL sbp_msg_imu_raw_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_imu_raw_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u32_decode(ctx, &msg->tow)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->tow_f)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->acc_x)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->acc_y)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->acc_z)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->gyr_x)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->gyr_y)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->gyr_z)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_imu_raw_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
@@ -119,6 +127,8 @@ s8 sbp_msg_imu_raw_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_imu_raw_cmp(const sbp_msg_imu_raw_t *a,
                         const sbp_msg_imu_raw_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u32_cmp(&a->tow, &b->tow);
   if (ret != 0) {
@@ -162,18 +172,25 @@ int sbp_msg_imu_raw_cmp(const sbp_msg_imu_raw_t *a,
   return ret;
 }
 
-bool sbp_msg_imu_aux_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_msg_imu_aux_t *msg) {
+size_t sbp_msg_imu_aux_encoded_len(const sbp_msg_imu_aux_t *msg) {
+  (void)msg;
+  return SBP_MSG_IMU_AUX_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_imu_aux_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_imu_aux_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u8_encode(ctx, &msg->imu_type)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->temp)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->imu_conf)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_imu_aux_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -191,18 +208,20 @@ s8 sbp_msg_imu_aux_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_imu_aux_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_msg_imu_aux_t *msg) {
+SBP_BOOL sbp_msg_imu_aux_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_imu_aux_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u8_decode(ctx, &msg->imu_type)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->temp)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->imu_conf)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_imu_aux_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
@@ -235,6 +254,8 @@ s8 sbp_msg_imu_aux_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_imu_aux_cmp(const sbp_msg_imu_aux_t *a,
                         const sbp_msg_imu_aux_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u8_cmp(&a->imu_type, &b->imu_type);
   if (ret != 0) {

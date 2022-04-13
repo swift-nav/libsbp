@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -80,11 +79,8 @@ typedef struct {
  * @param msg sbp_packed_obs_content_dep_b_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_packed_obs_content_dep_b_encoded_len(
-    const sbp_packed_obs_content_dep_b_t *msg) {
-  (void)msg;
-  return SBP_PACKED_OBS_CONTENT_DEP_B_ENCODED_LEN;
-}
+size_t sbp_packed_obs_content_dep_b_encoded_len(
+    const sbp_packed_obs_content_dep_b_t *msg);
 
 /**
  * Encode an instance of sbp_packed_obs_content_dep_b_t to wire representation
@@ -180,6 +176,6 @@ static inline bool operator>=(const sbp_packed_obs_content_dep_b_t &lhs,
   return sbp_packed_obs_content_dep_b_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_OBSERVATION_PACKEDOBSCONTENTDEPB_H */

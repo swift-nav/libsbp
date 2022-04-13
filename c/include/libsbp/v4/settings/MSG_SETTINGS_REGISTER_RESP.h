@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -71,10 +70,10 @@ SBP_EXPORT void sbp_msg_settings_register_resp_setting_init(
  * Test sbp_msg_settings_register_resp_t::setting for validity
  *
  * @param msg sbp_msg_settings_register_resp_t instance
- * @return true is sbp_msg_settings_register_resp_t::setting is valid for
- * encoding purposes, false otherwise
+ * @return SBP_TRUE is sbp_msg_settings_register_resp_t::setting is valid for
+ * encoding purposes, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_settings_register_resp_setting_valid(
+SBP_EXPORT SBP_BOOL sbp_msg_settings_register_resp_setting_valid(
     const sbp_msg_settings_register_resp_t *msg);
 
 /**
@@ -127,13 +126,13 @@ SBP_EXPORT size_t sbp_msg_settings_register_resp_setting_count_sections(
  *
  * The specified string will be appended to the field as a new section. If the
  * new section would end up overflowing the maximum encoded length of this field
- * the string will not be changed and this function will return false
+ * the string will not be changed and this function will return SBP_FALSE
  *
  * @param msg sbp_msg_settings_register_resp_t instance
  * @param new_str New string
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_settings_register_resp_setting_add_section(
+SBP_EXPORT SBP_BOOL sbp_msg_settings_register_resp_setting_add_section(
     sbp_msg_settings_register_resp_t *msg, const char *new_str);
 
 /**
@@ -143,13 +142,13 @@ SBP_EXPORT bool sbp_msg_settings_register_resp_setting_add_section(
  * A new section will be added to the field according to the specified printf
  * style format string and arguments. If the operation would end up overflowing
  * the maximum size of this field in wire encoding the existing contents will be
- * unmodified and this function will return false.
+ * unmodified and this function will return SBP_FALSE.
  *
  * @param msg sbp_msg_settings_register_resp_t instance
  * @param fmt printf style format string
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_settings_register_resp_setting_add_section_printf(
+SBP_EXPORT SBP_BOOL sbp_msg_settings_register_resp_setting_add_section_printf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
@@ -163,9 +162,9 @@ SBP_EXPORT bool sbp_msg_settings_register_resp_setting_add_section_printf(
  * @param msg sbp_msg_settings_register_resp_t instance
  * @param fmt printf style format string
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_settings_register_resp_setting_add_section_vprintf(
+SBP_EXPORT SBP_BOOL sbp_msg_settings_register_resp_setting_add_section_vprintf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(2);
 
@@ -181,13 +180,13 @@ SBP_EXPORT bool sbp_msg_settings_register_resp_setting_add_section_vprintf(
  *
  * If the operation would end up overflowing the maximum size of this field in
  * wire encoding the existing contents will be unmodified and this function will
- * return false.
+ * return SBP_FALSE.
  *
  * @param msg sbp_msg_settings_register_resp_t instance
  * @param str New string
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_settings_register_resp_setting_append(
+SBP_EXPORT SBP_BOOL sbp_msg_settings_register_resp_setting_append(
     sbp_msg_settings_register_resp_t *msg, const char *str);
 
 /**
@@ -202,13 +201,13 @@ SBP_EXPORT bool sbp_msg_settings_register_resp_setting_append(
  *
  * If the operation would end up overflowing the maximum size of this field in
  * wire encoding the existing contents will be unmodified and this function will
- * return false.
+ * return SBP_FALSE.
  *
  * @param msg sbp_msg_settings_register_resp_t instance
  * @param fmt printf style format string
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_settings_register_resp_setting_append_printf(
+SBP_EXPORT SBP_BOOL sbp_msg_settings_register_resp_setting_append_printf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, ...)
     SBP_ATTR_FORMAT(2, 3);
 
@@ -224,14 +223,14 @@ SBP_EXPORT bool sbp_msg_settings_register_resp_setting_append_printf(
  *
  * If the operation would end overflowing the maximum size of this field in wire
  * encoding the existing contents will be unmodified and this function will
- * return false.
+ * return SBP_FALSE.
  *
  * @param msg sbp_msg_settings_register_resp_t instance
  * @param fmt printf style format string
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_settings_register_resp_setting_append_vprintf(
+SBP_EXPORT SBP_BOOL sbp_msg_settings_register_resp_setting_append_vprintf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(2);
 
@@ -269,11 +268,8 @@ SBP_EXPORT size_t sbp_msg_settings_register_resp_setting_section_strlen(
  * @param msg sbp_msg_settings_register_resp_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_settings_register_resp_encoded_len(
-    const sbp_msg_settings_register_resp_t *msg) {
-  return SBP_MSG_SETTINGS_REGISTER_RESP_ENCODED_OVERHEAD +
-         sbp_msg_settings_register_resp_setting_encoded_len(msg);
-}
+size_t sbp_msg_settings_register_resp_encoded_len(
+    const sbp_msg_settings_register_resp_t *msg);
 
 /**
  * Encode an instance of sbp_msg_settings_register_resp_t to wire representation
@@ -391,6 +387,6 @@ static inline bool operator>=(const sbp_msg_settings_register_resp_t &lhs,
   return sbp_msg_settings_register_resp_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_SETTINGS_MSG_SETTINGS_REGISTER_RESP_H */

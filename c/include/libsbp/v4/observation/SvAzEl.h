@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -66,10 +65,7 @@ typedef struct {
  * @param msg sbp_sv_az_el_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg) {
-  (void)msg;
-  return SBP_SV_AZ_EL_ENCODED_LEN;
-}
+size_t sbp_sv_az_el_encoded_len(const sbp_sv_az_el_t *msg);
 
 /**
  * Encode an instance of sbp_sv_az_el_t to wire representation
@@ -162,6 +158,6 @@ static inline bool operator>=(const sbp_sv_az_el_t &lhs,
   return sbp_sv_az_el_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_OBSERVATION_SVAZEL_H */

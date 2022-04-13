@@ -109,7 +109,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(
         sbp_msg_print_dep_text_set(
             &test_msg.print_dep, "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n",
-            false, &written),
+            SBP_FALSE, &written),
         "Can't assign text");
     ck_assert_msg(
         written == strlen("INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n"),
@@ -176,7 +176,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(
         sbp_msg_print_dep_text_set(
             &test_msg.print_dep, "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n",
-            false, &written),
+            SBP_FALSE, &written),
         "Can't assign text");
     ck_assert_msg(
         written == strlen("INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n"),
@@ -239,10 +239,11 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     memset(&test_msg, 0, sizeof(test_msg));
 
     size_t written;
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: Disabling channel 0 (PRN 11)\n", false, &written),
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(&test_msg.print_dep,
+                                   "INFO: Disabling channel 0 (PRN 11)\n",
+                                   SBP_FALSE, &written),
+        "Can't assign text");
     ck_assert_msg(written == strlen("INFO: Disabling channel 0 (PRN 11)\n"),
                   "Wrote different to expected");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 35,
@@ -307,7 +308,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(
         sbp_msg_print_dep_text_set(&test_msg.print_dep,
                                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n",
-                                   false, &written),
+                                   SBP_FALSE, &written),
         "Can't assign text");
     ck_assert_msg(
         written == strlen("INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n"),
@@ -374,7 +375,7 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     ck_assert_msg(
         sbp_msg_print_dep_text_set(
             &test_msg.print_dep, "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n",
-            false, &written),
+            SBP_FALSE, &written),
         "Can't assign text");
     ck_assert_msg(
         written == strlen("INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n"),
@@ -437,10 +438,11 @@ START_TEST(test_auto_check_sbp_logging_MsgPrintDep) {
     memset(&test_msg, 0, sizeof(test_msg));
 
     size_t written;
-    ck_assert_msg(sbp_msg_print_dep_text_set(
-                      &test_msg.print_dep,
-                      "INFO: Disabling channel 1 (PRN 15)\n", false, &written),
-                  "Can't assign text");
+    ck_assert_msg(
+        sbp_msg_print_dep_text_set(&test_msg.print_dep,
+                                   "INFO: Disabling channel 1 (PRN 15)\n",
+                                   SBP_FALSE, &written),
+        "Can't assign text");
     ck_assert_msg(written == strlen("INFO: Disabling channel 1 (PRN 15)\n"),
                   "Wrote different to expected");
     ck_assert_msg(sbp_msg_print_dep_text_encoded_len(&test_msg.print_dep) == 35,

@@ -111,7 +111,7 @@ START_TEST(test_auto_check_sbp_logging_MsgLog) {
     ck_assert_msg(
         sbp_msg_log_text_set(&test_msg.log,
                              "Filtered all obs from 2314 at tow 83.539019",
-                             false, &written),
+                             SBP_FALSE, &written),
         "Can't assign text");
     ck_assert_msg(
         written == strlen("Filtered all obs from 2314 at tow 83.539019"),

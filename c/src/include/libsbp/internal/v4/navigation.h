@@ -18,8 +18,6 @@
 #ifndef LIBSBP_INTERNAL_V4_NAVIGATION_H
 #define LIBSBP_INTERNAL_V4_NAVIGATION_H
 
-#include <stdbool.h>
-
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/navigation.h>
 
@@ -32,188 +30,189 @@ extern "C" {
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_gps_time_t *msg);
+SBP_BOOL sbp_msg_gps_time_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_gps_time_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_gps_time_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_gps_time_t *msg);
+SBP_BOOL sbp_msg_gps_time_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_gps_time_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_gps_time_gnss_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_gps_time_gnss_t *msg);
+SBP_BOOL sbp_msg_gps_time_gnss_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_gps_time_gnss_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_gps_time_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_gps_time_gnss_t *msg);
+SBP_BOOL sbp_msg_gps_time_gnss_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_gps_time_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_utc_time_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_utc_time_t *msg);
+SBP_BOOL sbp_msg_utc_time_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_utc_time_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_utc_time_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_utc_time_t *msg);
+SBP_BOOL sbp_msg_utc_time_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_utc_time_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_utc_time_gnss_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_utc_time_gnss_t *msg);
+SBP_BOOL sbp_msg_utc_time_gnss_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_utc_time_gnss_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_utc_time_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_utc_time_gnss_t *msg);
+SBP_BOOL sbp_msg_utc_time_gnss_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_utc_time_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_dops_encode_internal(sbp_encode_ctx_t *ctx,
-                                  const sbp_msg_dops_t *msg);
+SBP_BOOL sbp_msg_dops_encode_internal(sbp_encode_ctx_t *ctx,
+                                      const sbp_msg_dops_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_dops_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_dops_t *msg);
+SBP_BOOL sbp_msg_dops_decode_internal(sbp_decode_ctx_t *ctx,
+                                      sbp_msg_dops_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_pos_ecef_t *msg);
+SBP_BOOL sbp_msg_pos_ecef_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_pos_ecef_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_pos_ecef_t *msg);
+SBP_BOOL sbp_msg_pos_ecef_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_pos_ecef_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_cov_encode_internal(sbp_encode_ctx_t *ctx,
-                                          const sbp_msg_pos_ecef_cov_t *msg);
+SBP_BOOL sbp_msg_pos_ecef_cov_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_pos_ecef_cov_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_cov_decode_internal(sbp_decode_ctx_t *ctx,
-                                          sbp_msg_pos_ecef_cov_t *msg);
+SBP_BOOL sbp_msg_pos_ecef_cov_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_pos_ecef_cov_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_msg_pos_llh_t *msg);
+SBP_BOOL sbp_msg_pos_llh_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_pos_llh_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_msg_pos_llh_t *msg);
+SBP_BOOL sbp_msg_pos_llh_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_pos_llh_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_cov_encode_internal(sbp_encode_ctx_t *ctx,
-                                         const sbp_msg_pos_llh_cov_t *msg);
+SBP_BOOL sbp_msg_pos_llh_cov_encode_internal(sbp_encode_ctx_t *ctx,
+                                             const sbp_msg_pos_llh_cov_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_cov_decode_internal(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_pos_llh_cov_t *msg);
+SBP_BOOL sbp_msg_pos_llh_cov_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_pos_llh_cov_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_estimated_horizontal_error_ellipse_encode_internal(
+SBP_BOOL sbp_estimated_horizontal_error_ellipse_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_estimated_horizontal_error_ellipse_t *msg);
 
 /**
@@ -221,9 +220,9 @@ bool sbp_estimated_horizontal_error_ellipse_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_estimated_horizontal_error_ellipse_decode_internal(
+SBP_BOOL sbp_estimated_horizontal_error_ellipse_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_estimated_horizontal_error_ellipse_t *msg);
 
 /**
@@ -231,169 +230,169 @@ bool sbp_estimated_horizontal_error_ellipse_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_acc_encode_internal(sbp_encode_ctx_t *ctx,
-                                         const sbp_msg_pos_llh_acc_t *msg);
+SBP_BOOL sbp_msg_pos_llh_acc_encode_internal(sbp_encode_ctx_t *ctx,
+                                             const sbp_msg_pos_llh_acc_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_acc_decode_internal(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_pos_llh_acc_t *msg);
+SBP_BOOL sbp_msg_pos_llh_acc_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_pos_llh_acc_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ecef_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_baseline_ecef_t *msg);
+SBP_BOOL sbp_msg_baseline_ecef_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_baseline_ecef_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ecef_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_baseline_ecef_t *msg);
+SBP_BOOL sbp_msg_baseline_ecef_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_baseline_ecef_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ned_encode_internal(sbp_encode_ctx_t *ctx,
-                                          const sbp_msg_baseline_ned_t *msg);
+SBP_BOOL sbp_msg_baseline_ned_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_baseline_ned_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ned_decode_internal(sbp_decode_ctx_t *ctx,
-                                          sbp_msg_baseline_ned_t *msg);
+SBP_BOOL sbp_msg_baseline_ned_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_baseline_ned_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_vel_ecef_t *msg);
+SBP_BOOL sbp_msg_vel_ecef_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_vel_ecef_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_vel_ecef_t *msg);
+SBP_BOOL sbp_msg_vel_ecef_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_vel_ecef_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_cov_encode_internal(sbp_encode_ctx_t *ctx,
-                                          const sbp_msg_vel_ecef_cov_t *msg);
+SBP_BOOL sbp_msg_vel_ecef_cov_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_vel_ecef_cov_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_cov_decode_internal(sbp_decode_ctx_t *ctx,
-                                          sbp_msg_vel_ecef_cov_t *msg);
+SBP_BOOL sbp_msg_vel_ecef_cov_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_vel_ecef_cov_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_msg_vel_ned_t *msg);
+SBP_BOOL sbp_msg_vel_ned_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_vel_ned_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_msg_vel_ned_t *msg);
+SBP_BOOL sbp_msg_vel_ned_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_vel_ned_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_cov_encode_internal(sbp_encode_ctx_t *ctx,
-                                         const sbp_msg_vel_ned_cov_t *msg);
+SBP_BOOL sbp_msg_vel_ned_cov_encode_internal(sbp_encode_ctx_t *ctx,
+                                             const sbp_msg_vel_ned_cov_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_cov_decode_internal(sbp_decode_ctx_t *ctx,
-                                         sbp_msg_vel_ned_cov_t *msg);
+SBP_BOOL sbp_msg_vel_ned_cov_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_vel_ned_cov_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_gnss_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_pos_ecef_gnss_t *msg);
+SBP_BOOL sbp_msg_pos_ecef_gnss_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_pos_ecef_gnss_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_pos_ecef_gnss_t *msg);
+SBP_BOOL sbp_msg_pos_ecef_gnss_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_pos_ecef_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_cov_gnss_encode_internal(
+SBP_BOOL sbp_msg_pos_ecef_cov_gnss_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_pos_ecef_cov_gnss_t *msg);
 
 /**
@@ -401,9 +400,9 @@ bool sbp_msg_pos_ecef_cov_gnss_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_cov_gnss_decode_internal(
+SBP_BOOL sbp_msg_pos_ecef_cov_gnss_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_pos_ecef_cov_gnss_t *msg);
 
 /**
@@ -411,29 +410,29 @@ bool sbp_msg_pos_ecef_cov_gnss_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_gnss_encode_internal(sbp_encode_ctx_t *ctx,
-                                          const sbp_msg_pos_llh_gnss_t *msg);
+SBP_BOOL sbp_msg_pos_llh_gnss_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_pos_llh_gnss_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                          sbp_msg_pos_llh_gnss_t *msg);
+SBP_BOOL sbp_msg_pos_llh_gnss_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_pos_llh_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_cov_gnss_encode_internal(
+SBP_BOOL sbp_msg_pos_llh_cov_gnss_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_pos_llh_cov_gnss_t *msg);
 
 /**
@@ -441,39 +440,39 @@ bool sbp_msg_pos_llh_cov_gnss_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_cov_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                              sbp_msg_pos_llh_cov_gnss_t *msg);
+SBP_BOOL sbp_msg_pos_llh_cov_gnss_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_pos_llh_cov_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_gnss_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_vel_ecef_gnss_t *msg);
+SBP_BOOL sbp_msg_vel_ecef_gnss_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_vel_ecef_gnss_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_vel_ecef_gnss_t *msg);
+SBP_BOOL sbp_msg_vel_ecef_gnss_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_vel_ecef_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_cov_gnss_encode_internal(
+SBP_BOOL sbp_msg_vel_ecef_cov_gnss_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_vel_ecef_cov_gnss_t *msg);
 
 /**
@@ -481,9 +480,9 @@ bool sbp_msg_vel_ecef_cov_gnss_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_cov_gnss_decode_internal(
+SBP_BOOL sbp_msg_vel_ecef_cov_gnss_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_vel_ecef_cov_gnss_t *msg);
 
 /**
@@ -491,29 +490,29 @@ bool sbp_msg_vel_ecef_cov_gnss_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_gnss_encode_internal(sbp_encode_ctx_t *ctx,
-                                          const sbp_msg_vel_ned_gnss_t *msg);
+SBP_BOOL sbp_msg_vel_ned_gnss_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_vel_ned_gnss_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                          sbp_msg_vel_ned_gnss_t *msg);
+SBP_BOOL sbp_msg_vel_ned_gnss_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_msg_vel_ned_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_cov_gnss_encode_internal(
+SBP_BOOL sbp_msg_vel_ned_cov_gnss_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_vel_ned_cov_gnss_t *msg);
 
 /**
@@ -521,59 +520,59 @@ bool sbp_msg_vel_ned_cov_gnss_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_cov_gnss_decode_internal(sbp_decode_ctx_t *ctx,
-                                              sbp_msg_vel_ned_cov_gnss_t *msg);
+SBP_BOOL sbp_msg_vel_ned_cov_gnss_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_vel_ned_cov_gnss_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_body_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_vel_body_t *msg);
+SBP_BOOL sbp_msg_vel_body_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_vel_body_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_body_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_vel_body_t *msg);
+SBP_BOOL sbp_msg_vel_body_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_vel_body_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_cog_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_msg_vel_cog_t *msg);
+SBP_BOOL sbp_msg_vel_cog_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_vel_cog_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_cog_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_msg_vel_cog_t *msg);
+SBP_BOOL sbp_msg_vel_cog_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_vel_cog_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_age_corrections_encode_internal(
+SBP_BOOL sbp_msg_age_corrections_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_age_corrections_t *msg);
 
 /**
@@ -581,19 +580,19 @@ bool sbp_msg_age_corrections_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_age_corrections_decode_internal(sbp_decode_ctx_t *ctx,
-                                             sbp_msg_age_corrections_t *msg);
+SBP_BOOL sbp_msg_age_corrections_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_age_corrections_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_gps_time_dep_a_encode_internal(
+SBP_BOOL sbp_msg_gps_time_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_gps_time_dep_a_t *msg);
 
 /**
@@ -601,39 +600,39 @@ bool sbp_msg_gps_time_dep_a_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_gps_time_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
-                                            sbp_msg_gps_time_dep_a_t *msg);
+SBP_BOOL sbp_msg_gps_time_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
+                                                sbp_msg_gps_time_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_dops_dep_a_encode_internal(sbp_encode_ctx_t *ctx,
-                                        const sbp_msg_dops_dep_a_t *msg);
+SBP_BOOL sbp_msg_dops_dep_a_encode_internal(sbp_encode_ctx_t *ctx,
+                                            const sbp_msg_dops_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_dops_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
-                                        sbp_msg_dops_dep_a_t *msg);
+SBP_BOOL sbp_msg_dops_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
+                                            sbp_msg_dops_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_dep_a_encode_internal(
+SBP_BOOL sbp_msg_pos_ecef_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_pos_ecef_dep_a_t *msg);
 
 /**
@@ -641,39 +640,39 @@ bool sbp_msg_pos_ecef_dep_a_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_ecef_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
-                                            sbp_msg_pos_ecef_dep_a_t *msg);
+SBP_BOOL sbp_msg_pos_ecef_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
+                                                sbp_msg_pos_ecef_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_dep_a_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_pos_llh_dep_a_t *msg);
+SBP_BOOL sbp_msg_pos_llh_dep_a_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_pos_llh_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_pos_llh_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_pos_llh_dep_a_t *msg);
+SBP_BOOL sbp_msg_pos_llh_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_pos_llh_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ecef_dep_a_encode_internal(
+SBP_BOOL sbp_msg_baseline_ecef_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_baseline_ecef_dep_a_t *msg);
 
 /**
@@ -681,9 +680,9 @@ bool sbp_msg_baseline_ecef_dep_a_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ecef_dep_a_decode_internal(
+SBP_BOOL sbp_msg_baseline_ecef_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_baseline_ecef_dep_a_t *msg);
 
 /**
@@ -691,9 +690,9 @@ bool sbp_msg_baseline_ecef_dep_a_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ned_dep_a_encode_internal(
+SBP_BOOL sbp_msg_baseline_ned_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_baseline_ned_dep_a_t *msg);
 
 /**
@@ -701,9 +700,9 @@ bool sbp_msg_baseline_ned_dep_a_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_ned_dep_a_decode_internal(
+SBP_BOOL sbp_msg_baseline_ned_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_baseline_ned_dep_a_t *msg);
 
 /**
@@ -711,9 +710,9 @@ bool sbp_msg_baseline_ned_dep_a_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_dep_a_encode_internal(
+SBP_BOOL sbp_msg_vel_ecef_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_vel_ecef_dep_a_t *msg);
 
 /**
@@ -721,39 +720,39 @@ bool sbp_msg_vel_ecef_dep_a_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ecef_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
-                                            sbp_msg_vel_ecef_dep_a_t *msg);
+SBP_BOOL sbp_msg_vel_ecef_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
+                                                sbp_msg_vel_ecef_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_dep_a_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_vel_ned_dep_a_t *msg);
+SBP_BOOL sbp_msg_vel_ned_dep_a_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_vel_ned_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_vel_ned_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_vel_ned_dep_a_t *msg);
+SBP_BOOL sbp_msg_vel_ned_dep_a_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_vel_ned_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_heading_dep_a_encode_internal(
+SBP_BOOL sbp_msg_baseline_heading_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_baseline_heading_dep_a_t *msg);
 
 /**
@@ -761,9 +760,9 @@ bool sbp_msg_baseline_heading_dep_a_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_baseline_heading_dep_a_decode_internal(
+SBP_BOOL sbp_msg_baseline_heading_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_baseline_heading_dep_a_t *msg);
 
 /**
@@ -771,9 +770,9 @@ bool sbp_msg_baseline_heading_dep_a_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_protection_level_dep_a_encode_internal(
+SBP_BOOL sbp_msg_protection_level_dep_a_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_protection_level_dep_a_t *msg);
 
 /**
@@ -781,9 +780,9 @@ bool sbp_msg_protection_level_dep_a_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_protection_level_dep_a_decode_internal(
+SBP_BOOL sbp_msg_protection_level_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_protection_level_dep_a_t *msg);
 
 /**
@@ -791,9 +790,9 @@ bool sbp_msg_protection_level_dep_a_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_protection_level_encode_internal(
+SBP_BOOL sbp_msg_protection_level_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_protection_level_t *msg);
 
 /**
@@ -801,10 +800,10 @@ bool sbp_msg_protection_level_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_protection_level_decode_internal(sbp_decode_ctx_t *ctx,
-                                              sbp_msg_protection_level_t *msg);
+SBP_BOOL sbp_msg_protection_level_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_protection_level_t *msg);
 
 #ifdef __cplusplus
 }

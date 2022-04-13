@@ -14,7 +14,6 @@
 #define LIBSBP_INTERNAL_V4_STRING_SBP_STRING_H
 
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stdint.h>
 
 #include <libsbp/common.h>
@@ -32,7 +31,7 @@ typedef struct {
   /**
    * Test a string for validity
    */
-  bool (*valid)(const sbp_string_t *s, size_t maxlen);
+  SBP_BOOL (*valid)(const sbp_string_t *s, size_t maxlen);
 
   /**
    * Initialize a string
@@ -52,12 +51,12 @@ typedef struct {
 
   /**
    * When decoding a string #sbp_string_decode will add a missing NULL
-   * terminator to the resulting string if this flag is set to true.
+   * terminator to the resulting string if this flag is set to SBP_TRUE.
    *
    * When set to false no modification will be made even if that means the
    * resulting string is invalid
    */
-  bool inject_missing_terminator;
+  SBP_BOOL inject_missing_terminator;
 } sbp_string_params_t;
 
 /**
@@ -88,9 +87,9 @@ int sbp_string_cmp(const sbp_string_t *a, const sbp_string_t *b,
  * @param max Maximum number of bytes to copy
  * @param str Source string
  * @param n Number of bytes to copy from str to buf
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, false otherwise
  */
-bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
+SBP_BOOL sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
                             const char *str, size_t n);
 
 /**
@@ -98,7 +97,7 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
  *
  * If the destination buffer can't store the entire formatted string, and
  * should_trunc is false, no data will be written and false will be returned.
- * Otherwise, if should_trunc is true, the formatted message will be truncated
+ * Otherwise, if should_trunc is SBP_TRUE, the formatted message will be truncated
  * to fit in the destination buffer.
  *
  * @param buf Destination buffer
@@ -108,9 +107,9 @@ bool sbp_string_copy_to_buf(char *buf, size_t *copied, size_t max,
  * in the destination buffer
  * @param fmt Printf style format string
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, false otherwise
  */
-bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool should_trunc,
+SBP_BOOL sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, SBP_BOOL should_trunc,
                                const char *fmt, va_list ap) SBP_ATTR_VFORMAT(5);
 
 /**
@@ -126,9 +125,9 @@ bool sbp_string_vprintf_to_buf(char *buf, size_t *copied, size_t max, bool shoul
  * @param maxlen Maximum encoded length
  * @param ctx Encode context
  * @param params String params
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, false otherwise
  */
-bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_string_encode(const sbp_string_t *s, size_t maxlen,
                        sbp_encode_ctx_t *ctx,
                        const sbp_string_params_t *params);
 
@@ -148,9 +147,9 @@ bool sbp_string_encode(const sbp_string_t *s, size_t maxlen,
  * @param maxlen Maximum encoded length
  * @param ctx Decode context
  * @param params string params
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, false otherwise
  */
-bool sbp_string_decode(sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_string_decode(sbp_string_t *s, size_t maxlen,
                        sbp_decode_ctx_t *ctx,
                        const sbp_string_params_t *params);
 

@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -81,11 +80,8 @@ typedef struct {
  * @param msg sbp_ephemeris_common_content_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_ephemeris_common_content_encoded_len(
-    const sbp_ephemeris_common_content_t *msg) {
-  (void)msg;
-  return SBP_EPHEMERIS_COMMON_CONTENT_ENCODED_LEN;
-}
+size_t sbp_ephemeris_common_content_encoded_len(
+    const sbp_ephemeris_common_content_t *msg);
 
 /**
  * Encode an instance of sbp_ephemeris_common_content_t to wire representation
@@ -181,6 +177,6 @@ static inline bool operator>=(const sbp_ephemeris_common_content_t &lhs,
   return sbp_ephemeris_common_content_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_OBSERVATION_EPHEMERISCOMMONCONTENT_H */

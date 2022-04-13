@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -61,11 +60,8 @@ typedef struct {
  * @param msg sbp_tropospheric_delay_correction_no_std_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_tropospheric_delay_correction_no_std_encoded_len(
-    const sbp_tropospheric_delay_correction_no_std_t *msg) {
-  (void)msg;
-  return SBP_TROPOSPHERIC_DELAY_CORRECTION_NO_STD_ENCODED_LEN;
-}
+size_t sbp_tropospheric_delay_correction_no_std_encoded_len(
+    const sbp_tropospheric_delay_correction_no_std_t *msg);
 
 /**
  * Encode an instance of sbp_tropospheric_delay_correction_no_std_t to wire
@@ -171,6 +167,6 @@ static inline bool operator>=(
   return sbp_tropospheric_delay_correction_no_std_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_SSR_TROPOSPHERICDELAYCORRECTIONNOSTD_H */

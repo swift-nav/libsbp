@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -69,10 +68,10 @@ SBP_EXPORT void sbp_msg_csac_telemetry_labels_telemetry_labels_init(
  * Test sbp_msg_csac_telemetry_labels_t::telemetry_labels for validity
  *
  * @param msg sbp_msg_csac_telemetry_labels_t instance
- * @return true is sbp_msg_csac_telemetry_labels_t::telemetry_labels is valid
- * for encoding purposes, false otherwise
+ * @return SBP_TRUE is sbp_msg_csac_telemetry_labels_t::telemetry_labels is
+ * valid for encoding purposes, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_valid(
+SBP_EXPORT SBP_BOOL sbp_msg_csac_telemetry_labels_telemetry_labels_valid(
     const sbp_msg_csac_telemetry_labels_t *msg);
 
 /**
@@ -118,31 +117,31 @@ sbp_msg_csac_telemetry_labels_telemetry_labels_space_remaining(
  *
  * Erase any existing content and replace with the specified string
  *
- * If the should_trunc parameter is set to false and the specified string is
+ * If the should_trunc parameter is set to SBP_FALSE and the specified string is
  * longer than can be represented in wire encoding, this function will return
- * false. Otherwise, if should_trunc is set to true, then as much as possible
- * will be read from the new_str as can fit in the msg.
+ * SBP_FALSE. Otherwise, if should_trunc is set to SBP_TRUE, then as much as
+ * possible will be read from the new_str as can fit in the msg.
  *
  * @param msg sbp_msg_csac_telemetry_labels_t instance
  * @param new_str New string
  * @param should_trunc Whether the new_str can be truncated to fit in msg
  * @param n_written If not null, on success will be set to the number of bytes
  * written to msg
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_set(
+SBP_EXPORT SBP_BOOL sbp_msg_csac_telemetry_labels_telemetry_labels_set(
     sbp_msg_csac_telemetry_labels_t *msg, const char *new_str,
-    bool should_trunc, size_t *n_written);
+    SBP_BOOL should_trunc, size_t *n_written);
 
 /**
  * Set sbp_msg_csac_telemetry_labels_t::telemetry_labels from a raw buffer
  *
  * Erase any existing content and replace with the specified raw buffer
  *
- * If the should_trunc parameter is set to false and the specified string is
+ * If the should_trunc parameter is set to SBP_FALSE and the specified string is
  * longer than can be represented in wire encoding, this function will return
- * false. Otherwise, if should_trunc is set to true, then as much as possible
- * will be read from the new_str as can fit in the msg.
+ * SBP_FALSE. Otherwise, if should_trunc is set to SBP_TRUE, then as much as
+ * possible will be read from the new_str as can fit in the msg.
  *
  * @param msg sbp_msg_csac_telemetry_labels_t instance
  * @param new_buf New buffer
@@ -150,11 +149,11 @@ SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_set(
  * @param should_trunc Whether the new_str can be truncated to fit in msg
  * @param n_written If not null, on success will be set to the number of bytes
  * written to msg
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_set_raw(
+SBP_EXPORT SBP_BOOL sbp_msg_csac_telemetry_labels_telemetry_labels_set_raw(
     sbp_msg_csac_telemetry_labels_t *msg, const char *new_buf,
-    size_t new_buf_len, bool should_trunc, size_t *n_written);
+    size_t new_buf_len, SBP_BOOL should_trunc, size_t *n_written);
 
 /**
  * Set sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
@@ -162,22 +161,23 @@ SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_set_raw(
  *
  * Erase any existing content and replace with the formatted string
  *
- * This function will return true if the new string was successfully applied.
- * If should_trunc is set false, and the operation would end up overflowing the
- * maximum size of this field in wire encoding the existing contents will be
- * erased and this function will return false. Otherwise, if should_trunc is
- * set true, the input formatted string will be truncated to fit.
+ * This function will return SBP_TRUE if the new string was successfully
+ * applied. If should_trunc is set SBP_FALSE, and the operation would end up
+ * overflowing the maximum size of this field in wire encoding the existing
+ * contents will be erased and this function will return SBP_FALSE. Otherwise,
+ * if should_trunc is set SBP_TRUE, the input formatted string will be truncated
+ * to fit.
  *
  * @param msg sbp_msg_csac_telemetry_labels_t instance
  * @param should_trunc Whether the input string should be truncated to fit
  * @param n_written If not null, on success will be set to the number of bytes
  * written to msg
  * @param fmt printf style format string
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
-    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
+SBP_EXPORT SBP_BOOL sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
+    sbp_msg_csac_telemetry_labels_t *msg, SBP_BOOL should_trunc,
+    size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
 
 /**
  * Set sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
@@ -192,32 +192,33 @@ SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_printf(
  * written to msg
  * @param fmt printf style format string
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
+SBP_EXPORT SBP_BOOL sbp_msg_csac_telemetry_labels_telemetry_labels_vprintf(
+    sbp_msg_csac_telemetry_labels_t *msg, SBP_BOOL should_trunc,
+    size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
 /**
  * Append sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
  * formatting
  *
  * The new string will be appended to the existing contents of the string (if
- * any). If should_trunc is false and the operation would end up overflowing
+ * any). If should_trunc is SBP_FALSE and the operation would end up overflowing
  * the maximum size of this field in wire encoding, the existing contents will
- * be unmodified and this function will return false. Otherwise, if
- * should_trunc is true, the input string will be truncated to fit.
+ * be unmodified and this function will return SBP_FALSE. Otherwise, if
+ * should_trunc is SBP_TRUE, the input string will be truncated to fit.
  *
  * @param msg sbp_msg_csac_telemetry_labels_t instance
  * @param should_trunc Whether the input string should be truncated to fit
  * @param n_written If not null, on success will be set to the number of bytes
  * written to msg
  * @param fmt printf style format string
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
-    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
+SBP_EXPORT SBP_BOOL
+sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
+    sbp_msg_csac_telemetry_labels_t *msg, SBP_BOOL should_trunc,
+    size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4, 5);
 
 /**
  * Append sbp_msg_csac_telemetry_labels_t::telemetry_labels with printf style
@@ -232,11 +233,12 @@ SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_printf(
  * written to msg
  * @param fmt printf style format string
  * @param ap Argument list
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-SBP_EXPORT bool sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
-    sbp_msg_csac_telemetry_labels_t *msg, bool should_trunc, size_t *n_written,
-    const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
+SBP_EXPORT SBP_BOOL
+sbp_msg_csac_telemetry_labels_telemetry_labels_append_vprintf(
+    sbp_msg_csac_telemetry_labels_t *msg, SBP_BOOL should_trunc,
+    size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
 /**
  * Obtain the string value from
@@ -265,11 +267,8 @@ SBP_EXPORT size_t sbp_msg_csac_telemetry_labels_telemetry_labels_strlen(
  * @param msg sbp_msg_csac_telemetry_labels_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_csac_telemetry_labels_encoded_len(
-    const sbp_msg_csac_telemetry_labels_t *msg) {
-  return SBP_MSG_CSAC_TELEMETRY_LABELS_ENCODED_OVERHEAD +
-         sbp_msg_csac_telemetry_labels_telemetry_labels_encoded_len(msg);
-}
+size_t sbp_msg_csac_telemetry_labels_encoded_len(
+    const sbp_msg_csac_telemetry_labels_t *msg);
 
 /**
  * Encode an instance of sbp_msg_csac_telemetry_labels_t to wire representation
@@ -387,6 +386,6 @@ static inline bool operator>=(const sbp_msg_csac_telemetry_labels_t &lhs,
   return sbp_msg_csac_telemetry_labels_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_SYSTEM_MSG_CSAC_TELEMETRY_LABELS_H */

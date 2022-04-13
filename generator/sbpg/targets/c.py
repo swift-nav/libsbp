@@ -21,6 +21,7 @@ from sbpg import ReleaseVersion
 SBP_MESSAGES_TEMPLATE_NAME = "c/v4/sbp_messages_template.h"
 SBP_PACKAGE_TEMPLATE_NAME = "c/v4/sbp_package_template.h"
 SBP_MSG_TEMPLATE_NAME = "c/v4/sbp_msg_template.h"
+SBP_MSG_SRC_TEMPLATE_NAME = "c/src/sbp_msg_template.c"
 VERSION_TEMPLATE_NAME = "c/sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "c/cpp/message_traits_template.h"
 SBP_MESSAGES_SOURCE_TEMPLATE_NAME = "c/src/sbp_messages_template.c"
@@ -652,6 +653,16 @@ def render_all(output_dir, package_specs):
     destination_filename = "%s/include/libsbp/v4/sbp_msg.h" % (output_dir)
     render_file(
         SBP_MSG_TEMPLATE_NAME,
+        destination_filename,
+        {
+            "real_messages": real_messages,
+            "packages": all_packages,
+        },
+    )
+
+    destination_filename = "%s/src/sbp_msg.c" % (output_dir)
+    render_file(
+        SBP_MSG_SRC_TEMPLATE_NAME,
         destination_filename,
         {
             "real_messages": real_messages,

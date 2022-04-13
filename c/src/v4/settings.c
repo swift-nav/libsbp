@@ -3,7 +3,6 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,11 +15,16 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/settings.h>
 
-bool sbp_msg_settings_save_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_settings_save_t *msg) {
+size_t sbp_msg_settings_save_encoded_len(const sbp_msg_settings_save_t *msg) {
+  (void)msg;
+  return SBP_MSG_SETTINGS_SAVE_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_settings_save_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_settings_save_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_save_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -38,11 +42,11 @@ s8 sbp_msg_settings_save_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_settings_save_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_settings_save_t *msg) {
+SBP_BOOL sbp_msg_settings_save_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_settings_save_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_save_decode(const uint8_t *buf, uint8_t len,
@@ -76,9 +80,11 @@ s8 sbp_msg_settings_save_send(sbp_state_t *s, u16 sender_id,
 
 int sbp_msg_settings_save_cmp(const sbp_msg_settings_save_t *a,
                               const sbp_msg_settings_save_t *b) {
+  int ret = 0;
+  uint8_t i;
+  (void)i;
   (void)a;
   (void)b;
-  int ret = 0;
   return ret;
 }
 
@@ -86,7 +92,8 @@ void sbp_msg_settings_write_setting_init(sbp_msg_settings_write_t *msg) {
   sbp_multipart_string_init(&msg->setting);
 }
 
-bool sbp_msg_settings_write_setting_valid(const sbp_msg_settings_write_t *msg) {
+SBP_BOOL sbp_msg_settings_write_setting_valid(
+    const sbp_msg_settings_write_t *msg) {
   return sbp_multipart_string_valid(&msg->setting,
                                     SBP_MSG_SETTINGS_WRITE_SETTING_MAX);
 }
@@ -114,45 +121,47 @@ size_t sbp_msg_settings_write_setting_count_sections(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_SETTING_MAX);
 }
 
-bool sbp_msg_settings_write_setting_add_section(sbp_msg_settings_write_t *msg,
-                                                const char *new_str) {
+SBP_BOOL sbp_msg_settings_write_setting_add_section(
+    sbp_msg_settings_write_t *msg, const char *new_str) {
   return sbp_multipart_string_add_section(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_SETTING_MAX, new_str);
 }
 
-bool sbp_msg_settings_write_setting_add_section_printf(
+SBP_BOOL sbp_msg_settings_write_setting_add_section_printf(
     sbp_msg_settings_write_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_add_section_vprintf(
+  ret = sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_write_setting_add_section_vprintf(
+SBP_BOOL sbp_msg_settings_write_setting_add_section_vprintf(
     sbp_msg_settings_write_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_SETTING_MAX, fmt, ap);
 }
 
-bool sbp_msg_settings_write_setting_append(sbp_msg_settings_write_t *msg,
-                                           const char *str) {
+SBP_BOOL sbp_msg_settings_write_setting_append(sbp_msg_settings_write_t *msg,
+                                               const char *str) {
   return sbp_multipart_string_append(&msg->setting,
                                      SBP_MSG_SETTINGS_WRITE_SETTING_MAX, str);
 }
 
-bool sbp_msg_settings_write_setting_append_printf(sbp_msg_settings_write_t *msg,
-                                                  const char *fmt, ...) {
+SBP_BOOL sbp_msg_settings_write_setting_append_printf(
+    sbp_msg_settings_write_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_append_vprintf(
+  ret = sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_write_setting_append_vprintf(
+SBP_BOOL sbp_msg_settings_write_setting_append_vprintf(
     sbp_msg_settings_write_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_SETTING_MAX, fmt, ap);
@@ -170,13 +179,20 @@ size_t sbp_msg_settings_write_setting_section_strlen(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_SETTING_MAX, section);
 }
 
-bool sbp_msg_settings_write_encode_internal(
+size_t sbp_msg_settings_write_encoded_len(const sbp_msg_settings_write_t *msg) {
+  return SBP_MSG_SETTINGS_WRITE_ENCODED_OVERHEAD +
+         sbp_msg_settings_write_setting_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_settings_write_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_write_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_multipart_string_encode(&msg->setting,
                                    SBP_MSG_SETTINGS_WRITE_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_write_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -194,13 +210,15 @@ s8 sbp_msg_settings_write_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_settings_write_decode_internal(sbp_decode_ctx_t *ctx,
-                                            sbp_msg_settings_write_t *msg) {
+SBP_BOOL sbp_msg_settings_write_decode_internal(sbp_decode_ctx_t *ctx,
+                                                sbp_msg_settings_write_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_multipart_string_decode(&msg->setting,
                                    SBP_MSG_SETTINGS_WRITE_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_write_decode(const uint8_t *buf, uint8_t len,
@@ -236,6 +254,8 @@ s8 sbp_msg_settings_write_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_settings_write_cmp(const sbp_msg_settings_write_t *a,
                                const sbp_msg_settings_write_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_msg_settings_write_setting_strcmp(a, b);
   if (ret != 0) {
@@ -249,7 +269,7 @@ void sbp_msg_settings_write_resp_setting_init(
   sbp_multipart_string_init(&msg->setting);
 }
 
-bool sbp_msg_settings_write_resp_setting_valid(
+SBP_BOOL sbp_msg_settings_write_resp_setting_valid(
     const sbp_msg_settings_write_resp_t *msg) {
   return sbp_multipart_string_valid(&msg->setting,
                                     SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX);
@@ -279,45 +299,47 @@ size_t sbp_msg_settings_write_resp_setting_count_sections(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX);
 }
 
-bool sbp_msg_settings_write_resp_setting_add_section(
+SBP_BOOL sbp_msg_settings_write_resp_setting_add_section(
     sbp_msg_settings_write_resp_t *msg, const char *new_str) {
   return sbp_multipart_string_add_section(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, new_str);
 }
 
-bool sbp_msg_settings_write_resp_setting_add_section_printf(
+SBP_BOOL sbp_msg_settings_write_resp_setting_add_section_printf(
     sbp_msg_settings_write_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_add_section_vprintf(
+  ret = sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_write_resp_setting_add_section_vprintf(
+SBP_BOOL sbp_msg_settings_write_resp_setting_add_section_vprintf(
     sbp_msg_settings_write_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, fmt, ap);
 }
 
-bool sbp_msg_settings_write_resp_setting_append(
+SBP_BOOL sbp_msg_settings_write_resp_setting_append(
     sbp_msg_settings_write_resp_t *msg, const char *str) {
   return sbp_multipart_string_append(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, str);
 }
 
-bool sbp_msg_settings_write_resp_setting_append_printf(
+SBP_BOOL sbp_msg_settings_write_resp_setting_append_printf(
     sbp_msg_settings_write_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_append_vprintf(
+  ret = sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_write_resp_setting_append_vprintf(
+SBP_BOOL sbp_msg_settings_write_resp_setting_append_vprintf(
     sbp_msg_settings_write_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, fmt, ap);
@@ -335,16 +357,24 @@ size_t sbp_msg_settings_write_resp_setting_section_strlen(
       &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, section);
 }
 
-bool sbp_msg_settings_write_resp_encode_internal(
+size_t sbp_msg_settings_write_resp_encoded_len(
+    const sbp_msg_settings_write_resp_t *msg) {
+  return SBP_MSG_SETTINGS_WRITE_RESP_ENCODED_OVERHEAD +
+         sbp_msg_settings_write_resp_setting_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_settings_write_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_write_resp_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u8_encode(ctx, &msg->status)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_multipart_string_encode(
           &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_write_resp_encode(
@@ -363,16 +393,18 @@ s8 sbp_msg_settings_write_resp_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_settings_write_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_write_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_write_resp_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u8_decode(ctx, &msg->status)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_multipart_string_decode(
           &msg->setting, SBP_MSG_SETTINGS_WRITE_RESP_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_write_resp_decode(const uint8_t *buf, uint8_t len,
@@ -408,6 +440,8 @@ s8 sbp_msg_settings_write_resp_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_settings_write_resp_cmp(const sbp_msg_settings_write_resp_t *a,
                                     const sbp_msg_settings_write_resp_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u8_cmp(&a->status, &b->status);
   if (ret != 0) {
@@ -425,7 +459,7 @@ void sbp_msg_settings_read_req_setting_init(sbp_msg_settings_read_req_t *msg) {
   sbp_multipart_string_init(&msg->setting);
 }
 
-bool sbp_msg_settings_read_req_setting_valid(
+SBP_BOOL sbp_msg_settings_read_req_setting_valid(
     const sbp_msg_settings_read_req_t *msg) {
   return sbp_multipart_string_valid(&msg->setting,
                                     SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX);
@@ -455,45 +489,47 @@ size_t sbp_msg_settings_read_req_setting_count_sections(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX);
 }
 
-bool sbp_msg_settings_read_req_setting_add_section(
+SBP_BOOL sbp_msg_settings_read_req_setting_add_section(
     sbp_msg_settings_read_req_t *msg, const char *new_str) {
   return sbp_multipart_string_add_section(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, new_str);
 }
 
-bool sbp_msg_settings_read_req_setting_add_section_printf(
+SBP_BOOL sbp_msg_settings_read_req_setting_add_section_printf(
     sbp_msg_settings_read_req_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_add_section_vprintf(
+  ret = sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_read_req_setting_add_section_vprintf(
+SBP_BOOL sbp_msg_settings_read_req_setting_add_section_vprintf(
     sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, fmt, ap);
 }
 
-bool sbp_msg_settings_read_req_setting_append(sbp_msg_settings_read_req_t *msg,
-                                              const char *str) {
+SBP_BOOL sbp_msg_settings_read_req_setting_append(
+    sbp_msg_settings_read_req_t *msg, const char *str) {
   return sbp_multipart_string_append(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, str);
 }
 
-bool sbp_msg_settings_read_req_setting_append_printf(
+SBP_BOOL sbp_msg_settings_read_req_setting_append_printf(
     sbp_msg_settings_read_req_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_append_vprintf(
+  ret = sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_read_req_setting_append_vprintf(
+SBP_BOOL sbp_msg_settings_read_req_setting_append_vprintf(
     sbp_msg_settings_read_req_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, fmt, ap);
@@ -511,13 +547,21 @@ size_t sbp_msg_settings_read_req_setting_section_strlen(
       &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, section);
 }
 
-bool sbp_msg_settings_read_req_encode_internal(
+size_t sbp_msg_settings_read_req_encoded_len(
+    const sbp_msg_settings_read_req_t *msg) {
+  return SBP_MSG_SETTINGS_READ_REQ_ENCODED_OVERHEAD +
+         sbp_msg_settings_read_req_setting_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_settings_read_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_req_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_multipart_string_encode(
           &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_req_encode(uint8_t *buf, uint8_t len,
@@ -536,13 +580,15 @@ s8 sbp_msg_settings_read_req_encode(uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-bool sbp_msg_settings_read_req_decode_internal(
+SBP_BOOL sbp_msg_settings_read_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_req_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_multipart_string_decode(
           &msg->setting, SBP_MSG_SETTINGS_READ_REQ_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_req_decode(const uint8_t *buf, uint8_t len,
@@ -578,6 +624,8 @@ s8 sbp_msg_settings_read_req_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_settings_read_req_cmp(const sbp_msg_settings_read_req_t *a,
                                   const sbp_msg_settings_read_req_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_msg_settings_read_req_setting_strcmp(a, b);
   if (ret != 0) {
@@ -591,7 +639,7 @@ void sbp_msg_settings_read_resp_setting_init(
   sbp_multipart_string_init(&msg->setting);
 }
 
-bool sbp_msg_settings_read_resp_setting_valid(
+SBP_BOOL sbp_msg_settings_read_resp_setting_valid(
     const sbp_msg_settings_read_resp_t *msg) {
   return sbp_multipart_string_valid(&msg->setting,
                                     SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX);
@@ -621,45 +669,47 @@ size_t sbp_msg_settings_read_resp_setting_count_sections(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX);
 }
 
-bool sbp_msg_settings_read_resp_setting_add_section(
+SBP_BOOL sbp_msg_settings_read_resp_setting_add_section(
     sbp_msg_settings_read_resp_t *msg, const char *new_str) {
   return sbp_multipart_string_add_section(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, new_str);
 }
 
-bool sbp_msg_settings_read_resp_setting_add_section_printf(
+SBP_BOOL sbp_msg_settings_read_resp_setting_add_section_printf(
     sbp_msg_settings_read_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_add_section_vprintf(
+  ret = sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_read_resp_setting_add_section_vprintf(
+SBP_BOOL sbp_msg_settings_read_resp_setting_add_section_vprintf(
     sbp_msg_settings_read_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, fmt, ap);
 }
 
-bool sbp_msg_settings_read_resp_setting_append(
+SBP_BOOL sbp_msg_settings_read_resp_setting_append(
     sbp_msg_settings_read_resp_t *msg, const char *str) {
   return sbp_multipart_string_append(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, str);
 }
 
-bool sbp_msg_settings_read_resp_setting_append_printf(
+SBP_BOOL sbp_msg_settings_read_resp_setting_append_printf(
     sbp_msg_settings_read_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_append_vprintf(
+  ret = sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_read_resp_setting_append_vprintf(
+SBP_BOOL sbp_msg_settings_read_resp_setting_append_vprintf(
     sbp_msg_settings_read_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, fmt, ap);
@@ -677,13 +727,21 @@ size_t sbp_msg_settings_read_resp_setting_section_strlen(
       &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, section);
 }
 
-bool sbp_msg_settings_read_resp_encode_internal(
+size_t sbp_msg_settings_read_resp_encoded_len(
+    const sbp_msg_settings_read_resp_t *msg) {
+  return SBP_MSG_SETTINGS_READ_RESP_ENCODED_OVERHEAD +
+         sbp_msg_settings_read_resp_setting_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_settings_read_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_resp_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_multipart_string_encode(
           &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_resp_encode(uint8_t *buf, uint8_t len,
@@ -702,13 +760,15 @@ s8 sbp_msg_settings_read_resp_encode(uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-bool sbp_msg_settings_read_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_read_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_resp_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_multipart_string_decode(
           &msg->setting, SBP_MSG_SETTINGS_READ_RESP_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_resp_decode(const uint8_t *buf, uint8_t len,
@@ -744,6 +804,8 @@ s8 sbp_msg_settings_read_resp_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_settings_read_resp_cmp(const sbp_msg_settings_read_resp_t *a,
                                    const sbp_msg_settings_read_resp_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_msg_settings_read_resp_setting_strcmp(a, b);
   if (ret != 0) {
@@ -752,12 +814,20 @@ int sbp_msg_settings_read_resp_cmp(const sbp_msg_settings_read_resp_t *a,
   return ret;
 }
 
-bool sbp_msg_settings_read_by_index_req_encode_internal(
+size_t sbp_msg_settings_read_by_index_req_encoded_len(
+    const sbp_msg_settings_read_by_index_req_t *msg) {
+  (void)msg;
+  return SBP_MSG_SETTINGS_READ_BY_INDEX_REQ_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_settings_read_by_index_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_by_index_req_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u16_encode(ctx, &msg->index)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_by_index_req_encode(
@@ -776,12 +846,14 @@ s8 sbp_msg_settings_read_by_index_req_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_settings_read_by_index_req_decode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_by_index_req_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u16_decode(ctx, &msg->index)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_by_index_req_decode(
@@ -818,6 +890,8 @@ int sbp_msg_settings_read_by_index_req_cmp(
     const sbp_msg_settings_read_by_index_req_t *a,
     const sbp_msg_settings_read_by_index_req_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u16_cmp(&a->index, &b->index);
   if (ret != 0) {
@@ -831,7 +905,7 @@ void sbp_msg_settings_read_by_index_resp_setting_init(
   sbp_multipart_string_init(&msg->setting);
 }
 
-bool sbp_msg_settings_read_by_index_resp_setting_valid(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_setting_valid(
     const sbp_msg_settings_read_by_index_resp_t *msg) {
   return sbp_multipart_string_valid(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX);
@@ -862,45 +936,47 @@ size_t sbp_msg_settings_read_by_index_resp_setting_count_sections(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX);
 }
 
-bool sbp_msg_settings_read_by_index_resp_setting_add_section(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_setting_add_section(
     sbp_msg_settings_read_by_index_resp_t *msg, const char *new_str) {
   return sbp_multipart_string_add_section(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX, new_str);
 }
 
-bool sbp_msg_settings_read_by_index_resp_setting_add_section_printf(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_setting_add_section_printf(
     sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_add_section_vprintf(
+  ret = sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_read_by_index_resp_setting_add_section_vprintf(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_setting_add_section_vprintf(
     sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX, fmt, ap);
 }
 
-bool sbp_msg_settings_read_by_index_resp_setting_append(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_setting_append(
     sbp_msg_settings_read_by_index_resp_t *msg, const char *str) {
   return sbp_multipart_string_append(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX, str);
 }
 
-bool sbp_msg_settings_read_by_index_resp_setting_append_printf(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_setting_append_printf(
     sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_append_vprintf(
+  ret = sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_read_by_index_resp_setting_append_vprintf(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_setting_append_vprintf(
     sbp_msg_settings_read_by_index_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX, fmt, ap);
@@ -918,17 +994,25 @@ size_t sbp_msg_settings_read_by_index_resp_setting_section_strlen(
       &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX, section);
 }
 
-bool sbp_msg_settings_read_by_index_resp_encode_internal(
+size_t sbp_msg_settings_read_by_index_resp_encoded_len(
+    const sbp_msg_settings_read_by_index_resp_t *msg) {
+  return SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_ENCODED_OVERHEAD +
+         sbp_msg_settings_read_by_index_resp_setting_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_settings_read_by_index_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_by_index_resp_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u16_encode(ctx, &msg->index)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_multipart_string_encode(
           &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX,
           ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_by_index_resp_encode(
@@ -947,17 +1031,19 @@ s8 sbp_msg_settings_read_by_index_resp_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_settings_read_by_index_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_by_index_resp_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u16_decode(ctx, &msg->index)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_multipart_string_decode(
           &msg->setting, SBP_MSG_SETTINGS_READ_BY_INDEX_RESP_SETTING_MAX,
           ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_by_index_resp_decode(
@@ -994,6 +1080,8 @@ int sbp_msg_settings_read_by_index_resp_cmp(
     const sbp_msg_settings_read_by_index_resp_t *a,
     const sbp_msg_settings_read_by_index_resp_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u16_cmp(&a->index, &b->index);
   if (ret != 0) {
@@ -1007,11 +1095,17 @@ int sbp_msg_settings_read_by_index_resp_cmp(
   return ret;
 }
 
-bool sbp_msg_settings_read_by_index_done_encode_internal(
+size_t sbp_msg_settings_read_by_index_done_encoded_len(
+    const sbp_msg_settings_read_by_index_done_t *msg) {
+  (void)msg;
+  return SBP_MSG_SETTINGS_READ_BY_INDEX_DONE_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_settings_read_by_index_done_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_by_index_done_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_by_index_done_encode(
@@ -1030,11 +1124,11 @@ s8 sbp_msg_settings_read_by_index_done_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_settings_read_by_index_done_decode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_done_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_by_index_done_t *msg) {
   (void)ctx;
   (void)msg;
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_read_by_index_done_decode(
@@ -1070,9 +1164,11 @@ s8 sbp_msg_settings_read_by_index_done_send(
 int sbp_msg_settings_read_by_index_done_cmp(
     const sbp_msg_settings_read_by_index_done_t *a,
     const sbp_msg_settings_read_by_index_done_t *b) {
+  int ret = 0;
+  uint8_t i;
+  (void)i;
   (void)a;
   (void)b;
-  int ret = 0;
   return ret;
 }
 
@@ -1080,7 +1176,7 @@ void sbp_msg_settings_register_setting_init(sbp_msg_settings_register_t *msg) {
   sbp_multipart_string_init(&msg->setting);
 }
 
-bool sbp_msg_settings_register_setting_valid(
+SBP_BOOL sbp_msg_settings_register_setting_valid(
     const sbp_msg_settings_register_t *msg) {
   return sbp_multipart_string_valid(&msg->setting,
                                     SBP_MSG_SETTINGS_REGISTER_SETTING_MAX);
@@ -1110,45 +1206,47 @@ size_t sbp_msg_settings_register_setting_count_sections(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX);
 }
 
-bool sbp_msg_settings_register_setting_add_section(
+SBP_BOOL sbp_msg_settings_register_setting_add_section(
     sbp_msg_settings_register_t *msg, const char *new_str) {
   return sbp_multipart_string_add_section(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, new_str);
 }
 
-bool sbp_msg_settings_register_setting_add_section_printf(
+SBP_BOOL sbp_msg_settings_register_setting_add_section_printf(
     sbp_msg_settings_register_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_add_section_vprintf(
+  ret = sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_register_setting_add_section_vprintf(
+SBP_BOOL sbp_msg_settings_register_setting_add_section_vprintf(
     sbp_msg_settings_register_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, fmt, ap);
 }
 
-bool sbp_msg_settings_register_setting_append(sbp_msg_settings_register_t *msg,
-                                              const char *str) {
+SBP_BOOL sbp_msg_settings_register_setting_append(
+    sbp_msg_settings_register_t *msg, const char *str) {
   return sbp_multipart_string_append(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, str);
 }
 
-bool sbp_msg_settings_register_setting_append_printf(
+SBP_BOOL sbp_msg_settings_register_setting_append_printf(
     sbp_msg_settings_register_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_append_vprintf(
+  ret = sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_register_setting_append_vprintf(
+SBP_BOOL sbp_msg_settings_register_setting_append_vprintf(
     sbp_msg_settings_register_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, fmt, ap);
@@ -1166,13 +1264,21 @@ size_t sbp_msg_settings_register_setting_section_strlen(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, section);
 }
 
-bool sbp_msg_settings_register_encode_internal(
+size_t sbp_msg_settings_register_encoded_len(
+    const sbp_msg_settings_register_t *msg) {
+  return SBP_MSG_SETTINGS_REGISTER_ENCODED_OVERHEAD +
+         sbp_msg_settings_register_setting_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_settings_register_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_register_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_multipart_string_encode(
           &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_register_encode(uint8_t *buf, uint8_t len,
@@ -1191,13 +1297,15 @@ s8 sbp_msg_settings_register_encode(uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-bool sbp_msg_settings_register_decode_internal(
+SBP_BOOL sbp_msg_settings_register_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_register_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_multipart_string_decode(
           &msg->setting, SBP_MSG_SETTINGS_REGISTER_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_register_decode(const uint8_t *buf, uint8_t len,
@@ -1233,6 +1341,8 @@ s8 sbp_msg_settings_register_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_settings_register_cmp(const sbp_msg_settings_register_t *a,
                                   const sbp_msg_settings_register_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_msg_settings_register_setting_strcmp(a, b);
   if (ret != 0) {
@@ -1246,7 +1356,7 @@ void sbp_msg_settings_register_resp_setting_init(
   sbp_multipart_string_init(&msg->setting);
 }
 
-bool sbp_msg_settings_register_resp_setting_valid(
+SBP_BOOL sbp_msg_settings_register_resp_setting_valid(
     const sbp_msg_settings_register_resp_t *msg) {
   return sbp_multipart_string_valid(&msg->setting,
                                     SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX);
@@ -1276,45 +1386,47 @@ size_t sbp_msg_settings_register_resp_setting_count_sections(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX);
 }
 
-bool sbp_msg_settings_register_resp_setting_add_section(
+SBP_BOOL sbp_msg_settings_register_resp_setting_add_section(
     sbp_msg_settings_register_resp_t *msg, const char *new_str) {
   return sbp_multipart_string_add_section(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, new_str);
 }
 
-bool sbp_msg_settings_register_resp_setting_add_section_printf(
+SBP_BOOL sbp_msg_settings_register_resp_setting_add_section_printf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_add_section_vprintf(
+  ret = sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_register_resp_setting_add_section_vprintf(
+SBP_BOOL sbp_msg_settings_register_resp_setting_add_section_vprintf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_add_section_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, fmt, ap);
 }
 
-bool sbp_msg_settings_register_resp_setting_append(
+SBP_BOOL sbp_msg_settings_register_resp_setting_append(
     sbp_msg_settings_register_resp_t *msg, const char *str) {
   return sbp_multipart_string_append(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, str);
 }
 
-bool sbp_msg_settings_register_resp_setting_append_printf(
+SBP_BOOL sbp_msg_settings_register_resp_setting_append_printf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, ...) {
+  SBP_BOOL ret;
   va_list ap;
   va_start(ap, fmt);
-  bool ret = sbp_multipart_string_append_vprintf(
+  ret = sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, fmt, ap);
   va_end(ap);
   return ret;
 }
 
-bool sbp_msg_settings_register_resp_setting_append_vprintf(
+SBP_BOOL sbp_msg_settings_register_resp_setting_append_vprintf(
     sbp_msg_settings_register_resp_t *msg, const char *fmt, va_list ap) {
   return sbp_multipart_string_append_vprintf(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, fmt, ap);
@@ -1332,16 +1444,24 @@ size_t sbp_msg_settings_register_resp_setting_section_strlen(
       &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, section);
 }
 
-bool sbp_msg_settings_register_resp_encode_internal(
+size_t sbp_msg_settings_register_resp_encoded_len(
+    const sbp_msg_settings_register_resp_t *msg) {
+  return SBP_MSG_SETTINGS_REGISTER_RESP_ENCODED_OVERHEAD +
+         sbp_msg_settings_register_resp_setting_encoded_len(msg);
+}
+
+SBP_BOOL sbp_msg_settings_register_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_register_resp_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u8_encode(ctx, &msg->status)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_multipart_string_encode(
           &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_register_resp_encode(
@@ -1360,16 +1480,18 @@ s8 sbp_msg_settings_register_resp_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_settings_register_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_register_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_register_resp_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u8_decode(ctx, &msg->status)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_multipart_string_decode(
           &msg->setting, SBP_MSG_SETTINGS_REGISTER_RESP_SETTING_MAX, ctx)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_settings_register_resp_decode(
@@ -1406,6 +1528,8 @@ int sbp_msg_settings_register_resp_cmp(
     const sbp_msg_settings_register_resp_t *a,
     const sbp_msg_settings_register_resp_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u8_cmp(&a->status, &b->status);
   if (ret != 0) {

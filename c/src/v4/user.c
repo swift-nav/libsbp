@@ -3,7 +3,6 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,14 +15,21 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/user.h>
 
-bool sbp_msg_user_data_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_msg_user_data_t *msg) {
-  for (size_t i = 0; i < msg->n_contents; i++) {
+size_t sbp_msg_user_data_encoded_len(const sbp_msg_user_data_t *msg) {
+  return SBP_MSG_USER_DATA_ENCODED_OVERHEAD +
+         (msg->n_contents * SBP_ENCODED_LEN_U8);
+}
+
+SBP_BOOL sbp_msg_user_data_encode_internal(sbp_encode_ctx_t *ctx,
+                                           const sbp_msg_user_data_t *msg) {
+  size_t i;
+  (void)i;
+  for (i = 0; i < msg->n_contents; i++) {
     if (!sbp_u8_encode(ctx, &msg->contents[i])) {
-      return false;
+      return SBP_FALSE;
     }
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_user_data_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -41,16 +47,18 @@ s8 sbp_msg_user_data_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_user_data_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_msg_user_data_t *msg) {
+SBP_BOOL sbp_msg_user_data_decode_internal(sbp_decode_ctx_t *ctx,
+                                           sbp_msg_user_data_t *msg) {
+  uint8_t i;
+  (void)i;
   msg->n_contents =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
-  for (uint8_t i = 0; i < msg->n_contents; i++) {
+  for (i = 0; i < msg->n_contents; i++) {
     if (!sbp_u8_decode(ctx, &msg->contents[i])) {
-      return false;
+      return SBP_FALSE;
     }
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_user_data_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
@@ -85,9 +93,11 @@ s8 sbp_msg_user_data_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_user_data_cmp(const sbp_msg_user_data_t *a,
                           const sbp_msg_user_data_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u8_cmp(&a->n_contents, &b->n_contents);
-  for (uint8_t i = 0; ret == 0 && i < a->n_contents; i++) {
+  for (i = 0; ret == 0 && i < a->n_contents; i++) {
     ret = sbp_u8_cmp(&a->contents[i], &b->contents[i]);
   }
   if (ret != 0) {

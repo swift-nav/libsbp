@@ -3,7 +3,6 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,18 +15,25 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/vehicle.h>
 
-bool sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_odometry_t *msg) {
+size_t sbp_msg_odometry_encoded_len(const sbp_msg_odometry_t *msg) {
+  (void)msg;
+  return SBP_MSG_ODOMETRY_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_odometry_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u32_encode(ctx, &msg->tow)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s32_encode(ctx, &msg->velocity)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->flags)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_odometry_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -45,18 +51,20 @@ s8 sbp_msg_odometry_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_odometry_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_odometry_t *msg) {
+SBP_BOOL sbp_msg_odometry_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_odometry_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u32_decode(ctx, &msg->tow)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s32_decode(ctx, &msg->velocity)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->flags)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_odometry_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
@@ -89,6 +97,8 @@ s8 sbp_msg_odometry_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_odometry_cmp(const sbp_msg_odometry_t *a,
                          const sbp_msg_odometry_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u32_cmp(&a->tow, &b->tow);
   if (ret != 0) {
@@ -107,21 +117,28 @@ int sbp_msg_odometry_cmp(const sbp_msg_odometry_t *a,
   return ret;
 }
 
-bool sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_msg_wheeltick_t *msg) {
+size_t sbp_msg_wheeltick_encoded_len(const sbp_msg_wheeltick_t *msg) {
+  (void)msg;
+  return SBP_MSG_WHEELTICK_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx,
+                                           const sbp_msg_wheeltick_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u64_encode(ctx, &msg->time)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->flags)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->source)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s32_encode(ctx, &msg->ticks)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_wheeltick_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -139,21 +156,23 @@ s8 sbp_msg_wheeltick_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_wheeltick_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_msg_wheeltick_t *msg) {
+SBP_BOOL sbp_msg_wheeltick_decode_internal(sbp_decode_ctx_t *ctx,
+                                           sbp_msg_wheeltick_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u64_decode(ctx, &msg->time)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->flags)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->source)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s32_decode(ctx, &msg->ticks)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_wheeltick_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
@@ -188,6 +207,8 @@ s8 sbp_msg_wheeltick_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_wheeltick_cmp(const sbp_msg_wheeltick_t *a,
                           const sbp_msg_wheeltick_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u64_cmp(&a->time, &b->time);
   if (ret != 0) {

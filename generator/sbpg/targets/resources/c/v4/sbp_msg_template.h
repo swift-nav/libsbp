@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_SBP_MSG_H
 #define LIBSBP_V4_SBP_MSG_H
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -54,19 +53,7 @@ typedef union {
  *         `SBP_OK` (0) if the message was successfully encoded and written to buf
  *         callback
  */
-static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, sbp_msg_type_t msg_type, const sbp_msg_t *msg) {
-  switch(msg_type) {
-((*- for m in real_messages *))
-    case (((m.v4_msg_type))):
-      return (((m.public_encode_fn)))(buf, len, n_written, &msg->(((m.union_member_name))));
-((*- endfor *))
-    case SbpMsgAll:
-      break;
-    default:
-      break;
-  }
-  return -1;
-}
+s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_written, sbp_msg_type_t msg_type, const sbp_msg_t *msg);
 
 /** Decodes a SBP message from the SBP encoded wire format.
  *
@@ -79,19 +66,7 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len, uint8_t *n_writte
  *         `SBP_OK` (0) if the message was successfully decoded
  *         callback
  */
-static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_type_t msg_type, sbp_msg_t *msg) {
-  switch(msg_type) {
-((*- for m in real_messages *))
-    case (((m.v4_msg_type))):
-      return (((m.public_decode_fn)))(buf, len, n_read, &msg->(((m.union_member_name))));
-((*- endfor *))
-    case SbpMsgAll:
-      break;
-    default:
-      break;
-  }
-  return -1;
-}
+s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read, sbp_msg_type_t msg_type, sbp_msg_t *msg);
 
 /** Returns the wire format size in bytes of a given SBP message.
  *
@@ -99,19 +74,7 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len, uint8_t *n_
  * \param msg         SBP message
  * \return            The Number of bytes that the given message would be on the wire
  */
-static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type, const sbp_msg_t *msg) {
-  switch(msg_type) {
-((*- for m in real_messages *))
-    case (((m.v4_msg_type))):
-      return (((m.encoded_len_fn)))(&msg->(((m.union_member_name))));
-((*- endfor *))
-    case SbpMsgAll:
-      break;
-    default:
-      break;
-  }
-  return 0;
-}
+size_t sbp_message_encoded_len(sbp_msg_type_t msg_type, const sbp_msg_t *msg);
 
 /** Compares two SBP messages of equal type.
  *
@@ -122,19 +85,7 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type, const sbp_
  *                    1 if, on the first non-equal field, a.field > b.field
  *                    -1 if, on the first non-equal field, a.field < b.field
  */
-static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b) {
-  switch(msg_type) {
-    ((*- for m in real_messages *))
-    case (((m.v4_msg_type))):
-      return (((m.cmp_fn)))(&a->(((m.union_member_name))), &b->(((m.union_member_name))));
-    ((*- endfor *))
-    case SbpMsgAll:
-      break;
-    default:
-      break;
-  }
-  return 0;
-}
+int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a, const sbp_msg_t *b);
 
 #ifdef __cplusplus
 }

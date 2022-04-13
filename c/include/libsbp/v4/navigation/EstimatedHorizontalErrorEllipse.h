@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -64,11 +63,8 @@ typedef struct {
  * @param msg sbp_estimated_horizontal_error_ellipse_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_estimated_horizontal_error_ellipse_encoded_len(
-    const sbp_estimated_horizontal_error_ellipse_t *msg) {
-  (void)msg;
-  return SBP_ESTIMATED_HORIZONTAL_ERROR_ELLIPSE_ENCODED_LEN;
-}
+size_t sbp_estimated_horizontal_error_ellipse_encoded_len(
+    const sbp_estimated_horizontal_error_ellipse_t *msg);
 
 /**
  * Encode an instance of sbp_estimated_horizontal_error_ellipse_t to wire
@@ -174,6 +170,6 @@ static inline bool operator>=(
   return sbp_estimated_horizontal_error_ellipse_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_NAVIGATION_ESTIMATEDHORIZONTALERRORELLIPSE_H */

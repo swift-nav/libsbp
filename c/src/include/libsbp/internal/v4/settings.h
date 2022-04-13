@@ -18,8 +18,6 @@
 #ifndef LIBSBP_INTERNAL_V4_SETTINGS_H
 #define LIBSBP_INTERNAL_V4_SETTINGS_H
 
-#include <stdbool.h>
-
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/settings.h>
 
@@ -32,29 +30,29 @@ extern "C" {
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_save_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_settings_save_t *msg);
+SBP_BOOL sbp_msg_settings_save_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_settings_save_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_save_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_settings_save_t *msg);
+SBP_BOOL sbp_msg_settings_save_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_settings_save_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_write_encode_internal(
+SBP_BOOL sbp_msg_settings_write_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_write_t *msg);
 
 /**
@@ -62,19 +60,19 @@ bool sbp_msg_settings_write_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_write_decode_internal(sbp_decode_ctx_t *ctx,
-                                            sbp_msg_settings_write_t *msg);
+SBP_BOOL sbp_msg_settings_write_decode_internal(sbp_decode_ctx_t *ctx,
+                                                sbp_msg_settings_write_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_write_resp_encode_internal(
+SBP_BOOL sbp_msg_settings_write_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_write_resp_t *msg);
 
 /**
@@ -82,9 +80,9 @@ bool sbp_msg_settings_write_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_write_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_write_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_write_resp_t *msg);
 
 /**
@@ -92,9 +90,9 @@ bool sbp_msg_settings_write_resp_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_req_encode_internal(
+SBP_BOOL sbp_msg_settings_read_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_req_t *msg);
 
 /**
@@ -102,9 +100,9 @@ bool sbp_msg_settings_read_req_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_req_decode_internal(
+SBP_BOOL sbp_msg_settings_read_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_req_t *msg);
 
 /**
@@ -112,9 +110,9 @@ bool sbp_msg_settings_read_req_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_resp_encode_internal(
+SBP_BOOL sbp_msg_settings_read_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_resp_t *msg);
 
 /**
@@ -122,9 +120,9 @@ bool sbp_msg_settings_read_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_read_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_resp_t *msg);
 
 /**
@@ -132,9 +130,9 @@ bool sbp_msg_settings_read_resp_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_by_index_req_encode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_by_index_req_t *msg);
 
 /**
@@ -142,9 +140,9 @@ bool sbp_msg_settings_read_by_index_req_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_by_index_req_decode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_by_index_req_t *msg);
 
 /**
@@ -152,9 +150,9 @@ bool sbp_msg_settings_read_by_index_req_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_by_index_resp_encode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_by_index_resp_t *msg);
 
 /**
@@ -162,9 +160,9 @@ bool sbp_msg_settings_read_by_index_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_by_index_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_by_index_resp_t *msg);
 
 /**
@@ -172,9 +170,9 @@ bool sbp_msg_settings_read_by_index_resp_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_by_index_done_encode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_done_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_read_by_index_done_t *msg);
 
 /**
@@ -182,9 +180,9 @@ bool sbp_msg_settings_read_by_index_done_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_read_by_index_done_decode_internal(
+SBP_BOOL sbp_msg_settings_read_by_index_done_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_read_by_index_done_t *msg);
 
 /**
@@ -192,9 +190,9 @@ bool sbp_msg_settings_read_by_index_done_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_register_encode_internal(
+SBP_BOOL sbp_msg_settings_register_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_register_t *msg);
 
 /**
@@ -202,9 +200,9 @@ bool sbp_msg_settings_register_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_register_decode_internal(
+SBP_BOOL sbp_msg_settings_register_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_register_t *msg);
 
 /**
@@ -212,9 +210,9 @@ bool sbp_msg_settings_register_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_register_resp_encode_internal(
+SBP_BOOL sbp_msg_settings_register_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_settings_register_resp_t *msg);
 
 /**
@@ -222,9 +220,9 @@ bool sbp_msg_settings_register_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_settings_register_resp_decode_internal(
+SBP_BOOL sbp_msg_settings_register_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_settings_register_resp_t *msg);
 
 #ifdef __cplusplus

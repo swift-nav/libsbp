@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -60,11 +59,8 @@ typedef struct {
  * @param msg sbp_msg_nap_device_dna_req_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_nap_device_dna_req_encoded_len(
-    const sbp_msg_nap_device_dna_req_t *msg) {
-  (void)msg;
-  return SBP_MSG_NAP_DEVICE_DNA_REQ_ENCODED_LEN;
-}
+size_t sbp_msg_nap_device_dna_req_encoded_len(
+    const sbp_msg_nap_device_dna_req_t *msg);
 
 /**
  * Encode an instance of sbp_msg_nap_device_dna_req_t to wire representation
@@ -180,6 +176,6 @@ static inline bool operator>=(const sbp_msg_nap_device_dna_req_t &lhs,
   return sbp_msg_nap_device_dna_req_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_BOOTLOAD_MSG_NAP_DEVICE_DNA_REQ_H */

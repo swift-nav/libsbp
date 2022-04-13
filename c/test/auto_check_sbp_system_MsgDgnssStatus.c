@@ -110,8 +110,8 @@ START_TEST(test_auto_check_sbp_system_MsgDgnssStatus) {
     test_msg.dgnss_status.num_signals = 12;
 
     size_t written;
-    ck_assert_msg(sbp_msg_dgnss_status_source_set(&test_msg.dgnss_status,
-                                                  "Skylark", false, &written),
+    ck_assert_msg(sbp_msg_dgnss_status_source_set(
+                      &test_msg.dgnss_status, "Skylark", SBP_FALSE, &written),
                   "Can't assign text");
     ck_assert_msg(written == strlen("Skylark"), "Wrote different to expected");
     ck_assert_msg(

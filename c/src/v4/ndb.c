@@ -3,7 +3,6 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,33 +15,40 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/ndb.h>
 
-bool sbp_msg_ndb_event_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_msg_ndb_event_t *msg) {
+size_t sbp_msg_ndb_event_encoded_len(const sbp_msg_ndb_event_t *msg) {
+  (void)msg;
+  return SBP_MSG_NDB_EVENT_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_ndb_event_encode_internal(sbp_encode_ctx_t *ctx,
+                                           const sbp_msg_ndb_event_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u64_encode(ctx, &msg->recv_time)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->event)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->object_type)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->result)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->data_source)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->object_sid)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_v4_gnss_signal_encode_internal(ctx, &msg->src_sid)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u16_encode(ctx, &msg->original_sender)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_ndb_event_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -60,33 +66,35 @@ s8 sbp_msg_ndb_event_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_ndb_event_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_msg_ndb_event_t *msg) {
+SBP_BOOL sbp_msg_ndb_event_decode_internal(sbp_decode_ctx_t *ctx,
+                                           sbp_msg_ndb_event_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u64_decode(ctx, &msg->recv_time)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->event)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->object_type)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->result)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->data_source)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->object_sid)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_v4_gnss_signal_decode_internal(ctx, &msg->src_sid)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u16_decode(ctx, &msg->original_sender)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_ndb_event_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
@@ -121,6 +129,8 @@ s8 sbp_msg_ndb_event_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_ndb_event_cmp(const sbp_msg_ndb_event_t *a,
                           const sbp_msg_ndb_event_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u64_cmp(&a->recv_time, &b->recv_time);
   if (ret != 0) {

@@ -58,7 +58,6 @@
 #define LIBSBP_INTERNAL_V4_STRING_MULTIPART_H
 
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 
 #include <libsbp/common.h>
@@ -100,7 +99,7 @@ void sbp_multipart_string_init(sbp_string_t *s);
  * @param maxlen Maximum encoded length
  * @return true is the string is valid, false otherwise
  */
-bool sbp_multipart_string_valid(const sbp_string_t *s, size_t maxlen);
+SBP_BOOL sbp_multipart_string_valid(const sbp_string_t *s, size_t maxlen);
 
 /**
  * Compare two multipart strings
@@ -190,7 +189,7 @@ size_t sbp_multipart_string_section_strlen(const sbp_string_t *s,
  * @param str New section string
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_add_section(sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_multipart_string_add_section(sbp_string_t *s, size_t maxlen,
                                       const char *str);
 
 /**
@@ -209,7 +208,7 @@ bool sbp_multipart_string_add_section(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
+SBP_BOOL sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
                                               size_t maxlen,
                                               const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
@@ -236,7 +235,7 @@ bool sbp_multipart_string_add_section_vprintf(sbp_string_t *s,
  * @param new_str string to append
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_append(sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_multipart_string_append(sbp_string_t *s, size_t maxlen,
                                  const char *new_str);
 
 /**
@@ -262,7 +261,7 @@ bool sbp_multipart_string_append(sbp_string_t *s, size_t maxlen,
  * @param ap Argument list
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_append_vprintf(sbp_string_t *s,
+SBP_BOOL sbp_multipart_string_append_vprintf(sbp_string_t *s,
                                          size_t maxlen,
                                          const char *fmt, va_list ap)
     SBP_ATTR_VFORMAT(3);
@@ -297,7 +296,7 @@ const char *sbp_multipart_string_get_section(const sbp_string_t *s,
  * @param ctx Encode context
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_encode(const sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_multipart_string_encode(const sbp_string_t *s, size_t maxlen,
                                  sbp_encode_ctx_t *ctx);
 
 /**
@@ -313,7 +312,7 @@ bool sbp_multipart_string_encode(const sbp_string_t *s, size_t maxlen,
  * @param ctx Decode context
  * @return true on success, false otherwise
  */
-bool sbp_multipart_string_decode(sbp_string_t *s, size_t maxlen,
+SBP_BOOL sbp_multipart_string_decode(sbp_string_t *s, size_t maxlen,
                                  sbp_decode_ctx_t *ctx);
 
 #ifdef __cplusplus

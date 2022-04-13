@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -77,11 +76,7 @@ typedef struct {
  * @param msg sbp_msg_device_monitor_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_device_monitor_encoded_len(
-    const sbp_msg_device_monitor_t *msg) {
-  (void)msg;
-  return SBP_MSG_DEVICE_MONITOR_ENCODED_LEN;
-}
+size_t sbp_msg_device_monitor_encoded_len(const sbp_msg_device_monitor_t *msg);
 
 /**
  * Encode an instance of sbp_msg_device_monitor_t to wire representation
@@ -195,6 +190,6 @@ static inline bool operator>=(const sbp_msg_device_monitor_t &lhs,
   return sbp_msg_device_monitor_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_PIKSI_MSG_DEVICE_MONITOR_H */

@@ -3,7 +3,6 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -16,24 +15,31 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/mag.h>
 
-bool sbp_msg_mag_raw_encode_internal(sbp_encode_ctx_t *ctx,
-                                     const sbp_msg_mag_raw_t *msg) {
+size_t sbp_msg_mag_raw_encoded_len(const sbp_msg_mag_raw_t *msg) {
+  (void)msg;
+  return SBP_MSG_MAG_RAW_ENCODED_LEN;
+}
+
+SBP_BOOL sbp_msg_mag_raw_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_msg_mag_raw_t *msg) {
+  size_t i;
+  (void)i;
   if (!sbp_u32_encode(ctx, &msg->tow)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_encode(ctx, &msg->tow_f)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->mag_x)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->mag_y)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_encode(ctx, &msg->mag_z)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_mag_raw_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
@@ -51,24 +57,26 @@ s8 sbp_msg_mag_raw_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_mag_raw_decode_internal(sbp_decode_ctx_t *ctx,
-                                     sbp_msg_mag_raw_t *msg) {
+SBP_BOOL sbp_msg_mag_raw_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_msg_mag_raw_t *msg) {
+  uint8_t i;
+  (void)i;
   if (!sbp_u32_decode(ctx, &msg->tow)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_u8_decode(ctx, &msg->tow_f)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->mag_x)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->mag_y)) {
-    return false;
+    return SBP_FALSE;
   }
   if (!sbp_s16_decode(ctx, &msg->mag_z)) {
-    return false;
+    return SBP_FALSE;
   }
-  return true;
+  return SBP_TRUE;
 }
 
 s8 sbp_msg_mag_raw_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
@@ -101,6 +109,8 @@ s8 sbp_msg_mag_raw_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_mag_raw_cmp(const sbp_msg_mag_raw_t *a,
                         const sbp_msg_mag_raw_t *b) {
   int ret = 0;
+  uint8_t i;
+  (void)i;
 
   ret = sbp_u32_cmp(&a->tow, &b->tow);
   if (ret != 0) {

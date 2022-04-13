@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -61,10 +60,7 @@ typedef struct {
  * @param msg sbp_sv_id_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_sv_id_encoded_len(const sbp_sv_id_t *msg) {
-  (void)msg;
-  return SBP_SV_ID_ENCODED_LEN;
-}
+size_t sbp_sv_id_encoded_len(const sbp_sv_id_t *msg);
 
 /**
  * Encode an instance of sbp_sv_id_t to wire representation
@@ -150,6 +146,6 @@ static inline bool operator>=(const sbp_sv_id_t &lhs, const sbp_sv_id_t &rhs) {
   return sbp_sv_id_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_GNSS_SVID_H */

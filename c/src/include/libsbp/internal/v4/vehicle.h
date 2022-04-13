@@ -18,8 +18,6 @@
 #ifndef LIBSBP_INTERNAL_V4_VEHICLE_H
 #define LIBSBP_INTERNAL_V4_VEHICLE_H
 
-#include <stdbool.h>
-
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/vehicle.h>
 
@@ -32,40 +30,40 @@ extern "C" {
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx,
-                                      const sbp_msg_odometry_t *msg);
+SBP_BOOL sbp_msg_odometry_encode_internal(sbp_encode_ctx_t *ctx,
+                                          const sbp_msg_odometry_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_odometry_decode_internal(sbp_decode_ctx_t *ctx,
-                                      sbp_msg_odometry_t *msg);
+SBP_BOOL sbp_msg_odometry_decode_internal(sbp_decode_ctx_t *ctx,
+                                          sbp_msg_odometry_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_msg_wheeltick_t *msg);
+SBP_BOOL sbp_msg_wheeltick_encode_internal(sbp_encode_ctx_t *ctx,
+                                           const sbp_msg_wheeltick_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_wheeltick_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_msg_wheeltick_t *msg);
+SBP_BOOL sbp_msg_wheeltick_decode_internal(sbp_decode_ctx_t *ctx,
+                                           sbp_msg_wheeltick_t *msg);
 
 #ifdef __cplusplus
 }

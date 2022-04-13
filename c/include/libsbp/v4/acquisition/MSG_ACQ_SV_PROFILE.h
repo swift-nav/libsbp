@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -69,11 +68,7 @@ typedef struct {
  * @param msg sbp_msg_acq_sv_profile_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_acq_sv_profile_encoded_len(
-    const sbp_msg_acq_sv_profile_t *msg) {
-  return SBP_MSG_ACQ_SV_PROFILE_ENCODED_OVERHEAD +
-         (msg->n_acq_sv_profile * SBP_ACQ_SV_PROFILE_ENCODED_LEN);
-}
+size_t sbp_msg_acq_sv_profile_encoded_len(const sbp_msg_acq_sv_profile_t *msg);
 
 /**
  * Encode an instance of sbp_msg_acq_sv_profile_t to wire representation
@@ -187,6 +182,6 @@ static inline bool operator>=(const sbp_msg_acq_sv_profile_t &lhs,
   return sbp_msg_acq_sv_profile_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_ACQUISITION_MSG_ACQ_SV_PROFILE_H */

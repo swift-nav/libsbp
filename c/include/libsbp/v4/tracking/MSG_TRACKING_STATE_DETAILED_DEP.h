@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -167,11 +166,8 @@ typedef struct {
  * @param msg sbp_msg_tracking_state_detailed_dep_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_tracking_state_detailed_dep_encoded_len(
-    const sbp_msg_tracking_state_detailed_dep_t *msg) {
-  (void)msg;
-  return SBP_MSG_TRACKING_STATE_DETAILED_DEP_ENCODED_LEN;
-}
+size_t sbp_msg_tracking_state_detailed_dep_encoded_len(
+    const sbp_msg_tracking_state_detailed_dep_t *msg);
 
 /**
  * Encode an instance of sbp_msg_tracking_state_detailed_dep_t to wire
@@ -295,6 +291,6 @@ static inline bool operator>=(
   return sbp_msg_tracking_state_detailed_dep_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_TRACKING_MSG_TRACKING_STATE_DETAILED_DEP_H */

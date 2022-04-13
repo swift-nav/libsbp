@@ -18,8 +18,6 @@
 #ifndef LIBSBP_INTERNAL_V4_FILE_IO_H
 #define LIBSBP_INTERNAL_V4_FILE_IO_H
 
-#include <stdbool.h>
-
 #include <libsbp/internal/v4/common.h>
 #include <libsbp/v4/file_io.h>
 
@@ -32,9 +30,9 @@ extern "C" {
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_req_encode_internal(
+SBP_BOOL sbp_msg_fileio_read_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_req_t *msg);
 
 /**
@@ -42,19 +40,19 @@ bool sbp_msg_fileio_read_req_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_req_decode_internal(sbp_decode_ctx_t *ctx,
-                                             sbp_msg_fileio_read_req_t *msg);
+SBP_BOOL sbp_msg_fileio_read_req_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_resp_encode_internal(
+SBP_BOOL sbp_msg_fileio_read_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_resp_t *msg);
 
 /**
@@ -62,19 +60,19 @@ bool sbp_msg_fileio_read_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_resp_decode_internal(sbp_decode_ctx_t *ctx,
-                                              sbp_msg_fileio_read_resp_t *msg);
+SBP_BOOL sbp_msg_fileio_read_resp_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_resp_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_dir_req_encode_internal(
+SBP_BOOL sbp_msg_fileio_read_dir_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_req_t *msg);
 
 /**
@@ -82,9 +80,9 @@ bool sbp_msg_fileio_read_dir_req_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_dir_req_decode_internal(
+SBP_BOOL sbp_msg_fileio_read_dir_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_req_t *msg);
 
 /**
@@ -92,9 +90,9 @@ bool sbp_msg_fileio_read_dir_req_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_dir_resp_encode_internal(
+SBP_BOOL sbp_msg_fileio_read_dir_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
@@ -102,9 +100,9 @@ bool sbp_msg_fileio_read_dir_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_read_dir_resp_decode_internal(
+SBP_BOOL sbp_msg_fileio_read_dir_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_fileio_read_dir_resp_t *msg);
 
 /**
@@ -112,29 +110,29 @@ bool sbp_msg_fileio_read_dir_resp_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_remove_encode_internal(sbp_encode_ctx_t *ctx,
-                                           const sbp_msg_fileio_remove_t *msg);
+SBP_BOOL sbp_msg_fileio_remove_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_fileio_remove_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_remove_decode_internal(sbp_decode_ctx_t *ctx,
-                                           sbp_msg_fileio_remove_t *msg);
+SBP_BOOL sbp_msg_fileio_remove_decode_internal(sbp_decode_ctx_t *ctx,
+                                               sbp_msg_fileio_remove_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_write_req_encode_internal(
+SBP_BOOL sbp_msg_fileio_write_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_req_t *msg);
 
 /**
@@ -142,19 +140,19 @@ bool sbp_msg_fileio_write_req_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_write_req_decode_internal(sbp_decode_ctx_t *ctx,
-                                              sbp_msg_fileio_write_req_t *msg);
+SBP_BOOL sbp_msg_fileio_write_req_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_fileio_write_req_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_write_resp_encode_internal(
+SBP_BOOL sbp_msg_fileio_write_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_write_resp_t *msg);
 
 /**
@@ -162,9 +160,9 @@ bool sbp_msg_fileio_write_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_write_resp_decode_internal(
+SBP_BOOL sbp_msg_fileio_write_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_fileio_write_resp_t *msg);
 
 /**
@@ -172,9 +170,9 @@ bool sbp_msg_fileio_write_resp_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_config_req_encode_internal(
+SBP_BOOL sbp_msg_fileio_config_req_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_req_t *msg);
 
 /**
@@ -182,9 +180,9 @@ bool sbp_msg_fileio_config_req_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_config_req_decode_internal(
+SBP_BOOL sbp_msg_fileio_config_req_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_req_t *msg);
 
 /**
@@ -192,9 +190,9 @@ bool sbp_msg_fileio_config_req_decode_internal(
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_config_resp_encode_internal(
+SBP_BOOL sbp_msg_fileio_config_resp_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_fileio_config_resp_t *msg);
 
 /**
@@ -202,9 +200,9 @@ bool sbp_msg_fileio_config_resp_encode_internal(
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool sbp_msg_fileio_config_resp_decode_internal(
+SBP_BOOL sbp_msg_fileio_config_resp_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_fileio_config_resp_t *msg);
 
 #ifdef __cplusplus

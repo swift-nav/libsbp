@@ -15,7 +15,6 @@
 
 #ifndef _RUSTC_BINDGEN_
 #include <stdint.h>
-#include <stdbool.h>
 #include <inttypes.h>
 #endif
 
@@ -30,6 +29,11 @@
  * \{ */
 
 #ifndef _RUSTC_BINDGEN_
+
+#define SBP_BOOL int
+#define SBP_TRUE 1
+#define SBP_FALSE 0
+
 /** Signed 8-bit integer. */
 typedef int8_t s8;
 /** Signed 16-bit integer. */

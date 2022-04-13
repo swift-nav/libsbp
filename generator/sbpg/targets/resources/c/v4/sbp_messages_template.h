@@ -18,7 +18,6 @@
 #ifndef LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H
 #define LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H
 
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdarg.h>
 #include <string.h>
@@ -99,9 +98,9 @@ typedef struct {
    * Test (((comment_name))) for validity
    *
    * @param msg (((m.type_name))) instance
-   * @return true is (((comment_name))) is valid for encoding purposes, false otherwise
+   * @return SBP_TRUE is (((comment_name))) is valid for encoding purposes, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_valid(const (((m.type_name))) *msg);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_valid(const (((m.type_name))) *msg);
 
   /**
    * Tests 2 instances of (((comment_name))) for equality
@@ -138,9 +137,9 @@ typedef struct {
    *
    * Erase any existing content and replace with the specified string
    *
-   * If the should_trunc parameter is set to false and the specified string is
+   * If the should_trunc parameter is set to SBP_FALSE and the specified string is
    * longer than can be represented in wire encoding, this function will return
-   * false. Otherwise, if should_trunc is set to true, then as much as possible will
+   * SBP_FALSE. Otherwise, if should_trunc is set to SBP_TRUE, then as much as possible will
    * be read from the new_str as can fit in the msg.
    *
    * @param msg (((m.type_name))) instance
@@ -148,18 +147,18 @@ typedef struct {
    * @param should_trunc Whether the new_str can be truncated to fit in msg
    * @param n_written If not null, on success will be set to the number of bytes
    * written to msg
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, bool should_trunc, size_t *n_written);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_set( (((-m.type_name))) *msg, const char *new_str, SBP_BOOL should_trunc, size_t *n_written);
 
   /**
    * Set (((comment_name))) from a raw buffer
    *
    * Erase any existing content and replace with the specified raw buffer
    *
-   * If the should_trunc parameter is set to false and the specified string is
+   * If the should_trunc parameter is set to SBP_FALSE and the specified string is
    * longer than can be represented in wire encoding, this function will return
-   * false. Otherwise, if should_trunc is set to true, then as much as possible will
+   * SBP_FALSE. Otherwise, if should_trunc is set to SBP_TRUE, then as much as possible will
    * be read from the new_str as can fit in the msg.
    *
    * @param msg (((m.type_name))) instance
@@ -168,29 +167,29 @@ typedef struct {
    * @param should_trunc Whether the new_str can be truncated to fit in msg
    * @param n_written If not null, on success will be set to the number of bytes
    * written to msg
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_set_raw( (((-m.type_name))) *msg, const char *new_buf, size_t new_buf_len, bool should_trunc, size_t *n_written);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_set_raw( (((-m.type_name))) *msg, const char *new_buf, size_t new_buf_len, SBP_BOOL should_trunc, size_t *n_written);
 
   /**
    * Set (((comment_name))) with printf style formatting
    *
    * Erase any existing content and replace with the formatted string
    *
-   * This function will return true if the new string was successfully applied.
-   * If should_trunc is set false, and the operation would end up overflowing the
+   * This function will return SBP_TRUE if the new string was successfully applied.
+   * If should_trunc is set SBP_FALSE, and the operation would end up overflowing the
    * maximum size of this field in wire encoding the existing contents will be
-   * erased and this function will return false. Otherwise, if should_trunc is
-   * set true, the input formatted string will be truncated to fit.
+   * erased and this function will return SBP_FALSE. Otherwise, if should_trunc is
+   * set SBP_TRUE, the input formatted string will be truncated to fit.
    *
    * @param msg (((m.type_name))) instance
    * @param should_trunc Whether the input string should be truncated to fit
    * @param n_written If not null, on success will be set to the number of bytes
    * written to msg
    * @param fmt printf style format string
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_printf( (((-m.type_name))) *msg,  bool should_trunc, size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4,5);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_printf( (((-m.type_name))) *msg,  SBP_BOOL should_trunc, size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4,5);
 
   /**
    * Set (((comment_name))) with printf style formatting
@@ -203,27 +202,27 @@ typedef struct {
    * written to msg
    * @param fmt printf style format string
    * @param ap Argument list
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg,  bool should_trunc, size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_vprintf( (((-m.type_name))) *msg,  SBP_BOOL should_trunc, size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
   /**
    * Append (((comment_name))) with printf style formatting
    *
    * The new string will be appended to the existing contents of the string (if
-   * any). If should_trunc is false and the operation would end up overflowing
+   * any). If should_trunc is SBP_FALSE and the operation would end up overflowing
    * the maximum size of this field in wire encoding, the existing contents will
-   * be unmodified and this function will return false. Otherwise, if
-   * should_trunc is true, the input string will be truncated to fit.
+   * be unmodified and this function will return SBP_FALSE. Otherwise, if
+   * should_trunc is SBP_TRUE, the input string will be truncated to fit.
    *
    * @param msg (((m.type_name))) instance
    * @param should_trunc Whether the input string should be truncated to fit
    * @param n_written If not null, on success will be set to the number of bytes
    * written to msg
    * @param fmt printf style format string
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg,  bool should_trunc, size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4,5);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg,  SBP_BOOL should_trunc, size_t *n_written, const char *fmt, ...) SBP_ATTR_FORMAT(4,5);
 
   /**
    * Append (((comment_name))) with printf style formatting
@@ -236,9 +235,9 @@ typedef struct {
    * written to msg
    * @param fmt printf style format string
    * @param ap Argument list
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg,  bool should_trunc, size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg,  SBP_BOOL should_trunc, size_t *n_written, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(4);
 
   /**
    * Obtain the string value from (((comment_name)))
@@ -269,24 +268,24 @@ typedef struct {
   /**
    * Add a section to (((comment_name)))
    *
-   * The specified string will be appended to the field as a new section. If the new section would end up overflowing the maximum encoded length of this field the string will not be changed and this function will return false
+   * The specified string will be appended to the field as a new section. If the new section would end up overflowing the maximum encoded length of this field the string will not be changed and this function will return SBP_FALSE
    *
    * @param msg (((m.type_name))) instance 
    * @param new_str New string
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_add_section( (((-m.type_name))) *msg, const char *new_str);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_add_section( (((-m.type_name))) *msg, const char *new_str);
 
   /**
    * Add a section to (((comment_name))) with printf style formatting
    *
-   * A new section will be added to the field according to the specified printf style format string and arguments. If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
+   * A new section will be added to the field according to the specified printf style format string and arguments. If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return SBP_FALSE.
    *
    * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_add_section_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_add_section_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Add a section to (((comment_name))) with printf style formatting
@@ -296,9 +295,9 @@ typedef struct {
    * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_add_section_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Append a string to the last section in (((comment_name)))
@@ -307,13 +306,13 @@ typedef struct {
    *
    * If the field already contains one or more sections the given string will be appended on to the last section in the string. 
    *
-   * If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
+   * If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return SBP_FALSE.
    *
    * @param msg (((m.type_name))) instance
    * @param str New string
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_append( (((-m.type_name))) *msg, const char *str);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_append( (((-m.type_name))) *msg, const char *str);
 
   /**
    * Append a string to the last section in (((comment_name))) with printf style formatting
@@ -322,13 +321,13 @@ typedef struct {
    *
    * If the field already contains one or more sections the given string will be appended on to the last section in the string.
    *
-   * If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
+   * If the operation would end up overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return SBP_FALSE.
    *
    * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_append_printf( (((-m.type_name))) *msg, const char *fmt, ...) SBP_ATTR_FORMAT(2,3);
 
   /**
    * Append a string to the last section in (((comment_name))) with printf style formatting
@@ -337,14 +336,14 @@ typedef struct {
    *
    * If the field already contains one or more sections the given string will be sppended on to the last section in the string.
    *
-   * If the operation would end overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return false.
+   * If the operation would end overflowing the maximum size of this field in wire encoding the existing contents will be unmodified and this function will return SBP_FALSE.
    *
    * @param msg (((m.type_name))) instance
    * @param fmt printf style format string
    * @param ap Argument list
-   * @return true on success, false otherwise
+   * @return SBP_TRUE on success, SBP_FALSE otherwise
    */
-  SBP_EXPORT bool (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
+  SBP_EXPORT SBP_BOOL (((f.fn_prefix)))_append_vprintf( (((-m.type_name))) *msg, const char *fmt, va_list ap) SBP_ATTR_VFORMAT(2);
 
   /**
    * Obtain a section from (((comment_name)))
@@ -382,23 +381,7 @@ typedef struct {
  * @param msg (((m.type_name))) instance
  * @return Length of on-wire representation
  */
-static inline size_t (((m.encoded_len_fn)))(const (((m.type_name))) *msg)
-{
-  ((*- if m.is_fixed_size *))
-  (void)msg;
-  return (((m.encoded_len_macro)));
-  ((*- else *))
-    return (((m.encoded_len_macro))) 
-    ((*- for f in m.fields *))
-    ((*- if f.packing == "variable-array" *))
-    + (msg->(((f.size_fn))) * (((f.encoded_len_macro))))
-    ((*- elif f.packing == "packed-string" *))
-    + (((f.fn_prefix)))_encoded_len(msg)
-    ((*- endif *))
-    ((*- endfor *))
-    ;
-  ((*- endif *))
-}
+size_t (((m.encoded_len_fn)))(const (((m.type_name))) *msg);
 
 /**
  * Encode an instance of (((m.type_name))) to wire representation
@@ -486,7 +469,7 @@ static inline bool operator>=(const (((m.type_name))) &lhs, const (((m.type_name
   return (((m.cmp_fn)))(&lhs, &rhs) >= 0;
 }
 
-#endif // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_(((m.package_name|upper)))_(((m.name|upper)))_H */
 

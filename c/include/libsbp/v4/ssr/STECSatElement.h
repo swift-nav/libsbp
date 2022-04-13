@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -68,11 +67,7 @@ typedef struct {
  * @param msg sbp_stec_sat_element_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_stec_sat_element_encoded_len(
-    const sbp_stec_sat_element_t *msg) {
-  (void)msg;
-  return SBP_STEC_SAT_ELEMENT_ENCODED_LEN;
-}
+size_t sbp_stec_sat_element_encoded_len(const sbp_stec_sat_element_t *msg);
 
 /**
  * Encode an instance of sbp_stec_sat_element_t to wire representation
@@ -167,6 +162,6 @@ static inline bool operator>=(const sbp_stec_sat_element_t &lhs,
   return sbp_stec_sat_element_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_SSR_STECSATELEMENT_H */

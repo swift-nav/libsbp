@@ -18,8 +18,6 @@
 #ifndef LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
 #define LIBSBP_INTERNAL_V4_(((package.name|upper)))_H
 
-#include <stdbool.h>
-
 #include <libsbp/v4/(((package.name))).h>
 #include <libsbp/internal/v4/common.h>
 ((*- for i in package.includes *))
@@ -37,18 +35,18 @@
  *
  * @param ctx Encode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool (((m.internal_encode_fn)))(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
+SBP_BOOL (((m.internal_encode_fn)))(sbp_encode_ctx_t *ctx, const (((m.type_name))) *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
  *
  * @param ctx Decode context
  * @param msg SBP type instance
- * @return true on success, false otherwise
+ * @return SBP_TRUE on success, SBP_FALSE otherwise
  */
-bool (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
+SBP_BOOL (((m.internal_decode_fn)))(sbp_decode_ctx_t *ctx, (((m.type_name))) *msg);
 
 ((*- endfor *))
 

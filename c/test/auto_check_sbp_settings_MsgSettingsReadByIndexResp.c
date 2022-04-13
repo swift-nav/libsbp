@@ -110,17 +110,17 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     test_msg.settings_read_by_index_resp.index = 0;
 
-    ck_assert_msg(
-        sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "telemetry_radio") == true,
-        "Can't assign section 0");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
                       &test_msg.settings_read_by_index_resp,
-                      "configuration_string") == true,
+                      "telemetry_radio") == SBP_TRUE,
+                  "Can't assign section 0");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp,
+                      "configuration_string") == SBP_TRUE,
                   "Can't assign section 1");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
                       &test_msg.settings_read_by_index_resp,
-                      "AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ") == true,
+                      "AT&F,ATS1=115,ATS2=128,ATS5=0,AT&W,ATZ") == SBP_TRUE,
                   "Can't assign section 2");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
                       &test_msg.settings_read_by_index_resp) == 76,
@@ -203,17 +203,18 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "uart_ftdi") == true,
+            &test_msg.settings_read_by_index_resp, "uart_ftdi") == SBP_TRUE,
         "Can't assign section 0");
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "mode") == SBP_TRUE,
+        "Can't assign section 1");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
-                      &test_msg.settings_read_by_index_resp, "mode") == true,
-                  "Can't assign section 1");
-    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
-                      &test_msg.settings_read_by_index_resp, "SBP") == true,
+                      &test_msg.settings_read_by_index_resp, "SBP") == SBP_TRUE,
                   "Can't assign section 2");
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "enum:SBP,NMEA") == true,
+            &test_msg.settings_read_by_index_resp, "enum:SBP,NMEA") == SBP_TRUE,
         "Can't assign section 3");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
                       &test_msg.settings_read_by_index_resp) == 33,
@@ -302,15 +303,16 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "uart_ftdi") == true,
+            &test_msg.settings_read_by_index_resp, "uart_ftdi") == SBP_TRUE,
         "Can't assign section 0");
+    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
+                      &test_msg.settings_read_by_index_resp,
+                      "sbp_message_mask") == SBP_TRUE,
+                  "Can't assign section 1");
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "sbp_message_mask") == true,
-        "Can't assign section 1");
-    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
-                      &test_msg.settings_read_by_index_resp, "65535") == true,
-                  "Can't assign section 2");
+            &test_msg.settings_read_by_index_resp, "65535") == SBP_TRUE,
+        "Can't assign section 2");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
                       &test_msg.settings_read_by_index_resp) == 33,
                   "String not encoded properly");
@@ -392,15 +394,16 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "uart_ftdi") == true,
+            &test_msg.settings_read_by_index_resp, "uart_ftdi") == SBP_TRUE,
         "Can't assign section 0");
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "baudrate") == true,
+            &test_msg.settings_read_by_index_resp, "baudrate") == SBP_TRUE,
         "Can't assign section 1");
-    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
-                      &test_msg.settings_read_by_index_resp, "1000000") == true,
-                  "Can't assign section 2");
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "1000000") == SBP_TRUE,
+        "Can't assign section 2");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
                       &test_msg.settings_read_by_index_resp) == 27,
                   "String not encoded properly");
@@ -482,17 +485,18 @@ START_TEST(test_auto_check_sbp_settings_MsgSettingsReadByIndexResp) {
 
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "uart_uarta") == true,
+            &test_msg.settings_read_by_index_resp, "uart_uarta") == SBP_TRUE,
         "Can't assign section 0");
+    ck_assert_msg(
+        sbp_msg_settings_read_by_index_resp_setting_add_section(
+            &test_msg.settings_read_by_index_resp, "mode") == SBP_TRUE,
+        "Can't assign section 1");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
-                      &test_msg.settings_read_by_index_resp, "mode") == true,
-                  "Can't assign section 1");
-    ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_add_section(
-                      &test_msg.settings_read_by_index_resp, "SBP") == true,
+                      &test_msg.settings_read_by_index_resp, "SBP") == SBP_TRUE,
                   "Can't assign section 2");
     ck_assert_msg(
         sbp_msg_settings_read_by_index_resp_setting_add_section(
-            &test_msg.settings_read_by_index_resp, "enum:SBP,NMEA") == true,
+            &test_msg.settings_read_by_index_resp, "enum:SBP,NMEA") == SBP_TRUE,
         "Can't assign section 3");
     ck_assert_msg(sbp_msg_settings_read_by_index_resp_setting_encoded_len(
                       &test_msg.settings_read_by_index_resp) == 34,

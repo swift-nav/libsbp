@@ -3,6 +3,8 @@ FILE(GLOB generated_c_sources v4/*.c)
 set(libsbp_SRCS
   edc.c
   sbp.c
+  sbp_msg.c
+  v4/common.c
   v4/string/sbp_string.c
   v4/string/multipart.c
   v4/string/unterminated.c
@@ -15,6 +17,7 @@ swift_add_library(sbp
   SOURCES ${libsbp_SRCS}
 )
 add_library(swiftnav::sbp ALIAS sbp)
+swift_set_language_standards(sbp C 90)
 
 target_compile_definitions(sbp
   PRIVATE

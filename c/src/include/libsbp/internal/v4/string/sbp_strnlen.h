@@ -35,13 +35,7 @@ extern "C" {
  * @param limit Max length
  * @return string length
  */
-static inline size_t sbp_strnlen(const char *str, size_t limit) {
-  size_t len = 0;
-  while (len < limit && str[len] != 0) {
-    len++;
-  }
-  return len;
-}
+size_t sbp_strnlen(const char *str, size_t limit);
 
 #ifdef __cplusplus
 }

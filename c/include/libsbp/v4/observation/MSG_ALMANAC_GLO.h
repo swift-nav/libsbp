@@ -20,7 +20,6 @@
 
 #include <math.h>
 #include <stdarg.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -95,11 +94,7 @@ typedef struct {
  * @param msg sbp_msg_almanac_glo_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_almanac_glo_encoded_len(
-    const sbp_msg_almanac_glo_t *msg) {
-  (void)msg;
-  return SBP_MSG_ALMANAC_GLO_ENCODED_LEN;
-}
+size_t sbp_msg_almanac_glo_encoded_len(const sbp_msg_almanac_glo_t *msg);
 
 /**
  * Encode an instance of sbp_msg_almanac_glo_t to wire representation
@@ -213,6 +208,6 @@ static inline bool operator>=(const sbp_msg_almanac_glo_t &lhs,
   return sbp_msg_almanac_glo_cmp(&lhs, &rhs) >= 0;
 }
 
-#endif  // ifdef __cplusplus
+#endif /* ifdef __cplusplus */
 
 #endif /* LIBSBP_V4_OBSERVATION_MSG_ALMANAC_GLO_H */
