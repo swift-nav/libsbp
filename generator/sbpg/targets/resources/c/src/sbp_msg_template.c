@@ -73,3 +73,4 @@ int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a, const sbp_msg_t
   }
   return 0;
 }
+

@@ -17,7 +17,11 @@ swift_add_library(sbp
   SOURCES ${libsbp_SRCS}
 )
 add_library(swiftnav::sbp ALIAS sbp)
-swift_set_language_standards(sbp C 90)
+set_target_properties(sbp PROPERTIES
+  C_STANDARD 90
+  C_STANDARD_REQUIRED ON
+  C_EXTENSIONS OFF
+  )
 
 target_compile_definitions(sbp
   PRIVATE
