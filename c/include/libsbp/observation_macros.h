@@ -35,13 +35,13 @@
 #define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT) & \
         SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK))
-#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SET(flags, val)                \
-  do {                                                                     \
-    (flags) =                                                              \
-        (u8)((flags & (~(SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK          \
-                         << SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT))) | \
-             (((val) & (SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK))         \
-              << (SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT)));            \
+#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SET(flags, val)                  \
+  do {                                                                       \
+    (flags) =                                                                \
+        (u8)(((flags) & (~(SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK          \
+                           << SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT))) | \
+             (((val) & (SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK))           \
+              << (SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_NO_EXCLUSION (0)
@@ -52,13 +52,13 @@
 #define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT) & \
         SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK))
-#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SET(flags, val)                \
-  do {                                                                    \
-    (flags) =                                                             \
-        (u8)((flags & (~(SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK          \
-                         << SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT))) | \
-             (((val) & (SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK))         \
-              << (SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT)));            \
+#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SET(flags, val)                  \
+  do {                                                                      \
+    (flags) =                                                               \
+        (u8)(((flags) & (~(SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK          \
+                           << SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT))) | \
+             (((val) & (SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK))           \
+              << (SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_INVALID_DOPPLER_MEASUREMENT (0)
@@ -68,13 +68,13 @@
 #define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT) & \
         SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK))
-#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SET(flags, val)           \
-  do {                                                                     \
-    (flags) = (u8)(                                                        \
-        (flags & (~(SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK          \
-                    << SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT))) | \
-        (((val) & (SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK))         \
-         << (SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT)));            \
+#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SET(flags, val)             \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        ((flags) & (~(SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK          \
+                      << SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT))) | \
+        (((val) & (SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK))           \
+         << (SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_HALF_CYCLE_PHASE_AMBIGUITY_UNRESOLVED \
@@ -86,13 +86,13 @@
 #define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT) & \
         SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK))
-#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SET(flags, val)           \
-  do {                                                                     \
-    (flags) = (u8)(                                                        \
-        (flags & (~(SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK          \
-                    << SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT))) | \
-        (((val) & (SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK))         \
-         << (SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT)));            \
+#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SET(flags, val)             \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        ((flags) & (~(SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK          \
+                      << SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT))) | \
+        (((val) & (SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK))           \
+         << (SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_INVALID_CARRIER_PHASE_MEASUREMENT \
@@ -104,13 +104,13 @@
 #define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT) & \
         SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK))
-#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SET(flags, val)                \
-  do {                                                                        \
-    (flags) =                                                                 \
-        (u8)((flags & (~(SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK          \
-                         << SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT))) | \
-             (((val) & (SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK))         \
-              << (SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT)));            \
+#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SET(flags, val)             \
+  do {                                                                     \
+    (flags) = (u8)(                                                        \
+        ((flags) & (~(SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK          \
+                      << SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT))) | \
+        (((val) & (SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK))           \
+         << (SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_INVALID_PSEUDORANGE_MEASUREMENT \
@@ -132,7 +132,7 @@
 #define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_SET(flags, val)        \
   do {                                                                        \
     (flags) =                                                                 \
-        (u8)((flags &                                                         \
+        (u8)(((flags) &                                                       \
               (~(SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_MASK          \
                  << SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_SHIFT))) | \
              (((val) & (SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_MASK)) \
@@ -151,7 +151,7 @@
 #define SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_SET(flags, val)        \
   do {                                                                       \
     (flags) =                                                                \
-        (u8)((flags &                                                        \
+        (u8)(((flags) &                                                      \
               (~(SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_MASK          \
                  << SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_SHIFT))) | \
              (((val) & (SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_MASK)) \
@@ -166,13 +166,13 @@
 #define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT) & \
         SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK))
-#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SET(flags, val)                \
-  do {                                                                       \
-    (flags) =                                                                \
-        (u8)((flags & (~(SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK          \
-                         << SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT))) | \
-             (((val) & (SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK))         \
-              << (SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT)));            \
+#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SET(flags, val)                  \
+  do {                                                                         \
+    (flags) =                                                                  \
+        (u8)(((flags) & (~(SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK          \
+                           << SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT))) | \
+             (((val) & (SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK))           \
+              << (SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_FULL_FIXING_UNAVAILABLE (0)
@@ -182,13 +182,13 @@
 #define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT) & \
         SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK))
-#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SET(flags, val)           \
-  do {                                                                     \
-    (flags) = (u8)(                                                        \
-        (flags & (~(SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK          \
-                    << SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT))) | \
-        (((val) & (SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK))         \
-         << (SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT)));            \
+#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SET(flags, val)             \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        ((flags) & (~(SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK          \
+                      << SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT))) | \
+        (((val) & (SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK))           \
+         << (SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_PARTIAL_FIXING_UNAVAILABLE (0)
@@ -198,13 +198,13 @@
 #define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT) & \
         SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK))
-#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SET(flags, val)           \
-  do {                                                                     \
-    (flags) = (u8)(                                                        \
-        (flags & (~(SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK          \
-                    << SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT))) | \
-        (((val) & (SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK))         \
-         << (SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT)));            \
+#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SET(flags, val)             \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        ((flags) & (~(SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK          \
+                      << SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT))) | \
+        (((val) & (SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK))           \
+         << (SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT)));              \
   } while (0)
 
 #define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_DO_NOT_USE_SIGNAL (0)

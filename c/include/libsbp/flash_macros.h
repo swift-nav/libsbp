@@ -24,13 +24,13 @@
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT) & \
         SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK))
-#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SET(flags, val)                \
-  do {                                                                        \
-    (flags) =                                                                 \
-        (u8)((flags & (~(SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK          \
-                         << SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT))) | \
-             (((val) & (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK))         \
-              << (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT)));            \
+#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SET(flags, val)             \
+  do {                                                                     \
+    (flags) = (u8)(                                                        \
+        ((flags) & (~(SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK          \
+                      << SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT))) | \
+        (((val) & (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK))           \
+         << (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT)));              \
   } while (0)
 
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_STM (0)
@@ -71,12 +71,12 @@
 #define SBP_FLASH_DONE_RESPONSE_CODE_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_FLASH_DONE_RESPONSE_CODE_SHIFT) & \
         SBP_FLASH_DONE_RESPONSE_CODE_MASK))
-#define SBP_FLASH_DONE_RESPONSE_CODE_SET(flags, val)                      \
-  do {                                                                    \
-    (flags) = (u8)((flags & (~(SBP_FLASH_DONE_RESPONSE_CODE_MASK          \
-                               << SBP_FLASH_DONE_RESPONSE_CODE_SHIFT))) | \
-                   (((val) & (SBP_FLASH_DONE_RESPONSE_CODE_MASK))         \
-                    << (SBP_FLASH_DONE_RESPONSE_CODE_SHIFT)));            \
+#define SBP_FLASH_DONE_RESPONSE_CODE_SET(flags, val)                        \
+  do {                                                                      \
+    (flags) = (u8)(((flags) & (~(SBP_FLASH_DONE_RESPONSE_CODE_MASK          \
+                                 << SBP_FLASH_DONE_RESPONSE_CODE_SHIFT))) | \
+                   (((val) & (SBP_FLASH_DONE_RESPONSE_CODE_MASK))           \
+                    << (SBP_FLASH_DONE_RESPONSE_CODE_SHIFT)));              \
   } while (0)
 
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_OK (0)
@@ -97,13 +97,13 @@
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT) & \
         SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK))
-#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SET(flags, val)                \
-  do {                                                                         \
-    (flags) =                                                                  \
-        (u8)((flags & (~(SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK          \
-                         << SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT))) | \
-             (((val) & (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK))         \
-              << (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT)));            \
+#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SET(flags, val)             \
+  do {                                                                      \
+    (flags) = (u8)(                                                         \
+        ((flags) & (~(SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK          \
+                      << SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT))) | \
+        (((val) & (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK))           \
+         << (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT)));              \
   } while (0)
 
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_STM (0)
@@ -128,13 +128,13 @@
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT) & \
         SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK))
-#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SET(flags, val)           \
-  do {                                                                     \
-    (flags) = (u8)(                                                        \
-        (flags & (~(SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK          \
-                    << SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT))) | \
-        (((val) & (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK))         \
-         << (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT)));            \
+#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SET(flags, val)             \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        ((flags) & (~(SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK          \
+                      << SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT))) | \
+        (((val) & (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK))           \
+         << (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT)));              \
   } while (0)
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_STM (0)
@@ -159,13 +159,13 @@
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT) & \
         SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK))
-#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SET(flags, val)                \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags & (~(SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK          \
-                         << SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT))) | \
-             (((val) & (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK))         \
-              << (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT)));            \
+#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SET(flags, val)                  \
+  do {                                                                        \
+    (flags) =                                                                 \
+        (u8)(((flags) & (~(SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK          \
+                           << SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT))) | \
+             (((val) & (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK))           \
+              << (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT)));              \
   } while (0)
 
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_STM (0)

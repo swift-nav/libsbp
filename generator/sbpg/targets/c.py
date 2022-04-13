@@ -329,7 +329,7 @@ def create_bitfield_macros(field, msg):
             )
             ret_list.append(
                 """#define {}_SET(flags, val) \\
-                             do {{(flags) = ({})((flags & (~({}_MASK << {}_SHIFT))) | \\
+                             do {{(flags) = ({})(((flags) & (~({}_MASK << {}_SHIFT))) | \\
                              (((val) & ({}_MASK)) \\
                              << ({}_SHIFT)));}} while(0)
                              """.format(

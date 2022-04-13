@@ -24,12 +24,12 @@
 #define SBP_EXT_EVENT_TIME_QUALITY_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_EXT_EVENT_TIME_QUALITY_SHIFT) & \
         SBP_EXT_EVENT_TIME_QUALITY_MASK))
-#define SBP_EXT_EVENT_TIME_QUALITY_SET(flags, val)                      \
-  do {                                                                  \
-    (flags) = (u8)((flags & (~(SBP_EXT_EVENT_TIME_QUALITY_MASK          \
-                               << SBP_EXT_EVENT_TIME_QUALITY_SHIFT))) | \
-                   (((val) & (SBP_EXT_EVENT_TIME_QUALITY_MASK))         \
-                    << (SBP_EXT_EVENT_TIME_QUALITY_SHIFT)));            \
+#define SBP_EXT_EVENT_TIME_QUALITY_SET(flags, val)                        \
+  do {                                                                    \
+    (flags) = (u8)(((flags) & (~(SBP_EXT_EVENT_TIME_QUALITY_MASK          \
+                                 << SBP_EXT_EVENT_TIME_QUALITY_SHIFT))) | \
+                   (((val) & (SBP_EXT_EVENT_TIME_QUALITY_MASK))           \
+                    << (SBP_EXT_EVENT_TIME_QUALITY_SHIFT)));              \
   } while (0)
 
 #define SBP_EXT_EVENT_TIME_QUALITY_UNKNOWN_DONT_HAVE_NAV_SOLUTION (0)
@@ -39,12 +39,12 @@
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT) & \
         SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK))
-#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SET(flags, val)                      \
-  do {                                                                      \
-    (flags) = (u8)((flags & (~(SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK          \
-                               << SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT))) | \
-                   (((val) & (SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK))         \
-                    << (SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT)));            \
+#define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SET(flags, val)                        \
+  do {                                                                        \
+    (flags) = (u8)(((flags) & (~(SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK          \
+                                 << SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT))) | \
+                   (((val) & (SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_MASK))           \
+                    << (SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_SHIFT)));              \
   } while (0)
 
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_LOW (0)

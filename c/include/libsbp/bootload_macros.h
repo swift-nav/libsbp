@@ -41,7 +41,7 @@
     flags, val)                                                                           \
   do {                                                                                    \
     (flags) = (u32)(                                                                      \
-        (flags &                                                                          \
+        ((flags) &                                                                        \
          (~(SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK          \
             << SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT))) | \
         (((val) &                                                                         \
@@ -64,7 +64,7 @@
     flags, val)                                                                           \
   do {                                                                                    \
     (flags) = (u32)(                                                                      \
-        (flags &                                                                          \
+        ((flags) &                                                                        \
          (~(SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK          \
             << SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT))) | \
         (((val) &                                                                         \

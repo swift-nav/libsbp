@@ -24,12 +24,12 @@
 #define SBP_NDB_EVENT_EVENT_TYPE_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_NDB_EVENT_EVENT_TYPE_SHIFT) & \
         SBP_NDB_EVENT_EVENT_TYPE_MASK))
-#define SBP_NDB_EVENT_EVENT_TYPE_SET(flags, val)                      \
-  do {                                                                \
-    (flags) = (u8)((flags & (~(SBP_NDB_EVENT_EVENT_TYPE_MASK          \
-                               << SBP_NDB_EVENT_EVENT_TYPE_SHIFT))) | \
-                   (((val) & (SBP_NDB_EVENT_EVENT_TYPE_MASK))         \
-                    << (SBP_NDB_EVENT_EVENT_TYPE_SHIFT)));            \
+#define SBP_NDB_EVENT_EVENT_TYPE_SET(flags, val)                        \
+  do {                                                                  \
+    (flags) = (u8)(((flags) & (~(SBP_NDB_EVENT_EVENT_TYPE_MASK          \
+                                 << SBP_NDB_EVENT_EVENT_TYPE_SHIFT))) | \
+                   (((val) & (SBP_NDB_EVENT_EVENT_TYPE_MASK))           \
+                    << (SBP_NDB_EVENT_EVENT_TYPE_SHIFT)));              \
   } while (0)
 
 #define SBP_NDB_EVENT_EVENT_TYPE_UNKNOWN (0)
@@ -41,12 +41,12 @@
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT) & \
         SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK))
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SET(flags, val)                      \
-  do {                                                                       \
-    (flags) = (u8)((flags & (~(SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK          \
-                               << SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT))) | \
-                   (((val) & (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK))         \
-                    << (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT)));            \
+#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SET(flags, val)                        \
+  do {                                                                         \
+    (flags) = (u8)(((flags) & (~(SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK          \
+                                 << SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT))) | \
+                   (((val) & (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK))           \
+                    << (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT)));              \
   } while (0)
 
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_UNKNOWN (0)
@@ -61,12 +61,12 @@
 #define SBP_NDB_EVENT_EVENT_RESULT_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_NDB_EVENT_EVENT_RESULT_SHIFT) & \
         SBP_NDB_EVENT_EVENT_RESULT_MASK))
-#define SBP_NDB_EVENT_EVENT_RESULT_SET(flags, val)                      \
-  do {                                                                  \
-    (flags) = (u8)((flags & (~(SBP_NDB_EVENT_EVENT_RESULT_MASK          \
-                               << SBP_NDB_EVENT_EVENT_RESULT_SHIFT))) | \
-                   (((val) & (SBP_NDB_EVENT_EVENT_RESULT_MASK))         \
-                    << (SBP_NDB_EVENT_EVENT_RESULT_SHIFT)));            \
+#define SBP_NDB_EVENT_EVENT_RESULT_SET(flags, val)                        \
+  do {                                                                    \
+    (flags) = (u8)(((flags) & (~(SBP_NDB_EVENT_EVENT_RESULT_MASK          \
+                                 << SBP_NDB_EVENT_EVENT_RESULT_SHIFT))) | \
+                   (((val) & (SBP_NDB_EVENT_EVENT_RESULT_MASK))           \
+                    << (SBP_NDB_EVENT_EVENT_RESULT_SHIFT)));              \
   } while (0)
 
 #define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_NONE (0)
@@ -85,12 +85,12 @@
 #define SBP_NDB_EVENT_DATA_SOURCE_GET(flags)               \
   ((u8)((u8)((flags) >> SBP_NDB_EVENT_DATA_SOURCE_SHIFT) & \
         SBP_NDB_EVENT_DATA_SOURCE_MASK))
-#define SBP_NDB_EVENT_DATA_SOURCE_SET(flags, val)                      \
-  do {                                                                 \
-    (flags) = (u8)((flags & (~(SBP_NDB_EVENT_DATA_SOURCE_MASK          \
-                               << SBP_NDB_EVENT_DATA_SOURCE_SHIFT))) | \
-                   (((val) & (SBP_NDB_EVENT_DATA_SOURCE_MASK))         \
-                    << (SBP_NDB_EVENT_DATA_SOURCE_SHIFT)));            \
+#define SBP_NDB_EVENT_DATA_SOURCE_SET(flags, val)                        \
+  do {                                                                   \
+    (flags) = (u8)(((flags) & (~(SBP_NDB_EVENT_DATA_SOURCE_MASK          \
+                                 << SBP_NDB_EVENT_DATA_SOURCE_SHIFT))) | \
+                   (((val) & (SBP_NDB_EVENT_DATA_SOURCE_MASK))           \
+                    << (SBP_NDB_EVENT_DATA_SOURCE_SHIFT)));              \
   } while (0)
 
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_UNDEFINED (0)
