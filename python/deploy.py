@@ -8,7 +8,6 @@ import platform
 import tempfile
 import subprocess
 
-
 if 'PYPI_USERNAME' not in os.environ or 'PYPI_PASSWORD' not in os.environ:
     print("\n>>> WARNING: set PYPI_USERNAME and PYPI_PASSWORD to push to PyPI\n\n")
     sys.exit(1)
@@ -40,15 +39,15 @@ else:
 
 os.environ['IS_RELEASED'] = 'y'
 
+
 def twine_upload(wheel):
     cmd_prefix = ["python3", "-m"]
     if PYPI_USERNAME is not None and PYPI_PASSWORD is not None:
         invoke = subprocess.check_call if not USE_TEST_PYPI else subprocess.call
-        ret = invoke(cmd_prefix + [
-            "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD] + ([
-                "--repository-url", "https://test.pypi.org/legacy/"]
-                if USE_TEST_PYPI else []
-            ) + [wheel])
+        cmd = ["twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD]
+        ret = invoke(cmd_prefix + cmd + (["--repository-url", "https://test.pypi.org/legacy/"] if USE_TEST_PYPI else [])
+                     + [wheel])
+        invoke(cmd_prefix + cmd + ["dist/*"])
     else:
         print(">>> WARNING: not pushing to PyPI (one of PYPI_USERNAME or PYPI_PASSWORD was empty)")
 
@@ -61,7 +60,6 @@ def invoke_bdist():
 
 
 def run_bdist(deploy_dir):
-
     print(">>> Building staging area for deployment ...")
 
     old_cwd = os.getcwd()
