@@ -431,7 +431,7 @@ dist-rust:
 
 dist-java:
     $(call announce-begin,"Deploying Java to maven central")
-    VERSION=$(SBP_VERSION) gradle publish
+    VERSION=$(SBP_VERSION) \gradle publish
     $(call announce-end,"Finished deploying Java to maven central")
 
 dist: dist-python dist-javascript dist-haskell dist-rust dist-java
