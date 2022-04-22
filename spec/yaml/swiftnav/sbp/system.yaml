@@ -215,7 +215,7 @@ definitions:
             fill: SubSystemReport
             desc: Reported status of individual subsystems
 
- - StartusJournalItem:
+ - StatusJournalItem:
     short_desc: Sub-system Status report
     embedded_type: true
     desc: >
