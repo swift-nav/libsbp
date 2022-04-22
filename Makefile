@@ -429,10 +429,7 @@ dist-rust:
 	git reset --hard $(SBP_VERSION)
 	$(call announce-end,"Finished reverting commit made by `sbp2json` deployment")
 
-dist-java:
-    VERSION=$(SBP_VERSION) gradle publish
-
-dist: dist-python dist-javascript dist-haskell dist-rust dist-java
+dist: dist-python dist-javascript dist-haskell dist-rust
 
 pdf:
 	$(call announce-begin,"Generating PDF datasheet documentation")

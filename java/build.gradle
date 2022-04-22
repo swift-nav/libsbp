@@ -99,7 +99,7 @@ publishing {
 
             groupId = 'com.swiftnav'
             artifactId = 'sbp'
-            version = System.getenv("VERSION") ?: "unset-version-build" // should instead fail if version not provided?
+            version = '1.0.0'
             from components.java
 
             pom {
