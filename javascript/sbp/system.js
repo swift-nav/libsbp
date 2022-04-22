@@ -206,6 +206,80 @@ MsgStatusReport.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
 MsgStatusReport.prototype.fieldSpec.push(['status', 'array', SubSystemReport.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
+ * SBP class for message fragment StatusJournalItem
+ *
+ * Report the general and specific state of a sub-system.  If the generic state is
+ * reported as initializing, the specific state should be ignored.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field uptime number (unsigned 32-bit int, 4 bytes) Number of seconds since system startup
+ * @field component number (unsigned 16-bit int, 2 bytes) Identity of reporting subsystem
+ * @field generic number (unsigned 8-bit int, 1 byte) Generic form status report
+ * @field specific number (unsigned 8-bit int, 1 byte) Subsystem specific status code
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var StatusJournalItem = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "StatusJournalItem";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+StatusJournalItem.prototype = Object.create(SBP.prototype);
+StatusJournalItem.prototype.messageType = "StatusJournalItem";
+StatusJournalItem.prototype.constructor = StatusJournalItem;
+StatusJournalItem.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('uptime')
+  .uint16('component')
+  .uint8('generic')
+  .uint8('specific');
+StatusJournalItem.prototype.fieldSpec = [];
+StatusJournalItem.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
+StatusJournalItem.prototype.fieldSpec.push(['component', 'writeUInt16LE', 2]);
+StatusJournalItem.prototype.fieldSpec.push(['generic', 'writeUInt8', 1]);
+StatusJournalItem.prototype.fieldSpec.push(['specific', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
+ *
+ * The status journal message contains up to 30 past status reports (see
+ * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+ * purposes.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field reporting_system number (unsigned 16-bit int, 2 bytes) Identity of reporting system
+ * @field sbp_version number (unsigned 16-bit int, 2 bytes) SBP protocol version
+ * @field sequence number (unsigned 32-bit int, 4 bytes) Increments on each status report sent
+ * @field status array Status journal
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgStatusJournal = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_STATUS_JOURNAL";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgStatusJournal.prototype = Object.create(SBP.prototype);
+MsgStatusJournal.prototype.messageType = "MSG_STATUS_JOURNAL";
+MsgStatusJournal.prototype.msg_type = 0xFFFD;
+MsgStatusJournal.prototype.constructor = MsgStatusJournal;
+MsgStatusJournal.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('reporting_system')
+  .uint16('sbp_version')
+  .uint32('sequence')
+  .array('status', { type: StatusJournalItem.prototype.parser, readUntil: 'eof' });
+MsgStatusJournal.prototype.fieldSpec = [];
+MsgStatusJournal.prototype.fieldSpec.push(['reporting_system', 'writeUInt16LE', 2]);
+MsgStatusJournal.prototype.fieldSpec.push(['sbp_version', 'writeUInt16LE', 2]);
+MsgStatusJournal.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
+MsgStatusJournal.prototype.fieldSpec.push(['status', 'array', StatusJournalItem.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
  * SBP class for message MSG_INS_STATUS (0xFF03).
  *
  * The INS status message describes the state of the operation and initialization
@@ -469,6 +543,9 @@ module.exports = {
   SubSystemReport: SubSystemReport,
   0xFFFE: MsgStatusReport,
   MsgStatusReport: MsgStatusReport,
+  StatusJournalItem: StatusJournalItem,
+  0xFFFD: MsgStatusJournal,
+  MsgStatusJournal: MsgStatusJournal,
   0xFF03: MsgInsStatus,
   MsgInsStatus: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,

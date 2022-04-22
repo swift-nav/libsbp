@@ -203,6 +203,7 @@ import com.swiftnav.sbp.system.MsgInsStatus;
 import com.swiftnav.sbp.system.MsgInsUpdates;
 import com.swiftnav.sbp.system.MsgPpsTime;
 import com.swiftnav.sbp.system.MsgStartup;
+import com.swiftnav.sbp.system.MsgStatusJournal;
 import com.swiftnav.sbp.system.MsgStatusReport;
 import com.swiftnav.sbp.tracking.MsgMeasurementState;
 import com.swiftnav.sbp.tracking.MsgTrackingIq;
@@ -588,6 +589,8 @@ final class MessageTable {
                 return new MsgHeartbeat(msg);
             case MsgStatusReport.TYPE:
                 return new MsgStatusReport(msg);
+            case MsgStatusJournal.TYPE:
+                return new MsgStatusJournal(msg);
             case MsgInsStatus.TYPE:
                 return new MsgInsStatus(msg);
             case MsgCsacTelemetry.TYPE:

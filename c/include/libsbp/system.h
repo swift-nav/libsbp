@@ -307,6 +307,104 @@ typedef struct SBP_ATTR_PACKED {
                                       subsystems */
 } msg_status_report_t;
 
+/** Sub-system Status report
+ *
+ * Report the general and specific state of a sub-system.  If the generic
+ * state is reported as initializing, the specific state should be ignored.
+ */
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_MASK (0xffff)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_SHIFT (0u)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_GET(flags)      \
+  (((flags) >> SBP_STATUSJOURNALITEM_SUBSYSTEM_SHIFT) & \
+   SBP_STATUSJOURNALITEM_SUBSYSTEM_MASK)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_SET(flags, val)           \
+  do {                                                            \
+    ((flags) |= (((val) & (SBP_STATUSJOURNALITEM_SUBSYSTEM_MASK)) \
+                 << (SBP_STATUSJOURNALITEM_SUBSYSTEM_SHIFT)));    \
+  } while (0)
+
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_PRIMARY_GNSS_ANTENNA (0)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_MEASUREMENT_ENGINE (1)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_CORRECTIONS_CLIENT (2)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_DIFFERENTIAL_GNSS_ENGINE (3)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_CAN (4)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_WHEEL_ODOMETRY (5)
+#define SBP_STATUSJOURNALITEM_SUBSYSTEM_SENSOR_FUSION_ENGINE (6)
+#define SBP_STATUSJOURNALITEM_GENERIC_MASK (0xff)
+#define SBP_STATUSJOURNALITEM_GENERIC_SHIFT (0u)
+#define SBP_STATUSJOURNALITEM_GENERIC_GET(flags)      \
+  (((flags) >> SBP_STATUSJOURNALITEM_GENERIC_SHIFT) & \
+   SBP_STATUSJOURNALITEM_GENERIC_MASK)
+#define SBP_STATUSJOURNALITEM_GENERIC_SET(flags, val)           \
+  do {                                                          \
+    ((flags) |= (((val) & (SBP_STATUSJOURNALITEM_GENERIC_MASK)) \
+                 << (SBP_STATUSJOURNALITEM_GENERIC_SHIFT)));    \
+  } while (0)
+
+#define SBP_STATUSJOURNALITEM_GENERIC_OKNOMINAL (0)
+#define SBP_STATUSJOURNALITEM_GENERIC_INITIALIZING (1)
+#define SBP_STATUSJOURNALITEM_GENERIC_UNKNOWN (2)
+#define SBP_STATUSJOURNALITEM_GENERIC_DEGRADED (3)
+#define SBP_STATUSJOURNALITEM_GENERIC_UNUSABLE (4)
+
+typedef struct SBP_ATTR_PACKED {
+  u32 uptime;    /**< Number of seconds since system startup */
+  u16 component; /**< Identity of reporting subsystem */
+  u8 generic;    /**< Generic form status report */
+  u8 specific;   /**< Subsystem specific status code */
+} status_journal_item_t;
+
+/** Status report journal
+ *
+ * The status journal message contains up to 30 past status reports (see
+ * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+ * purposes.
+ */
+#define SBP_MSG_STATUS_JOURNAL 0xFFFD
+#define SBP_STATUS_JOURNAL_SYSTEM_MASK (0xffff)
+#define SBP_STATUS_JOURNAL_SYSTEM_SHIFT (0u)
+#define SBP_STATUS_JOURNAL_SYSTEM_GET(flags)      \
+  (((flags) >> SBP_STATUS_JOURNAL_SYSTEM_SHIFT) & \
+   SBP_STATUS_JOURNAL_SYSTEM_MASK)
+#define SBP_STATUS_JOURNAL_SYSTEM_SET(flags, val)           \
+  do {                                                      \
+    ((flags) |= (((val) & (SBP_STATUS_JOURNAL_SYSTEM_MASK)) \
+                 << (SBP_STATUS_JOURNAL_SYSTEM_SHIFT)));    \
+  } while (0)
+
+#define SBP_STATUS_JOURNAL_SYSTEM_STARLING (0)
+#define SBP_STATUS_JOURNAL_SYSTEM_PRECISION_GNSS_MODULE (1)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0x1ff)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
+  (((flags) >> SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+   SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+  do {                                                                       \
+    ((flags) |=                                                              \
+     (((val) & (SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK))  \
+      << (SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT)));     \
+  } while (0)
+
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT (0u)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
+  (((flags) >> SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+   SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+  do {                                                                       \
+    ((flags) |=                                                              \
+     (((val) & (SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))  \
+      << (SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));     \
+  } while (0)
+
+typedef struct SBP_ATTR_PACKED {
+  u16 reporting_system;            /**< Identity of reporting system */
+  u16 sbp_version;                 /**< SBP protocol version */
+  u32 sequence;                    /**< Increments on each status report sent */
+  status_journal_item_t status[0]; /**< Status journal */
+} msg_status_journal_t;
+
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation and

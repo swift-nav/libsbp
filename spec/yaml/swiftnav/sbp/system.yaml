@@ -224,7 +224,7 @@ definitions:
     fields:
         - uptime:
             type: u32
-            desc: Number of seconds since system startup
+            desc: Microseconds since system startup
         - component:
             type: u16
             desc: Identity of reporting subsystem
@@ -259,7 +259,7 @@ definitions:
     id: 0xFFFD
     short_desc: Status report journal
     desc: >
-        The status journal message contains up to 30 past status reports (see MSG_STATUS_REPORT)
+        The status journal message contains past status reports (see MSG_STATUS_REPORT)
         and functions as a error/event storage for telemetry purposes.
     fields:
         - reporting_system:
@@ -279,10 +279,16 @@ definitions:
                   desc: SBP major protocol version number
               - 0-7:
                   desc: SBP minor protocol version number
-        - sequence:
+        - n_status_reports:
             type: u32
-            desc: Increments on each status report sent
-        - status:
+            desc: Total number of status reports sent since system startup
+        - packet_index:
+            type: u8
+            desc: Index of this packet in the status journal
+        - n_packets:
+            type: u8
+            desc: Number of packets in this status journal
+        - journal:
             type: array
             fill: StatusJournalItem
             desc: Status journal

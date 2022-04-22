@@ -210,6 +210,75 @@ $(makeSBP 'msgStatusReport ''MsgStatusReport)
 $(makeJSON "_msgStatusReport_" ''MsgStatusReport)
 $(makeLenses ''MsgStatusReport)
 
+-- | StatusJournalItem.
+--
+-- Report the general and specific state of a sub-system.  If the generic
+-- state is reported as initializing, the specific state should be ignored.
+data StatusJournalItem = StatusJournalItem
+  { _statusJournalItem_uptime  :: !Word32
+    -- ^ Number of seconds since system startup
+  , _statusJournalItem_component :: !Word16
+    -- ^ Identity of reporting subsystem
+  , _statusJournalItem_generic :: !Word8
+    -- ^ Generic form status report
+  , _statusJournalItem_specific :: !Word8
+    -- ^ Subsystem specific status code
+  } deriving ( Show, Read, Eq )
+
+instance Binary StatusJournalItem where
+  get = do
+    _statusJournalItem_uptime <- getWord32le
+    _statusJournalItem_component <- getWord16le
+    _statusJournalItem_generic <- getWord8
+    _statusJournalItem_specific <- getWord8
+    pure StatusJournalItem {..}
+
+  put StatusJournalItem {..} = do
+    putWord32le _statusJournalItem_uptime
+    putWord16le _statusJournalItem_component
+    putWord8 _statusJournalItem_generic
+    putWord8 _statusJournalItem_specific
+
+$(makeJSON "_statusJournalItem_" ''StatusJournalItem)
+$(makeLenses ''StatusJournalItem)
+
+msgStatusJournal :: Word16
+msgStatusJournal = 0xFFFD
+
+-- | SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
+--
+-- The status journal message contains up to 30 past status reports (see
+-- MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+-- purposes.
+data MsgStatusJournal = MsgStatusJournal
+  { _msgStatusJournal_reporting_system :: !Word16
+    -- ^ Identity of reporting system
+  , _msgStatusJournal_sbp_version    :: !Word16
+    -- ^ SBP protocol version
+  , _msgStatusJournal_sequence       :: !Word32
+    -- ^ Increments on each status report sent
+  , _msgStatusJournal_status         :: ![StatusJournalItem]
+    -- ^ Status journal
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgStatusJournal where
+  get = do
+    _msgStatusJournal_reporting_system <- getWord16le
+    _msgStatusJournal_sbp_version <- getWord16le
+    _msgStatusJournal_sequence <- getWord32le
+    _msgStatusJournal_status <- whileM (not <$> isEmpty) get
+    pure MsgStatusJournal {..}
+
+  put MsgStatusJournal {..} = do
+    putWord16le _msgStatusJournal_reporting_system
+    putWord16le _msgStatusJournal_sbp_version
+    putWord32le _msgStatusJournal_sequence
+    mapM_ put _msgStatusJournal_status
+
+$(makeSBP 'msgStatusJournal ''MsgStatusJournal)
+$(makeJSON "_msgStatusJournal_" ''MsgStatusJournal)
+$(makeLenses ''MsgStatusJournal)
+
 msgInsStatus :: Word16
 msgInsStatus = 0xFF03
 
