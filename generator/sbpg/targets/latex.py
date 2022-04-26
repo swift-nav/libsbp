@@ -58,9 +58,7 @@ LATEX_SUBS = (
 )
 
 def append_signals_table(value):
-    foo = value + " (see pg. ~\\pageref{sec:signals})"
-    print(foo)
-    return foo
+    return value + " (see pg. ~\\pageref{sec:signals})"
 
 def escape_tex(value):
   """
