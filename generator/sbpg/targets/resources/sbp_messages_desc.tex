@@ -44,6 +44,9 @@
 \end{table}
 
 ((*- for f in m.fields *))
+((*- if f.is_gnss_signal *))
+
+((*- else *))
 ((*- if f.bitfields *))
 \begin{table}[H]
   \centering
@@ -85,6 +88,7 @@
   ((*- endfor *))
   \end{minipage}
 \end{table}
+((*- endif *))
 ((*- endif *))
 ((*- endfor *))
 \newpage

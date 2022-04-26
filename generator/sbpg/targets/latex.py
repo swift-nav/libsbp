@@ -162,7 +162,7 @@ class FieldItem (object):
   """Field contents for a message in a LaTeX table.
   """
 
-  def __init__(self, name, fmt, offset, size, units, desc, n_with_values, bitfields):
+  def __init__(self, name, fmt, offset, size, units, desc, n_with_values, bitfields, type_id):
     self.name = name
     self.fmt = fmt
     self.offset = offset
@@ -171,6 +171,12 @@ class FieldItem (object):
     self.desc = desc or ""
     self.n_with_values = n_with_values
     self.bitfields = bitfields
+    self.type_id = type_id
+
+
+  @property
+  def is_gnss_signal(self):
+      return self.desc == "Signal constellation, band and code"
 
 
 def handle_fields(definitions, fields, prefix, offset, multiplier):
@@ -188,7 +194,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
         size = field_sizes[f.options['fill'].value] * f.options['size'].value
         adj_offset = "%dN+%d" % (multiplier, offset) if multiplier else offset
         item = FieldItem(prefix_name, name, adj_offset, size,
-                         str(f.units), f.desc, n_with_values, bitfields)
+                         str(f.units), f.desc, n_with_values, bitfields, f.type_id)
         items.append(item)
         offset += size
       else:
@@ -196,7 +202,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
         multiplier = field_sizes[f.options['fill'].value]
         size = field_sizes[f.options['fill'].value] * 1
         item = FieldItem(prefix_name, name, offset, "N",
-                         str(f.units), f.desc, n_with_values, bitfields)
+                         str(f.units), f.desc, n_with_values, bitfields, f.type_id)
         items.append(item)
         offset += size
     elif f.type_id == "string":
@@ -208,7 +214,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
         size = field_sizes['u8'] * f.options['size'].value
         adj_offset = "%dN+%d" % (multiplier, offset) if multiplier else offset
         item = FieldItem(prefix_name, name, adj_offset, size,
-                         str(f.units), f.desc, n_with_values, bitfields)
+                         str(f.units), f.desc, n_with_values, bitfields, f.type_id)
         items.append(item)
         offset += size
       else:
@@ -216,7 +222,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
         size = field_sizes['u8']
         multiplier = 1
         item = FieldItem(prefix_name, name, offset, "N",
-                         str(f.units), f.desc, n_with_values, bitfields)
+                         str(f.units), f.desc, n_with_values, bitfields, f.type_id)
         items.append(item)
         offset += size
     elif f.type_id == "array":
@@ -257,7 +263,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       prefix_name = '.'.join([prefix, f.identifier]) if prefix else f.identifier
       n_with_values = f.options['n_with_values'].value
       bitfields = f.options['fields'].value if n_with_values > 0 else None
-      item = FieldItem(prefix_name, name, adj_offset, size, str(f.units), f.desc, n_with_values, bitfields)
+      item = FieldItem(prefix_name, name, adj_offset, size, str(f.units), f.desc, n_with_values, bitfields, f.type_id)
       items.append(item)
       offset += size
   return (items, offset, multiplier)
