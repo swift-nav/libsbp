@@ -30,7 +30,11 @@
       (((f.fmt))) &
       (((f.units|escape_tex))) &
       \texttt{(((f.name|escape_tex)))} &
+      ((*- if f.is_gnss_signal *))
+      \hangindent=0.5em{(((f.desc|append_signals_table)))} \\
+      ((*- else *))
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
+      ((*- endif *))
       ((*- endfor *))
     \midrule
     & $\mathtt{(((m.size)))}$ & & & & Total Payload Length\\

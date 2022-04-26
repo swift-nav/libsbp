@@ -57,6 +57,11 @@ LATEX_SUBS = (
     (re.compile(r'\.\.\.+'), r'\\ldots'),
 )
 
+def append_signals_table(value):
+    foo = value + " (see pg. ~\\pageref{sec:signals})"
+    print(foo)
+    return foo
+
 def escape_tex(value):
   """
   Make text tex safe
@@ -111,6 +116,7 @@ def get_size(v):
   """
   return field_sizes[v] if field_sizes.get(v, None) else "---"
 
+JENV.filters['append_signals_table'] = append_signals_table
 JENV.filters['escape_tex'] = escape_tex
 JENV.filters['classnameify'] = classnameify
 JENV.filters['packagenameify'] = packagenameify
