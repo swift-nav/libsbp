@@ -25,8 +25,8 @@ import org.json.JSONObject;
  * <p>You can have MSG_STATUS_JOURNAL inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>The status journal message contains up to 30 past status reports (see MSG_STATUS_REPORT) and
- * functions as a error/event storage for telemetry purposes.
+ * <p>The status journal message contains past status reports (see MSG_STATUS_REPORT) and functions
+ * as a error/event storage for telemetry purposes.
  */
 public class MsgStatusJournal extends SBPMessage {
     public static final int TYPE = 0xFFFD;
@@ -37,11 +37,17 @@ public class MsgStatusJournal extends SBPMessage {
     /** SBP protocol version */
     public int sbp_version;
 
-    /** Increments on each status report sent */
-    public long sequence;
+    /** Total number of status reports sent since system startup */
+    public long n_status_reports;
+
+    /** Index of this packet in the status journal */
+    public int packet_index;
+
+    /** Number of packets in this status journal */
+    public int n_packets;
 
     /** Status journal */
-    public StatusJournalItem[] status;
+    public StatusJournalItem[] journal;
 
     public MsgStatusJournal(int sender) {
         super(sender, TYPE);
@@ -61,16 +67,20 @@ public class MsgStatusJournal extends SBPMessage {
         /* Parse fields from binary */
         reporting_system = parser.getU16();
         sbp_version = parser.getU16();
-        sequence = parser.getU32();
-        status = parser.getArray(StatusJournalItem.class);
+        n_status_reports = parser.getU32();
+        packet_index = parser.getU8();
+        n_packets = parser.getU8();
+        journal = parser.getArray(StatusJournalItem.class);
     }
 
     @Override
     protected void build(Builder builder) {
         builder.putU16(reporting_system);
         builder.putU16(sbp_version);
-        builder.putU32(sequence);
-        builder.putArray(status);
+        builder.putU32(n_status_reports);
+        builder.putU8(packet_index);
+        builder.putU8(n_packets);
+        builder.putArray(journal);
     }
 
     @Override
@@ -78,8 +88,10 @@ public class MsgStatusJournal extends SBPMessage {
         JSONObject obj = super.toJSON();
         obj.put("reporting_system", reporting_system);
         obj.put("sbp_version", sbp_version);
-        obj.put("sequence", sequence);
-        obj.put("status", SBPStruct.toJSONArray(status));
+        obj.put("n_status_reports", n_status_reports);
+        obj.put("packet_index", packet_index);
+        obj.put("n_packets", n_packets);
+        obj.put("journal", SBPStruct.toJSONArray(journal));
         return obj;
     }
 }

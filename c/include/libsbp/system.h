@@ -348,7 +348,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_STATUSJOURNALITEM_GENERIC_UNUSABLE (4)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 uptime;    /**< Number of seconds since system startup */
+  u32 uptime;    /**< Milliseconds since system startup */
   u16 component; /**< Identity of reporting subsystem */
   u8 generic;    /**< Generic form status report */
   u8 specific;   /**< Subsystem specific status code */
@@ -356,7 +356,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Status report journal
  *
- * The status journal message contains up to 30 past status reports (see
+ * The status journal message contains past status reports (see
  * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
  * purposes.
  */
@@ -399,10 +399,13 @@ typedef struct SBP_ATTR_PACKED {
   } while (0)
 
 typedef struct SBP_ATTR_PACKED {
-  u16 reporting_system;            /**< Identity of reporting system */
-  u16 sbp_version;                 /**< SBP protocol version */
-  u32 sequence;                    /**< Increments on each status report sent */
-  status_journal_item_t status[0]; /**< Status journal */
+  u16 reporting_system; /**< Identity of reporting system */
+  u16 sbp_version;      /**< SBP protocol version */
+  u32 n_status_reports; /**< Total number of status reports sent since
+                             system startup */
+  u8 packet_index;      /**< Index of this packet in the status journal */
+  u8 n_packets;         /**< Number of packets in this status journal */
+  status_journal_item_t journal[0]; /**< Status journal */
 } msg_status_journal_t;
 
 /** Inertial Navigation System status message

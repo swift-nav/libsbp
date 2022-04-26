@@ -221,6 +221,7 @@ use self::system::MsgInsStatus;
 use self::system::MsgInsUpdates;
 use self::system::MsgPpsTime;
 use self::system::MsgStartup;
+use self::system::MsgStatusJournal;
 use self::system::MsgStatusReport;
 use self::tracking::MsgMeasurementState;
 use self::tracking::MsgTrackingIq;
@@ -475,6 +476,7 @@ pub enum SBP {
     MsgGroupMeta(MsgGroupMeta),
     MsgSolnMeta(MsgSolnMeta),
     MsgSolnMetaDepA(MsgSolnMetaDepA),
+    MsgStatusJournal(MsgStatusJournal),
     MsgStatusReport(MsgStatusReport),
     MsgHeartbeat(MsgHeartbeat),
     Unknown(Unknown),
@@ -1488,6 +1490,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSolnMetaDepA(msg))
             }
+            65533 => {
+                let mut msg = MsgStatusJournal::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgStatusJournal(msg))
+            }
             65534 => {
                 let mut msg = MsgStatusReport::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1711,6 +1718,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgGroupMeta(msg) => msg.get_message_name(),
             SBP::MsgSolnMeta(msg) => msg.get_message_name(),
             SBP::MsgSolnMetaDepA(msg) => msg.get_message_name(),
+            SBP::MsgStatusJournal(msg) => msg.get_message_name(),
             SBP::MsgStatusReport(msg) => msg.get_message_name(),
             SBP::MsgHeartbeat(msg) => msg.get_message_name(),
             SBP::Unknown(msg) => msg.get_message_name(),
@@ -1920,6 +1928,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgGroupMeta(msg) => msg.get_message_type(),
             SBP::MsgSolnMeta(msg) => msg.get_message_type(),
             SBP::MsgSolnMetaDepA(msg) => msg.get_message_type(),
+            SBP::MsgStatusJournal(msg) => msg.get_message_type(),
             SBP::MsgStatusReport(msg) => msg.get_message_type(),
             SBP::MsgHeartbeat(msg) => msg.get_message_type(),
             SBP::Unknown(msg) => msg.get_message_type(),
@@ -2129,6 +2138,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgGroupMeta(msg) => msg.get_sender_id(),
             SBP::MsgSolnMeta(msg) => msg.get_sender_id(),
             SBP::MsgSolnMetaDepA(msg) => msg.get_sender_id(),
+            SBP::MsgStatusJournal(msg) => msg.get_sender_id(),
             SBP::MsgStatusReport(msg) => msg.get_sender_id(),
             SBP::MsgHeartbeat(msg) => msg.get_sender_id(),
             SBP::Unknown(msg) => msg.get_sender_id(),
@@ -2338,6 +2348,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgGroupMeta(msg) => msg.set_sender_id(new_id),
             SBP::MsgSolnMeta(msg) => msg.set_sender_id(new_id),
             SBP::MsgSolnMetaDepA(msg) => msg.set_sender_id(new_id),
+            SBP::MsgStatusJournal(msg) => msg.set_sender_id(new_id),
             SBP::MsgStatusReport(msg) => msg.set_sender_id(new_id),
             SBP::MsgHeartbeat(msg) => msg.set_sender_id(new_id),
             SBP::Unknown(msg) => msg.set_sender_id(new_id),
@@ -2547,6 +2558,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgGroupMeta(msg) => msg.to_frame(),
             SBP::MsgSolnMeta(msg) => msg.to_frame(),
             SBP::MsgSolnMetaDepA(msg) => msg.to_frame(),
+            SBP::MsgStatusJournal(msg) => msg.to_frame(),
             SBP::MsgStatusReport(msg) => msg.to_frame(),
             SBP::MsgHeartbeat(msg) => msg.to_frame(),
             SBP::Unknown(msg) => msg.to_frame(),
@@ -2756,6 +2768,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgGroupMeta(msg) => msg.write_frame(buf),
             SBP::MsgSolnMeta(msg) => msg.write_frame(buf),
             SBP::MsgSolnMetaDepA(msg) => msg.write_frame(buf),
+            SBP::MsgStatusJournal(msg) => msg.write_frame(buf),
             SBP::MsgStatusReport(msg) => msg.write_frame(buf),
             SBP::MsgHeartbeat(msg) => msg.write_frame(buf),
             SBP::Unknown(msg) => msg.write_frame(buf),
@@ -2968,6 +2981,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgGroupMeta(msg) => msg.gps_time(),
             SBP::MsgSolnMeta(msg) => msg.gps_time(),
             SBP::MsgSolnMetaDepA(msg) => msg.gps_time(),
+            SBP::MsgStatusJournal(msg) => msg.gps_time(),
             SBP::MsgStatusReport(msg) => msg.gps_time(),
             SBP::MsgHeartbeat(msg) => msg.gps_time(),
             SBP::Unknown(msg) => msg.gps_time(),
@@ -3179,6 +3193,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgGroupMeta(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgSolnMeta(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgSolnMetaDepA(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgStatusJournal(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgStatusReport(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgHeartbeat(msg) => msg.append_to_sbp_buffer(buf),
             SBP::Unknown(msg) => msg.append_to_sbp_buffer(buf),
@@ -3388,6 +3403,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgGroupMeta(msg) => msg.sbp_size(),
             SBP::MsgSolnMeta(msg) => msg.sbp_size(),
             SBP::MsgSolnMetaDepA(msg) => msg.sbp_size(),
+            SBP::MsgStatusJournal(msg) => msg.sbp_size(),
             SBP::MsgStatusReport(msg) => msg.sbp_size(),
             SBP::MsgHeartbeat(msg) => msg.sbp_size(),
             SBP::Unknown(msg) => msg.sbp_size(),
@@ -4397,6 +4413,11 @@ impl From<MsgSolnMeta> for SBP {
 impl From<MsgSolnMetaDepA> for SBP {
     fn from(msg: MsgSolnMetaDepA) -> Self {
         SBP::MsgSolnMetaDepA(msg)
+    }
+}
+impl From<MsgStatusJournal> for SBP {
+    fn from(msg: MsgStatusJournal) -> Self {
+        SBP::MsgStatusJournal(msg)
     }
 }
 impl From<MsgStatusReport> for SBP {

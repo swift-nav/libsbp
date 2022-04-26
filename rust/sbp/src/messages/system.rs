@@ -954,6 +954,111 @@ impl crate::serialize::SbpSerialize for MsgStartup {
     }
 }
 
+/// Status report journal
+///
+/// The status journal message contains past status reports (see
+/// MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+/// purposes.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgStatusJournal {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// Identity of reporting system
+    pub reporting_system: u16,
+    /// SBP protocol version
+    pub sbp_version: u16,
+    /// Total number of status reports sent since system startup
+    pub n_status_reports: u32,
+    /// Index of this packet in the status journal
+    pub packet_index: u8,
+    /// Number of packets in this status journal
+    pub n_packets: u8,
+    /// Status journal
+    pub journal: Vec<StatusJournalItem>,
+}
+
+impl MsgStatusJournal {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStatusJournal, crate::Error> {
+        Ok( MsgStatusJournal{
+            sender_id: None,
+            reporting_system: _buf.read_u16::<LittleEndian>()?,
+            sbp_version: _buf.read_u16::<LittleEndian>()?,
+            n_status_reports: _buf.read_u32::<LittleEndian>()?,
+            packet_index: _buf.read_u8()?,
+            n_packets: _buf.read_u8()?,
+            journal: StatusJournalItem::parse_array(_buf)?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgStatusJournal {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_STATUS_JOURNAL"
+    }
+
+    fn get_message_type(&self) -> u16 {
+        65533
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+}
+impl super::ConcreteMessage for MsgStatusJournal {
+    const MESSAGE_TYPE: u16 = 65533;
+    const MESSAGE_NAME: &'static str = "MSG_STATUS_JOURNAL";
+}
+impl TryFrom<super::SBP> for MsgStatusJournal {
+    type Error = super::TryFromSBPError;
+
+    fn try_from(msg: super::SBP) -> Result<Self, Self::Error> {
+        match msg {
+            super::SBP::MsgStatusJournal(m) => Ok(m),
+            _ => Err(super::TryFromSBPError),
+        }
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStatusJournal {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.reporting_system.append_to_sbp_buffer(buf);
+        self.sbp_version.append_to_sbp_buffer(buf);
+        self.n_status_reports.append_to_sbp_buffer(buf);
+        self.packet_index.append_to_sbp_buffer(buf);
+        self.n_packets.append_to_sbp_buffer(buf);
+        self.journal.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.reporting_system.sbp_size();
+        size += self.sbp_version.sbp_size();
+        size += self.n_status_reports.sbp_size();
+        size += self.packet_index.sbp_size();
+        size += self.n_packets.sbp_size();
+        size += self.journal.sbp_size();
+        size
+    }
+}
+
 /// Status report message
 ///
 /// The status report is sent periodically to inform the host or other
@@ -1055,6 +1160,74 @@ impl crate::serialize::SbpSerialize for MsgStatusReport {
         size += self.sequence.sbp_size();
         size += self.uptime.sbp_size();
         size += self.status.sbp_size();
+        size
+    }
+}
+
+/// Sub-system Status report
+///
+/// Report the general and specific state of a sub-system.  If the generic
+/// state is reported as initializing, the specific state should be ignored.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct StatusJournalItem {
+    /// Milliseconds since system startup
+    pub uptime: u32,
+    /// Identity of reporting subsystem
+    pub component: u16,
+    /// Generic form status report
+    pub generic: u8,
+    /// Subsystem specific status code
+    pub specific: u8,
+}
+
+impl StatusJournalItem {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<StatusJournalItem, crate::Error> {
+        Ok( StatusJournalItem{
+            uptime: _buf.read_u32::<LittleEndian>()?,
+            component: _buf.read_u16::<LittleEndian>()?,
+            generic: _buf.read_u8()?,
+            specific: _buf.read_u8()?,
+        } )
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<StatusJournalItem>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(StatusJournalItem::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<StatusJournalItem>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(StatusJournalItem::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for StatusJournalItem {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.uptime.append_to_sbp_buffer(buf);
+        self.component.append_to_sbp_buffer(buf);
+        self.generic.append_to_sbp_buffer(buf);
+        self.specific.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.uptime.sbp_size();
+        size += self.component.sbp_size();
+        size += self.generic.sbp_size();
+        size += self.specific.sbp_size();
         size
     }
 }

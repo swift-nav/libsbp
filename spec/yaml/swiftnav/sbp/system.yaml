@@ -224,7 +224,7 @@ definitions:
     fields:
         - uptime:
             type: u32
-            desc: Microseconds since system startup
+            desc: Milliseconds since system startup
         - component:
             type: u16
             desc: Identity of reporting subsystem

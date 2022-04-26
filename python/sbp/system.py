@@ -76,7 +76,7 @@ class StatusJournalItem(object):
   Parameters
   ----------
   uptime : int
-    Number of seconds since system startup
+    Milliseconds since system startup
   component : int
     Identity of reporting subsystem
   generic : int
@@ -543,7 +543,7 @@ class MsgStatusJournal(SBP):
   of its fields.
 
   
-  The status journal message contains up to 30 past status reports (see
+  The status journal message contains past status reports (see
   MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
   purposes.
 
@@ -555,9 +555,13 @@ class MsgStatusJournal(SBP):
     Identity of reporting system
   sbp_version : int
     SBP protocol version
-  sequence : int
-    Increments on each status report sent
-  status : array
+  n_status_reports : int
+    Total number of status reports sent since system startup
+  packet_index : int
+    Index of this packet in the status journal
+  n_packets : int
+    Number of packets in this status journal
+  journal : array
     Status journal
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -566,13 +570,17 @@ class MsgStatusJournal(SBP):
   _parser = construct.Struct(
                    'reporting_system' / construct.Int16ul,
                    'sbp_version' / construct.Int16ul,
-                   'sequence' / construct.Int32ul,
-                   'status' / construct.GreedyRange(StatusJournalItem._parser),)
+                   'n_status_reports' / construct.Int32ul,
+                   'packet_index' / construct.Int8ul,
+                   'n_packets' / construct.Int8ul,
+                   'journal' / construct.GreedyRange(StatusJournalItem._parser),)
   __slots__ = [
                'reporting_system',
                'sbp_version',
-               'sequence',
-               'status',
+               'n_status_reports',
+               'packet_index',
+               'n_packets',
+               'journal',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -587,8 +595,10 @@ class MsgStatusJournal(SBP):
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.reporting_system = kwargs.pop('reporting_system')
       self.sbp_version = kwargs.pop('sbp_version')
-      self.sequence = kwargs.pop('sequence')
-      self.status = kwargs.pop('status')
+      self.n_status_reports = kwargs.pop('n_status_reports')
+      self.packet_index = kwargs.pop('packet_index')
+      self.n_packets = kwargs.pop('n_packets')
+      self.journal = kwargs.pop('journal')
 
   def __repr__(self):
     return fmt_repr(self)

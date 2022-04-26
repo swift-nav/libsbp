@@ -90,6 +90,33 @@ message MsgStatusReport {
     repeated SubSystemReport status = 5;
 }
 
+/** Sub-system Status report
+ *
+ * Report the general and specific state of a sub-system.  If the generic
+ * state is reported as initializing, the specific state should be ignored.
+ */
+message StatusJournalItem {
+    uint32 uptime = 1;
+    uint32 component = 2;
+    uint32 generic = 3;
+    uint32 specific = 4;
+}
+
+/** Status report journal
+ *
+ * The status journal message contains past status reports (see
+ * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+ * purposes.
+ */
+message MsgStatusJournal {
+    uint32 reporting_system = 1;
+    uint32 sbp_version = 2;
+    uint32 n_status_reports = 3;
+    uint32 packet_index = 4;
+    uint32 n_packets = 5;
+    repeated StatusJournalItem journal = 6;
+}
+
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation and

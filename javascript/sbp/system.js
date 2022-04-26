@@ -212,7 +212,7 @@ MsgStatusReport.prototype.fieldSpec.push(['status', 'array', SubSystemReport.pro
  * reported as initializing, the specific state should be ignored.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field uptime number (unsigned 32-bit int, 4 bytes) Number of seconds since system startup
+ * @field uptime number (unsigned 32-bit int, 4 bytes) Milliseconds since system startup
  * @field component number (unsigned 16-bit int, 2 bytes) Identity of reporting subsystem
  * @field generic number (unsigned 8-bit int, 1 byte) Generic form status report
  * @field specific number (unsigned 8-bit int, 1 byte) Subsystem specific status code
@@ -244,15 +244,16 @@ StatusJournalItem.prototype.fieldSpec.push(['specific', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
  *
- * The status journal message contains up to 30 past status reports (see
- * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
- * purposes.
+ * The status journal message contains past status reports (see MSG_STATUS_REPORT)
+ * and functions as a error/event storage for telemetry purposes.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field reporting_system number (unsigned 16-bit int, 2 bytes) Identity of reporting system
  * @field sbp_version number (unsigned 16-bit int, 2 bytes) SBP protocol version
- * @field sequence number (unsigned 32-bit int, 4 bytes) Increments on each status report sent
- * @field status array Status journal
+ * @field n_status_reports number (unsigned 32-bit int, 4 bytes) Total number of status reports sent since system startup
+ * @field packet_index number (unsigned 8-bit int, 1 byte) Index of this packet in the status journal
+ * @field n_packets number (unsigned 8-bit int, 1 byte) Number of packets in this status journal
+ * @field journal array Status journal
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -271,13 +272,17 @@ MsgStatusJournal.prototype.parser = new Parser()
   .endianess('little')
   .uint16('reporting_system')
   .uint16('sbp_version')
-  .uint32('sequence')
-  .array('status', { type: StatusJournalItem.prototype.parser, readUntil: 'eof' });
+  .uint32('n_status_reports')
+  .uint8('packet_index')
+  .uint8('n_packets')
+  .array('journal', { type: StatusJournalItem.prototype.parser, readUntil: 'eof' });
 MsgStatusJournal.prototype.fieldSpec = [];
 MsgStatusJournal.prototype.fieldSpec.push(['reporting_system', 'writeUInt16LE', 2]);
 MsgStatusJournal.prototype.fieldSpec.push(['sbp_version', 'writeUInt16LE', 2]);
-MsgStatusJournal.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
-MsgStatusJournal.prototype.fieldSpec.push(['status', 'array', StatusJournalItem.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+MsgStatusJournal.prototype.fieldSpec.push(['n_status_reports', 'writeUInt32LE', 4]);
+MsgStatusJournal.prototype.fieldSpec.push(['packet_index', 'writeUInt8', 1]);
+MsgStatusJournal.prototype.fieldSpec.push(['n_packets', 'writeUInt8', 1]);
+MsgStatusJournal.prototype.fieldSpec.push(['journal', 'array', StatusJournalItem.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_INS_STATUS (0xFF03).

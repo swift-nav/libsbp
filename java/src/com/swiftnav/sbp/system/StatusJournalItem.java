@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class StatusJournalItem extends SBPStruct {
 
-    /** Number of seconds since system startup */
+    /** Milliseconds since system startup */
     public long uptime;
 
     /** Identity of reporting subsystem */

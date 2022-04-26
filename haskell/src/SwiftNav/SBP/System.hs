@@ -216,7 +216,7 @@ $(makeLenses ''MsgStatusReport)
 -- state is reported as initializing, the specific state should be ignored.
 data StatusJournalItem = StatusJournalItem
   { _statusJournalItem_uptime  :: !Word32
-    -- ^ Number of seconds since system startup
+    -- ^ Milliseconds since system startup
   , _statusJournalItem_component :: !Word16
     -- ^ Identity of reporting subsystem
   , _statusJournalItem_generic :: !Word8
@@ -247,7 +247,7 @@ msgStatusJournal = 0xFFFD
 
 -- | SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
 --
--- The status journal message contains up to 30 past status reports (see
+-- The status journal message contains past status reports (see
 -- MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
 -- purposes.
 data MsgStatusJournal = MsgStatusJournal
@@ -255,9 +255,13 @@ data MsgStatusJournal = MsgStatusJournal
     -- ^ Identity of reporting system
   , _msgStatusJournal_sbp_version    :: !Word16
     -- ^ SBP protocol version
-  , _msgStatusJournal_sequence       :: !Word32
-    -- ^ Increments on each status report sent
-  , _msgStatusJournal_status         :: ![StatusJournalItem]
+  , _msgStatusJournal_n_status_reports :: !Word32
+    -- ^ Total number of status reports sent since system startup
+  , _msgStatusJournal_packet_index   :: !Word8
+    -- ^ Index of this packet in the status journal
+  , _msgStatusJournal_n_packets      :: !Word8
+    -- ^ Number of packets in this status journal
+  , _msgStatusJournal_journal        :: ![StatusJournalItem]
     -- ^ Status journal
   } deriving ( Show, Read, Eq )
 
@@ -265,15 +269,19 @@ instance Binary MsgStatusJournal where
   get = do
     _msgStatusJournal_reporting_system <- getWord16le
     _msgStatusJournal_sbp_version <- getWord16le
-    _msgStatusJournal_sequence <- getWord32le
-    _msgStatusJournal_status <- whileM (not <$> isEmpty) get
+    _msgStatusJournal_n_status_reports <- getWord32le
+    _msgStatusJournal_packet_index <- getWord8
+    _msgStatusJournal_n_packets <- getWord8
+    _msgStatusJournal_journal <- whileM (not <$> isEmpty) get
     pure MsgStatusJournal {..}
 
   put MsgStatusJournal {..} = do
     putWord16le _msgStatusJournal_reporting_system
     putWord16le _msgStatusJournal_sbp_version
-    putWord32le _msgStatusJournal_sequence
-    mapM_ put _msgStatusJournal_status
+    putWord32le _msgStatusJournal_n_status_reports
+    putWord8 _msgStatusJournal_packet_index
+    putWord8 _msgStatusJournal_n_packets
+    mapM_ put _msgStatusJournal_journal
 
 $(makeSBP 'msgStatusJournal ''MsgStatusJournal)
 $(makeJSON "_msgStatusJournal_" ''MsgStatusJournal)
