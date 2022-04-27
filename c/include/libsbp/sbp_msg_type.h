@@ -221,6 +221,7 @@ typedef enum {
   SbpMsgSsrStecCorrection = SBP_MSG_SSR_STEC_CORRECTION,
   SbpMsgSsrTileDefinition = SBP_MSG_SSR_TILE_DEFINITION,
   SbpMsgStartup = SBP_MSG_STARTUP,
+  SbpMsgStatusJournal = SBP_MSG_STATUS_JOURNAL,
   SbpMsgStatusReport = SBP_MSG_STATUS_REPORT,
   SbpMsgStmFlashLockSector = SBP_MSG_STM_FLASH_LOCK_SECTOR,
   SbpMsgStmFlashUnlockSector = SBP_MSG_STM_FLASH_UNLOCK_SECTOR,

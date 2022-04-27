@@ -227,6 +227,7 @@ typedef union {
   sbp_msg_ssr_stec_correction_t ssr_stec_correction;
   sbp_msg_ssr_tile_definition_t ssr_tile_definition;
   sbp_msg_startup_t startup;
+  sbp_msg_status_journal_t status_journal;
   sbp_msg_status_report_t status_report;
   sbp_msg_stm_flash_lock_sector_t stm_flash_lock_sector;
   sbp_msg_stm_flash_unlock_sector_t stm_flash_unlock_sector;
@@ -740,6 +741,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
                                                 &msg->ssr_tile_definition);
     case SbpMsgStartup:
       return sbp_msg_startup_encode(buf, len, n_written, &msg->startup);
+    case SbpMsgStatusJournal:
+      return sbp_msg_status_journal_encode(buf, len, n_written,
+                                           &msg->status_journal);
     case SbpMsgStatusReport:
       return sbp_msg_status_report_encode(buf, len, n_written,
                                           &msg->status_report);
@@ -1307,6 +1311,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
                                                 &msg->ssr_tile_definition);
     case SbpMsgStartup:
       return sbp_msg_startup_decode(buf, len, n_read, &msg->startup);
+    case SbpMsgStatusJournal:
+      return sbp_msg_status_journal_decode(buf, len, n_read,
+                                           &msg->status_journal);
     case SbpMsgStatusReport:
       return sbp_msg_status_report_decode(buf, len, n_read,
                                           &msg->status_report);
@@ -1782,6 +1789,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ssr_tile_definition_encoded_len(&msg->ssr_tile_definition);
     case SbpMsgStartup:
       return sbp_msg_startup_encoded_len(&msg->startup);
+    case SbpMsgStatusJournal:
+      return sbp_msg_status_journal_encoded_len(&msg->status_journal);
     case SbpMsgStatusReport:
       return sbp_msg_status_report_encoded_len(&msg->status_report);
     case SbpMsgStmFlashLockSector:
@@ -2305,6 +2314,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
                                              &b->ssr_tile_definition);
     case SbpMsgStartup:
       return sbp_msg_startup_cmp(&a->startup, &b->startup);
+    case SbpMsgStatusJournal:
+      return sbp_msg_status_journal_cmp(&a->status_journal, &b->status_journal);
     case SbpMsgStatusReport:
       return sbp_msg_status_report_cmp(&a->status_report, &b->status_report);
     case SbpMsgStmFlashLockSector:
