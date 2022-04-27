@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSensorAidEvent",
+  "title":"MsgSensorAidEvent",
+  "description":"This diagnostic message contains state and update status information for all sensors that are being used by the fusion engine. This message will be generated asynchronously to the solution messages and will be emitted anytime a sensor update is being processed.\n",
+  "type": "object",
+  "properties": {
+    "time": {"type": "integer"},
+    "sensor_type": {"type": "integer"},
+    "sensor_id": {"type": "integer"},
+    "sensor_state": {"type": "integer"},
+    "n_available_meas": {"type": "integer"},
+    "n_attempted_meas": {"type": "integer"},
+    "n_accepted_meas": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "time",
+    "sensor_type",
+    "sensor_id",
+    "sensor_state",
+    "n_available_meas",
+    "n_attempted_meas",
+    "n_accepted_meas",
+    "flags"
+  ]
+}

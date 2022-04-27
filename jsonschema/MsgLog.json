@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgLog",
   "title":"MsgLog",
-  "description":"This message contains a human-readable payload string from the,\ndevice containing errors, warnings and informational messages at,\nERROR, WARNING, DEBUG, INFO logging levels.\n",
+  "description":"This message contains a human-readable payload string from the device containing errors, warnings and informational messages at ERROR, WARNING, DEBUG, INFO logging levels.\n",
   "type": "object",
   "properties": {
     "level": {"type": "integer"},

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: Swift Navigation <dev@swift-nav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -50,7 +50,7 @@ function getFieldValuesFromSpecType (fieldType, line, previousValues) {
     }
 
     var str = '';
-    for (var i = 0; i < strLength; i++) {
+    for (let i = 0; i < strLength; i++) {
       str += 'x';
     }
     return str;
@@ -59,7 +59,7 @@ function getFieldValuesFromSpecType (fieldType, line, previousValues) {
     var randomSize = (Math.floor(Math.random() * 3) + 2);
     var numElements = (typeof sizeField === 'number' ? sizeField : (typeof sizeField === 'string' ? previousValues[sizeField] : randomSize));
     var elements = [];
-    for (var i = 0; i < numElements; i++) {
+    for (let i = 0; i < numElements; i++) {
       elements.push(getFieldValuesFromSpecType(line[2]));
     }
     return elements;
@@ -93,7 +93,7 @@ function assertFieldsMatch (spec, fields1, fields2) {
     if (Array.isArray(fieldType)) {
       return assertFieldsMatch(fieldType, v1, v2);
     } else if (fieldType === 'array') {
-    } else if (fieldType.toLowerCase().indexOf('float') !== -1 || fieldType.toLowerCase().indexOf('float') !== -1) {
+    } else if (fieldType.toLowerCase().indexOf('float') !== -1) {
     } else if (fieldType === 'writeUInt64LE') {
       assert.equal(v1.toString(), v2.toString());
     } else {
@@ -110,10 +110,9 @@ describe('test packages based on descriptors of types', function () {
     );
  });
 
-  testMsgTypes.forEach(function (k) {
-    it('should test ' + k, function () {
-      var msgLabel = k;
-      var msgConstructor = messageTypesTable[k];
+  testMsgTypes.forEach(function (msgLabel) {
+    it('should test ' + msgLabel, function () {
+      var msgConstructor = messageTypesTable[msgLabel];
       if (!msgConstructor.prototype.msg_type) {
         return;
       }

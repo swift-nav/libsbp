@@ -11,6 +11,8 @@ on:
       - "generator/**"
       - "spec/**"
       - "c/test/**"
+      - "java/build.gradle"
+      - "java/test/**"
       - "rust/sbp/tests/**"
 jobs:
   generation:
@@ -20,15 +22,45 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          submodules: recursive
 
-      - name: Run generator
+      - name: Installing dependencies
         run: |
-          pip3 install tox
-          rm c/test/auto_check_*.c rust/sbp/tests/auto_check_*.rs
-          make gen-c gen-rust
+          sudo apt-get -qq update
+          sudo apt-get install -y tox python3-sphinx clang-format-6.0 gradle enchant
+          pip3 install tox-run-command
+          tox -e py --notest
 
-      - name: Check
+      - name: Generate tests
+        run: |
+          rm c/test/auto_check_*.c c/test/cpp/auto_check_*.cc java/test/auto_check_*.java rust/sbp/tests/integration/auto_check_*.rs
+          make gen-c gen-java gen-rust
+
+      - name: Check generated tests are up to date
         run: |
           git add c/test/ rust/sbp/tests/
           git diff --cached --name-only --exit-code
           git diff --name-only --exit-code
+
+      - name: Generate html
+        run: make html-python  # emits python/docs/build/html, not checked in
+
+      - name: Installing pdf dependencies
+        run: |
+          sudo apt-get install -y texlive-latex-extra texlive-fonts-extra texlive-science graphviz
+
+      - name: Generate pdf
+        id: pdf
+        run: |
+          make pdf
+          cp docs/sbp.pdf .
+          echo "::set-output name=artifact_name::sbp.pdf"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.pdf.outputs.artifact_name }}
+          path: ${{ steps.pdf.outputs.artifact_name }}
+
+      # name: Check generated pdf
+      # run: |
+      #   git diff --name-only --exit-code

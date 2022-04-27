@@ -1,0 +1,38 @@
+# Copyright (C) 2015-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.observation
+description: Satellite observation messages from the device.
+             The SBP sender ID of 0 indicates remote observations
+             from a GNSS base station, correction network, or Skylark,
+             Swift's cloud GNSS correction product.
+stable: True
+public: True
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+
+ - Doppler:
+     short_desc: GNSS doppler measurement
+     desc: >
+       Doppler measurement in Hz represented as a 24-bit
+       fixed point number with Q16.8 layout, i.e. 16-bits of whole
+       doppler and 8-bits of fractional doppler. This doppler is defined
+       as positive for approaching satellites.
+     fields:
+         - i:
+             type: u16 # MSGBREAK
+             units: Hz
+             desc: Doppler whole Hz
+         - f:
+             type: u8
+             units: Hz / 256
+             desc: Doppler fractional part

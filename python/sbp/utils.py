@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2011-2014 Swift Navigation Inc.
+# Copyright (C) 2011-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -36,7 +36,7 @@ def walk_json_dict(coll):
 
   """
   if isinstance(coll, dict):
-    return dict((k, walk_json_dict(v)) for (k, v) in iter(coll.items()))
+    return dict((k, walk_json_dict(v)) for (k, v) in iter(coll.items()) if k != '_io')
   elif isinstance(coll, bytes):
     return coll.decode('ascii', errors='replace')
   elif hasattr(coll, '__iter__') and not isinstance(coll, str):
@@ -55,6 +55,12 @@ def containerize(coll):
   coll : dict
 
   """
+  # If the caller has used intantiated a message class using classes
+  # representing the inner components of messages, they should have
+  # a _parser and not a to_binary.
+  if hasattr(coll, "_parser") and not hasattr(coll, "to_binary"):
+    coll = dict([(k, getattr(coll, k)) for k in coll.__slots__])
+
   if isinstance(coll, Container):
     [setattr(coll, k, containerize(v)) for (k, v) in coll.items()]
     return coll

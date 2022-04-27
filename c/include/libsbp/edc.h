@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Swift Navigation Inc.
+ * Copyright (C) 2010-2021 Swift Navigation Inc.
  * Contact: Swift Navigation <dev@swift-nav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -13,13 +13,13 @@
 #ifndef LIBSBP_EDC_H
 #define LIBSBP_EDC_H
 
+#include <libsbp/common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "common.h"
-
-u16 crc16_ccitt(const u8 *buf, u32 len, u16 crc);
+SBP_EXPORT u16 crc16_ccitt(const u8 *buf, u32 len, u16 crc);
 
 #ifdef __cplusplus
 }

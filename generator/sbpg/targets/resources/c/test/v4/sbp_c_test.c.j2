@@ -1,0 +1,218 @@
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+// This file was auto-generated from (((s.src_filename))) by generate.py. Do not modify by hand!
+
+#include <check.h>
+#include <stdio.h> // for debugging
+#include <stdlib.h> // for malloc
+#include <libsbp/sbp.h>
+#include <libsbp/v4/(((include))).h>
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  sbp_msg_type_t msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_msg;
+
+static u32 dummy_wr = 0;
+static u32 dummy_rd = 0;
+static u8 dummy_buff[1024];
+static void* last_io_context;
+
+static void* DUMMY_MEMORY_FOR_CALLBACKS = (void*)0xdeadbeef;
+static void* DUMMY_MEMORY_FOR_IO = (void*)0xdead0000;
+
+static void dummy_reset()
+{
+  dummy_rd = dummy_wr = 0;
+  memset(dummy_buff, 0, sizeof(dummy_buff));
+}
+
+static s32 dummy_write(u8 *buff, u32 n, void* context)
+{
+ last_io_context = context;
+ u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
+ memcpy(dummy_buff + dummy_wr, buff, real_n);
+ dummy_wr += real_n;
+ return (s32)real_n;
+}
+
+static s32 dummy_read(u8 *buff, u32 n, void* context)
+{
+ last_io_context = context;
+ u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
+ memcpy(buff, dummy_buff + dummy_rd, real_n);
+ dummy_rd += real_n;
+ return (s32)real_n;
+}
+
+static void logging_reset()
+{
+  memset(&last_msg, 0, sizeof(last_msg));
+}
+
+static void msg_callback(u16 sender_id, sbp_msg_type_t msg_type, const sbp_msg_t *msg, void *context)
+{
+  last_msg.n_callbacks_logged++;
+  last_msg.sender_id = sender_id;
+  last_msg.msg_type = msg_type;
+  last_msg.msg = *msg;
+  last_msg.context = context;
+}
+
+START_TEST( test_(((s.suite_name))) )
+{
+  static sbp_msg_callbacks_node_t n;
+
+  // State of the SBP message parser.
+  // Must be statically allocated.
+  sbp_state_t sbp_state;
+
+  //
+  // Run tests:
+  //
+
+    ((*- macro compare_string(root_path, value) *))
+    ck_assert_msg( (((- value.fn_prefix)))_encoded_len(&(((root_path)))) == (((value.encoded_len))), "Invalid encoded len");
+    ((*- if value.sections *))
+    ((*- for s in value.sections *))
+    ck_assert_msg(strcmp( (((- value.fn_prefix)))_get_section(&(((root_path))), (((loop.index0)))), "(((value.sections[loop.index0])))") == 0, "Section (((loop.index0))) not decoded properly");
+    ((*- endfor *))
+    ((*- else *))
+    ck_assert_msg(strcmp( (((- value.fn_prefix)))_get(&(((root_path)))), "(((value.text)))") == 0, "String not decoded properly");
+    ((*- endif *))
+    ((*- endmacro *))
+
+    ((*- macro compare_value(root_path, path, value) *))
+    ((*- if value is string_type *))
+    {
+      const char check_string[] = { (((value|str_escape))) };
+      ck_assert_msg(memcmp(&(((path))), check_string, sizeof(check_string)) == 0, "incorrect value for (((path))), expected string '%s', is '%s'", check_string, (((path))));
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))(((compare_value(root_path, path + '[' + loop.index0|to_str + ']', ff))))((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- if value.handle_as and value.handle_as == "encoded-string" *))
+    (((compare_string(root_path, value))))
+    ((*- else *))
+    ((*- for k in value|sorted *))
+    (((compare_value(root_path, path + '.' + k, value[k]))))
+    ((*- endfor *))
+    ((*- endif *))
+    ((*- elif value is float_type *))((=
+        Note: the ("%.12g"|format(value)|float) filter is intended to keep float
+        literal precision unchanged whether generated under Python 2.7 or 3.x. =))
+    ck_assert_msg(( (((-path))) * 100 - ((("%.12g"|format(value)|float))) * 100) < 0.05, "incorrect value for (((path))), expected ((("%.12g"|format(value)|float))), is %s", (((path))));
+    ((*- else *))
+    ck_assert_msg( (((-path))) == (((value))), "incorrect value for (((path))), expected (((value))), is %d", (((path))));
+    ((*- endif *))
+    ((*- endmacro *))
+
+    ((*- macro assign_string(root_path, value) *))
+    ((*- if value.sections *))
+    ((*- for s in value.sections *))
+    ck_assert_msg( (((- value.fn_prefix)))_add_section(&(((root_path))), "(((value.sections[loop.index0])))") == true, "Can't assign section (((loop.index0)))");
+    ((*- endfor *))
+    ((*- else *))
+    size_t written;
+    ck_assert_msg( (((- value.fn_prefix)))_set(&(((root_path))), "(((value.text)))", false, &written), "Can't assign text");
+    ck_assert_msg(written == strlen("(((value.text)))"), "Wrote different to expected");
+    ((*- endif *))
+    ck_assert_msg( (((- value.fn_prefix)))_encoded_len(&(((root_path)))) == (((value.encoded_len))), "String not encoded properly");
+    ((*- endmacro *))
+
+    ((*- macro assign_value(root_path, path, value) *))
+    ((*- if value is string_type *))
+    {
+      const char assign_string[] = { (((value|str_escape))) };
+      memcpy( (((-path))), assign_string, sizeof(assign_string));
+    }
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))
+    (((assign_value(root_path, path + '[' + loop.index0|to_str + ']', ff))))
+    ((*- endfor *))
+    ((*- elif value is dict_type *))
+    ((*- if value.handle_as and value.handle_as == "encoded-string" *))
+    (((assign_string(root_path, value))))
+    ((*- else *))
+    ((*- for k in (((value|sorted))) *))
+    (((assign_value(root_path, path + '.' + k, value[k]))))
+    ((*- endfor *))
+    ((*- endif *))
+    ((*- else *))
+    (((path))) = (((value)));
+    ((*- endif *))
+    ((*- endmacro *))
+
+  ((*- for t in s.tests *))
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_callback_register(&sbp_state, (((t.msg_type))), &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = { ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) };
+
+    dummy_reset();
+
+    sbp_msg_t test_msg;
+    memset(&test_msg, 0, sizeof(test_msg));
+    ((*- for f in t.c_decoded_fieldskeys *))
+      (((assign_value("test_msg." + t.msg_type_name|convert_unpacked_union, "test_msg." + t.msg_type_name|convert_unpacked_union + "." + f, t.c_decoded_fields[f]))))
+    ((*- endfor *))
+
+    sbp_message_send(&sbp_state, (((t.msg_type_name|convert_upper))), (((t.raw_json_obj.sender))), &test_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+        "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == (((t.raw_json_obj.sender))),
+        "msg_callback: sender_id decoded incorrectly");
+
+    ck_assert_msg(sbp_message_cmp( (((-t.msg_type_name|convert_upper))), &last_msg.msg, &test_msg) == 0,
+        "Sent and received messages did not compare equal");
+    ((*- for f in t.c_decoded_fieldskeys *))
+      (((compare_value("last_msg.msg." + t.msg_type_name|convert_unpacked_union, "last_msg.msg." + t.msg_type_name|convert_unpacked_union + "." + f, t.c_decoded_fields[f]))))
+    ((*- endfor *))
+
+  }
+  ((*- endfor *))
+}
+END_TEST
+
+Suite* (((s.suite_name)))_suite(void)
+{
+  Suite *s = suite_create("SBP generated test suite: (((s.suite_name)))");
+  TCase *tc_acq = tcase_create("Automated_Suite_(((s.suite_name)))");
+  tcase_add_test(tc_acq, test_(((s.suite_name))));
+  suite_add_tcase(s, tc_acq);
+  return s;
+}

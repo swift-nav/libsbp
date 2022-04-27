@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Acquisition
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Satellite acquisition messages from the device.\>
+-- \< Satellite acquisition messages from the device. \>
 
 module SwiftNav.SBP.Acquisition
   ( module SwiftNav.SBP.Acquisition
@@ -153,8 +153,8 @@ msgAcqResultDepA = 0x0015
 -- Deprecated.
 data MsgAcqResultDepA = MsgAcqResultDepA
   { _msgAcqResultDepA_snr :: !Float
-    -- ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
-    -- in the revision of this message.
+    -- ^ SNR of best point. Currently dimensionless, but will have units of dB
+    -- Hz in the revision of this message.
   , _msgAcqResultDepA_cp :: !Float
     -- ^ Code phase of best point
   , _msgAcqResultDepA_cf :: !Float
@@ -184,7 +184,7 @@ $(makeLenses ''MsgAcqResultDepA)
 
 -- | AcqSvProfile.
 --
--- Profile for a specific SV for debugging purposes The message describes SV
+-- Profile for a specific SV for debugging purposes. The message describes SV
 -- profile during acquisition time. The message is used to debug and measure
 -- the performance.
 data AcqSvProfile = AcqSvProfile

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,46 +8,39 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.ssr;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
-import com.swiftnav.sbp.SBPStruct;
 
 public class GridDefinitionHeaderDepA extends SBPStruct {
-    
-    /** region_size (deg) = 10 / region_size_inverse
-0 is an invalid value.
- */
+
+    /** region_size (deg) = 10 / region_size_inverse 0 is an invalid value. */
     public int region_size_inverse;
-    
-    /** grid height (deg) = grid width (deg) = area_width / region_size
-0 is an invalid value.
- */
+
+    /** grid height (deg) = grid width (deg) = area_width / region_size 0 is an invalid value. */
     public int area_width;
-    
+
     /** North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90 */
     public int lat_nw_corner_enc;
-    
-    /** North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180 */
+
+    /** North-West corner longitude (deg) = region_size * lon_nw_corner_enc - 180 */
     public int lon_nw_corner_enc;
-    
+
     /** Number of messages in the dataset */
     public int num_msgs;
-    
-    /** Postion of this message in the dataset */
-    public int seq_num;
-    
 
-    public GridDefinitionHeaderDepA () {}
+    /** Position of this message in the dataset */
+    public int seq_num;
+
+    public GridDefinitionHeaderDepA() {}
 
     @Override
     public GridDefinitionHeaderDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {

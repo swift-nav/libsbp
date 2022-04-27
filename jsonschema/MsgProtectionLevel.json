@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgProtectionLevel",
   "title":"MsgProtectionLevel",
-  "description":"This message reports the protection levels associated to the given ,\nstate estimate. The full GPS time is given by the preceding MSG_GPS_TIME ,\nwith the matching time-of-week (tow).\n",
+  "description":"This message reports the protection levels associated to the given state estimate. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

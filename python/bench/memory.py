@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -14,7 +14,7 @@ from guppy import hpy
 def sbp_nav():
   import sbp.navigation as nav
   ll = []
-  for i in range(0, 100000):
+  for _ in range(0, 100000):
     ll.append(nav.MsgBaselineECEF(sender=0x42,
                                   tow=100,
                                   x=10,

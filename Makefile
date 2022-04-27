@@ -62,15 +62,24 @@ help:
 	@echo "  quicktype-elm          generate Elm module from JSON Schema"
 	@echo
 
-all: c python javascript java docs haskell protobuf rust jsonschema
+packaged-languages: c python haskell rust javascript
+
+non-packaged-languages: java protobuf jsonschema quicktype
+
+all: packaged-languages docs non-packaged-languages
+
 clean:
 	@echo "Removing the ./c/build directory..."
-	rm -r $(SWIFTNAV_ROOT)/c/build
+	rm -fr $(SWIFTNAV_ROOT)/c/build
+	@echo "Removing the ./python/docs/build directory..."
+	rm -fr $(SWIFTNAV_ROOT)/python/docs/build
+	@echo "Removing ./latex/sbp_out.* ..."
+	rm -f $(SWIFTNAV_ROOT)/latex/sbp_out.*
 docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
 python:     deps-python     gen-python     test-python
-javascript: deps-javascript gen-javascript test-javascript
+javascript: deps-javascript gen-javascript test-javascript bundle-javascript
 java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
 rust:       deps-rust       gen-rust       test-rust
@@ -80,6 +89,7 @@ jsonschema: deps-jsonschema gen-jsonschema test-jsonschema
 quicktype-typescript: deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript
 quicktype-javascript: deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript
 quicktype-elm:        deps-quicktype-elm        gen-quicktype-elm        test-quicktype-elm
+quicktype:            quicktype-typescript      quicktype-javascript     quicktype-elm
 
 # Prerequisite verification
 verify-prereq-generator:
@@ -92,6 +102,7 @@ else
 endif
 
 verify-prereq-c: verify-prereq-generator
+	@command -v clang-format-6.0 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`clang-format-6.0\` but it's not installed. Aborting.\n\nHave you installed clang-format-6.0? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v checkmk      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`checkmk\` but it's not installed. Aborting.\n\nHave you installed checkmk? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
@@ -101,7 +112,6 @@ verify-prereq-python: verify-prereq-generator
 	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 	@command -v pip 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`pip\` but it's not installed. Aborting.\n\nHave you installed pip? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 	@command -v tox 1>/dev/null 2>/dev/null    || { echo >&2 -e "I require \`tox\` but it's not installed. Aborting.\n\nHave you installed tox? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
-	@command -v pandoc 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pandoc\` but it's not installed. Aborting.\n\nHave you installed pandoc? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-javascript: verify-prereq-generator
 	@command -v node   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`node\` but it's not installed. Aborting.\n\nHave you installed Node.js? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
@@ -138,10 +148,14 @@ deps-c: verify-prereq-c
 
 deps-python: verify-prereq-python
 
+bundle-javascript: deps-javascript
+	$(call announce-begin,"Building Javascript bundle")
+	cd $(SWIFTNAV_ROOT); npm run webpack
+	$(call announce-end,"Finished building JavaScript bundle")
+
 deps-javascript: verify-prereq-javascript
 	$(call announce-begin,"Installing Javascript dependencies")
 	cd $(SWIFTNAV_ROOT); npm install
-	cd $(SWIFTNAV_ROOT); npm run webpack
 	$(call announce-end,"Finished installing Javascript dependencies")
 
 deps-java: verify-prereq-java
@@ -162,13 +176,14 @@ deps-quicktype-elm: verify-prereq-quicktype
 
 # Generators
 
-gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-jsonschema gen-quicktype-typescript gen-quicktype-javascript gen-quicktype-elm
+gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-jsonschema gen-quicktype
+gen-quicktype: gen-quicktype-typescript gen-quicktype-elm
 
 gen-c:
-	$(call announce-begin,"Generating C headers")
+	$(call announce-begin,"Generating C headers and sources")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
-		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
+		       -o $(SWIFTNAV_ROOT)/c \
 		       -r $(SBP_VERSION) \
 	               --c
 
@@ -179,6 +194,15 @@ gen-c:
 		       -r $(SBP_VERSION) \
 	               --test-c
 
+	$(call announce-begin,"Formatting C code")
+
+	cd $(SWIFTNAV_ROOT)/c; \
+	mkdir -p build/ && cd build/; \
+	cmake $(CMAKEFLAGS) ../; \
+	$(MAKE) clang-format-all
+
+	$(call announce-end,"Finished formatting C code")
+
 	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
 
 gen-python:
@@ -188,6 +212,10 @@ gen-python:
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
 		       -r $(SBP_VERSION) \
 		       --python
+
+	$(call announce-begin,"Formatting Python code")
+	tox -e py --run-command="autoflake -i --remove-all-unused-imports -r python/sbp"
+	$(call announce-end,"Finished formatting Python code")
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
 gen-javascript:
@@ -211,6 +239,20 @@ gen-java:
 		       -r $(SBP_VERSION) \
 		       --java
 	$(call announce-end,"Finished generating Java bindings. Please check $(SWIFTNAV_ROOT)/java/src/sbp")
+
+	$(call announce-begin,"Generating Java tests")
+
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
+	-o $(SWIFTNAV_ROOT)/java/test/ \
+		       -r $(SBP_VERSION_UNPREFIXED) \
+	               --test-java
+
+	$(call announce-end,"Finished generating Java tests")
+
+	$(call announce-begin,"Formatting Java code")
+	cd $(SWIFTNAV_ROOT)/java && gradle spotlessApply
+	$(call announce-end,"Finished formatting Java code")
 
 gen-haskell:
 	$(call announce-begin,"Generating Haskell bindings")
@@ -244,7 +286,7 @@ gen-rust:
 
 	$(call announce-begin,"Formatting Rust code")
 
-	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo fmt
+	cd $(SWIFTNAV_ROOT)/rust/sbp && rustup run stable cargo fmt
 
 	$(call announce-end,"Finished formatting Rust code")
 
@@ -285,7 +327,7 @@ gen-quicktype-elm:
 
 # Testers
 
-test: test-all-begin test-c test-java test-python test-haskell test-javascript test-rust test-all-end
+test: test-all-begin test-c test-c-v4 test-java test-python test-haskell test-javascript test-rust test-all-end
 
 test-all-begin:
 	$(call announce-begin,"Running all tests")
@@ -302,13 +344,18 @@ test-c:
 	$(MAKE) do-all-tests
 	$(call announce-end,"Finished running C tests")
 
+test-c-v4:
+	$(call announce-begin,"Running C tests")
+	cd $(SWIFTNAV_ROOT)/c; \
+	mkdir -p build/ && cd build/; \
+	cmake $(CMAKEFLAGS) ../; \
+	$(MAKE); \
+	$(MAKE) do-test-libsbp-v4 do-test-libsbp-cpp-v4
+	$(call announce-end,"Finished running C tests")
+
 test-python:
 	$(call announce-begin,"Running Python tests")
-ifdef CI
-	cd $(SWIFTNAV_ROOT)/python/ && tox -- $(SWIFTNAV_ROOT)/haskell
-else
 	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters
-endif
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:
@@ -319,7 +366,7 @@ test-javascript:
 
 test-java:
 	$(call announce-begin,"Running Java tests")
-	cd $(SWIFTNAV_ROOT)/java && gradle test
+	cd $(SWIFTNAV_ROOT)/java && gradle test -i
 	$(call announce-end,"Finished running Java tests")
 
 test-haskell:
@@ -329,7 +376,9 @@ test-haskell:
 
 test-rust:
 	$(call announce-begin,"Running Rust tests")
-	cargo test --verbose --all-targets
+	cargo test --verbose --all-features --all-targets
+	$(call announce-begin,"Running Rust doc tests")
+	cargo test --doc
 	$(call announce-begin,"Building Rust examples")
 	cargo build --examples --verbose --all-features --all-targets
 	$(call announce-end,"Finished running Rust tests")
@@ -356,25 +405,31 @@ test-quicktype-elm:
 
 dist-python:
 	$(call announce-begin,"Deploying Python package")
-	$(MAKE) -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_VERSION)" deploy
+	$(MAKE) -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_VERSION_UNPREFIXED)" deploy
 	$(call announce-end,"Finished deploying Python package")
 
 dist-javascript:
 	$(call announce-begin,"Deploying Javascript package")
 	npm publish
-	$(call announce-begin,"Finished deploying Javascript package")
+	$(call announce-end,"Finished deploying Javascript package")
 
 dist-haskell:
 	$(call announce-begin,"Deploying Haskell package")
 	(cd $(SWIFTNAV_ROOT)/haskell; stack sdist; stack upload .)
-	$(call announce-begin,"Finished deploying Haskell package")
+	$(call announce-end,"Finished deploying Haskell package")
 
-dist-pdf:
-	$(call announce-begin,"Deploying PDF documentation")
-	$(MAKE) pdf_dist
-	$(call announce-begin,"Finished deploying PDF documentation")
+dist-rust:
+	$(call announce-begin,"Deploying Rust `sbp` package")
+	cargo release --package sbp --execute $(SBP_VERSION_UNPREFIXED)
+	$(call announce-end,"Finished deploying Rust `sbp` package")
+	$(call announce-begin,"Deploying Rust `sbp2json` package")
+	cargo release --package sbp2json --execute $(SBP_VERSION_UNPREFIXED)
+	$(call announce-end,"Finished deploying Rust `sbp2json` package")
+	$(call announce-begin,"Reverting commit made by `sbp2json` deployment")
+	git reset --hard $(SBP_VERSION)
+	$(call announce-end,"Finished reverting commit made by `sbp2json` deployment")
 
-dist: dist-python dist-javascript dist-haskell dist-pdf
+dist: dist-python dist-javascript dist-haskell dist-rust
 
 pdf:
 	$(call announce-begin,"Generating PDF datasheet documentation")
@@ -391,20 +446,25 @@ pdf-for-real:
 		       -r $(SBP_VERSION) \
 	               --latex
 
-pdf_dist:
-	s3cmd put  $(SWIFTNAV_ROOT)/docs/sbp.pdf s3://downloads.swiftnav.com/sbp/docs/sbp_$(SBP_VERSION).pdf
-
 html:
-	$(call announce-begin,"Generating bindings documentation")
+	$(call announce-begin,"Generating html documentation")
+	$(MAKE) html-c
+	$(MAKE) html-python
+	$(call announce-end,"Finished generating html documentation")
+
+html-c:
 	$(call announce-begin,"Generating C bindings documentation")
 	cd $(SWIFTNAV_ROOT)/c && \
 	  mkdir -p build      && \
 	  cd build            && \
 	  cmake ..            && \
 	  $(MAKE) docs
+	$(call announce-end,"Finished generating C bindings documentation at c/build/docs/html/index.html")
+
+html-python:
 	$(call announce-begin,"Generating Python documentation")
-	$(MAKE) -C $(SWIFTNAV_ROOT)/python/docs html
-	$(call announce-end,"Finished generating documentation")
+	tox -e py --run-command="make -C python/docs spelling html"
+	$(call announce-end,"Finished generating Python documentation at python/docs/build/html/index.html")
 
 release:
 	$(call announce-begin,"Run release boilerplate")

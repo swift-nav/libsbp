@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -11,14 +11,11 @@
 
 import os
 import re
-import shutil
 import subprocess
-import tempfile
 
 from operator import attrgetter
 
-from sbpg.targets.templating import *
-from sbpg.utils import fmt_repr
+from sbpg.targets.templating import ACRONYMS, JENV
 from sbpg import ReleaseVersion
 
 
@@ -53,7 +50,7 @@ TEMPLATE_NAME = "sbp_messages_desc.tex"
 LATEX_SUBS = (
     (re.compile(r'\\'), r'\\textbackslash'),
     (re.compile(r'([{}_#%&$])'), r'\\\1'),
-    (re.compile(r'@@(\S+)\[(.+)\]'), r'\\href{\1}{\2}'),
+    (re.compile(r'@@(\S+)\[([^\]]+)\]'), r'\\href{\1}{\2}'),
     (re.compile(r'~'), r'\~{}'),
     (re.compile(r'\^'), r'\^{}'),
     (re.compile(r'"'), r"''"),
@@ -226,14 +223,14 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       name = f.options['fill'].value
       definition = next(d for d in definitions if name == d.identifier)
       prefix_name = '.'.join([prefix, f.identifier]) if prefix else f.identifier
-      (new_items, new_offset, new_multiplier) \
+      (_, new_offset, _) \
         = handle_fields(definitions,
                         definition.fields,
                         prefix_name + "[N]",
                         offset,
                         multiplier)
       multiplier = new_offset - offset
-      (newer_items, newer_offset, newer_multiplier) \
+      (newer_items, newer_offset, _) \
         = handle_fields(definitions,
                         definition.fields,
                         prefix_name + "[N]", offset,

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,63 +8,58 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.navigation;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/navigation.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_GPS_TIME_DEP_A (0x0100).
+/**
+ * SBP class for message MSG_GPS_TIME_DEP_A (0x0100).
  *
- * You can have MSG_GPS_TIME_DEP_A inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_GPS_TIME_DEP_A inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * This message reports the GPS time, representing the time since
- * the GPS epoch began on midnight January 6, 1980 UTC. GPS time
- * counts the weeks and seconds of the week. The weeks begin at the
- * Saturday/Sunday transition. GPS week 0 began at the beginning of
- * the GPS time scale.
- * 
- * Within each week number, the GPS time of the week is between
- * between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
- * does not accumulate leap seconds, and as of now, has a small
- * offset from UTC. In a message stream, this message precedes a
- * set of other navigation messages referenced to the same time
- * (but lacking the ns field) and indicates a more precise time of
- * these messages. */
-
+ * <p>This message reports the GPS time, representing the time since the GPS epoch began on midnight
+ * January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The weeks begin at the
+ * Saturday/Sunday transition. GPS week 0 began at the beginning of the GPS time scale.
+ *
+ * <p>Within each week number, the GPS time of the week is between between 0 and 604800 seconds
+ * (=60*60*24*7). Note that GPS time does not accumulate leap seconds, and as of now, has a small
+ * offset from UTC. In a message stream, this message precedes a set of other navigation messages
+ * referenced to the same time (but lacking the ns field) and indicates a more precise time of these
+ * messages.
+ */
 public class MsgGPSTimeDepA extends SBPMessage {
     public static final int TYPE = 0x0100;
 
-    
     /** GPS week number */
     public int wn;
-    
+
     /** GPS time of week rounded to the nearest millisecond */
     public long tow;
-    
-    /** Nanosecond residual of millisecond-rounded TOW (ranges
-from -500000 to 500000)
- */
+
+    /** Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000) */
     public int ns_residual;
-    
+
     /** Status flags (reserved) */
     public int flags;
-    
 
-    public MsgGPSTimeDepA (int sender) { super(sender, TYPE); }
-    public MsgGPSTimeDepA () { super(TYPE); }
-    public MsgGPSTimeDepA (SBPMessage msg) throws SBPBinaryException {
+    public MsgGPSTimeDepA(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgGPSTimeDepA() {
+        super(TYPE);
+    }
+
+    public MsgGPSTimeDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

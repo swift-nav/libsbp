@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2020 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -13,16 +13,19 @@
 Generator for Haskell target.
 """
 
-import string
 import copy
-from sbpg.targets.templating import *
-from sbpg.utils import comment_links
+
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import JENV, indented_wordwrap
 from sbpg import ReleaseVersion
 
 MESSAGES_TEMPLATE_NAME = "SbpMessagesTemplate.hs"
 CABAL_TEMPLATE_NAME = "sbp-template.cabal"
 SBP_TEMPLATE_NAME = "SbpTemplate.hs"
 MESSAGE_TEMPLATE_NAME = "SbpMessageTemplate.hs"
+MODULE_PREFIX = "SwiftNav.SBP"
 
 CONSTRUCT_CODE = {
   'u8': 'Word8',
@@ -145,8 +148,18 @@ def to_put(f, type_map=PUT_CONSTRUCT_CODE):
     return "mapM_ %s" % to_put(f_, type_map)
   return type_map.get(name, "put")
 
-def comment_links_hsk(s):
-  return '\<' + comment_links(s) + '\>'
+@pass_environment
+def commentify(environment: Environment, value: str, indent=0, wrap_in_brackets=False):
+  """
+  Builds a comment.
+  """
+  if not value:
+    return
+  value = indented_wordwrap(environment, value, indent=(" " * indent) + "-- ", first=False)
+  if wrap_in_brackets:
+    return "\< " + value + " \>"
+  else:
+    return value
 
 def max_fid_len(m):
   """
@@ -160,19 +173,18 @@ JENV.filters['hs_to_type'] = to_type
 JENV.filters['hs_to_get'] = to_get
 JENV.filters['hs_to_put'] = to_put
 JENV.filters['hs_max_fid_len'] = max_fid_len
-JENV.filters['comment_links'] = comment_links_hsk
+JENV.filters['commentify'] = commentify
 
 def render_source(output_dir, package_spec):
   """
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  module_prefix = "SwiftNav.SBP"
   module_name = camel_case(name)
-  full_module_name = ".".join([module_prefix, module_name])
+  full_module_name = ".".join([MODULE_PREFIX, module_name])
   destination_filename = "%s/src/SwiftNav/SBP/%s.hs" % (output_dir, module_name)
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
-  module_includes = [".".join([module_prefix] + [camel_case(j) for j in i.split(".")[:-1]])
+  module_includes = [".".join([MODULE_PREFIX] + [camel_case(j) for j in i.split(".")[:-1]])
                      for i in package_spec.includes]
 
   with open(destination_filename, 'w') as f:
@@ -183,13 +195,12 @@ def render_source(output_dir, package_spec):
 
 def render_cabal(output_dir, package_specs, release: ReleaseVersion):
   modules = []
-  module_prefix = "SwiftNav.SBP"
   for package_spec in package_specs:
     if not package_spec.render_source:
       continue
     path, name = package_spec.filepath
     module_name = camel_case(name)
-    full_module_name = ".".join([module_prefix, module_name])
+    full_module_name = ".".join([MODULE_PREFIX, module_name])
     modules.append(full_module_name)
   destination_filename = "%s/sbp.cabal" % output_dir
   py_template = JENV.get_template(CABAL_TEMPLATE_NAME)
@@ -200,13 +211,12 @@ def render_cabal(output_dir, package_specs, release: ReleaseVersion):
 def render_sbp(output_dir, package_specs):
   modules = []
   msgs = []
-  module_prefix = "SwiftNav.SBP"
   for package_spec in package_specs:
     if not package_spec.render_source:
       continue
     path, name = package_spec.filepath
     module_name = camel_case(name)
-    full_module_name = ".".join([module_prefix, module_name])
+    full_module_name = ".".join([MODULE_PREFIX, module_name])
     modules.append(full_module_name)
     for m in package_spec.definitions:
       if m.is_real_message:

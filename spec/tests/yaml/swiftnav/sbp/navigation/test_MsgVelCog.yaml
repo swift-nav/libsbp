@@ -1,0 +1,79 @@
+description: Unit tests for swiftnav.sbp.navigation MsgVelCog
+generated_on: 2021-12-09 18:33:35.382091
+package: sbp.navigation
+tests:
+- msg:
+    fields:
+      cog: 1000
+      cog_accuracy: 4000
+      flags: 62
+      sog: 2000
+      sog_accuracy: 5000
+      tow: 326825520
+      v_up: 3000
+      v_up_accuracy: 6000
+    module: sbp.navigation
+    name: MsgVelCog
+  msg_type: '0x21C'
+  raw_json: '{"crc":49620,"length":30,"msg_type":540,"payload":
+  "MPZ6E+gDAADQBwAAuAsAAKAPAACIEwAAcBcAAD4A","preamble":85,"sender":35027,
+  "tow":326825520,"cog":1000,"sog":2000,"v_up":3000,"cog_accuracy":4000,
+  "sog_accuracy":5000,"v_up_accuracy":6000,"flags":62}'
+  raw_packet: VRwC04geMPZ6E+gDAADQBwAAuAsAAKAPAACIEwAAcBcAAD4A1ME=
+  sbp:
+    crc: '0xC1D4'
+    length: 30
+    msg_type: '0x21C'
+    payload: MPZ6E+gDAADQBwAAuAsAAKAPAACIEwAAcBcAAD4A
+    preamble: '0x55'
+    sender: '0x88D3'
+- msg:
+    fields:
+      cog: 123
+      cog_accuracy: 180000000
+      flags: 0
+      sog: 456
+      sog_accuracy: 100
+      tow: 326825520
+      v_up: -1000
+      v_up_accuracy: 100
+    module: sbp.navigation
+    name: MsgVelCog
+  msg_type: '0x21C'
+  raw_json: '{"crc":29274,"length":30,"msg_type":540,"payload":
+  "MPZ6E3sAAADIAQAAGPz//wCVugpkAAAAZAAAAAAA","preamble":85,"sender":35027,
+  "tow":326825520,"cog":123,"sog":456,"v_up":-1000,"cog_accuracy":180000000,
+  "sog_accuracy":100,"v_up_accuracy":100,"flags":0}'
+  raw_packet: VRwC04geMPZ6E3sAAADIAQAAGPz//wCVugpkAAAAZAAAAAAAWnI=
+  sbp:
+    crc: '0x725A'
+    length: 30
+    msg_type: '0x21C'
+    payload: MPZ6E3sAAADIAQAAGPz//wCVugpkAAAAZAAAAAAA
+    preamble: '0x55'
+    sender: '0x88D3'
+- msg:
+    fields:
+      cog: 0
+      cog_accuracy: 0
+      flags: 0
+      sog: 0
+      sog_accuracy: 0
+      tow: 326825520
+      v_up: 0
+      v_up_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelCog
+  msg_type: '0x21C'
+  raw_json: '{"crc":53802,"length":30,"msg_type":540,"payload":
+  "MPZ6EwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","preamble":85,"sender":35027,
+  "tow":326825520,"cog":0,"sog":0,"v_up":0,"cog_accuracy":0,"sog_accuracy":0,
+  "v_up_accuracy":0,"flags":0}'
+  raw_packet: VRwC04geMPZ6EwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKtI=
+  sbp:
+    crc: '0xD22A'
+    length: 30
+    msg_type: '0x21C'
+    payload: MPZ6EwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    preamble: '0x55'
+    sender: '0x88D3'

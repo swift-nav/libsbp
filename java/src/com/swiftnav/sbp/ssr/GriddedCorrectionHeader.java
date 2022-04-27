@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,53 +8,49 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.ssr;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/ssr.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
-import com.swiftnav.sbp.SBPStruct;
 
 public class GriddedCorrectionHeader extends SBPStruct {
-    
+
     /** Unique identifier of the tile set this tile belongs to. */
     public int tile_set_id;
-    
+
     /** Unique identifier of this tile in the tile set. */
     public int tile_id;
-    
+
     /** GNSS reference time of the correction */
     public GPSTimeSec time;
-    
+
     /** Number of messages in the dataset */
     public int num_msgs;
-    
+
     /** Position of this message in the dataset */
     public int seq_num;
-    
-    /** Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
- */
-    public int update_interval;
-    
-    /** IOD of the SSR atmospheric correction
- */
-    public int iod_atmo;
-    
-    /** Quality of the troposphere data. Encoded following RTCM DF389
-specification in units of m.
- */
-    public int tropo_quality_indicator;
-    
 
-    public GriddedCorrectionHeader () {}
+    /**
+     * Update interval between consecutive corrections. Encoded following RTCM DF391 specification.
+     */
+    public int update_interval;
+
+    /** IOD of the SSR atmospheric correction */
+    public int iod_atmo;
+
+    /**
+     * Quality of the troposphere data. Encoded following RTCM DF389 specification in units of m.
+     */
+    public int tropo_quality_indicator;
+
+    public GriddedCorrectionHeader() {}
 
     @Override
     public GriddedCorrectionHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {

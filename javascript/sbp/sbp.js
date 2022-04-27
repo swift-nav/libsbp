@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: Swift Navigation <dev@swift-nav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -63,17 +63,17 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
         assert(data[fieldName] instanceof UInt64, 'uint64 type must be represented by cuint.UINT64');
         var high = data[fieldName].clone().shiftRight(32).and(new UInt64(0xffffffff, 0)).toNumber();
         var low = data[fieldName].clone().and(new UInt64(0xffffffff, 0)).toNumber();
-        var b = new Buffer(8);
+        let b = new Buffer(8);
         b.writeUInt32LE(low);
         b.writeUInt32LE(high, 4);
         buffers.push(b);
       } else {
-        var b = new Buffer(dataSize);
+        let b = new Buffer(dataSize);
         b[dataType](data[fieldName], 0);
         buffers.push(b);
       }
     } else if (dataType === 'string') {
-      var b = new Buffer(data[fieldName].length);
+      let b = new Buffer(data[fieldName].length);
       b.write(data[fieldName], 0, 'utf8');
       buffers.push(b);
     } else if (dataType === 'array') {
@@ -85,7 +85,7 @@ SBP.prototype.payloadToBuffer = function payloadToBuffer (fieldSpec, data) {
           buffers = buffers.concat(this.payloadToBuffer(dataFill, iData));
         } else {
           // Built-in type
-          var b = new Buffer(fieldSize(field[3]));
+          let b = new Buffer(fieldSize(field[3]));
           b[dataFill](iData, 0);
           buffers.push(b);
         }
@@ -150,7 +150,7 @@ SBP.prototype.toBuffer = function toBuffer () {
 SBP.prototype.toJSON = function toJSON () {
   var dict = {};
 
-  Object.keys(this.sbp).map(function (k) {
+  Object.keys(this.sbp).forEach(function (k) {
     if (this.sbp[k] instanceof Buffer) {
       dict[k] = this.sbp[k].toString('base64');
     } else {
@@ -158,7 +158,7 @@ SBP.prototype.toJSON = function toJSON () {
     }
   }.bind(this));
 
-  Object.keys(this.fields).map(function (k) {
+  Object.keys(this.fields).forEach(function (k) {
     dict[k] = this.fields[k];
   }.bind(this));
 

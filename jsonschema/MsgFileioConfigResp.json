@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFileioConfigResp",
   "title":"MsgFileioConfigResp",
-  "description":"The advice on the optimal configuration for a FileIO,\ntransfer.  Newer version of FileIO can support greater,\nthroughput by supporting a large window of FileIO data,\nthat can be in-flight during read or write operations.\n",
+  "description":"The advice on the optimal configuration for a FileIO transfer.  Newer version of FileIO can support greater throughput by supporting a large window of FileIO data that can be in-flight during read or write operations.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},

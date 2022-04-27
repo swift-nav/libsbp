@@ -51,6 +51,6 @@ To publish to [Hackage](http://hackage.haskell.org/package/sbp), use the
 
 # LICENSE
 
-Copyright © 2015 Swift Navigation Inc.
+Copyright © 2015-2021 Swift Navigation Inc.
 
 [1]: https://github.com/swift-nav/libsbp/tree/master/haskell

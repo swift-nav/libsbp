@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -22,7 +22,7 @@ package swiftnav.sbp.gnss;
 
 /** Represents all the relevant information about the signal
  *
- * Signal identifier containing constellation, band, and satellite identifier
+ * Signal identifier containing constellation, band, and satellite identifier.
  */
 message GnssSignal {
     uint32 sat = 1;
@@ -31,8 +31,8 @@ message GnssSignal {
 
 /** Space vehicle identifier
  *
- * A (Constellation ID, satellite ID) tuple that uniquely identifies
- * a space vehicle
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies a space
+ * vehicle.
  */
 message SvId {
     uint32 satId = 1;
@@ -41,9 +41,8 @@ message SvId {
 
 /** Whole second accurate GPS time
  *
- * A GPS time, defined as the number of
- * seconds since beginning of the week on the Saturday/Sunday
- * transition.
+ * A GPS time, defined as the number of seconds since beginning of the week on
+ * the Saturday/Sunday transition.
  */
 message GpsTimeSec {
     uint32 tow = 1;
@@ -52,10 +51,9 @@ message GpsTimeSec {
 
 /** Nanosecond-accurate receiver clock time
  *
- * A wire-appropriate receiver clock time, defined as the time
- * since the beginning of the week on the Saturday/Sunday
- * transition. In most cases, observations are epoch aligned
- * so ns field will be 0.
+ * A wire-appropriate receiver clock time, defined as the time since the
+ * beginning of the week on the Saturday/Sunday transition. In most cases,
+ * observations are epoch aligned so ns field will be 0.
  */
 message GpsTime {
     uint32 tow = 1;
@@ -63,12 +61,11 @@ message GpsTime {
     uint32 wn = 3;
 }
 
-/** GNSS carrier phase measurement.
+/** GNSS carrier phase measurement
  *
- * Carrier phase measurement in cycles represented as a 40-bit
- * fixed point number with Q32.8 layout, i.e. 32-bits of whole
- * cycles and 8-bits of fractional cycles. This phase has the
- * same sign as the pseudorange.
+ * Carrier phase measurement in cycles represented as a 40-bit fixed point
+ * number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
+ * fractional cycles. This phase has the same sign as the pseudorange.
  */
 message CarrierPhase {
     sint32 i = 1;

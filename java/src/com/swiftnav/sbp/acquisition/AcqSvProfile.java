@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,60 +8,57 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.acquisition;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/acquisition.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
-import com.swiftnav.sbp.SBPStruct;
 
 public class AcqSvProfile extends SBPStruct {
-    
+
     /** SV search job type (deep, fallback, etc) */
     public int job_type;
-    
+
     /** Acquisition status 1 is Success, 0 is Failure */
     public int status;
-    
+
     /** CN0 value. Only valid if status is '1' */
     public int cn0;
-    
+
     /** Acquisition integration time */
     public int int_time;
-    
+
     /** GNSS signal for which acquisition was attempted */
     public GnssSignal sid;
-    
+
     /** Acq frequency bin width */
     public int bin_width;
-    
+
     /** Timestamp of the job complete event */
     public long timestamp;
-    
+
     /** Time spent to search for sid.code */
     public long time_spent;
-    
+
     /** Doppler range lowest frequency */
     public int cf_min;
-    
+
     /** Doppler range highest frequency */
     public int cf_max;
-    
+
     /** Doppler value of detected peak. Only valid if status is '1' */
     public int cf;
-    
+
     /** Codephase of detected peak. Only valid if status is '1' */
     public long cp;
-    
 
-    public AcqSvProfile () {}
+    public AcqSvProfile() {}
 
     @Override
     public AcqSvProfile parse(SBPMessage.Parser parser) throws SBPBinaryException {

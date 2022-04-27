@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -241,7 +241,7 @@ MsgInsStatus.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  * intended to be a low rate message for status purposes.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implementation defined.
  * @field telemetry string Comma separated list of values as defined by the index
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -273,7 +273,7 @@ MsgCsacTelemetry.prototype.fieldSpec.push(['telemetry', 'string', null]);
  * rate than the MSG_CSAC_TELEMETRY.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implementation defined.
  * @field telemetry_labels string Comma separated list of telemetry field values
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -300,7 +300,7 @@ MsgCsacTelemetryLabels.prototype.fieldSpec.push(['telemetry_labels', 'string', n
 /**
  * SBP class for message MSG_INS_UPDATES (0xFF06).
  *
- * The INS update status message contains informations about executed and rejected
+ * The INS update status message contains information about executed and rejected
  * INS updates. This message is expected to be extended in the future as new types
  * of measurements are being added.
  *
@@ -421,6 +421,57 @@ MsgPpsTime.prototype.fieldSpec.push(['time', 'writeUInt64LE', 8]);
 MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
+ *
+ * This diagnostic message contains state and update status information for all
+ * sensors that are being used by the fusion engine. This message will be generated
+ * asynchronously to the solution messages and will be emitted anytime a sensor
+ * update is being processed.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time number (unsigned 32-bit int, 4 bytes) Update timestamp in milliseconds.
+ * @field sensor_type number (unsigned 8-bit int, 1 byte) Sensor type
+ * @field sensor_id number (unsigned 16-bit int, 2 bytes) Sensor identifier
+ * @field sensor_state number (unsigned 8-bit int, 1 byte) Reserved for future use
+ * @field n_available_meas number (unsigned 8-bit int, 1 byte) Number of available measurements in this epoch
+ * @field n_attempted_meas number (unsigned 8-bit int, 1 byte) Number of attempted measurements in this epoch
+ * @field n_accepted_meas number (unsigned 8-bit int, 1 byte) Number of accepted measurements in this epoch
+ * @field flags number (unsigned 32-bit int, 4 bytes) Reserved for future use
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSensorAidEvent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SENSOR_AID_EVENT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSensorAidEvent.prototype = Object.create(SBP.prototype);
+MsgSensorAidEvent.prototype.messageType = "MSG_SENSOR_AID_EVENT";
+MsgSensorAidEvent.prototype.msg_type = 0xFF09;
+MsgSensorAidEvent.prototype.constructor = MsgSensorAidEvent;
+MsgSensorAidEvent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('time')
+  .uint8('sensor_type')
+  .uint16('sensor_id')
+  .uint8('sensor_state')
+  .uint8('n_available_meas')
+  .uint8('n_attempted_meas')
+  .uint8('n_accepted_meas')
+  .uint32('flags');
+MsgSensorAidEvent.prototype.fieldSpec = [];
+MsgSensorAidEvent.prototype.fieldSpec.push(['time', 'writeUInt32LE', 4]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_type', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_id', 'writeUInt16LE', 2]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_state', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_available_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_attempted_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_accepted_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
+
+/**
  * SBP class for message MSG_GROUP_META (0xFF0A).
  *
  * This leading message lists the time metadata of the Solution Group. It also
@@ -431,7 +482,7 @@ MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field group_id number (unsigned 8-bit int, 1 byte) Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
  * @field n_group_msgs number (unsigned 8-bit int, 1 byte) Size of list group_msgs
- * @field group_msgs array An inorder list of message types included in the Solution Group, including
+ * @field group_msgs array An in-order list of message types included in the Solution Group, including
  *   GROUP_META itself
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -452,12 +503,12 @@ MsgGroupMeta.prototype.parser = new Parser()
   .uint8('group_id')
   .uint8('flags')
   .uint8('n_group_msgs')
-  .array('group_msgs', { type: 'uint16le', readUntil: 'eof' });
+  .array('group_msgs', { type: 'uint16le', length: 'n_group_msgs' });
 MsgGroupMeta.prototype.fieldSpec = [];
 MsgGroupMeta.prototype.fieldSpec.push(['group_id', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['n_group_msgs', 'writeUInt8', 1]);
-MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, null]);
+MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, 'n_group_msgs']);
 
 module.exports = {
   0xFF00: MsgStartup,
@@ -481,6 +532,8 @@ module.exports = {
   MsgGnssTimeOffset: MsgGnssTimeOffset,
   0xFF08: MsgPpsTime,
   MsgPpsTime: MsgPpsTime,
+  0xFF09: MsgSensorAidEvent,
+  MsgSensorAidEvent: MsgSensorAidEvent,
   0xFF0A: MsgGroupMeta,
   MsgGroupMeta: MsgGroupMeta,
 }

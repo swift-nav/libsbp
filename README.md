@@ -100,24 +100,31 @@ but works on all platforms that Python itself supports.
 
 ## Building / installing
 
+Before you start, run 
+```
+git pull --tags
+```
+in you local libsbp repository to pull the tags. This will ensure the correct
+version number is generated.
+
 ### Using Docker
 
 Before you begin, make sure you have [Docker](https://docs.docker.com/docker-for-mac/install/) installed.
-Start [Docker desktop](https://docs.docker.com/docker-for-mac/). 
+Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 
 #### Fetching the prebuilt image from DockerHub
 
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness) by running the following on your command line:
 
-``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.04.22``
+    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021-10-13 /bin/bash
 
 This will mount your local copy of the libsbp repository onto the image.
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 Alternatively, you could run
 
-``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:latest-master``
+    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:latest-master /bin/bash
 
 if you are facing issues with compilation and the tags are out of date as well.
 
@@ -127,32 +134,38 @@ Otherwise, the `Dockerfile` will create a docker image that contains all the
 necessary dependencies to build libsbp.  You can make a local image fresh from
 this file by running `docker build` as such:
 
-`mkdir docker-build; cd docker-build`
+    docker build -t libsbp-build - <Dockerfile
 
-This dummy directory is to prevent docker from sucking up the whole
-repo into the local context (which is then immediately discarded
-anyway).  Next create the docker image:
+Reading the Dockerfile from STDIN prevents docker from pulling in the whole
+repostory into the build context (which is then immediately discarded anyway).
+You can customize the UID of the user that's created with the docker image
+by passing the desired `UID` value to the build:
 
-`docker build -f ../Dockerfile -t libsbp-build .`
+    docker build -t libsbp-build --build-arg UID=1234 - <Dockerfile
 
 You can then make this image operate on your local workspace like this:
 
-`cd ..`  (back up to the root of the repo)
-
-``docker run --rm -v $PWD:/mnt/workspace  -i -t libsbp-build:latest``
+    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:latest /bin/bash
 
 #### Using the docker image
 
 Once in the image, simply type `make all` to generate all the libsbp bindings.
-This could take several hours to run.
+This could take several hours to run.  Alternately, the docker image will run
+the `make all` command by default, so you can kick off the `make all` process
+by simply running the following command:
 
-When you are finished, quit Docker so that it would not unnecessarily use up resources on your machine. 
+    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2021-10-13
 
-If you run into issues during the generation process, try running `make clean`. 
-Alternatively, you could recompile from a clean, newly-cloned libsbp repository on your machine,
-which would minimize the chance of running into compilation issues from an old build.
+When you are finished, quit Docker so that it would not unnecessarily use up
+resources on your machine.
+
+If you run into issues during the generation process, try running `make clean`.
+Alternatively, you could recompile from a clean, newly-cloned libsbp repository
+on your machine, which would minimize the chance of running into compilation
+issues from an old build.
 
 ### Installing from package managers
+
 Some bindings are available on package managers:
 
 * [`python`](https://github.com/swift-nav/libsbp/tree/HEAD/python): available on pip
@@ -235,7 +248,7 @@ payload field, and a 16-bit CRC value. SBP uses the CCITT CRC16
 Please see
 [the docs](https://github.com/swift-nav/libsbp/raw/master/docs/sbp.pdf)
 for a full description of the packet structure and the message
-types. Developer documentatation for the language-specific sbp
+types. Developer documentation for the language-specific sbp
 libraries is [here](http://swift-nav.github.io/libsbp/).
 Please refer to [the changelog](https://github.com/swift-nav/libsbp/blob/master/CHANGELOG.md)
 for more information about the evolution of the library and its messages.
@@ -249,6 +262,6 @@ HOWTO for instructions on updating these schemas.
 
 ## LICENSE
 
-Copyright © 2020 Swift Navigation
+Copyright © 2021 Swift Navigation
 
 Distributed under MIT.

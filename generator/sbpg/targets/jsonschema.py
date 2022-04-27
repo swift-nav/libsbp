@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: Swift Engineering <dev@swiftnav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -18,9 +18,8 @@ files.
 
 import copy
 import json
-import os
 
-from sbpg.targets.templating import *
+from sbpg.targets.templating import JENV, ACRONYMS
 
 TEMPLATE_NAME = 'message_template.jsonschema.j2'
 
@@ -99,7 +98,7 @@ def render_source(output_dir, package_spec):
     for msg in package_spec.definitions:
         if 'Dep' in msg.identifier or 'DEP' in msg.identifier:
             continue
-        msg_name = classnameify(msg.identifier) if msg.sbp_id else classnameify(msg.identifier)
+        msg_name = classnameify(msg.identifier)
         destination_filename = "%s/%s.json" % (output_dir, msg_name)
         with open(destination_filename, 'w+') as output_fp:
             print(destination_filename)

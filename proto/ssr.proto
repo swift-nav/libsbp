@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -21,17 +21,17 @@ package swiftnav.sbp.ssr;
 
 import "gnss.proto";
 
-/** SSR code biases corrections for a particular satellite.
+/** SSR code biases corrections for a particular satellite
  *
- * Code biases are to be added to pseudorange.
- * The corrections conform with RTCMv3 MT 1059 / 1065.
+ * Code biases are to be added to pseudorange. The corrections conform with
+ * RTCMv3 MT 1059 / 1065.
  */
 message CodeBiasesContent {
     uint32 code = 1;
     sint32 value = 2;
 }
 
-/** SSR phase biases corrections for a particular satellite.
+/** SSR phase biases corrections for a particular satellite
  *
  * Phase biases are to be added to carrier phase measurements.
  */
@@ -43,11 +43,11 @@ message PhaseBiasesContent {
     sint32 bias = 5;
 }
 
-/** Header for the MSG_SSR_STEC_CORRECTION message.
+/** Header for the MSG_SSR_STEC_CORRECTION message
  *
- * A full set of STEC information will likely span multiple SBP
- * messages, since SBP message a limited to 255 bytes.  The header
- * is used to tie multiple SBP messages into a sequence.
+ * A full set of STEC information will likely span multiple SBP messages,
+ * since SBP message a limited to 255 bytes.  The header is used to tie
+ * multiple SBP messages into a sequence.
  */
 message STECHeader {
     uint32 tile_set_id = 1;
@@ -59,11 +59,10 @@ message STECHeader {
     uint32 iod_atmo = 7;
 }
 
-/** Header for the MSG_SSR_GRIDDED_CORRECTION message.
+/** Header for the MSG_SSR_GRIDDED_CORRECTION message
  *
- * The LPP message contains nested variable length arrays
- * which are not suppported in SBP, so each grid point will
- * be identified by the index.
+ * The LPP message contains nested variable length arrays which are not
+ * supported in SBP, so each grid point will be identified by the index.
  */
 message GriddedCorrectionHeader {
     uint32 tile_set_id = 1;
@@ -78,7 +77,7 @@ message GriddedCorrectionHeader {
 
 /** None
  *
-* STEC polynomial for the given satellite.
+ * STEC polynomial for the given satellite.
  */
 message STECSatElement {
     SvId sv_id = 1;
@@ -108,7 +107,7 @@ message TroposphericDelayCorrection {
 
 /** None
  *
-* STEC residual for the given satellite at the grid point.
+ * STEC residual for the given satellite at the grid point.
  */
 message STECResidualNoStd {
     SvId sv_id = 1;
@@ -117,8 +116,8 @@ message STECResidualNoStd {
 
 /** None
  *
- * STEC residual (mean and standard deviation) for the given satellite
- * at the grid point,
+ * STEC residual (mean and standard deviation) for the given satellite at the
+ * grid point.
  */
 message STECResidual {
     SvId sv_id = 1;
@@ -126,34 +125,11 @@ message STECResidual {
     uint32 stddev = 3;
 }
 
-/** Correction data for a single grid point.
- *
- * Contains one tropo delay, plus STEC residuals for each satellite at the
- * grid point.
- */
-message GridElementNoStd {
-    uint32 index = 1;
-    TroposphericDelayCorrectionNoStd tropo_delay_correction = 2;
-    repeated STECResidualNoStd stec_residuals = 3;
-}
-
-/** Correction data for a single grid point.
- *
- * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
- * stddev) for each satellite at the grid point.
- */
-message GridElement {
-    uint32 index = 1;
-    TroposphericDelayCorrection tropo_delay_correction = 2;
-    repeated STECResidual stec_residuals = 3;
-}
-
 /** Precise orbit and clock correction
  *
- * The precise orbit and clock correction message is
- * to be applied as a delta correction to broadcast
- * ephemeris and is an equivalent to the 1060 /1066
- * RTCM message types
+ * The precise orbit and clock correction message is to be applied as a delta
+ * correction to broadcast ephemeris and is an equivalent to the 1060 /1066
+ * RTCM message types.
  */
 message MsgSsrOrbitClock {
     gnss.GpsTimeSec time = 1;
@@ -174,10 +150,9 @@ message MsgSsrOrbitClock {
 
 /** Precise code biases correction
  *
- * The precise code biases message is to be added
- * to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is an
- * equivalent to the 1059 / 1065 RTCM message types
+ * The precise code biases message is to be added to the pseudorange of the
+ * corresponding signal to get corrected pseudorange. It is an equivalent to
+ * the 1059 / 1065 RTCM message types.
  */
 message MsgSsrCodeBiases {
     gnss.GpsTimeSec time = 1;
@@ -189,12 +164,11 @@ message MsgSsrCodeBiases {
 
 /** Precise phase biases correction
  *
- * The precise phase biases message contains the biases
- * to be added to the carrier phase of the corresponding
- * signal to get corrected carrier phase measurement, as
- * well as the satellite yaw angle to be applied to compute
- * the phase wind-up correction.
- * It is typically an equivalent to the 1265 RTCM message types
+ * The precise phase biases message contains the biases to be added to the
+ * carrier phase of the corresponding signal to get corrected carrier phase
+ * measurement, as well as the satellite yaw angle to be applied to compute
+ * the phase wind-up correction. It is typically an equivalent to the 1265
+ * RTCM message types.
  */
 message MsgSsrPhaseBiases {
     gnss.GpsTimeSec time = 1;
@@ -208,13 +182,13 @@ message MsgSsrPhaseBiases {
     repeated PhaseBiasesContent biases = 9;
 }
 
-/** STEC correction polynomial coeffcients.
+/** STEC correction polynomial coefficients
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
  * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
- * of the atmospheric delay.
- * 
+ * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
+ * the atmospheric delay.
+ *
  * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
  */
 message MsgSsrStecCorrection {
@@ -222,15 +196,17 @@ message MsgSsrStecCorrection {
     repeated STECSatElement stec_sat_list = 2;
 }
 
-/** Gridded troposphere and STEC correction residuals.
+/** Gridded troposphere and STEC correction residuals
  *
  * STEC residuals are per space vehicle, troposphere is not.
- * 
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+ *
+ * It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
  */
 message MsgSsrGriddedCorrection {
     GriddedCorrectionHeader header = 1;
-    GridElement element = 2;
+    uint32 index = 2;
+    TroposphericDelayCorrection tropo_delay_correction = 3;
+    repeated STECResidual stec_residuals = 4;
 }
 
 /** Definition of a SSR atmospheric correction tile.
@@ -239,7 +215,7 @@ message MsgSsrGriddedCorrection {
  * Provides the correction point coordinates for the atmospheric correction
  * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
  * messages.
- * 
+ *
  * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
  * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
  * correction points, not lists of points.
@@ -256,7 +232,7 @@ message MsgSsrTileDefinition {
     uint64 bitmask = 9;
 }
 
-/** Antenna phase center correction.
+/** Antenna phase center correction
  *
  * Contains phase center offset and elevation variation corrections for one
  * signal on a satellite.

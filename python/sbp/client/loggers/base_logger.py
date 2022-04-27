@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -8,10 +8,11 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from ...table import dispatch
 from construct.core import ConstructError
 import warnings
 import six
+
+import sbp.table
 
 
 class BaseLogger(object):
@@ -74,7 +75,7 @@ class LogIterator(six.Iterator):
 
     """
 
-    def __init__(self, handle, dispatcher=dispatch):
+    def __init__(self, handle, dispatcher=sbp.table.dispatch):
         self.handle = handle
         self.dispatcher = dispatcher
 

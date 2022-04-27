@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#STECHeader",
   "title":"STECHeader",
-  "description":"A full set of STEC information will likely span multiple SBP,\nmessages, since SBP message a limited to 255 bytes.  The header,\nis used to tie multiple SBP messages into a sequence.\n",
+  "description":"A full set of STEC information will likely span multiple SBP messages, since SBP message a limited to 255 bytes.  The header is used to tie multiple SBP messages into a sequence.\n",
   "type": "object",
   "properties": {
     "tile_set_id": {"type": "integer"},

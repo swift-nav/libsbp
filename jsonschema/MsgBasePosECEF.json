@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgBasePosECEF",
   "title":"MsgBasePosECEF",
-  "description":"The base station position message is the position reported by,\nthe base station itself in absolute Earth Centered Earth Fixed,\ncoordinates. It is used for pseudo-absolute RTK positioning, and,\nis required to be a high-accuracy surveyed location of the base,\nstation. Any error here will result in an error in the,\npseudo-absolute position output.\n",
+  "description":"The base station position message is the position reported by the base station itself in absolute Earth Centered Earth Fixed coordinates. It is used for pseudo-absolute RTK positioning, and is required to be a high-accuracy surveyed location of the base station. Any error here will result in an error in the pseudo-absolute position output.\n",
   "type": "object",
   "properties": {
     "x": {"type": "number"},

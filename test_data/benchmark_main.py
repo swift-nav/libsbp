@@ -11,16 +11,16 @@ SLUSH_PERCENTAGE = 0.25
 
 # How much faster Rust should be than other implementations
 RATIOS_SBP2JSON = {
-    "haskell": 2.06,
-    "python": 26.0,
+    "haskell": 2.19,
+    "python": 24.96,
 }
 
 RATIOS_JSON2SBP = {
-    "haskell": 2.18,
+    "haskell": 2.05,
 }
 
 RATIOS_JSON2JSON = {
-    "haskell": 2.68,
+    "haskell": 2.78,
 }
 
 FAILED = [False]

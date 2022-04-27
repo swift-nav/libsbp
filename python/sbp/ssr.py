@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -20,7 +20,7 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import *
+from sbp.gnss import GPSTimeSec, GnssSignal, SvId
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ssr.yaml with generate.py.
 # Please do not hand edit!
@@ -29,23 +29,21 @@ from sbp.gnss import *
 class CodeBiasesContent(object):
   """CodeBiasesContent.
   
-  Code biases are to be added to pseudorange.
-The corrections conform with RTCMv3 MT 1059 / 1065.
-
+  Code biases are to be added to pseudorange. The corrections conform with
+  RTCMv3 MT 1059 / 1065.
   
   Parameters
   ----------
   code : int
-    Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467).
-
+    Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    DF467).
   value : int
     Code bias value
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'code' / construct.Int8ul,
-                     'value' / construct.Int16sl,))
+                     'value' / construct.Int16sl,)
   __slots__ = [
                'code',
                'value',
@@ -65,41 +63,34 @@ The corrections conform with RTCMv3 MT 1059 / 1065.
     p = CodeBiasesContent._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return CodeBiasesContent.build(d)
     
 class PhaseBiasesContent(object):
   """PhaseBiasesContent.
   
   Phase biases are to be added to carrier phase measurements.
-
   
   Parameters
   ----------
   code : int
-    Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467)
-
+    Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    DF467)
   integer_indicator : int
     Indicator for integer property
   widelane_integer_indicator : int
     Indicator for two groups of Wide-Lane(s) integer property
   discontinuity_counter : int
-    Signal phase discontinuity counter.
-Increased for every discontinuity in phase.
-
+    Signal phase discontinuity counter. Increased for every discontinuity in
+    phase.
   bias : int
     Phase bias for specified signal
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'code' / construct.Int8ul,
                      'integer_indicator' / construct.Int8ul,
                      'widelane_integer_indicator' / construct.Int8ul,
                      'discontinuity_counter' / construct.Int8ul,
-                     'bias' / construct.Int32sl,))
+                     'bias' / construct.Int32sl,)
   __slots__ = [
                'code',
                'integer_indicator',
@@ -125,18 +116,13 @@ Increased for every discontinuity in phase.
     p = PhaseBiasesContent._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return PhaseBiasesContent.build(d)
     
 class STECHeader(object):
   """STECHeader.
   
-  A full set of STEC information will likely span multiple SBP
-messages, since SBP message a limited to 255 bytes.  The header
-is used to tie multiple SBP messages into a sequence.
-
+  A full set of STEC information will likely span multiple SBP messages, since
+  SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
+  messages into a sequence.
   
   Parameters
   ----------
@@ -151,22 +137,20 @@ is used to tie multiple SBP messages into a sequence.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
 
-
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'tile_set_id' / construct.Int16ul,
                      'tile_id' / construct.Int16ul,
-                     'time' / construct.Struct(GPSTimeSec._parser),
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
                      'update_interval' / construct.Int8ul,
-                     'iod_atmo' / construct.Int8ul,))
+                     'iod_atmo' / construct.Int8ul,)
   __slots__ = [
                'tile_set_id',
                'tile_id',
@@ -196,18 +180,12 @@ following RTCM DF391 specification.
     p = STECHeader._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return STECHeader.build(d)
     
 class GriddedCorrectionHeader(object):
   """GriddedCorrectionHeader.
   
-  The LPP message contains nested variable length arrays
-which are not suppported in SBP, so each grid point will
-be identified by the index.
-
+  The LPP message contains nested variable length arrays which are not
+  supported in SBP, so each grid point will be identified by the index.
   
   Parameters
   ----------
@@ -222,27 +200,24 @@ be identified by the index.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
-
   tropo_quality_indicator : int
     Quality of the troposphere data. Encoded following RTCM DF389
-specification in units of m.
-
+    specification in units of m.
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'tile_set_id' / construct.Int16ul,
                      'tile_id' / construct.Int16ul,
-                     'time' / construct.Struct(GPSTimeSec._parser),
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
                      'update_interval' / construct.Int8ul,
                      'iod_atmo' / construct.Int8ul,
-                     'tropo_quality_indicator' / construct.Int8ul,))
+                     'tropo_quality_indicator' / construct.Int8ul,)
   __slots__ = [
                'tile_set_id',
                'tile_id',
@@ -274,10 +249,6 @@ specification in units of m.
     p = GriddedCorrectionHeader._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GriddedCorrectionHeader.build(d)
     
 class STECSatElement(object):
   """STECSatElement.
@@ -289,18 +260,16 @@ class STECSatElement(object):
   sv_id : SvId
     Unique space vehicle identifier
   stec_quality_indicator : int
-    Quality of the STEC data. Encoded following RTCM DF389 specification
-but in units of TECU instead of m.
-
+    Quality of the STEC data. Encoded following RTCM DF389 specification but
+    in units of TECU instead of m.
   stec_coeff : array
-    Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
-
+    Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sv_id' / construct.Struct(SvId._parser),
+  _parser = construct.Struct(
+                     'sv_id' / SvId._parser,
                      'stec_quality_indicator' / construct.Int8ul,
-                     'stec_coeff' / construct.Array(4, construct.Int16sl),))
+                     'stec_coeff' / construct.Array(4, construct.Int16sl),)
   __slots__ = [
                'sv_id',
                'stec_quality_indicator',
@@ -322,16 +291,11 @@ but in units of TECU instead of m.
     p = STECSatElement._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return STECSatElement.build(d)
     
 class TroposphericDelayCorrectionNoStd(object):
   """TroposphericDelayCorrectionNoStd.
   
   Troposphere vertical delays at the grid point.
-
   
   Parameters
   ----------
@@ -341,9 +305,9 @@ class TroposphericDelayCorrectionNoStd(object):
     Wet vertical delay
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'hydro' / construct.Int16sl,
-                     'wet' / construct.Int8sl,))
+                     'wet' / construct.Int8sl,)
   __slots__ = [
                'hydro',
                'wet',
@@ -363,17 +327,11 @@ class TroposphericDelayCorrectionNoStd(object):
     p = TroposphericDelayCorrectionNoStd._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TroposphericDelayCorrectionNoStd.build(d)
     
 class TroposphericDelayCorrection(object):
   """TroposphericDelayCorrection.
   
-  Troposphere vertical delays (mean and standard deviation) at the grid
-point.
-
+  Troposphere vertical delays (mean and standard deviation) at the grid point.
   
   Parameters
   ----------
@@ -385,10 +343,10 @@ point.
     stddev
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'hydro' / construct.Int16sl,
                      'wet' / construct.Int8sl,
-                     'stddev' / construct.Int8ul,))
+                     'stddev' / construct.Int8ul,)
   __slots__ = [
                'hydro',
                'wet',
@@ -410,10 +368,6 @@ point.
     p = TroposphericDelayCorrection._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TroposphericDelayCorrection.build(d)
     
 class STECResidualNoStd(object):
   """STECResidualNoStd.
@@ -428,9 +382,9 @@ class STECResidualNoStd(object):
     STEC residual
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sv_id' / construct.Struct(SvId._parser),
-                     'residual' / construct.Int16sl,))
+  _parser = construct.Struct(
+                     'sv_id' / SvId._parser,
+                     'residual' / construct.Int16sl,)
   __slots__ = [
                'sv_id',
                'residual',
@@ -450,17 +404,12 @@ class STECResidualNoStd(object):
     p = STECResidualNoStd._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return STECResidualNoStd.build(d)
     
 class STECResidual(object):
   """STECResidual.
   
-  STEC residual (mean and standard deviation) for the given satellite
-at the grid point,
-
+  STEC residual (mean and standard deviation) for the given satellite at the
+  grid point.
   
   Parameters
   ----------
@@ -472,10 +421,10 @@ at the grid point,
     stddev
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sv_id' / construct.Struct(SvId._parser),
+  _parser = construct.Struct(
+                     'sv_id' / SvId._parser,
                      'residual' / construct.Int16sl,
-                     'stddev' / construct.Int8ul,))
+                     'stddev' / construct.Int8ul,)
   __slots__ = [
                'sv_id',
                'residual',
@@ -497,111 +446,12 @@ at the grid point,
     p = STECResidual._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return STECResidual.build(d)
-    
-class GridElementNoStd(object):
-  """GridElementNoStd.
-  
-  Contains one tropo delay, plus STEC residuals for each satellite at the
-grid point.
-
-  
-  Parameters
-  ----------
-  index : int
-    Index of the grid point
-  tropo_delay_correction : TroposphericDelayCorrectionNoStd
-    Wet and hydrostatic vertical delays
-  stec_residuals : array
-    STEC residuals for each satellite
-
-  """
-  _parser = construct.Embedded(construct.Struct(
-                     'index' / construct.Int16ul,
-                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrectionNoStd._parser),
-                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidualNoStd._parser)),))
-  __slots__ = [
-               'index',
-               'tropo_delay_correction',
-               'stec_residuals',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.index = kwargs.pop('index')
-      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
-      self.stec_residuals = kwargs.pop('stec_residuals')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = GridElementNoStd._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GridElementNoStd.build(d)
-    
-class GridElement(object):
-  """GridElement.
-  
-  Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
-stddev) for each satellite at the grid point.
-
-  
-  Parameters
-  ----------
-  index : int
-    Index of the grid point
-  tropo_delay_correction : TroposphericDelayCorrection
-    Wet and hydrostatic vertical delays (mean, stddev)
-  stec_residuals : array
-    STEC residuals for each satellite (mean, stddev)
-
-  """
-  _parser = construct.Embedded(construct.Struct(
-                     'index' / construct.Int16ul,
-                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrection._parser),
-                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidual._parser)),))
-  __slots__ = [
-               'index',
-               'tropo_delay_correction',
-               'stec_residuals',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.index = kwargs.pop('index')
-      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
-      self.stec_residuals = kwargs.pop('stec_residuals')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = GridElement._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GridElement.build(d)
     
 class SatelliteAPC(object):
   """SatelliteAPC.
   
   Contains phase center offset and elevation variation corrections for one
-signal on a satellite.
-
+  signal on a satellite.
   
   Parameters
   ----------
@@ -612,22 +462,20 @@ signal on a satellite.
   svn : int
     Satellite Code, as defined by IGS. Typically the space vehicle number.
   pco : array
-    Mean phase center offset, X Y and Z axises. See IGS ANTEX file
-format description for coordinate system definition.
-
+    Mean phase center offset, X Y and Z axes. See IGS ANTEX file format
+    description for coordinate system definition.
   pcv : array
-    Elevation dependent phase center variations. First element is 0
-degrees separation from the Z axis, subsequent elements represent
-elevation variations in 1 degree increments.
-
+    Elevation dependent phase center variations. First element is 0 degrees
+    separation from the Z axis, subsequent elements represent elevation
+    variations in 1 degree increments.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
                      'sat_info' / construct.Int8ul,
                      'svn' / construct.Int16ul,
                      'pco' / construct.Array(3, construct.Int16sl),
-                     'pcv' / construct.Array(21, construct.Int8sl),))
+                     'pcv' / construct.Array(21, construct.Int8sl),)
   __slots__ = [
                'sid',
                'sat_info',
@@ -653,18 +501,13 @@ elevation variations in 1 degree increments.
     p = SatelliteAPC._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SatelliteAPC.build(d)
     
 class STECHeaderDepA(object):
   """STECHeaderDepA.
   
-  A full set of STEC information will likely span multiple SBP
-messages, since SBP message a limited to 255 bytes.  The header
-is used to tie multiple SBP messages into a sequence.
-
+  A full set of STEC information will likely span multiple SBP messages, since
+  SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
+  messages into a sequence.
   
   Parameters
   ----------
@@ -675,20 +518,18 @@ is used to tie multiple SBP messages into a sequence.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
 
-
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'time' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
                      'update_interval' / construct.Int8ul,
-                     'iod_atmo' / construct.Int8ul,))
+                     'iod_atmo' / construct.Int8ul,)
   __slots__ = [
                'time',
                'num_msgs',
@@ -714,18 +555,12 @@ following RTCM DF391 specification.
     p = STECHeaderDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return STECHeaderDepA.build(d)
     
 class GriddedCorrectionHeaderDepA(object):
   """GriddedCorrectionHeaderDepA.
   
-  The 3GPP message contains nested variable length arrays
-which are not suppported in SBP, so each grid point will
-be identified by the index.
-
+  The 3GPP message contains nested variable length arrays which are not
+  supported in SBP, so each grid point will be identified by the index.
   
   Parameters
   ----------
@@ -736,25 +571,22 @@ be identified by the index.
   seq_num : int
     Position of this message in the dataset
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_atmo : int
     IOD of the SSR atmospheric correction
-
   tropo_quality_indicator : int
     Quality of the troposphere data. Encoded following RTCM DF389
-specifcation in units of m.
-
+    specification in units of m.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'time' / construct.Struct(GPSTimeSec._parser),
+  _parser = construct.Struct(
+                     'time' / GPSTimeSec._parser,
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
                      'update_interval' / construct.Int8ul,
                      'iod_atmo' / construct.Int8ul,
-                     'tropo_quality_indicator' / construct.Int8ul,))
+                     'tropo_quality_indicator' / construct.Int8ul,)
   __slots__ = [
                'time',
                'num_msgs',
@@ -782,45 +614,37 @@ specifcation in units of m.
     p = GriddedCorrectionHeaderDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GriddedCorrectionHeaderDepA.build(d)
     
 class GridDefinitionHeaderDepA(object):
   """GridDefinitionHeaderDepA.
   
-  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
-Also includes an RLE encoded validity list.
-
+  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
+  RLE encoded validity list.
   
   Parameters
   ----------
   region_size_inverse : int
-    region_size (deg) = 10 / region_size_inverse
-0 is an invalid value.
-
+    region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
   area_width : int
-    grid height (deg) = grid width (deg) = area_width / region_size
-0 is an invalid value.
-
+    grid height (deg) = grid width (deg) = area_width / region_size 0 is an
+    invalid value.
   lat_nw_corner_enc : int
     North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
   lon_nw_corner_enc : int
-    North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+    North-West corner longitude (deg) = region_size * lon_nw_corner_enc - 180
   num_msgs : int
     Number of messages in the dataset
   seq_num : int
-    Postion of this message in the dataset
+    Position of this message in the dataset
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'region_size_inverse' / construct.Int8ul,
                      'area_width' / construct.Int16ul,
                      'lat_nw_corner_enc' / construct.Int16ul,
                      'lon_nw_corner_enc' / construct.Int16ul,
                      'num_msgs' / construct.Int8ul,
-                     'seq_num' / construct.Int8ul,))
+                     'seq_num' / construct.Int8ul,)
   __slots__ = [
                'region_size_inverse',
                'area_width',
@@ -848,10 +672,6 @@ Also includes an RLE encoded validity list.
     p = GridDefinitionHeaderDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GridDefinitionHeaderDepA.build(d)
     
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
@@ -862,11 +682,9 @@ class MsgSsrOrbitClock(SBP):
   of its fields.
 
   
-  The precise orbit and clock correction message is
-to be applied as a delta correction to broadcast
-ephemeris and is an equivalent to the 1060 /1066
-RTCM message types
-
+  The precise orbit and clock correction message is to be applied as a delta
+  correction to broadcast ephemeris and is an equivalent to the 1060 /1066
+  RTCM message types.
 
   Parameters
   ----------
@@ -877,14 +695,11 @@ RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   iod : int
     Issue of broadcast ephemeris data or IODCRC (Beidou)
   radial : int
@@ -910,8 +725,8 @@ generating configuration
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
                    'iod' / construct.Int32ul,
@@ -1025,11 +840,9 @@ class MsgSsrCodeBiases(SBP):
   of its fields.
 
   
-  The precise code biases message is to be added
-to the pseudorange of the corresponding signal
-to get corrected pseudorange. It is an
-equivalent to the 1059 / 1065 RTCM message types
-
+  The precise code biases message is to be added to the pseudorange of the
+  corresponding signal to get corrected pseudorange. It is an equivalent to
+  the 1059 / 1065 RTCM message types.
 
   Parameters
   ----------
@@ -1040,14 +853,11 @@ equivalent to the 1059 / 1065 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   biases : array
     Code biases for the different satellite signals
   sender : int
@@ -1055,11 +865,11 @@ generating configuration
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
-                   construct.GreedyRange('biases' / construct.Struct(CodeBiasesContent._parser)),)
+                   'biases' / construct.GreedyRange(CodeBiasesContent._parser),)
   __slots__ = [
                'time',
                'sid',
@@ -1143,13 +953,11 @@ class MsgSsrPhaseBiases(SBP):
   of its fields.
 
   
-  The precise phase biases message contains the biases
-to be added to the carrier phase of the corresponding
-signal to get corrected carrier phase measurement, as
-well as the satellite yaw angle to be applied to compute
-the phase wind-up correction.
-It is typically an equivalent to the 1265 RTCM message types
-
+  The precise phase biases message contains the biases to be added to the
+  carrier phase of the corresponding signal to get corrected carrier phase
+  measurement, as well as the satellite yaw angle to be applied to compute the
+  phase wind-up correction. It is typically an equivalent to the 1265 RTCM
+  message types.
 
   Parameters
   ----------
@@ -1160,42 +968,35 @@ It is typically an equivalent to the 1265 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   dispersive_bias : int
     Indicator for the dispersive phase biases property.
-
   mw_consistency : int
     Consistency indicator for Melbourne-Wubbena linear combinations
-
   yaw : int
     Satellite yaw angle
   yaw_rate : int
     Satellite yaw angle rate
   biases : array
-    Phase biases corrections for a
-satellite being tracked.
-
+    Phase biases corrections for a satellite being tracked.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
                    'dispersive_bias' / construct.Int8ul,
                    'mw_consistency' / construct.Int8ul,
                    'yaw' / construct.Int16ul,
                    'yaw_rate' / construct.Int8sl,
-                   construct.GreedyRange('biases' / construct.Struct(PhaseBiasesContent._parser)),)
+                   'biases' / construct.GreedyRange(PhaseBiasesContent._parser),)
   __slots__ = [
                'time',
                'sid',
@@ -1288,28 +1089,27 @@ class MsgSsrStecCorrection(SBP):
 
   
   The Slant Total Electron Content per space vehicle, given as polynomial
-approximation for a given tile. This should be combined with the
-MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-of the atmospheric delay.
+  approximation for a given tile. This should be combined with the
+  MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
+  the atmospheric delay.
 
-It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
-
+  It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   header : STECHeader
-    Header of a STEC polynomial coeffcient message.
+    Header of a STEC polynomial coefficient message.
   stec_sat_list : array
-    Array of STEC polynomial coeffcients for each space vehicle.
+    Array of STEC polynomial coefficients for each space vehicle.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(STECHeader._parser),
-                   construct.GreedyRange('stec_sat_list' / construct.Struct(STECSatElement._parser)),)
+                   'header' / STECHeader._parser,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElement._parser),)
   __slots__ = [
                'header',
                'stec_sat_list',
@@ -1389,8 +1189,7 @@ class MsgSsrGriddedCorrection(SBP):
   
   STEC residuals are per space vehicle, troposphere is not.
 
-It is typically equivalent to the QZSS CLAS Sub Type 9 messages
-
+  It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 
   Parameters
   ----------
@@ -1398,19 +1197,26 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     SBP parent object to inherit from.
   header : GriddedCorrectionHeader
     Header of a gridded correction message
-  element : GridElement
-    Tropo and STEC residuals for the given grid point.
-
+  index : int
+    Index of the grid point.
+  tropo_delay_correction : TroposphericDelayCorrection
+    Wet and hydrostatic vertical delays (mean, stddev).
+  stec_residuals : array
+    STEC residuals for each satellite (mean, stddev).
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeader._parser),
-                   'element' / construct.Struct(GridElement._parser),)
+                   'header' / GriddedCorrectionHeader._parser,
+                   'index' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrection._parser,
+                   'stec_residuals' / construct.GreedyRange(STECResidual._parser),)
   __slots__ = [
                'header',
-               'element',
+               'index',
+               'tropo_delay_correction',
+               'stec_residuals',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -1424,7 +1230,9 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
       self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
+      self.index = kwargs.pop('index')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.stec_residuals = kwargs.pop('stec_residuals')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1486,13 +1294,12 @@ class MsgSsrTileDefinition(SBP):
 
   
   Provides the correction point coordinates for the atmospheric correction
-values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-messages.
+  values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+  messages.
 
-Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-correction points, not lists of points.
-
+  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+  element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+  correction points, not lists of points.
 
   Parameters
   ----------
@@ -1502,67 +1309,57 @@ correction points, not lists of points.
     Unique identifier of the tile set this tile belongs to.
   tile_id : int
     Unique identifier of this tile in the tile set.
-
-See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
   corner_nw_lat : int
     North-West corner correction point latitude.
 
-The relation between the latitude X in the range [-90, 90] and
-the coded number N is:
+    The relation between the latitude X in the range [-90, 90] and the coded
+    number N is:
 
-N = floor((X / 90) * 2^14)
+    N = floor((X / 90) * 2^14)
 
-See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
   corner_nw_lon : int
-    North-West corner correction point longtitude.
+    North-West corner correction point longitude.
 
-The relation between the longtitude X in the range [-180, 180]
-and the coded number N is:
+    The relation between the longitude X in the range [-180, 180] and the
+    coded number N is:
 
-N = floor((X / 180) * 2^15)
+    N = floor((X / 180) * 2^15)
 
-See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
   spacing_lat : int
     Spacing of the correction points in the latitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
   spacing_lon : int
-    Spacing of the correction points in the longtitude direction.
+    Spacing of the correction points in the longitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
   rows : int
     Number of steps in the latitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
   cols : int
-    Number of steps in the longtitude direction.
+    Number of steps in the longitude direction.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongtitude.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
   bitmask : int
-    Specifies the availability of correction data at the
-correction points in the array.
+    Specifies the availability of correction data at the correction points in
+    the array.
 
-If a specific bit is enabled (set to 1), the correction is not
-available. Only the first rows * cols bits are used, the remainder
-are set to 0. If there are more then 64 correction points the
-remaining corrections are always available.
+    If a specific bit is enabled (set to 1), the correction is not available.
+    Only the first rows * cols bits are used, the remainder are set to 0. If
+    there are more then 64 correction points the remaining corrections are
+    always available.
 
-Starting with the northwest corner of the array (top left on a
-north oriented map) the correction points are enumerated with row
-precedence - first row west to east, second row west to east,
-until last row west to east - ending with the southeast corner of
-the array.
+    Starting with the northwest corner of the array (top left on a north
+    oriented map) the correction points are enumerated with row precedence -
+    first row west to east, second row west to east, until last row west to
+    east - ending with the southeast corner of the array.
 
-See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
-note the definition of the bits is inverted.
-
+    See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    definition of the bits is inverted.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1680,7 +1477,7 @@ class MsgSsrSatelliteApc(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('apc' / construct.Struct(SatelliteAPC._parser)),)
+                   'apc' / construct.GreedyRange(SatelliteAPC._parser),)
   __slots__ = [
                'apc',
               ]
@@ -1766,14 +1563,11 @@ class MsgSsrOrbitClockDepA(SBP):
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
-
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
   iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
-
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
   iod : int
     Issue of broadcast ephemeris data
   radial : int
@@ -1799,8 +1593,8 @@ generating configuration
 
   """
   _parser = construct.Struct(
-                   'time' / construct.Struct(GPSTimeSec._parser),
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'time' / GPSTimeSec._parser,
+                   'sid' / GnssSignal._parser,
                    'update_interval' / construct.Int8ul,
                    'iod_ssr' / construct.Int8ul,
                    'iod' / construct.Int8ul,
@@ -1928,8 +1722,8 @@ class MsgSsrStecCorrectionDepA(SBP):
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(STECHeaderDepA._parser),
-                   construct.GreedyRange('stec_sat_list' / construct.Struct(STECSatElement._parser)),)
+                   'header' / STECHeaderDepA._parser,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElement._parser),)
   __slots__ = [
                'header',
                'stec_sat_list',
@@ -2014,18 +1808,26 @@ class MsgSsrGriddedCorrectionNoStdDepA(SBP):
     SBP parent object to inherit from.
   header : GriddedCorrectionHeaderDepA
     Header of a Gridded Correction message
-  element : GridElementNoStd
-    Tropo and STEC residuals for the given grid point
+  index : int
+    Index of the grid point
+  tropo_delay_correction : TroposphericDelayCorrectionNoStd
+    Wet and hydrostatic vertical delays
+  stec_residuals : array
+    STEC residuals for each satellite
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeaderDepA._parser),
-                   'element' / construct.Struct(GridElementNoStd._parser),)
+                   'header' / GriddedCorrectionHeaderDepA._parser,
+                   'index' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrectionNoStd._parser,
+                   'stec_residuals' / construct.GreedyRange(STECResidualNoStd._parser),)
   __slots__ = [
                'header',
-               'element',
+               'index',
+               'tropo_delay_correction',
+               'stec_residuals',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -2039,7 +1841,9 @@ class MsgSsrGriddedCorrectionNoStdDepA(SBP):
       self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
+      self.index = kwargs.pop('index')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.stec_residuals = kwargs.pop('stec_residuals')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2107,20 +1911,26 @@ class MsgSsrGriddedCorrectionDepA(SBP):
     SBP parent object to inherit from.
   header : GriddedCorrectionHeaderDepA
     Header of a Gridded Correction message
-  element : GridElement
-    Tropo and STEC residuals for the given grid point (mean
-and standard deviation)
-
+  index : int
+    Index of the grid point
+  tropo_delay_correction : TroposphericDelayCorrection
+    Wet and hydrostatic vertical delays (mean, stddev)
+  stec_residuals : array
+    STEC residuals for each satellite (mean, stddev)
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeaderDepA._parser),
-                   'element' / construct.Struct(GridElement._parser),)
+                   'header' / GriddedCorrectionHeaderDepA._parser,
+                   'index' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrection._parser,
+                   'stec_residuals' / construct.GreedyRange(STECResidual._parser),)
   __slots__ = [
                'header',
-               'element',
+               'index',
+               'tropo_delay_correction',
+               'stec_residuals',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -2134,7 +1944,9 @@ and standard deviation)
       self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
+      self.index = kwargs.pop('index')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.stec_residuals = kwargs.pop('stec_residuals')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2203,18 +2015,17 @@ class MsgSsrGridDefinitionDepA(SBP):
   header : GridDefinitionHeaderDepA
     Header of a Gridded Correction message
   rle_list : array
-    Run Length Encode list of quadrants that contain valid data.
-The spec describes the encoding scheme in detail, but
-essentially the index of the quadrants that contain transitions between
-valid and invalid (and vice versa) are encoded as u8 integers.
-
+    Run Length Encode list of quadrants that contain valid data. The spec
+    describes the encoding scheme in detail, but essentially the index of the
+    quadrants that contain transitions between valid and invalid (and vice
+    versa) are encoded as u8 integers.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'header' / construct.Struct(GridDefinitionHeaderDepA._parser),
-                   construct.GreedyRange('rle_list' / construct.Int8ul),)
+                   'header' / GridDefinitionHeaderDepA._parser,
+                   'rle_list' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'header',
                'rle_list',

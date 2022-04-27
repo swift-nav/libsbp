@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -12,7 +12,6 @@
 
 """
 Satellite code and carrier-phase tracking messages from the device.
-
 """
 
 import json
@@ -21,7 +20,7 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import *
+from sbp.gnss import CarrierPhase, GPSTime, GPSTimeDep, GnssSignal, GnssSignalDep
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
 # Please do not hand edit!
@@ -30,9 +29,8 @@ from sbp.gnss import *
 class TrackingChannelState(object):
   """TrackingChannelState.
   
-  Tracking channel state for a specific satellite signal and
-measured signal power.
-
+  Tracking channel state for a specific satellite signal and measured signal
+  power.
   
   Parameters
   ----------
@@ -44,10 +42,10 @@ measured signal power.
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'sid' / construct.Struct(GnssSignal._parser),
+  _parser = construct.Struct(
+                     'sid' / GnssSignal._parser,
                      'fcn' / construct.Int8ul,
-                     'cn0' / construct.Int8ul,))
+                     'cn0' / construct.Int8ul,)
   __slots__ = [
                'sid',
                'fcn',
@@ -69,32 +67,26 @@ measured signal power.
     p = TrackingChannelState._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelState.build(d)
     
 class MeasurementState(object):
   """MeasurementState.
   
   Measurement Engine tracking channel state for a specific satellite signal
-and measured signal power.
-The mesid field for Glonass can either
-carry the FCN as 100 + FCN where FCN is in [-7, +6] or
-the Slot ID (from 1 to 28)
-
+  and measured signal power. The mesid field for Glonass can either carry the
+  FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28).
   
   Parameters
   ----------
   mesid : GnssSignal
-    Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT)
+    Measurement Engine GNSS signal being tracked (carries either Glonass FCN
+    or SLOT)
   cn0 : int
     Carrier-to-Noise density.  Zero implies invalid cn0.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'mesid' / construct.Struct(GnssSignal._parser),
-                     'cn0' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'mesid' / GnssSignal._parser,
+                     'cn0' / construct.Int8ul,)
   __slots__ = [
                'mesid',
                'cn0',
@@ -114,16 +106,11 @@ the Slot ID (from 1 to 28)
     p = MeasurementState._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return MeasurementState.build(d)
     
 class TrackingChannelCorrelation(object):
   """TrackingChannelCorrelation.
   
   Structure containing in-phase and quadrature correlation components.
-
   
   Parameters
   ----------
@@ -133,9 +120,9 @@ class TrackingChannelCorrelation(object):
     Quadrature correlation
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'I' / construct.Int16sl,
-                     'Q' / construct.Int16sl,))
+                     'Q' / construct.Int16sl,)
   __slots__ = [
                'I',
                'Q',
@@ -155,16 +142,11 @@ class TrackingChannelCorrelation(object):
     p = TrackingChannelCorrelation._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelCorrelation.build(d)
     
 class TrackingChannelCorrelationDep(object):
   """TrackingChannelCorrelationDep.
   
   Structure containing in-phase and quadrature correlation components.
-
   
   Parameters
   ----------
@@ -174,9 +156,9 @@ class TrackingChannelCorrelationDep(object):
     Quadrature correlation
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'I' / construct.Int32sl,
-                     'Q' / construct.Int32sl,))
+                     'Q' / construct.Int32sl,)
   __slots__ = [
                'I',
                'Q',
@@ -196,10 +178,6 @@ class TrackingChannelCorrelationDep(object):
     p = TrackingChannelCorrelationDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelCorrelationDep.build(d)
     
 class TrackingChannelStateDepA(object):
   """TrackingChannelStateDepA.
@@ -216,10 +194,10 @@ class TrackingChannelStateDepA(object):
     Carrier-to-noise density
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'state' / construct.Int8ul,
                      'prn' / construct.Int8ul,
-                     'cn0' / construct.Float32l,))
+                     'cn0' / construct.Float32l,)
   __slots__ = [
                'state',
                'prn',
@@ -241,10 +219,6 @@ class TrackingChannelStateDepA(object):
     p = TrackingChannelStateDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelStateDepA.build(d)
     
 class TrackingChannelStateDepB(object):
   """TrackingChannelStateDepB.
@@ -261,10 +235,10 @@ class TrackingChannelStateDepB(object):
     Carrier-to-noise density
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'state' / construct.Int8ul,
-                     'sid' / construct.Struct(GnssSignalDep._parser),
-                     'cn0' / construct.Float32l,))
+                     'sid' / GnssSignalDep._parser,
+                     'cn0' / construct.Float32l,)
   __slots__ = [
                'state',
                'sid',
@@ -286,10 +260,6 @@ class TrackingChannelStateDepB(object):
     p = TrackingChannelStateDepB._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelStateDepB.build(d)
     
 SBP_MSG_TRACKING_STATE_DETAILED_DEP_A = 0x0021
 class MsgTrackingStateDetailedDepA(SBP):
@@ -300,9 +270,8 @@ class MsgTrackingStateDetailedDepA(SBP):
   of its fields.
 
   
-  The tracking message returns a set tracking channel parameters for a
-single tracking channel useful for debugging issues.
-
+  The tracking message returns a set tracking channel parameters for a single
+  tracking channel useful for debugging issues.
 
   Parameters
   ----------
@@ -311,28 +280,22 @@ single tracking channel useful for debugging issues.
   recv_time : int
     Receiver clock time.
   tot : GPSTime
-    Time of transmission of signal from satellite. TOW only valid when
-TOW status is decoded or propagated. WN only valid when week
-number valid flag is set.
-
+    Time of transmission of signal from satellite. TOW only valid when TOW
+    status is decoded or propagated. WN only valid when week number valid flag
+    is set.
   P : int
-    Pseudorange observation. Valid only when pseudorange valid flag is
-set.
-
+    Pseudorange observation. Valid only when pseudorange valid flag is set.
   P_std : int
-    Pseudorange observation standard deviation. Valid only when
-pseudorange valid flag is set.
-
+    Pseudorange observation standard deviation. Valid only when pseudorange
+    valid flag is set.
   L : CarrierPhase
-    Carrier phase observation with typical sign convention. Valid only
-when PLL pessimistic lock is achieved.
-
+    Carrier phase observation with typical sign convention. Valid only when
+    PLL pessimistic lock is achieved.
   cn0 : int
     Carrier-to-Noise density
   lock : int
     Lock time. It is encoded according to DF402 from the RTCM 10403.2
-Amendment 2 specification. Valid values range from 0 to 15.
-
+    Amendment 2 specification. Valid values range from 0 to 15.
   sid : GnssSignal
     GNSS signal identifier.
   doppler : int
@@ -340,15 +303,12 @@ Amendment 2 specification. Valid values range from 0 to 15.
   doppler_std : int
     Carrier Doppler frequency standard deviation.
   uptime : int
-    Number of seconds of continuous tracking. Specifies how much time
-signal is in continuous track.
-
+    Number of seconds of continuous tracking. Specifies how much time signal
+    is in continuous track.
   clock_offset : int
     TCXO clock offset. Valid only when valid clock valid flag is set.
-
   clock_drift : int
     TCXO clock drift. Valid only when valid clock valid flag is set.
-
   corr_spacing : int
     Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
   acceleration : int
@@ -371,13 +331,13 @@ signal is in continuous track.
   """
   _parser = construct.Struct(
                    'recv_time' / construct.Int64ul,
-                   'tot' / construct.Struct(GPSTime._parser),
+                   'tot' / GPSTime._parser,
                    'P' / construct.Int32ul,
                    'P_std' / construct.Int16ul,
-                   'L' / construct.Struct(CarrierPhase._parser),
+                   'L' / CarrierPhase._parser,
                    'cn0' / construct.Int8ul,
                    'lock' / construct.Int16ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'doppler' / construct.Int32sl,
                    'doppler_std' / construct.Int16ul,
                    'uptime' / construct.Int32ul,
@@ -515,28 +475,22 @@ class MsgTrackingStateDetailedDep(SBP):
   recv_time : int
     Receiver clock time.
   tot : GPSTimeDep
-    Time of transmission of signal from satellite. TOW only valid when
-TOW status is decoded or propagated. WN only valid when week
-number valid flag is set.
-
+    Time of transmission of signal from satellite. TOW only valid when TOW
+    status is decoded or propagated. WN only valid when week number valid flag
+    is set.
   P : int
-    Pseudorange observation. Valid only when pseudorange valid flag is
-set.
-
+    Pseudorange observation. Valid only when pseudorange valid flag is set.
   P_std : int
-    Pseudorange observation standard deviation. Valid only when
-pseudorange valid flag is set.
-
+    Pseudorange observation standard deviation. Valid only when pseudorange
+    valid flag is set.
   L : CarrierPhase
-    Carrier phase observation with typical sign convention. Valid only
-when PLL pessimistic lock is achieved.
-
+    Carrier phase observation with typical sign convention. Valid only when
+    PLL pessimistic lock is achieved.
   cn0 : int
     Carrier-to-Noise density
   lock : int
     Lock time. It is encoded according to DF402 from the RTCM 10403.2
-Amendment 2 specification. Valid values range from 0 to 15.
-
+    Amendment 2 specification. Valid values range from 0 to 15.
   sid : GnssSignalDep
     GNSS signal identifier.
   doppler : int
@@ -544,15 +498,12 @@ Amendment 2 specification. Valid values range from 0 to 15.
   doppler_std : int
     Carrier Doppler frequency standard deviation.
   uptime : int
-    Number of seconds of continuous tracking. Specifies how much time
-signal is in continuous track.
-
+    Number of seconds of continuous tracking. Specifies how much time signal
+    is in continuous track.
   clock_offset : int
     TCXO clock offset. Valid only when valid clock valid flag is set.
-
   clock_drift : int
     TCXO clock drift. Valid only when valid clock valid flag is set.
-
   corr_spacing : int
     Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
   acceleration : int
@@ -575,13 +526,13 @@ signal is in continuous track.
   """
   _parser = construct.Struct(
                    'recv_time' / construct.Int64ul,
-                   'tot' / construct.Struct(GPSTimeDep._parser),
+                   'tot' / GPSTimeDep._parser,
                    'P' / construct.Int32ul,
                    'P_std' / construct.Int16ul,
-                   'L' / construct.Struct(CarrierPhase._parser),
+                   'L' / CarrierPhase._parser,
                    'cn0' / construct.Int8ul,
                    'lock' / construct.Int16ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   'sid' / GnssSignalDep._parser,
                    'doppler' / construct.Int32sl,
                    'doppler_std' / construct.Int16ul,
                    'uptime' / construct.Int32ul,
@@ -710,10 +661,9 @@ class MsgTrackingState(SBP):
   of its fields.
 
   
-  The tracking message returns a variable-length array of tracking
-channel states. It reports status and carrier-to-noise density
-measurements for all tracked satellites.
-
+  The tracking message returns a variable-length array of tracking channel
+  states. It reports status and carrier-to-noise density measurements for all
+  tracked satellites.
 
   Parameters
   ----------
@@ -726,7 +676,7 @@ measurements for all tracked satellites.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(TrackingChannelState._parser)),)
+                   'states' / construct.GreedyRange(TrackingChannelState._parser),)
   __slots__ = [
                'states',
               ]
@@ -802,10 +752,9 @@ class MsgMeasurementState(SBP):
   of its fields.
 
   
-  The tracking message returns a variable-length array of tracking
-channel states. It reports status and carrier-to-noise density
-measurements for all tracked satellites.
-
+  The tracking message returns a variable-length array of tracking channel
+  states. It reports status and carrier-to-noise density measurements for all
+  tracked satellites.
 
   Parameters
   ----------
@@ -818,7 +767,7 @@ measurements for all tracked satellites.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(MeasurementState._parser)),)
+                   'states' / construct.GreedyRange(MeasurementState._parser),)
   __slots__ = [
                'states',
               ]
@@ -894,9 +843,8 @@ class MsgTrackingIq(SBP):
   of its fields.
 
   
-  When enabled, a tracking channel can output the correlations at each
-update interval.
-
+  When enabled, a tracking channel can output the correlations at each update
+  interval.
 
   Parameters
   ----------
@@ -914,7 +862,7 @@ update interval.
   """
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'corrs' / construct.Array(3, construct.Byte),)
   __slots__ = [
                'channel',
@@ -995,9 +943,8 @@ class MsgTrackingIqDepB(SBP):
   of its fields.
 
   
-  When enabled, a tracking channel can output the correlations at each
-update interval.
-
+  When enabled, a tracking channel can output the correlations at each update
+  interval.
 
   Parameters
   ----------
@@ -1015,7 +962,7 @@ update interval.
   """
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'corrs' / construct.Array(3, construct.Byte),)
   __slots__ = [
                'channel',
@@ -1114,7 +1061,7 @@ class MsgTrackingIqDepA(SBP):
   """
   _parser = construct.Struct(
                    'channel' / construct.Int8ul,
-                   'sid' / construct.Struct(GnssSignalDep._parser),
+                   'sid' / GnssSignalDep._parser,
                    'corrs' / construct.Array(3, construct.Byte),)
   __slots__ = [
                'channel',
@@ -1208,7 +1155,7 @@ class MsgTrackingStateDepA(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(TrackingChannelStateDepA._parser)),)
+                   'states' / construct.GreedyRange(TrackingChannelStateDepA._parser),)
   __slots__ = [
                'states',
               ]
@@ -1297,7 +1244,7 @@ class MsgTrackingStateDepB(SBP):
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('states' / construct.Struct(TrackingChannelStateDepB._parser)),)
+                   'states' / construct.GreedyRange(TrackingChannelStateDepB._parser),)
   __slots__ = [
                'states',
               ]

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2020 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,18 +8,15 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.client;
+
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SBPFramer extends SBPIterable implements SBPSender {
@@ -67,8 +63,9 @@ public class SBPFramer extends SBPIterable implements SBPSender {
         byte[] payload = driver.read(len);
         calccrc = CRC16.crc16(payload, calccrc);
 
-        int crc = ByteBuffer.wrap(driver.read(CRC_SIZE))
-                .order(ByteOrder.LITTLE_ENDIAN).getShort() & 0xffff;
+        int crc =
+                ByteBuffer.wrap(driver.read(CRC_SIZE)).order(ByteOrder.LITTLE_ENDIAN).getShort()
+                        & 0xffff;
         if (crc != calccrc) {
             System.err.println("CRC error in received SBPMessage");
             return null;
@@ -92,7 +89,7 @@ public class SBPFramer extends SBPIterable implements SBPSender {
         bb.put(PREAMBLE);
         bb.putShort((short) msg.type);
         bb.putShort((short) msg.sender);
-        bb.put((byte)payload.length);
+        bb.put((byte) payload.length);
         bb.put(payload);
         int crc = CRC16.crc16(Arrays.copyOfRange(binmsg, 1, payload.length + 6));
         bb.putShort((short) crc);

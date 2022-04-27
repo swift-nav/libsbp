@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -28,9 +28,9 @@ var UInt64 = require('cuint').UINT64;
  *
  * Message representing the x component of vehicle velocity in the user frame at
  * the odometry reference point(s) specified by the user. The offset for the
- * odometry reference point and  the definition and origin of the user frame are
+ * odometry reference point and the definition and origin of the user frame are
  * defined through the device settings interface. There are 4 possible user-defined
- * sources of this message  which are labeled arbitrarily  source 0 through 3. If
+ * sources of this message which are labeled arbitrarily source 0 through 3. If
  * using "processor time" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
  * measurements with GNSS. Processor time shall roll over to zero after one week.

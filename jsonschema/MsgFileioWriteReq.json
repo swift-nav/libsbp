@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFileioWriteReq",
   "title":"MsgFileioWriteReq",
-  "description":"The file write message writes a certain length (up to 255 bytes),\nof data to a file at a given offset. Returns a copy of the,\noriginal MSG_FILEIO_WRITE_RESP message to check integrity of,\nthe write. The sequence number in the request will be returned,\nin the response. If message is invalid, a followup MSG_PRINT,\nmessage will print \"Invalid fileio write message\". A device will,\nonly  process this message when it is received from sender ID,\n0x42.\n",
+  "description":"The file write message writes a certain length (up to 255 bytes) of data to a file at a given offset. Returns a copy of the original MSG_FILEIO_WRITE_RESP message to check integrity of the write. The sequence number in the request will be returned in the response. If message is invalid, a followup MSG_PRINT message will print \"Invalid fileio write message\". A device will only process this message when it is received from sender ID 0x42.\n",
   "type": "object",
   "properties": {
     "sequence": {"type": "integer"},

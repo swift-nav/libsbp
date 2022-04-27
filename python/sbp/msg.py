@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2011-2014 Swift Navigation Inc.
+# Copyright (C) 2011-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -20,7 +20,6 @@ except ImportError:
 
 from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
-from sbp.constants import crc16_tab
 
 
 SENDER_ID = _SENDER_ID
@@ -132,7 +131,7 @@ class SBP(object):
     crc_offset = header_offset + self.length
     preamble_bytes = 1
     crc_over_len = _HEADER_LEN + self.length - preamble_bytes
-    self.crc = crc16(buf[1:1+crc_over_len])
+    self.crc = crc16(buf[1+offset:1+offset+crc_over_len])
     _CRC_PARSER.pack_into(buf, crc_offset, self.crc)
     length = preamble_bytes + crc_over_len + _CRC_LEN
     return length

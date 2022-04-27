@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2011-2014 Swift Navigation Inc.
+# Copyright (C) 2011-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -31,6 +31,7 @@ sbp_identifier = Schema(int)
 units = Coerce(str)
 bitmask = Coerce(str)
 size = Schema(int)
+encoding = Schema(str)
 
 bitfield = Schema([{Optional(bitmask):
                            {Optional('units'): units,
@@ -43,6 +44,7 @@ field = Schema({identifier:
                  Optional('map_by'): identifier,
                  Optional('fill'): identifier,
                  Optional('size'): size,
+                 Optional('encoding'): encoding,
                  Optional('size_fn'): identifier,
                  Optional('fields'): bitfield}})
 definition = Schema({identifier:

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,22 +8,16 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
+package com.swiftnav.sbp.examples;
+
+
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.client.SBPDriver;
-import com.swiftnav.sbp.client.SBPForwarder;
 import com.swiftnav.sbp.client.SBPFramer;
 import com.swiftnav.sbp.client.SBPHandler;
 import com.swiftnav.sbp.drivers.SBPDriverJSSC;
-import com.swiftnav.sbp.drivers.SBPDriverHTTP;
 import com.swiftnav.sbp.logging.MsgLog;
 import com.swiftnav.sbp.tracking.MsgTrackingState;
 import com.swiftnav.sbp.tracking.TrackingChannelState;
-
-import java.lang.Integer;
-import java.lang.NumberFormatException;
-import java.lang.System;
-import java.net.MalformedURLException;
-
 import jssc.SerialPortException;
 
 public class TrackingState {
@@ -65,7 +58,7 @@ public class TrackingState {
             System.err.println("Failed to open serial port: " + e.toString());
             System.exit(-2);
         }
-        
+
         for (SBPMessage msg : handler) {
             switch (msg.type) {
                 case MsgLog.TYPE:
@@ -87,17 +80,15 @@ public class TrackingState {
         MsgTrackingState msg = (MsgTrackingState) msg_;
 
         boolean tracking = false;
-        for (TrackingChannelState state : msg.states)
-            if (state.cn0 != 0)
-                tracking = true;
+        for (TrackingChannelState state : msg.states) if (state.cn0 != 0) tracking = true;
 
-        if (!tracking)
-            return;
+        if (!tracking) return;
 
         System.out.print("Tracking: ");
         for (TrackingChannelState state : msg.states) {
             if (state.cn0 != 0)
-                System.out.printf("sat=%d, code=%d, cn0=%.1f ", state.sid.sat, state.sid.code, state.cn0);
+                System.out.printf(
+                        "sat=%d, code=%d, cn0=%.1f ", state.sid.sat, state.sid.code, state.cn0);
         }
         System.out.println();
     }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -16,10 +16,14 @@ files.
 
 """
 
-from sbpg.targets.templating import JENV, ACRONYMS
+import copy
+
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import ACRONYMS, INCLUDE_MAP, JENV, indented_wordwrap, is_list
 from sbpg.utils import comment_links
 from sbpg import ReleaseVersion
-import copy
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
 VERSION_TEMPLATE_NAME = "sbp_python_relver_template.j2"
@@ -51,15 +55,10 @@ PYDOC_CODE = {
 }
 
 
-def is_array():
-  return False
-
-
 def construct_format(f, type_map=CONSTRUCT_CODE):
   """
   Formats for Construct.
   """
-  formatted = ""
   if type_map.get(f.type_id, None):
     return "'{identifier}' / {type_id}".format(type_id=type_map.get(f.type_id),
                                              identifier=f.identifier)
@@ -76,12 +75,21 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     return "'{id}' / construct.Array({size}, {type})".format(id=f.identifier, size=s, type=type_map.get(f_.type_id, 'construct.Byte'))
   elif f.type_id == 'array':
     fill = f.options['fill'].value
-    f_ = copy.copy(f)
-    f_.type_id = fill
-    return "construct.GreedyRange(%s)" % construct_format(f_)
+    if type_map.get(fill):
+      return "'%s' / construct.GreedyRange(%s)" % (f.identifier, type_map.get(fill))
+    else:
+      return "'%s' / construct.GreedyRange(%s._parser)" % (f.identifier, fill)
   else:
-    return "'%s' / construct.Struct(%s._parser)" % (f.identifier, f.type_id)
-  return formatted
+    return "'%s' / %s._parser" % (f.identifier, f.type_id)
+
+
+@pass_environment
+def commentify(environment: Environment,
+               value: str, width=76, indent=2):
+  """
+  Builds a comment.
+  """
+  return indented_wordwrap(environment, value, width=width, indent=" " * indent, first=False)
 
 
 def pydoc_format(type_id, pydoc=PYDOC_CODE):
@@ -97,10 +105,29 @@ def classnameify(s):
   """
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
+
+def has_real_message(l):
+  """
+  Determine if module has any real messages.
+  """
+  return any(m.static and m.is_real_message for m in l)
+
+
+def needs_raw_docstring(m):
+  if m.desc and "\\0" in m.desc:
+    return True
+  return any(f.desc and "\\0" in f.desc for f in m.fields)
+
+
+JENV.filters['has_real_message'] = has_real_message
 JENV.filters['construct_py'] = construct_format
 JENV.filters['classnameify'] = classnameify
+JENV.filters['commentify'] = commentify
 JENV.filters['pydoc'] = pydoc_format
 JENV.filters['comment_links'] = comment_links
+
+JENV.tests['list'] = is_list
+JENV.tests['needs_raw_docstring'] = needs_raw_docstring
 
 
 def render_source(output_dir, package_spec, jenv=JENV):
@@ -113,7 +140,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[1:-1])
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
-  includes = [i for i in includes if i != "types"]
+  includes = [(i, INCLUDE_MAP.get(i)) for i in includes if i != "types"]
   print(destination_filename, includes)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,

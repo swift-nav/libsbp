@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -11,18 +11,28 @@
 
 
 """
-(((description|comment_links)))
+(((description|comment_links|commentify(indent=0) )))
 """
 
+((* if msgs|has_real_message -*))
 import json
 
 import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+((*- else -*))
+import construct
 
-((*- for i in include *))
-from (((module_path))).(((i))) import *
+from sbp.utils import fmt_repr
+((*- endif -*))
+
+((*- for (file, ident) in include *))
+  ((*- if ident is list *))
+from (((module_path))).(((file))) import ((* for name in ident -*))((( name )))((*- if not loop.last *)), ((* endif -*))((*- endfor *))
+  ((*- else *))
+from (((module_path))).(((file))) import *
+  ((*- endif *))
 ((*- endfor *))
 
 # Automatically generated from piksi/yaml/(((filepath))) with generate.py.
@@ -34,7 +44,7 @@ from (((module_path))).(((i))) import *
 class ((( m.identifier )))(object):
   """(((m.identifier))).
   ((* if m.desc *))
-  (((m.desc)))
+  ((( m.desc | commentify )))
   ((*- endif *))
   ((* if m.fields *))
   Parameters
@@ -42,17 +52,17 @@ class ((( m.identifier )))(object):
   ((*- for f in m.fields *))
   (((f.identifier))) : (((f.type_id|pydoc)))
   ((*- if f.desc *))
-    (((f.desc)))
+    ((( f.desc | commentify(width=74, indent=4) )))
   ((*- endif *))
   ((*- endfor *))
   ((*- endif *))
 
   """
   ((*- if m.fields *))
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      ((*- for f in m.fields *))
                      ((( f | construct_py ))),
-                     ((*- endfor *))))
+                     ((*- endfor *)))
   __slots__ = [((* for f in m.fields *))
                '((( f.identifier )))',
                ((*- endfor *))
@@ -80,10 +90,6 @@ class ((( m.identifier )))(object):
     p = ((( m.identifier )))._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return ((( m.identifier ))).build(d)
   ((*- endif *))
     ((* endif *))
   ((*- endif *))
@@ -94,14 +100,14 @@ class ((( m.identifier )))(object):
     ((*- if m.is_real_message *))
 SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
 class ((( m.identifier | classnameify )))(SBP):
-  """SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
+  ((* if m is needs_raw_docstring *))r((* endif *))"""SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
 
   You can have (((m.identifier))) inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   ((* if m.desc *))
-  (((m.desc)))
+  (((m.desc | commentify )))
   ((*- endif *))
 
   ((*- if m.fields*))
@@ -113,7 +119,7 @@ class ((( m.identifier | classnameify )))(SBP):
   ((*- for f in m.fields *))
   (((f.identifier))) : (((f.type_id|pydoc)))
   ((*- if f.desc *))
-    (((f.desc)))
+    (((f.desc | commentify(width=74, indent=4) )))
   ((*- endif *))
   ((*- endfor *))
   sender : int

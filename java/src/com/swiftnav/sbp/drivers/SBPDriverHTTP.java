@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2020 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,8 +8,8 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.drivers;
+
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class SBPDriverHTTP extends SBPDriverStream {
     private final URL url;
@@ -34,12 +32,12 @@ public class SBPDriverHTTP extends SBPDriverStream {
 
         System.out.println("Connecting to " + url.toString());
 
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
-        //http.setDoOutput(true);
-        //http.setChunkedStreamingMode(200);
+        HttpURLConnection http = (HttpURLConnection) url.openConnection();
+        // http.setDoOutput(true);
+        // http.setChunkedStreamingMode(200);
         http.setRequestProperty("Device-Uid", uid);
         http.setRequestProperty("Accept", "application/vnd.swiftnav.broker.v1+sbp2");
-        //http.setRequestProperty("Content-Type", "application/sbp");
+        // http.setRequestProperty("Content-Type", "application/sbp");
 
         http.connect();
         System.out.println("" + http.getResponseCode() + " " + http.getResponseMessage());

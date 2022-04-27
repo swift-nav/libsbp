@@ -1,0 +1,81 @@
+/*
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+package com.swiftnav.sbp.test;
+
+// This file was auto-generated from (((s.src_filename))) by generate.py. Do not modify by hand!
+
+import java.math.BigInteger;
+
+import org.junit.Test;
+
+import org.json.JSONObject;
+
+import com.swiftnav.sbp.SBPMessage;
+((* set names = s.tests|map(attribute='msg')|map(attribute='name')|unique|list *))
+((*- for name in names *))
+import com.swiftnav.(((s.package))).(((name)));
+((* endfor *))
+
+((*- macro compare_value(prefix, value) *))
+((*- if value is string_type *))
+        org.junit.Assert.assertEquals(msg.(((prefix))), (((value|str_escape))) );
+((*- elif value is array_type *))
+((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) )))((*- endfor *))
+((*- elif value is dict_type *))
+((*- for k in (((value|sorted))) *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
+((*- elif value is float_type *))((=
+    Note: the ("%.17e"|format(value)) filter is intended to preserve float
+    literal precision accross all value ranges. =))
+        org.junit.Assert.assertEquals(msg.(((prefix))), ((("%.17e"|format(value)))), DELTA);
+((*- elif value < -2147483648 or value > 2147483647 *))
+        value = msg.(((prefix)));
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue("'" + msg.(((prefix))) + "' != '" + (((value)))L + "'", value.equals( new BigInteger( "(((value)))" ) ) );
+        } else {
+            value = value.longValue();
+            expected = (((value)))L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+((*- else *))
+        value = msg.(((prefix)));
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue("'" + msg.(((prefix))) + "' != '" + (((value))) + "'", value.equals(BigInteger.valueOf( (((value)))L ) ) );
+        } else {
+            value = value.longValue();
+            expected = (((value)))L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+((*- endif *))
+((*- endmacro *))
+
+public class (((s.suite_name)))Test {
+
+    public static boolean debug = false;
+    private static final double DELTA = 1e-15;
+
+    ((*- for t in s.tests *))
+
+    @Test
+    public void test((( loop.index )))() throws Throwable {
+        if (debug)
+            System.out.format("%n%s%n", "(((s.suite_name)))Test.test((( loop.index )))");
+        byte[] payload = new byte[] { ((*- for p in t.sbp.payload | b64_decode *))(byte)(((p))),((*- endfor *)) };
+        SBPMessage sbp = new SBPMessage( (((t.sbp.sender))), (((t.sbp.msg_type))), payload );
+        (((t.msg.name))) msg = new (((t.msg.name)))( sbp );
+        JSONObject json = msg.toJSON();
+        Number value;
+        Number expected;
+        ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+    }
+    ((*- endfor *))
+}

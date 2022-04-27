@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -22,10 +22,9 @@ package swiftnav.sbp.system;
 
 /** System start-up message
  *
- * The system start-up message is sent once on system
- * start-up. It notifies the host or other attached devices that
- * the system has started and is now ready to respond to commands
- * or configuration requests.
+ * The system start-up message is sent once on system start-up. It notifies
+ * the host or other attached devices that the system has started and is now
+ * ready to respond to commands or configuration requests.
  */
 message MsgStartup {
     uint32 cause = 1;
@@ -47,16 +46,15 @@ message MsgDgnssStatus {
 
 /** System heartbeat message
  *
- * The heartbeat message is sent periodically to inform the host
- * or other attached devices that the system is running. It is
- * used to monitor system malfunctions. It also contains status
- * flags that indicate to the host the status of the system and
- * whether it is operating correctly. Currently, the expected
- * heartbeat interval is 1 sec.
- * 
- * The system error flag is used to indicate that an error has
- * occurred in the system. To determine the source of the error,
- * the remaining error flags should be inspected.
+ * The heartbeat message is sent periodically to inform the host or other
+ * attached devices that the system is running. It is used to monitor system
+ * malfunctions. It also contains status flags that indicate to the host the
+ * status of the system and whether it is operating correctly. Currently, the
+ * expected heartbeat interval is 1 sec.
+ *
+ * The system error flag is used to indicate that an error has occurred in the
+ * system. To determine the source of the error, the remaining error flags
+ * should be inspected.
  */
 message MsgHeartbeat {
     uint32 flags = 1;
@@ -75,15 +73,14 @@ message SubSystemReport {
 
 /** Status report message
  *
- * The status report is sent periodically to inform the host
- * or other attached devices that the system is running. It is
- * used to monitor system malfunctions. It contains status
- * reports that indicate to the host the status of each sub-system and
- * whether it is operating correctly.
- * 
- * Interpretation of the subsystem specific status code is product
- * dependent, but if the generic status code is initializing, it should
- * be ignored.  Refer to product documentation for details.
+ * The status report is sent periodically to inform the host or other attached
+ * devices that the system is running. It is used to monitor system
+ * malfunctions. It contains status reports that indicate to the host the
+ * status of each sub-system and whether it is operating correctly.
+ *
+ * Interpretation of the subsystem specific status code is product dependent,
+ * but if the generic status code is initializing, it should be ignored.
+ * Refer to product documentation for details.
  */
 message MsgStatusReport {
     uint32 reporting_system = 1;
@@ -95,8 +92,8 @@ message MsgStatusReport {
 
 /** Inertial Navigation System status message
  *
- * The INS status message describes the state of the operation
- * and initialization of the inertial navigation system. 
+ * The INS status message describes the state of the operation and
+ * initialization of the inertial navigation system.
  */
 message MsgInsStatus {
     uint32 flags = 1;
@@ -116,8 +113,8 @@ message MsgCsacTelemetry {
 /** Experimental telemetry message labels
  *
  * The CSAC telemetry message provides labels for each member of the string
- * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
- * rate than the MSG_CSAC_TELEMETRY.
+ * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a
+ * lower rate than the MSG_CSAC_TELEMETRY.
  */
 message MsgCsacTelemetryLabels {
     uint32 id = 1;
@@ -126,8 +123,9 @@ message MsgCsacTelemetryLabels {
 
 /** Inertial Navigation System update status message
  *
- * The INS update status message contains informations about executed and rejected INS updates.
- * This message is expected to be extended in the future as new types of measurements are being added.
+ * The INS update status message contains information about executed and
+ * rejected INS updates. This message is expected to be extended in the future
+ * as new types of measurements are being added.
  */
 message MsgInsUpdates {
     uint32 tow = 1;
@@ -141,9 +139,9 @@ message MsgInsUpdates {
 
 /** Offset of the local time with respect to GNSS time
  *
- * The GNSS time offset message contains the information that is needed to translate messages
- * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
- * producing this message.
+ * The GNSS time offset message contains the information that is needed to
+ * translate messages tagged with a local timestamp (e.g. IMU or wheeltick
+ * messages) to GNSS time for the sender producing this message.
  */
 message MsgGnssTimeOffset {
     sint32 weeks = 1;
@@ -155,28 +153,45 @@ message MsgGnssTimeOffset {
 /** Local time at detection of PPS pulse
  *
  * The PPS time message contains the value of the sender's local time in
- * microseconds at the moment a pulse is detected on the PPS input. This
- * is to be used for syncronisation of sensor data sampled with a local
- * timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
- * to the sender.
- * 
+ * microseconds at the moment a pulse is detected on the PPS input. This is to
+ * be used for syncronisation of sensor data sampled with a local timestamp
+ * (e.g. IMU or wheeltick messages) where GNSS time is unknown to the sender.
+ *
  * The local time used to timestamp the PPS pulse must be generated by the
- * same clock which is used to timestamp the IMU/wheel sensor data and
- * should follow the same roll-over rules.  A separate MSG_PPS_TIME
- * message should be sent for each source of sensor data which uses
- * PPS-relative timestamping.  The sender ID for each of these
- * MSG_PPS_TIME messages should match the sender ID of the respective
- * sensor data.
+ * same clock which is used to timestamp the IMU/wheel sensor data and should
+ * follow the same roll-over rules.  A separate MSG_PPS_TIME message should be
+ * sent for each source of sensor data which uses PPS-relative timestamping.
+ * The sender ID for each of these MSG_PPS_TIME messages should match the
+ * sender ID of the respective sensor data.
  */
 message MsgPpsTime {
     uint64 time = 1;
     uint32 flags = 2;
 }
 
+/** Sensor state and update status data
+ *
+ * This diagnostic message contains state and update status information for
+ * all sensors that are being used by the fusion engine. This message will be
+ * generated asynchronously to the solution messages and will be emitted
+ * anytime a sensor update is being processed.
+ */
+message MsgSensorAidEvent {
+    uint32 time = 1;
+    uint32 sensor_type = 2;
+    uint32 sensor_id = 3;
+    uint32 sensor_state = 4;
+    uint32 n_available_meas = 5;
+    uint32 n_attempted_meas = 6;
+    uint32 n_accepted_meas = 7;
+    uint32 flags = 8;
+}
+
 /** Solution Group Metadata
  *
- * This leading message lists the time metadata of the Solution Group.
- * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+ * This leading message lists the time metadata of the Solution Group. It also
+ * lists the atomic contents (i.e. types of messages included) of the Solution
+ * Group.
  */
 message MsgGroupMeta {
     uint32 group_id = 1;

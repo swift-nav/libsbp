@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -35,15 +35,15 @@ class MsgImuRaw(SBP):
 
   
   Raw data from the Inertial Measurement Unit, containing accelerometer and
-gyroscope readings. The sense of the measurements are to be aligned with 
-the indications on the device itself. Measurement units, which are specific to the
-device hardware and settings, are communicated via the MSG_IMU_AUX message.
-If using "time since startup" time tags, the receiving end will expect a
-`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements
-with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
+  gyroscope readings. The sense of the measurements are to be aligned with the
+  indications on the device itself. Measurement units, which are specific to
+  the device hardware and settings, are communicated via the MSG_IMU_AUX
+  message. If using "time since startup" time tags, the receiving end will
+  expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
+  synchronise IMU measurements with GNSS. The timestamp must wrap around to
+  zero when reaching one week (604800 seconds).
 
-The time-tagging mode should not change throughout a run.
-
+  The time-tagging mode should not change throughout a run.
 
   Parameters
   ----------
@@ -51,10 +51,8 @@ The time-tagging mode should not change throughout a run.
     SBP parent object to inherit from.
   tow : int
     Milliseconds since reference epoch and time status.
-
   tow_f : int
     Milliseconds since reference epoch, fractional part
-
   acc_x : int
     Acceleration in the IMU frame X axis
   acc_y : int
@@ -170,9 +168,8 @@ class MsgImuAux(SBP):
 
   
   Auxiliary data specific to a particular IMU. The `imu_type` field will
-always be consistent but the rest of the payload is device specific and
-depends on the value of `imu_type`.
-
+  always be consistent but the rest of the payload is device specific and
+  depends on the value of `imu_type`.
 
   Parameters
   ----------

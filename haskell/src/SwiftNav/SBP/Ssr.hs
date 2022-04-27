@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Ssr
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Precise State Space Representation (SSR) corrections format\>
+-- \< Precise State Space Representation (SSR) corrections format \>
 
 module SwiftNav.SBP.Ssr
   ( module SwiftNav.SBP.Ssr
@@ -73,8 +73,8 @@ data PhaseBiasesContent = PhaseBiasesContent
   , _phaseBiasesContent_widelane_integer_indicator :: !Word8
     -- ^ Indicator for two groups of Wide-Lane(s) integer property
   , _phaseBiasesContent_discontinuity_counter    :: !Word8
-    -- ^ Signal phase discontinuity counter. Increased for every discontinuity in
-    -- phase.
+    -- ^ Signal phase discontinuity counter. Increased for every discontinuity
+    -- in phase.
   , _phaseBiasesContent_bias                     :: !Int32
     -- ^ Phase bias for specified signal
   } deriving ( Show, Read, Eq )
@@ -100,9 +100,9 @@ $(makeLenses ''PhaseBiasesContent)
 
 -- | STECHeader.
 --
--- A full set of STEC information will likely span multiple SBP messages, since
--- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
--- messages into a sequence.
+-- A full set of STEC information will likely span multiple SBP messages,
+-- since SBP message a limited to 255 bytes.  The header is used to tie
+-- multiple SBP messages into a sequence.
 data STECHeader = STECHeader
   { _sTECHeader_tile_set_id   :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
@@ -147,7 +147,7 @@ $(makeLenses ''STECHeader)
 -- | GriddedCorrectionHeader.
 --
 -- The LPP message contains nested variable length arrays which are not
--- suppported in SBP, so each grid point will be identified by the index.
+-- supported in SBP, so each grid point will be identified by the index.
 data GriddedCorrectionHeader = GriddedCorrectionHeader
   { _griddedCorrectionHeader_tile_set_id           :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
@@ -201,10 +201,10 @@ data STECSatElement = STECSatElement
   { _sTECSatElement_sv_id                :: !SvId
     -- ^ Unique space vehicle identifier
   , _sTECSatElement_stec_quality_indicator :: !Word8
-    -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification but
-    -- in units of TECU instead of m.
+    -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification
+    -- but in units of TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
-    -- ^ Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+    -- ^ Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
   } deriving ( Show, Read, Eq )
 
 instance Binary STECSatElement where
@@ -247,7 +247,8 @@ $(makeLenses ''TroposphericDelayCorrectionNoStd)
 
 -- | TroposphericDelayCorrection.
 --
--- Troposphere vertical delays (mean and standard deviation) at the grid point.
+-- Troposphere vertical delays (mean and standard deviation) at the grid
+-- point.
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
     -- ^ Hydrostatic vertical delay
@@ -298,7 +299,7 @@ $(makeLenses ''STECResidualNoStd)
 -- | STECResidual.
 --
 -- STEC residual (mean and standard deviation) for the given satellite at the
--- grid point,
+-- grid point.
 data STECResidual = STECResidual
   { _sTECResidual_sv_id  :: !SvId
     -- ^ space vehicle identifier
@@ -323,62 +324,6 @@ instance Binary STECResidual where
 $(makeJSON "_sTECResidual_" ''STECResidual)
 $(makeLenses ''STECResidual)
 
--- | GridElementNoStd.
---
--- Contains one tropo delay, plus STEC residuals for each satellite at the grid
--- point.
-data GridElementNoStd = GridElementNoStd
-  { _gridElementNoStd_index                :: !Word16
-    -- ^ Index of the grid point
-  , _gridElementNoStd_tropo_delay_correction :: !TroposphericDelayCorrectionNoStd
-    -- ^ Wet and hydrostatic vertical delays
-  , _gridElementNoStd_stec_residuals       :: ![STECResidualNoStd]
-    -- ^ STEC residuals for each satellite
-  } deriving ( Show, Read, Eq )
-
-instance Binary GridElementNoStd where
-  get = do
-    _gridElementNoStd_index <- getWord16le
-    _gridElementNoStd_tropo_delay_correction <- get
-    _gridElementNoStd_stec_residuals <- whileM (not <$> isEmpty) get
-    pure GridElementNoStd {..}
-
-  put GridElementNoStd {..} = do
-    putWord16le _gridElementNoStd_index
-    put _gridElementNoStd_tropo_delay_correction
-    mapM_ put _gridElementNoStd_stec_residuals
-
-$(makeJSON "_gridElementNoStd_" ''GridElementNoStd)
-$(makeLenses ''GridElementNoStd)
-
--- | GridElement.
---
--- Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
--- stddev) for each satellite at the grid point.
-data GridElement = GridElement
-  { _gridElement_index                :: !Word16
-    -- ^ Index of the grid point
-  , _gridElement_tropo_delay_correction :: !TroposphericDelayCorrection
-    -- ^ Wet and hydrostatic vertical delays (mean, stddev)
-  , _gridElement_stec_residuals       :: ![STECResidual]
-    -- ^ STEC residuals for each satellite (mean, stddev)
-  } deriving ( Show, Read, Eq )
-
-instance Binary GridElement where
-  get = do
-    _gridElement_index <- getWord16le
-    _gridElement_tropo_delay_correction <- get
-    _gridElement_stec_residuals <- whileM (not <$> isEmpty) get
-    pure GridElement {..}
-
-  put GridElement {..} = do
-    putWord16le _gridElement_index
-    put _gridElement_tropo_delay_correction
-    mapM_ put _gridElement_stec_residuals
-
-$(makeJSON "_gridElement_" ''GridElement)
-$(makeLenses ''GridElement)
-
 msgSsrOrbitClock :: Word16
 msgSsrOrbitClock = 0x05DD
 
@@ -386,7 +331,7 @@ msgSsrOrbitClock = 0x05DD
 --
 -- The precise orbit and clock correction message is to be applied as a delta
 -- correction to broadcast ephemeris and is an equivalent to the 1060 /1066
--- RTCM message types
+-- RTCM message types.
 data MsgSsrOrbitClock = MsgSsrOrbitClock
   { _msgSsrOrbitClock_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -465,7 +410,7 @@ msgSsrCodeBiases = 0x05E1
 --
 -- The precise code biases message is to be added to the pseudorange of the
 -- corresponding signal to get corrected pseudorange. It is an equivalent to
--- the 1059 / 1065 RTCM message types
+-- the 1059 / 1065 RTCM message types.
 data MsgSsrCodeBiases = MsgSsrCodeBiases
   { _msgSsrCodeBiases_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -508,9 +453,9 @@ msgSsrPhaseBiases = 0x05E6
 --
 -- The precise phase biases message contains the biases to be added to the
 -- carrier phase of the corresponding signal to get corrected carrier phase
--- measurement, as well as the satellite yaw angle to be applied to compute the
--- phase wind-up correction. It is typically an equivalent to the 1265 RTCM
--- message types
+-- measurement, as well as the satellite yaw angle to be applied to compute
+-- the phase wind-up correction. It is typically an equivalent to the 1265
+-- RTCM message types.
 data MsgSsrPhaseBiases = MsgSsrPhaseBiases
   { _msgSsrPhaseBiases_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -570,13 +515,14 @@ msgSsrStecCorrection = 0x05FB
 -- The Slant Total Electron Content per space vehicle, given as polynomial
 -- approximation for a given tile. This should be combined with the
 -- MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
--- the atmospheric delay.  It is typically equivalent to the QZSS CLAS Sub Type
--- 8 messages.
+-- the atmospheric delay.
+--
+-- It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
 data MsgSsrStecCorrection = MsgSsrStecCorrection
   { _msgSsrStecCorrection_header      :: !STECHeader
-    -- ^ Header of a STEC polynomial coeffcient message.
+    -- ^ Header of a STEC polynomial coefficient message.
   , _msgSsrStecCorrection_stec_sat_list :: ![STECSatElement]
-    -- ^ Array of STEC polynomial coeffcients for each space vehicle.
+    -- ^ Array of STEC polynomial coefficients for each space vehicle.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrStecCorrection where
@@ -598,24 +544,33 @@ msgSsrGriddedCorrection = 0x05FC
 
 -- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
 --
--- STEC residuals are per space vehicle, troposphere is not.  It is typically
--- equivalent to the QZSS CLAS Sub Type 9 messages
+-- STEC residuals are per space vehicle, troposphere is not.
+--
+-- It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
 data MsgSsrGriddedCorrection = MsgSsrGriddedCorrection
-  { _msgSsrGriddedCorrection_header :: !GriddedCorrectionHeader
+  { _msgSsrGriddedCorrection_header               :: !GriddedCorrectionHeader
     -- ^ Header of a gridded correction message
-  , _msgSsrGriddedCorrection_element :: !GridElement
-    -- ^ Tropo and STEC residuals for the given grid point.
+  , _msgSsrGriddedCorrection_index                :: !Word16
+    -- ^ Index of the grid point.
+  , _msgSsrGriddedCorrection_tropo_delay_correction :: !TroposphericDelayCorrection
+    -- ^ Wet and hydrostatic vertical delays (mean, stddev).
+  , _msgSsrGriddedCorrection_stec_residuals       :: ![STECResidual]
+    -- ^ STEC residuals for each satellite (mean, stddev).
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrGriddedCorrection where
   get = do
     _msgSsrGriddedCorrection_header <- get
-    _msgSsrGriddedCorrection_element <- get
+    _msgSsrGriddedCorrection_index <- getWord16le
+    _msgSsrGriddedCorrection_tropo_delay_correction <- get
+    _msgSsrGriddedCorrection_stec_residuals <- whileM (not <$> isEmpty) get
     pure MsgSsrGriddedCorrection {..}
 
   put MsgSsrGriddedCorrection {..} = do
     put _msgSsrGriddedCorrection_header
-    put _msgSsrGriddedCorrection_element
+    putWord16le _msgSsrGriddedCorrection_index
+    put _msgSsrGriddedCorrection_tropo_delay_correction
+    mapM_ put _msgSsrGriddedCorrection_stec_residuals
 
 $(makeSBP 'msgSsrGriddedCorrection ''MsgSsrGriddedCorrection)
 $(makeJSON "_msgSsrGriddedCorrection_" ''MsgSsrGriddedCorrection)
@@ -628,48 +583,67 @@ msgSsrTileDefinition = 0x05F6
 --
 -- Provides the correction point coordinates for the atmospheric correction
 -- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
--- messages.  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol)
--- information element GNSS-SSR-CorrectionPoints. SBP only supports gridded
--- arrays of correction points, not lists of points.
+-- messages.
+--
+-- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+-- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+-- correction points, not lists of points.
 data MsgSsrTileDefinition = MsgSsrTileDefinition
   { _msgSsrTileDefinition_tile_set_id :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
   , _msgSsrTileDefinition_tile_id     :: !Word16
-    -- ^ Unique identifier of this tile in the tile set.  See GNSS-SSR-
-    -- ArrayOfCorrectionPoints field correctionPointSetID.
+    -- ^ Unique identifier of this tile in the tile set.
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
   , _msgSsrTileDefinition_corner_nw_lat :: !Int16
-    -- ^ North-West corner correction point latitude.  The relation between the
-    -- latitude X in the range [-90, 90] and the coded number N is:  N =
-    -- floor((X / 90) * 2^14)  See GNSS-SSR-ArrayOfCorrectionPoints field
-    -- referencePointLatitude.
+    -- ^ North-West corner correction point latitude.
+    --
+    -- The relation between the latitude X in the range [-90, 90] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 90) * 2^14)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
   , _msgSsrTileDefinition_corner_nw_lon :: !Int16
-    -- ^ North-West corner correction point longtitude.  The relation between the
-    -- longtitude X in the range [-180, 180] and the coded number N is:  N =
-    -- floor((X / 180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
-    -- referencePointLongitude.
+    -- ^ North-West corner correction point longitude.
+    --
+    -- The relation between the longitude X in the range [-180, 180] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 180) * 2^15)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
   , _msgSsrTileDefinition_spacing_lat :: !Word16
-    -- ^ Spacing of the correction points in the latitude direction.  See GNSS-
-    -- SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+    -- ^ Spacing of the correction points in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
   , _msgSsrTileDefinition_spacing_lon :: !Word16
-    -- ^ Spacing of the correction points in the longtitude direction.  See GNSS-
-    -- SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
+    -- ^ Spacing of the correction points in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
   , _msgSsrTileDefinition_rows        :: !Word16
-    -- ^ Number of steps in the latitude direction.  See GNSS-SSR-
-    -- ArrayOfCorrectionPoints field numberOfStepsLatitude.
+    -- ^ Number of steps in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
   , _msgSsrTileDefinition_cols        :: !Word16
-    -- ^ Number of steps in the longtitude direction.  See GNSS-SSR-
-    -- ArrayOfCorrectionPoints field numberOfStepsLongtitude.
+    -- ^ Number of steps in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
   , _msgSsrTileDefinition_bitmask     :: !Word64
     -- ^ Specifies the availability of correction data at the correction points
-    -- in the array.  If a specific bit is enabled (set to 1), the correction
-    -- is not available. Only the first rows * cols bits are used, the
-    -- remainder are set to 0. If there are more then 64 correction points the
-    -- remaining corrections are always available.  Starting with the northwest
-    -- corner of the array (top left on a north oriented map) the correction
-    -- points are enumerated with row precedence - first row west to east,
-    -- second row west to east, until last row west to east - ending with the
-    -- southeast corner of the array.  See GNSS-SSR-ArrayOfCorrectionPoints
-    -- field bitmaskOfGrids but note the definition of the bits is inverted.
+    -- in the array.
+    --
+    -- If a specific bit is enabled (set to 1), the correction is not
+    -- available. Only the first rows * cols bits are used, the remainder are
+    -- set to 0. If there are more then 64 correction points the remaining
+    -- corrections are always available.
+    --
+    -- Starting with the northwest corner of the array (top left on a north
+    -- oriented map) the correction points are enumerated with row precedence
+    -- - first row west to east, second row west to east, until last row west
+    -- to east - ending with the southeast corner of the array.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    -- definition of the bits is inverted.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrTileDefinition where
@@ -712,7 +686,7 @@ data SatelliteAPC = SatelliteAPC
   , _satelliteAPC_svn    :: !Word16
     -- ^ Satellite Code, as defined by IGS. Typically the space vehicle number.
   , _satelliteAPC_pco    :: ![Int16]
-    -- ^ Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    -- ^ Mean phase center offset, X Y and Z axes. See IGS ANTEX file format
     -- description for coordinate system definition.
   , _satelliteAPC_pcv    :: ![Int8]
     -- ^ Elevation dependent phase center variations. First element is 0 degrees
@@ -835,9 +809,9 @@ $(makeLenses ''MsgSsrOrbitClockDepA)
 
 -- | STECHeaderDepA.
 --
--- A full set of STEC information will likely span multiple SBP messages, since
--- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
--- messages into a sequence.
+-- A full set of STEC information will likely span multiple SBP messages,
+-- since SBP message a limited to 255 bytes.  The header is used to tie
+-- multiple SBP messages into a sequence.
 data STECHeaderDepA = STECHeaderDepA
   { _sTECHeaderDepA_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -874,7 +848,7 @@ $(makeLenses ''STECHeaderDepA)
 -- | GriddedCorrectionHeaderDepA.
 --
 -- The 3GPP message contains nested variable length arrays which are not
--- suppported in SBP, so each grid point will be identified by the index.
+-- supported in SBP, so each grid point will be identified by the index.
 data GriddedCorrectionHeaderDepA = GriddedCorrectionHeaderDepA
   { _griddedCorrectionHeaderDepA_time                  :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -889,7 +863,7 @@ data GriddedCorrectionHeaderDepA = GriddedCorrectionHeaderDepA
     -- ^ IOD of the SSR atmospheric correction
   , _griddedCorrectionHeaderDepA_tropo_quality_indicator :: !Word8
     -- ^ Quality of the troposphere data. Encoded following RTCM DF389
-    -- specifcation in units of m.
+    -- specification in units of m.
   } deriving ( Show, Read, Eq )
 
 instance Binary GriddedCorrectionHeaderDepA where
@@ -926,12 +900,12 @@ data GridDefinitionHeaderDepA = GridDefinitionHeaderDepA
   , _gridDefinitionHeaderDepA_lat_nw_corner_enc :: !Word16
     -- ^ North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
   , _gridDefinitionHeaderDepA_lon_nw_corner_enc :: !Word16
-    -- ^ North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
+    -- ^ North-West corner longitude (deg) = region_size * lon_nw_corner_enc -
     -- 180
   , _gridDefinitionHeaderDepA_num_msgs          :: !Word8
     -- ^ Number of messages in the dataset
   , _gridDefinitionHeaderDepA_seq_num           :: !Word8
-    -- ^ Postion of this message in the dataset
+    -- ^ Position of this message in the dataset
   } deriving ( Show, Read, Eq )
 
 instance Binary GridDefinitionHeaderDepA where
@@ -983,21 +957,29 @@ msgSsrGriddedCorrectionNoStdDepA :: Word16
 msgSsrGriddedCorrectionNoStdDepA = 0x05F0
 
 data MsgSsrGriddedCorrectionNoStdDepA = MsgSsrGriddedCorrectionNoStdDepA
-  { _msgSsrGriddedCorrectionNoStdDepA_header :: !GriddedCorrectionHeaderDepA
+  { _msgSsrGriddedCorrectionNoStdDepA_header               :: !GriddedCorrectionHeaderDepA
     -- ^ Header of a Gridded Correction message
-  , _msgSsrGriddedCorrectionNoStdDepA_element :: !GridElementNoStd
-    -- ^ Tropo and STEC residuals for the given grid point
+  , _msgSsrGriddedCorrectionNoStdDepA_index                :: !Word16
+    -- ^ Index of the grid point
+  , _msgSsrGriddedCorrectionNoStdDepA_tropo_delay_correction :: !TroposphericDelayCorrectionNoStd
+    -- ^ Wet and hydrostatic vertical delays
+  , _msgSsrGriddedCorrectionNoStdDepA_stec_residuals       :: ![STECResidualNoStd]
+    -- ^ STEC residuals for each satellite
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrGriddedCorrectionNoStdDepA where
   get = do
     _msgSsrGriddedCorrectionNoStdDepA_header <- get
-    _msgSsrGriddedCorrectionNoStdDepA_element <- get
+    _msgSsrGriddedCorrectionNoStdDepA_index <- getWord16le
+    _msgSsrGriddedCorrectionNoStdDepA_tropo_delay_correction <- get
+    _msgSsrGriddedCorrectionNoStdDepA_stec_residuals <- whileM (not <$> isEmpty) get
     pure MsgSsrGriddedCorrectionNoStdDepA {..}
 
   put MsgSsrGriddedCorrectionNoStdDepA {..} = do
     put _msgSsrGriddedCorrectionNoStdDepA_header
-    put _msgSsrGriddedCorrectionNoStdDepA_element
+    putWord16le _msgSsrGriddedCorrectionNoStdDepA_index
+    put _msgSsrGriddedCorrectionNoStdDepA_tropo_delay_correction
+    mapM_ put _msgSsrGriddedCorrectionNoStdDepA_stec_residuals
 
 $(makeSBP 'msgSsrGriddedCorrectionNoStdDepA ''MsgSsrGriddedCorrectionNoStdDepA)
 $(makeJSON "_msgSsrGriddedCorrectionNoStdDepA_" ''MsgSsrGriddedCorrectionNoStdDepA)
@@ -1007,22 +989,29 @@ msgSsrGriddedCorrectionDepA :: Word16
 msgSsrGriddedCorrectionDepA = 0x05FA
 
 data MsgSsrGriddedCorrectionDepA = MsgSsrGriddedCorrectionDepA
-  { _msgSsrGriddedCorrectionDepA_header :: !GriddedCorrectionHeaderDepA
+  { _msgSsrGriddedCorrectionDepA_header               :: !GriddedCorrectionHeaderDepA
     -- ^ Header of a Gridded Correction message
-  , _msgSsrGriddedCorrectionDepA_element :: !GridElement
-    -- ^ Tropo and STEC residuals for the given grid point (mean and standard
-    -- deviation)
+  , _msgSsrGriddedCorrectionDepA_index                :: !Word16
+    -- ^ Index of the grid point
+  , _msgSsrGriddedCorrectionDepA_tropo_delay_correction :: !TroposphericDelayCorrection
+    -- ^ Wet and hydrostatic vertical delays (mean, stddev)
+  , _msgSsrGriddedCorrectionDepA_stec_residuals       :: ![STECResidual]
+    -- ^ STEC residuals for each satellite (mean, stddev)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrGriddedCorrectionDepA where
   get = do
     _msgSsrGriddedCorrectionDepA_header <- get
-    _msgSsrGriddedCorrectionDepA_element <- get
+    _msgSsrGriddedCorrectionDepA_index <- getWord16le
+    _msgSsrGriddedCorrectionDepA_tropo_delay_correction <- get
+    _msgSsrGriddedCorrectionDepA_stec_residuals <- whileM (not <$> isEmpty) get
     pure MsgSsrGriddedCorrectionDepA {..}
 
   put MsgSsrGriddedCorrectionDepA {..} = do
     put _msgSsrGriddedCorrectionDepA_header
-    put _msgSsrGriddedCorrectionDepA_element
+    putWord16le _msgSsrGriddedCorrectionDepA_index
+    put _msgSsrGriddedCorrectionDepA_tropo_delay_correction
+    mapM_ put _msgSsrGriddedCorrectionDepA_stec_residuals
 
 $(makeSBP 'msgSsrGriddedCorrectionDepA ''MsgSsrGriddedCorrectionDepA)
 $(makeJSON "_msgSsrGriddedCorrectionDepA_" ''MsgSsrGriddedCorrectionDepA)

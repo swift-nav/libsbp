@@ -1,3 +1,10 @@
+plugins {
+  id 'jacoco'
+  id "org.sonarqube" version "3.3"
+  // spotless pre v5 used to allow gradle 4 on ubuntu-latest
+  id "com.diffplug.gradle.spotless" version "4.5.1"
+}
+
 apply plugin: 'java'
 
 repositories {
@@ -5,14 +12,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.scream3r:jssc:2.8.0'
-    implementation 'org.json:json:20131018'
+    implementation 'io.github.java-native:jssc:2.9.4'
+    implementation 'org.json:json:20220320'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 sourceSets {
     test {
         java {
             srcDir 'example'
+            srcDir 'test'
         }
 
     }
@@ -26,5 +35,52 @@ sourceSets {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true
+}
+
+test {
+    useJUnit()
+    finalizedBy jacocoTestReport
+}
+
 archivesBaseName = 'sbp'
 
+jacocoTestReport {
+    reports {
+        // Using deprecated 'enabled' for gradle 4 compatibility
+        xml.enabled = true
+    }
+}
+
+sonarqube {
+  properties {
+    property 'sonar.projectName', "libsbp-java"
+    property "sonar.projectKey", "swift-nav_libsbp"
+    property "sonar.organization", "swift-nav"
+    property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
+spotless {
+  java {
+    // Use Android Open Source Project style
+    googleJavaFormat().aosp()
+    importOrder()
+    endWithNewline()
+    removeUnusedImports()
+
+    licenseHeader '/* Copyright (C) 2015-2022 Swift Navigation Inc.\n' +
+                  ' * Contact: https://support.swiftnav.com\n' +
+                  ' *\n' +
+                  ' * This source is subject to the license found in the file \'LICENSE\' which must\n' +
+                  ' * be be distributed together with this source. All other rights reserved.\n' +
+                  ' *\n' +
+                  ' * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,\n' +
+                  ' * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED\n' +
+                  ' * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.\n' +
+                  ' */\n'
+  }
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -15,39 +15,16 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-/** \defgroup mag Mag
- *
- * * Magnetometer (mag) messages.
- * \{ */
-
 #ifndef LIBSBP_MAG_MESSAGES_H
 #define LIBSBP_MAG_MESSAGES_H
 
-#include "common.h"
+#include <libsbp/common.h>
 
-SBP_PACK_START
+SBP_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/mag.h` instead. Access to legacy types "
+    "via `libsbp/mag.h` will be removed in version 5.")
 
-
-/** Raw magnetometer data
- *
- * Raw data from the magnetometer.
- */
-#define SBP_MSG_MAG_RAW 0x0902
-
-typedef struct SBP_ATTR_PACKED {
-  u32 tow;      /**< Milliseconds since start of GPS week. If the high bit is set, the
-time is unknown or invalid.
- [ms] */
-  u8 tow_f;    /**< Milliseconds since start of GPS week, fractional part
- [ms / 256] */
-  s16 mag_x;    /**< Magnetic field in the body frame X axis [microteslas] */
-  s16 mag_y;    /**< Magnetic field in the body frame Y axis [microteslas] */
-  s16 mag_z;    /**< Magnetic field in the body frame Z axis [microteslas] */
-} msg_mag_raw_t;
-
-
-/** \} */
-
-SBP_PACK_END
+#include <libsbp/legacy/mag.h>
 
 #endif /* LIBSBP_MAG_MESSAGES_H */

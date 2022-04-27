@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -9,9 +9,10 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 package: swiftnav.sbp.bootload
-description: |
+description: >
   Messages for the bootloading configuration of a Piksi 2.3.1.  This message
   group does not apply to Piksi Multi.
+
 
   Note that some of these messages share the same message type ID for both the
   host request and the device response.
@@ -25,16 +26,15 @@ definitions:
     id: 0x00B3
     public: false
     short_desc: Bootloading handshake request (host => device)
-    desc: |
+    desc: >
       The handshake message request from the host establishes a
       handshake between the device bootloader and the host. The
       response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
-
  - MSG_BOOTLOADER_HANDSHAKE_RESP:
     id: 0x00B4
     public: false
     short_desc: Bootloading handshake response (host <= device)
-    desc: |
+    desc: >
       The handshake message response from the device establishes a
       handshake between the device bootloader and the host. The
       request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
@@ -53,13 +53,14 @@ definitions:
                 desc: SBP minor protocol version number
       - version:
           type: string
+          encoding: unterminated
           desc: Bootloader version number
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
     id: 0x00B1
     public: false
     short_desc: Bootloader jump to application (host => device)
-    desc: |
+    desc: >
       The host initiates the bootloader to jump to the application.
     fields:
       - jump:
@@ -70,7 +71,7 @@ definitions:
     id: 0x00DE
     public: false
     short_desc: Read FPGA device ID over UART request (host => device)
-    desc: |
+    desc: >
       The device message from the host reads a unique device
       identifier from the SwiftNAP, an FPGA. The host requests the ID
       by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
@@ -82,11 +83,11 @@ definitions:
     id: 0x00DD
     public: false
     short_desc: Read FPGA device ID over UART response (host <= device)
-    desc: |
+    desc: >
       The device message from the host reads a unique device
       identifier from the SwiftNAP, an FPGA. The host requests the ID
       by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-      responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
+      responds with a MSG_NAP_DEVICE_DNA_RESP message with the
       device ID in the payload. Note that this ID is tied to the FPGA,
       and not related to the Piksi's serial number.
     fields:
@@ -94,7 +95,7 @@ definitions:
           type: array
           fill: u8
           size: 8
-          desc: |
+          desc: >
             57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
             on the right.
 
@@ -109,5 +110,6 @@ definitions:
     fields:
       - handshake:
           type: array
+          encoding: unterminated
           fill: u8
           desc: Version number string (not NULL terminated)

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -23,13 +23,12 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
+var CarrierPhase = require("./gnss").CarrierPhase;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
+var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;
 
 /**
@@ -687,7 +686,7 @@ MsgCommandOutput.prototype.fieldSpec.push(['line', 'string', null]);
  * SBP class for message MSG_NETWORK_STATE_REQ (0x00BA).
  *
  * Request state of Piksi network interfaces. Output will be sent in
- * MSG_NETWORK_STATE_RESP messages
+ * MSG_NETWORK_STATE_RESP messages.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -954,9 +953,9 @@ MsgSpecan.prototype.fieldSpec.push(['amplitude_value', 'array', 'writeUInt8', fu
  *
  * This message describes the gain of each channel in the receiver frontend. Each
  * gain is encoded as a non-dimensional percentage relative to the maximum range
- * possible for the gain stage of the frontend. By convention, each gain array  has
+ * possible for the gain stage of the frontend. By convention, each gain array has
  * 8 entries and the index of the array corresponding to the index of the rf
- * channel  in the frontend. A gain of 127 percent encodes that rf channel is not
+ * channel in the frontend. A gain of 127 percent encodes that rf channel is not
  * present in the hardware. A negative value implies an error for the particular
  * gain stage as reported by the frontend.
  *

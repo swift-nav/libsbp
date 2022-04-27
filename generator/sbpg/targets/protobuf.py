@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -17,8 +17,11 @@ files.
 """
 
 import copy
-from sbpg.targets.templating import *
-from sbpg.utils import markdown_links
+
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import JENV, indented_wordwrap
 
 MESSAGES_TEMPLATE_NAME = 'message_template.proto.j2'
 
@@ -36,16 +39,13 @@ TYPE_MAP = {
   'string': 'string',
 }
 
-def to_comment(value):
+@pass_environment
+def commentify(environment: Environment,
+               value: str):
   """
   Builds a comment.
   """
-  if value is None:
-    return
-  if len(value.split('\n')) == 1:
-    return "* " + value
-  else:
-    return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
+  return indented_wordwrap(environment, value, indent=" * ", first=True)
 
 def to_identifier(s):
   """
@@ -75,7 +75,7 @@ def to_title(s):
 
 JENV.filters['pb_to_identifier'] = to_identifier
 JENV.filters['pb_to_type'] = to_type
-JENV.filters['pb_to_comment'] = to_comment
+JENV.filters['commentify'] = commentify
 JENV.filters['pb_to_title'] = to_title
 
 def render_source(output_dir, package_spec):

@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgEphemerisBds",
   "title":"MsgEphemerisBds",
-  "description":"The ephemeris message returns a set of satellite orbit,\nparameters that is used to calculate BDS satellite position,,\nvelocity, and clock offset. Please see the BeiDou Navigation,\nSatellite System SIS-ICD Version 2.1, Table 5-9 for more details.\n",
+  "description":"The ephemeris message returns a set of satellite orbit parameters that is used to calculate BDS satellite position, velocity, and clock offset. Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.\n",
   "type": "object",
   "properties": {
     "common": {"$ref": "EphemerisCommonContent.json"},

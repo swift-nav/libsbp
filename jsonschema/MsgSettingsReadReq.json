@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSettingsReadReq",
   "title":"MsgSettingsReadReq",
-  "description":"The setting message that reads the device configuration. The string,\nfield is a NULL-terminated and NULL-delimited string with contents,\n\"SECTION_SETTING\\0SETTING\\0\" where the '\\0' escape sequence denotes the,\nNULL character and where quotation marks are omitted. An example,\nstring that could be sent to a device is \"solution\\0soln_freq\\0\". A,\ndevice will only respond to this message when it is received from,\nsender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP,\nmessage (msg_id 0x00A5).\n",
+  "description":"The setting message that reads the device configuration. The string field is a NULL-terminated and NULL-delimited string with contents \"SECTION_SETTING\\0SETTING\\0\" where the '\\0' escape sequence denotes the NULL character and where quotation marks are omitted. An example string that could be sent to a device is \"solution\\0soln_freq\\0\". A device will only respond to this message when it is received from sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP message (msg_id 0x00A5).\n",
   "type": "object",
   "properties": {
     "setting": {"type": "string"}

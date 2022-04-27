@@ -63,7 +63,7 @@ jobs:
         os:
           - ubuntu-18.04
           - macos-10.15
-          - windows-2016
+          - windows-2022
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2

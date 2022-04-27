@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2011-2014 Swift Navigation Inc.
+# Copyright (C) 2011-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -14,15 +14,18 @@ Parsing YAML specifications of SBP.
 """
 
 import glob
+import inspect
+import itertools
 import os
+import string
+import sys
+
+import yaml
+
 import sbpg.specs.yaml_schema as s
 import sbpg.specs.yaml_test_schema as t
 import sbpg.syntax as sbp
 import sbpg.test_structs as sbp_test
-import sys
-import inspect
-
-import yaml
 
 ##############################################################################
 #
@@ -44,7 +47,7 @@ def read_spec(filename, verbose=False):
 
   Raises
   ----------
-  Exception
+  ValueError
     On empty file.
   yaml.YAMLError
     On Yaml parsing error
@@ -53,9 +56,9 @@ def read_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.load(f)
+    contents = yaml.safe_load(f)
     if contents is None:
-      raise Exception("Empty yaml file: %s." % filename)
+      raise ValueError("Empty yaml file: %s." % filename)
     try:
       s.package_schema(contents)
     except Exception as e:
@@ -79,7 +82,7 @@ def read_test_spec(filename, verbose=False):
 
   Raises
   ----------
-  Exception
+  ValueError
     On empty file.
   yaml.YAMLError
     On Yaml parsing error
@@ -88,9 +91,9 @@ def read_test_spec(filename, verbose=False):
   """
   contents = None
   with open(filename, 'r') as f:
-    contents = yaml.load(f)
+    contents = yaml.safe_load(f)
     if contents is None:
-      raise Exception("Empty yaml file: %s." % filename)
+      raise ValueError("Empty yaml file: %s." % filename)
     try:
       t.test_schema(contents)
     except Exception as e:
@@ -253,11 +256,28 @@ def mk_definition(defn):
   assert len(defn) == 1
   identifier, contents = next(iter(defn.items()))
   fs = [mk_field(f) for f in contents.get('fields', [])]
+  type_id = contents.get('type')
+  desc = contents.get('desc', None)
+  if desc and type_id not in ["collection", "primitive"]:
+    desc = desc.strip()
+    if not desc.upper() == "DEPRECATED":
+      assert desc.endswith("."), f"{identifier}: Append . to: `{desc}`"
+    assert all(x in string.printable for x in desc), f"Unprintable: {desc}"
+    lines = desc.splitlines()
+    assert all(line.strip() == line for line in lines), f"Extra whitespace:\n{lines}"
+    odd_lines = list(itertools.islice(lines,1,len(lines),2))
+    if any(line for line in odd_lines):
+      print(f"Warning: Multi-line desc contains single blank lines (use two):\n{lines}")
+  short_desc = contents.get("short_desc", None)
+  if short_desc:
+    assert not short_desc.endswith("."), f"{identifier}: Remove . from: `{short_desc}`"
+    assert all(x in string.printable for x in short_desc), f"Unprintable: {short_desc}"
+    assert len(short_desc.splitlines()) == 1, f"Multi-line short_desc: {short_desc}"
   return sbp.resolve_type(sbp.Definition(identifier=identifier,
                                          sbp_id=contents.get('id', None),
-                                         short_desc=contents.get('short_desc', None),
-                                         desc=contents.get('desc', None),
-                                         type_id=contents.get('type'),
+                                         short_desc=short_desc,
+                                         desc=desc,
+                                         type_id=type_id,
                                          fields=fs,
                                          public=contents.get('public', True),
                                          embedded_type=contents.get('embedded_type', False),
