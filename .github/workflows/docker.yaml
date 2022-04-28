@@ -13,7 +13,7 @@ jobs:
         ubuntu-release:
           - bionic
           - focal
-          - groovy
+          - jammy
     name: Build docker image
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +30,5 @@ jobs:
         run: docker images
 
       - name: Run make all inside image
-        if: matrix.ubuntu-release != 'groovy'
         run: |
           docker run --rm -v $PWD:/mnt/workspace -t libsbp-build:latest make all
