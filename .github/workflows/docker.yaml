@@ -13,7 +13,7 @@ jobs:
         ubuntu-release:
           - bionic
           - focal
-          - jammy
+#          - jammy
     name: Build docker image
     runs-on: ubuntu-latest
     steps:
