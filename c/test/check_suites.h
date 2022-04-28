@@ -96,6 +96,7 @@ Suite* auto_check_sbp_system_MsgHeartbeat_suite(void);
 Suite* auto_check_sbp_system_MsgInsStatus_suite(void);
 Suite* auto_check_sbp_system_MsgInsUpdates_suite(void);
 Suite* auto_check_sbp_system_MsgStartup_suite(void);
+Suite* auto_check_sbp_system_MsgStatusJournal_suite(void);
 Suite* auto_check_sbp_tracking_MsgMeasurementState_suite(void);
 Suite* auto_check_sbp_tracking_MsgTrackingState_suite(void);
 Suite* auto_check_sbp_tracking_MsgTrackingStateDetailedDep_suite(void);
