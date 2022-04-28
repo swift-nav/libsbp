@@ -200,7 +200,7 @@ definitions:
             type: u16
             desc: SBP protocol version
             fields:
-              - 8-16:
+              - 8-15:
                   desc: SBP major protocol version number
               - 0-7:
                   desc: SBP minor protocol version number
@@ -275,7 +275,7 @@ definitions:
             type: u16
             desc: SBP protocol version
             fields:
-              - 8-16:
+              - 8-15:
                   desc: SBP major protocol version number
               - 0-7:
                   desc: SBP minor protocol version number
