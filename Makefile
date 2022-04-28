@@ -80,7 +80,7 @@ docs: verify-prereq-docs pdf html
 c:          deps-c          gen-c          test-c
 python:     deps-python     gen-python     test-python
 javascript: deps-javascript gen-javascript test-javascript bundle-javascript
-java:       deps-java       gen-java       test-java
+java:       deps-java       gen-java       test-java       java-examples
 haskell:    deps-haskell    gen-haskell    test-haskell
 rust:       deps-rust       gen-rust       test-rust
 protobuf:   deps-protobuf   gen-protobuf   test-protobuf
@@ -485,3 +485,8 @@ mapping:
 
 benchmark:
 	@PYTHONPATH=$(PWD)/test_data ./test_data/benchmark_main.py
+
+java-examples:
+	$(call announce-begin,"Building java example fat jar")
+	cd $(SWIFTNAV_ROOT)/java/example && gradle clean fatjar
+	$(call announce-end,"Finished building fat jar")

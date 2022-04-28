@@ -3,29 +3,49 @@
 ## Requirements
 
 - JDK 11
-- Maven (optional)
+- Gradle
+
+## Examples
+
+Examples included
+- SerialLink (com.swiftnav.example.SerialLink)
+- TCPExample (com.swiftnav.example.TCPExample)
+- TrackingState (com.swiftnav.example.TrackingState)
+
+Example socket 
+host `piksi-relay-1.ce.swiftnav.com` 
+port `55555`
 
 ## How to run this example
 
 Using this example, build jar using
 
 ```bash
-mvn clean install
+gradle fatjar
 ```
 
-Using the built jars under `/target`,
+Using the built jars under `/build/libs`,
 
 Since multiple examples, use the built jar as classpath and desired example as the main class i.e:
 
 ```bash
 # Serial Link example
-java -cp example-1.0-SNAPSHOT.jar com.swiftnav.example.SerialLink
+java -cp example-all.jar com.swiftnav.example.SerialLink
 
 # TCP example
-java -cp example-1.0-SNAPSHOT.jar com.swiftnav.example.TCPExample
+java -cp example-all.jar com.swiftnav.example.TCPExample
 
 # Tracking State example
-java -cp example-1.0-SNAPSHOT.jar com.swiftnav.example.TrackingState
+java -cp example-all.jar com.swiftnav.example.TrackingState
+```
+
+
+## Using makefile
+
+Can use makefile to build using
+
+```shell
+make java-examples
 ```
 
 ## Setup
