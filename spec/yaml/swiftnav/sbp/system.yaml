@@ -29,7 +29,7 @@ definitions:
             type: u8
             desc: Cause of startup
             fields:
-              - 0-8:
+              - 0-7:
                   desc: Cause of startup
                   values:
                     - 0: Power on
@@ -39,12 +39,11 @@ definitions:
             type: u8
             desc: Startup type
             fields:
-              - 0-8:
+              - 0-7:
                   values:
                     - 0: Cold start
                     - 1: Warm start
                     - 2: Hot start
-
         - reserved:
             type: u16
             desc: Reserved
@@ -136,10 +135,10 @@ definitions:
                       - 1: An error has occurred
 
  - SubSystemReport:
-    short_desc: Sub-system Status report
+    short_desc: Subsystem Status report
     embedded_type: true
     desc: >
-      Report the general and specific state of a sub-system.  If the generic
+      Report the general and specific state of a subsystem.  If the generic
       state is reported as initializing, the specific state should be ignored.
     fields:
         - component:
@@ -179,7 +178,7 @@ definitions:
         The status report is sent periodically to inform the host
         or other attached devices that the system is running. It is
         used to monitor system malfunctions. It contains status
-        reports that indicate to the host the status of each sub-system and
+        reports that indicate to the host the status of each subsystem and
         whether it is operating correctly.
 
 
@@ -216,51 +215,26 @@ definitions:
             desc: Reported status of individual subsystems
 
  - StatusJournalItem:
-    short_desc: Sub-system Status report
+    short_desc: Subsystem Status report
     embedded_type: true
     desc: >
-      Report the general and specific state of a sub-system.  If the generic
-      state is reported as initializing, the specific state should be ignored.
+      Reports the uptime and the state of a subsystem via generic and specific
+      status codes.  If the generic state is reported as initializing, the
+      specific state should be ignored.
     fields:
         - uptime:
             type: u32
             desc: Milliseconds since system startup
-        - component:
-            type: u16
-            desc: Identity of reporting subsystem
-            fields:
-              - 0-15:
-                  desc: Subsystem
-                  values:
-                      - 0: Primary GNSS Antenna
-                      - 1: Measurement Engine
-                      - 2: Corrections Client
-                      - 3: Differential GNSS Engine
-                      - 4: CAN
-                      - 5: Wheel Odometry
-                      - 6: Sensor Fusion Engine
-        - generic:
-            type: u8
-            desc: Generic form status report
-            fields:
-              - 0-7:
-                  desc: Generic
-                  values:
-                      - 0: OK/Nominal
-                      - 1: Initializing
-                      - 2: Unknown
-                      - 3: Degraded
-                      - 4: Unusable
-        - specific:
-            type: u8
-            desc: Subsystem specific status code
+        - report:
+            type: SubSystemReport
 
  - MSG_STATUS_JOURNAL:
     id: 0xFFFD
     short_desc: Status report journal
     desc: >
-        The status journal message contains past status reports (see MSG_STATUS_REPORT)
-        and functions as a error/event storage for telemetry purposes.
+        The status journal message contains past status reports (see
+        MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+        purposes.
     fields:
         - reporting_system:
             type: u16
@@ -279,15 +253,15 @@ definitions:
                   desc: SBP major protocol version number
               - 0-7:
                   desc: SBP minor protocol version number
-        - n_status_reports:
+        - total_status_reports:
             type: u32
             desc: Total number of status reports sent since system startup
-        - packet_index:
+        - sequence_descriptor:
             type: u8
-            desc: Index of this packet in the status journal
-        - n_packets:
-            type: u8
-            desc: Number of packets in this status journal
+            desc: >
+              Index and number of messages in this sequence. First nibble is
+              the size of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
         - journal:
             type: array
             fill: StatusJournalItem
