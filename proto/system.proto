@@ -60,10 +60,10 @@ message MsgHeartbeat {
     uint32 flags = 1;
 }
 
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
+ * Report the general and specific state of a subsystem.  If the generic state
+ * is reported as initializing, the specific state should be ignored.
  */
 message SubSystemReport {
     uint32 component = 1;
@@ -76,7 +76,7 @@ message SubSystemReport {
  * The status report is sent periodically to inform the host or other attached
  * devices that the system is running. It is used to monitor system
  * malfunctions. It contains status reports that indicate to the host the
- * status of each sub-system and whether it is operating correctly.
+ * status of each subsystem and whether it is operating correctly.
  *
  * Interpretation of the subsystem specific status code is product dependent,
  * but if the generic status code is initializing, it should be ignored.
@@ -90,16 +90,15 @@ message MsgStatusReport {
     repeated SubSystemReport status = 5;
 }
 
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
+ * Reports the uptime and the state of a subsystem via generic and specific
+ * status codes.  If the generic state is reported as initializing, the
+ * specific state should be ignored.
  */
 message StatusJournalItem {
     uint32 uptime = 1;
-    uint32 component = 2;
-    uint32 generic = 3;
-    uint32 specific = 4;
+    SubSystemReport report = 2;
 }
 
 /** Status report journal
@@ -111,10 +110,9 @@ message StatusJournalItem {
 message MsgStatusJournal {
     uint32 reporting_system = 1;
     uint32 sbp_version = 2;
-    uint32 n_status_reports = 3;
-    uint32 packet_index = 4;
-    uint32 n_packets = 5;
-    repeated StatusJournalItem journal = 6;
+    uint32 total_status_reports = 3;
+    uint32 sequence_descriptor = 4;
+    repeated StatusJournalItem journal = 5;
 }
 
 /** Inertial Navigation System status message

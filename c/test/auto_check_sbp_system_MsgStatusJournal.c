@@ -122,9 +122,9 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 253, 255, 211, 136, 34, 1, 0, 1, 4,  100, 0,  0,  0,
-        7,  3,   146, 16,  0,   0,  6, 0, 1, 13, 186, 19, 0,  0,
-        6,  0,   1,   14,  184, 34, 0, 0, 6, 0,  1,   15, 11, 55,
+        85, 253, 255, 211, 136, 33, 1, 0, 1,  4,   100, 0,   0,   0,
+        16, 146, 16,  0,   0,   6,  0, 1, 13, 186, 19,  0,   0,   6,
+        0,  1,   14,  184, 34,  0,  0, 6, 0,  1,   15,  113, 119,
     };
 
     dummy_reset();
@@ -138,31 +138,30 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->journal[0]);
     }
-    test_msg->journal[0].component = 6;
-    test_msg->journal[0].generic = 1;
-    test_msg->journal[0].specific = 13;
+    test_msg->journal[0].report.component = 6;
+    test_msg->journal[0].report.generic = 1;
+    test_msg->journal[0].report.specific = 13;
     test_msg->journal[0].uptime = 4242;
     if (sizeof(test_msg->journal) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->journal[0]);
     }
-    test_msg->journal[1].component = 6;
-    test_msg->journal[1].generic = 1;
-    test_msg->journal[1].specific = 14;
+    test_msg->journal[1].report.component = 6;
+    test_msg->journal[1].report.generic = 1;
+    test_msg->journal[1].report.specific = 14;
     test_msg->journal[1].uptime = 5050;
     if (sizeof(test_msg->journal) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->journal[0]);
     }
-    test_msg->journal[2].component = 6;
-    test_msg->journal[2].generic = 1;
-    test_msg->journal[2].specific = 15;
+    test_msg->journal[2].report.component = 6;
+    test_msg->journal[2].report.generic = 1;
+    test_msg->journal[2].report.specific = 15;
     test_msg->journal[2].uptime = 8888;
-    test_msg->n_packets = 3;
-    test_msg->n_status_reports = 100;
-    test_msg->packet_index = 7;
     test_msg->reporting_system = 1;
     test_msg->sbp_version = 1025;
+    test_msg->sequence_descriptor = 16;
+    test_msg->total_status_reports = 100;
     sbp_send_message(&sbp_state, 0xFFFD, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -172,7 +171,9 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
         "from the spec is badly defined. Check your test spec");
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
                   "frame was not encoded properly");
 
@@ -218,57 +219,64 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
         (msg_status_journal_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->journal[0].component == 6,
-                  "incorrect value for journal[0].component, expected 6, is %d",
-                  check_msg->journal[0].component);
-    ck_assert_msg(check_msg->journal[0].generic == 1,
-                  "incorrect value for journal[0].generic, expected 1, is %d",
-                  check_msg->journal[0].generic);
-    ck_assert_msg(check_msg->journal[0].specific == 13,
-                  "incorrect value for journal[0].specific, expected 13, is %d",
-                  check_msg->journal[0].specific);
+    ck_assert_msg(
+        check_msg->journal[0].report.component == 6,
+        "incorrect value for journal[0].report.component, expected 6, is %d",
+        check_msg->journal[0].report.component);
+    ck_assert_msg(
+        check_msg->journal[0].report.generic == 1,
+        "incorrect value for journal[0].report.generic, expected 1, is %d",
+        check_msg->journal[0].report.generic);
+    ck_assert_msg(
+        check_msg->journal[0].report.specific == 13,
+        "incorrect value for journal[0].report.specific, expected 13, is %d",
+        check_msg->journal[0].report.specific);
     ck_assert_msg(check_msg->journal[0].uptime == 4242,
                   "incorrect value for journal[0].uptime, expected 4242, is %d",
                   check_msg->journal[0].uptime);
-    ck_assert_msg(check_msg->journal[1].component == 6,
-                  "incorrect value for journal[1].component, expected 6, is %d",
-                  check_msg->journal[1].component);
-    ck_assert_msg(check_msg->journal[1].generic == 1,
-                  "incorrect value for journal[1].generic, expected 1, is %d",
-                  check_msg->journal[1].generic);
-    ck_assert_msg(check_msg->journal[1].specific == 14,
-                  "incorrect value for journal[1].specific, expected 14, is %d",
-                  check_msg->journal[1].specific);
+    ck_assert_msg(
+        check_msg->journal[1].report.component == 6,
+        "incorrect value for journal[1].report.component, expected 6, is %d",
+        check_msg->journal[1].report.component);
+    ck_assert_msg(
+        check_msg->journal[1].report.generic == 1,
+        "incorrect value for journal[1].report.generic, expected 1, is %d",
+        check_msg->journal[1].report.generic);
+    ck_assert_msg(
+        check_msg->journal[1].report.specific == 14,
+        "incorrect value for journal[1].report.specific, expected 14, is %d",
+        check_msg->journal[1].report.specific);
     ck_assert_msg(check_msg->journal[1].uptime == 5050,
                   "incorrect value for journal[1].uptime, expected 5050, is %d",
                   check_msg->journal[1].uptime);
-    ck_assert_msg(check_msg->journal[2].component == 6,
-                  "incorrect value for journal[2].component, expected 6, is %d",
-                  check_msg->journal[2].component);
-    ck_assert_msg(check_msg->journal[2].generic == 1,
-                  "incorrect value for journal[2].generic, expected 1, is %d",
-                  check_msg->journal[2].generic);
-    ck_assert_msg(check_msg->journal[2].specific == 15,
-                  "incorrect value for journal[2].specific, expected 15, is %d",
-                  check_msg->journal[2].specific);
+    ck_assert_msg(
+        check_msg->journal[2].report.component == 6,
+        "incorrect value for journal[2].report.component, expected 6, is %d",
+        check_msg->journal[2].report.component);
+    ck_assert_msg(
+        check_msg->journal[2].report.generic == 1,
+        "incorrect value for journal[2].report.generic, expected 1, is %d",
+        check_msg->journal[2].report.generic);
+    ck_assert_msg(
+        check_msg->journal[2].report.specific == 15,
+        "incorrect value for journal[2].report.specific, expected 15, is %d",
+        check_msg->journal[2].report.specific);
     ck_assert_msg(check_msg->journal[2].uptime == 8888,
                   "incorrect value for journal[2].uptime, expected 8888, is %d",
                   check_msg->journal[2].uptime);
-    ck_assert_msg(check_msg->n_packets == 3,
-                  "incorrect value for n_packets, expected 3, is %d",
-                  check_msg->n_packets);
-    ck_assert_msg(check_msg->n_status_reports == 100,
-                  "incorrect value for n_status_reports, expected 100, is %d",
-                  check_msg->n_status_reports);
-    ck_assert_msg(check_msg->packet_index == 7,
-                  "incorrect value for packet_index, expected 7, is %d",
-                  check_msg->packet_index);
     ck_assert_msg(check_msg->reporting_system == 1,
                   "incorrect value for reporting_system, expected 1, is %d",
                   check_msg->reporting_system);
     ck_assert_msg(check_msg->sbp_version == 1025,
                   "incorrect value for sbp_version, expected 1025, is %d",
                   check_msg->sbp_version);
+    ck_assert_msg(check_msg->sequence_descriptor == 16,
+                  "incorrect value for sequence_descriptor, expected 16, is %d",
+                  check_msg->sequence_descriptor);
+    ck_assert_msg(
+        check_msg->total_status_reports == 100,
+        "incorrect value for total_status_reports, expected 100, is %d",
+        check_msg->total_status_reports);
   }
   // Test successful parsing of a message
   {
@@ -288,8 +296,8 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 253, 255, 211, 136, 18, 1, 0, 1, 4, 100, 0,   0,
-        0,  7,   1,   146, 16,  0,  0, 6, 0, 1, 13,  106, 72,
+        85, 253, 255, 211, 136, 17, 1, 0, 1, 4,  100, 0,   0,
+        0,  16,  146, 16,  0,   0,  6, 0, 1, 13, 144, 121,
     };
 
     dummy_reset();
@@ -303,15 +311,14 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->journal[0]);
     }
-    test_msg->journal[0].component = 6;
-    test_msg->journal[0].generic = 1;
-    test_msg->journal[0].specific = 13;
+    test_msg->journal[0].report.component = 6;
+    test_msg->journal[0].report.generic = 1;
+    test_msg->journal[0].report.specific = 13;
     test_msg->journal[0].uptime = 4242;
-    test_msg->n_packets = 1;
-    test_msg->n_status_reports = 100;
-    test_msg->packet_index = 7;
     test_msg->reporting_system = 1;
     test_msg->sbp_version = 1025;
+    test_msg->sequence_descriptor = 16;
+    test_msg->total_status_reports = 100;
     sbp_send_message(&sbp_state, 0xFFFD, 35027, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -321,7 +328,9 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
         "from the spec is badly defined. Check your test spec");
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
                   "frame was not encoded properly");
 
@@ -367,33 +376,34 @@ START_TEST(test_auto_check_sbp_system_MsgStatusJournal) {
         (msg_status_journal_t*)((void*)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->journal[0].component == 6,
-                  "incorrect value for journal[0].component, expected 6, is %d",
-                  check_msg->journal[0].component);
-    ck_assert_msg(check_msg->journal[0].generic == 1,
-                  "incorrect value for journal[0].generic, expected 1, is %d",
-                  check_msg->journal[0].generic);
-    ck_assert_msg(check_msg->journal[0].specific == 13,
-                  "incorrect value for journal[0].specific, expected 13, is %d",
-                  check_msg->journal[0].specific);
+    ck_assert_msg(
+        check_msg->journal[0].report.component == 6,
+        "incorrect value for journal[0].report.component, expected 6, is %d",
+        check_msg->journal[0].report.component);
+    ck_assert_msg(
+        check_msg->journal[0].report.generic == 1,
+        "incorrect value for journal[0].report.generic, expected 1, is %d",
+        check_msg->journal[0].report.generic);
+    ck_assert_msg(
+        check_msg->journal[0].report.specific == 13,
+        "incorrect value for journal[0].report.specific, expected 13, is %d",
+        check_msg->journal[0].report.specific);
     ck_assert_msg(check_msg->journal[0].uptime == 4242,
                   "incorrect value for journal[0].uptime, expected 4242, is %d",
                   check_msg->journal[0].uptime);
-    ck_assert_msg(check_msg->n_packets == 1,
-                  "incorrect value for n_packets, expected 1, is %d",
-                  check_msg->n_packets);
-    ck_assert_msg(check_msg->n_status_reports == 100,
-                  "incorrect value for n_status_reports, expected 100, is %d",
-                  check_msg->n_status_reports);
-    ck_assert_msg(check_msg->packet_index == 7,
-                  "incorrect value for packet_index, expected 7, is %d",
-                  check_msg->packet_index);
     ck_assert_msg(check_msg->reporting_system == 1,
                   "incorrect value for reporting_system, expected 1, is %d",
                   check_msg->reporting_system);
     ck_assert_msg(check_msg->sbp_version == 1025,
                   "incorrect value for sbp_version, expected 1025, is %d",
                   check_msg->sbp_version);
+    ck_assert_msg(check_msg->sequence_descriptor == 16,
+                  "incorrect value for sequence_descriptor, expected 16, is %d",
+                  check_msg->sequence_descriptor);
+    ck_assert_msg(
+        check_msg->total_status_reports == 100,
+        "incorrect value for total_status_reports, expected 100, is %d",
+        check_msg->total_status_reports);
   }
 }
 END_TEST

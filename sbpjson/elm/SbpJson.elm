@@ -2574,26 +2574,32 @@ functions as a error/event storage for telemetry purposes.
 -}
 type alias MsgStatusJournal =
     { journal : Array StatusJournalItem
-    , nPackets : Int
-    , nStatusReports : Int
-    , packetIndex : Int
     , reportingSystem : Int
     , sbpVersion : Int
+    , sequenceDescriptor : Int
+    , totalStatusReports : Int
     }
 
-{-| Report the general and specific state of a sub-system.  If the generic state is reported
-as initializing, the specific state should be ignored.
+{-| Reports the uptime and the state of a subsystem via generic and specific status codes.
+If the generic state is reported as initializing, the specific state should be ignored.
 -}
 type alias StatusJournalItem =
+    { report : SubSystemReport
+    , uptime : Int
+    }
+
+{-| Report the general and specific state of a subsystem.  If the generic state is reported
+as initializing, the specific state should be ignored.
+-}
+type alias SubSystemReport =
     { component : Int
     , generic : Int
     , specific : Int
-    , uptime : Int
     }
 
 {-| The status report is sent periodically to inform the host or other attached devices that
 the system is running. It is used to monitor system malfunctions. It contains status
-reports that indicate to the host the status of each sub-system and whether it is
+reports that indicate to the host the status of each subsystem and whether it is
 operating correctly.,
 ,
 Interpretation of the subsystem specific status code is product dependent, but if the
@@ -2606,15 +2612,6 @@ type alias MsgStatusReport =
     , sequence : Int
     , status : Array SubSystemReport
     , uptime : Int
-    }
-
-{-| Report the general and specific state of a sub-system.  If the generic state is reported
-as initializing, the specific state should be ignored.
--}
-type alias SubSystemReport =
-    { component : Int
-    , generic : Int
-    , specific : Int
     }
 
 {-| The flash lock message locks a sector of the STM flash memory. The device replies with a
@@ -6370,38 +6367,47 @@ msgStatusJournal : Jdec.Decoder MsgStatusJournal
 msgStatusJournal =
     Jpipe.decode MsgStatusJournal
         |> Jpipe.required "journal" (Jdec.array statusJournalItem)
-        |> Jpipe.required "n_packets" Jdec.int
-        |> Jpipe.required "n_status_reports" Jdec.int
-        |> Jpipe.required "packet_index" Jdec.int
         |> Jpipe.required "reporting_system" Jdec.int
         |> Jpipe.required "sbp_version" Jdec.int
+        |> Jpipe.required "sequence_descriptor" Jdec.int
+        |> Jpipe.required "total_status_reports" Jdec.int
 
 encodeMsgStatusJournal : MsgStatusJournal -> Jenc.Value
 encodeMsgStatusJournal x =
     Jenc.object
         [ ("journal", makeArrayEncoder encodeStatusJournalItem x.journal)
-        , ("n_packets", Jenc.int x.nPackets)
-        , ("n_status_reports", Jenc.int x.nStatusReports)
-        , ("packet_index", Jenc.int x.packetIndex)
         , ("reporting_system", Jenc.int x.reportingSystem)
         , ("sbp_version", Jenc.int x.sbpVersion)
+        , ("sequence_descriptor", Jenc.int x.sequenceDescriptor)
+        , ("total_status_reports", Jenc.int x.totalStatusReports)
         ]
 
 statusJournalItem : Jdec.Decoder StatusJournalItem
 statusJournalItem =
     Jpipe.decode StatusJournalItem
-        |> Jpipe.required "component" Jdec.int
-        |> Jpipe.required "generic" Jdec.int
-        |> Jpipe.required "specific" Jdec.int
+        |> Jpipe.required "report" subSystemReport
         |> Jpipe.required "uptime" Jdec.int
 
 encodeStatusJournalItem : StatusJournalItem -> Jenc.Value
 encodeStatusJournalItem x =
     Jenc.object
+        [ ("report", encodeSubSystemReport x.report)
+        , ("uptime", Jenc.int x.uptime)
+        ]
+
+subSystemReport : Jdec.Decoder SubSystemReport
+subSystemReport =
+    Jpipe.decode SubSystemReport
+        |> Jpipe.required "component" Jdec.int
+        |> Jpipe.required "generic" Jdec.int
+        |> Jpipe.required "specific" Jdec.int
+
+encodeSubSystemReport : SubSystemReport -> Jenc.Value
+encodeSubSystemReport x =
+    Jenc.object
         [ ("component", Jenc.int x.component)
         , ("generic", Jenc.int x.generic)
         , ("specific", Jenc.int x.specific)
-        , ("uptime", Jenc.int x.uptime)
         ]
 
 msgStatusReport : Jdec.Decoder MsgStatusReport
@@ -6421,21 +6427,6 @@ encodeMsgStatusReport x =
         , ("sequence", Jenc.int x.sequence)
         , ("status", makeArrayEncoder encodeSubSystemReport x.status)
         , ("uptime", Jenc.int x.uptime)
-        ]
-
-subSystemReport : Jdec.Decoder SubSystemReport
-subSystemReport =
-    Jpipe.decode SubSystemReport
-        |> Jpipe.required "component" Jdec.int
-        |> Jpipe.required "generic" Jdec.int
-        |> Jpipe.required "specific" Jdec.int
-
-encodeSubSystemReport : SubSystemReport -> Jenc.Value
-encodeSubSystemReport x =
-    Jenc.object
-        [ ("component", Jenc.int x.component)
-        , ("generic", Jenc.int x.generic)
-        , ("specific", Jenc.int x.specific)
         ]
 
 msgStmFlashLockSector : Jdec.Decoder MsgStmFlashLockSector

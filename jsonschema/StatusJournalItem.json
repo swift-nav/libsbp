@@ -13,18 +13,14 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#StatusJournalItem",
   "title":"StatusJournalItem",
-  "description":"Report the general and specific state of a sub-system.  If the generic state is reported as initializing, the specific state should be ignored.\n",
+  "description":"Reports the uptime and the state of a subsystem via generic and specific status codes.  If the generic state is reported as initializing, the specific state should be ignored.\n",
   "type": "object",
   "properties": {
     "uptime": {"type": "integer"},
-    "component": {"type": "integer"},
-    "generic": {"type": "integer"},
-    "specific": {"type": "integer"}
+    "report": {"$ref": "SubSystemReport.json"}
   },
   "required": [
     "uptime",
-    "component",
-    "generic",
-    "specific"
+    "report"
   ]
 }

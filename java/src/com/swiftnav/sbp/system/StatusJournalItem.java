@@ -24,14 +24,7 @@ public class StatusJournalItem extends SBPStruct {
     /** Milliseconds since system startup */
     public long uptime;
 
-    /** Identity of reporting subsystem */
-    public int component;
-
-    /** Generic form status report */
-    public int generic;
-
-    /** Subsystem specific status code */
-    public int specific;
+    public SubSystemReport report;
 
     public StatusJournalItem() {}
 
@@ -39,9 +32,7 @@ public class StatusJournalItem extends SBPStruct {
     public StatusJournalItem parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         uptime = parser.getU32();
-        component = parser.getU16();
-        generic = parser.getU8();
-        specific = parser.getU8();
+        report = new SubSystemReport().parse(parser);
         return this;
     }
 
@@ -49,18 +40,14 @@ public class StatusJournalItem extends SBPStruct {
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         builder.putU32(uptime);
-        builder.putU16(component);
-        builder.putU8(generic);
-        builder.putU8(specific);
+        report.build(builder);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
         obj.put("uptime", uptime);
-        obj.put("component", component);
-        obj.put("generic", generic);
-        obj.put("specific", specific);
+        obj.put("report", report.toJSON());
         return obj;
     }
 }

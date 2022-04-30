@@ -2875,17 +2875,19 @@ const typeMap = {
     ], "any"),
     "MsgStatusJournal": o([
         { json: "journal", js: "journal", typ: a(r("StatusJournalItem")) },
-        { json: "n_packets", js: "n_packets", typ: 0 },
-        { json: "n_status_reports", js: "n_status_reports", typ: 0 },
-        { json: "packet_index", js: "packet_index", typ: 0 },
         { json: "reporting_system", js: "reporting_system", typ: 0 },
         { json: "sbp_version", js: "sbp_version", typ: 0 },
+        { json: "sequence_descriptor", js: "sequence_descriptor", typ: 0 },
+        { json: "total_status_reports", js: "total_status_reports", typ: 0 },
     ], "any"),
     "StatusJournalItem": o([
+        { json: "report", js: "report", typ: r("SubSystemReport") },
+        { json: "uptime", js: "uptime", typ: 0 },
+    ], "any"),
+    "SubSystemReport": o([
         { json: "component", js: "component", typ: 0 },
         { json: "generic", js: "generic", typ: 0 },
         { json: "specific", js: "specific", typ: 0 },
-        { json: "uptime", js: "uptime", typ: 0 },
     ], "any"),
     "MsgStatusReport": o([
         { json: "reporting_system", js: "reporting_system", typ: 0 },
@@ -2893,11 +2895,6 @@ const typeMap = {
         { json: "sequence", js: "sequence", typ: 0 },
         { json: "status", js: "status", typ: a(r("SubSystemReport")) },
         { json: "uptime", js: "uptime", typ: 0 },
-    ], "any"),
-    "SubSystemReport": o([
-        { json: "component", js: "component", typ: 0 },
-        { json: "generic", js: "generic", typ: 0 },
-        { json: "specific", js: "specific", typ: 0 },
     ], "any"),
     "MsgStmFlashLockSector": o([
         { json: "sector", js: "sector", typ: 0 },

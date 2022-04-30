@@ -78,9 +78,9 @@ class Test_auto_check_sbp_system_MsgStatusJournal0
 
 TEST_F(Test_auto_check_sbp_system_MsgStatusJournal0, Test) {
   uint8_t encoded_frame[] = {
-      85, 253, 255, 211, 136, 34, 1, 0, 1, 4,  100, 0,  0,  0,
-      7,  3,   146, 16,  0,   0,  6, 0, 1, 13, 186, 19, 0,  0,
-      6,  0,   1,   14,  184, 34, 0, 0, 6, 0,  1,   15, 11, 55,
+      85, 253, 255, 211, 136, 33, 1, 0, 1,  4,   100, 0,   0,   0,
+      16, 146, 16,  0,   0,   6,  0, 1, 13, 186, 19,  0,   0,   6,
+      0,  1,   14,  184, 34,  0,  0, 6, 0,  1,   15,  113, 119,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -91,31 +91,30 @@ TEST_F(Test_auto_check_sbp_system_MsgStatusJournal0, Test) {
     // Cope with variable length arrays
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->journal[0]));
   }
-  test_msg->journal[0].component = 6;
-  test_msg->journal[0].generic = 1;
-  test_msg->journal[0].specific = 13;
+  test_msg->journal[0].report.component = 6;
+  test_msg->journal[0].report.generic = 1;
+  test_msg->journal[0].report.specific = 13;
   test_msg->journal[0].uptime = 4242;
   if (sizeof(test_msg->journal) == 0) {
     // Cope with variable length arrays
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->journal[0]));
   }
-  test_msg->journal[1].component = 6;
-  test_msg->journal[1].generic = 1;
-  test_msg->journal[1].specific = 14;
+  test_msg->journal[1].report.component = 6;
+  test_msg->journal[1].report.generic = 1;
+  test_msg->journal[1].report.specific = 14;
   test_msg->journal[1].uptime = 5050;
   if (sizeof(test_msg->journal) == 0) {
     // Cope with variable length arrays
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->journal[0]));
   }
-  test_msg->journal[2].component = 6;
-  test_msg->journal[2].generic = 1;
-  test_msg->journal[2].specific = 15;
+  test_msg->journal[2].report.component = 6;
+  test_msg->journal[2].report.generic = 1;
+  test_msg->journal[2].report.specific = 15;
   test_msg->journal[2].uptime = 8888;
-  test_msg->n_packets = 3;
-  test_msg->n_status_reports = 100;
-  test_msg->packet_index = 7;
   test_msg->reporting_system = 1;
   test_msg->sbp_version = 1025;
+  test_msg->sequence_descriptor = 16;
+  test_msg->total_status_reports = 100;
 
   EXPECT_EQ(send_message(0xFFFD, 35027, test_msg_len, test_msg_storage),
             SBP_OK);
@@ -130,57 +129,54 @@ TEST_F(Test_auto_check_sbp_system_MsgStatusJournal0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->journal[0].component, 6)
-      << "incorrect value for journal[0].component, expected 6, is "
-      << last_msg_->journal[0].component;
-  EXPECT_EQ(last_msg_->journal[0].generic, 1)
-      << "incorrect value for journal[0].generic, expected 1, is "
-      << last_msg_->journal[0].generic;
-  EXPECT_EQ(last_msg_->journal[0].specific, 13)
-      << "incorrect value for journal[0].specific, expected 13, is "
-      << last_msg_->journal[0].specific;
+  EXPECT_EQ(last_msg_->journal[0].report.component, 6)
+      << "incorrect value for journal[0].report.component, expected 6, is "
+      << last_msg_->journal[0].report.component;
+  EXPECT_EQ(last_msg_->journal[0].report.generic, 1)
+      << "incorrect value for journal[0].report.generic, expected 1, is "
+      << last_msg_->journal[0].report.generic;
+  EXPECT_EQ(last_msg_->journal[0].report.specific, 13)
+      << "incorrect value for journal[0].report.specific, expected 13, is "
+      << last_msg_->journal[0].report.specific;
   EXPECT_EQ(last_msg_->journal[0].uptime, 4242)
       << "incorrect value for journal[0].uptime, expected 4242, is "
       << last_msg_->journal[0].uptime;
-  EXPECT_EQ(last_msg_->journal[1].component, 6)
-      << "incorrect value for journal[1].component, expected 6, is "
-      << last_msg_->journal[1].component;
-  EXPECT_EQ(last_msg_->journal[1].generic, 1)
-      << "incorrect value for journal[1].generic, expected 1, is "
-      << last_msg_->journal[1].generic;
-  EXPECT_EQ(last_msg_->journal[1].specific, 14)
-      << "incorrect value for journal[1].specific, expected 14, is "
-      << last_msg_->journal[1].specific;
+  EXPECT_EQ(last_msg_->journal[1].report.component, 6)
+      << "incorrect value for journal[1].report.component, expected 6, is "
+      << last_msg_->journal[1].report.component;
+  EXPECT_EQ(last_msg_->journal[1].report.generic, 1)
+      << "incorrect value for journal[1].report.generic, expected 1, is "
+      << last_msg_->journal[1].report.generic;
+  EXPECT_EQ(last_msg_->journal[1].report.specific, 14)
+      << "incorrect value for journal[1].report.specific, expected 14, is "
+      << last_msg_->journal[1].report.specific;
   EXPECT_EQ(last_msg_->journal[1].uptime, 5050)
       << "incorrect value for journal[1].uptime, expected 5050, is "
       << last_msg_->journal[1].uptime;
-  EXPECT_EQ(last_msg_->journal[2].component, 6)
-      << "incorrect value for journal[2].component, expected 6, is "
-      << last_msg_->journal[2].component;
-  EXPECT_EQ(last_msg_->journal[2].generic, 1)
-      << "incorrect value for journal[2].generic, expected 1, is "
-      << last_msg_->journal[2].generic;
-  EXPECT_EQ(last_msg_->journal[2].specific, 15)
-      << "incorrect value for journal[2].specific, expected 15, is "
-      << last_msg_->journal[2].specific;
+  EXPECT_EQ(last_msg_->journal[2].report.component, 6)
+      << "incorrect value for journal[2].report.component, expected 6, is "
+      << last_msg_->journal[2].report.component;
+  EXPECT_EQ(last_msg_->journal[2].report.generic, 1)
+      << "incorrect value for journal[2].report.generic, expected 1, is "
+      << last_msg_->journal[2].report.generic;
+  EXPECT_EQ(last_msg_->journal[2].report.specific, 15)
+      << "incorrect value for journal[2].report.specific, expected 15, is "
+      << last_msg_->journal[2].report.specific;
   EXPECT_EQ(last_msg_->journal[2].uptime, 8888)
       << "incorrect value for journal[2].uptime, expected 8888, is "
       << last_msg_->journal[2].uptime;
-  EXPECT_EQ(last_msg_->n_packets, 3)
-      << "incorrect value for n_packets, expected 3, is "
-      << last_msg_->n_packets;
-  EXPECT_EQ(last_msg_->n_status_reports, 100)
-      << "incorrect value for n_status_reports, expected 100, is "
-      << last_msg_->n_status_reports;
-  EXPECT_EQ(last_msg_->packet_index, 7)
-      << "incorrect value for packet_index, expected 7, is "
-      << last_msg_->packet_index;
   EXPECT_EQ(last_msg_->reporting_system, 1)
       << "incorrect value for reporting_system, expected 1, is "
       << last_msg_->reporting_system;
   EXPECT_EQ(last_msg_->sbp_version, 1025)
       << "incorrect value for sbp_version, expected 1025, is "
       << last_msg_->sbp_version;
+  EXPECT_EQ(last_msg_->sequence_descriptor, 16)
+      << "incorrect value for sequence_descriptor, expected 16, is "
+      << last_msg_->sequence_descriptor;
+  EXPECT_EQ(last_msg_->total_status_reports, 100)
+      << "incorrect value for total_status_reports, expected 100, is "
+      << last_msg_->total_status_reports;
 }
 class Test_auto_check_sbp_system_MsgStatusJournal1
     : public ::testing::Test,
@@ -242,8 +238,8 @@ class Test_auto_check_sbp_system_MsgStatusJournal1
 
 TEST_F(Test_auto_check_sbp_system_MsgStatusJournal1, Test) {
   uint8_t encoded_frame[] = {
-      85, 253, 255, 211, 136, 18, 1, 0, 1, 4, 100, 0,   0,
-      0,  7,   1,   146, 16,  0,  0, 6, 0, 1, 13,  106, 72,
+      85, 253, 255, 211, 136, 17, 1, 0, 1, 4,  100, 0,   0,
+      0,  16,  146, 16,  0,   0,  6, 0, 1, 13, 144, 121,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -254,15 +250,14 @@ TEST_F(Test_auto_check_sbp_system_MsgStatusJournal1, Test) {
     // Cope with variable length arrays
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->journal[0]));
   }
-  test_msg->journal[0].component = 6;
-  test_msg->journal[0].generic = 1;
-  test_msg->journal[0].specific = 13;
+  test_msg->journal[0].report.component = 6;
+  test_msg->journal[0].report.generic = 1;
+  test_msg->journal[0].report.specific = 13;
   test_msg->journal[0].uptime = 4242;
-  test_msg->n_packets = 1;
-  test_msg->n_status_reports = 100;
-  test_msg->packet_index = 7;
   test_msg->reporting_system = 1;
   test_msg->sbp_version = 1025;
+  test_msg->sequence_descriptor = 16;
+  test_msg->total_status_reports = 100;
 
   EXPECT_EQ(send_message(0xFFFD, 35027, test_msg_len, test_msg_storage),
             SBP_OK);
@@ -277,31 +272,28 @@ TEST_F(Test_auto_check_sbp_system_MsgStatusJournal1, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 35027);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->journal[0].component, 6)
-      << "incorrect value for journal[0].component, expected 6, is "
-      << last_msg_->journal[0].component;
-  EXPECT_EQ(last_msg_->journal[0].generic, 1)
-      << "incorrect value for journal[0].generic, expected 1, is "
-      << last_msg_->journal[0].generic;
-  EXPECT_EQ(last_msg_->journal[0].specific, 13)
-      << "incorrect value for journal[0].specific, expected 13, is "
-      << last_msg_->journal[0].specific;
+  EXPECT_EQ(last_msg_->journal[0].report.component, 6)
+      << "incorrect value for journal[0].report.component, expected 6, is "
+      << last_msg_->journal[0].report.component;
+  EXPECT_EQ(last_msg_->journal[0].report.generic, 1)
+      << "incorrect value for journal[0].report.generic, expected 1, is "
+      << last_msg_->journal[0].report.generic;
+  EXPECT_EQ(last_msg_->journal[0].report.specific, 13)
+      << "incorrect value for journal[0].report.specific, expected 13, is "
+      << last_msg_->journal[0].report.specific;
   EXPECT_EQ(last_msg_->journal[0].uptime, 4242)
       << "incorrect value for journal[0].uptime, expected 4242, is "
       << last_msg_->journal[0].uptime;
-  EXPECT_EQ(last_msg_->n_packets, 1)
-      << "incorrect value for n_packets, expected 1, is "
-      << last_msg_->n_packets;
-  EXPECT_EQ(last_msg_->n_status_reports, 100)
-      << "incorrect value for n_status_reports, expected 100, is "
-      << last_msg_->n_status_reports;
-  EXPECT_EQ(last_msg_->packet_index, 7)
-      << "incorrect value for packet_index, expected 7, is "
-      << last_msg_->packet_index;
   EXPECT_EQ(last_msg_->reporting_system, 1)
       << "incorrect value for reporting_system, expected 1, is "
       << last_msg_->reporting_system;
   EXPECT_EQ(last_msg_->sbp_version, 1025)
       << "incorrect value for sbp_version, expected 1025, is "
       << last_msg_->sbp_version;
+  EXPECT_EQ(last_msg_->sequence_descriptor, 16)
+      << "incorrect value for sequence_descriptor, expected 16, is "
+      << last_msg_->sequence_descriptor;
+  EXPECT_EQ(last_msg_->total_status_reports, 100)
+      << "incorrect value for total_status_reports, expected 100, is "
+      << last_msg_->total_status_reports;
 }

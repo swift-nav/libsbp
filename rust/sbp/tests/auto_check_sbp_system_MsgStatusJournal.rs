@@ -24,8 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_system_MsgStatusJournal() {
     {
         let mut payload = Cursor::new(vec![
-            85, 253, 255, 211, 136, 34, 1, 0, 1, 4, 100, 0, 0, 0, 7, 3, 146, 16, 0, 0, 6, 0, 1, 13,
-            186, 19, 0, 0, 6, 0, 1, 14, 184, 34, 0, 0, 6, 0, 1, 15, 11, 55,
+            85, 253, 255, 211, 136, 33, 1, 0, 1, 4, 100, 0, 0, 0, 16, 146, 16, 0, 0, 6, 0, 1, 13,
+            186, 19, 0, 0, 6, 0, 1, 14, 184, 34, 0, 0, 6, 0, 1, 15, 113, 119,
         ]);
 
         // Test the round trip payload parsing
@@ -50,19 +50,19 @@ fn test_auto_check_sbp_system_MsgStatusJournal() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.journal[0].component, 6,
-                    "incorrect value for journal[0].component, expected 6, is {}",
-                    msg.journal[0].component
+                    msg.journal[0].report.component, 6,
+                    "incorrect value for journal[0].report.component, expected 6, is {}",
+                    msg.journal[0].report.component
                 );
                 assert_eq!(
-                    msg.journal[0].generic, 1,
-                    "incorrect value for journal[0].generic, expected 1, is {}",
-                    msg.journal[0].generic
+                    msg.journal[0].report.generic, 1,
+                    "incorrect value for journal[0].report.generic, expected 1, is {}",
+                    msg.journal[0].report.generic
                 );
                 assert_eq!(
-                    msg.journal[0].specific, 13,
-                    "incorrect value for journal[0].specific, expected 13, is {}",
-                    msg.journal[0].specific
+                    msg.journal[0].report.specific, 13,
+                    "incorrect value for journal[0].report.specific, expected 13, is {}",
+                    msg.journal[0].report.specific
                 );
                 assert_eq!(
                     msg.journal[0].uptime, 4242,
@@ -70,19 +70,19 @@ fn test_auto_check_sbp_system_MsgStatusJournal() {
                     msg.journal[0].uptime
                 );
                 assert_eq!(
-                    msg.journal[1].component, 6,
-                    "incorrect value for journal[1].component, expected 6, is {}",
-                    msg.journal[1].component
+                    msg.journal[1].report.component, 6,
+                    "incorrect value for journal[1].report.component, expected 6, is {}",
+                    msg.journal[1].report.component
                 );
                 assert_eq!(
-                    msg.journal[1].generic, 1,
-                    "incorrect value for journal[1].generic, expected 1, is {}",
-                    msg.journal[1].generic
+                    msg.journal[1].report.generic, 1,
+                    "incorrect value for journal[1].report.generic, expected 1, is {}",
+                    msg.journal[1].report.generic
                 );
                 assert_eq!(
-                    msg.journal[1].specific, 14,
-                    "incorrect value for journal[1].specific, expected 14, is {}",
-                    msg.journal[1].specific
+                    msg.journal[1].report.specific, 14,
+                    "incorrect value for journal[1].report.specific, expected 14, is {}",
+                    msg.journal[1].report.specific
                 );
                 assert_eq!(
                     msg.journal[1].uptime, 5050,
@@ -90,39 +90,24 @@ fn test_auto_check_sbp_system_MsgStatusJournal() {
                     msg.journal[1].uptime
                 );
                 assert_eq!(
-                    msg.journal[2].component, 6,
-                    "incorrect value for journal[2].component, expected 6, is {}",
-                    msg.journal[2].component
+                    msg.journal[2].report.component, 6,
+                    "incorrect value for journal[2].report.component, expected 6, is {}",
+                    msg.journal[2].report.component
                 );
                 assert_eq!(
-                    msg.journal[2].generic, 1,
-                    "incorrect value for journal[2].generic, expected 1, is {}",
-                    msg.journal[2].generic
+                    msg.journal[2].report.generic, 1,
+                    "incorrect value for journal[2].report.generic, expected 1, is {}",
+                    msg.journal[2].report.generic
                 );
                 assert_eq!(
-                    msg.journal[2].specific, 15,
-                    "incorrect value for journal[2].specific, expected 15, is {}",
-                    msg.journal[2].specific
+                    msg.journal[2].report.specific, 15,
+                    "incorrect value for journal[2].report.specific, expected 15, is {}",
+                    msg.journal[2].report.specific
                 );
                 assert_eq!(
                     msg.journal[2].uptime, 8888,
                     "incorrect value for journal[2].uptime, expected 8888, is {}",
                     msg.journal[2].uptime
-                );
-                assert_eq!(
-                    msg.n_packets, 3,
-                    "incorrect value for n_packets, expected 3, is {}",
-                    msg.n_packets
-                );
-                assert_eq!(
-                    msg.n_status_reports, 100,
-                    "incorrect value for n_status_reports, expected 100, is {}",
-                    msg.n_status_reports
-                );
-                assert_eq!(
-                    msg.packet_index, 7,
-                    "incorrect value for packet_index, expected 7, is {}",
-                    msg.packet_index
                 );
                 assert_eq!(
                     msg.reporting_system, 1,
@@ -133,6 +118,16 @@ fn test_auto_check_sbp_system_MsgStatusJournal() {
                     msg.sbp_version, 1025,
                     "incorrect value for sbp_version, expected 1025, is {}",
                     msg.sbp_version
+                );
+                assert_eq!(
+                    msg.sequence_descriptor, 16,
+                    "incorrect value for sequence_descriptor, expected 16, is {}",
+                    msg.sequence_descriptor
+                );
+                assert_eq!(
+                    msg.total_status_reports, 100,
+                    "incorrect value for total_status_reports, expected 100, is {}",
+                    msg.total_status_reports
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgStatusJournal"),
@@ -142,8 +137,8 @@ fn test_auto_check_sbp_system_MsgStatusJournal() {
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 253, 255, 211, 136, 18, 1, 0, 1, 4, 100, 0, 0, 0, 7, 1, 146, 16, 0, 0, 6, 0, 1, 13,
-            106, 72,
+            85, 253, 255, 211, 136, 17, 1, 0, 1, 4, 100, 0, 0, 0, 16, 146, 16, 0, 0, 6, 0, 1, 13,
+            144, 121,
         ]);
 
         // Test the round trip payload parsing
@@ -168,39 +163,24 @@ fn test_auto_check_sbp_system_MsgStatusJournal() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.journal[0].component, 6,
-                    "incorrect value for journal[0].component, expected 6, is {}",
-                    msg.journal[0].component
+                    msg.journal[0].report.component, 6,
+                    "incorrect value for journal[0].report.component, expected 6, is {}",
+                    msg.journal[0].report.component
                 );
                 assert_eq!(
-                    msg.journal[0].generic, 1,
-                    "incorrect value for journal[0].generic, expected 1, is {}",
-                    msg.journal[0].generic
+                    msg.journal[0].report.generic, 1,
+                    "incorrect value for journal[0].report.generic, expected 1, is {}",
+                    msg.journal[0].report.generic
                 );
                 assert_eq!(
-                    msg.journal[0].specific, 13,
-                    "incorrect value for journal[0].specific, expected 13, is {}",
-                    msg.journal[0].specific
+                    msg.journal[0].report.specific, 13,
+                    "incorrect value for journal[0].report.specific, expected 13, is {}",
+                    msg.journal[0].report.specific
                 );
                 assert_eq!(
                     msg.journal[0].uptime, 4242,
                     "incorrect value for journal[0].uptime, expected 4242, is {}",
                     msg.journal[0].uptime
-                );
-                assert_eq!(
-                    msg.n_packets, 1,
-                    "incorrect value for n_packets, expected 1, is {}",
-                    msg.n_packets
-                );
-                assert_eq!(
-                    msg.n_status_reports, 100,
-                    "incorrect value for n_status_reports, expected 100, is {}",
-                    msg.n_status_reports
-                );
-                assert_eq!(
-                    msg.packet_index, 7,
-                    "incorrect value for packet_index, expected 7, is {}",
-                    msg.packet_index
                 );
                 assert_eq!(
                     msg.reporting_system, 1,
@@ -211,6 +191,16 @@ fn test_auto_check_sbp_system_MsgStatusJournal() {
                     msg.sbp_version, 1025,
                     "incorrect value for sbp_version, expected 1025, is {}",
                     msg.sbp_version
+                );
+                assert_eq!(
+                    msg.sequence_descriptor, 16,
+                    "incorrect value for sequence_descriptor, expected 16, is {}",
+                    msg.sequence_descriptor
+                );
+                assert_eq!(
+                    msg.total_status_reports, 100,
+                    "incorrect value for total_status_reports, expected 100, is {}",
+                    msg.total_status_reports
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgStatusJournal"),

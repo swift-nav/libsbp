@@ -138,8 +138,8 @@ $(makeLenses ''MsgHeartbeat)
 
 -- | SubSystemReport.
 --
--- Report the general and specific state of a sub-system.  If the generic
--- state is reported as initializing, the specific state should be ignored.
+-- Report the general and specific state of a subsystem.  If the generic state
+-- is reported as initializing, the specific state should be ignored.
 data SubSystemReport = SubSystemReport
   { _subSystemReport_component :: !Word16
     -- ^ Identity of reporting subsystem
@@ -172,7 +172,7 @@ msgStatusReport = 0xFFFE
 -- The status report is sent periodically to inform the host or other attached
 -- devices that the system is running. It is used to monitor system
 -- malfunctions. It contains status reports that indicate to the host the
--- status of each sub-system and whether it is operating correctly.
+-- status of each subsystem and whether it is operating correctly.
 --
 -- Interpretation of the subsystem specific status code is product dependent,
 -- but if the generic status code is initializing, it should be ignored.
@@ -212,32 +212,24 @@ $(makeLenses ''MsgStatusReport)
 
 -- | StatusJournalItem.
 --
--- Report the general and specific state of a sub-system.  If the generic
--- state is reported as initializing, the specific state should be ignored.
+-- Reports the uptime and the state of a subsystem via generic and specific
+-- status codes.  If the generic state is reported as initializing, the
+-- specific state should be ignored.
 data StatusJournalItem = StatusJournalItem
-  { _statusJournalItem_uptime  :: !Word32
+  { _statusJournalItem_uptime :: !Word32
     -- ^ Milliseconds since system startup
-  , _statusJournalItem_component :: !Word16
-    -- ^ Identity of reporting subsystem
-  , _statusJournalItem_generic :: !Word8
-    -- ^ Generic form status report
-  , _statusJournalItem_specific :: !Word8
-    -- ^ Subsystem specific status code
+  , _statusJournalItem_report :: !SubSystemReport
   } deriving ( Show, Read, Eq )
 
 instance Binary StatusJournalItem where
   get = do
     _statusJournalItem_uptime <- getWord32le
-    _statusJournalItem_component <- getWord16le
-    _statusJournalItem_generic <- getWord8
-    _statusJournalItem_specific <- getWord8
+    _statusJournalItem_report <- get
     pure StatusJournalItem {..}
 
   put StatusJournalItem {..} = do
     putWord32le _statusJournalItem_uptime
-    putWord16le _statusJournalItem_component
-    putWord8 _statusJournalItem_generic
-    putWord8 _statusJournalItem_specific
+    put _statusJournalItem_report
 
 $(makeJSON "_statusJournalItem_" ''StatusJournalItem)
 $(makeLenses ''StatusJournalItem)
@@ -251,17 +243,17 @@ msgStatusJournal = 0xFFFD
 -- MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
 -- purposes.
 data MsgStatusJournal = MsgStatusJournal
-  { _msgStatusJournal_reporting_system :: !Word16
+  { _msgStatusJournal_reporting_system   :: !Word16
     -- ^ Identity of reporting system
-  , _msgStatusJournal_sbp_version    :: !Word16
+  , _msgStatusJournal_sbp_version        :: !Word16
     -- ^ SBP protocol version
-  , _msgStatusJournal_n_status_reports :: !Word32
+  , _msgStatusJournal_total_status_reports :: !Word32
     -- ^ Total number of status reports sent since system startup
-  , _msgStatusJournal_packet_index   :: !Word8
-    -- ^ Index of this packet in the status journal
-  , _msgStatusJournal_n_packets      :: !Word8
-    -- ^ Number of packets in this status journal
-  , _msgStatusJournal_journal        :: ![StatusJournalItem]
+  , _msgStatusJournal_sequence_descriptor :: !Word8
+    -- ^ Index and number of messages in this sequence. First nibble is the size
+    -- of the sequence (n), second nibble is the zero-indexed counter (ith
+    -- packet of n)
+  , _msgStatusJournal_journal            :: ![StatusJournalItem]
     -- ^ Status journal
   } deriving ( Show, Read, Eq )
 
@@ -269,18 +261,16 @@ instance Binary MsgStatusJournal where
   get = do
     _msgStatusJournal_reporting_system <- getWord16le
     _msgStatusJournal_sbp_version <- getWord16le
-    _msgStatusJournal_n_status_reports <- getWord32le
-    _msgStatusJournal_packet_index <- getWord8
-    _msgStatusJournal_n_packets <- getWord8
+    _msgStatusJournal_total_status_reports <- getWord32le
+    _msgStatusJournal_sequence_descriptor <- getWord8
     _msgStatusJournal_journal <- whileM (not <$> isEmpty) get
     pure MsgStatusJournal {..}
 
   put MsgStatusJournal {..} = do
     putWord16le _msgStatusJournal_reporting_system
     putWord16le _msgStatusJournal_sbp_version
-    putWord32le _msgStatusJournal_n_status_reports
-    putWord8 _msgStatusJournal_packet_index
-    putWord8 _msgStatusJournal_n_packets
+    putWord32le _msgStatusJournal_total_status_reports
+    putWord8 _msgStatusJournal_sequence_descriptor
     mapM_ put _msgStatusJournal_journal
 
 $(makeSBP 'msgStatusJournal ''MsgStatusJournal)

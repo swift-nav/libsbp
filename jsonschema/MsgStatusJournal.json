@@ -18,17 +18,15 @@
   "properties": {
     "reporting_system": {"type": "integer"},
     "sbp_version": {"type": "integer"},
-    "n_status_reports": {"type": "integer"},
-    "packet_index": {"type": "integer"},
-    "n_packets": {"type": "integer"},
+    "total_status_reports": {"type": "integer"},
+    "sequence_descriptor": {"type": "integer"},
     "journal": {"type": "array", "items": {"$ref": "StatusJournalItem.json"}}
   },
   "required": [
     "reporting_system",
     "sbp_version",
-    "n_status_reports",
-    "packet_index",
-    "n_packets",
+    "total_status_reports",
+    "sequence_descriptor",
     "journal"
   ]
 }

@@ -38,13 +38,13 @@ public class MsgStatusJournal extends SBPMessage {
     public int sbp_version;
 
     /** Total number of status reports sent since system startup */
-    public long n_status_reports;
+    public long total_status_reports;
 
-    /** Index of this packet in the status journal */
-    public int packet_index;
-
-    /** Number of packets in this status journal */
-    public int n_packets;
+    /**
+     * Index and number of messages in this sequence. First nibble is the size of the sequence (n),
+     * second nibble is the zero-indexed counter (ith packet of n)
+     */
+    public int sequence_descriptor;
 
     /** Status journal */
     public StatusJournalItem[] journal;
@@ -67,9 +67,8 @@ public class MsgStatusJournal extends SBPMessage {
         /* Parse fields from binary */
         reporting_system = parser.getU16();
         sbp_version = parser.getU16();
-        n_status_reports = parser.getU32();
-        packet_index = parser.getU8();
-        n_packets = parser.getU8();
+        total_status_reports = parser.getU32();
+        sequence_descriptor = parser.getU8();
         journal = parser.getArray(StatusJournalItem.class);
     }
 
@@ -77,9 +76,8 @@ public class MsgStatusJournal extends SBPMessage {
     protected void build(Builder builder) {
         builder.putU16(reporting_system);
         builder.putU16(sbp_version);
-        builder.putU32(n_status_reports);
-        builder.putU8(packet_index);
-        builder.putU8(n_packets);
+        builder.putU32(total_status_reports);
+        builder.putU8(sequence_descriptor);
         builder.putArray(journal);
     }
 
@@ -88,9 +86,8 @@ public class MsgStatusJournal extends SBPMessage {
         JSONObject obj = super.toJSON();
         obj.put("reporting_system", reporting_system);
         obj.put("sbp_version", sbp_version);
-        obj.put("n_status_reports", n_status_reports);
-        obj.put("packet_index", packet_index);
-        obj.put("n_packets", n_packets);
+        obj.put("total_status_reports", total_status_reports);
+        obj.put("sequence_descriptor", sequence_descriptor);
         obj.put("journal", SBPStruct.toJSONArray(journal));
         return obj;
     }

@@ -34,7 +34,7 @@ SBP_PACK_START
  * ready to respond to commands or configuration requests.
  */
 #define SBP_MSG_STARTUP 0xFF00
-#define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0x1ff)
+#define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0xff)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags)      \
   (((flags) >> SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT) & \
@@ -48,7 +48,7 @@ SBP_PACK_START
 #define SBP_STARTUP_CAUSE_OF_STARTUP_POWER_ON (0)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SOFTWARE_RESET (1)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_WATCHDOG_RESET (2)
-#define SBP_STARTUP__MASK (0x1ff)
+#define SBP_STARTUP__MASK (0xff)
 #define SBP_STARTUP__SHIFT (0u)
 #define SBP_STARTUP__GET(flags) \
   (((flags) >> SBP_STARTUP__SHIFT) & SBP_STARTUP__MASK)
@@ -204,10 +204,10 @@ typedef struct SBP_ATTR_PACKED {
   u32 flags; /**< Status flags */
 } msg_heartbeat_t;
 
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
+ * Report the general and specific state of a subsystem.  If the generic state
+ * is reported as initializing, the specific state should be ignored.
  */
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
@@ -255,7 +255,7 @@ typedef struct SBP_ATTR_PACKED {
  * The status report is sent periodically to inform the host or other attached
  * devices that the system is running. It is used to monitor system
  * malfunctions. It contains status reports that indicate to the host the
- * status of each sub-system and whether it is operating correctly.
+ * status of each subsystem and whether it is operating correctly.
  *
  * Interpretation of the subsystem specific status code is product dependent,
  * but if the generic status code is initializing, it should be ignored.
@@ -307,51 +307,16 @@ typedef struct SBP_ATTR_PACKED {
                                       subsystems */
 } msg_status_report_t;
 
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
+ * Reports the uptime and the state of a subsystem via generic and specific
+ * status codes.  If the generic state is reported as initializing, the
+ * specific state should be ignored.
  */
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_MASK (0xffff)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_SHIFT (0u)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_GET(flags)      \
-  (((flags) >> SBP_STATUSJOURNALITEM_SUBSYSTEM_SHIFT) & \
-   SBP_STATUSJOURNALITEM_SUBSYSTEM_MASK)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_SET(flags, val)           \
-  do {                                                            \
-    ((flags) |= (((val) & (SBP_STATUSJOURNALITEM_SUBSYSTEM_MASK)) \
-                 << (SBP_STATUSJOURNALITEM_SUBSYSTEM_SHIFT)));    \
-  } while (0)
-
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_PRIMARY_GNSS_ANTENNA (0)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_MEASUREMENT_ENGINE (1)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_CORRECTIONS_CLIENT (2)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_DIFFERENTIAL_GNSS_ENGINE (3)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_CAN (4)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_WHEEL_ODOMETRY (5)
-#define SBP_STATUSJOURNALITEM_SUBSYSTEM_SENSOR_FUSION_ENGINE (6)
-#define SBP_STATUSJOURNALITEM_GENERIC_MASK (0xff)
-#define SBP_STATUSJOURNALITEM_GENERIC_SHIFT (0u)
-#define SBP_STATUSJOURNALITEM_GENERIC_GET(flags)      \
-  (((flags) >> SBP_STATUSJOURNALITEM_GENERIC_SHIFT) & \
-   SBP_STATUSJOURNALITEM_GENERIC_MASK)
-#define SBP_STATUSJOURNALITEM_GENERIC_SET(flags, val)           \
-  do {                                                          \
-    ((flags) |= (((val) & (SBP_STATUSJOURNALITEM_GENERIC_MASK)) \
-                 << (SBP_STATUSJOURNALITEM_GENERIC_SHIFT)));    \
-  } while (0)
-
-#define SBP_STATUSJOURNALITEM_GENERIC_OKNOMINAL (0)
-#define SBP_STATUSJOURNALITEM_GENERIC_INITIALIZING (1)
-#define SBP_STATUSJOURNALITEM_GENERIC_UNKNOWN (2)
-#define SBP_STATUSJOURNALITEM_GENERIC_DEGRADED (3)
-#define SBP_STATUSJOURNALITEM_GENERIC_UNUSABLE (4)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 uptime;    /**< Milliseconds since system startup */
-  u16 component; /**< Identity of reporting subsystem */
-  u8 generic;    /**< Generic form status report */
-  u8 specific;   /**< Subsystem specific status code */
+  u32 uptime; /**< Milliseconds since system startup */
+  sub_system_report_t report;
 } status_journal_item_t;
 
 /** Status report journal
@@ -399,12 +364,14 @@ typedef struct SBP_ATTR_PACKED {
   } while (0)
 
 typedef struct SBP_ATTR_PACKED {
-  u16 reporting_system; /**< Identity of reporting system */
-  u16 sbp_version;      /**< SBP protocol version */
-  u32 n_status_reports; /**< Total number of status reports sent since
-                             system startup */
-  u8 packet_index;      /**< Index of this packet in the status journal */
-  u8 n_packets;         /**< Number of packets in this status journal */
+  u16 reporting_system;     /**< Identity of reporting system */
+  u16 sbp_version;          /**< SBP protocol version */
+  u32 total_status_reports; /**< Total number of status reports sent since
+                                 system startup */
+  u8 sequence_descriptor;   /**< Index and number of messages in this
+                                 sequence. First nibble is the size of the
+                                 sequence (n), second nibble is the zero-
+                                 indexed counter (ith packet of n) */
   status_journal_item_t journal[0]; /**< Status journal */
 } msg_status_journal_t;
 

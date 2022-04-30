@@ -31,40 +31,40 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
         byte[] payload =
                 new byte[] {
                     (byte) 1, (byte) 0, (byte) 1, (byte) 4, (byte) 100, (byte) 0, (byte) 0,
-                    (byte) 0, (byte) 7, (byte) 3, (byte) 146, (byte) 16, (byte) 0, (byte) 0,
-                    (byte) 6, (byte) 0, (byte) 1, (byte) 13, (byte) 186, (byte) 19, (byte) 0,
-                    (byte) 0, (byte) 6, (byte) 0, (byte) 1, (byte) 14, (byte) 184, (byte) 34,
-                    (byte) 0, (byte) 0, (byte) 6, (byte) 0, (byte) 1, (byte) 15,
+                    (byte) 0, (byte) 16, (byte) 146, (byte) 16, (byte) 0, (byte) 0, (byte) 6,
+                    (byte) 0, (byte) 1, (byte) 13, (byte) 186, (byte) 19, (byte) 0, (byte) 0,
+                    (byte) 6, (byte) 0, (byte) 1, (byte) 14, (byte) 184, (byte) 34, (byte) 0,
+                    (byte) 0, (byte) 6, (byte) 0, (byte) 1, (byte) 15,
                 };
         SBPMessage sbp = new SBPMessage(0x88D3, 0xFFFD, payload);
         MsgStatusJournal msg = new MsgStatusJournal(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
-        value = msg.journal[0].component;
+        value = msg.journal[0].report.component;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[0].component + "' != '" + 6 + "'",
+                    "'" + msg.journal[0].report.component + "' != '" + 6 + "'",
                     value.equals(BigInteger.valueOf(6L)));
         } else {
             value = value.longValue();
             expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[0].generic;
+        value = msg.journal[0].report.generic;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[0].generic + "' != '" + 1 + "'",
+                    "'" + msg.journal[0].report.generic + "' != '" + 1 + "'",
                     value.equals(BigInteger.valueOf(1L)));
         } else {
             value = value.longValue();
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[0].specific;
+        value = msg.journal[0].report.specific;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[0].specific + "' != '" + 13 + "'",
+                    "'" + msg.journal[0].report.specific + "' != '" + 13 + "'",
                     value.equals(BigInteger.valueOf(13L)));
         } else {
             value = value.longValue();
@@ -81,30 +81,30 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
             expected = 4242L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[1].component;
+        value = msg.journal[1].report.component;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[1].component + "' != '" + 6 + "'",
+                    "'" + msg.journal[1].report.component + "' != '" + 6 + "'",
                     value.equals(BigInteger.valueOf(6L)));
         } else {
             value = value.longValue();
             expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[1].generic;
+        value = msg.journal[1].report.generic;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[1].generic + "' != '" + 1 + "'",
+                    "'" + msg.journal[1].report.generic + "' != '" + 1 + "'",
                     value.equals(BigInteger.valueOf(1L)));
         } else {
             value = value.longValue();
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[1].specific;
+        value = msg.journal[1].report.specific;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[1].specific + "' != '" + 14 + "'",
+                    "'" + msg.journal[1].report.specific + "' != '" + 14 + "'",
                     value.equals(BigInteger.valueOf(14L)));
         } else {
             value = value.longValue();
@@ -121,30 +121,30 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
             expected = 5050L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[2].component;
+        value = msg.journal[2].report.component;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[2].component + "' != '" + 6 + "'",
+                    "'" + msg.journal[2].report.component + "' != '" + 6 + "'",
                     value.equals(BigInteger.valueOf(6L)));
         } else {
             value = value.longValue();
             expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[2].generic;
+        value = msg.journal[2].report.generic;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[2].generic + "' != '" + 1 + "'",
+                    "'" + msg.journal[2].report.generic + "' != '" + 1 + "'",
                     value.equals(BigInteger.valueOf(1L)));
         } else {
             value = value.longValue();
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[2].specific;
+        value = msg.journal[2].report.specific;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[2].specific + "' != '" + 15 + "'",
+                    "'" + msg.journal[2].report.specific + "' != '" + 15 + "'",
                     value.equals(BigInteger.valueOf(15L)));
         } else {
             value = value.longValue();
@@ -161,35 +161,6 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
             expected = 8888L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.n_packets;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.n_packets + "' != '" + 3 + "'", value.equals(BigInteger.valueOf(3L)));
-        } else {
-            value = value.longValue();
-            expected = 3L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.n_status_reports;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.n_status_reports + "' != '" + 100 + "'",
-                    value.equals(BigInteger.valueOf(100L)));
-        } else {
-            value = value.longValue();
-            expected = 100L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.packet_index;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.packet_index + "' != '" + 7 + "'",
-                    value.equals(BigInteger.valueOf(7L)));
-        } else {
-            value = value.longValue();
-            expected = 7L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.reporting_system;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -210,6 +181,26 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
             expected = 1025L;
             org.junit.Assert.assertEquals(value, expected);
         }
+        value = msg.sequence_descriptor;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.sequence_descriptor + "' != '" + 16 + "'",
+                    value.equals(BigInteger.valueOf(16L)));
+        } else {
+            value = value.longValue();
+            expected = 16L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.total_status_reports;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.total_status_reports + "' != '" + 100 + "'",
+                    value.equals(BigInteger.valueOf(100L)));
+        } else {
+            value = value.longValue();
+            expected = 100L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
     }
 
     @Test
@@ -218,38 +209,38 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
         byte[] payload =
                 new byte[] {
                     (byte) 1, (byte) 0, (byte) 1, (byte) 4, (byte) 100, (byte) 0, (byte) 0,
-                    (byte) 0, (byte) 7, (byte) 1, (byte) 146, (byte) 16, (byte) 0, (byte) 0,
-                    (byte) 6, (byte) 0, (byte) 1, (byte) 13,
+                    (byte) 0, (byte) 16, (byte) 146, (byte) 16, (byte) 0, (byte) 0, (byte) 6,
+                    (byte) 0, (byte) 1, (byte) 13,
                 };
         SBPMessage sbp = new SBPMessage(0x88D3, 0xFFFD, payload);
         MsgStatusJournal msg = new MsgStatusJournal(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
-        value = msg.journal[0].component;
+        value = msg.journal[0].report.component;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[0].component + "' != '" + 6 + "'",
+                    "'" + msg.journal[0].report.component + "' != '" + 6 + "'",
                     value.equals(BigInteger.valueOf(6L)));
         } else {
             value = value.longValue();
             expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[0].generic;
+        value = msg.journal[0].report.generic;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[0].generic + "' != '" + 1 + "'",
+                    "'" + msg.journal[0].report.generic + "' != '" + 1 + "'",
                     value.equals(BigInteger.valueOf(1L)));
         } else {
             value = value.longValue();
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.journal[0].specific;
+        value = msg.journal[0].report.specific;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.journal[0].specific + "' != '" + 13 + "'",
+                    "'" + msg.journal[0].report.specific + "' != '" + 13 + "'",
                     value.equals(BigInteger.valueOf(13L)));
         } else {
             value = value.longValue();
@@ -266,35 +257,6 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
             expected = 4242L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.n_packets;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.n_packets + "' != '" + 1 + "'", value.equals(BigInteger.valueOf(1L)));
-        } else {
-            value = value.longValue();
-            expected = 1L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.n_status_reports;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.n_status_reports + "' != '" + 100 + "'",
-                    value.equals(BigInteger.valueOf(100L)));
-        } else {
-            value = value.longValue();
-            expected = 100L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.packet_index;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.packet_index + "' != '" + 7 + "'",
-                    value.equals(BigInteger.valueOf(7L)));
-        } else {
-            value = value.longValue();
-            expected = 7L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.reporting_system;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -313,6 +275,26 @@ public class auto_check_sbp_system_MsgStatusJournalTest {
         } else {
             value = value.longValue();
             expected = 1025L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.sequence_descriptor;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.sequence_descriptor + "' != '" + 16 + "'",
+                    value.equals(BigInteger.valueOf(16L)));
+        } else {
+            value = value.longValue();
+            expected = 16L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.total_status_reports;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.total_status_reports + "' != '" + 100 + "'",
+                    value.equals(BigInteger.valueOf(100L)));
+        } else {
+            value = value.longValue();
+            expected = 100L;
             org.junit.Assert.assertEquals(value, expected);
         }
     }

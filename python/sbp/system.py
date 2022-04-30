@@ -28,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 class SubSystemReport(object):
   """SubSystemReport.
   
-  Report the general and specific state of a sub-system.  If the generic state
+  Report the general and specific state of a subsystem.  If the generic state
   is reported as initializing, the specific state should be ignored.
   
   Parameters
@@ -70,31 +70,23 @@ class SubSystemReport(object):
 class StatusJournalItem(object):
   """StatusJournalItem.
   
-  Report the general and specific state of a sub-system.  If the generic state
-  is reported as initializing, the specific state should be ignored.
+  Reports the uptime and the state of a subsystem via generic and specific
+  status codes.  If the generic state is reported as initializing, the
+  specific state should be ignored.
   
   Parameters
   ----------
   uptime : int
     Milliseconds since system startup
-  component : int
-    Identity of reporting subsystem
-  generic : int
-    Generic form status report
-  specific : int
-    Subsystem specific status code
+  report : SubSystemReport
 
   """
   _parser = construct.Struct(
                      'uptime' / construct.Int32ul,
-                     'component' / construct.Int16ul,
-                     'generic' / construct.Int8ul,
-                     'specific' / construct.Int8ul,)
+                     'report' / SubSystemReport._parser,)
   __slots__ = [
                'uptime',
-               'component',
-               'generic',
-               'specific',
+               'report',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -102,9 +94,7 @@ class StatusJournalItem(object):
       self.from_binary(payload)
     else:
       self.uptime = kwargs.pop('uptime')
-      self.component = kwargs.pop('component')
-      self.generic = kwargs.pop('generic')
-      self.specific = kwargs.pop('specific')
+      self.report = kwargs.pop('report')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -430,7 +420,7 @@ class MsgStatusReport(SBP):
   The status report is sent periodically to inform the host or other attached
   devices that the system is running. It is used to monitor system
   malfunctions. It contains status reports that indicate to the host the
-  status of each sub-system and whether it is operating correctly.
+  status of each subsystem and whether it is operating correctly.
 
   Interpretation of the subsystem specific status code is product dependent,
   but if the generic status code is initializing, it should be ignored.  Refer
@@ -555,12 +545,12 @@ class MsgStatusJournal(SBP):
     Identity of reporting system
   sbp_version : int
     SBP protocol version
-  n_status_reports : int
+  total_status_reports : int
     Total number of status reports sent since system startup
-  packet_index : int
-    Index of this packet in the status journal
-  n_packets : int
-    Number of packets in this status journal
+  sequence_descriptor : int
+    Index and number of messages in this sequence. First nibble is the size of
+    the sequence (n), second nibble is the zero-indexed counter (ith packet of
+    n)
   journal : array
     Status journal
   sender : int
@@ -570,16 +560,14 @@ class MsgStatusJournal(SBP):
   _parser = construct.Struct(
                    'reporting_system' / construct.Int16ul,
                    'sbp_version' / construct.Int16ul,
-                   'n_status_reports' / construct.Int32ul,
-                   'packet_index' / construct.Int8ul,
-                   'n_packets' / construct.Int8ul,
+                   'total_status_reports' / construct.Int32ul,
+                   'sequence_descriptor' / construct.Int8ul,
                    'journal' / construct.GreedyRange(StatusJournalItem._parser),)
   __slots__ = [
                'reporting_system',
                'sbp_version',
-               'n_status_reports',
-               'packet_index',
-               'n_packets',
+               'total_status_reports',
+               'sequence_descriptor',
                'journal',
               ]
 
@@ -595,9 +583,8 @@ class MsgStatusJournal(SBP):
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.reporting_system = kwargs.pop('reporting_system')
       self.sbp_version = kwargs.pop('sbp_version')
-      self.n_status_reports = kwargs.pop('n_status_reports')
-      self.packet_index = kwargs.pop('packet_index')
-      self.n_packets = kwargs.pop('n_packets')
+      self.total_status_reports = kwargs.pop('total_status_reports')
+      self.sequence_descriptor = kwargs.pop('sequence_descriptor')
       self.journal = kwargs.pop('journal')
 
   def __repr__(self):

@@ -2135,29 +2135,36 @@ export interface MsgStartup {
  * functions as a error/event storage for telemetry purposes.
  */
 export interface MsgStatusJournal {
-    journal:          StatusJournalItem[];
-    n_packets:        number;
-    n_status_reports: number;
-    packet_index:     number;
-    reporting_system: number;
-    sbp_version:      number;
+    journal:              StatusJournalItem[];
+    reporting_system:     number;
+    sbp_version:          number;
+    sequence_descriptor:  number;
+    total_status_reports: number;
 }
 
 /**
- * Report the general and specific state of a sub-system.  If the generic state is reported
- * as initializing, the specific state should be ignored.
+ * Reports the uptime and the state of a subsystem via generic and specific status codes.
+ * If the generic state is reported as initializing, the specific state should be ignored.
  */
 export interface StatusJournalItem {
+    report: SubSystemReport;
+    uptime: number;
+}
+
+/**
+ * Report the general and specific state of a subsystem.  If the generic state is reported
+ * as initializing, the specific state should be ignored.
+ */
+export interface SubSystemReport {
     component: number;
     generic:   number;
     specific:  number;
-    uptime:    number;
 }
 
 /**
  * The status report is sent periodically to inform the host or other attached devices that
  * the system is running. It is used to monitor system malfunctions. It contains status
- * reports that indicate to the host the status of each sub-system and whether it is
+ * reports that indicate to the host the status of each subsystem and whether it is
  * operating correctly.,
  * ,
  * Interpretation of the subsystem specific status code is product dependent, but if the
@@ -2170,16 +2177,6 @@ export interface MsgStatusReport {
     sequence:         number;
     status:           SubSystemReport[];
     uptime:           number;
-}
-
-/**
- * Report the general and specific state of a sub-system.  If the generic state is reported
- * as initializing, the specific state should be ignored.
- */
-export interface SubSystemReport {
-    component: number;
-    generic:   number;
-    specific:  number;
 }
 
 /**
@@ -5264,17 +5261,19 @@ const typeMap: any = {
     ], "any"),
     "MsgStatusJournal": o([
         { json: "journal", js: "journal", typ: a(r("StatusJournalItem")) },
-        { json: "n_packets", js: "n_packets", typ: 0 },
-        { json: "n_status_reports", js: "n_status_reports", typ: 0 },
-        { json: "packet_index", js: "packet_index", typ: 0 },
         { json: "reporting_system", js: "reporting_system", typ: 0 },
         { json: "sbp_version", js: "sbp_version", typ: 0 },
+        { json: "sequence_descriptor", js: "sequence_descriptor", typ: 0 },
+        { json: "total_status_reports", js: "total_status_reports", typ: 0 },
     ], "any"),
     "StatusJournalItem": o([
+        { json: "report", js: "report", typ: r("SubSystemReport") },
+        { json: "uptime", js: "uptime", typ: 0 },
+    ], "any"),
+    "SubSystemReport": o([
         { json: "component", js: "component", typ: 0 },
         { json: "generic", js: "generic", typ: 0 },
         { json: "specific", js: "specific", typ: 0 },
-        { json: "uptime", js: "uptime", typ: 0 },
     ], "any"),
     "MsgStatusReport": o([
         { json: "reporting_system", js: "reporting_system", typ: 0 },
@@ -5282,11 +5281,6 @@ const typeMap: any = {
         { json: "sequence", js: "sequence", typ: 0 },
         { json: "status", js: "status", typ: a(r("SubSystemReport")) },
         { json: "uptime", js: "uptime", typ: 0 },
-    ], "any"),
-    "SubSystemReport": o([
-        { json: "component", js: "component", typ: 0 },
-        { json: "generic", js: "generic", typ: 0 },
-        { json: "specific", js: "specific", typ: 0 },
     ], "any"),
     "MsgStmFlashLockSector": o([
         { json: "sector", js: "sector", typ: 0 },
