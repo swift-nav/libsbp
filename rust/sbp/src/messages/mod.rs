@@ -223,6 +223,7 @@ use self::system::msg_ins_updates::MsgInsUpdates;
 use self::system::msg_pps_time::MsgPpsTime;
 use self::system::msg_sensor_aid_event::MsgSensorAidEvent;
 use self::system::msg_startup::MsgStartup;
+use self::system::msg_status_journal::MsgStatusJournal;
 use self::system::msg_status_report::MsgStatusReport;
 use self::tracking::msg_measurement_state::MsgMeasurementState;
 use self::tracking::msg_tracking_iq::MsgTrackingIq;
@@ -731,6 +732,8 @@ pub enum Sbp {
     MsgSolnMeta(MsgSolnMeta),
     /// Deprecated
     MsgSolnMetaDepA(MsgSolnMetaDepA),
+    /// Status report journal
+    MsgStatusJournal(MsgStatusJournal),
     /// Status report message
     MsgStatusReport(MsgStatusReport),
     /// System heartbeat message
@@ -1777,6 +1780,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSolnMetaDepA(msg))
             }
+            MsgStatusJournal::MESSAGE_TYPE => {
+                let mut msg = MsgStatusJournal::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgStatusJournal(msg))
+            }
             MsgStatusReport::MESSAGE_TYPE => {
                 let mut msg = MsgStatusReport::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -2001,6 +2009,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGroupMeta(msg) => msg.message_name(),
             Sbp::MsgSolnMeta(msg) => msg.message_name(),
             Sbp::MsgSolnMetaDepA(msg) => msg.message_name(),
+            Sbp::MsgStatusJournal(msg) => msg.message_name(),
             Sbp::MsgStatusReport(msg) => msg.message_name(),
             Sbp::MsgHeartbeat(msg) => msg.message_name(),
             Sbp::Unknown(msg) => msg.message_name(),
@@ -2211,6 +2220,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGroupMeta(msg) => msg.message_type(),
             Sbp::MsgSolnMeta(msg) => msg.message_type(),
             Sbp::MsgSolnMetaDepA(msg) => msg.message_type(),
+            Sbp::MsgStatusJournal(msg) => msg.message_type(),
             Sbp::MsgStatusReport(msg) => msg.message_type(),
             Sbp::MsgHeartbeat(msg) => msg.message_type(),
             Sbp::Unknown(msg) => msg.message_type(),
@@ -2421,6 +2431,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGroupMeta(msg) => msg.sender_id(),
             Sbp::MsgSolnMeta(msg) => msg.sender_id(),
             Sbp::MsgSolnMetaDepA(msg) => msg.sender_id(),
+            Sbp::MsgStatusJournal(msg) => msg.sender_id(),
             Sbp::MsgStatusReport(msg) => msg.sender_id(),
             Sbp::MsgHeartbeat(msg) => msg.sender_id(),
             Sbp::Unknown(msg) => msg.sender_id(),
@@ -2631,6 +2642,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGroupMeta(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSolnMeta(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSolnMetaDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgStatusJournal(msg) => msg.set_sender_id(new_id),
             Sbp::MsgStatusReport(msg) => msg.set_sender_id(new_id),
             Sbp::MsgHeartbeat(msg) => msg.set_sender_id(new_id),
             Sbp::Unknown(msg) => msg.set_sender_id(new_id),
@@ -2841,6 +2853,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGroupMeta(msg) => msg.encoded_len(),
             Sbp::MsgSolnMeta(msg) => msg.encoded_len(),
             Sbp::MsgSolnMetaDepA(msg) => msg.encoded_len(),
+            Sbp::MsgStatusJournal(msg) => msg.encoded_len(),
             Sbp::MsgStatusReport(msg) => msg.encoded_len(),
             Sbp::MsgHeartbeat(msg) => msg.encoded_len(),
             Sbp::Unknown(msg) => msg.encoded_len(),
@@ -3054,6 +3067,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgGroupMeta(msg) => msg.gps_time(),
             Sbp::MsgSolnMeta(msg) => msg.gps_time(),
             Sbp::MsgSolnMetaDepA(msg) => msg.gps_time(),
+            Sbp::MsgStatusJournal(msg) => msg.gps_time(),
             Sbp::MsgStatusReport(msg) => msg.gps_time(),
             Sbp::MsgHeartbeat(msg) => msg.gps_time(),
             Sbp::Unknown(msg) => msg.gps_time(),
@@ -3272,6 +3286,7 @@ impl WireFormat for Sbp {
             Sbp::MsgGroupMeta(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSolnMeta(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSolnMetaDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgStatusJournal(msg) => WireFormat::write(msg, buf),
             Sbp::MsgStatusReport(msg) => WireFormat::write(msg, buf),
             Sbp::MsgHeartbeat(msg) => WireFormat::write(msg, buf),
             Sbp::Unknown(msg) => WireFormat::write(msg, buf),
@@ -3482,6 +3497,7 @@ impl WireFormat for Sbp {
             Sbp::MsgGroupMeta(msg) => WireFormat::len(msg),
             Sbp::MsgSolnMeta(msg) => WireFormat::len(msg),
             Sbp::MsgSolnMetaDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgStatusJournal(msg) => WireFormat::len(msg),
             Sbp::MsgStatusReport(msg) => WireFormat::len(msg),
             Sbp::MsgHeartbeat(msg) => WireFormat::len(msg),
             Sbp::Unknown(msg) => WireFormat::len(msg),
@@ -4698,6 +4714,12 @@ impl From<MsgSolnMeta> for Sbp {
 impl From<MsgSolnMetaDepA> for Sbp {
     fn from(msg: MsgSolnMetaDepA) -> Self {
         Sbp::MsgSolnMetaDepA(msg)
+    }
+}
+
+impl From<MsgStatusJournal> for Sbp {
+    fn from(msg: MsgStatusJournal) -> Self {
+        Sbp::MsgStatusJournal(msg)
     }
 }
 

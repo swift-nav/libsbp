@@ -73,10 +73,10 @@ typedef struct SBP_ATTR_PACKED {
   u32 flags; /**< Status flags */
 } msg_heartbeat_t;
 
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
+ * Report the general and specific state of a subsystem.  If the generic state
+ * is reported as initializing, the specific state should be ignored.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -90,7 +90,7 @@ typedef struct SBP_ATTR_PACKED {
  * The status report is sent periodically to inform the host or other attached
  * devices that the system is running. It is used to monitor system
  * malfunctions. It contains status reports that indicate to the host the
- * status of each sub-system and whether it is operating correctly.
+ * status of each subsystem and whether it is operating correctly.
  *
  * Interpretation of the subsystem specific status code is product dependent,
  * but if the generic status code is initializing, it should be ignored.
@@ -105,6 +105,37 @@ typedef struct SBP_ATTR_PACKED {
   sub_system_report_t status[0]; /**< Reported status of individual
                                       subsystems */
 } msg_status_report_t;
+
+/** Subsystem Status report
+ *
+ * Reports the uptime and the state of a subsystem via generic and specific
+ * status codes.  If the generic state is reported as initializing, the
+ * specific state should be ignored.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u32 uptime; /**< Milliseconds since system startup */
+  sub_system_report_t report;
+} status_journal_item_t;
+
+/** Status report journal
+ *
+ * The status journal message contains past status reports (see
+ * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+ * purposes.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u16 reporting_system;     /**< Identity of reporting system */
+  u16 sbp_version;          /**< SBP protocol version */
+  u32 total_status_reports; /**< Total number of status reports sent since
+                                 system startup */
+  u8 sequence_descriptor;   /**< Index and number of messages in this
+                                 sequence. First nibble is the size of the
+                                 sequence (n), second nibble is the zero-
+                                 indexed counter (ith packet of n) */
+  status_journal_item_t journal[0]; /**< Status journal */
+} msg_status_journal_t;
 
 /** Inertial Navigation System status message
  *

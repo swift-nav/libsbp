@@ -89,6 +89,7 @@ mod auto_check_sbp_system_msg_ins_status;
 mod auto_check_sbp_system_msg_ins_updates;
 mod auto_check_sbp_system_msg_sensor_aid_event;
 mod auto_check_sbp_system_msg_startup;
+mod auto_check_sbp_system_msg_status_journal;
 mod auto_check_sbp_tracking_msg_measurement_state;
 mod auto_check_sbp_tracking_msg_tracking_state;
 mod auto_check_sbp_tracking_msg_tracking_state_detailed_dep;

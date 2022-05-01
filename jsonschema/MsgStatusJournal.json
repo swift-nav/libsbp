@@ -1,0 +1,32 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgStatusJournal",
+  "title":"MsgStatusJournal",
+  "description":"The status journal message contains past status reports (see MSG_STATUS_REPORT) and functions as a error/event storage for telemetry purposes.\n",
+  "type": "object",
+  "properties": {
+    "reporting_system": {"type": "integer"},
+    "sbp_version": {"type": "integer"},
+    "total_status_reports": {"type": "integer"},
+    "sequence_descriptor": {"type": "integer"},
+    "journal": {"type": "array", "items": {"$ref": "StatusJournalItem.json"}}
+  },
+  "required": [
+    "reporting_system",
+    "sbp_version",
+    "total_status_reports",
+    "sequence_descriptor",
+    "journal"
+  ]
+}

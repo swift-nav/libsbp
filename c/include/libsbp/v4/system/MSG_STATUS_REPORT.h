@@ -44,7 +44,7 @@ extern "C" {
  * The status report is sent periodically to inform the host or other attached
  * devices that the system is running. It is used to monitor system
  * malfunctions. It contains status reports that indicate to the host the status
- * of each sub-system and whether it is operating correctly.
+ * of each subsystem and whether it is operating correctly.
  *
  */
 typedef struct {

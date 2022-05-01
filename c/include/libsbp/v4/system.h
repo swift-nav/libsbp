@@ -28,7 +28,9 @@
 #include <libsbp/v4/system/MSG_PPS_TIME.h>
 #include <libsbp/v4/system/MSG_SENSOR_AID_EVENT.h>
 #include <libsbp/v4/system/MSG_STARTUP.h>
+#include <libsbp/v4/system/MSG_STATUS_JOURNAL.h>
 #include <libsbp/v4/system/MSG_STATUS_REPORT.h>
+#include <libsbp/v4/system/StatusJournalItem.h>
 #include <libsbp/v4/system/SubSystemReport.h>
 
 #endif /* LIBSBP_V4_SYSTEM_MESSAGES_H */
