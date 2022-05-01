@@ -15,6 +15,7 @@ libsbp Development Procedures
     + [Error: `!!! No Python wheel (.whl) file found...`](#error--no-python-wheel-whl-file-found)
     + [Tox error: `ERROR: FAIL could not package project`](#tox-error-error-fail-could-not-package-project)
     + [Tox error: `ERROR: cowardly refusing to delete envdir`](#tox-error-error-cowardly-refusing-to-delete-envdir)
+- [Distributing Java](#distributing-java)
 - [Contributions](#contributions)
 
 <!-- tocstop -->
@@ -343,6 +344,49 @@ There's an open tox issue for this: https://github.com/tox-dev/tox/issues/1354
 -- the only workaround that resolved this was to downgrade tox:
 
     pip install --upgrade --force-reinstall tox==3.12.1
+
+# Distributing Java
+
+To distribute java, ensure you have the correct credentials and prerequisites
+- Gradle 7+
+- gradle.properties
+- Sonatype deployer account
+- Your own GPG key
+
+
+Add in gradle.properties located in `.gradle` or wherever the working directory is setup 
+(probably located/have to create it in `/User/<user>/.gradle/gradle.properties`)
+
+```shell
+# last 8 digit of gpg key
+signing.keyId=xxx
+# password for gpg key
+signing.password=xxx
+# path to exported secret gpg keys
+signing.secretKeyRingFile=path_to_secret.gpg
+
+# sonatype logins
+ossrhUsername=xxx
+ossrhPassword=xxx
+```
+
+Modify `ossrhUsername` and `ossrhPassword` with the sonatype deployer account 
+(or an individual one with deployer role)
+
+
+Generate GPG key with
+```shell
+gpg --gen-key
+gpg --export-secret-keys <key> > keys.gpg
+gpg --keyserver keyserver.ubuntu.com --send-keys <key>
+```
+
+To publish, run gradle publish - (might have some conflicts with the version, so should use Makefile to actually 
+publish with version, make dist-java in docker)
+
+After publishing, go to Nexus Repository Manager. Select the deployed version, close the staging repository 
+and release to finish it off.
+
 
 # Contributions
 
