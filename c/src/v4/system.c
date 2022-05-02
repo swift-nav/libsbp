@@ -587,13 +587,7 @@ bool sbp_status_journal_item_encode_internal(
   if (!sbp_u32_encode(ctx, &msg->uptime)) {
     return false;
   }
-  if (!sbp_u16_encode(ctx, &msg->component)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->generic)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->specific)) {
+  if (!sbp_sub_system_report_encode_internal(ctx, &msg->report)) {
     return false;
   }
   return true;
@@ -619,13 +613,7 @@ bool sbp_status_journal_item_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u32_decode(ctx, &msg->uptime)) {
     return false;
   }
-  if (!sbp_u16_decode(ctx, &msg->component)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->generic)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->specific)) {
+  if (!sbp_sub_system_report_decode_internal(ctx, &msg->report)) {
     return false;
   }
   return true;
@@ -656,17 +644,7 @@ int sbp_status_journal_item_cmp(const sbp_status_journal_item_t *a,
     return ret;
   }
 
-  ret = sbp_u16_cmp(&a->component, &b->component);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->generic, &b->generic);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->specific, &b->specific);
+  ret = sbp_sub_system_report_cmp(&a->report, &b->report);
   if (ret != 0) {
     return ret;
   }
@@ -681,13 +659,10 @@ bool sbp_msg_status_journal_encode_internal(
   if (!sbp_u16_encode(ctx, &msg->sbp_version)) {
     return false;
   }
-  if (!sbp_u32_encode(ctx, &msg->n_status_reports)) {
+  if (!sbp_u32_encode(ctx, &msg->total_status_reports)) {
     return false;
   }
-  if (!sbp_u8_encode(ctx, &msg->packet_index)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->n_packets)) {
+  if (!sbp_u8_encode(ctx, &msg->sequence_descriptor)) {
     return false;
   }
   for (size_t i = 0; i < msg->n_journal; i++) {
@@ -721,13 +696,10 @@ bool sbp_msg_status_journal_decode_internal(sbp_decode_ctx_t *ctx,
   if (!sbp_u16_decode(ctx, &msg->sbp_version)) {
     return false;
   }
-  if (!sbp_u32_decode(ctx, &msg->n_status_reports)) {
+  if (!sbp_u32_decode(ctx, &msg->total_status_reports)) {
     return false;
   }
-  if (!sbp_u8_decode(ctx, &msg->packet_index)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->n_packets)) {
+  if (!sbp_u8_decode(ctx, &msg->sequence_descriptor)) {
     return false;
   }
   msg->n_journal = (uint8_t)((ctx->buf_len - ctx->offset) /
@@ -784,17 +756,12 @@ int sbp_msg_status_journal_cmp(const sbp_msg_status_journal_t *a,
     return ret;
   }
 
-  ret = sbp_u32_cmp(&a->n_status_reports, &b->n_status_reports);
+  ret = sbp_u32_cmp(&a->total_status_reports, &b->total_status_reports);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_u8_cmp(&a->packet_index, &b->packet_index);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->n_packets, &b->n_packets);
+  ret = sbp_u8_cmp(&a->sequence_descriptor, &b->sequence_descriptor);
   if (ret != 0) {
     return ret;
   }

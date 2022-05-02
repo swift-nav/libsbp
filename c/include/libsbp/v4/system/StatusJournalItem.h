@@ -28,6 +28,7 @@
 #include <libsbp/common.h>
 #include <libsbp/system_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
+#include <libsbp/v4/system/SubSystemReport.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,10 +39,11 @@ extern "C" {
  * SBP_STATUSJOURNALITEM
  *
  *****************************************************************************/
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic state
- * is reported as initializing, the specific state should be ignored.
+ * Reports the uptime and the state of a subsystem via generic and specific
+ * status codes.  If the generic state is reported as initializing, the specific
+ * state should be ignored.
  */
 typedef struct {
   /**
@@ -49,20 +51,7 @@ typedef struct {
    */
   u32 uptime;
 
-  /**
-   * Identity of reporting subsystem
-   */
-  u16 component;
-
-  /**
-   * Generic form status report
-   */
-  u8 generic;
-
-  /**
-   * Subsystem specific status code
-   */
-  u8 specific;
+  sbp_sub_system_report_t report;
 } sbp_status_journal_item_t;
 
 /**

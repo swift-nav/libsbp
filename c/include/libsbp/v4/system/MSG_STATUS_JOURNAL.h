@@ -59,17 +59,14 @@ typedef struct {
   /**
    * Total number of status reports sent since system startup
    */
-  u32 n_status_reports;
+  u32 total_status_reports;
 
   /**
-   * Index of this packet in the status journal
+   * Index and number of messages in this sequence. First nibble is the size of
+   * the sequence (n), second nibble is the zero-indexed counter (ith packet of
+   * n)
    */
-  u8 packet_index;
-
-  /**
-   * Number of packets in this status journal
-   */
-  u8 n_packets;
+  u8 sequence_descriptor;
 
   /**
    * Status journal

@@ -106,17 +106,16 @@ typedef struct SBP_ATTR_PACKED {
                                       subsystems */
 } msg_status_report_t;
 
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
+ * Reports the uptime and the state of a subsystem via generic and specific
+ * status codes.  If the generic state is reported as initializing, the
+ * specific state should be ignored.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u32 uptime;    /**< Milliseconds since system startup */
-  u16 component; /**< Identity of reporting subsystem */
-  u8 generic;    /**< Generic form status report */
-  u8 specific;   /**< Subsystem specific status code */
+  u32 uptime; /**< Milliseconds since system startup */
+  sub_system_report_t report;
 } status_journal_item_t;
 
 /** Status report journal
@@ -127,12 +126,14 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u16 reporting_system; /**< Identity of reporting system */
-  u16 sbp_version;      /**< SBP protocol version */
-  u32 n_status_reports; /**< Total number of status reports sent since
-                             system startup */
-  u8 packet_index;      /**< Index of this packet in the status journal */
-  u8 n_packets;         /**< Number of packets in this status journal */
+  u16 reporting_system;     /**< Identity of reporting system */
+  u16 sbp_version;          /**< SBP protocol version */
+  u32 total_status_reports; /**< Total number of status reports sent since
+                                 system startup */
+  u8 sequence_descriptor;   /**< Index and number of messages in this
+                                 sequence. First nibble is the size of the
+                                 sequence (n), second nibble is the zero-
+                                 indexed counter (ith packet of n) */
   status_journal_item_t journal[0]; /**< Status journal */
 } msg_status_journal_t;
 

@@ -217,82 +217,57 @@ definitions:
             desc: Reported status of individual subsystems
 
  - StatusJournalItem:
-    short_desc: Sub-system Status report
-    embedded_type: true
-    desc: >
-      Report the general and specific state of a sub-system.  If the generic
-      state is reported as initializing, the specific state should be ignored.
-    fields:
-        - uptime:
-            type: u32
-            desc: Milliseconds since system startup
-        - component:
-            type: u16
-            desc: Identity of reporting subsystem
-            fields:
-              - 0-15:
-                  desc: Subsystem
-                  values:
-                      - 0: Primary GNSS Antenna
-                      - 1: Measurement Engine
-                      - 2: Corrections Client
-                      - 3: Differential GNSS Engine
-                      - 4: CAN
-                      - 5: Wheel Odometry
-                      - 6: Sensor Fusion Engine
-        - generic:
-            type: u8
-            desc: Generic form status report
-            fields:
-              - 0-7:
-                  desc: Generic
-                  values:
-                      - 0: OK/Nominal
-                      - 1: Initializing
-                      - 2: Unknown
-                      - 3: Degraded
-                      - 4: Unusable
-        - specific:
-            type: u8
-            desc: Subsystem specific status code
+     short_desc: Subsystem Status report
+     embedded_type: true
+     desc: >
+       Reports the uptime and the state of a subsystem via generic and specific
+       status codes.  If the generic state is reported as initializing, the
+       specific state should be ignored.
+     fields:
+       - uptime:
+           type: u32
+           desc: Milliseconds since system startup
+       - report:
+           type: SubSystemReport
 
  - MSG_STATUS_JOURNAL:
-    id: 0xFFFD
-    short_desc: Status report journal
-    desc: >
-        The status journal message contains past status reports (see MSG_STATUS_REPORT)
-        and functions as a error/event storage for telemetry purposes.
-    fields:
-        - reporting_system:
-            type: u16
-            desc: Identity of reporting system
-            fields:
-              - 0-15:
+     id: 0xFFFD
+     short_desc: Status report journal
+     desc: >
+       The status journal message contains past status reports (see
+       MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+       purposes.
+     fields:
+       - reporting_system:
+           type: u16
+           desc: Identity of reporting system
+           fields:
+             - 0-15:
                  desc: System
                  values:
-                     - 0: Starling
-                     - 1: Precision GNSS Module (PGM)
-        - sbp_version:
-            type: u16
-            desc: SBP protocol version
-            fields:
-              - 8-16:
-                  desc: SBP major protocol version number
-              - 0-7:
-                  desc: SBP minor protocol version number
-        - n_status_reports:
-            type: u32
-            desc: Total number of status reports sent since system startup
-        - packet_index:
-            type: u8
-            desc: Index of this packet in the status journal
-        - n_packets:
-            type: u8
-            desc: Number of packets in this status journal
-        - journal:
-            type: array
-            fill: StatusJournalItem
-            desc: Status journal
+                   - 0: Starling
+                   - 1: Precision GNSS Module (PGM)
+       - sbp_version:
+           type: u16
+           desc: SBP protocol version
+           fields:
+             - 8-15:
+                 desc: SBP major protocol version number
+             - 0-7:
+                 desc: SBP minor protocol version number
+       - total_status_reports:
+           type: u32
+           desc: Total number of status reports sent since system startup
+       - sequence_descriptor:
+           type: u8
+           desc: >
+             Index and number of messages in this sequence. First nibble is
+             the size of the sequence (n), second nibble is the zero-indexed
+             counter (ith packet of n)
+       - journal:
+           type: array
+           fill: StatusJournalItem
+           desc: Status journal
 
  - MSG_INS_STATUS:
     id: 0xFF03
