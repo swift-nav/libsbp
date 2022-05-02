@@ -24,7 +24,9 @@ pub use msg_ins_updates::MsgInsUpdates;
 pub use msg_pps_time::MsgPpsTime;
 pub use msg_sensor_aid_event::MsgSensorAidEvent;
 pub use msg_startup::MsgStartup;
+pub use msg_status_journal::MsgStatusJournal;
 pub use msg_status_report::MsgStatusReport;
+pub use status_journal_item::StatusJournalItem;
 pub use sub_system_report::SubSystemReport;
 
 pub mod msg_csac_telemetry {
@@ -2264,6 +2266,195 @@ pub mod msg_startup {
     }
 }
 
+pub mod msg_status_journal {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Status report journal
+    ///
+    /// The status journal message contains past status reports (see
+    /// MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+    /// purposes.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgStatusJournal {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Identity of reporting system
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "reporting_system")))]
+        pub reporting_system: u16,
+        /// SBP protocol version
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sbp_version")))]
+        pub sbp_version: u16,
+        /// Total number of status reports sent since system startup
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "total_status_reports")))]
+        pub total_status_reports: u32,
+        /// Index and number of messages in this sequence. First nibble is the size
+        /// of the sequence (n), second nibble is the zero-indexed counter (ith
+        /// packet of n)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence_descriptor")))]
+        pub sequence_descriptor: u8,
+        /// Status journal
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "journal")))]
+        pub journal: Vec<StatusJournalItem>,
+    }
+
+    impl MsgStatusJournal {
+        /// Gets the [System][self::System] stored in the `reporting_system` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `System` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u16)`. This may be because of a malformed message,
+        /// or because new variants of `System` were added.
+        pub fn system(&self) -> Result<System, u16> {
+            get_bit_range!(self.reporting_system, u16, u16, 15, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [System][System] of the `reporting_system` bitfield.
+        pub fn set_system(&mut self, system: System) {
+            set_bit_range!(&mut self.reporting_system, system, u16, u16, 15, 0);
+        }
+
+        /// Gets the `sbp_major_protocol_version_number` stored in `sbp_version`.
+        pub fn sbp_major_protocol_version_number(&self) -> u8 {
+            get_bit_range!(self.sbp_version, u16, u8, 15, 8)
+        }
+
+        /// Sets the `sbp_major_protocol_version_number` bitrange of `sbp_version`.
+        pub fn set_sbp_major_protocol_version_number(
+            &mut self,
+            sbp_major_protocol_version_number: u8,
+        ) {
+            set_bit_range!(
+                &mut self.sbp_version,
+                sbp_major_protocol_version_number,
+                u16,
+                u8,
+                15,
+                8
+            );
+        }
+
+        /// Gets the `sbp_minor_protocol_version_number` stored in `sbp_version`.
+        pub fn sbp_minor_protocol_version_number(&self) -> u8 {
+            get_bit_range!(self.sbp_version, u16, u8, 7, 0)
+        }
+
+        /// Sets the `sbp_minor_protocol_version_number` bitrange of `sbp_version`.
+        pub fn set_sbp_minor_protocol_version_number(
+            &mut self,
+            sbp_minor_protocol_version_number: u8,
+        ) {
+            set_bit_range!(
+                &mut self.sbp_version,
+                sbp_minor_protocol_version_number,
+                u16,
+                u8,
+                7,
+                0
+            );
+        }
+    }
+
+    impl ConcreteMessage for MsgStatusJournal {
+        const MESSAGE_TYPE: u16 = 65533;
+        const MESSAGE_NAME: &'static str = "MSG_STATUS_JOURNAL";
+    }
+
+    impl SbpMessage for MsgStatusJournal {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgStatusJournal {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgStatusJournal(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgStatusJournal {
+        const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <Vec<StatusJournalItem> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.reporting_system)
+                + WireFormat::len(&self.sbp_version)
+                + WireFormat::len(&self.total_status_reports)
+                + WireFormat::len(&self.sequence_descriptor)
+                + WireFormat::len(&self.journal)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.reporting_system, buf);
+            WireFormat::write(&self.sbp_version, buf);
+            WireFormat::write(&self.total_status_reports, buf);
+            WireFormat::write(&self.sequence_descriptor, buf);
+            WireFormat::write(&self.journal, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgStatusJournal {
+                sender_id: None,
+                reporting_system: WireFormat::parse_unchecked(buf),
+                sbp_version: WireFormat::parse_unchecked(buf),
+                total_status_reports: WireFormat::parse_unchecked(buf),
+                sequence_descriptor: WireFormat::parse_unchecked(buf),
+                journal: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// System
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum System {
+        /// Starling
+        Starling = 0,
+
+        /// Precision GNSS Module (PGM)
+        PrecisionGnssModule = 1,
+    }
+
+    impl std::fmt::Display for System {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                System::Starling => f.write_str("Starling"),
+                System::PrecisionGnssModule => f.write_str("Precision GNSS Module (PGM)"),
+            }
+        }
+    }
+
+    impl TryFrom<u16> for System {
+        type Error = u16;
+        fn try_from(i: u16) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(System::Starling),
+                1 => Ok(System::PrecisionGnssModule),
+                i => Err(i),
+            }
+        }
+    }
+}
+
 pub mod msg_status_report {
     #![allow(unused_imports)]
 
@@ -2275,7 +2466,7 @@ pub mod msg_status_report {
     /// The status report is sent periodically to inform the host or other
     /// attached devices that the system is running. It is used to monitor system
     /// malfunctions. It contains status reports that indicate to the host the
-    /// status of each sub-system and whether it is operating correctly.
+    /// status of each subsystem and whether it is operating correctly.
     ///
     /// Interpretation of the subsystem specific status code is product dependent,
     /// but if the generic status code is initializing, it should be ignored.
@@ -2456,15 +2647,56 @@ pub mod msg_status_report {
     }
 }
 
+pub mod status_journal_item {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Subsystem Status report
+    ///
+    /// Reports the uptime and the state of a subsystem via generic and specific
+    /// status codes.  If the generic state is reported as initializing, the
+    /// specific state should be ignored.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct StatusJournalItem {
+        /// Milliseconds since system startup
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "uptime")))]
+        pub uptime: u32,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "report")))]
+        pub report: SubSystemReport,
+    }
+
+    impl WireFormat for StatusJournalItem {
+        const MIN_LEN: usize =
+            <u32 as WireFormat>::MIN_LEN + <SubSystemReport as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.uptime) + WireFormat::len(&self.report)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.uptime, buf);
+            WireFormat::write(&self.report, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            StatusJournalItem {
+                uptime: WireFormat::parse_unchecked(buf),
+                report: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
 pub mod sub_system_report {
     #![allow(unused_imports)]
 
     use super::*;
     use crate::messages::lib::*;
 
-    /// Sub-system Status report
+    /// Subsystem Status report
     ///
-    /// Report the general and specific state of a sub-system.  If the generic
+    /// Report the general and specific state of a subsystem.  If the generic
     /// state is reported as initializing, the specific state should be ignored.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]

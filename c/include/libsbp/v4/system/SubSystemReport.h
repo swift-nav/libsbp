@@ -38,9 +38,9 @@ extern "C" {
  * SBP_SUBSYSTEMREPORT
  *
  *****************************************************************************/
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic state
+ * Report the general and specific state of a subsystem.  If the generic state
  * is reported as initializing, the specific state should be ignored.
  */
 typedef struct {

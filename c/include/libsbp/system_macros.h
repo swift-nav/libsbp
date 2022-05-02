@@ -326,6 +326,82 @@
  */
 #define SBP_MSG_STATUS_REPORT_ENCODED_OVERHEAD 12u
 
+/**
+ * Encoded length of sbp_status_journal_item_t (V4 API) and
+ * status_journal_item_t (legacy API)
+ */
+#define SBP_STATUS_JOURNAL_ITEM_ENCODED_LEN 8u
+
+#define SBP_MSG_STATUS_JOURNAL 0xFFFD
+#define SBP_STATUS_JOURNAL_SYSTEM_MASK (0xffffu)
+#define SBP_STATUS_JOURNAL_SYSTEM_SHIFT (0u)
+#define SBP_STATUS_JOURNAL_SYSTEM_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_STATUS_JOURNAL_SYSTEM_SHIFT) & \
+         SBP_STATUS_JOURNAL_SYSTEM_MASK))
+#define SBP_STATUS_JOURNAL_SYSTEM_SET(flags, val)                       \
+  do {                                                                  \
+    (flags) = (u16)((flags & (~(SBP_STATUS_JOURNAL_SYSTEM_MASK          \
+                                << SBP_STATUS_JOURNAL_SYSTEM_SHIFT))) | \
+                    (((val) & (SBP_STATUS_JOURNAL_SYSTEM_MASK))         \
+                     << (SBP_STATUS_JOURNAL_SYSTEM_SHIFT)));            \
+  } while (0)
+
+#define SBP_STATUS_JOURNAL_SYSTEM_STARLING (0)
+#define SBP_STATUS_JOURNAL_SYSTEM_PRECISION_GNSS_MODULE (1)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0xffu)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
+  ((u16)((u16)((flags) >>                                                    \
+               SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+         SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK))
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(flags, val)   \
+  do {                                                                         \
+    (flags) = (u16)(                                                           \
+        (flags &                                                               \
+         (~(SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK          \
+            << SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT))) | \
+        (((val) & (SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)) \
+         << (SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT)));    \
+  } while (0)
+
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK (0xffu)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT (0u)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
+  ((u16)((u16)((flags) >>                                                    \
+               SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+         SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(flags, val)   \
+  do {                                                                         \
+    (flags) = (u16)(                                                           \
+        (flags &                                                               \
+         (~(SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK          \
+            << SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT))) | \
+        (((val) & (SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)) \
+         << (SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));    \
+  } while (0)
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_status_journal_t::journal (V4 API) or msg_status_journal_t::journal
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_STATUS_JOURNAL_JOURNAL_MAX 30u
+
+/**
+ * Encoded length of sbp_msg_status_journal_t (V4 API) and
+ * msg_status_journal_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_status_journal_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_STATUS_JOURNAL_ENCODED_OVERHEAD 9u
+
 #define SBP_MSG_INS_STATUS 0xFF03
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7u)
 #define SBP_INS_STATUS_INS_TYPE_SHIFT (29u)

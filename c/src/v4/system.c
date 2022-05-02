@@ -582,6 +582,200 @@ int sbp_msg_status_report_cmp(const sbp_msg_status_report_t *a,
   return ret;
 }
 
+bool sbp_status_journal_item_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_status_journal_item_t *msg) {
+  if (!sbp_u32_encode(ctx, &msg->uptime)) {
+    return false;
+  }
+  if (!sbp_sub_system_report_encode_internal(ctx, &msg->report)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_status_journal_item_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_status_journal_item_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_status_journal_item_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_status_journal_item_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_status_journal_item_t *msg) {
+  if (!sbp_u32_decode(ctx, &msg->uptime)) {
+    return false;
+  }
+  if (!sbp_sub_system_report_decode_internal(ctx, &msg->report)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_status_journal_item_decode(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read,
+                                  sbp_status_journal_item_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_status_journal_item_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+int sbp_status_journal_item_cmp(const sbp_status_journal_item_t *a,
+                                const sbp_status_journal_item_t *b) {
+  int ret = 0;
+
+  ret = sbp_u32_cmp(&a->uptime, &b->uptime);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_sub_system_report_cmp(&a->report, &b->report);
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}
+
+bool sbp_msg_status_journal_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_status_journal_t *msg) {
+  if (!sbp_u16_encode(ctx, &msg->reporting_system)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->sbp_version)) {
+    return false;
+  }
+  if (!sbp_u32_encode(ctx, &msg->total_status_reports)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->sequence_descriptor)) {
+    return false;
+  }
+  for (size_t i = 0; i < msg->n_journal; i++) {
+    if (!sbp_status_journal_item_encode_internal(ctx, &msg->journal[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_status_journal_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                 const sbp_msg_status_journal_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_status_journal_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_msg_status_journal_decode_internal(sbp_decode_ctx_t *ctx,
+                                            sbp_msg_status_journal_t *msg) {
+  if (!sbp_u16_decode(ctx, &msg->reporting_system)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->sbp_version)) {
+    return false;
+  }
+  if (!sbp_u32_decode(ctx, &msg->total_status_reports)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->sequence_descriptor)) {
+    return false;
+  }
+  msg->n_journal = (uint8_t)((ctx->buf_len - ctx->offset) /
+                             SBP_STATUS_JOURNAL_ITEM_ENCODED_LEN);
+  for (uint8_t i = 0; i < msg->n_journal; i++) {
+    if (!sbp_status_journal_item_decode_internal(ctx, &msg->journal[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_status_journal_decode(const uint8_t *buf, uint8_t len,
+                                 uint8_t *n_read,
+                                 sbp_msg_status_journal_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_status_journal_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+s8 sbp_msg_status_journal_send(sbp_state_t *s, u16 sender_id,
+                               const sbp_msg_status_journal_t *msg,
+                               sbp_write_fn_t write) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_msg_status_journal_encode(payload, sizeof(payload), &payload_len,
+                                         msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
+  return sbp_payload_send(s, SBP_MSG_STATUS_JOURNAL, sender_id, payload_len,
+                          payload, write);
+}
+
+int sbp_msg_status_journal_cmp(const sbp_msg_status_journal_t *a,
+                               const sbp_msg_status_journal_t *b) {
+  int ret = 0;
+
+  ret = sbp_u16_cmp(&a->reporting_system, &b->reporting_system);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->sbp_version, &b->sbp_version);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u32_cmp(&a->total_status_reports, &b->total_status_reports);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->sequence_descriptor, &b->sequence_descriptor);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->n_journal, &b->n_journal);
+  for (uint8_t i = 0; ret == 0 && i < a->n_journal; i++) {
+    ret = sbp_status_journal_item_cmp(&a->journal[i], &b->journal[i]);
+  }
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}
+
 bool sbp_msg_ins_status_encode_internal(sbp_encode_ctx_t *ctx,
                                         const sbp_msg_ins_status_t *msg) {
   if (!sbp_u32_encode(ctx, &msg->flags)) {

@@ -214,6 +214,7 @@ mod tests {
 
     use super::*;
 
+    #[cfg(feature = "swiftnav")]
     #[test]
     fn test_rover_time_wn() {
         #[rustfmt::skip]
@@ -246,6 +247,7 @@ mod tests {
         assert!((gps_time.tow() - 2568.).abs() < f64::EPSILON);
     }
 
+    #[cfg(feature = "swiftnav")]
     #[test]
     fn test_rover_time_result() {
         let data = Cursor::new(vec![

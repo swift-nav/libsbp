@@ -28,7 +28,7 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 class SubSystemReport(object):
   """SubSystemReport.
   
-  Report the general and specific state of a sub-system.  If the generic state
+  Report the general and specific state of a subsystem.  If the generic state
   is reported as initializing, the specific state should be ignored.
   
   Parameters
@@ -64,6 +64,43 @@ class SubSystemReport(object):
   
   def from_binary(self, d):
     p = SubSystemReport._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class StatusJournalItem(object):
+  """StatusJournalItem.
+  
+  Reports the uptime and the state of a subsystem via generic and specific
+  status codes.  If the generic state is reported as initializing, the
+  specific state should be ignored.
+  
+  Parameters
+  ----------
+  uptime : int
+    Milliseconds since system startup
+  report : SubSystemReport
+
+  """
+  _parser = construct.Struct(
+                     'uptime' / construct.Int32ul,
+                     'report' / SubSystemReport._parser,)
+  __slots__ = [
+               'uptime',
+               'report',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.uptime = kwargs.pop('uptime')
+      self.report = kwargs.pop('report')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = StatusJournalItem._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
@@ -383,7 +420,7 @@ class MsgStatusReport(SBP):
   The status report is sent periodically to inform the host or other attached
   devices that the system is running. It is used to monitor system
   malfunctions. It contains status reports that indicate to the host the
-  status of each sub-system and whether it is operating correctly.
+  status of each subsystem and whether it is operating correctly.
 
   Interpretation of the subsystem specific status code is product dependent,
   but if the generic status code is initializing, it should be ignored.  Refer
@@ -483,6 +520,119 @@ class MsgStatusReport(SBP):
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgStatusReport, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_STATUS_JOURNAL = 0xFFFD
+class MsgStatusJournal(SBP):
+  """SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
+
+  You can have MSG_STATUS_JOURNAL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The status journal message contains past status reports (see
+  MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+  purposes.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  reporting_system : int
+    Identity of reporting system
+  sbp_version : int
+    SBP protocol version
+  total_status_reports : int
+    Total number of status reports sent since system startup
+  sequence_descriptor : int
+    Index and number of messages in this sequence. First nibble is the size of
+    the sequence (n), second nibble is the zero-indexed counter (ith packet of
+    n)
+  journal : array
+    Status journal
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'reporting_system' / construct.Int16ul,
+                   'sbp_version' / construct.Int16ul,
+                   'total_status_reports' / construct.Int32ul,
+                   'sequence_descriptor' / construct.Int8ul,
+                   'journal' / construct.GreedyRange(StatusJournalItem._parser),)
+  __slots__ = [
+               'reporting_system',
+               'sbp_version',
+               'total_status_reports',
+               'sequence_descriptor',
+               'journal',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgStatusJournal,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgStatusJournal, self).__init__()
+      self.msg_type = SBP_MSG_STATUS_JOURNAL
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.reporting_system = kwargs.pop('reporting_system')
+      self.sbp_version = kwargs.pop('sbp_version')
+      self.total_status_reports = kwargs.pop('total_status_reports')
+      self.sequence_descriptor = kwargs.pop('sequence_descriptor')
+      self.journal = kwargs.pop('journal')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgStatusJournal.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgStatusJournal(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgStatusJournal._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgStatusJournal._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgStatusJournal._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgStatusJournal, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1342,6 +1492,7 @@ msg_classes = {
   0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
   0xFFFE: MsgStatusReport,
+  0xFFFD: MsgStatusJournal,
   0xFF03: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,

@@ -123,7 +123,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
                   "frame was not encoded properly");
 
@@ -226,7 +228,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
                   "frame was not encoded properly");
 
@@ -329,7 +333,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
                   "frame was not encoded properly");
 
@@ -432,7 +438,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
                   "frame was not encoded properly");
 
@@ -535,7 +543,9 @@ START_TEST(test_auto_check_sbp_navigation_MsgBaselineNED) {
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-                  "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
                   "frame was not encoded properly");
 

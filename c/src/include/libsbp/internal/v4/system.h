@@ -134,6 +134,46 @@ bool sbp_msg_status_report_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
+bool sbp_status_journal_item_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_status_journal_item_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_status_journal_item_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_status_journal_item_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_status_journal_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_status_journal_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_status_journal_decode_internal(sbp_decode_ctx_t *ctx,
+                                            sbp_msg_status_journal_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_ins_status_encode_internal(sbp_encode_ctx_t *ctx,
                                         const sbp_msg_ins_status_t *msg);
 
