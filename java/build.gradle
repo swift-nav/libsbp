@@ -3,6 +3,8 @@ plugins {
   id "org.sonarqube" version "3.3"
   // spotless pre v5 used to allow gradle 4 on ubuntu-latest
   id "com.diffplug.gradle.spotless" version "4.5.1"
+  id 'maven-publish'
+  id 'signing'
 }
 
 apply plugin: 'java'
@@ -83,4 +85,69 @@ spotless {
                   ' * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.\n' +
                   ' */\n'
   }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+
+        mavenJava(MavenPublication) {
+
+            groupId = 'com.swiftnav'
+            artifactId = 'sbp'
+            version = System.getenv("VERSION") ?: "unset-version-build" // should instead fail if version not provided?
+            from components.java
+
+            pom {
+                name = 'libsbp'
+                description = 'Swift binary protocol client libraries'
+                url = 'https://github.com/swift-nav/libsbp'
+                inceptionYear = '2021'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'adrian-kong'
+                        name = 'Adrian Kong'
+                        email = 'adrian.kong@swift-nav.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git:github.com/swift-nav/libsbp.git'
+                    developerConnection = 'scm:git:ssh://github.com/swift-nav/libsbp.git'
+                    url = 'https://github.com/swift-nav/libsbp'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = project.properties["ossrhUsername"]
+                password = project.properties["ossrhPassword"]
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
 }

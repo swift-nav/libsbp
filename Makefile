@@ -429,7 +429,12 @@ dist-rust:
 	git reset --hard $(SBP_VERSION)
 	$(call announce-end,"Finished reverting commit made by `sbp2json` deployment")
 
-dist: dist-python dist-javascript dist-haskell dist-rust
+dist-java:
+	$(call announce-begin,"Deploying Java to maven central")
+	VERSION=$(SBP_VERSION_UNPREFIXED) gradle publish
+	$(call announce-end,"Finished deploying Java to maven central")
+
+dist: dist-python dist-javascript dist-haskell dist-rust dist-java
 
 pdf:
 	$(call announce-begin,"Generating PDF datasheet documentation")
