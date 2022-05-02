@@ -20,6 +20,17 @@ port `55555`
 
 Using this example, build jar using
 
+### Using gradle run tasks
+
+Using gradle we can run with 
+```shell
+gradle tcpExample --args="..."
+gradle serialLink --args="..."
+gradle trackingState --args="..."
+```
+
+### Using gradle to run via build
+
 ```bash
 gradle fatjar
 ```
@@ -40,7 +51,7 @@ java -cp example-all.jar com.swiftnav.example.TrackingState
 ```
 
 
-## Using makefile
+### Using makefile
 
 Can use makefile to build using
 

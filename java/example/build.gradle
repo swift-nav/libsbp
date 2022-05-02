@@ -2,6 +2,8 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'application'
+
 group 'com.swiftnav'
 version 'unspecified'
 
@@ -26,6 +28,21 @@ task fatJar(type: Jar) {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     with jar
+}
+
+task tcpExample(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.swiftnav.example.TCPExample"
+}
+
+task serialLink(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.swiftnav.example.SerialLink"
+}
+
+task trackingState(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.swiftnav.example.SerialLink"
 }
 
 test {
