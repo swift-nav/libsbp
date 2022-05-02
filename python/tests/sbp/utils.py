@@ -94,7 +94,8 @@ def _assert_sbp(sbp, test_case):
     Unit test case parsed from YAML.
 
   """
-  assert sbp.crc == int(test_case['crc'], 0), "Invalid crc."
+  expected = int(test_case['crc'], 0)
+  assert sbp.crc == expected, "Invalid crc. Actual: {:x} vs expected: {:x}.".format(sbp.crc, expected)
   assert sbp.msg_type == int(test_case['msg_type'], 0), "Invalid msg_type."
   assert sbp.sender == int(test_case['sender'], 0), "Invalid sender."
   assert sbp.length == test_case['length'], "Invalid length."

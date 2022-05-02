@@ -34,7 +34,7 @@ SBP_PACK_START
  * ready to respond to commands or configuration requests.
  */
 #define SBP_MSG_STARTUP 0xFF00
-#define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0x1ff)
+#define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0xff)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags)      \
   (((flags) >> SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT) & \
@@ -48,7 +48,7 @@ SBP_PACK_START
 #define SBP_STARTUP_CAUSE_OF_STARTUP_POWER_ON (0)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SOFTWARE_RESET (1)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_WATCHDOG_RESET (2)
-#define SBP_STARTUP__MASK (0x1ff)
+#define SBP_STARTUP__MASK (0xff)
 #define SBP_STARTUP__SHIFT (0u)
 #define SBP_STARTUP__GET(flags) \
   (((flags) >> SBP_STARTUP__SHIFT) & SBP_STARTUP__MASK)
@@ -204,10 +204,10 @@ typedef struct SBP_ATTR_PACKED {
   u32 flags; /**< Status flags */
 } msg_heartbeat_t;
 
-/** Sub-system Status report
+/** Subsystem Status report
  *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
+ * Report the general and specific state of a subsystem.  If the generic state
+ * is reported as initializing, the specific state should be ignored.
  */
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
@@ -255,7 +255,7 @@ typedef struct SBP_ATTR_PACKED {
  * The status report is sent periodically to inform the host or other attached
  * devices that the system is running. It is used to monitor system
  * malfunctions. It contains status reports that indicate to the host the
- * status of each sub-system and whether it is operating correctly.
+ * status of each subsystem and whether it is operating correctly.
  *
  * Interpretation of the subsystem specific status code is product dependent,
  * but if the generic status code is initializing, it should be ignored.
@@ -274,7 +274,7 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_STATUS_REPORT_SYSTEM_STARLING (0)
 #define SBP_STATUS_REPORT_SYSTEM_PRECISION_GNSS_MODULE (1)
-#define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0x1ff)
+#define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
 #define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
   (((flags) >> SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
@@ -306,6 +306,74 @@ typedef struct SBP_ATTR_PACKED {
   sub_system_report_t status[0]; /**< Reported status of individual
                                       subsystems */
 } msg_status_report_t;
+
+/** Subsystem Status report
+ *
+ * Reports the uptime and the state of a subsystem via generic and specific
+ * status codes.  If the generic state is reported as initializing, the
+ * specific state should be ignored.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u32 uptime; /**< Milliseconds since system startup */
+  sub_system_report_t report;
+} status_journal_item_t;
+
+/** Status report journal
+ *
+ * The status journal message contains past status reports (see
+ * MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+ * purposes.
+ */
+#define SBP_MSG_STATUS_JOURNAL 0xFFFD
+#define SBP_STATUS_JOURNAL_SYSTEM_MASK (0xffff)
+#define SBP_STATUS_JOURNAL_SYSTEM_SHIFT (0u)
+#define SBP_STATUS_JOURNAL_SYSTEM_GET(flags)      \
+  (((flags) >> SBP_STATUS_JOURNAL_SYSTEM_SHIFT) & \
+   SBP_STATUS_JOURNAL_SYSTEM_MASK)
+#define SBP_STATUS_JOURNAL_SYSTEM_SET(flags, val)           \
+  do {                                                      \
+    ((flags) |= (((val) & (SBP_STATUS_JOURNAL_SYSTEM_MASK)) \
+                 << (SBP_STATUS_JOURNAL_SYSTEM_SHIFT)));    \
+  } while (0)
+
+#define SBP_STATUS_JOURNAL_SYSTEM_STARLING (0)
+#define SBP_STATUS_JOURNAL_SYSTEM_PRECISION_GNSS_MODULE (1)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
+  (((flags) >> SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+   SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+  do {                                                                       \
+    ((flags) |=                                                              \
+     (((val) & (SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK))  \
+      << (SBP_STATUS_JOURNAL_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT)));     \
+  } while (0)
+
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT (0u)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET(flags)      \
+  (((flags) >> SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+   SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+  do {                                                                       \
+    ((flags) |=                                                              \
+     (((val) & (SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))  \
+      << (SBP_STATUS_JOURNAL_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));     \
+  } while (0)
+
+typedef struct SBP_ATTR_PACKED {
+  u16 reporting_system;     /**< Identity of reporting system */
+  u16 sbp_version;          /**< SBP protocol version */
+  u32 total_status_reports; /**< Total number of status reports sent since
+                                 system startup */
+  u8 sequence_descriptor;   /**< Index and number of messages in this
+                                 sequence. First nibble is the size of the
+                                 sequence (n), second nibble is the zero-
+                                 indexed counter (ith packet of n) */
+  status_journal_item_t journal[0]; /**< Status journal */
+} msg_status_journal_t;
 
 /** Inertial Navigation System status message
  *

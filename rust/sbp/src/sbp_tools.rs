@@ -178,6 +178,7 @@ mod tests {
 
     use super::*;
 
+    #[cfg(feature = "swiftnav-rs")]
     #[test]
     fn test_rover_time_wn() {
         #[rustfmt::skip]
