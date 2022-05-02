@@ -143,6 +143,7 @@
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
 //   const msgSsrTileDefinition = Convert.toMsgSsrTileDefinition(json);
 //   const msgStartup = Convert.toMsgStartup(json);
+//   const msgStatusJournal = Convert.toMsgStatusJournal(json);
 //   const msgStatusReport = Convert.toMsgStatusReport(json);
 //   const msgStmFlashLockSector = Convert.toMsgStmFlashLockSector(json);
 //   const msgStmFlashUnlockSector = Convert.toMsgStmFlashUnlockSector(json);
@@ -180,6 +181,7 @@
 //   const sTECSatElement = Convert.toSTECSatElement(json);
 //   const satelliteAPC = Convert.toSatelliteAPC(json);
 //   const solutionInputType = Convert.toSolutionInputType(json);
+//   const statusJournalItem = Convert.toStatusJournalItem(json);
 //   const subSystemReport = Convert.toSubSystemReport(json);
 //   const svAzEl = Convert.toSvAzEl(json);
 //   const svID = Convert.toSvID(json);
@@ -1322,6 +1324,14 @@ function msgStartupToJson(value) {
     return JSON.stringify(uncast(value, r("MsgStartup")), null, 2);
 }
 
+function toMsgStatusJournal(json) {
+    return cast(JSON.parse(json), r("MsgStatusJournal"));
+}
+
+function msgStatusJournalToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgStatusJournal")), null, 2);
+}
+
 function toMsgStatusReport(json) {
     return cast(JSON.parse(json), r("MsgStatusReport"));
 }
@@ -1616,6 +1626,14 @@ function toSolutionInputType(json) {
 
 function solutionInputTypeToJson(value) {
     return JSON.stringify(uncast(value, r("SolutionInputType")), null, 2);
+}
+
+function toStatusJournalItem(json) {
+    return cast(JSON.parse(json), r("StatusJournalItem"));
+}
+
+function statusJournalItemToJson(value) {
+    return JSON.stringify(uncast(value, r("StatusJournalItem")), null, 2);
 }
 
 function toSubSystemReport(json) {
@@ -2833,17 +2851,28 @@ const typeMap = {
         { json: "cause", js: "cause", typ: 0 },
         { json: "startup_type", js: "startup_type", typ: 0 },
     ], "any"),
-    "MsgStatusReport": o([
+    "MsgStatusJournal": o([
+        { json: "journal", js: "journal", typ: a(r("StatusJournalItem")) },
         { json: "reporting_system", js: "reporting_system", typ: 0 },
         { json: "sbp_version", js: "sbp_version", typ: 0 },
-        { json: "sequence", js: "sequence", typ: 0 },
-        { json: "status", js: "status", typ: a(r("SubSystemReport")) },
+        { json: "sequence_descriptor", js: "sequence_descriptor", typ: 0 },
+        { json: "total_status_reports", js: "total_status_reports", typ: 0 },
+    ], "any"),
+    "StatusJournalItem": o([
+        { json: "report", js: "report", typ: r("SubSystemReport") },
         { json: "uptime", js: "uptime", typ: 0 },
     ], "any"),
     "SubSystemReport": o([
         { json: "component", js: "component", typ: 0 },
         { json: "generic", js: "generic", typ: 0 },
         { json: "specific", js: "specific", typ: 0 },
+    ], "any"),
+    "MsgStatusReport": o([
+        { json: "reporting_system", js: "reporting_system", typ: 0 },
+        { json: "sbp_version", js: "sbp_version", typ: 0 },
+        { json: "sequence", js: "sequence", typ: 0 },
+        { json: "status", js: "status", typ: a(r("SubSystemReport")) },
+        { json: "uptime", js: "uptime", typ: 0 },
     ], "any"),
     "MsgStmFlashLockSector": o([
         { json: "sector", js: "sector", typ: 0 },
@@ -3348,6 +3377,8 @@ module.exports = {
     "toMsgSsrTileDefinition": toMsgSsrTileDefinition,
     "msgStartupToJson": msgStartupToJson,
     "toMsgStartup": toMsgStartup,
+    "msgStatusJournalToJson": msgStatusJournalToJson,
+    "toMsgStatusJournal": toMsgStatusJournal,
     "msgStatusReportToJson": msgStatusReportToJson,
     "toMsgStatusReport": toMsgStatusReport,
     "msgStmFlashLockSectorToJson": msgStmFlashLockSectorToJson,
@@ -3422,6 +3453,8 @@ module.exports = {
     "toSatelliteAPC": toSatelliteAPC,
     "solutionInputTypeToJson": solutionInputTypeToJson,
     "toSolutionInputType": toSolutionInputType,
+    "statusJournalItemToJson": statusJournalItemToJson,
+    "toStatusJournalItem": toStatusJournalItem,
     "subSystemReportToJson": subSystemReportToJson,
     "toSubSystemReport": toSubSystemReport,
     "svAzElToJson": svAzElToJson,

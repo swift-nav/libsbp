@@ -163,3 +163,5 @@ wheelticks
 xFF
 xFFFE
 xFFFF
+xFFFD
+uptime

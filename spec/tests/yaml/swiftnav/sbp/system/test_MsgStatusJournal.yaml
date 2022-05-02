@@ -1,0 +1,66 @@
+description: Unit tests for swiftnav.sbp.system MsgStatusJournal
+generated_on: '2022-04-28 09:56:19.891285'
+package: sbp.system
+tests:
+- msg:
+    c_decoded_fields:
+      n_journal: 3
+    fields:
+      reporting_system: 1
+      sbp_version: 1025
+      total_status_reports: 100
+      sequence_descriptor: 16
+      journal:
+      - uptime: 4242
+        report:
+          component: 6
+          generic: 1
+          specific: 13
+      - uptime: 5050
+        report:
+          component: 6
+          generic: 1
+          specific: 14
+      - uptime: 8888
+        report:
+          component: 6
+          generic: 1
+          specific: 15
+    module: sbp.system
+    name: MsgStatusJournal
+  msg_type: '0xFFFD'
+  raw_json: '{"preamble": 85, "msg_type": 65533, "sender": 35027, "length": 33, "payload": "AQABBGQAAAAQkhAAAAYAAQ26EwAABgABDrgiAAAGAAEP", "crc": 30577, "reporting_system": 1, "sbp_version": 1025, "total_status_reports": 100, "sequence_descriptor": 16, "journal": [{"uptime": 4242, "report": {"component": 6, "generic": 1, "specific": 13}}, {"uptime": 5050, "report": {"component": 6, "generic": 1, "specific": 14}}, {"uptime": 8888, "report": {"component": 6, "generic": 1, "specific": 15}}]}'
+  raw_packet: Vf3/04ghAQABBGQAAAAQkhAAAAYAAQ26EwAABgABDrgiAAAGAAEPcXc=
+  sbp:
+    crc: '0x7771'
+    length: 33
+    msg_type: '0xFFFD'
+    payload: AQABBGQAAAAQkhAAAAYAAQ26EwAABgABDrgiAAAGAAEP
+    preamble: '0x55'
+    sender: '0x88D3'
+- msg:
+    c_decoded_fields:
+      n_journal: 1
+    fields:
+      journal:
+      - report:
+          component: 6
+          generic: 1
+          specific: 13
+        uptime: 4242
+      sequence_descriptor: 16
+      total_status_reports: 100
+      reporting_system: 1
+      sbp_version: 1025
+    module: sbp.system
+    name: MsgStatusJournal
+  msg_type: '0xFFFD'
+  raw_json: '{"preamble": 85, "msg_type": 65533, "sender": 35027, "length": 17, "payload": "AQABBGQAAAAQkhAAAAYAAQ0=", "crc": 31120, "reporting_system": 1, "sbp_version": 1025, "total_status_reports": 100, "sequence_descriptor": 16, "journal": [{"uptime": 4242, "report": {"component": 6, "generic": 1, "specific": 13}}]}'
+  raw_packet: Vf3/04gRAQABBGQAAAAQkhAAAAYAAQ2QeQ==
+  sbp:
+    crc: '0x7990'
+    length: 17
+    msg_type: '0xFFFD'
+    payload: AQABBGQAAAAQkhAAAAYAAQ0=
+    preamble: '0x55'
+    sender: '0x88D3'

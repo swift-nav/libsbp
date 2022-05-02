@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#SubSystemReport",
   "title":"SubSystemReport",
-  "description":"Report the general and specific state of a sub-system.  If the generic state is reported as initializing, the specific state should be ignored.\n",
+  "description":"Report the general and specific state of a subsystem.  If the generic state is reported as initializing, the specific state should be ignored.\n",
   "type": "object",
   "properties": {
     "component": {"type": "integer"},

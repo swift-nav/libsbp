@@ -83,3 +83,5 @@ python/sbp/_version.py
 # Spec Validation
 previous-spec/
 current-spec/
+
+.vscode/
