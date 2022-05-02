@@ -227,7 +227,7 @@ gen-javascript:
 		       --javascript
 	cd $(SWIFTNAV_ROOT)
 	$(call announce-begin,"Bumping NPM version")
-	@- npm version "$(shell cat javascript/sbp/RELEASE-VERSION)" --no-git-tag-version >/dev/null 2>&1
+	@- npm version "$(shell cat javascript/sbp/RELEASE-VERSION)" --no-git-tag-version >/dev/null 2>&1 || :
 	@- npm run webpack >/dev/null 2>&1
 	$(call announce-end,"Finished generating JavaScript bindings. Please check $(SWIFTNAV_ROOT)/javascript/sbp")
 
