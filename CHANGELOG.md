@@ -1,5 +1,46 @@
 # Change Log
 
+## [v3.4.14](https://github.com/swift-nav/libsbp/tree/v3.4.14) (2022-05-02)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.13...v3.4.14)
+
+**Merged pull requests:**
+
+- Add status journal message [\#1123](https://github.com/swift-nav/libsbp/pull/1123) ([reimerix](https://github.com/reimerix))
+
+## [v3.4.13](https://github.com/swift-nav/libsbp/tree/v3.4.13) (2021-01-07)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.12...v3.4.13)
+
+**Merged pull requests:**
+
+- Improvements to MSG\_VEL\_COG [\#1094](https://github.com/swift-nav/libsbp/pull/1094)
+
+## [v3.4.12](https://github.com/swift-nav/libsbp/tree/v3.4.12) (2021-12-13)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.11...v3.4.12)
+
+**Merged pull requests:**
+
+- fix bit masks for new COG message [\#1091](https://github.com/swift-nav/libsbp/pull/1091)
+
+## [v3.4.11](https://github.com/swift-nav/libsbp/tree/v3.4.11) (2022-05-02)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.10...v3.4.11)
+
+- Add initial version of [MSG\_VEL\_COG](https://github.com/swift-nav/libsbp/compare/d8ec454a3d7f1b2f8b8f515934612c184b8d5fa3...03cc73e310d02df0679af807af8b5b792c1aa361)
+
+## [v3.4.10](https://github.com/swift-nav/libsbp/tree/v3.4.10) (2021-12-13)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.9...v3.4.10)
+
+**Merged pull requests:**
+
+- docker: sync with github actions [137dcae](https://github.com/swift-nav/libsbp/commit/137dcaec6e16d609672b68af656e79155f9e199e)
+- rust: don't stop converters when they encounter an error [\#1049](https://github.com/swift-nav/libsbp/pull/1049)
+- Add orthometric height to MSG_POS_LLH_ACC [\#1050](https://github.com/swift-nav/libsbp/pull/1050)
+- rust: Derive clone for GpsTimeError [\#1052](https://github.com/swift-nav/libsbp/pull/1052)
+
 ## [v3.4.9](https://github.com/swift-nav/libsbp/tree/v3.4.9) (2021-07-14)
 
 Release yanked, do not use.
