@@ -4,7 +4,17 @@ SBP Bindings for Java
 Java client for Swift Binary Protocol (SBP).
 Supports standard Java and Android.
 
-Setup
+Prerequisites
+-----
+- Java 11
+- Gradle 7.1.1
+
+Quick Setup
+-----
+Use `latest build from maven
+<https://search.maven.org/artifact/com.swiftnav/sbp>`_ as dependency
+
+Building
 -----
 
 Generate message classes from the toplevel:
@@ -21,17 +31,13 @@ Find compiled documentation in java/build/docs/javadoc
 Usage Examples
 ---------------
 
-A simple example is provided to read from a serial port and write log messages,
-as well as the latitude, longitude, and altitude from MsgPosLLH to stdout.
-
-  $ cd java/example
-  $ javac -cp ../build/libs/sbp.jar:/path/to/jssc.jar SerialLink.java
-  $ java -cp ../build/libs/sbp.jar:/path/to/jssc.jar:./ SerialLink /dev/ttyUSB0
+Examples are viewable at `example
+<https://github.com/swift-nav/libsbp/tree/master/java/example>`_
 
 License
 -------
 
-Copyright © 2015-2021 Swift Navigation
+Copyright © 2015-2022 Swift Navigation
 
 Distributed under MIT.
 

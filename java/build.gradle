@@ -22,7 +22,6 @@ dependencies {
 sourceSets {
     test {
         java {
-            srcDir 'example'
             srcDir 'test'
         }
 
