@@ -1043,3 +1043,131 @@ instance Binary MsgSsrGridDefinitionDepA where
 $(makeSBP 'msgSsrGridDefinitionDepA ''MsgSsrGridDefinitionDepA)
 $(makeJSON "_msgSsrGridDefinitionDepA_" ''MsgSsrGridDefinitionDepA)
 $(makeLenses ''MsgSsrGridDefinitionDepA)
+
+data BoundsHeader = BoundsHeader
+  { _boundsHeader_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the bound
+  , _boundsHeader_num_msgs      :: !Word8
+    -- ^ Number of messages in the dataset
+  , _boundsHeader_seq_num       :: !Word8
+    -- ^ Position of this message in the dataset
+  , _boundsHeader_update_interval :: !Word8
+    -- ^ Update interval between consecutive bounds. Similar to RTCM DF391.
+  , _boundsHeader_sol_id        :: !Word8
+    -- ^ SSR Solution ID.
+  } deriving ( Show, Read, Eq )
+
+instance Binary BoundsHeader where
+  get = do
+    _boundsHeader_time <- get
+    _boundsHeader_num_msgs <- getWord8
+    _boundsHeader_seq_num <- getWord8
+    _boundsHeader_update_interval <- getWord8
+    _boundsHeader_sol_id <- getWord8
+    pure BoundsHeader {..}
+
+  put BoundsHeader {..} = do
+    put _boundsHeader_time
+    putWord8 _boundsHeader_num_msgs
+    putWord8 _boundsHeader_seq_num
+    putWord8 _boundsHeader_update_interval
+    putWord8 _boundsHeader_sol_id
+
+$(makeJSON "_boundsHeader_" ''BoundsHeader)
+$(makeLenses ''BoundsHeader)
+
+-- | OrbitClockBound.
+--
+-- Orbit and clock bound.
+data OrbitClockBound = OrbitClockBound
+  { _orbitClockBound_sat_id             :: !Word8
+    -- ^ Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    -- DF488 (BDS) depending on the constellation.
+  , _orbitClockBound_orb_radial_bound_mu :: !Word8
+    -- ^ Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  , _orbitClockBound_orb_along_bound_mu :: !Word8
+    -- ^ Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  , _orbitClockBound_orb_cross_bound_mu :: !Word8
+    -- ^ Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  , _orbitClockBound_orb_radial_bound_sig :: !Word8
+    -- ^ Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  , _orbitClockBound_orb_along_bound_sig :: !Word8
+    -- ^ Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i
+    -- 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  , _orbitClockBound_orb_cross_bound_sig :: !Word8
+    -- ^ Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i
+    -- 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  , _orbitClockBound_clock_bound_mu     :: !Word8
+    -- ^ Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  , _orbitClockBound_clock_bound_sig    :: !Word8
+    -- ^ Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i
+    -- 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  } deriving ( Show, Read, Eq )
+
+instance Binary OrbitClockBound where
+  get = do
+    _orbitClockBound_sat_id <- getWord8
+    _orbitClockBound_orb_radial_bound_mu <- getWord8
+    _orbitClockBound_orb_along_bound_mu <- getWord8
+    _orbitClockBound_orb_cross_bound_mu <- getWord8
+    _orbitClockBound_orb_radial_bound_sig <- getWord8
+    _orbitClockBound_orb_along_bound_sig <- getWord8
+    _orbitClockBound_orb_cross_bound_sig <- getWord8
+    _orbitClockBound_clock_bound_mu <- getWord8
+    _orbitClockBound_clock_bound_sig <- getWord8
+    pure OrbitClockBound {..}
+
+  put OrbitClockBound {..} = do
+    putWord8 _orbitClockBound_sat_id
+    putWord8 _orbitClockBound_orb_radial_bound_mu
+    putWord8 _orbitClockBound_orb_along_bound_mu
+    putWord8 _orbitClockBound_orb_cross_bound_mu
+    putWord8 _orbitClockBound_orb_radial_bound_sig
+    putWord8 _orbitClockBound_orb_along_bound_sig
+    putWord8 _orbitClockBound_orb_cross_bound_sig
+    putWord8 _orbitClockBound_clock_bound_mu
+    putWord8 _orbitClockBound_clock_bound_sig
+
+$(makeJSON "_orbitClockBound_" ''OrbitClockBound)
+$(makeLenses ''OrbitClockBound)
+
+msgSsrOrbitClockBounds :: Word16
+msgSsrOrbitClockBounds = 0x05DE
+
+data MsgSsrOrbitClockBounds = MsgSsrOrbitClockBounds
+  { _msgSsrOrbitClockBounds_header           :: !BoundsHeader
+    -- ^ Header of a bounds message.
+  , _msgSsrOrbitClockBounds_ssr_iod          :: !Word8
+    -- ^ IOD of the SSR bound.
+  , _msgSsrOrbitClockBounds_const_id         :: !Word8
+    -- ^ Constellation ID to which the SVs belong.
+  , _msgSsrOrbitClockBounds_n_sats           :: !Word8
+    -- ^ Number of satellites.
+  , _msgSsrOrbitClockBounds_orbit_clock_bounds :: ![OrbitClockBound]
+    -- ^ Orbit and Clock Bounds per Satellite
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrOrbitClockBounds where
+  get = do
+    _msgSsrOrbitClockBounds_header <- get
+    _msgSsrOrbitClockBounds_ssr_iod <- getWord8
+    _msgSsrOrbitClockBounds_const_id <- getWord8
+    _msgSsrOrbitClockBounds_n_sats <- getWord8
+    _msgSsrOrbitClockBounds_orbit_clock_bounds <- whileM (not <$> isEmpty) get
+    pure MsgSsrOrbitClockBounds {..}
+
+  put MsgSsrOrbitClockBounds {..} = do
+    put _msgSsrOrbitClockBounds_header
+    putWord8 _msgSsrOrbitClockBounds_ssr_iod
+    putWord8 _msgSsrOrbitClockBounds_const_id
+    putWord8 _msgSsrOrbitClockBounds_n_sats
+    mapM_ put _msgSsrOrbitClockBounds_orbit_clock_bounds
+
+$(makeSBP 'msgSsrOrbitClockBounds ''MsgSsrOrbitClockBounds)
+$(makeJSON "_msgSsrOrbitClockBounds_" ''MsgSsrOrbitClockBounds)
+$(makeLenses ''MsgSsrOrbitClockBounds)

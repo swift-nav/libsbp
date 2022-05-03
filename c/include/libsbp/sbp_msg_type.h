@@ -213,6 +213,7 @@ typedef enum {
   SbpMsgSsrGriddedCorrectionNoStdDepA =
       SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A,
   SbpMsgSsrGriddedCorrection = SBP_MSG_SSR_GRIDDED_CORRECTION,
+  SbpMsgSsrOrbitClockBounds = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS,
   SbpMsgSsrOrbitClockDepA = SBP_MSG_SSR_ORBIT_CLOCK_DEP_A,
   SbpMsgSsrOrbitClock = SBP_MSG_SSR_ORBIT_CLOCK,
   SbpMsgSsrPhaseBiases = SBP_MSG_SSR_PHASE_BIASES,

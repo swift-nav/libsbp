@@ -673,6 +673,136 @@ class GridDefinitionHeaderDepA(object):
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
+class BoundsHeader(object):
+  """BoundsHeader.
+  
+  
+  Parameters
+  ----------
+  time : GPSTimeSec
+    GNSS reference time of the bound
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  update_interval : int
+    Update interval between consecutive bounds. Similar to RTCM DF391.
+  sol_id : int
+    SSR Solution ID.
+
+  """
+  _parser = construct.Struct(
+                     'time' / GPSTimeSec._parser,
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,
+                     'update_interval' / construct.Int8ul,
+                     'sol_id' / construct.Int8ul,)
+  __slots__ = [
+               'time',
+               'num_msgs',
+               'seq_num',
+               'update_interval',
+               'sol_id',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.time = kwargs.pop('time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.update_interval = kwargs.pop('update_interval')
+      self.sol_id = kwargs.pop('sol_id')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = BoundsHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class OrbitClockBound(object):
+  """OrbitClockBound.
+  
+  Orbit and clock bound.
+  
+  Parameters
+  ----------
+  sat_id : int
+    Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    DF488 (BDS) depending on the constellation.
+  orb_radial_bound_mu : int
+    Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  orb_along_bound_mu : int
+    Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  orb_cross_bound_mu : int
+    Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  orb_radial_bound_sig : int
+    Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  orb_along_bound_sig : int
+    Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i
+    200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  orb_cross_bound_sig : int
+    Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i
+    200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  clock_bound_mu : int
+    Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240,
+    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+  clock_bound_sig : int
+    Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i
+    200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+
+  """
+  _parser = construct.Struct(
+                     'sat_id' / construct.Int8ul,
+                     'orb_radial_bound_mu' / construct.Int8ul,
+                     'orb_along_bound_mu' / construct.Int8ul,
+                     'orb_cross_bound_mu' / construct.Int8ul,
+                     'orb_radial_bound_sig' / construct.Int8ul,
+                     'orb_along_bound_sig' / construct.Int8ul,
+                     'orb_cross_bound_sig' / construct.Int8ul,
+                     'clock_bound_mu' / construct.Int8ul,
+                     'clock_bound_sig' / construct.Int8ul,)
+  __slots__ = [
+               'sat_id',
+               'orb_radial_bound_mu',
+               'orb_along_bound_mu',
+               'orb_cross_bound_mu',
+               'orb_radial_bound_sig',
+               'orb_along_bound_sig',
+               'orb_cross_bound_sig',
+               'clock_bound_mu',
+               'clock_bound_sig',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sat_id = kwargs.pop('sat_id')
+      self.orb_radial_bound_mu = kwargs.pop('orb_radial_bound_mu')
+      self.orb_along_bound_mu = kwargs.pop('orb_along_bound_mu')
+      self.orb_cross_bound_mu = kwargs.pop('orb_cross_bound_mu')
+      self.orb_radial_bound_sig = kwargs.pop('orb_radial_bound_sig')
+      self.orb_along_bound_sig = kwargs.pop('orb_along_bound_sig')
+      self.orb_cross_bound_sig = kwargs.pop('orb_cross_bound_sig')
+      self.clock_bound_mu = kwargs.pop('clock_bound_mu')
+      self.clock_bound_sig = kwargs.pop('clock_bound_sig')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = OrbitClockBound._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
   """SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
@@ -2094,6 +2224,114 @@ class MsgSsrGridDefinitionDepA(SBP):
     d.update(j)
     return d
     
+SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS = 0x05DE
+class MsgSsrOrbitClockBounds(SBP):
+  """SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
+
+  You can have MSG_SSR_ORBIT_CLOCK_BOUNDS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod : int
+    IOD of the SSR bound.
+  const_id : int
+    Constellation ID to which the SVs belong.
+  n_sats : int
+    Number of satellites.
+  orbit_clock_bounds : array
+    Orbit and Clock Bounds per Satellite
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod' / construct.Int8ul,
+                   'const_id' / construct.Int8ul,
+                   'n_sats' / construct.Int8ul,
+                   'orbit_clock_bounds' / construct.GreedyRange(OrbitClockBound._parser),)
+  __slots__ = [
+               'header',
+               'ssr_iod',
+               'const_id',
+               'n_sats',
+               'orbit_clock_bounds',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrOrbitClockBounds,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrOrbitClockBounds, self).__init__()
+      self.msg_type = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.ssr_iod = kwargs.pop('ssr_iod')
+      self.const_id = kwargs.pop('const_id')
+      self.n_sats = kwargs.pop('n_sats')
+      self.orbit_clock_bounds = kwargs.pop('orbit_clock_bounds')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrOrbitClockBounds.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrOrbitClockBounds(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrOrbitClockBounds._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrOrbitClockBounds._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrOrbitClockBounds._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrOrbitClockBounds, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,
@@ -2108,4 +2346,5 @@ msg_classes = {
   0x05F0: MsgSsrGriddedCorrectionNoStdDepA,
   0x05FA: MsgSsrGriddedCorrectionDepA,
   0x05F5: MsgSsrGridDefinitionDepA,
+  0x05DE: MsgSsrOrbitClockBounds,
 }

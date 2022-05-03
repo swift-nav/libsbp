@@ -132,6 +132,8 @@ int main(void) {
       sr, legacy_auto_check_sbp_settings_MsgSettingsReadByIndexDone_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp_suite());
+  srunner_add_suite(sr,
+                    legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgDgnssStatus_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgGroupMeta_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgHeartbeat_suite());

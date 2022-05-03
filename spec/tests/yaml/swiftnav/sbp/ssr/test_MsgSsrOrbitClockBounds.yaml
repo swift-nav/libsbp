@@ -1,0 +1,55 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrOrbitClockBounds
+generated_on: 2022-04-08 # manually generated
+package: sbp.ssr
+tests:
+
+- msg:
+    fields:
+      header:
+        time:
+          tow: 180
+          wn: 3
+        num_msgs: 1
+        seq_num: 2
+        update_interval: 3
+        sol_id: 48
+      ssr_iod: 15
+      const_id: 1
+      n_sats: 2
+      orbit_clock_bounds:
+      - sat_id: 24
+        orb_radial_bound_mu: 39
+        orb_along_bound_mu: 38
+        orb_cross_bound_mu: 37
+        orb_radial_bound_sig: 1
+        orb_along_bound_sig: 2
+        orb_cross_bound_sig: 3
+        clock_bound_mu: 39
+        clock_bound_sig: 1
+      - sat_id: 3
+        orb_radial_bound_mu: 39
+        orb_along_bound_mu: 38
+        orb_cross_bound_mu: 37
+        orb_radial_bound_sig: 1
+        orb_along_bound_sig: 2
+        orb_cross_bound_sig: 3
+        clock_bound_mu: 39
+        clock_bound_sig: 1
+    module: sbp.ssr
+    name: MsgSsrOrbitClockBounds
+  msg_type: '1502'
+  raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 3, "sol_id": 48},
+    "ssr_iod": 15, "const_id": 1, "n_sats": 2, "orbit_clock_bounds": [{"sat_id": 24, "orb_radial_bound_mu": 39,
+    "orb_along_bound_mu": 38, "orb_cross_bound_mu": 37, "orb_radial_bound_sig": 1, "orb_along_bound_sig": 2,
+    "orb_cross_bound_sig": 3, "clock_bound_mu": 39, "clock_bound_sig": 1}, {"sat_id": 3, "orb_radial_bound_mu": 39,
+    "orb_along_bound_mu": 38, "orb_cross_bound_mu": 37, "orb_radial_bound_sig": 1, "orb_along_bound_sig": 2,
+    "orb_cross_bound_sig": 3, "clock_bound_mu": 39, "clock_bound_sig": 1}], "preamble": 85, "msg_type": 1502,
+    "sender": 66, "length": 31, "payload": "tAAAAAMAAQIDMA8BAhgnJiUBAgMnAQMnJiUBAgMnAQ==", "crc": 21781}'
+  raw_packet: Vd4FQgAftAAAAAMAAQIDMA8BAhgnJiUBAgMnAQMnJiUBAgMnARVV
+  sbp:
+    preamble: '0x55'
+    msg_type: '0x05DE'
+    sender: '0x0042'
+    length: 31
+    payload: tAAAAAMAAQIDMA8BAhgnJiUBAgMnAQMnJiUBAgMnAQ==
+    crc: '0x5515'
