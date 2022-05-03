@@ -231,6 +231,7 @@ inside the container (so you don't have to setup git inside the docker container
    - `make dist-haskell`
    - `make dist-rust` (see section on Rust below)
    - `make dist-python` (see section on Python below)
+   - `make dist-java` (see section on Java below)
 
    You may need credentials on the appropriate package repositories. Ignore the
    GPG error in `stack`, the package will get uploaded correctly anyway.  If
@@ -353,9 +354,17 @@ To distribute java, ensure you have the correct credentials and prerequisites
 - Sonatype deployer account
 - Your own GPG key
 
+Add in `gradle.properties` located in `.gradle` or wherever the working
+directory is setup (probably located/have to create it in
+`$HOME/.gradle/gradle.properties`).  It's recommended to create
+`.gradle/gradle.properties` in the `libsbp` checkout directory so you can
+invoke docker like this in order to run the `dist-java` task:
 
-Add in gradle.properties located in `.gradle` or wherever the working directory is setup 
-(probably located/have to create it in `/User/<user>/.gradle/gradle.properties`)
+```shell
+docker run -v $PWD/.gradle:/home/dockerdev/.gradle -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021-10-13 /bin/bash
+```
+
+Then, create `gradle.properties` as follows:
 
 ```shell
 # last 8 digit of gpg key
@@ -370,9 +379,10 @@ ossrhUsername=xxx
 ossrhPassword=xxx
 ```
 
-Modify `ossrhUsername` and `ossrhPassword` with the sonatype deployer account 
-(or an individual one with deployer role)
-
+Modify `ossrhUsername` and `ossrhPassword` with the sonatype deployer account
+(or an individual one with deployer role).  See [SonaType getting started
+guide](https://central.sonatype.org/publish/publish-guide/) for more details.
+Internal Swift developers should have access to shared credentials.
 
 Generate GPG key with
 ```shell
@@ -381,12 +391,12 @@ gpg --export-secret-keys <key> > keys.gpg
 gpg --keyserver keyserver.ubuntu.com --send-keys <key>
 ```
 
-To publish, run gradle publish - (might have some conflicts with the version, so should use Makefile to actually 
-publish with version, make dist-java in docker)
+To publish, run `gradle publish` (via `make dist-java`) - (might have some
+conflicts with the version, so should use Makefile to actually publish with
+the correct version, so run `make dist-java` in docker)
 
-After publishing, go to Nexus Repository Manager. Select the deployed version, close the staging repository 
-and release to finish it off.
-
+After publishing, go to Nexus Repository Manager. Select the deployed version,
+close the staging repository and release to finish it off.
 
 # Contributions
 
