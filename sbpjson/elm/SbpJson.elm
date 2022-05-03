@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGriddedCorrection, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGriddedCorrection, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -152,6 +152,7 @@
 --     decodeString msgSsrStecCorrection myJsonString
 --     decodeString msgSsrTileDefinition myJsonString
 --     decodeString msgStartup myJsonString
+--     decodeString msgStatusJournal myJsonString
 --     decodeString msgStatusReport myJsonString
 --     decodeString msgStmFlashLockSector myJsonString
 --     decodeString msgStmFlashUnlockSector myJsonString
@@ -190,6 +191,7 @@
 --     decodeString stecSatElement myJsonString
 --     decodeString satelliteAPC myJsonString
 --     decodeString solutionInputType myJsonString
+--     decodeString statusJournalItem myJsonString
 --     decodeString subSystemReport myJsonString
 --     decodeString svAzEl myJsonString
 --     decodeString svID myJsonString
@@ -629,6 +631,9 @@ module SbpJson exposing
     , MsgStartup
     , msgStartupToString
     , msgStartup
+    , MsgStatusJournal
+    , msgStatusJournalToString
+    , msgStatusJournal
     , MsgStatusReport
     , msgStatusReportToString
     , msgStatusReport
@@ -743,6 +748,9 @@ module SbpJson exposing
     , SolutionInputType
     , solutionInputTypeToString
     , solutionInputType
+    , StatusJournalItem
+    , statusJournalItemToString
+    , statusJournalItem
     , SubSystemReport
     , subSystemReportToString
     , subSystemReport
@@ -2583,9 +2591,37 @@ type alias MsgStartup =
     , startupType : Int
     }
 
+{-| The status journal message contains past status reports (see MSG_STATUS_REPORT) and
+functions as a error/event storage for telemetry purposes.
+-}
+type alias MsgStatusJournal =
+    { journal : Array StatusJournalItem
+    , reportingSystem : Int
+    , sbpVersion : Int
+    , sequenceDescriptor : Int
+    , totalStatusReports : Int
+    }
+
+{-| Reports the uptime and the state of a subsystem via generic and specific status codes.
+If the generic state is reported as initializing, the specific state should be ignored.
+-}
+type alias StatusJournalItem =
+    { report : SubSystemReport
+    , uptime : Int
+    }
+
+{-| Report the general and specific state of a subsystem.  If the generic state is reported
+as initializing, the specific state should be ignored.
+-}
+type alias SubSystemReport =
+    { component : Int
+    , generic : Int
+    , specific : Int
+    }
+
 {-| The status report is sent periodically to inform the host or other attached devices that
 the system is running. It is used to monitor system malfunctions. It contains status
-reports that indicate to the host the status of each sub-system and whether it is
+reports that indicate to the host the status of each subsystem and whether it is
 operating correctly.,
 ,
 Interpretation of the subsystem specific status code is product dependent, but if the
@@ -2598,15 +2634,6 @@ type alias MsgStatusReport =
     , sequence : Int
     , status : Array SubSystemReport
     , uptime : Int
-    }
-
-{-| Report the general and specific state of a sub-system.  If the generic state is reported
-as initializing, the specific state should be ignored.
--}
-type alias SubSystemReport =
-    { component : Int
-    , generic : Int
-    , specific : Int
     }
 
 {-| The flash lock message locks a sector of the STM flash memory. The device replies with a
@@ -3435,6 +3462,9 @@ msgSsrTileDefinitionToString r = Jenc.encode 0 (encodeMsgSsrTileDefinition r)
 msgStartupToString : MsgStartup -> String
 msgStartupToString r = Jenc.encode 0 (encodeMsgStartup r)
 
+msgStatusJournalToString : MsgStatusJournal -> String
+msgStatusJournalToString r = Jenc.encode 0 (encodeMsgStatusJournal r)
+
 msgStatusReportToString : MsgStatusReport -> String
 msgStatusReportToString r = Jenc.encode 0 (encodeMsgStatusReport r)
 
@@ -3551,6 +3581,9 @@ satelliteAPCToString r = Jenc.encode 0 (encodeSatelliteAPC r)
 
 solutionInputTypeToString : SolutionInputType -> String
 solutionInputTypeToString r = Jenc.encode 0 (encodeSolutionInputType r)
+
+statusJournalItemToString : StatusJournalItem -> String
+statusJournalItemToString r = Jenc.encode 0 (encodeStatusJournalItem r)
 
 subSystemReportToString : SubSystemReport -> String
 subSystemReportToString r = Jenc.encode 0 (encodeSubSystemReport r)
@@ -6402,6 +6435,53 @@ encodeMsgStartup x =
         , ("startup_type", Jenc.int x.startupType)
         ]
 
+msgStatusJournal : Jdec.Decoder MsgStatusJournal
+msgStatusJournal =
+    Jpipe.decode MsgStatusJournal
+        |> Jpipe.required "journal" (Jdec.array statusJournalItem)
+        |> Jpipe.required "reporting_system" Jdec.int
+        |> Jpipe.required "sbp_version" Jdec.int
+        |> Jpipe.required "sequence_descriptor" Jdec.int
+        |> Jpipe.required "total_status_reports" Jdec.int
+
+encodeMsgStatusJournal : MsgStatusJournal -> Jenc.Value
+encodeMsgStatusJournal x =
+    Jenc.object
+        [ ("journal", makeArrayEncoder encodeStatusJournalItem x.journal)
+        , ("reporting_system", Jenc.int x.reportingSystem)
+        , ("sbp_version", Jenc.int x.sbpVersion)
+        , ("sequence_descriptor", Jenc.int x.sequenceDescriptor)
+        , ("total_status_reports", Jenc.int x.totalStatusReports)
+        ]
+
+statusJournalItem : Jdec.Decoder StatusJournalItem
+statusJournalItem =
+    Jpipe.decode StatusJournalItem
+        |> Jpipe.required "report" subSystemReport
+        |> Jpipe.required "uptime" Jdec.int
+
+encodeStatusJournalItem : StatusJournalItem -> Jenc.Value
+encodeStatusJournalItem x =
+    Jenc.object
+        [ ("report", encodeSubSystemReport x.report)
+        , ("uptime", Jenc.int x.uptime)
+        ]
+
+subSystemReport : Jdec.Decoder SubSystemReport
+subSystemReport =
+    Jpipe.decode SubSystemReport
+        |> Jpipe.required "component" Jdec.int
+        |> Jpipe.required "generic" Jdec.int
+        |> Jpipe.required "specific" Jdec.int
+
+encodeSubSystemReport : SubSystemReport -> Jenc.Value
+encodeSubSystemReport x =
+    Jenc.object
+        [ ("component", Jenc.int x.component)
+        , ("generic", Jenc.int x.generic)
+        , ("specific", Jenc.int x.specific)
+        ]
+
 msgStatusReport : Jdec.Decoder MsgStatusReport
 msgStatusReport =
     Jpipe.decode MsgStatusReport
@@ -6419,21 +6499,6 @@ encodeMsgStatusReport x =
         , ("sequence", Jenc.int x.sequence)
         , ("status", makeArrayEncoder encodeSubSystemReport x.status)
         , ("uptime", Jenc.int x.uptime)
-        ]
-
-subSystemReport : Jdec.Decoder SubSystemReport
-subSystemReport =
-    Jpipe.decode SubSystemReport
-        |> Jpipe.required "component" Jdec.int
-        |> Jpipe.required "generic" Jdec.int
-        |> Jpipe.required "specific" Jdec.int
-
-encodeSubSystemReport : SubSystemReport -> Jenc.Value
-encodeSubSystemReport x =
-    Jenc.object
-        [ ("component", Jenc.int x.component)
-        , ("generic", Jenc.int x.generic)
-        , ("specific", Jenc.int x.specific)
         ]
 
 msgStmFlashLockSector : Jdec.Decoder MsgStmFlashLockSector
