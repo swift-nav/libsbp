@@ -381,15 +381,6 @@ definitions:
             fill: STECSatElement
             desc: Array of STEC polynomial coefficients for each space vehicle.
 
- - MSG_SSR_STEC_CORRECTION:
-     id: 0x05FD
-     short_desc: STEC correction polynomial coefficients
-     public: False
-     fields:
-       - stub:
-           type: array
-           fill: u8
-
  - MSG_SSR_GRIDDED_CORRECTION:
     id: 0x05FC
     short_desc: Gridded troposphere and STEC correction residuals
@@ -413,16 +404,7 @@ definitions:
             fill: STECResidual
             desc: STEC residuals for each satellite (mean, stddev).
 
- - MSG_SSR_GRIDDED_CORRECTION_BOUNDS:
-     id: 0x05FE
-     short_desc: Gridded troposhere and STEC correction residuals bounds
-     public: False
-     fields:
-       - stub:
-           type: array
-           fill: u8
-
- - MSG_SSR_TILE_DEFINITION_DEP:
+ - MSG_SSR_TILE_DEFINITION:
     id: 0x05F6
     short_desc: >
       Definition of a SSR atmospheric correction tile.
@@ -529,25 +511,6 @@ definitions:
 
               See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
               note the definition of the bits is inverted.
-
- - MSG_SSR_TILE_DEFINITION:
-     id: 0x05F7
-     short_desc: >
-       Definition of a SSR atmospheric correction tile.
-     desc: >
-       Provides the correction point coordinates for the atmospheric correction
-       values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-       messages.
-       
-       
-       Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-       element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-       correction points, not lists of points.
-     public: False
-     fields:
-       - stub:
-           type: array
-           fill: u8
 
  - SatelliteAPC:
      short_desc: Antenna phase center correction
@@ -844,29 +807,120 @@ definitions:
               essentially the index of the quadrants that contain transitions between
               valid and invalid (and vice versa) are encoded as u8 integers.
 
+ - BoundsHeader:
+     short_desc: Header for the Bounds messages
+     fields:
+       - time:
+           type: GPSTimeSec
+           desc: GNSS reference time of the bound
+       - num_msgs:
+           type: u8
+           desc: Number of messages in the dataset
+       - seq_num:
+           type: u8
+           desc: Position of this message in the dataset
+       - update_interval:
+           type: u8
+           desc: >
+             Update interval between consecutive bounds. Similar to
+             RTCM DF391.
+       - sol_id:
+           type: u8
+           desc: SSR Solution ID.
+
+ - OrbitClockBound:
+     desc: Orbit and clock bound.
+     fields:
+       - sat_id:
+           type: u8
+           desc: >
+             Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo),
+             or DF488 (BDS) depending on the constellation.
+       - orb_radial_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Mean Radial (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+       - orb_along_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Mean Along-Track (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+       - orb_cross_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Mean Cross-Track (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+       - orb_radial_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Standard Deviation Radial (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+       - orb_along_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Standard Deviation Along-Track (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+       - orb_cross_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Standard Deviation Cross-Track (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+       - clock_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Clock Bound Mean (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+       - clock_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Clock Bound Standard Deviation (range 0-55)
+             i<=200, mean=0.0251i
+             200<i<=240, mean=5+0.5(i-200)
+             i>240, mean=25+2(i-240)
+
  - MSG_SSR_ORBIT_CLOCK_BOUNDS:
      id: 0x05DE
-     short_desc: Stubbed version of Combined Orbit and Clock Bound
+     short_desc: Combined Orbit and Clock Bound
      public: False
      fields:
-       - stub:
+       - header:
+           type: BoundsHeader
+           desc: Header of a bounds message.
+       - ssr_iod:
+           type: u8
+           desc: IOD of the SSR bound.
+       - const_id:
+           type: u8
+           desc: Constellation ID to which the SVs belong.
+       - n_sats:
+           type: u8
+           desc: Number of satellites.
+       - orbit_clock_bounds:
            type: array
-           fill: u8
-
- - MSG_SSR_CODE_PHASE_BIASES_BOUNDS:
-     id: 0x05EC
-     short_desc: Stubbed version of Combined Code and Phase Biases Bounds
-     public: False
-     fields:
-       - stub:
-           type: array
-           fill: u8
-
- - MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION:
-     id: 0x05DF
-     short_desc: Combined Orbit and Clock Bound Degradation Parameter
-     public: False
-     fields:
-       - stub:
-           type: array
-           fill: u8
+           fill: OrbitClockBound
+           size_fn: n_sats
+           map_by: sat_id
+           desc: Orbit and Clock Bounds per Satellite
