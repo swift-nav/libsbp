@@ -1,5 +1,18 @@
 # Changelog
 
+## [v4.2.0](https://github.com/swift-nav/libsbp/tree/v4.2.0) (2022-05-03)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.6...v4.2.0)
+
+**Merged pull requests:**
+
+- Add MSG\_STATUS\_JOURNAL \[4.1.x\] [\#1126](https://github.com/swift-nav/libsbp/pull/1126) ([silverjam](https://github.com/silverjam))
+- Deploying tarball to pypi [\#1121](https://github.com/swift-nav/libsbp/pull/1121) ([adrian-kong](https://github.com/adrian-kong))
+- Auto submodule update: cmake - clang-tidy: allow target to be disabled \(\#109\) [\#1120](https://github.com/swift-nav/libsbp/pull/1120) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Publishing to maven central [\#1119](https://github.com/swift-nav/libsbp/pull/1119) ([adrian-kong](https://github.com/adrian-kong))
+- Updating libraries and headers to 2022 [\#1118](https://github.com/swift-nav/libsbp/pull/1118) ([adrian-kong](https://github.com/adrian-kong))
+- Fix rust release.toml and haskell sbp.cabal. [\#1117](https://github.com/swift-nav/libsbp/pull/1117) ([john-michaelburke](https://github.com/john-michaelburke))
+
 ## [v4.1.6](https://github.com/swift-nav/libsbp/tree/v4.1.6) (2022-04-13)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.5...v4.1.6)

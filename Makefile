@@ -420,10 +420,10 @@ dist-haskell:
 
 dist-rust:
 	$(call announce-begin,"Deploying Rust `sbp` package")
-	cargo release --package sbp --execute $(SBP_VERSION_UNPREFIXED)
+	cargo release -v --package sbp --execute $(SBP_VERSION_UNPREFIXED)
 	$(call announce-end,"Finished deploying Rust `sbp` package")
 	$(call announce-begin,"Deploying Rust `sbp2json` package")
-	cargo release --package sbp2json --execute $(SBP_VERSION_UNPREFIXED)
+	cargo release -v --package sbp2json --execute $(SBP_VERSION_UNPREFIXED)
 	$(call announce-end,"Finished deploying Rust `sbp2json` package")
 	$(call announce-begin,"Reverting commit made by `sbp2json` deployment")
 	git reset --hard $(SBP_VERSION)
