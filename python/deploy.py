@@ -45,18 +45,22 @@ def twine_upload(wheel):
     if PYPI_USERNAME is not None and PYPI_PASSWORD is not None:
         invoke = subprocess.check_call if not USE_TEST_PYPI else subprocess.call
         cmd = ["twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD]
-        ret = invoke(cmd_prefix + cmd + (["--repository-url", "https://test.pypi.org/legacy/"] if USE_TEST_PYPI else [])
-                     + [wheel])
-        invoke(cmd_prefix + cmd + ["dist/*"])
+        cmd = cmd_prefix + cmd + (
+                ["--repository-url", "https://test.pypi.org/legacy/"] if USE_TEST_PYPI else [])
+        ret_wheel = invoke(cmd + [wheel])
     else:
         print(">>> WARNING: not pushing to PyPI (one of PYPI_USERNAME or PYPI_PASSWORD was empty)")
 
-    if USE_TEST_PYPI and ret != 0:
-        print(">>> WARNING: twine upload returned exit code {}".format(ret))
+    if USE_TEST_PYPI and ret_wheel != 0:
+        print(">>> WARNING: upload of wheel failed, exit code: {}".format(ret_wheel))
 
 
 def invoke_bdist():
     subprocess.check_call(["python3", "setup.py", "bdist_wheel"])
+
+
+def invoke_sdist():
+    subprocess.check_call(["python3", "setup.py", "sdist"])
 
 
 def run_bdist(deploy_dir):
@@ -93,6 +97,7 @@ def run_bdist(deploy_dir):
     os.chdir("module")
 
     print(">>> Staged to '{}'...'".format(deploy_dir))
+
     print(">>> Building Python wheel ...")
 
     invoke_bdist()
@@ -114,6 +119,27 @@ def run_bdist(deploy_dir):
 
     wheel = wheel.replace("-linux_x86_64", "-manylinux1_x86_64")
     twine_upload(wheel)
+
+    print(">>> Building source tarball ...")
+
+    invoke_sdist()
+
+    tarball_pattern = "dist/sbp-{}*.tar.gz".format(SBP_VERSION)
+    print(">>> Uploading source tarball (glob: {})...".format(tarball_pattern))
+
+    tarballs = glob.glob(tarball_pattern)
+    if not tarballs:
+        print("\n!!! No source tarball (.tgz) file found...\n\n")
+        sys.exit(1)
+
+    tarball = tarballs[0]
+
+    print(">>> Found source tarball (of {} matches): {}".format(len(tarballs), tarball))
+
+    print(">>> Copying tarball {} to {}".format(tarball, old_cwd))
+    shutil.copy(tarball, old_cwd)
+
+    twine_upload(tarball)
 
 
 def build_wheel(deploy_dir):

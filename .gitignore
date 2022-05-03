@@ -85,3 +85,4 @@ previous-spec/
 current-spec/
 
 .vscode/
+.gradle/
