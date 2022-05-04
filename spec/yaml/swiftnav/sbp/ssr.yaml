@@ -920,3 +920,57 @@ definitions:
            size_fn: n_sats
            map_by: sat_id
            desc: Orbit and Clock Bounds per Satellite
+
+ - CodePhaseBiasesSatSig:
+     short_desc: Code and Phase Biases Bounds per Satellite-Signal couple
+     fields:
+       - sat_id:
+           type: u8
+           desc: >
+             Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo),
+             or DF488 (BDS) depending on the constellation.
+       - signal_id:
+           type: u8
+           desc: >
+             Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
+             DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+       - code_bias_bound_mu:
+           type: u8
+           units: 0.005 m
+           desc: Code Bias Mean (range 0-1.275)
+       - code_bias_bound_sig:
+           type: u8
+           units: 0.005 m
+           desc: Code Bias Standard Deviation (range 0-1.275)
+       - phase_bias_bound_mu:
+           type: u8
+           units: 0.005 m
+           desc: Phase Bias Mean (range 0-1.275)
+       - phase_bias_bound_sig:
+           type: u8
+           units: 0.005 m
+           desc: Phase Bias Standard Deviation (range 0-1.275)
+
+ - MSG_SSR_CODE_PHASE_BIASES_BOUNDS:
+     id: 0x05EC
+     short_desc: Combined Code and Phase Biases Bounds
+     public: False
+     fields:
+       - header:
+           type: BoundsHeader
+           desc: Header of a bounds message.
+       - ssr_iod:
+           type: u8
+           desc: IOD of the SSR bound.
+       - const_id:
+           type: u8
+           desc: Constellation ID to which the SVs belong.
+       - n_sats_signals:
+           type: u8
+           desc: Number of satellite-signal couples.
+       - satellites_signals:
+           type: array
+           fill: CodePhaseBiasesSatSig
+           size_fn: n_sats_signals
+           map_by: sat_id
+           desc: Code and Phase Biases Bounds per Satellite-Signal couple.

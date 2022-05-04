@@ -1,0 +1,55 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrCodePhaseBiasesBounds
+generated_on: 2022-04-12 # manually generated
+package: sbp.ssr
+tests:
+
+  - msg:
+      fields:
+        header:
+          time:
+            tow: 180
+            wn: 3
+          num_msgs: 1
+          seq_num: 2
+          update_interval: 1
+          sol_id: 14
+        ssr_iod: 15
+        const_id: 1
+        n_sats_signals: 3
+        satellites_signals:
+          - sat_id: 0
+            signal_id: 3
+            code_bias_bound_mu: 39
+            code_bias_bound_sig: 1
+            phase_bias_bound_mu: 39
+            phase_bias_bound_sig: 1
+          - sat_id: 1
+            signal_id: 3
+            code_bias_bound_mu: 39
+            code_bias_bound_sig: 1
+            phase_bias_bound_mu: 39
+            phase_bias_bound_sig: 1
+          - sat_id: 1
+            signal_id: 1
+            code_bias_bound_mu: 39
+            code_bias_bound_sig: 1
+            phase_bias_bound_mu: 39
+            phase_bias_bound_sig: 1
+      module: sbp.ssr
+      name: MsgSsrCodePhaseBiasesBounds
+    msg_type: '1516'
+    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 1,
+    "sol_id": 14}, "ssr_iod": 15, "const_id": 1, "n_sats_signals": 3, "satellites_signals": [{
+    "sat_id": 0, "signal_id": 3, "code_bias_bound_mu": 39, "code_bias_bound_sig": 1, "phase_bias_bound_mu": 39,
+    "phase_bias_bound_sig": 1}, {"sat_id": 1, "signal_id": 3, "code_bias_bound_mu": 39, "code_bias_bound_sig": 1,
+    "phase_bias_bound_mu": 39, "phase_bias_bound_sig": 1}, {"sat_id": 1, "signal_id": 1, "code_bias_bound_mu": 39,
+    "code_bias_bound_sig": 1, "phase_bias_bound_mu": 39, "phase_bias_bound_sig": 1}], "preamble": 85,
+    "msg_type": 1516, "sender": 66, "length": 31, "payload": "tAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnAQ==", "crc": 28951}'
+    raw_packet: VewFQgAftAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnARdx
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x05EC'
+      sender: '0x0042'
+      length: 31
+      payload: tAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnAQ==
+      crc: '0x7117'
