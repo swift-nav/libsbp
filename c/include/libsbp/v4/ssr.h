@@ -19,10 +19,12 @@
 #define LIBSBP_V4_SSR_MESSAGES_H
 #include <libsbp/v4/ssr/BoundsHeader.h>
 #include <libsbp/v4/ssr/CodeBiasesContent.h>
+#include <libsbp/v4/ssr/CodePhaseBiasesSatSig.h>
 #include <libsbp/v4/ssr/GridDefinitionHeaderDepA.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeader.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeaderDepA.h>
 #include <libsbp/v4/ssr/MSG_SSR_CODE_BIASES.h>
+#include <libsbp/v4/ssr/MSG_SSR_CODE_PHASE_BIASES_BOUNDS.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A.h>

@@ -182,6 +182,7 @@ import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
 import com.swiftnav.sbp.solution_meta.MsgSolnMeta;
 import com.swiftnav.sbp.solution_meta.MsgSolnMetaDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
+import com.swiftnav.sbp.ssr.MsgSsrCodePhaseBiasesBounds;
 import com.swiftnav.sbp.ssr.MsgSsrGridDefinitionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionDepA;
@@ -585,6 +586,8 @@ final class MessageTable {
                 return new MsgSsrGridDefinitionDepA(msg);
             case MsgSsrOrbitClockBounds.TYPE:
                 return new MsgSsrOrbitClockBounds(msg);
+            case MsgSsrCodePhaseBiasesBounds.TYPE:
+                return new MsgSsrCodePhaseBiasesBounds(msg);
             case MsgStartup.TYPE:
                 return new MsgStartup(msg);
             case MsgDgnssStatus.TYPE:

@@ -15,10 +15,12 @@
 //! Precise State Space Representation (SSR) corrections format
 pub use bounds_header::BoundsHeader;
 pub use code_biases_content::CodeBiasesContent;
+pub use code_phase_biases_sat_sig::CodePhaseBiasesSatSig;
 pub use grid_definition_header_dep_a::GridDefinitionHeaderDepA;
 pub use gridded_correction_header::GriddedCorrectionHeader;
 pub use gridded_correction_header_dep_a::GriddedCorrectionHeaderDepA;
 pub use msg_ssr_code_biases::MsgSsrCodeBiases;
+pub use msg_ssr_code_phase_biases_bounds::MsgSsrCodePhaseBiasesBounds;
 pub use msg_ssr_grid_definition_dep_a::MsgSsrGridDefinitionDepA;
 pub use msg_ssr_gridded_correction::MsgSsrGriddedCorrection;
 pub use msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
@@ -138,6 +140,74 @@ pub mod code_biases_content {
             CodeBiasesContent {
                 code: WireFormat::parse_unchecked(buf),
                 value: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod code_phase_biases_sat_sig {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Code and Phase Biases Bounds per Satellite-Signal couple
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct CodePhaseBiasesSatSig {
+        /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+        /// DF488 (BDS) depending on the constellation.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_id")))]
+        pub sat_id: u8,
+        /// Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
+        /// DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "signal_id")))]
+        pub signal_id: u8,
+        /// Code Bias Mean (range 0-1.275)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "code_bias_bound_mu")))]
+        pub code_bias_bound_mu: u8,
+        /// Code Bias Standard Deviation (range 0-1.275)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "code_bias_bound_sig")))]
+        pub code_bias_bound_sig: u8,
+        /// Phase Bias Mean (range 0-1.275)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "phase_bias_bound_mu")))]
+        pub phase_bias_bound_mu: u8,
+        /// Phase Bias Standard Deviation (range 0-1.275)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "phase_bias_bound_sig")))]
+        pub phase_bias_bound_sig: u8,
+    }
+
+    impl WireFormat for CodePhaseBiasesSatSig {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.sat_id)
+                + WireFormat::len(&self.signal_id)
+                + WireFormat::len(&self.code_bias_bound_mu)
+                + WireFormat::len(&self.code_bias_bound_sig)
+                + WireFormat::len(&self.phase_bias_bound_mu)
+                + WireFormat::len(&self.phase_bias_bound_sig)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.sat_id, buf);
+            WireFormat::write(&self.signal_id, buf);
+            WireFormat::write(&self.code_bias_bound_mu, buf);
+            WireFormat::write(&self.code_bias_bound_sig, buf);
+            WireFormat::write(&self.phase_bias_bound_mu, buf);
+            WireFormat::write(&self.phase_bias_bound_sig, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            CodePhaseBiasesSatSig {
+                sat_id: WireFormat::parse_unchecked(buf),
+                signal_id: WireFormat::parse_unchecked(buf),
+                code_bias_bound_mu: WireFormat::parse_unchecked(buf),
+                code_bias_bound_sig: WireFormat::parse_unchecked(buf),
+                phase_bias_bound_mu: WireFormat::parse_unchecked(buf),
+                phase_bias_bound_sig: WireFormat::parse_unchecked(buf),
             }
         }
     }
@@ -481,6 +551,102 @@ pub mod msg_ssr_code_biases {
                 update_interval: WireFormat::parse_unchecked(buf),
                 iod_ssr: WireFormat::parse_unchecked(buf),
                 biases: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_code_phase_biases_bounds {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Combined Code and Phase Biases Bounds
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrCodePhaseBiasesBounds {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Header of a bounds message.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        pub header: BoundsHeader,
+        /// IOD of the SSR bound.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        pub ssr_iod: u8,
+        /// Constellation ID to which the SVs belong.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
+        pub const_id: u8,
+        /// Number of satellite-signal couples.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats_signals")))]
+        pub n_sats_signals: u8,
+        /// Code and Phase Biases Bounds per Satellite-Signal couple.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "satellites_signals")))]
+        pub satellites_signals: Vec<CodePhaseBiasesSatSig>,
+    }
+
+    impl ConcreteMessage for MsgSsrCodePhaseBiasesBounds {
+        const MESSAGE_TYPE: u16 = 1516;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
+    }
+
+    impl SbpMessage for MsgSsrCodePhaseBiasesBounds {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrCodePhaseBiasesBounds {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrCodePhaseBiasesBounds(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrCodePhaseBiasesBounds {
+        const MIN_LEN: usize = <BoundsHeader as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <Vec<CodePhaseBiasesSatSig> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.header)
+                + WireFormat::len(&self.ssr_iod)
+                + WireFormat::len(&self.const_id)
+                + WireFormat::len(&self.n_sats_signals)
+                + WireFormat::len(&self.satellites_signals)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.header, buf);
+            WireFormat::write(&self.ssr_iod, buf);
+            WireFormat::write(&self.const_id, buf);
+            WireFormat::write(&self.n_sats_signals, buf);
+            WireFormat::write(&self.satellites_signals, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrCodePhaseBiasesBounds {
+                sender_id: None,
+                header: WireFormat::parse_unchecked(buf),
+                ssr_iod: WireFormat::parse_unchecked(buf),
+                const_id: WireFormat::parse_unchecked(buf),
+                n_sats_signals: WireFormat::parse_unchecked(buf),
+                satellites_signals: WireFormat::parse_unchecked(buf),
             }
         }
     }
