@@ -15,6 +15,7 @@ pub mod file_io;
 pub mod flash;
 pub mod gnss;
 pub mod imu;
+pub mod integrity;
 pub mod linux;
 pub mod logging;
 pub mod mag;
@@ -66,6 +67,12 @@ use self::flash::msg_stm_unique_id_req::MsgStmUniqueIdReq;
 use self::flash::msg_stm_unique_id_resp::MsgStmUniqueIdResp;
 use self::imu::msg_imu_aux::MsgImuAux;
 use self::imu::msg_imu_raw::MsgImuRaw;
+use self::integrity::msg_ssr_flag_high_level::MsgSsrFlagHighLevel;
+use self::integrity::msg_ssr_flag_iono_grid_point_sat_los::MsgSsrFlagIonoGridPointSatLos;
+use self::integrity::msg_ssr_flag_iono_grid_points::MsgSsrFlagIonoGridPoints;
+use self::integrity::msg_ssr_flag_iono_tile_sat_los::MsgSsrFlagIonoTileSatLos;
+use self::integrity::msg_ssr_flag_satellites::MsgSsrFlagSatellites;
+use self::integrity::msg_ssr_flag_tropo_grid_points::MsgSsrFlagTropoGridPoints;
 use self::linux::msg_linux_cpu_state::MsgLinuxCpuState;
 use self::linux::msg_linux_cpu_state_dep_a::MsgLinuxCpuStateDepA;
 use self::linux::msg_linux_mem_state::MsgLinuxMemState;
@@ -89,9 +96,11 @@ use self::navigation::msg_baseline_ned::MsgBaselineNed;
 use self::navigation::msg_baseline_ned_dep_a::MsgBaselineNedDepA;
 use self::navigation::msg_dops::MsgDops;
 use self::navigation::msg_dops_dep_a::MsgDopsDepA;
+use self::navigation::msg_gps_leap_second::MsgGpsLeapSecond;
 use self::navigation::msg_gps_time::MsgGpsTime;
 use self::navigation::msg_gps_time_dep_a::MsgGpsTimeDepA;
 use self::navigation::msg_gps_time_gnss::MsgGpsTimeGnss;
+use self::navigation::msg_itrf::MsgItrf;
 use self::navigation::msg_pos_ecef::MsgPosEcef;
 use self::navigation::msg_pos_ecef_cov::MsgPosEcefCov;
 use self::navigation::msg_pos_ecef_cov_gnss::MsgPosEcefCovGnss;
@@ -201,17 +210,23 @@ use self::settings::msg_settings_write_resp::MsgSettingsWriteResp;
 use self::solution_meta::msg_soln_meta::MsgSolnMeta;
 use self::solution_meta::msg_soln_meta_dep_a::MsgSolnMetaDepA;
 use self::ssr::msg_ssr_code_biases::MsgSsrCodeBiases;
+use self::ssr::msg_ssr_code_phase_biases_bounds::MsgSsrCodePhaseBiasesBounds;
 use self::ssr::msg_ssr_grid_definition_dep_a::MsgSsrGridDefinitionDepA;
 use self::ssr::msg_ssr_gridded_correction::MsgSsrGriddedCorrection;
+use self::ssr::msg_ssr_gridded_correction_bounds::MsgSsrGriddedCorrectionBounds;
 use self::ssr::msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
 use self::ssr::msg_ssr_gridded_correction_no_std_dep_a::MsgSsrGriddedCorrectionNoStdDepA;
 use self::ssr::msg_ssr_orbit_clock::MsgSsrOrbitClock;
+use self::ssr::msg_ssr_orbit_clock_bounds::MsgSsrOrbitClockBounds;
+use self::ssr::msg_ssr_orbit_clock_bounds_degradation::MsgSsrOrbitClockBoundsDegradation;
 use self::ssr::msg_ssr_orbit_clock_dep_a::MsgSsrOrbitClockDepA;
 use self::ssr::msg_ssr_phase_biases::MsgSsrPhaseBiases;
 use self::ssr::msg_ssr_satellite_apc::MsgSsrSatelliteApc;
 use self::ssr::msg_ssr_stec_correction::MsgSsrStecCorrection;
+use self::ssr::msg_ssr_stec_correction_dep::MsgSsrStecCorrectionDep;
 use self::ssr::msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
 use self::ssr::msg_ssr_tile_definition::MsgSsrTileDefinition;
+use self::ssr::msg_ssr_tile_definition_dep::MsgSsrTileDefinitionDep;
 use self::system::msg_csac_telemetry::MsgCsacTelemetry;
 use self::system::msg_csac_telemetry_labels::MsgCsacTelemetryLabels;
 use self::system::msg_dgnss_status::MsgDgnssStatus;
@@ -636,6 +651,10 @@ pub enum Sbp {
     MsgPosEcefCovGnss(MsgPosEcefCovGnss),
     /// GNSS-only Velocity in ECEF
     MsgVelEcefCovGnss(MsgVelEcefCovGnss),
+    /// Leap second SBP message.
+    MsgGpsLeapSecond(MsgGpsLeapSecond),
+    /// Reference Frame Transformation Parameter
+    MsgItrf(MsgItrf),
     /// Navigation DataBase Event
     MsgNdbEvent(MsgNdbEvent),
     /// Plaintext logging messages with levels
@@ -646,24 +665,36 @@ pub enum Sbp {
     MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),
     /// Precise orbit and clock correction
     MsgSsrOrbitClock(MsgSsrOrbitClock),
+    /// Stubbed version of Combined Orbit and Clock Bound
+    MsgSsrOrbitClockBounds(MsgSsrOrbitClockBounds),
+    /// Combined Orbit and Clock Bound Degradation Parameter
+    MsgSsrOrbitClockBoundsDegradation(MsgSsrOrbitClockBoundsDegradation),
     /// Precise code biases correction
     MsgSsrCodeBiases(MsgSsrCodeBiases),
     /// Precise phase biases correction
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
     /// Deprecated
     MsgSsrStecCorrectionDepA(MsgSsrStecCorrectionDepA),
+    /// Stubbed version of Combined Code and Phase Biases Bounds
+    MsgSsrCodePhaseBiasesBounds(MsgSsrCodePhaseBiasesBounds),
     /// Deprecated
     MsgSsrGriddedCorrectionNoStdDepA(MsgSsrGriddedCorrectionNoStdDepA),
     /// Deprecated
     MsgSsrGridDefinitionDepA(MsgSsrGridDefinitionDepA),
     /// Definition of a SSR atmospheric correction tile.
+    MsgSsrTileDefinitionDep(MsgSsrTileDefinitionDep),
+    /// Definition of a SSR atmospheric correction tile.
     MsgSsrTileDefinition(MsgSsrTileDefinition),
     /// Deprecated
     MsgSsrGriddedCorrectionDepA(MsgSsrGriddedCorrectionDepA),
     /// STEC correction polynomial coefficients
-    MsgSsrStecCorrection(MsgSsrStecCorrection),
+    MsgSsrStecCorrectionDep(MsgSsrStecCorrectionDep),
     /// Gridded troposphere and STEC correction residuals
     MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
+    /// STEC correction polynomial coefficients
+    MsgSsrStecCorrection(MsgSsrStecCorrection),
+    /// Gridded troposhere and STEC correction residuals bounds
+    MsgSsrGriddedCorrectionBounds(MsgSsrGriddedCorrectionBounds),
     /// Satellite antenna phase center corrections
     MsgSsrSatelliteApc(MsgSsrSatelliteApc),
     /// OSR corrections
@@ -680,6 +711,18 @@ pub enum Sbp {
     MsgOdometry(MsgOdometry),
     /// Accumulated wheeltick count message
     MsgWheeltick(MsgWheeltick),
+    /// High level integrity flags
+    MsgSsrFlagHighLevel(MsgSsrFlagHighLevel),
+    /// List of satellites which are faulty, per constellation
+    MsgSsrFlagSatellites(MsgSsrFlagSatellites),
+    /// List of grid points which are faulty
+    MsgSsrFlagTropoGridPoints(MsgSsrFlagTropoGridPoints),
+    /// List of grid points which are faulty
+    MsgSsrFlagIonoGridPoints(MsgSsrFlagIonoGridPoints),
+    /// List of all the LOS which are faulty
+    MsgSsrFlagIonoTileSatLos(MsgSsrFlagIonoTileSatLos),
+    /// List of all the grid points to satellite which are faulty
+    MsgSsrFlagIonoGridPointSatLos(MsgSsrFlagIonoGridPointSatLos),
     /// Request advice on the optimal configuration for FileIO
     MsgFileioConfigReq(MsgFileioConfigReq),
     /// Response with advice on the optimal configuration for FileIO.
@@ -1540,6 +1583,16 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelEcefCovGnss(msg))
             }
+            MsgGpsLeapSecond::MESSAGE_TYPE => {
+                let mut msg = MsgGpsLeapSecond::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgGpsLeapSecond(msg))
+            }
+            MsgItrf::MESSAGE_TYPE => {
+                let mut msg = MsgItrf::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgItrf(msg))
+            }
             MsgNdbEvent::MESSAGE_TYPE => {
                 let mut msg = MsgNdbEvent::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1565,6 +1618,16 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrOrbitClock(msg))
             }
+            MsgSsrOrbitClockBounds::MESSAGE_TYPE => {
+                let mut msg = MsgSsrOrbitClockBounds::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrOrbitClockBounds(msg))
+            }
+            MsgSsrOrbitClockBoundsDegradation::MESSAGE_TYPE => {
+                let mut msg = MsgSsrOrbitClockBoundsDegradation::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrOrbitClockBoundsDegradation(msg))
+            }
             MsgSsrCodeBiases::MESSAGE_TYPE => {
                 let mut msg = MsgSsrCodeBiases::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1580,6 +1643,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrStecCorrectionDepA(msg))
             }
+            MsgSsrCodePhaseBiasesBounds::MESSAGE_TYPE => {
+                let mut msg = MsgSsrCodePhaseBiasesBounds::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrCodePhaseBiasesBounds(msg))
+            }
             MsgSsrGriddedCorrectionNoStdDepA::MESSAGE_TYPE => {
                 let mut msg = MsgSsrGriddedCorrectionNoStdDepA::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1589,6 +1657,11 @@ impl Sbp {
                 let mut msg = MsgSsrGridDefinitionDepA::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGridDefinitionDepA(msg))
+            }
+            MsgSsrTileDefinitionDep::MESSAGE_TYPE => {
+                let mut msg = MsgSsrTileDefinitionDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrTileDefinitionDep(msg))
             }
             MsgSsrTileDefinition::MESSAGE_TYPE => {
                 let mut msg = MsgSsrTileDefinition::parse(&mut frame.payload)?;
@@ -1600,15 +1673,25 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGriddedCorrectionDepA(msg))
             }
-            MsgSsrStecCorrection::MESSAGE_TYPE => {
-                let mut msg = MsgSsrStecCorrection::parse(&mut frame.payload)?;
+            MsgSsrStecCorrectionDep::MESSAGE_TYPE => {
+                let mut msg = MsgSsrStecCorrectionDep::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
-                Ok(Sbp::MsgSsrStecCorrection(msg))
+                Ok(Sbp::MsgSsrStecCorrectionDep(msg))
             }
             MsgSsrGriddedCorrection::MESSAGE_TYPE => {
                 let mut msg = MsgSsrGriddedCorrection::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGriddedCorrection(msg))
+            }
+            MsgSsrStecCorrection::MESSAGE_TYPE => {
+                let mut msg = MsgSsrStecCorrection::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrStecCorrection(msg))
+            }
+            MsgSsrGriddedCorrectionBounds::MESSAGE_TYPE => {
+                let mut msg = MsgSsrGriddedCorrectionBounds::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrGriddedCorrectionBounds(msg))
             }
             MsgSsrSatelliteApc::MESSAGE_TYPE => {
                 let mut msg = MsgSsrSatelliteApc::parse(&mut frame.payload)?;
@@ -1649,6 +1732,36 @@ impl Sbp {
                 let mut msg = MsgWheeltick::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgWheeltick(msg))
+            }
+            MsgSsrFlagHighLevel::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagHighLevel::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagHighLevel(msg))
+            }
+            MsgSsrFlagSatellites::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagSatellites::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagSatellites(msg))
+            }
+            MsgSsrFlagTropoGridPoints::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagTropoGridPoints::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagTropoGridPoints(msg))
+            }
+            MsgSsrFlagIonoGridPoints::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagIonoGridPoints::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagIonoGridPoints(msg))
+            }
+            MsgSsrFlagIonoTileSatLos::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagIonoTileSatLos::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagIonoTileSatLos(msg))
+            }
+            MsgSsrFlagIonoGridPointSatLos::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagIonoGridPointSatLos::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagIonoGridPointSatLos(msg))
             }
             MsgFileioConfigReq::MESSAGE_TYPE => {
                 let mut msg = MsgFileioConfigReq::parse(&mut frame.payload)?;
@@ -1961,20 +2074,28 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.message_name(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.message_name(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.message_name(),
+            Sbp::MsgGpsLeapSecond(msg) => msg.message_name(),
+            Sbp::MsgItrf(msg) => msg.message_name(),
             Sbp::MsgNdbEvent(msg) => msg.message_name(),
             Sbp::MsgLog(msg) => msg.message_name(),
             Sbp::MsgFwd(msg) => msg.message_name(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.message_name(),
             Sbp::MsgSsrOrbitClock(msg) => msg.message_name(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.message_name(),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => msg.message_name(),
             Sbp::MsgSsrCodeBiases(msg) => msg.message_name(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.message_name(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.message_name(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_name(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_name(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.message_name(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.message_name(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.message_name(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.message_name(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.message_name(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.message_name(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.message_name(),
             Sbp::MsgOsr(msg) => msg.message_name(),
             Sbp::MsgUserData(msg) => msg.message_name(),
@@ -1983,6 +2104,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.message_name(),
             Sbp::MsgOdometry(msg) => msg.message_name(),
             Sbp::MsgWheeltick(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_name(),
             Sbp::MsgSbasRaw(msg) => msg.message_name(),
@@ -2172,20 +2299,28 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.message_type(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.message_type(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.message_type(),
+            Sbp::MsgGpsLeapSecond(msg) => msg.message_type(),
+            Sbp::MsgItrf(msg) => msg.message_type(),
             Sbp::MsgNdbEvent(msg) => msg.message_type(),
             Sbp::MsgLog(msg) => msg.message_type(),
             Sbp::MsgFwd(msg) => msg.message_type(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.message_type(),
             Sbp::MsgSsrOrbitClock(msg) => msg.message_type(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.message_type(),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => msg.message_type(),
             Sbp::MsgSsrCodeBiases(msg) => msg.message_type(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.message_type(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.message_type(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_type(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_type(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.message_type(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.message_type(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.message_type(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.message_type(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.message_type(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.message_type(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.message_type(),
             Sbp::MsgOsr(msg) => msg.message_type(),
             Sbp::MsgUserData(msg) => msg.message_type(),
@@ -2194,6 +2329,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.message_type(),
             Sbp::MsgOdometry(msg) => msg.message_type(),
             Sbp::MsgWheeltick(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_type(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_type(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_type(),
             Sbp::MsgSbasRaw(msg) => msg.message_type(),
@@ -2383,20 +2524,28 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.sender_id(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.sender_id(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.sender_id(),
+            Sbp::MsgGpsLeapSecond(msg) => msg.sender_id(),
+            Sbp::MsgItrf(msg) => msg.sender_id(),
             Sbp::MsgNdbEvent(msg) => msg.sender_id(),
             Sbp::MsgLog(msg) => msg.sender_id(),
             Sbp::MsgFwd(msg) => msg.sender_id(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrOrbitClock(msg) => msg.sender_id(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.sender_id(),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => msg.sender_id(),
             Sbp::MsgSsrCodeBiases(msg) => msg.sender_id(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.sender_id(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.sender_id(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.sender_id(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.sender_id(),
             Sbp::MsgSsrTileDefinition(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.sender_id(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.sender_id(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.sender_id(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.sender_id(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.sender_id(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.sender_id(),
             Sbp::MsgOsr(msg) => msg.sender_id(),
             Sbp::MsgUserData(msg) => msg.sender_id(),
@@ -2405,6 +2554,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.sender_id(),
             Sbp::MsgOdometry(msg) => msg.sender_id(),
             Sbp::MsgWheeltick(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigReq(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigResp(msg) => msg.sender_id(),
             Sbp::MsgSbasRaw(msg) => msg.sender_id(),
@@ -2594,20 +2749,28 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPosEcefCovGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgVelEcefCovGnss(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgGpsLeapSecond(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgItrf(msg) => msg.set_sender_id(new_id),
             Sbp::MsgNdbEvent(msg) => msg.set_sender_id(new_id),
             Sbp::MsgLog(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFwd(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrOrbitClock(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrCodeBiases(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrPhaseBiases(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrTileDefinition(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgSsrStecCorrection(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrStecCorrection(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrSatelliteApc(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOsr(msg) => msg.set_sender_id(new_id),
             Sbp::MsgUserData(msg) => msg.set_sender_id(new_id),
@@ -2616,6 +2779,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOdometry(msg) => msg.set_sender_id(new_id),
             Sbp::MsgWheeltick(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigReq(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigResp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSbasRaw(msg) => msg.set_sender_id(new_id),
@@ -2805,20 +2974,28 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.encoded_len(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.encoded_len(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.encoded_len(),
+            Sbp::MsgGpsLeapSecond(msg) => msg.encoded_len(),
+            Sbp::MsgItrf(msg) => msg.encoded_len(),
             Sbp::MsgNdbEvent(msg) => msg.encoded_len(),
             Sbp::MsgLog(msg) => msg.encoded_len(),
             Sbp::MsgFwd(msg) => msg.encoded_len(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrOrbitClock(msg) => msg.encoded_len(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.encoded_len(),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => msg.encoded_len(),
             Sbp::MsgSsrCodeBiases(msg) => msg.encoded_len(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.encoded_len(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.encoded_len(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.encoded_len(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.encoded_len(),
             Sbp::MsgSsrTileDefinition(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.encoded_len(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.encoded_len(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.encoded_len(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.encoded_len(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.encoded_len(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.encoded_len(),
             Sbp::MsgOsr(msg) => msg.encoded_len(),
             Sbp::MsgUserData(msg) => msg.encoded_len(),
@@ -2827,6 +3004,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.encoded_len(),
             Sbp::MsgOdometry(msg) => msg.encoded_len(),
             Sbp::MsgWheeltick(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigReq(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigResp(msg) => msg.encoded_len(),
             Sbp::MsgSbasRaw(msg) => msg.encoded_len(),
@@ -3019,20 +3202,28 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.gps_time(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.gps_time(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.gps_time(),
+            Sbp::MsgGpsLeapSecond(msg) => msg.gps_time(),
+            Sbp::MsgItrf(msg) => msg.gps_time(),
             Sbp::MsgNdbEvent(msg) => msg.gps_time(),
             Sbp::MsgLog(msg) => msg.gps_time(),
             Sbp::MsgFwd(msg) => msg.gps_time(),
             Sbp::MsgSsrOrbitClockDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrOrbitClock(msg) => msg.gps_time(),
+            Sbp::MsgSsrOrbitClockBounds(msg) => msg.gps_time(),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => msg.gps_time(),
             Sbp::MsgSsrCodeBiases(msg) => msg.gps_time(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.gps_time(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.gps_time(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.gps_time(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.gps_time(),
             Sbp::MsgSsrTileDefinition(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.gps_time(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.gps_time(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.gps_time(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.gps_time(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.gps_time(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.gps_time(),
             Sbp::MsgOsr(msg) => msg.gps_time(),
             Sbp::MsgUserData(msg) => msg.gps_time(),
@@ -3041,6 +3232,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.gps_time(),
             Sbp::MsgOdometry(msg) => msg.gps_time(),
             Sbp::MsgWheeltick(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigReq(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigResp(msg) => msg.gps_time(),
             Sbp::MsgSbasRaw(msg) => msg.gps_time(),
@@ -3238,20 +3435,28 @@ impl WireFormat for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPosEcefCovGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgVelEcefCovGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgGpsLeapSecond(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgItrf(msg) => WireFormat::write(msg, buf),
             Sbp::MsgNdbEvent(msg) => WireFormat::write(msg, buf),
             Sbp::MsgLog(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFwd(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrOrbitClockDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrOrbitClock(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrOrbitClockBounds(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrCodeBiases(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrPhaseBiases(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrTileDefinitionDep(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgSsrStecCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrStecCorrectionDep(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrStecCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrSatelliteApc(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOsr(msg) => WireFormat::write(msg, buf),
             Sbp::MsgUserData(msg) => WireFormat::write(msg, buf),
@@ -3260,6 +3465,12 @@ impl WireFormat for Sbp {
             Sbp::MsgMagRaw(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOdometry(msg) => WireFormat::write(msg, buf),
             Sbp::MsgWheeltick(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagHighLevel(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagSatellites(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSbasRaw(msg) => WireFormat::write(msg, buf),
@@ -3449,20 +3660,28 @@ impl WireFormat for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => WireFormat::len(msg),
             Sbp::MsgPosEcefCovGnss(msg) => WireFormat::len(msg),
             Sbp::MsgVelEcefCovGnss(msg) => WireFormat::len(msg),
+            Sbp::MsgGpsLeapSecond(msg) => WireFormat::len(msg),
+            Sbp::MsgItrf(msg) => WireFormat::len(msg),
             Sbp::MsgNdbEvent(msg) => WireFormat::len(msg),
             Sbp::MsgLog(msg) => WireFormat::len(msg),
             Sbp::MsgFwd(msg) => WireFormat::len(msg),
             Sbp::MsgSsrOrbitClockDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrOrbitClock(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrOrbitClockBounds(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => WireFormat::len(msg),
             Sbp::MsgSsrCodeBiases(msg) => WireFormat::len(msg),
             Sbp::MsgSsrPhaseBiases(msg) => WireFormat::len(msg),
             Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrTileDefinitionDep(msg) => WireFormat::len(msg),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::len(msg),
-            Sbp::MsgSsrStecCorrection(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrStecCorrectionDep(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrection(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrStecCorrection(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => WireFormat::len(msg),
             Sbp::MsgSsrSatelliteApc(msg) => WireFormat::len(msg),
             Sbp::MsgOsr(msg) => WireFormat::len(msg),
             Sbp::MsgUserData(msg) => WireFormat::len(msg),
@@ -3471,6 +3690,12 @@ impl WireFormat for Sbp {
             Sbp::MsgMagRaw(msg) => WireFormat::len(msg),
             Sbp::MsgOdometry(msg) => WireFormat::len(msg),
             Sbp::MsgWheeltick(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagHighLevel(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagSatellites(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::len(msg),
             Sbp::MsgSbasRaw(msg) => WireFormat::len(msg),
@@ -4429,6 +4654,18 @@ impl From<MsgVelEcefCovGnss> for Sbp {
     }
 }
 
+impl From<MsgGpsLeapSecond> for Sbp {
+    fn from(msg: MsgGpsLeapSecond) -> Self {
+        Sbp::MsgGpsLeapSecond(msg)
+    }
+}
+
+impl From<MsgItrf> for Sbp {
+    fn from(msg: MsgItrf) -> Self {
+        Sbp::MsgItrf(msg)
+    }
+}
+
 impl From<MsgNdbEvent> for Sbp {
     fn from(msg: MsgNdbEvent) -> Self {
         Sbp::MsgNdbEvent(msg)
@@ -4459,6 +4696,18 @@ impl From<MsgSsrOrbitClock> for Sbp {
     }
 }
 
+impl From<MsgSsrOrbitClockBounds> for Sbp {
+    fn from(msg: MsgSsrOrbitClockBounds) -> Self {
+        Sbp::MsgSsrOrbitClockBounds(msg)
+    }
+}
+
+impl From<MsgSsrOrbitClockBoundsDegradation> for Sbp {
+    fn from(msg: MsgSsrOrbitClockBoundsDegradation) -> Self {
+        Sbp::MsgSsrOrbitClockBoundsDegradation(msg)
+    }
+}
+
 impl From<MsgSsrCodeBiases> for Sbp {
     fn from(msg: MsgSsrCodeBiases) -> Self {
         Sbp::MsgSsrCodeBiases(msg)
@@ -4477,6 +4726,12 @@ impl From<MsgSsrStecCorrectionDepA> for Sbp {
     }
 }
 
+impl From<MsgSsrCodePhaseBiasesBounds> for Sbp {
+    fn from(msg: MsgSsrCodePhaseBiasesBounds) -> Self {
+        Sbp::MsgSsrCodePhaseBiasesBounds(msg)
+    }
+}
+
 impl From<MsgSsrGriddedCorrectionNoStdDepA> for Sbp {
     fn from(msg: MsgSsrGriddedCorrectionNoStdDepA) -> Self {
         Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg)
@@ -4486,6 +4741,12 @@ impl From<MsgSsrGriddedCorrectionNoStdDepA> for Sbp {
 impl From<MsgSsrGridDefinitionDepA> for Sbp {
     fn from(msg: MsgSsrGridDefinitionDepA) -> Self {
         Sbp::MsgSsrGridDefinitionDepA(msg)
+    }
+}
+
+impl From<MsgSsrTileDefinitionDep> for Sbp {
+    fn from(msg: MsgSsrTileDefinitionDep) -> Self {
+        Sbp::MsgSsrTileDefinitionDep(msg)
     }
 }
 
@@ -4501,15 +4762,27 @@ impl From<MsgSsrGriddedCorrectionDepA> for Sbp {
     }
 }
 
-impl From<MsgSsrStecCorrection> for Sbp {
-    fn from(msg: MsgSsrStecCorrection) -> Self {
-        Sbp::MsgSsrStecCorrection(msg)
+impl From<MsgSsrStecCorrectionDep> for Sbp {
+    fn from(msg: MsgSsrStecCorrectionDep) -> Self {
+        Sbp::MsgSsrStecCorrectionDep(msg)
     }
 }
 
 impl From<MsgSsrGriddedCorrection> for Sbp {
     fn from(msg: MsgSsrGriddedCorrection) -> Self {
         Sbp::MsgSsrGriddedCorrection(msg)
+    }
+}
+
+impl From<MsgSsrStecCorrection> for Sbp {
+    fn from(msg: MsgSsrStecCorrection) -> Self {
+        Sbp::MsgSsrStecCorrection(msg)
+    }
+}
+
+impl From<MsgSsrGriddedCorrectionBounds> for Sbp {
+    fn from(msg: MsgSsrGriddedCorrectionBounds) -> Self {
+        Sbp::MsgSsrGriddedCorrectionBounds(msg)
     }
 }
 
@@ -4558,6 +4831,42 @@ impl From<MsgOdometry> for Sbp {
 impl From<MsgWheeltick> for Sbp {
     fn from(msg: MsgWheeltick) -> Self {
         Sbp::MsgWheeltick(msg)
+    }
+}
+
+impl From<MsgSsrFlagHighLevel> for Sbp {
+    fn from(msg: MsgSsrFlagHighLevel) -> Self {
+        Sbp::MsgSsrFlagHighLevel(msg)
+    }
+}
+
+impl From<MsgSsrFlagSatellites> for Sbp {
+    fn from(msg: MsgSsrFlagSatellites) -> Self {
+        Sbp::MsgSsrFlagSatellites(msg)
+    }
+}
+
+impl From<MsgSsrFlagTropoGridPoints> for Sbp {
+    fn from(msg: MsgSsrFlagTropoGridPoints) -> Self {
+        Sbp::MsgSsrFlagTropoGridPoints(msg)
+    }
+}
+
+impl From<MsgSsrFlagIonoGridPoints> for Sbp {
+    fn from(msg: MsgSsrFlagIonoGridPoints) -> Self {
+        Sbp::MsgSsrFlagIonoGridPoints(msg)
+    }
+}
+
+impl From<MsgSsrFlagIonoTileSatLos> for Sbp {
+    fn from(msg: MsgSsrFlagIonoTileSatLos) -> Self {
+        Sbp::MsgSsrFlagIonoTileSatLos(msg)
+    }
+}
+
+impl From<MsgSsrFlagIonoGridPointSatLos> for Sbp {
+    fn from(msg: MsgSsrFlagIonoGridPointSatLos) -> Self {
+        Sbp::MsgSsrFlagIonoGridPointSatLos(msg)
     }
 }
 

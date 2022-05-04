@@ -30,6 +30,7 @@
 #include <libsbp/v4/flash.h>
 #include <libsbp/v4/gnss.h>
 #include <libsbp/v4/imu.h>
+#include <libsbp/v4/integrity.h>
 #include <libsbp/v4/linux.h>
 #include <libsbp/v4/logging.h>
 #include <libsbp/v4/mag.h>
@@ -132,6 +133,7 @@ typedef union {
   sbp_msg_glo_biases_t glo_biases;
   sbp_msg_gnss_capb_t gnss_capb;
   sbp_msg_gnss_time_offset_t gnss_time_offset;
+  sbp_msg_gps_leap_second_t gps_leap_second;
   sbp_msg_gps_time_dep_a_t gps_time_dep_a;
   sbp_msg_gps_time_gnss_t gps_time_gnss;
   sbp_msg_gps_time_t gps_time;
@@ -147,6 +149,7 @@ typedef union {
   sbp_msg_ins_status_t ins_status;
   sbp_msg_ins_updates_t ins_updates;
   sbp_msg_iono_t iono;
+  sbp_msg_itrf_t itrf;
   sbp_msg_linux_cpu_state_dep_a_t linux_cpu_state_dep_a;
   sbp_msg_linux_cpu_state_t linux_cpu_state;
   sbp_msg_linux_mem_state_dep_a_t linux_mem_state_dep_a;
@@ -214,17 +217,30 @@ typedef union {
   sbp_msg_specan_dep_t specan_dep;
   sbp_msg_specan_t specan;
   sbp_msg_ssr_code_biases_t ssr_code_biases;
+  sbp_msg_ssr_code_phase_biases_bounds_t ssr_code_phase_biases_bounds;
+  sbp_msg_ssr_flag_high_level_t ssr_flag_high_level;
+  sbp_msg_ssr_flag_iono_grid_point_sat_los_t ssr_flag_iono_grid_point_sat_los;
+  sbp_msg_ssr_flag_iono_grid_points_t ssr_flag_iono_grid_points;
+  sbp_msg_ssr_flag_iono_tile_sat_los_t ssr_flag_iono_tile_sat_los;
+  sbp_msg_ssr_flag_satellites_t ssr_flag_satellites;
+  sbp_msg_ssr_flag_tropo_grid_points_t ssr_flag_tropo_grid_points;
   sbp_msg_ssr_grid_definition_dep_a_t ssr_grid_definition_dep_a;
+  sbp_msg_ssr_gridded_correction_bounds_t ssr_gridded_correction_bounds;
   sbp_msg_ssr_gridded_correction_dep_a_t ssr_gridded_correction_dep_a;
   sbp_msg_ssr_gridded_correction_no_std_dep_a_t
       ssr_gridded_correction_no_std_dep_a;
   sbp_msg_ssr_gridded_correction_t ssr_gridded_correction;
+  sbp_msg_ssr_orbit_clock_bounds_degradation_t
+      ssr_orbit_clock_bounds_degradation;
+  sbp_msg_ssr_orbit_clock_bounds_t ssr_orbit_clock_bounds;
   sbp_msg_ssr_orbit_clock_dep_a_t ssr_orbit_clock_dep_a;
   sbp_msg_ssr_orbit_clock_t ssr_orbit_clock;
   sbp_msg_ssr_phase_biases_t ssr_phase_biases;
   sbp_msg_ssr_satellite_apc_t ssr_satellite_apc;
   sbp_msg_ssr_stec_correction_dep_a_t ssr_stec_correction_dep_a;
+  sbp_msg_ssr_stec_correction_dep_t ssr_stec_correction_dep;
   sbp_msg_ssr_stec_correction_t ssr_stec_correction;
+  sbp_msg_ssr_tile_definition_dep_t ssr_tile_definition_dep;
   sbp_msg_ssr_tile_definition_t ssr_tile_definition;
   sbp_msg_startup_t startup;
   sbp_msg_status_journal_t status_journal;
@@ -493,6 +509,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_encode(buf, len, n_written,
                                              &msg->gnss_time_offset);
+    case SbpMsgGpsLeapSecond:
+      return sbp_msg_gps_leap_second_encode(buf, len, n_written,
+                                            &msg->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_encode(buf, len, n_written,
                                            &msg->gps_time_dep_a);
@@ -528,6 +547,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_ins_updates_encode(buf, len, n_written, &msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_encode(buf, len, n_written, &msg->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_encode(buf, len, n_written, &msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_encode(buf, len, n_written,
                                                   &msg->linux_cpu_state_dep_a);
@@ -706,9 +727,33 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_encode(buf, len, n_written,
                                             &msg->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_encode(
+          buf, len, n_written, &msg->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevel:
+      return sbp_msg_ssr_flag_high_level_encode(buf, len, n_written,
+                                                &msg->ssr_flag_high_level);
+    case SbpMsgSsrFlagIonoGridPointSatLos:
+      return sbp_msg_ssr_flag_iono_grid_point_sat_los_encode(
+          buf, len, n_written, &msg->ssr_flag_iono_grid_point_sat_los);
+    case SbpMsgSsrFlagIonoGridPoints:
+      return sbp_msg_ssr_flag_iono_grid_points_encode(
+          buf, len, n_written, &msg->ssr_flag_iono_grid_points);
+    case SbpMsgSsrFlagIonoTileSatLos:
+      return sbp_msg_ssr_flag_iono_tile_sat_los_encode(
+          buf, len, n_written, &msg->ssr_flag_iono_tile_sat_los);
+    case SbpMsgSsrFlagSatellites:
+      return sbp_msg_ssr_flag_satellites_encode(buf, len, n_written,
+                                                &msg->ssr_flag_satellites);
+    case SbpMsgSsrFlagTropoGridPoints:
+      return sbp_msg_ssr_flag_tropo_grid_points_encode(
+          buf, len, n_written, &msg->ssr_flag_tropo_grid_points);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_encode(
           buf, len, n_written, &msg->ssr_grid_definition_dep_a);
+    case SbpMsgSsrGriddedCorrectionBounds:
+      return sbp_msg_ssr_gridded_correction_bounds_encode(
+          buf, len, n_written, &msg->ssr_gridded_correction_bounds);
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_encode(
           buf, len, n_written, &msg->ssr_gridded_correction_dep_a);
@@ -718,6 +763,12 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_encode(
           buf, len, n_written, &msg->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_encode(
+          buf, len, n_written, &msg->ssr_orbit_clock_bounds_degradation);
+    case SbpMsgSsrOrbitClockBounds:
+      return sbp_msg_ssr_orbit_clock_bounds_encode(
+          buf, len, n_written, &msg->ssr_orbit_clock_bounds);
     case SbpMsgSsrOrbitClockDepA:
       return sbp_msg_ssr_orbit_clock_dep_a_encode(buf, len, n_written,
                                                   &msg->ssr_orbit_clock_dep_a);
@@ -733,9 +784,15 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrStecCorrectionDepA:
       return sbp_msg_ssr_stec_correction_dep_a_encode(
           buf, len, n_written, &msg->ssr_stec_correction_dep_a);
+    case SbpMsgSsrStecCorrectionDep:
+      return sbp_msg_ssr_stec_correction_dep_encode(
+          buf, len, n_written, &msg->ssr_stec_correction_dep);
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_encode(buf, len, n_written,
                                                 &msg->ssr_stec_correction);
+    case SbpMsgSsrTileDefinitionDep:
+      return sbp_msg_ssr_tile_definition_dep_encode(
+          buf, len, n_written, &msg->ssr_tile_definition_dep);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_encode(buf, len, n_written,
                                                 &msg->ssr_tile_definition);
@@ -1066,6 +1123,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_decode(buf, len, n_read,
                                              &msg->gnss_time_offset);
+    case SbpMsgGpsLeapSecond:
+      return sbp_msg_gps_leap_second_decode(buf, len, n_read,
+                                            &msg->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_decode(buf, len, n_read,
                                            &msg->gps_time_dep_a);
@@ -1101,6 +1161,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_ins_updates_decode(buf, len, n_read, &msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_decode(buf, len, n_read, &msg->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_decode(buf, len, n_read, &msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_decode(buf, len, n_read,
                                                   &msg->linux_cpu_state_dep_a);
@@ -1276,9 +1338,33 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_decode(buf, len, n_read,
                                             &msg->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_decode(
+          buf, len, n_read, &msg->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevel:
+      return sbp_msg_ssr_flag_high_level_decode(buf, len, n_read,
+                                                &msg->ssr_flag_high_level);
+    case SbpMsgSsrFlagIonoGridPointSatLos:
+      return sbp_msg_ssr_flag_iono_grid_point_sat_los_decode(
+          buf, len, n_read, &msg->ssr_flag_iono_grid_point_sat_los);
+    case SbpMsgSsrFlagIonoGridPoints:
+      return sbp_msg_ssr_flag_iono_grid_points_decode(
+          buf, len, n_read, &msg->ssr_flag_iono_grid_points);
+    case SbpMsgSsrFlagIonoTileSatLos:
+      return sbp_msg_ssr_flag_iono_tile_sat_los_decode(
+          buf, len, n_read, &msg->ssr_flag_iono_tile_sat_los);
+    case SbpMsgSsrFlagSatellites:
+      return sbp_msg_ssr_flag_satellites_decode(buf, len, n_read,
+                                                &msg->ssr_flag_satellites);
+    case SbpMsgSsrFlagTropoGridPoints:
+      return sbp_msg_ssr_flag_tropo_grid_points_decode(
+          buf, len, n_read, &msg->ssr_flag_tropo_grid_points);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_decode(
           buf, len, n_read, &msg->ssr_grid_definition_dep_a);
+    case SbpMsgSsrGriddedCorrectionBounds:
+      return sbp_msg_ssr_gridded_correction_bounds_decode(
+          buf, len, n_read, &msg->ssr_gridded_correction_bounds);
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_decode(
           buf, len, n_read, &msg->ssr_gridded_correction_dep_a);
@@ -1288,6 +1374,12 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_decode(
           buf, len, n_read, &msg->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_decode(
+          buf, len, n_read, &msg->ssr_orbit_clock_bounds_degradation);
+    case SbpMsgSsrOrbitClockBounds:
+      return sbp_msg_ssr_orbit_clock_bounds_decode(
+          buf, len, n_read, &msg->ssr_orbit_clock_bounds);
     case SbpMsgSsrOrbitClockDepA:
       return sbp_msg_ssr_orbit_clock_dep_a_decode(buf, len, n_read,
                                                   &msg->ssr_orbit_clock_dep_a);
@@ -1303,9 +1395,15 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrStecCorrectionDepA:
       return sbp_msg_ssr_stec_correction_dep_a_decode(
           buf, len, n_read, &msg->ssr_stec_correction_dep_a);
+    case SbpMsgSsrStecCorrectionDep:
+      return sbp_msg_ssr_stec_correction_dep_decode(
+          buf, len, n_read, &msg->ssr_stec_correction_dep);
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_decode(buf, len, n_read,
                                                 &msg->ssr_stec_correction);
+    case SbpMsgSsrTileDefinitionDep:
+      return sbp_msg_ssr_tile_definition_dep_decode(
+          buf, len, n_read, &msg->ssr_tile_definition_dep);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_decode(buf, len, n_read,
                                                 &msg->ssr_tile_definition);
@@ -1581,6 +1679,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_gnss_capb_encoded_len(&msg->gnss_capb);
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_encoded_len(&msg->gnss_time_offset);
+    case SbpMsgGpsLeapSecond:
+      return sbp_msg_gps_leap_second_encoded_len(&msg->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_encoded_len(&msg->gps_time_dep_a);
     case SbpMsgGpsTimeGnss:
@@ -1611,6 +1711,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ins_updates_encoded_len(&msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_encoded_len(&msg->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_encoded_len(&msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_encoded_len(
           &msg->linux_cpu_state_dep_a);
@@ -1759,9 +1861,31 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_specan_encoded_len(&msg->specan);
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_encoded_len(&msg->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_encoded_len(
+          &msg->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevel:
+      return sbp_msg_ssr_flag_high_level_encoded_len(&msg->ssr_flag_high_level);
+    case SbpMsgSsrFlagIonoGridPointSatLos:
+      return sbp_msg_ssr_flag_iono_grid_point_sat_los_encoded_len(
+          &msg->ssr_flag_iono_grid_point_sat_los);
+    case SbpMsgSsrFlagIonoGridPoints:
+      return sbp_msg_ssr_flag_iono_grid_points_encoded_len(
+          &msg->ssr_flag_iono_grid_points);
+    case SbpMsgSsrFlagIonoTileSatLos:
+      return sbp_msg_ssr_flag_iono_tile_sat_los_encoded_len(
+          &msg->ssr_flag_iono_tile_sat_los);
+    case SbpMsgSsrFlagSatellites:
+      return sbp_msg_ssr_flag_satellites_encoded_len(&msg->ssr_flag_satellites);
+    case SbpMsgSsrFlagTropoGridPoints:
+      return sbp_msg_ssr_flag_tropo_grid_points_encoded_len(
+          &msg->ssr_flag_tropo_grid_points);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_encoded_len(
           &msg->ssr_grid_definition_dep_a);
+    case SbpMsgSsrGriddedCorrectionBounds:
+      return sbp_msg_ssr_gridded_correction_bounds_encoded_len(
+          &msg->ssr_gridded_correction_bounds);
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_encoded_len(
           &msg->ssr_gridded_correction_dep_a);
@@ -1771,6 +1895,12 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_encoded_len(
           &msg->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_encoded_len(
+          &msg->ssr_orbit_clock_bounds_degradation);
+    case SbpMsgSsrOrbitClockBounds:
+      return sbp_msg_ssr_orbit_clock_bounds_encoded_len(
+          &msg->ssr_orbit_clock_bounds);
     case SbpMsgSsrOrbitClockDepA:
       return sbp_msg_ssr_orbit_clock_dep_a_encoded_len(
           &msg->ssr_orbit_clock_dep_a);
@@ -1783,8 +1913,14 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
     case SbpMsgSsrStecCorrectionDepA:
       return sbp_msg_ssr_stec_correction_dep_a_encoded_len(
           &msg->ssr_stec_correction_dep_a);
+    case SbpMsgSsrStecCorrectionDep:
+      return sbp_msg_ssr_stec_correction_dep_encoded_len(
+          &msg->ssr_stec_correction_dep);
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_encoded_len(&msg->ssr_stec_correction);
+    case SbpMsgSsrTileDefinitionDep:
+      return sbp_msg_ssr_tile_definition_dep_encoded_len(
+          &msg->ssr_tile_definition_dep);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_encoded_len(&msg->ssr_tile_definition);
     case SbpMsgStartup:
@@ -2078,6 +2214,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_cmp(&a->gnss_time_offset,
                                           &b->gnss_time_offset);
+    case SbpMsgGpsLeapSecond:
+      return sbp_msg_gps_leap_second_cmp(&a->gps_leap_second,
+                                         &b->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_cmp(&a->gps_time_dep_a, &b->gps_time_dep_a);
     case SbpMsgGpsTimeGnss:
@@ -2110,6 +2249,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_ins_updates_cmp(&a->ins_updates, &b->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_cmp(&a->iono, &b->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_cmp(&a->itrf, &b->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_cmp(&a->linux_cpu_state_dep_a,
                                                &b->linux_cpu_state_dep_a);
@@ -2278,9 +2419,34 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_cmp(&a->ssr_code_biases,
                                          &b->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_cmp(
+          &a->ssr_code_phase_biases_bounds, &b->ssr_code_phase_biases_bounds);
+    case SbpMsgSsrFlagHighLevel:
+      return sbp_msg_ssr_flag_high_level_cmp(&a->ssr_flag_high_level,
+                                             &b->ssr_flag_high_level);
+    case SbpMsgSsrFlagIonoGridPointSatLos:
+      return sbp_msg_ssr_flag_iono_grid_point_sat_los_cmp(
+          &a->ssr_flag_iono_grid_point_sat_los,
+          &b->ssr_flag_iono_grid_point_sat_los);
+    case SbpMsgSsrFlagIonoGridPoints:
+      return sbp_msg_ssr_flag_iono_grid_points_cmp(
+          &a->ssr_flag_iono_grid_points, &b->ssr_flag_iono_grid_points);
+    case SbpMsgSsrFlagIonoTileSatLos:
+      return sbp_msg_ssr_flag_iono_tile_sat_los_cmp(
+          &a->ssr_flag_iono_tile_sat_los, &b->ssr_flag_iono_tile_sat_los);
+    case SbpMsgSsrFlagSatellites:
+      return sbp_msg_ssr_flag_satellites_cmp(&a->ssr_flag_satellites,
+                                             &b->ssr_flag_satellites);
+    case SbpMsgSsrFlagTropoGridPoints:
+      return sbp_msg_ssr_flag_tropo_grid_points_cmp(
+          &a->ssr_flag_tropo_grid_points, &b->ssr_flag_tropo_grid_points);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_cmp(
           &a->ssr_grid_definition_dep_a, &b->ssr_grid_definition_dep_a);
+    case SbpMsgSsrGriddedCorrectionBounds:
+      return sbp_msg_ssr_gridded_correction_bounds_cmp(
+          &a->ssr_gridded_correction_bounds, &b->ssr_gridded_correction_bounds);
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_cmp(
           &a->ssr_gridded_correction_dep_a, &b->ssr_gridded_correction_dep_a);
@@ -2291,6 +2457,13 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_cmp(&a->ssr_gridded_correction,
                                                 &b->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_cmp(
+          &a->ssr_orbit_clock_bounds_degradation,
+          &b->ssr_orbit_clock_bounds_degradation);
+    case SbpMsgSsrOrbitClockBounds:
+      return sbp_msg_ssr_orbit_clock_bounds_cmp(&a->ssr_orbit_clock_bounds,
+                                                &b->ssr_orbit_clock_bounds);
     case SbpMsgSsrOrbitClockDepA:
       return sbp_msg_ssr_orbit_clock_dep_a_cmp(&a->ssr_orbit_clock_dep_a,
                                                &b->ssr_orbit_clock_dep_a);
@@ -2306,9 +2479,15 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrStecCorrectionDepA:
       return sbp_msg_ssr_stec_correction_dep_a_cmp(
           &a->ssr_stec_correction_dep_a, &b->ssr_stec_correction_dep_a);
+    case SbpMsgSsrStecCorrectionDep:
+      return sbp_msg_ssr_stec_correction_dep_cmp(&a->ssr_stec_correction_dep,
+                                                 &b->ssr_stec_correction_dep);
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_cmp(&a->ssr_stec_correction,
                                              &b->ssr_stec_correction);
+    case SbpMsgSsrTileDefinitionDep:
+      return sbp_msg_ssr_tile_definition_dep_cmp(&a->ssr_tile_definition_dep,
+                                                 &b->ssr_tile_definition_dep);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_cmp(&a->ssr_tile_definition,
                                              &b->ssr_tile_definition);

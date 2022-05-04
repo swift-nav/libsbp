@@ -1,0 +1,70 @@
+/*
+ * Copyright (C) 2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Integrity
+ *
+ * Integrity flag messages
+ */
+
+package swiftnav.sbp.integrity;
+
+import "gnss.proto";
+
+/** High level integrity flags
+ *
+None
+ */
+message MsgSsrFlagHighLevel {
+    repeated uint32 stub = 1;
+}
+
+/** List of satellites which are faulty, per constellation
+ *
+None
+ */
+message MsgSsrFlagSatellites {
+    repeated uint32 stub = 1;
+}
+
+/** List of grid points which are faulty
+ *
+None
+ */
+message MsgSsrFlagTropoGridPoints {
+    repeated uint32 stub = 1;
+}
+
+/** List of grid points which are faulty
+ *
+None
+ */
+message MsgSsrFlagIonoGridPoints {
+    repeated uint32 stub = 1;
+}
+
+/** List of all the LOS which are faulty
+ *
+None
+ */
+message MsgSsrFlagIonoTileSatLos {
+    repeated uint32 stub = 1;
+}
+
+/** List of all the grid points to satellite which are faulty
+ *
+None
+ */
+message MsgSsrFlagIonoGridPointSatLos {
+    repeated uint32 stub = 1;
+}

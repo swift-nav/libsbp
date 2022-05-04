@@ -507,10 +507,10 @@ $(makeSBP 'msgSsrPhaseBiases ''MsgSsrPhaseBiases)
 $(makeJSON "_msgSsrPhaseBiases_" ''MsgSsrPhaseBiases)
 $(makeLenses ''MsgSsrPhaseBiases)
 
-msgSsrStecCorrection :: Word16
-msgSsrStecCorrection = 0x05FB
+msgSsrStecCorrectionDep :: Word16
+msgSsrStecCorrectionDep = 0x05FB
 
--- | SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
+-- | SBP class for message MSG_SSR_STEC_CORRECTION_DEP (0x05FB).
 --
 -- The Slant Total Electron Content per space vehicle, given as polynomial
 -- approximation for a given tile. This should be combined with the
@@ -518,22 +518,41 @@ msgSsrStecCorrection = 0x05FB
 -- the atmospheric delay.
 --
 -- It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
-data MsgSsrStecCorrection = MsgSsrStecCorrection
-  { _msgSsrStecCorrection_header      :: !STECHeader
+data MsgSsrStecCorrectionDep = MsgSsrStecCorrectionDep
+  { _msgSsrStecCorrectionDep_header      :: !STECHeader
     -- ^ Header of a STEC polynomial coefficient message.
-  , _msgSsrStecCorrection_stec_sat_list :: ![STECSatElement]
+  , _msgSsrStecCorrectionDep_stec_sat_list :: ![STECSatElement]
     -- ^ Array of STEC polynomial coefficients for each space vehicle.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrStecCorrectionDep where
+  get = do
+    _msgSsrStecCorrectionDep_header <- get
+    _msgSsrStecCorrectionDep_stec_sat_list <- whileM (not <$> isEmpty) get
+    pure MsgSsrStecCorrectionDep {..}
+
+  put MsgSsrStecCorrectionDep {..} = do
+    put _msgSsrStecCorrectionDep_header
+    mapM_ put _msgSsrStecCorrectionDep_stec_sat_list
+
+$(makeSBP 'msgSsrStecCorrectionDep ''MsgSsrStecCorrectionDep)
+$(makeJSON "_msgSsrStecCorrectionDep_" ''MsgSsrStecCorrectionDep)
+$(makeLenses ''MsgSsrStecCorrectionDep)
+
+msgSsrStecCorrection :: Word16
+msgSsrStecCorrection = 0x05FD
+
+data MsgSsrStecCorrection = MsgSsrStecCorrection
+  { _msgSsrStecCorrection_stub :: ![Word8]
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrStecCorrection where
   get = do
-    _msgSsrStecCorrection_header <- get
-    _msgSsrStecCorrection_stec_sat_list <- whileM (not <$> isEmpty) get
+    _msgSsrStecCorrection_stub <- whileM (not <$> isEmpty) getWord8
     pure MsgSsrStecCorrection {..}
 
   put MsgSsrStecCorrection {..} = do
-    put _msgSsrStecCorrection_header
-    mapM_ put _msgSsrStecCorrection_stec_sat_list
+    mapM_ putWord8 _msgSsrStecCorrection_stub
 
 $(makeSBP 'msgSsrStecCorrection ''MsgSsrStecCorrection)
 $(makeJSON "_msgSsrStecCorrection_" ''MsgSsrStecCorrection)
@@ -576,25 +595,44 @@ $(makeSBP 'msgSsrGriddedCorrection ''MsgSsrGriddedCorrection)
 $(makeJSON "_msgSsrGriddedCorrection_" ''MsgSsrGriddedCorrection)
 $(makeLenses ''MsgSsrGriddedCorrection)
 
-msgSsrTileDefinition :: Word16
-msgSsrTileDefinition = 0x05F6
+msgSsrGriddedCorrectionBounds :: Word16
+msgSsrGriddedCorrectionBounds = 0x05FE
 
--- | SBP class for message MSG_SSR_TILE_DEFINITION (0x05F6).
+data MsgSsrGriddedCorrectionBounds = MsgSsrGriddedCorrectionBounds
+  { _msgSsrGriddedCorrectionBounds_stub :: ![Word8]
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrGriddedCorrectionBounds where
+  get = do
+    _msgSsrGriddedCorrectionBounds_stub <- whileM (not <$> isEmpty) getWord8
+    pure MsgSsrGriddedCorrectionBounds {..}
+
+  put MsgSsrGriddedCorrectionBounds {..} = do
+    mapM_ putWord8 _msgSsrGriddedCorrectionBounds_stub
+
+$(makeSBP 'msgSsrGriddedCorrectionBounds ''MsgSsrGriddedCorrectionBounds)
+$(makeJSON "_msgSsrGriddedCorrectionBounds_" ''MsgSsrGriddedCorrectionBounds)
+$(makeLenses ''MsgSsrGriddedCorrectionBounds)
+
+msgSsrTileDefinitionDep :: Word16
+msgSsrTileDefinitionDep = 0x05F6
+
+-- | SBP class for message MSG_SSR_TILE_DEFINITION_DEP (0x05F6).
 --
 -- Provides the correction point coordinates for the atmospheric correction
--- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+-- values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
 -- messages.
 --
 -- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
 -- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
 -- correction points, not lists of points.
-data MsgSsrTileDefinition = MsgSsrTileDefinition
-  { _msgSsrTileDefinition_tile_set_id :: !Word16
+data MsgSsrTileDefinitionDep = MsgSsrTileDefinitionDep
+  { _msgSsrTileDefinitionDep_tile_set_id :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
-  , _msgSsrTileDefinition_tile_id     :: !Word16
+  , _msgSsrTileDefinitionDep_tile_id     :: !Word16
     -- ^ Unique identifier of this tile in the tile set.
     -- See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
-  , _msgSsrTileDefinition_corner_nw_lat :: !Int16
+  , _msgSsrTileDefinitionDep_corner_nw_lat :: !Int16
     -- ^ North-West corner correction point latitude.
     --
     -- The relation between the latitude X in the range [-90, 90] and the
@@ -603,7 +641,7 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
     -- N = floor((X / 90) * 2^14)
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
-  , _msgSsrTileDefinition_corner_nw_lon :: !Int16
+  , _msgSsrTileDefinitionDep_corner_nw_lon :: !Int16
     -- ^ North-West corner correction point longitude.
     --
     -- The relation between the longitude X in the range [-180, 180] and the
@@ -612,23 +650,23 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
     -- N = floor((X / 180) * 2^15)
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
-  , _msgSsrTileDefinition_spacing_lat :: !Word16
+  , _msgSsrTileDefinitionDep_spacing_lat :: !Word16
     -- ^ Spacing of the correction points in the latitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
-  , _msgSsrTileDefinition_spacing_lon :: !Word16
+  , _msgSsrTileDefinitionDep_spacing_lon :: !Word16
     -- ^ Spacing of the correction points in the longitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
-  , _msgSsrTileDefinition_rows        :: !Word16
+  , _msgSsrTileDefinitionDep_rows        :: !Word16
     -- ^ Number of steps in the latitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
-  , _msgSsrTileDefinition_cols        :: !Word16
+  , _msgSsrTileDefinitionDep_cols        :: !Word16
     -- ^ Number of steps in the longitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
-  , _msgSsrTileDefinition_bitmask     :: !Word64
+  , _msgSsrTileDefinitionDep_bitmask     :: !Word64
     -- ^ Specifies the availability of correction data at the correction points
     -- in the array.
     --
@@ -646,29 +684,57 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
     -- definition of the bits is inverted.
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgSsrTileDefinitionDep where
+  get = do
+    _msgSsrTileDefinitionDep_tile_set_id <- getWord16le
+    _msgSsrTileDefinitionDep_tile_id <- getWord16le
+    _msgSsrTileDefinitionDep_corner_nw_lat <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinitionDep_corner_nw_lon <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinitionDep_spacing_lat <- getWord16le
+    _msgSsrTileDefinitionDep_spacing_lon <- getWord16le
+    _msgSsrTileDefinitionDep_rows <- getWord16le
+    _msgSsrTileDefinitionDep_cols <- getWord16le
+    _msgSsrTileDefinitionDep_bitmask <- getWord64le
+    pure MsgSsrTileDefinitionDep {..}
+
+  put MsgSsrTileDefinitionDep {..} = do
+    putWord16le _msgSsrTileDefinitionDep_tile_set_id
+    putWord16le _msgSsrTileDefinitionDep_tile_id
+    (putWord16le . fromIntegral) _msgSsrTileDefinitionDep_corner_nw_lat
+    (putWord16le . fromIntegral) _msgSsrTileDefinitionDep_corner_nw_lon
+    putWord16le _msgSsrTileDefinitionDep_spacing_lat
+    putWord16le _msgSsrTileDefinitionDep_spacing_lon
+    putWord16le _msgSsrTileDefinitionDep_rows
+    putWord16le _msgSsrTileDefinitionDep_cols
+    putWord64le _msgSsrTileDefinitionDep_bitmask
+
+$(makeSBP 'msgSsrTileDefinitionDep ''MsgSsrTileDefinitionDep)
+$(makeJSON "_msgSsrTileDefinitionDep_" ''MsgSsrTileDefinitionDep)
+$(makeLenses ''MsgSsrTileDefinitionDep)
+
+msgSsrTileDefinition :: Word16
+msgSsrTileDefinition = 0x05F7
+
+-- | SBP class for message MSG_SSR_TILE_DEFINITION (0x05F7).
+--
+-- Provides the correction point coordinates for the atmospheric correction
+-- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+-- messages.
+--
+-- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+-- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+-- correction points, not lists of points.
+data MsgSsrTileDefinition = MsgSsrTileDefinition
+  { _msgSsrTileDefinition_stub :: ![Word8]
+  } deriving ( Show, Read, Eq )
+
 instance Binary MsgSsrTileDefinition where
   get = do
-    _msgSsrTileDefinition_tile_set_id <- getWord16le
-    _msgSsrTileDefinition_tile_id <- getWord16le
-    _msgSsrTileDefinition_corner_nw_lat <- (fromIntegral <$> getWord16le)
-    _msgSsrTileDefinition_corner_nw_lon <- (fromIntegral <$> getWord16le)
-    _msgSsrTileDefinition_spacing_lat <- getWord16le
-    _msgSsrTileDefinition_spacing_lon <- getWord16le
-    _msgSsrTileDefinition_rows <- getWord16le
-    _msgSsrTileDefinition_cols <- getWord16le
-    _msgSsrTileDefinition_bitmask <- getWord64le
+    _msgSsrTileDefinition_stub <- whileM (not <$> isEmpty) getWord8
     pure MsgSsrTileDefinition {..}
 
   put MsgSsrTileDefinition {..} = do
-    putWord16le _msgSsrTileDefinition_tile_set_id
-    putWord16le _msgSsrTileDefinition_tile_id
-    (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lat
-    (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lon
-    putWord16le _msgSsrTileDefinition_spacing_lat
-    putWord16le _msgSsrTileDefinition_spacing_lon
-    putWord16le _msgSsrTileDefinition_rows
-    putWord16le _msgSsrTileDefinition_cols
-    putWord64le _msgSsrTileDefinition_bitmask
+    mapM_ putWord8 _msgSsrTileDefinition_stub
 
 $(makeSBP 'msgSsrTileDefinition ''MsgSsrTileDefinition)
 $(makeJSON "_msgSsrTileDefinition_" ''MsgSsrTileDefinition)
@@ -1043,3 +1109,60 @@ instance Binary MsgSsrGridDefinitionDepA where
 $(makeSBP 'msgSsrGridDefinitionDepA ''MsgSsrGridDefinitionDepA)
 $(makeJSON "_msgSsrGridDefinitionDepA_" ''MsgSsrGridDefinitionDepA)
 $(makeLenses ''MsgSsrGridDefinitionDepA)
+
+msgSsrOrbitClockBounds :: Word16
+msgSsrOrbitClockBounds = 0x05DE
+
+data MsgSsrOrbitClockBounds = MsgSsrOrbitClockBounds
+  { _msgSsrOrbitClockBounds_stub :: ![Word8]
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrOrbitClockBounds where
+  get = do
+    _msgSsrOrbitClockBounds_stub <- whileM (not <$> isEmpty) getWord8
+    pure MsgSsrOrbitClockBounds {..}
+
+  put MsgSsrOrbitClockBounds {..} = do
+    mapM_ putWord8 _msgSsrOrbitClockBounds_stub
+
+$(makeSBP 'msgSsrOrbitClockBounds ''MsgSsrOrbitClockBounds)
+$(makeJSON "_msgSsrOrbitClockBounds_" ''MsgSsrOrbitClockBounds)
+$(makeLenses ''MsgSsrOrbitClockBounds)
+
+msgSsrCodePhaseBiasesBounds :: Word16
+msgSsrCodePhaseBiasesBounds = 0x05EC
+
+data MsgSsrCodePhaseBiasesBounds = MsgSsrCodePhaseBiasesBounds
+  { _msgSsrCodePhaseBiasesBounds_stub :: ![Word8]
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrCodePhaseBiasesBounds where
+  get = do
+    _msgSsrCodePhaseBiasesBounds_stub <- whileM (not <$> isEmpty) getWord8
+    pure MsgSsrCodePhaseBiasesBounds {..}
+
+  put MsgSsrCodePhaseBiasesBounds {..} = do
+    mapM_ putWord8 _msgSsrCodePhaseBiasesBounds_stub
+
+$(makeSBP 'msgSsrCodePhaseBiasesBounds ''MsgSsrCodePhaseBiasesBounds)
+$(makeJSON "_msgSsrCodePhaseBiasesBounds_" ''MsgSsrCodePhaseBiasesBounds)
+$(makeLenses ''MsgSsrCodePhaseBiasesBounds)
+
+msgSsrOrbitClockBoundsDegradation :: Word16
+msgSsrOrbitClockBoundsDegradation = 0x05DF
+
+data MsgSsrOrbitClockBoundsDegradation = MsgSsrOrbitClockBoundsDegradation
+  { _msgSsrOrbitClockBoundsDegradation_stub :: ![Word8]
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrOrbitClockBoundsDegradation where
+  get = do
+    _msgSsrOrbitClockBoundsDegradation_stub <- whileM (not <$> isEmpty) getWord8
+    pure MsgSsrOrbitClockBoundsDegradation {..}
+
+  put MsgSsrOrbitClockBoundsDegradation {..} = do
+    mapM_ putWord8 _msgSsrOrbitClockBoundsDegradation_stub
+
+$(makeSBP 'msgSsrOrbitClockBoundsDegradation ''MsgSsrOrbitClockBoundsDegradation)
+$(makeJSON "_msgSsrOrbitClockBoundsDegradation_" ''MsgSsrOrbitClockBoundsDegradation)
+$(makeLenses ''MsgSsrOrbitClockBoundsDegradation)

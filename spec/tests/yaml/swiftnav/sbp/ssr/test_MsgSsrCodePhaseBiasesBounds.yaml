@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrCodePhaseBiasesBounds
+generated_on: 2022-04-12 # manually generated
+package: sbp.ssr
+tests:
+
+  - msg:
+      fields:
+        stub: [180,0,0,0,3,0,1,2,1,14,15,1,3,0,3,39,1,39,1,1,3,39,1,39,1,1,1,39,1,39,1]
+      c_decoded_fields:
+        n_stub: 31
+      module: sbp.ssr
+      name: MsgSsrCodePhaseBiasesBounds
+    msg_type: '1516'
+    raw_json: '{"stub": [180,0,0,0,3,0,1,2,1,14,15,1,3,0,3,39,1,39,1,1,3,39,1,39,1,1,1,39,1,39,1], "preamble": 85,
+    "msg_type": 1516, "sender": 66, "length": 31, "payload": "tAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnAQ==", "crc": 28951}'
+    raw_packet: VewFQgAftAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnARdx
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x05EC'
+      sender: '0x0042'
+      length: 31
+      payload: tAAAAAMAAQIBDg8BAwADJwEnAQEDJwEnAQEBJwEnAQ==
+      crc: '0x7117'

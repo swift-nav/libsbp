@@ -2427,3 +2427,24 @@ definitions:
                     desc: Safe state POPL
                 - 31:
                     desc: Safe state ROPL
+
+ - MSG_GPS_LEAP_SECOND:
+     id: 0x023A
+     short_desc: >
+       Leap second SBP message.
+     desc: >
+       Emulates the GPS CNAV message, reserving bytes for future broadcast of
+       the drift model parameters.
+     fields:
+       - stub:
+           type: array
+           fill: u8
+
+ - MSG_ITRF:
+     id: 0x0244
+     short_desc: Reference Frame Transformation Parameter
+     public: False
+     fields:
+       - stub:
+           type: array
+           fill: u8

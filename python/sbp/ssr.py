@@ -1079,11 +1079,11 @@ class MsgSsrPhaseBiases(SBP):
     d.update(j)
     return d
     
-SBP_MSG_SSR_STEC_CORRECTION = 0x05FB
-class MsgSsrStecCorrection(SBP):
-  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
+SBP_MSG_SSR_STEC_CORRECTION_DEP = 0x05FB
+class MsgSsrStecCorrectionDep(SBP):
+  """SBP class for message MSG_SSR_STEC_CORRECTION_DEP (0x05FB).
 
-  You can have MSG_SSR_STEC_CORRECTION inherit its fields directly
+  You can have MSG_SSR_STEC_CORRECTION_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1117,6 +1117,94 @@ class MsgSsrStecCorrection(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
+      super( MsgSsrStecCorrectionDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrStecCorrectionDep, self).__init__()
+      self.msg_type = SBP_MSG_SSR_STEC_CORRECTION_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.stec_sat_list = kwargs.pop('stec_sat_list')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrStecCorrectionDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrStecCorrectionDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrStecCorrectionDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrStecCorrectionDep._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrStecCorrectionDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrStecCorrectionDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_STEC_CORRECTION = 0x05FD
+class MsgSsrStecCorrection(SBP):
+  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05FD).
+
+  You can have MSG_SSR_STEC_CORRECTION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  stub : array
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'stub',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
       super( MsgSsrStecCorrection,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
@@ -1125,8 +1213,7 @@ class MsgSsrStecCorrection(SBP):
       super( MsgSsrStecCorrection, self).__init__()
       self.msg_type = SBP_MSG_SSR_STEC_CORRECTION
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.header = kwargs.pop('header')
-      self.stec_sat_list = kwargs.pop('stec_sat_list')
+      self.stub = kwargs.pop('stub')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1284,17 +1371,104 @@ class MsgSsrGriddedCorrection(SBP):
     d.update(j)
     return d
     
-SBP_MSG_SSR_TILE_DEFINITION = 0x05F6
-class MsgSsrTileDefinition(SBP):
-  """SBP class for message MSG_SSR_TILE_DEFINITION (0x05F6).
+SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS = 0x05FE
+class MsgSsrGriddedCorrectionBounds(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
 
-  You can have MSG_SSR_TILE_DEFINITION inherit its fields directly
+  You can have MSG_SSR_GRIDDED_CORRECTION_BOUNDS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  stub : array
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'stub',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrGriddedCorrectionBounds,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrGriddedCorrectionBounds, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.stub = kwargs.pop('stub')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrGriddedCorrectionBounds.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrGriddedCorrectionBounds(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGriddedCorrectionBounds._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGriddedCorrectionBounds._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGriddedCorrectionBounds._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGriddedCorrectionBounds, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_TILE_DEFINITION_DEP = 0x05F6
+class MsgSsrTileDefinitionDep(SBP):
+  """SBP class for message MSG_SSR_TILE_DEFINITION_DEP (0x05F6).
+
+  You can have MSG_SSR_TILE_DEFINITION_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   Provides the correction point coordinates for the atmospheric correction
-  values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+  values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
   messages.
 
   Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
@@ -1388,13 +1562,13 @@ class MsgSsrTileDefinition(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgSsrTileDefinition,
+      super( MsgSsrTileDefinitionDep,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSsrTileDefinition, self).__init__()
-      self.msg_type = SBP_MSG_SSR_TILE_DEFINITION
+      super( MsgSsrTileDefinitionDep, self).__init__()
+      self.msg_type = SBP_MSG_SSR_TILE_DEFINITION_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tile_set_id = kwargs.pop('tile_set_id')
       self.tile_id = kwargs.pop('tile_id')
@@ -1405,6 +1579,100 @@ class MsgSsrTileDefinition(SBP):
       self.rows = kwargs.pop('rows')
       self.cols = kwargs.pop('cols')
       self.bitmask = kwargs.pop('bitmask')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrTileDefinitionDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrTileDefinitionDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrTileDefinitionDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrTileDefinitionDep._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrTileDefinitionDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrTileDefinitionDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_TILE_DEFINITION = 0x05F7
+class MsgSsrTileDefinition(SBP):
+  """SBP class for message MSG_SSR_TILE_DEFINITION (0x05F7).
+
+  You can have MSG_SSR_TILE_DEFINITION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Provides the correction point coordinates for the atmospheric correction
+  values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+  messages.
+
+  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+  element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+  correction points, not lists of points.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  stub : array
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'stub',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrTileDefinition,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrTileDefinition, self).__init__()
+      self.msg_type = SBP_MSG_SSR_TILE_DEFINITION
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.stub = kwargs.pop('stub')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2094,18 +2362,285 @@ class MsgSsrGridDefinitionDepA(SBP):
     d.update(j)
     return d
     
+SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS = 0x05DE
+class MsgSsrOrbitClockBounds(SBP):
+  """SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
+
+  You can have MSG_SSR_ORBIT_CLOCK_BOUNDS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  stub : array
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'stub',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrOrbitClockBounds,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrOrbitClockBounds, self).__init__()
+      self.msg_type = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.stub = kwargs.pop('stub')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrOrbitClockBounds.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrOrbitClockBounds(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrOrbitClockBounds._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrOrbitClockBounds._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrOrbitClockBounds._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrOrbitClockBounds, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS = 0x05EC
+class MsgSsrCodePhaseBiasesBounds(SBP):
+  """SBP class for message MSG_SSR_CODE_PHASE_BIASES_BOUNDS (0x05EC).
+
+  You can have MSG_SSR_CODE_PHASE_BIASES_BOUNDS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  stub : array
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'stub',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrCodePhaseBiasesBounds,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrCodePhaseBiasesBounds, self).__init__()
+      self.msg_type = SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.stub = kwargs.pop('stub')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrCodePhaseBiasesBounds.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrCodePhaseBiasesBounds(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrCodePhaseBiasesBounds._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrCodePhaseBiasesBounds._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrCodePhaseBiasesBounds._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrCodePhaseBiasesBounds, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION = 0x05DF
+class MsgSsrOrbitClockBoundsDegradation(SBP):
+  """SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION (0x05DF).
+
+  You can have MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  stub : array
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'stub',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrOrbitClockBoundsDegradation,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrOrbitClockBoundsDegradation, self).__init__()
+      self.msg_type = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.stub = kwargs.pop('stub')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrOrbitClockBoundsDegradation.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrOrbitClockBoundsDegradation(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrOrbitClockBoundsDegradation._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrOrbitClockBoundsDegradation._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrOrbitClockBoundsDegradation._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrOrbitClockBoundsDegradation, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
-  0x05FB: MsgSsrStecCorrection,
+  0x05FB: MsgSsrStecCorrectionDep,
+  0x05FD: MsgSsrStecCorrection,
   0x05FC: MsgSsrGriddedCorrection,
-  0x05F6: MsgSsrTileDefinition,
+  0x05FE: MsgSsrGriddedCorrectionBounds,
+  0x05F6: MsgSsrTileDefinitionDep,
+  0x05F7: MsgSsrTileDefinition,
   0x0604: MsgSsrSatelliteApc,
   0x05DC: MsgSsrOrbitClockDepA,
   0x05EB: MsgSsrStecCorrectionDepA,
   0x05F0: MsgSsrGriddedCorrectionNoStdDepA,
   0x05FA: MsgSsrGriddedCorrectionDepA,
   0x05F5: MsgSsrGridDefinitionDepA,
+  0x05DE: MsgSsrOrbitClockBounds,
+  0x05EC: MsgSsrCodePhaseBiasesBounds,
+  0x05DF: MsgSsrOrbitClockBoundsDegradation,
 }

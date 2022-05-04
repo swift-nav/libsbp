@@ -1,0 +1,23 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrStecCorrection
+generated_on: 2022-04-19 # manually generated
+package: sbp.ssr
+tests:
+
+  - msg:
+      fields:
+        stub: [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,2,1,1,1,63,0,62,0,61,0,60,0,31,15,5,63,0,64,0,65,0,66,0]
+      c_decoded_fields:
+        n_stub: 38
+      module: sbp.ssr
+      name: MsgSsrStecCorrection
+    msg_type: '1533'
+    raw_json: '{"stub": [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,2,1,1,1,63,0,62,0,61,0,60,0,31,15,5,63,0,64,0,65,0,66,0],
+    "preamble": 85, "msg_type": 1533, "sender": 66, "length": 38, "payload": "tAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgA=", "crc": 12919}'
+    raw_packet: Vf0FQgAmtAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgB3Mg==
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x05FD'
+      sender: '0x0042'
+      length: 38
+      payload: tAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgA=
+      crc: '0x3277'

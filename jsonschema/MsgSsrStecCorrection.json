@@ -13,14 +13,12 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrStecCorrection",
   "title":"MsgSsrStecCorrection",
-  "description":"The Slant Total Electron Content per space vehicle, given as polynomial approximation for a given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of the atmospheric delay.,\n,\nIt is typically equivalent to the QZSS CLAS Sub Type 8 messages.\n",
+  "description":"",
   "type": "object",
   "properties": {
-    "header": {"$ref": "STECHeader.json"},
-    "stec_sat_list": {"type": "array", "items": {"$ref": "STECSatElement.json"}}
+    "stub": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "header",
-    "stec_sat_list"
+    "stub"
   ]
 }

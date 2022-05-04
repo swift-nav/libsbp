@@ -1,0 +1,25 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrOrbitClockBoundsDegradation
+generated_on: 2022-04-18 # manually generated
+package: sbp.ssr
+
+tests:
+
+  - msg:
+      fields:
+        stub: [180,0,0,0,3,0,1,2,3,48,15,1,10,0,0,0,0,0,0,0,200,199,198,197,196,195,194,193]
+      c_decoded_fields:
+        n_stub: 28
+      module: sbp.ssr
+      name: MsgSsrOrbitClockBoundsDegradation
+    msg_type: '1503'
+    raw_json: '{"stub": [180,0,0,0,3,0,1,2,3,48,15,1,10,0,0,0,0,0,0,0,200,199,198,197,196,195,194,193],
+    "preamble": 85, "msg_type": 1503, "sender": 66, "length": 28,
+    "payload": "tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ==", "crc": 30152}'
+    raw_packet: Vd8FQgActAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwch1
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x05DF'
+      sender: '0x0042'
+      length: 28
+      payload: tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ==
+      crc: '0x75C8'

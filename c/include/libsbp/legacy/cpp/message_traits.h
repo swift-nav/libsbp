@@ -19,6 +19,7 @@
 #include <libsbp/legacy/flash.h>
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/legacy/imu.h>
+#include <libsbp/legacy/integrity.h>
 #include <libsbp/legacy/linux.h>
 #include <libsbp/legacy/logging.h>
 #include <libsbp/legacy/mag.h>
@@ -913,6 +914,18 @@ struct MessageTraits<msg_vel_ecef_cov_gnss_t> {
 
 
 template<>
+struct MessageTraits<msg_gps_leap_second_t> {
+  static constexpr u16 id = 570;
+};
+
+
+template<>
+struct MessageTraits<msg_itrf_t> {
+  static constexpr u16 id = 580;
+};
+
+
+template<>
 struct MessageTraits<msg_ndb_event_t> {
   static constexpr u16 id = 1024;
 };
@@ -943,6 +956,18 @@ struct MessageTraits<msg_ssr_orbit_clock_t> {
 
 
 template<>
+struct MessageTraits<msg_ssr_orbit_clock_bounds_t> {
+  static constexpr u16 id = 1502;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_orbit_clock_bounds_degradation_t> {
+  static constexpr u16 id = 1503;
+};
+
+
+template<>
 struct MessageTraits<msg_ssr_code_biases_t> {
   static constexpr u16 id = 1505;
 };
@@ -961,6 +986,12 @@ struct MessageTraits<msg_ssr_stec_correction_dep_a_t> {
 
 
 template<>
+struct MessageTraits<msg_ssr_code_phase_biases_bounds_t> {
+  static constexpr u16 id = 1516;
+};
+
+
+template<>
 struct MessageTraits<msg_ssr_gridded_correction_no_std_dep_a_t> {
   static constexpr u16 id = 1520;
 };
@@ -973,8 +1004,14 @@ struct MessageTraits<msg_ssr_grid_definition_dep_a_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_tile_definition_t> {
+struct MessageTraits<msg_ssr_tile_definition_dep_t> {
   static constexpr u16 id = 1526;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_tile_definition_t> {
+  static constexpr u16 id = 1527;
 };
 
 
@@ -985,7 +1022,7 @@ struct MessageTraits<msg_ssr_gridded_correction_dep_a_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_stec_correction_t> {
+struct MessageTraits<msg_ssr_stec_correction_dep_t> {
   static constexpr u16 id = 1531;
 };
 
@@ -993,6 +1030,18 @@ struct MessageTraits<msg_ssr_stec_correction_t> {
 template<>
 struct MessageTraits<msg_ssr_gridded_correction_t> {
   static constexpr u16 id = 1532;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_stec_correction_t> {
+  static constexpr u16 id = 1533;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_gridded_correction_bounds_t> {
+  static constexpr u16 id = 1534;
 };
 
 
@@ -1041,6 +1090,42 @@ struct MessageTraits<msg_odometry_t> {
 template<>
 struct MessageTraits<msg_wheeltick_t> {
   static constexpr u16 id = 2308;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_high_level_t> {
+  static constexpr u16 id = 3001;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_satellites_t> {
+  static constexpr u16 id = 3005;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_tropo_grid_points_t> {
+  static constexpr u16 id = 3011;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_iono_grid_points_t> {
+  static constexpr u16 id = 3015;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_iono_tile_sat_los_t> {
+  static constexpr u16 id = 3021;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_iono_grid_point_sat_los_t> {
+  static constexpr u16 id = 3025;
 };
 
 

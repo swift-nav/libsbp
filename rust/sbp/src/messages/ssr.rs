@@ -18,17 +18,23 @@ pub use grid_definition_header_dep_a::GridDefinitionHeaderDepA;
 pub use gridded_correction_header::GriddedCorrectionHeader;
 pub use gridded_correction_header_dep_a::GriddedCorrectionHeaderDepA;
 pub use msg_ssr_code_biases::MsgSsrCodeBiases;
+pub use msg_ssr_code_phase_biases_bounds::MsgSsrCodePhaseBiasesBounds;
 pub use msg_ssr_grid_definition_dep_a::MsgSsrGridDefinitionDepA;
 pub use msg_ssr_gridded_correction::MsgSsrGriddedCorrection;
+pub use msg_ssr_gridded_correction_bounds::MsgSsrGriddedCorrectionBounds;
 pub use msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
 pub use msg_ssr_gridded_correction_no_std_dep_a::MsgSsrGriddedCorrectionNoStdDepA;
 pub use msg_ssr_orbit_clock::MsgSsrOrbitClock;
+pub use msg_ssr_orbit_clock_bounds::MsgSsrOrbitClockBounds;
+pub use msg_ssr_orbit_clock_bounds_degradation::MsgSsrOrbitClockBoundsDegradation;
 pub use msg_ssr_orbit_clock_dep_a::MsgSsrOrbitClockDepA;
 pub use msg_ssr_phase_biases::MsgSsrPhaseBiases;
 pub use msg_ssr_satellite_apc::MsgSsrSatelliteApc;
 pub use msg_ssr_stec_correction::MsgSsrStecCorrection;
+pub use msg_ssr_stec_correction_dep::MsgSsrStecCorrectionDep;
 pub use msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
 pub use msg_ssr_tile_definition::MsgSsrTileDefinition;
+pub use msg_ssr_tile_definition_dep::MsgSsrTileDefinitionDep;
 pub use phase_biases_content::PhaseBiasesContent;
 pub use satellite_apc::SatelliteAPC;
 pub use stec_header::STECHeader;
@@ -424,6 +430,73 @@ pub mod msg_ssr_code_biases {
     }
 }
 
+pub mod msg_ssr_code_phase_biases_bounds {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Stubbed version of Combined Code and Phase Biases Bounds
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrCodePhaseBiasesBounds {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
+    }
+
+    impl ConcreteMessage for MsgSsrCodePhaseBiasesBounds {
+        const MESSAGE_TYPE: u16 = 1516;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
+    }
+
+    impl SbpMessage for MsgSsrCodePhaseBiasesBounds {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrCodePhaseBiasesBounds {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrCodePhaseBiasesBounds(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrCodePhaseBiasesBounds {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrCodePhaseBiasesBounds {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
 pub mod msg_ssr_gridded_correction {
     #![allow(unused_imports)]
 
@@ -514,6 +587,73 @@ pub mod msg_ssr_gridded_correction {
                 index: WireFormat::parse_unchecked(buf),
                 tropo_delay_correction: WireFormat::parse_unchecked(buf),
                 stec_residuals: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_gridded_correction_bounds {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Gridded troposhere and STEC correction residuals bounds
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrGriddedCorrectionBounds {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
+    }
+
+    impl ConcreteMessage for MsgSsrGriddedCorrectionBounds {
+        const MESSAGE_TYPE: u16 = 1534;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_GRIDDED_CORRECTION_BOUNDS";
+    }
+
+    impl SbpMessage for MsgSsrGriddedCorrectionBounds {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrGriddedCorrectionBounds {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrGriddedCorrectionBounds(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrGriddedCorrectionBounds {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrGriddedCorrectionBounds {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
             }
         }
     }
@@ -941,6 +1081,140 @@ pub mod msg_ssr_orbit_clock {
     }
 }
 
+pub mod msg_ssr_orbit_clock_bounds {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Stubbed version of Combined Orbit and Clock Bound
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrOrbitClockBounds {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
+    }
+
+    impl ConcreteMessage for MsgSsrOrbitClockBounds {
+        const MESSAGE_TYPE: u16 = 1502;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
+    }
+
+    impl SbpMessage for MsgSsrOrbitClockBounds {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrOrbitClockBounds {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrOrbitClockBounds(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrOrbitClockBounds {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrOrbitClockBounds {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_orbit_clock_bounds_degradation {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Combined Orbit and Clock Bound Degradation Parameter
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrOrbitClockBoundsDegradation {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
+    }
+
+    impl ConcreteMessage for MsgSsrOrbitClockBoundsDegradation {
+        const MESSAGE_TYPE: u16 = 1503;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION";
+    }
+
+    impl SbpMessage for MsgSsrOrbitClockBoundsDegradation {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrOrbitClockBoundsDegradation {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrOrbitClockBoundsDegradation(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrOrbitClockBoundsDegradation {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrOrbitClockBoundsDegradation {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
 pub mod msg_ssr_orbit_clock_dep_a {
     #![allow(unused_imports)]
 
@@ -1310,32 +1584,19 @@ pub mod msg_ssr_stec_correction {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
-
     /// STEC correction polynomial coefficients
-    ///
-    /// The Slant Total Electron Content per space vehicle, given as polynomial
-    /// approximation for a given tile. This should be combined with the
-    /// MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-    /// of the atmospheric delay.
-    ///
-    /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
-    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
     pub struct MsgSsrStecCorrection {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
         pub sender_id: Option<u16>,
-        /// Header of a STEC polynomial coefficient message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
-        pub header: STECHeader,
-        /// Array of STEC polynomial coefficients for each space vehicle.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_sat_list")))]
-        pub stec_sat_list: Vec<STECSatElement>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
     }
 
     impl ConcreteMessage for MsgSsrStecCorrection {
-        const MESSAGE_TYPE: u16 = 1531;
+        const MESSAGE_TYPE: u16 = 1533;
         const MESSAGE_NAME: &'static str = "MSG_SSR_STEC_CORRECTION";
     }
 
@@ -1368,6 +1629,86 @@ pub mod msg_ssr_stec_correction {
     }
 
     impl WireFormat for MsgSsrStecCorrection {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrStecCorrection {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_stec_correction_dep {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// STEC correction polynomial coefficients
+    ///
+    /// The Slant Total Electron Content per space vehicle, given as polynomial
+    /// approximation for a given tile. This should be combined with the
+    /// MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
+    /// of the atmospheric delay.
+    ///
+    /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrStecCorrectionDep {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Header of a STEC polynomial coefficient message.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        pub header: STECHeader,
+        /// Array of STEC polynomial coefficients for each space vehicle.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_sat_list")))]
+        pub stec_sat_list: Vec<STECSatElement>,
+    }
+
+    impl ConcreteMessage for MsgSsrStecCorrectionDep {
+        const MESSAGE_TYPE: u16 = 1531;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_STEC_CORRECTION_DEP";
+    }
+
+    impl SbpMessage for MsgSsrStecCorrectionDep {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrStecCorrectionDep {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrStecCorrectionDep(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrStecCorrectionDep {
         const MIN_LEN: usize =
             <STECHeader as WireFormat>::MIN_LEN + <Vec<STECSatElement> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -1378,7 +1719,7 @@ pub mod msg_ssr_stec_correction {
             WireFormat::write(&self.stec_sat_list, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgSsrStecCorrection {
+            MsgSsrStecCorrectionDep {
                 sender_id: None,
                 header: WireFormat::parse_unchecked(buf),
                 stec_sat_list: WireFormat::parse_unchecked(buf),
@@ -1485,6 +1826,84 @@ pub mod msg_ssr_tile_definition {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
         pub sender_id: Option<u16>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
+    }
+
+    impl ConcreteMessage for MsgSsrTileDefinition {
+        const MESSAGE_TYPE: u16 = 1527;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION";
+    }
+
+    impl SbpMessage for MsgSsrTileDefinition {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrTileDefinition {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrTileDefinition(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrTileDefinition {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrTileDefinition {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_tile_definition_dep {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Definition of a SSR atmospheric correction tile.
+
+    ///
+    /// Provides the correction point coordinates for the atmospheric correction
+    /// values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
+    /// messages.
+    ///
+    /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+    /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+    /// correction points, not lists of points.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrTileDefinitionDep {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
         /// Unique identifier of the tile set this tile belongs to.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
         pub tile_set_id: u16,
@@ -1551,12 +1970,12 @@ pub mod msg_ssr_tile_definition {
         pub bitmask: u64,
     }
 
-    impl ConcreteMessage for MsgSsrTileDefinition {
+    impl ConcreteMessage for MsgSsrTileDefinitionDep {
         const MESSAGE_TYPE: u16 = 1526;
-        const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION";
+        const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION_DEP";
     }
 
-    impl SbpMessage for MsgSsrTileDefinition {
+    impl SbpMessage for MsgSsrTileDefinitionDep {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
@@ -1574,17 +1993,17 @@ pub mod msg_ssr_tile_definition {
         }
     }
 
-    impl TryFrom<Sbp> for MsgSsrTileDefinition {
+    impl TryFrom<Sbp> for MsgSsrTileDefinitionDep {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
-                Sbp::MsgSsrTileDefinition(m) => Ok(m),
+                Sbp::MsgSsrTileDefinitionDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
         }
     }
 
-    impl WireFormat for MsgSsrTileDefinition {
+    impl WireFormat for MsgSsrTileDefinitionDep {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -1617,7 +2036,7 @@ pub mod msg_ssr_tile_definition {
             WireFormat::write(&self.bitmask, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgSsrTileDefinition {
+            MsgSsrTileDefinitionDep {
                 sender_id: None,
                 tile_set_id: WireFormat::parse_unchecked(buf),
                 tile_id: WireFormat::parse_unchecked(buf),

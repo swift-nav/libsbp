@@ -27,8 +27,6 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
-#include <libsbp/v4/ssr/STECHeader.h>
-#include <libsbp/v4/ssr/STECSatElement.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -40,36 +38,19 @@ extern "C" {
  * SBP_MSG_SSR_STEC_CORRECTION
  *
  *****************************************************************************/
-/** STEC correction polynomial coefficients
- *
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
- * the atmospheric delay.
- *
- */
 typedef struct {
+  u8 stub[SBP_MSG_SSR_STEC_CORRECTION_STUB_MAX];
   /**
-   * Header of a STEC polynomial coefficient message.
-   */
-  sbp_stec_header_t header;
-
-  /**
-   * Array of STEC polynomial coefficients for each space vehicle.
-   */
-  sbp_stec_sat_element_t
-      stec_sat_list[SBP_MSG_SSR_STEC_CORRECTION_STEC_SAT_LIST_MAX];
-  /**
-   * Number of elements in stec_sat_list
+   * Number of elements in stub
    *
    * When sending a message fill in this field with the number elements set in
-   * stec_sat_list before calling an appropriate libsbp send function
+   * stub before calling an appropriate libsbp send function
    *
    * When receiving a message query this field for the number of elements in
-   * stec_sat_list. The value of any elements beyond the index specified in this
-   * field is undefined
+   * stub. The value of any elements beyond the index specified in this field is
+   * undefined
    */
-  u8 n_stec_sat_list;
+  u8 n_stub;
 } sbp_msg_ssr_stec_correction_t;
 
 /**
@@ -81,7 +62,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_stec_correction_encoded_len(
     const sbp_msg_ssr_stec_correction_t *msg) {
   return SBP_MSG_SSR_STEC_CORRECTION_ENCODED_OVERHEAD +
-         (msg->n_stec_sat_list * SBP_STEC_SAT_ELEMENT_ENCODED_LEN);
+         (msg->n_stub * SBP_ENCODED_LEN_U8);
 }
 
 /**
