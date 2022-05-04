@@ -47,6 +47,12 @@ import com.swiftnav.sbp.flash.MsgStmUniqueIdReq;
 import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
 import com.swiftnav.sbp.imu.MsgImuAux;
 import com.swiftnav.sbp.imu.MsgImuRaw;
+import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevel;
+import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPointSatLos;
+import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPoints;
+import com.swiftnav.sbp.integrity.MsgSsrFlagIonoTileSatLos;
+import com.swiftnav.sbp.integrity.MsgSsrFlagSatellites;
+import com.swiftnav.sbp.integrity.MsgSsrFlagTropoGridPoints;
 import com.swiftnav.sbp.linux.MsgLinuxCpuState;
 import com.swiftnav.sbp.linux.MsgLinuxCpuStateDepA;
 import com.swiftnav.sbp.linux.MsgLinuxMemState;
@@ -70,9 +76,11 @@ import com.swiftnav.sbp.navigation.MsgBaselineNED;
 import com.swiftnav.sbp.navigation.MsgBaselineNEDDepA;
 import com.swiftnav.sbp.navigation.MsgDops;
 import com.swiftnav.sbp.navigation.MsgDopsDepA;
+import com.swiftnav.sbp.navigation.MsgGPSLeapSecond;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
 import com.swiftnav.sbp.navigation.MsgGPSTimeDepA;
 import com.swiftnav.sbp.navigation.MsgGPSTimeGnss;
+import com.swiftnav.sbp.navigation.MsgItrf;
 import com.swiftnav.sbp.navigation.MsgPosECEF;
 import com.swiftnav.sbp.navigation.MsgPosECEFCov;
 import com.swiftnav.sbp.navigation.MsgPosECEFCovGnss;
@@ -182,17 +190,23 @@ import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
 import com.swiftnav.sbp.solution_meta.MsgSolnMeta;
 import com.swiftnav.sbp.solution_meta.MsgSolnMetaDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
+import com.swiftnav.sbp.ssr.MsgSsrCodePhaseBiasesBounds;
 import com.swiftnav.sbp.ssr.MsgSsrGridDefinitionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
+import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionBounds;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionNoStdDepA;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
+import com.swiftnav.sbp.ssr.MsgSsrOrbitClockBounds;
+import com.swiftnav.sbp.ssr.MsgSsrOrbitClockBoundsDegradation;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrSatelliteApc;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
+import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrTileDefinition;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDep;
 import com.swiftnav.sbp.system.MsgCsacTelemetry;
 import com.swiftnav.sbp.system.MsgCsacTelemetryLabels;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
@@ -290,6 +304,18 @@ final class MessageTable {
                 return new MsgImuRaw(msg);
             case MsgImuAux.TYPE:
                 return new MsgImuAux(msg);
+            case MsgSsrFlagHighLevel.TYPE:
+                return new MsgSsrFlagHighLevel(msg);
+            case MsgSsrFlagSatellites.TYPE:
+                return new MsgSsrFlagSatellites(msg);
+            case MsgSsrFlagTropoGridPoints.TYPE:
+                return new MsgSsrFlagTropoGridPoints(msg);
+            case MsgSsrFlagIonoGridPoints.TYPE:
+                return new MsgSsrFlagIonoGridPoints(msg);
+            case MsgSsrFlagIonoTileSatLos.TYPE:
+                return new MsgSsrFlagIonoTileSatLos(msg);
+            case MsgSsrFlagIonoGridPointSatLos.TYPE:
+                return new MsgSsrFlagIonoGridPointSatLos(msg);
             case MsgLinuxCpuStateDepA.TYPE:
                 return new MsgLinuxCpuStateDepA(msg);
             case MsgLinuxMemStateDepA.TYPE:
@@ -396,6 +422,10 @@ final class MessageTable {
                 return new MsgProtectionLevelDepA(msg);
             case MsgProtectionLevel.TYPE:
                 return new MsgProtectionLevel(msg);
+            case MsgGPSLeapSecond.TYPE:
+                return new MsgGPSLeapSecond(msg);
+            case MsgItrf.TYPE:
+                return new MsgItrf(msg);
             case MsgNdbEvent.TYPE:
                 return new MsgNdbEvent(msg);
             case MsgObs.TYPE:
@@ -564,10 +594,16 @@ final class MessageTable {
                 return new MsgSsrCodeBiases(msg);
             case MsgSsrPhaseBiases.TYPE:
                 return new MsgSsrPhaseBiases(msg);
+            case MsgSsrStecCorrectionDep.TYPE:
+                return new MsgSsrStecCorrectionDep(msg);
             case MsgSsrStecCorrection.TYPE:
                 return new MsgSsrStecCorrection(msg);
             case MsgSsrGriddedCorrection.TYPE:
                 return new MsgSsrGriddedCorrection(msg);
+            case MsgSsrGriddedCorrectionBounds.TYPE:
+                return new MsgSsrGriddedCorrectionBounds(msg);
+            case MsgSsrTileDefinitionDep.TYPE:
+                return new MsgSsrTileDefinitionDep(msg);
             case MsgSsrTileDefinition.TYPE:
                 return new MsgSsrTileDefinition(msg);
             case MsgSsrSatelliteApc.TYPE:
@@ -582,6 +618,12 @@ final class MessageTable {
                 return new MsgSsrGriddedCorrectionDepA(msg);
             case MsgSsrGridDefinitionDepA.TYPE:
                 return new MsgSsrGridDefinitionDepA(msg);
+            case MsgSsrOrbitClockBounds.TYPE:
+                return new MsgSsrOrbitClockBounds(msg);
+            case MsgSsrCodePhaseBiasesBounds.TYPE:
+                return new MsgSsrCodePhaseBiasesBounds(msg);
+            case MsgSsrOrbitClockBoundsDegradation.TYPE:
+                return new MsgSsrOrbitClockBoundsDegradation(msg);
             case MsgStartup.TYPE:
                 return new MsgStartup(msg);
             case MsgDgnssStatus.TYPE:

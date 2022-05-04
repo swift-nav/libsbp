@@ -31,6 +31,7 @@ import SwiftNav.SBP.FileIo
 import SwiftNav.SBP.Flash
 import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.Imu
+import SwiftNav.SBP.Integrity
 import SwiftNav.SBP.Linux
 import SwiftNav.SBP.Logging
 import SwiftNav.SBP.Mag
@@ -131,6 +132,7 @@ data SBPMsg =
    | SBPMsgGloBiases MsgGloBiases Msg
    | SBPMsgGnssCapb MsgGnssCapb Msg
    | SBPMsgGnssTimeOffset MsgGnssTimeOffset Msg
+   | SBPMsgGpsLeapSecond MsgGpsLeapSecond Msg
    | SBPMsgGpsTime MsgGpsTime Msg
    | SBPMsgGpsTimeDepA MsgGpsTimeDepA Msg
    | SBPMsgGpsTimeGnss MsgGpsTimeGnss Msg
@@ -146,6 +148,7 @@ data SBPMsg =
    | SBPMsgInsStatus MsgInsStatus Msg
    | SBPMsgInsUpdates MsgInsUpdates Msg
    | SBPMsgIono MsgIono Msg
+   | SBPMsgItrf MsgItrf Msg
    | SBPMsgLinuxCpuState MsgLinuxCpuState Msg
    | SBPMsgLinuxCpuStateDepA MsgLinuxCpuStateDepA Msg
    | SBPMsgLinuxMemState MsgLinuxMemState Msg
@@ -213,17 +216,29 @@ data SBPMsg =
    | SBPMsgSpecan MsgSpecan Msg
    | SBPMsgSpecanDep MsgSpecanDep Msg
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
+   | SBPMsgSsrCodePhaseBiasesBounds MsgSsrCodePhaseBiasesBounds Msg
+   | SBPMsgSsrFlagHighLevel MsgSsrFlagHighLevel Msg
+   | SBPMsgSsrFlagIonoGridPointSatLos MsgSsrFlagIonoGridPointSatLos Msg
+   | SBPMsgSsrFlagIonoGridPoints MsgSsrFlagIonoGridPoints Msg
+   | SBPMsgSsrFlagIonoTileSatLos MsgSsrFlagIonoTileSatLos Msg
+   | SBPMsgSsrFlagSatellites MsgSsrFlagSatellites Msg
+   | SBPMsgSsrFlagTropoGridPoints MsgSsrFlagTropoGridPoints Msg
    | SBPMsgSsrGridDefinitionDepA MsgSsrGridDefinitionDepA Msg
    | SBPMsgSsrGriddedCorrection MsgSsrGriddedCorrection Msg
+   | SBPMsgSsrGriddedCorrectionBounds MsgSsrGriddedCorrectionBounds Msg
    | SBPMsgSsrGriddedCorrectionDepA MsgSsrGriddedCorrectionDepA Msg
    | SBPMsgSsrGriddedCorrectionNoStdDepA MsgSsrGriddedCorrectionNoStdDepA Msg
    | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
+   | SBPMsgSsrOrbitClockBounds MsgSsrOrbitClockBounds Msg
+   | SBPMsgSsrOrbitClockBoundsDegradation MsgSsrOrbitClockBoundsDegradation Msg
    | SBPMsgSsrOrbitClockDepA MsgSsrOrbitClockDepA Msg
    | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
    | SBPMsgSsrSatelliteApc MsgSsrSatelliteApc Msg
    | SBPMsgSsrStecCorrection MsgSsrStecCorrection Msg
+   | SBPMsgSsrStecCorrectionDep MsgSsrStecCorrectionDep Msg
    | SBPMsgSsrStecCorrectionDepA MsgSsrStecCorrectionDepA Msg
    | SBPMsgSsrTileDefinition MsgSsrTileDefinition Msg
+   | SBPMsgSsrTileDefinitionDep MsgSsrTileDefinitionDep Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStatusJournal MsgStatusJournal Msg
    | SBPMsgStatusReport MsgStatusReport Msg
@@ -349,6 +364,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGloBiases = SBPMsgGloBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssCapb = SBPMsgGnssCapb (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssTimeOffset = SBPMsgGnssTimeOffset (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGpsLeapSecond = SBPMsgGpsLeapSecond (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeGnss = SBPMsgGpsTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -364,6 +380,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInsUpdates = SBPMsgInsUpdates (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgItrf = SBPMsgItrf (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuState = SBPMsgLinuxCpuState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxMemState = SBPMsgLinuxMemState (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -431,17 +448,29 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagHighLevel = SBPMsgSsrFlagHighLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagIonoGridPointSatLos = SBPMsgSsrFlagIonoGridPointSatLos (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagIonoGridPoints = SBPMsgSsrFlagIonoGridPoints (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagIonoTileSatLos = SBPMsgSsrFlagIonoTileSatLos (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagSatellites = SBPMsgSsrFlagSatellites (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagTropoGridPoints = SBPMsgSsrFlagTropoGridPoints (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrGriddedCorrectionBounds = SBPMsgSsrGriddedCorrectionBounds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrectionDepA = SBPMsgSsrGriddedCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrectionNoStdDepA = SBPMsgSsrGriddedCorrectionNoStdDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrOrbitClockBounds = SBPMsgSsrOrbitClockBounds (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrOrbitClockBoundsDegradation = SBPMsgSsrOrbitClockBoundsDegradation (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrection = SBPMsgSsrStecCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrStecCorrectionDep = SBPMsgSsrStecCorrectionDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrTileDefinition = SBPMsgSsrTileDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrTileDefinitionDep = SBPMsgSsrTileDefinitionDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStatusJournal = SBPMsgStatusJournal (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStatusReport = SBPMsgStatusReport (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -559,6 +588,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgGloBiases _ m) = put m
       encoder (SBPMsgGnssCapb _ m) = put m
       encoder (SBPMsgGnssTimeOffset _ m) = put m
+      encoder (SBPMsgGpsLeapSecond _ m) = put m
       encoder (SBPMsgGpsTime _ m) = put m
       encoder (SBPMsgGpsTimeDepA _ m) = put m
       encoder (SBPMsgGpsTimeGnss _ m) = put m
@@ -574,6 +604,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgInsStatus _ m) = put m
       encoder (SBPMsgInsUpdates _ m) = put m
       encoder (SBPMsgIono _ m) = put m
+      encoder (SBPMsgItrf _ m) = put m
       encoder (SBPMsgLinuxCpuState _ m) = put m
       encoder (SBPMsgLinuxCpuStateDepA _ m) = put m
       encoder (SBPMsgLinuxMemState _ m) = put m
@@ -641,17 +672,29 @@ instance Binary SBPMsg where
       encoder (SBPMsgSpecan _ m) = put m
       encoder (SBPMsgSpecanDep _ m) = put m
       encoder (SBPMsgSsrCodeBiases _ m) = put m
+      encoder (SBPMsgSsrCodePhaseBiasesBounds _ m) = put m
+      encoder (SBPMsgSsrFlagHighLevel _ m) = put m
+      encoder (SBPMsgSsrFlagIonoGridPointSatLos _ m) = put m
+      encoder (SBPMsgSsrFlagIonoGridPoints _ m) = put m
+      encoder (SBPMsgSsrFlagIonoTileSatLos _ m) = put m
+      encoder (SBPMsgSsrFlagSatellites _ m) = put m
+      encoder (SBPMsgSsrFlagTropoGridPoints _ m) = put m
       encoder (SBPMsgSsrGridDefinitionDepA _ m) = put m
       encoder (SBPMsgSsrGriddedCorrection _ m) = put m
+      encoder (SBPMsgSsrGriddedCorrectionBounds _ m) = put m
       encoder (SBPMsgSsrGriddedCorrectionDepA _ m) = put m
       encoder (SBPMsgSsrGriddedCorrectionNoStdDepA _ m) = put m
       encoder (SBPMsgSsrOrbitClock _ m) = put m
+      encoder (SBPMsgSsrOrbitClockBounds _ m) = put m
+      encoder (SBPMsgSsrOrbitClockBoundsDegradation _ m) = put m
       encoder (SBPMsgSsrOrbitClockDepA _ m) = put m
       encoder (SBPMsgSsrPhaseBiases _ m) = put m
       encoder (SBPMsgSsrSatelliteApc _ m) = put m
       encoder (SBPMsgSsrStecCorrection _ m) = put m
+      encoder (SBPMsgSsrStecCorrectionDep _ m) = put m
       encoder (SBPMsgSsrStecCorrectionDepA _ m) = put m
       encoder (SBPMsgSsrTileDefinition _ m) = put m
+      encoder (SBPMsgSsrTileDefinitionDep _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
       encoder (SBPMsgStatusJournal _ m) = put m
       encoder (SBPMsgStatusReport _ m) = put m
@@ -773,6 +816,7 @@ instance FromJSON SBPMsg where
         | msgType == msgGloBiases = SBPMsgGloBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssCapb = SBPMsgGnssCapb <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssTimeOffset = SBPMsgGnssTimeOffset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGpsLeapSecond = SBPMsgGpsLeapSecond <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeGnss = SBPMsgGpsTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -788,6 +832,7 @@ instance FromJSON SBPMsg where
         | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInsUpdates = SBPMsgInsUpdates <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgItrf = SBPMsgItrf <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuState = SBPMsgLinuxCpuState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxMemState = SBPMsgLinuxMemState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -855,17 +900,29 @@ instance FromJSON SBPMsg where
         | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagHighLevel = SBPMsgSsrFlagHighLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagIonoGridPointSatLos = SBPMsgSsrFlagIonoGridPointSatLos <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagIonoGridPoints = SBPMsgSsrFlagIonoGridPoints <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagIonoTileSatLos = SBPMsgSsrFlagIonoTileSatLos <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagSatellites = SBPMsgSsrFlagSatellites <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagTropoGridPoints = SBPMsgSsrFlagTropoGridPoints <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrGriddedCorrectionBounds = SBPMsgSsrGriddedCorrectionBounds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrectionDepA = SBPMsgSsrGriddedCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrectionNoStdDepA = SBPMsgSsrGriddedCorrectionNoStdDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrOrbitClockBounds = SBPMsgSsrOrbitClockBounds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrOrbitClockBoundsDegradation = SBPMsgSsrOrbitClockBoundsDegradation <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrection = SBPMsgSsrStecCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrStecCorrectionDep = SBPMsgSsrStecCorrectionDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrTileDefinition = SBPMsgSsrTileDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrTileDefinitionDep = SBPMsgSsrTileDefinitionDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStatusJournal = SBPMsgStatusJournal <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStatusReport = SBPMsgStatusReport <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -988,6 +1045,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGloBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssCapb n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssTimeOffset n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGpsLeapSecond n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeGnss n m) = toJSON n <<>> toJSON m
@@ -1003,6 +1061,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgInsUpdates n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgItrf n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxMemState n m) = toJSON n <<>> toJSON m
@@ -1070,17 +1129,29 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSpecan n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrCodePhaseBiasesBounds n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagHighLevel n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagIonoGridPointSatLos n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagIonoGridPoints n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagIonoTileSatLos n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagSatellites n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagTropoGridPoints n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGridDefinitionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrection n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrGriddedCorrectionBounds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrectionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrectionNoStdDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrOrbitClockBounds n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrOrbitClockBoundsDegradation n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClockDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrSatelliteApc n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrection n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrStecCorrectionDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrectionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrTileDefinition n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrTileDefinitionDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStatusJournal n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStatusReport n m) = toJSON n <<>> toJSON m
@@ -1197,6 +1268,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGloBiases n m) = SBPMsgGloBiases n <$> f m
   msg f (SBPMsgGnssCapb n m) = SBPMsgGnssCapb n <$> f m
   msg f (SBPMsgGnssTimeOffset n m) = SBPMsgGnssTimeOffset n <$> f m
+  msg f (SBPMsgGpsLeapSecond n m) = SBPMsgGpsLeapSecond n <$> f m
   msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
   msg f (SBPMsgGpsTimeDepA n m) = SBPMsgGpsTimeDepA n <$> f m
   msg f (SBPMsgGpsTimeGnss n m) = SBPMsgGpsTimeGnss n <$> f m
@@ -1212,6 +1284,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m
   msg f (SBPMsgInsUpdates n m) = SBPMsgInsUpdates n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
+  msg f (SBPMsgItrf n m) = SBPMsgItrf n <$> f m
   msg f (SBPMsgLinuxCpuState n m) = SBPMsgLinuxCpuState n <$> f m
   msg f (SBPMsgLinuxCpuStateDepA n m) = SBPMsgLinuxCpuStateDepA n <$> f m
   msg f (SBPMsgLinuxMemState n m) = SBPMsgLinuxMemState n <$> f m
@@ -1279,17 +1352,29 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSpecan n m) = SBPMsgSpecan n <$> f m
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
+  msg f (SBPMsgSsrCodePhaseBiasesBounds n m) = SBPMsgSsrCodePhaseBiasesBounds n <$> f m
+  msg f (SBPMsgSsrFlagHighLevel n m) = SBPMsgSsrFlagHighLevel n <$> f m
+  msg f (SBPMsgSsrFlagIonoGridPointSatLos n m) = SBPMsgSsrFlagIonoGridPointSatLos n <$> f m
+  msg f (SBPMsgSsrFlagIonoGridPoints n m) = SBPMsgSsrFlagIonoGridPoints n <$> f m
+  msg f (SBPMsgSsrFlagIonoTileSatLos n m) = SBPMsgSsrFlagIonoTileSatLos n <$> f m
+  msg f (SBPMsgSsrFlagSatellites n m) = SBPMsgSsrFlagSatellites n <$> f m
+  msg f (SBPMsgSsrFlagTropoGridPoints n m) = SBPMsgSsrFlagTropoGridPoints n <$> f m
   msg f (SBPMsgSsrGridDefinitionDepA n m) = SBPMsgSsrGridDefinitionDepA n <$> f m
   msg f (SBPMsgSsrGriddedCorrection n m) = SBPMsgSsrGriddedCorrection n <$> f m
+  msg f (SBPMsgSsrGriddedCorrectionBounds n m) = SBPMsgSsrGriddedCorrectionBounds n <$> f m
   msg f (SBPMsgSsrGriddedCorrectionDepA n m) = SBPMsgSsrGriddedCorrectionDepA n <$> f m
   msg f (SBPMsgSsrGriddedCorrectionNoStdDepA n m) = SBPMsgSsrGriddedCorrectionNoStdDepA n <$> f m
   msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
+  msg f (SBPMsgSsrOrbitClockBounds n m) = SBPMsgSsrOrbitClockBounds n <$> f m
+  msg f (SBPMsgSsrOrbitClockBoundsDegradation n m) = SBPMsgSsrOrbitClockBoundsDegradation n <$> f m
   msg f (SBPMsgSsrOrbitClockDepA n m) = SBPMsgSsrOrbitClockDepA n <$> f m
   msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
   msg f (SBPMsgSsrSatelliteApc n m) = SBPMsgSsrSatelliteApc n <$> f m
   msg f (SBPMsgSsrStecCorrection n m) = SBPMsgSsrStecCorrection n <$> f m
+  msg f (SBPMsgSsrStecCorrectionDep n m) = SBPMsgSsrStecCorrectionDep n <$> f m
   msg f (SBPMsgSsrStecCorrectionDepA n m) = SBPMsgSsrStecCorrectionDepA n <$> f m
   msg f (SBPMsgSsrTileDefinition n m) = SBPMsgSsrTileDefinition n <$> f m
+  msg f (SBPMsgSsrTileDefinitionDep n m) = SBPMsgSsrTileDefinitionDep n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStatusJournal n m) = SBPMsgStatusJournal n <$> f m
   msg f (SBPMsgStatusReport n m) = SBPMsgStatusReport n <$> f m

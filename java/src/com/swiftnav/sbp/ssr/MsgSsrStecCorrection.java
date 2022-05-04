@@ -16,30 +16,14 @@ package com.swiftnav.sbp.ssr;
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
- *
- * <p>You can have MSG_SSR_STEC_CORRECTION inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
- *
- * <p>The Slant Total Electron Content per space vehicle, given as polynomial approximation for a
- * given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get the state
- * space representation of the atmospheric delay.
- *
- * <p>It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
- */
 public class MsgSsrStecCorrection extends SBPMessage {
-    public static final int TYPE = 0x05FB;
+    public static final int TYPE = 0x05FD;
 
-    /** Header of a STEC polynomial coefficient message. */
-    public STECHeader header;
-
-    /** Array of STEC polynomial coefficients for each space vehicle. */
-    public STECSatElement[] stec_sat_list;
+    public int[] stub;
 
     public MsgSsrStecCorrection(int sender) {
         super(sender, TYPE);
@@ -57,21 +41,18 @@ public class MsgSsrStecCorrection extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        header = new STECHeader().parse(parser);
-        stec_sat_list = parser.getArray(STECSatElement.class);
+        stub = parser.getArrayofU8();
     }
 
     @Override
     protected void build(Builder builder) {
-        header.build(builder);
-        builder.putArray(stec_sat_list);
+        builder.putArrayofU8(stub);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("header", header.toJSON());
-        obj.put("stec_sat_list", SBPStruct.toJSONArray(stec_sat_list));
+        obj.put("stub", new JSONArray(stub));
         return obj;
     }
 }

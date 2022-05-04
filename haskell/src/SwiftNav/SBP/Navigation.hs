@@ -2303,3 +2303,45 @@ instance Binary MsgProtectionLevel where
 $(makeSBP 'msgProtectionLevel ''MsgProtectionLevel)
 $(makeJSON "_msgProtectionLevel_" ''MsgProtectionLevel)
 $(makeLenses ''MsgProtectionLevel)
+
+msgGpsLeapSecond :: Word16
+msgGpsLeapSecond = 0x023A
+
+-- | SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+--
+-- Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+-- drift model parameters.
+data MsgGpsLeapSecond = MsgGpsLeapSecond
+  { _msgGpsLeapSecond_stub :: ![Word8]
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGpsLeapSecond where
+  get = do
+    _msgGpsLeapSecond_stub <- whileM (not <$> isEmpty) getWord8
+    pure MsgGpsLeapSecond {..}
+
+  put MsgGpsLeapSecond {..} = do
+    mapM_ putWord8 _msgGpsLeapSecond_stub
+
+$(makeSBP 'msgGpsLeapSecond ''MsgGpsLeapSecond)
+$(makeJSON "_msgGpsLeapSecond_" ''MsgGpsLeapSecond)
+$(makeLenses ''MsgGpsLeapSecond)
+
+msgItrf :: Word16
+msgItrf = 0x0244
+
+data MsgItrf = MsgItrf
+  { _msgItrf_stub :: ![Word8]
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgItrf where
+  get = do
+    _msgItrf_stub <- whileM (not <$> isEmpty) getWord8
+    pure MsgItrf {..}
+
+  put MsgItrf {..} = do
+    mapM_ putWord8 _msgItrf_stub
+
+$(makeSBP 'msgItrf ''MsgItrf)
+$(makeJSON "_msgItrf_" ''MsgItrf)
+$(makeLenses ''MsgItrf)

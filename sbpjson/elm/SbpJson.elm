@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrGriddedCorrection, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSLeapSecond, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgItrf, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -76,6 +76,7 @@
 --     decodeString msgFlashReadResp myJsonString
 --     decodeString msgFrontEndGain myJsonString
 --     decodeString msgFwd myJsonString
+--     decodeString msgGPSLeapSecond myJsonString
 --     decodeString msgGPSTime myJsonString
 --     decodeString msgGPSTimeGnss myJsonString
 --     decodeString msgGloBiases myJsonString
@@ -90,6 +91,7 @@
 --     decodeString msgInsStatus myJsonString
 --     decodeString msgInsUpdates myJsonString
 --     decodeString msgIono myJsonString
+--     decodeString msgItrf myJsonString
 --     decodeString msgLinuxCPUState myJsonString
 --     decodeString msgLinuxMemState myJsonString
 --     decodeString msgLinuxProcessFdCount myJsonString
@@ -143,8 +145,18 @@
 --     decodeString msgSolnMeta myJsonString
 --     decodeString msgSpecan myJsonString
 --     decodeString msgSsrCodeBiases myJsonString
+--     decodeString msgSsrCodePhaseBiasesBounds myJsonString
+--     decodeString msgSsrFlagHighLevel myJsonString
+--     decodeString msgSsrFlagIonoGridPointSatLos myJsonString
+--     decodeString msgSsrFlagIonoGridPoints myJsonString
+--     decodeString msgSsrFlagIonoTileSatLos myJsonString
+--     decodeString msgSsrFlagSatellites myJsonString
+--     decodeString msgSsrFlagTropoGridPoints myJsonString
 --     decodeString msgSsrGriddedCorrection myJsonString
+--     decodeString msgSsrGriddedCorrectionBounds myJsonString
 --     decodeString msgSsrOrbitClock myJsonString
+--     decodeString msgSsrOrbitClockBounds myJsonString
+--     decodeString msgSsrOrbitClockBoundsDegradation myJsonString
 --     decodeString msgSsrPhaseBiases myJsonString
 --     decodeString msgSsrSatelliteApc myJsonString
 --     decodeString msgSsrStecCorrection myJsonString
@@ -400,6 +412,9 @@ module SbpJson exposing
     , MsgFwd
     , msgFwdToString
     , msgFwd
+    , MsgGPSLeapSecond
+    , msgGPSLeapSecondToString
+    , msgGPSLeapSecond
     , MsgGPSTime
     , msgGPSTimeToString
     , msgGPSTime
@@ -442,6 +457,9 @@ module SbpJson exposing
     , MsgIono
     , msgIonoToString
     , msgIono
+    , MsgItrf
+    , msgItrfToString
+    , msgItrf
     , MsgLinuxCPUState
     , msgLinuxCPUStateToString
     , msgLinuxCPUState
@@ -601,12 +619,42 @@ module SbpJson exposing
     , MsgSsrCodeBiases
     , msgSsrCodeBiasesToString
     , msgSsrCodeBiases
+    , MsgSsrCodePhaseBiasesBounds
+    , msgSsrCodePhaseBiasesBoundsToString
+    , msgSsrCodePhaseBiasesBounds
+    , MsgSsrFlagHighLevel
+    , msgSsrFlagHighLevelToString
+    , msgSsrFlagHighLevel
+    , MsgSsrFlagIonoGridPointSatLos
+    , msgSsrFlagIonoGridPointSatLosToString
+    , msgSsrFlagIonoGridPointSatLos
+    , MsgSsrFlagIonoGridPoints
+    , msgSsrFlagIonoGridPointsToString
+    , msgSsrFlagIonoGridPoints
+    , MsgSsrFlagIonoTileSatLos
+    , msgSsrFlagIonoTileSatLosToString
+    , msgSsrFlagIonoTileSatLos
+    , MsgSsrFlagSatellites
+    , msgSsrFlagSatellitesToString
+    , msgSsrFlagSatellites
+    , MsgSsrFlagTropoGridPoints
+    , msgSsrFlagTropoGridPointsToString
+    , msgSsrFlagTropoGridPoints
     , MsgSsrGriddedCorrection
     , msgSsrGriddedCorrectionToString
     , msgSsrGriddedCorrection
+    , MsgSsrGriddedCorrectionBounds
+    , msgSsrGriddedCorrectionBoundsToString
+    , msgSsrGriddedCorrectionBounds
     , MsgSsrOrbitClock
     , msgSsrOrbitClockToString
     , msgSsrOrbitClock
+    , MsgSsrOrbitClockBounds
+    , msgSsrOrbitClockBoundsToString
+    , msgSsrOrbitClockBounds
+    , MsgSsrOrbitClockBoundsDegradation
+    , msgSsrOrbitClockBoundsDegradationToString
+    , msgSsrOrbitClockBoundsDegradation
     , MsgSsrPhaseBiases
     , msgSsrPhaseBiasesToString
     , msgSsrPhaseBiases
@@ -1481,6 +1529,13 @@ type alias MsgFwd =
     , source : Int
     }
 
+{-| Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
+parameters.
+-}
+type alias MsgGPSLeapSecond =
+    { stub : Array Int
+    }
+
 {-| This message reports the GPS time, representing the time since the GPS epoch began on
 midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The
 weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the
@@ -1669,6 +1724,10 @@ type alias MsgIono =
     , b2 : Float
     , b3 : Float
     , tNmct : GpsTimeSEC
+    }
+
+type alias MsgItrf =
+    { stub : Array Int
     }
 
 {-| This message indicates the process state of the top 10 heaviest consumers of CPU on the
@@ -2405,6 +2464,34 @@ type alias CodeBiasesContent =
     , value : Int
     }
 
+type alias MsgSsrCodePhaseBiasesBounds =
+    { stub : Array Int
+    }
+
+type alias MsgSsrFlagHighLevel =
+    { stub : Array Int
+    }
+
+type alias MsgSsrFlagIonoGridPointSatLos =
+    { stub : Array Int
+    }
+
+type alias MsgSsrFlagIonoGridPoints =
+    { stub : Array Int
+    }
+
+type alias MsgSsrFlagIonoTileSatLos =
+    { stub : Array Int
+    }
+
+type alias MsgSsrFlagSatellites =
+    { stub : Array Int
+    }
+
+type alias MsgSsrFlagTropoGridPoints =
+    { stub : Array Int
+    }
+
 {-| STEC residuals are per space vehicle, troposphere is not.,
 ,
 It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
@@ -2430,6 +2517,10 @@ type alias GriddedCorrectionHeader =
     , updateInterval : Int
     }
 
+type alias MsgSsrGriddedCorrectionBounds =
+    { stub : Array Int
+    }
+
 {-| The precise orbit and clock correction message is to be applied as a delta correction to
 broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM message types.
 -}
@@ -2448,6 +2539,14 @@ type alias MsgSsrOrbitClock =
     , sid : GnssSignal
     , time : GpsTimeSEC
     , updateInterval : Int
+    }
+
+type alias MsgSsrOrbitClockBounds =
+    { stub : Array Int
+    }
+
+type alias MsgSsrOrbitClockBoundsDegradation =
+    { stub : Array Int
     }
 
 {-| The precise phase biases message contains the biases to be added to the carrier phase of
@@ -2491,35 +2590,8 @@ type alias SatelliteAPC =
     , svn : Int
     }
 
-{-| The Slant Total Electron Content per space vehicle, given as polynomial approximation for
-a given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get
-the state space representation of the atmospheric delay.,
-,
-It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
--}
 type alias MsgSsrStecCorrection =
-    { header : STECHeader
-    , stecSatList : Array STECSatElement
-    }
-
-{-| A full set of STEC information will likely span multiple SBP messages, since SBP message
-a limited to 255 bytes.  The header is used to tie multiple SBP messages into a sequence.
--}
-type alias STECHeader =
-    { iodAtmo : Int
-    , numMsgs : Int
-    , seqNum : Int
-    , tileID : Int
-    , tileSetID : Int
-    , time : GpsTimeSEC
-    , updateInterval : Int
-    }
-
-{-| STEC polynomial for the given satellite. -}
-type alias STECSatElement =
-    { stecCoeff : Array Int
-    , stecQualityIndicator : Int
-    , svID : SvID
+    { stub : Array Int
     }
 
 {-| Provides the correction point coordinates for the atmospheric correction values in the
@@ -2530,15 +2602,7 @@ GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points
 lists of points.
 -}
 type alias MsgSsrTileDefinition =
-    { bitmask : Int
-    , cols : Int
-    , cornerNwLat : Int
-    , cornerNwLon : Int
-    , rows : Int
-    , spacingLat : Int
-    , spacingLon : Int
-    , tileID : Int
-    , tileSetID : Int
+    { stub : Array Int
     }
 
 {-| The system start-up message is sent once on system start-up. It notifies the host or
@@ -2963,6 +3027,26 @@ type alias OdoInputType =
     { flags : Int
     }
 
+{-| A full set of STEC information will likely span multiple SBP messages, since SBP message
+a limited to 255 bytes.  The header is used to tie multiple SBP messages into a sequence.
+-}
+type alias STECHeader =
+    { iodAtmo : Int
+    , numMsgs : Int
+    , seqNum : Int
+    , tileID : Int
+    , tileSetID : Int
+    , time : GpsTimeSEC
+    , updateInterval : Int
+    }
+
+{-| STEC polynomial for the given satellite. -}
+type alias STECSatElement =
+    { stecCoeff : Array Int
+    , stecQualityIndicator : Int
+    , svID : SvID
+    }
+
 -- decoders and encoders
 
 acqSvProfileToString : AcqSvProfile -> String
@@ -3178,6 +3262,9 @@ msgFrontEndGainToString r = Jenc.encode 0 (encodeMsgFrontEndGain r)
 msgFwdToString : MsgFwd -> String
 msgFwdToString r = Jenc.encode 0 (encodeMsgFwd r)
 
+msgGPSLeapSecondToString : MsgGPSLeapSecond -> String
+msgGPSLeapSecondToString r = Jenc.encode 0 (encodeMsgGPSLeapSecond r)
+
 msgGPSTimeToString : MsgGPSTime -> String
 msgGPSTimeToString r = Jenc.encode 0 (encodeMsgGPSTime r)
 
@@ -3219,6 +3306,9 @@ msgInsUpdatesToString r = Jenc.encode 0 (encodeMsgInsUpdates r)
 
 msgIonoToString : MsgIono -> String
 msgIonoToString r = Jenc.encode 0 (encodeMsgIono r)
+
+msgItrfToString : MsgItrf -> String
+msgItrfToString r = Jenc.encode 0 (encodeMsgItrf r)
 
 msgLinuxCPUStateToString : MsgLinuxCPUState -> String
 msgLinuxCPUStateToString r = Jenc.encode 0 (encodeMsgLinuxCPUState r)
@@ -3394,11 +3484,41 @@ msgSpecanToString r = Jenc.encode 0 (encodeMsgSpecan r)
 msgSsrCodeBiasesToString : MsgSsrCodeBiases -> String
 msgSsrCodeBiasesToString r = Jenc.encode 0 (encodeMsgSsrCodeBiases r)
 
+msgSsrCodePhaseBiasesBoundsToString : MsgSsrCodePhaseBiasesBounds -> String
+msgSsrCodePhaseBiasesBoundsToString r = Jenc.encode 0 (encodeMsgSsrCodePhaseBiasesBounds r)
+
+msgSsrFlagHighLevelToString : MsgSsrFlagHighLevel -> String
+msgSsrFlagHighLevelToString r = Jenc.encode 0 (encodeMsgSsrFlagHighLevel r)
+
+msgSsrFlagIonoGridPointSatLosToString : MsgSsrFlagIonoGridPointSatLos -> String
+msgSsrFlagIonoGridPointSatLosToString r = Jenc.encode 0 (encodeMsgSsrFlagIonoGridPointSatLos r)
+
+msgSsrFlagIonoGridPointsToString : MsgSsrFlagIonoGridPoints -> String
+msgSsrFlagIonoGridPointsToString r = Jenc.encode 0 (encodeMsgSsrFlagIonoGridPoints r)
+
+msgSsrFlagIonoTileSatLosToString : MsgSsrFlagIonoTileSatLos -> String
+msgSsrFlagIonoTileSatLosToString r = Jenc.encode 0 (encodeMsgSsrFlagIonoTileSatLos r)
+
+msgSsrFlagSatellitesToString : MsgSsrFlagSatellites -> String
+msgSsrFlagSatellitesToString r = Jenc.encode 0 (encodeMsgSsrFlagSatellites r)
+
+msgSsrFlagTropoGridPointsToString : MsgSsrFlagTropoGridPoints -> String
+msgSsrFlagTropoGridPointsToString r = Jenc.encode 0 (encodeMsgSsrFlagTropoGridPoints r)
+
 msgSsrGriddedCorrectionToString : MsgSsrGriddedCorrection -> String
 msgSsrGriddedCorrectionToString r = Jenc.encode 0 (encodeMsgSsrGriddedCorrection r)
 
+msgSsrGriddedCorrectionBoundsToString : MsgSsrGriddedCorrectionBounds -> String
+msgSsrGriddedCorrectionBoundsToString r = Jenc.encode 0 (encodeMsgSsrGriddedCorrectionBounds r)
+
 msgSsrOrbitClockToString : MsgSsrOrbitClock -> String
 msgSsrOrbitClockToString r = Jenc.encode 0 (encodeMsgSsrOrbitClock r)
+
+msgSsrOrbitClockBoundsToString : MsgSsrOrbitClockBounds -> String
+msgSsrOrbitClockBoundsToString r = Jenc.encode 0 (encodeMsgSsrOrbitClockBounds r)
+
+msgSsrOrbitClockBoundsDegradationToString : MsgSsrOrbitClockBoundsDegradation -> String
+msgSsrOrbitClockBoundsDegradationToString r = Jenc.encode 0 (encodeMsgSsrOrbitClockBoundsDegradation r)
 
 msgSsrPhaseBiasesToString : MsgSsrPhaseBiases -> String
 msgSsrPhaseBiasesToString r = Jenc.encode 0 (encodeMsgSsrPhaseBiases r)
@@ -4668,6 +4788,17 @@ encodeMsgFwd x =
         , ("source", Jenc.int x.source)
         ]
 
+msgGPSLeapSecond : Jdec.Decoder MsgGPSLeapSecond
+msgGPSLeapSecond =
+    Jpipe.decode MsgGPSLeapSecond
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgGPSLeapSecond : MsgGPSLeapSecond -> Jenc.Value
+encodeMsgGPSLeapSecond x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
 msgGPSTime : Jdec.Decoder MsgGPSTime
 msgGPSTime =
     Jpipe.decode MsgGPSTime
@@ -4949,6 +5080,17 @@ encodeMsgIono x =
         , ("b2", Jenc.float x.b2)
         , ("b3", Jenc.float x.b3)
         , ("t_nmct", encodeGpsTimeSEC x.tNmct)
+        ]
+
+msgItrf : Jdec.Decoder MsgItrf
+msgItrf =
+    Jpipe.decode MsgItrf
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgItrf : MsgItrf -> Jenc.Value
+encodeMsgItrf x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgLinuxCPUState : Jdec.Decoder MsgLinuxCPUState
@@ -6074,6 +6216,83 @@ encodeCodeBiasesContent x =
         , ("value", Jenc.int x.value)
         ]
 
+msgSsrCodePhaseBiasesBounds : Jdec.Decoder MsgSsrCodePhaseBiasesBounds
+msgSsrCodePhaseBiasesBounds =
+    Jpipe.decode MsgSsrCodePhaseBiasesBounds
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrCodePhaseBiasesBounds : MsgSsrCodePhaseBiasesBounds -> Jenc.Value
+encodeMsgSsrCodePhaseBiasesBounds x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
+msgSsrFlagHighLevel : Jdec.Decoder MsgSsrFlagHighLevel
+msgSsrFlagHighLevel =
+    Jpipe.decode MsgSsrFlagHighLevel
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrFlagHighLevel : MsgSsrFlagHighLevel -> Jenc.Value
+encodeMsgSsrFlagHighLevel x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
+msgSsrFlagIonoGridPointSatLos : Jdec.Decoder MsgSsrFlagIonoGridPointSatLos
+msgSsrFlagIonoGridPointSatLos =
+    Jpipe.decode MsgSsrFlagIonoGridPointSatLos
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrFlagIonoGridPointSatLos : MsgSsrFlagIonoGridPointSatLos -> Jenc.Value
+encodeMsgSsrFlagIonoGridPointSatLos x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
+msgSsrFlagIonoGridPoints : Jdec.Decoder MsgSsrFlagIonoGridPoints
+msgSsrFlagIonoGridPoints =
+    Jpipe.decode MsgSsrFlagIonoGridPoints
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrFlagIonoGridPoints : MsgSsrFlagIonoGridPoints -> Jenc.Value
+encodeMsgSsrFlagIonoGridPoints x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
+msgSsrFlagIonoTileSatLos : Jdec.Decoder MsgSsrFlagIonoTileSatLos
+msgSsrFlagIonoTileSatLos =
+    Jpipe.decode MsgSsrFlagIonoTileSatLos
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrFlagIonoTileSatLos : MsgSsrFlagIonoTileSatLos -> Jenc.Value
+encodeMsgSsrFlagIonoTileSatLos x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
+msgSsrFlagSatellites : Jdec.Decoder MsgSsrFlagSatellites
+msgSsrFlagSatellites =
+    Jpipe.decode MsgSsrFlagSatellites
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrFlagSatellites : MsgSsrFlagSatellites -> Jenc.Value
+encodeMsgSsrFlagSatellites x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
+msgSsrFlagTropoGridPoints : Jdec.Decoder MsgSsrFlagTropoGridPoints
+msgSsrFlagTropoGridPoints =
+    Jpipe.decode MsgSsrFlagTropoGridPoints
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrFlagTropoGridPoints : MsgSsrFlagTropoGridPoints -> Jenc.Value
+encodeMsgSsrFlagTropoGridPoints x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
 msgSsrGriddedCorrection : Jdec.Decoder MsgSsrGriddedCorrection
 msgSsrGriddedCorrection =
     Jpipe.decode MsgSsrGriddedCorrection
@@ -6116,6 +6335,17 @@ encodeGriddedCorrectionHeader x =
         , ("update_interval", Jenc.int x.updateInterval)
         ]
 
+msgSsrGriddedCorrectionBounds : Jdec.Decoder MsgSsrGriddedCorrectionBounds
+msgSsrGriddedCorrectionBounds =
+    Jpipe.decode MsgSsrGriddedCorrectionBounds
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrGriddedCorrectionBounds : MsgSsrGriddedCorrectionBounds -> Jenc.Value
+encodeMsgSsrGriddedCorrectionBounds x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
 msgSsrOrbitClock : Jdec.Decoder MsgSsrOrbitClock
 msgSsrOrbitClock =
     Jpipe.decode MsgSsrOrbitClock
@@ -6151,6 +6381,28 @@ encodeMsgSsrOrbitClock x =
         , ("sid", encodeGnssSignal x.sid)
         , ("time", encodeGpsTimeSEC x.time)
         , ("update_interval", Jenc.int x.updateInterval)
+        ]
+
+msgSsrOrbitClockBounds : Jdec.Decoder MsgSsrOrbitClockBounds
+msgSsrOrbitClockBounds =
+    Jpipe.decode MsgSsrOrbitClockBounds
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrOrbitClockBounds : MsgSsrOrbitClockBounds -> Jenc.Value
+encodeMsgSsrOrbitClockBounds x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
+msgSsrOrbitClockBoundsDegradation : Jdec.Decoder MsgSsrOrbitClockBoundsDegradation
+msgSsrOrbitClockBoundsDegradation =
+    Jpipe.decode MsgSsrOrbitClockBoundsDegradation
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgSsrOrbitClockBoundsDegradation : MsgSsrOrbitClockBoundsDegradation -> Jenc.Value
+encodeMsgSsrOrbitClockBoundsDegradation x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgSsrPhaseBiases : Jdec.Decoder MsgSsrPhaseBiases
@@ -6232,79 +6484,23 @@ encodeSatelliteAPC x =
 msgSsrStecCorrection : Jdec.Decoder MsgSsrStecCorrection
 msgSsrStecCorrection =
     Jpipe.decode MsgSsrStecCorrection
-        |> Jpipe.required "header" stecHeader
-        |> Jpipe.required "stec_sat_list" (Jdec.array stecSatElement)
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
 
 encodeMsgSsrStecCorrection : MsgSsrStecCorrection -> Jenc.Value
 encodeMsgSsrStecCorrection x =
     Jenc.object
-        [ ("header", encodeSTECHeader x.header)
-        , ("stec_sat_list", makeArrayEncoder encodeSTECSatElement x.stecSatList)
-        ]
-
-stecHeader : Jdec.Decoder STECHeader
-stecHeader =
-    Jpipe.decode STECHeader
-        |> Jpipe.required "iod_atmo" Jdec.int
-        |> Jpipe.required "num_msgs" Jdec.int
-        |> Jpipe.required "seq_num" Jdec.int
-        |> Jpipe.required "tile_id" Jdec.int
-        |> Jpipe.required "tile_set_id" Jdec.int
-        |> Jpipe.required "time" gpsTimeSEC
-        |> Jpipe.required "update_interval" Jdec.int
-
-encodeSTECHeader : STECHeader -> Jenc.Value
-encodeSTECHeader x =
-    Jenc.object
-        [ ("iod_atmo", Jenc.int x.iodAtmo)
-        , ("num_msgs", Jenc.int x.numMsgs)
-        , ("seq_num", Jenc.int x.seqNum)
-        , ("tile_id", Jenc.int x.tileID)
-        , ("tile_set_id", Jenc.int x.tileSetID)
-        , ("time", encodeGpsTimeSEC x.time)
-        , ("update_interval", Jenc.int x.updateInterval)
-        ]
-
-stecSatElement : Jdec.Decoder STECSatElement
-stecSatElement =
-    Jpipe.decode STECSatElement
-        |> Jpipe.required "stec_coeff" (Jdec.array Jdec.int)
-        |> Jpipe.required "stec_quality_indicator" Jdec.int
-        |> Jpipe.required "sv_id" svID
-
-encodeSTECSatElement : STECSatElement -> Jenc.Value
-encodeSTECSatElement x =
-    Jenc.object
-        [ ("stec_coeff", makeArrayEncoder Jenc.int x.stecCoeff)
-        , ("stec_quality_indicator", Jenc.int x.stecQualityIndicator)
-        , ("sv_id", encodeSvID x.svID)
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgSsrTileDefinition : Jdec.Decoder MsgSsrTileDefinition
 msgSsrTileDefinition =
     Jpipe.decode MsgSsrTileDefinition
-        |> Jpipe.required "bitmask" Jdec.int
-        |> Jpipe.required "cols" Jdec.int
-        |> Jpipe.required "corner_nw_lat" Jdec.int
-        |> Jpipe.required "corner_nw_lon" Jdec.int
-        |> Jpipe.required "rows" Jdec.int
-        |> Jpipe.required "spacing_lat" Jdec.int
-        |> Jpipe.required "spacing_lon" Jdec.int
-        |> Jpipe.required "tile_id" Jdec.int
-        |> Jpipe.required "tile_set_id" Jdec.int
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
 
 encodeMsgSsrTileDefinition : MsgSsrTileDefinition -> Jenc.Value
 encodeMsgSsrTileDefinition x =
     Jenc.object
-        [ ("bitmask", Jenc.int x.bitmask)
-        , ("cols", Jenc.int x.cols)
-        , ("corner_nw_lat", Jenc.int x.cornerNwLat)
-        , ("corner_nw_lon", Jenc.int x.cornerNwLon)
-        , ("rows", Jenc.int x.rows)
-        , ("spacing_lat", Jenc.int x.spacingLat)
-        , ("spacing_lon", Jenc.int x.spacingLon)
-        , ("tile_id", Jenc.int x.tileID)
-        , ("tile_set_id", Jenc.int x.tileSetID)
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgStartup : Jdec.Decoder MsgStartup
@@ -6965,6 +7161,44 @@ encodeOdoInputType : OdoInputType -> Jenc.Value
 encodeOdoInputType x =
     Jenc.object
         [ ("flags", Jenc.int x.flags)
+        ]
+
+stecHeader : Jdec.Decoder STECHeader
+stecHeader =
+    Jpipe.decode STECHeader
+        |> Jpipe.required "iod_atmo" Jdec.int
+        |> Jpipe.required "num_msgs" Jdec.int
+        |> Jpipe.required "seq_num" Jdec.int
+        |> Jpipe.required "tile_id" Jdec.int
+        |> Jpipe.required "tile_set_id" Jdec.int
+        |> Jpipe.required "time" gpsTimeSEC
+        |> Jpipe.required "update_interval" Jdec.int
+
+encodeSTECHeader : STECHeader -> Jenc.Value
+encodeSTECHeader x =
+    Jenc.object
+        [ ("iod_atmo", Jenc.int x.iodAtmo)
+        , ("num_msgs", Jenc.int x.numMsgs)
+        , ("seq_num", Jenc.int x.seqNum)
+        , ("tile_id", Jenc.int x.tileID)
+        , ("tile_set_id", Jenc.int x.tileSetID)
+        , ("time", encodeGpsTimeSEC x.time)
+        , ("update_interval", Jenc.int x.updateInterval)
+        ]
+
+stecSatElement : Jdec.Decoder STECSatElement
+stecSatElement =
+    Jpipe.decode STECSatElement
+        |> Jpipe.required "stec_coeff" (Jdec.array Jdec.int)
+        |> Jpipe.required "stec_quality_indicator" Jdec.int
+        |> Jpipe.required "sv_id" svID
+
+encodeSTECSatElement : STECSatElement -> Jenc.Value
+encodeSTECSatElement x =
+    Jenc.object
+        [ ("stec_coeff", makeArrayEncoder Jenc.int x.stecCoeff)
+        , ("stec_quality_indicator", Jenc.int x.stecQualityIndicator)
+        , ("sv_id", encodeSvID x.svID)
         ]
 
 --- encoder helpers

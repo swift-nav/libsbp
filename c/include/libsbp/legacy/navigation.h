@@ -919,6 +919,21 @@ typedef struct SBP_ATTR_PACKED {
   u32 flags;     /**< Status flags */
 } msg_protection_level_t;
 
+/** Leap second SBP message.
+
+ *
+ * Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+ * drift model parameters.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_gps_leap_second_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_itrf_t;
+
 /** \} */
 
 SBP_PACK_END

@@ -184,16 +184,10 @@ message MsgSsrPhaseBiases {
 
 /** STEC correction polynomial coefficients
  *
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
- * the atmospheric delay.
- *
- * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+None
  */
 message MsgSsrStecCorrection {
-    STECHeader header = 1;
-    repeated STECSatElement stec_sat_list = 2;
+    repeated uint32 stub = 1;
 }
 
 /** Gridded troposphere and STEC correction residuals
@@ -209,6 +203,14 @@ message MsgSsrGriddedCorrection {
     repeated STECResidual stec_residuals = 4;
 }
 
+/** Gridded troposhere and STEC correction residuals bounds
+ *
+None
+ */
+message MsgSsrGriddedCorrectionBounds {
+    repeated uint32 stub = 1;
+}
+
 /** Definition of a SSR atmospheric correction tile.
 
  *
@@ -221,15 +223,7 @@ message MsgSsrGriddedCorrection {
  * correction points, not lists of points.
  */
 message MsgSsrTileDefinition {
-    uint32 tile_set_id = 1;
-    uint32 tile_id = 2;
-    sint32 corner_nw_lat = 3;
-    sint32 corner_nw_lon = 4;
-    uint32 spacing_lat = 5;
-    uint32 spacing_lon = 6;
-    uint32 rows = 7;
-    uint32 cols = 8;
-    uint64 bitmask = 9;
+    repeated uint32 stub = 1;
 }
 
 /** Antenna phase center correction
@@ -251,4 +245,28 @@ None
  */
 message MsgSsrSatelliteApc {
     repeated SatelliteAPC apc = 1;
+}
+
+/** Stubbed version of Combined Orbit and Clock Bound
+ *
+None
+ */
+message MsgSsrOrbitClockBounds {
+    repeated uint32 stub = 1;
+}
+
+/** Stubbed version of Combined Code and Phase Biases Bounds
+ *
+None
+ */
+message MsgSsrCodePhaseBiasesBounds {
+    repeated uint32 stub = 1;
+}
+
+/** Combined Orbit and Clock Bound Degradation Parameter
+ *
+None
+ */
+message MsgSsrOrbitClockBoundsDegradation {
+    repeated uint32 stub = 1;
 }

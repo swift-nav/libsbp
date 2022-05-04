@@ -30,6 +30,9 @@
 /** Full SBP version string. */
 #define SBP_VERSION "4.2.1-alpha"
 
+/** Is this a staging branch? */
+#define SBP_STAGING 0
+
 /** \} */
 
 #endif /* LIBSBP_VERSION_H */

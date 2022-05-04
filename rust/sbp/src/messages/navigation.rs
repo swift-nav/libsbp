@@ -45,9 +45,11 @@ pub use msg_baseline_ned::MsgBaselineNed;
 pub use msg_baseline_ned_dep_a::MsgBaselineNedDepA;
 pub use msg_dops::MsgDops;
 pub use msg_dops_dep_a::MsgDopsDepA;
+pub use msg_gps_leap_second::MsgGpsLeapSecond;
 pub use msg_gps_time::MsgGpsTime;
 pub use msg_gps_time_dep_a::MsgGpsTimeDepA;
 pub use msg_gps_time_gnss::MsgGpsTimeGnss;
+pub use msg_itrf::MsgItrf;
 pub use msg_pos_ecef::MsgPosEcef;
 pub use msg_pos_ecef_cov::MsgPosEcefCov;
 pub use msg_pos_ecef_cov_gnss::MsgPosEcefCovGnss;
@@ -1684,6 +1686,78 @@ pub mod msg_dops_dep_a {
     }
 }
 
+pub mod msg_gps_leap_second {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Leap second SBP message.
+
+    ///
+    /// Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+    /// drift model parameters.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgGpsLeapSecond {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
+    }
+
+    impl ConcreteMessage for MsgGpsLeapSecond {
+        const MESSAGE_TYPE: u16 = 570;
+        const MESSAGE_NAME: &'static str = "MSG_GPS_LEAP_SECOND";
+    }
+
+    impl SbpMessage for MsgGpsLeapSecond {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgGpsLeapSecond {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgGpsLeapSecond(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgGpsLeapSecond {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgGpsLeapSecond {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
 pub mod msg_gps_time {
     #![allow(unused_imports)]
 
@@ -2132,6 +2206,72 @@ pub mod msg_gps_time_gnss {
                 1 => Ok(TimeSource::GnssSolution),
                 2 => Ok(TimeSource::Propagated),
                 i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_itrf {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+    /// Reference Frame Transformation Parameter
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgItrf {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        pub stub: Vec<u8>,
+    }
+
+    impl ConcreteMessage for MsgItrf {
+        const MESSAGE_TYPE: u16 = 580;
+        const MESSAGE_NAME: &'static str = "MSG_ITRF";
+    }
+
+    impl SbpMessage for MsgItrf {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgItrf {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgItrf(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgItrf {
+        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stub)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stub, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgItrf {
+                sender_id: None,
+                stub: WireFormat::parse_unchecked(buf),
             }
         }
     }

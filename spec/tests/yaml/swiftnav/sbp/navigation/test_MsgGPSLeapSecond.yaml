@@ -1,0 +1,24 @@
+description: Unit tests for swiftnav.sbp.navigation MsgGPSLeapSecond
+generated_on: 2022-05-11 # manually generated
+package: sbp.navigation
+tests:
+
+  - msg:
+      fields:
+        stub: [1, 0, 2, 0, 3, 4, 5, 0, 6, 0, 7, 0, 8, 9]
+      c_decoded_fields:
+        n_stub: 14
+      module: sbp.navigation
+      name: MsgGPSLeapSecond
+    msg_type: '570'
+    raw_json: '{"stub": [1, 0, 2, 0, 3, 4, 5, 0, 6, 0, 7, 0, 8, 9],
+      "preamble": 85, "msg_type": 570, "sender": 66, "length": 14,
+      "payload": "AQACAAMEBQAGAAcACAk=", "crc": 59442}'
+    raw_packet: VToCQgAOAQACAAMEBQAGAAcACAky6A==
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x023A'
+      sender: '0x0042'
+      length: 14
+      payload: AQACAAMEBQAGAAcACAk=
+      crc: '0xE832'

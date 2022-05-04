@@ -648,3 +648,21 @@ message MsgProtectionLevel {
     sint32 heading = 20;
     uint32 flags = 21;
 }
+
+/** Leap second SBP message.
+
+ *
+ * Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+ * drift model parameters.
+ */
+message MsgGpsLeapSecond {
+    repeated uint32 stub = 1;
+}
+
+/** Reference Frame Transformation Parameter
+ *
+None
+ */
+message MsgItrf {
+    repeated uint32 stub = 1;
+}

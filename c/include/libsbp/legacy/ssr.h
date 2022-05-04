@@ -267,6 +267,10 @@ typedef struct SBP_ATTR_PACKED {
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial
                                             coefficients for each space
                                             vehicle. */
+} msg_ssr_stec_correction_dep_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
 } msg_ssr_stec_correction_t;
 
 /** Gridded troposphere and STEC correction residuals
@@ -292,11 +296,15 @@ typedef struct SBP_ATTR_PACKED {
                                           satellite (mean, stddev). */
 } msg_ssr_gridded_correction_t;
 
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_ssr_gridded_correction_bounds_t;
+
 /** Definition of a SSR atmospheric correction tile.
 
  *
  * Provides the correction point coordinates for the atmospheric correction
- * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+ * values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
  * messages.
  *
  * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
@@ -365,6 +373,22 @@ typedef struct SBP_ATTR_PACKED {
                           See GNSS-SSR-ArrayOfCorrectionPoints field
                           bitmaskOfGrids but note the definition of the
                           bits is inverted. */
+} msg_ssr_tile_definition_dep_t;
+
+/** Definition of a SSR atmospheric correction tile.
+
+ *
+ * Provides the correction point coordinates for the atmospheric correction
+ * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+ * messages.
+ *
+ * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+ * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+ * correction points, not lists of points.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
 } msg_ssr_tile_definition_t;
 
 /** Antenna phase center correction
@@ -519,6 +543,18 @@ typedef struct SBP_ATTR_PACKED {
                        transitions between valid and invalid (and vice versa)
                        are encoded as u8 integers. */
 } msg_ssr_grid_definition_dep_a_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_ssr_orbit_clock_bounds_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_ssr_code_phase_biases_bounds_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_ssr_orbit_clock_bounds_degradation_t;
 
 /** \} */
 

@@ -1,0 +1,24 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrGriddedCorrectionBounds
+generated_on: 2022-04-19 # manually generated
+package: sbp.ssr
+tests:
+
+  - msg:
+      fields:
+        stub: [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,39,232,3,244,1,100,200,150,100,2,5,10,16,0,17,18,19,20,21,6,10,22,0,23,24,25,26,27]
+      c_decoded_fields:
+        n_stub: 43
+      module: sbp.ssr
+      name: MsgSsrGriddedCorrectionBounds
+    msg_type: '1534'
+    raw_json: '{"stub": [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,39,232,3,244,1,100,200,150,100,2,5,10,16,0,17,18,19,20,21,6,10,22,0,23,24,25,26,27],
+    "preamble": 85, "msg_type": 1534, "sender": 66, "length": 43,
+    "payload": "tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZkAgUKEAAREhMUFQYKFgAXGBkaGw==", "crc": 37232}'
+    raw_packet: Vf4FQgArtAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZkAgUKEAAREhMUFQYKFgAXGBkaG3CR
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x05FE'
+      sender: '0x0042'
+      length: 43
+      payload: tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZkAgUKEAAREhMUFQYKFgAXGBkaGw==
+      crc: '0x9170'

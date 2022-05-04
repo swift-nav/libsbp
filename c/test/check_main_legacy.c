@@ -38,6 +38,19 @@ int main(void) {
                     legacy_auto_check_sbp_file_io_MsgFileioWriteResp_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_imu_MsgImuAux_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_imu_MsgImuRaw_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite());
+  srunner_add_suite(
+      sr,
+      legacy_auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLos_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_integrity_MsgSsrFlagIonoGridPoints_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_integrity_MsgSsrFlagSatellites_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_integrity_MsgSsrFlagTropoGridPoints_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_logging_MsgFwd_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_logging_MsgLog_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_logging_MsgPrintDep_suite());
@@ -53,11 +66,14 @@ int main(void) {
       sr, legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgDops_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgDopsDepA_suite());
+  srunner_add_suite(sr,
+                    legacy_auto_check_sbp_navigation_MsgGPSLeapSecond_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgGPSTime_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_navigation_MsgGPSTimeDepA_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS_suite());
+  srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgItrf_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgPosECEF_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgPosECEFCov_suite());
   srunner_add_suite(sr,
@@ -132,6 +148,16 @@ int main(void) {
       sr, legacy_auto_check_sbp_settings_MsgSettingsReadByIndexDone_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds_suite());
+  srunner_add_suite(sr,
+                    legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBoundsDegradation_suite());
+  srunner_add_suite(sr, legacy_auto_check_sbp_ssr_MsgSsrStecCorrection_suite());
+  srunner_add_suite(sr, legacy_auto_check_sbp_ssr_MsgSsrTileDefinition_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgDgnssStatus_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgGroupMeta_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgHeartbeat_suite());

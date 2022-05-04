@@ -1,11 +1,14 @@
 0x00BD
 AE
 Acq
+BBD
+BCD
 BD
 Beidou
 Bestpos
 Bn
 Codephase
+DF
 Duro
 EB
 FB
@@ -16,6 +19,7 @@ IPv
 InputType
 Iono
 Kalman
+LoS
 MiB
 Navstar
 Piksi
@@ -80,6 +84,7 @@ infofirmware
 interoperable
 io
 iode
+iono
 iterable
 ith
 jit

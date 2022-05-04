@@ -69,6 +69,7 @@
 //   const msgFlashReadResp = Convert.toMsgFlashReadResp(json);
 //   const msgFrontEndGain = Convert.toMsgFrontEndGain(json);
 //   const msgFwd = Convert.toMsgFwd(json);
+//   const msgGPSLeapSecond = Convert.toMsgGPSLeapSecond(json);
 //   const msgGPSTime = Convert.toMsgGPSTime(json);
 //   const msgGPSTimeGnss = Convert.toMsgGPSTimeGnss(json);
 //   const msgGloBiases = Convert.toMsgGloBiases(json);
@@ -83,6 +84,7 @@
 //   const msgInsStatus = Convert.toMsgInsStatus(json);
 //   const msgInsUpdates = Convert.toMsgInsUpdates(json);
 //   const msgIono = Convert.toMsgIono(json);
+//   const msgItrf = Convert.toMsgItrf(json);
 //   const msgLinuxCPUState = Convert.toMsgLinuxCPUState(json);
 //   const msgLinuxMemState = Convert.toMsgLinuxMemState(json);
 //   const msgLinuxProcessFdCount = Convert.toMsgLinuxProcessFdCount(json);
@@ -136,8 +138,18 @@
 //   const msgSolnMeta = Convert.toMsgSolnMeta(json);
 //   const msgSpecan = Convert.toMsgSpecan(json);
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
+//   const msgSsrCodePhaseBiasesBounds = Convert.toMsgSsrCodePhaseBiasesBounds(json);
+//   const msgSsrFlagHighLevel = Convert.toMsgSsrFlagHighLevel(json);
+//   const msgSsrFlagIonoGridPointSatLos = Convert.toMsgSsrFlagIonoGridPointSatLos(json);
+//   const msgSsrFlagIonoGridPoints = Convert.toMsgSsrFlagIonoGridPoints(json);
+//   const msgSsrFlagIonoTileSatLos = Convert.toMsgSsrFlagIonoTileSatLos(json);
+//   const msgSsrFlagSatellites = Convert.toMsgSsrFlagSatellites(json);
+//   const msgSsrFlagTropoGridPoints = Convert.toMsgSsrFlagTropoGridPoints(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
+//   const msgSsrGriddedCorrectionBounds = Convert.toMsgSsrGriddedCorrectionBounds(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
+//   const msgSsrOrbitClockBounds = Convert.toMsgSsrOrbitClockBounds(json);
+//   const msgSsrOrbitClockBoundsDegradation = Convert.toMsgSsrOrbitClockBoundsDegradation(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
@@ -732,6 +744,14 @@ function msgFwdToJson(value) {
     return JSON.stringify(uncast(value, r("MsgFwd")), null, 2);
 }
 
+function toMsgGPSLeapSecond(json) {
+    return cast(JSON.parse(json), r("MsgGPSLeapSecond"));
+}
+
+function msgGPSLeapSecondToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgGPSLeapSecond")), null, 2);
+}
+
 function toMsgGPSTime(json) {
     return cast(JSON.parse(json), r("MsgGPSTime"));
 }
@@ -842,6 +862,14 @@ function toMsgIono(json) {
 
 function msgIonoToJson(value) {
     return JSON.stringify(uncast(value, r("MsgIono")), null, 2);
+}
+
+function toMsgItrf(json) {
+    return cast(JSON.parse(json), r("MsgItrf"));
+}
+
+function msgItrfToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgItrf")), null, 2);
 }
 
 function toMsgLinuxCPUState(json) {
@@ -1268,6 +1296,62 @@ function msgSsrCodeBiasesToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrCodeBiases")), null, 2);
 }
 
+function toMsgSsrCodePhaseBiasesBounds(json) {
+    return cast(JSON.parse(json), r("MsgSsrCodePhaseBiasesBounds"));
+}
+
+function msgSsrCodePhaseBiasesBoundsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrCodePhaseBiasesBounds")), null, 2);
+}
+
+function toMsgSsrFlagHighLevel(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagHighLevel"));
+}
+
+function msgSsrFlagHighLevelToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagHighLevel")), null, 2);
+}
+
+function toMsgSsrFlagIonoGridPointSatLos(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagIonoGridPointSatLos"));
+}
+
+function msgSsrFlagIonoGridPointSatLosToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagIonoGridPointSatLos")), null, 2);
+}
+
+function toMsgSsrFlagIonoGridPoints(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagIonoGridPoints"));
+}
+
+function msgSsrFlagIonoGridPointsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagIonoGridPoints")), null, 2);
+}
+
+function toMsgSsrFlagIonoTileSatLos(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagIonoTileSatLos"));
+}
+
+function msgSsrFlagIonoTileSatLosToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagIonoTileSatLos")), null, 2);
+}
+
+function toMsgSsrFlagSatellites(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagSatellites"));
+}
+
+function msgSsrFlagSatellitesToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagSatellites")), null, 2);
+}
+
+function toMsgSsrFlagTropoGridPoints(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagTropoGridPoints"));
+}
+
+function msgSsrFlagTropoGridPointsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagTropoGridPoints")), null, 2);
+}
+
 function toMsgSsrGriddedCorrection(json) {
     return cast(JSON.parse(json), r("MsgSsrGriddedCorrection"));
 }
@@ -1276,12 +1360,36 @@ function msgSsrGriddedCorrectionToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrection")), null, 2);
 }
 
+function toMsgSsrGriddedCorrectionBounds(json) {
+    return cast(JSON.parse(json), r("MsgSsrGriddedCorrectionBounds"));
+}
+
+function msgSsrGriddedCorrectionBoundsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrectionBounds")), null, 2);
+}
+
 function toMsgSsrOrbitClock(json) {
     return cast(JSON.parse(json), r("MsgSsrOrbitClock"));
 }
 
 function msgSsrOrbitClockToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrOrbitClock")), null, 2);
+}
+
+function toMsgSsrOrbitClockBounds(json) {
+    return cast(JSON.parse(json), r("MsgSsrOrbitClockBounds"));
+}
+
+function msgSsrOrbitClockBoundsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBounds")), null, 2);
+}
+
+function toMsgSsrOrbitClockBoundsDegradation(json) {
+    return cast(JSON.parse(json), r("MsgSsrOrbitClockBoundsDegradation"));
+}
+
+function msgSsrOrbitClockBoundsDegradationToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBoundsDegradation")), null, 2);
 }
 
 function toMsgSsrPhaseBiases(json) {
@@ -2240,6 +2348,9 @@ const typeMap = {
         { json: "protocol", js: "protocol", typ: 0 },
         { json: "source", js: "source", typ: 0 },
     ], "any"),
+    "MsgGPSLeapSecond": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
     "MsgGPSTime": o([
         { json: "flags", js: "flags", typ: 0 },
         { json: "ns_residual", js: "ns_residual", typ: 0 },
@@ -2343,6 +2454,9 @@ const typeMap = {
         { json: "b2", js: "b2", typ: 3.14 },
         { json: "b3", js: "b3", typ: 3.14 },
         { json: "t_nmct", js: "t_nmct", typ: r("GpsTimeSEC") },
+    ], "any"),
+    "MsgItrf": o([
+        { json: "stub", js: "stub", typ: a(0) },
     ], "any"),
     "MsgLinuxCPUState": o([
         { json: "cmdline", js: "cmdline", typ: "" },
@@ -2758,6 +2872,27 @@ const typeMap = {
         { json: "code", js: "code", typ: 0 },
         { json: "value", js: "value", typ: 0 },
     ], "any"),
+    "MsgSsrCodePhaseBiasesBounds": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
+    "MsgSsrFlagHighLevel": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
+    "MsgSsrFlagIonoGridPointSatLos": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
+    "MsgSsrFlagIonoGridPoints": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
+    "MsgSsrFlagIonoTileSatLos": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
+    "MsgSsrFlagSatellites": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
+    "MsgSsrFlagTropoGridPoints": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
         { json: "index", js: "index", typ: 0 },
@@ -2774,6 +2909,9 @@ const typeMap = {
         { json: "tropo_quality_indicator", js: "tropo_quality_indicator", typ: 0 },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
+    "MsgSsrGriddedCorrectionBounds": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
     "MsgSsrOrbitClock": o([
         { json: "along", js: "along", typ: 0 },
         { json: "c0", js: "c0", typ: 0 },
@@ -2789,6 +2927,12 @@ const typeMap = {
         { json: "sid", js: "sid", typ: r("GnssSignal") },
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "MsgSsrOrbitClockBounds": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
+    "MsgSsrOrbitClockBoundsDegradation": o([
+        { json: "stub", js: "stub", typ: a(0) },
     ], "any"),
     "MsgSsrPhaseBiases": o([
         { json: "biases", js: "biases", typ: a(r("PhaseBiasesContent")) },
@@ -2819,33 +2963,10 @@ const typeMap = {
         { json: "svn", js: "svn", typ: 0 },
     ], "any"),
     "MsgSsrStecCorrection": o([
-        { json: "header", js: "header", typ: r("STECHeader") },
-        { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElement")) },
-    ], "any"),
-    "STECHeader": o([
-        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "seq_num", js: "seq_num", typ: 0 },
-        { json: "tile_id", js: "tile_id", typ: 0 },
-        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
-        { json: "time", js: "time", typ: r("GpsTimeSEC") },
-        { json: "update_interval", js: "update_interval", typ: 0 },
-    ], "any"),
-    "STECSatElement": o([
-        { json: "stec_coeff", js: "stec_coeff", typ: a(0) },
-        { json: "stec_quality_indicator", js: "stec_quality_indicator", typ: 0 },
-        { json: "sv_id", js: "sv_id", typ: r("SvID") },
+        { json: "stub", js: "stub", typ: a(0) },
     ], "any"),
     "MsgSsrTileDefinition": o([
-        { json: "bitmask", js: "bitmask", typ: 0 },
-        { json: "cols", js: "cols", typ: 0 },
-        { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
-        { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
-        { json: "rows", js: "rows", typ: 0 },
-        { json: "spacing_lat", js: "spacing_lat", typ: 0 },
-        { json: "spacing_lon", js: "spacing_lon", typ: 0 },
-        { json: "tile_id", js: "tile_id", typ: 0 },
-        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "stub", js: "stub", typ: a(0) },
     ], "any"),
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },
@@ -3092,6 +3213,20 @@ const typeMap = {
     "OdoInputType": o([
         { json: "flags", js: "flags", typ: 0 },
     ], "any"),
+    "STECHeader": o([
+        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "STECSatElement": o([
+        { json: "stec_coeff", js: "stec_coeff", typ: a(0) },
+        { json: "stec_quality_indicator", js: "stec_quality_indicator", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
+    ], "any"),
 };
 
 module.exports = {
@@ -3229,6 +3364,8 @@ module.exports = {
     "toMsgFrontEndGain": toMsgFrontEndGain,
     "msgFwdToJson": msgFwdToJson,
     "toMsgFwd": toMsgFwd,
+    "msgGPSLeapSecondToJson": msgGPSLeapSecondToJson,
+    "toMsgGPSLeapSecond": toMsgGPSLeapSecond,
     "msgGPSTimeToJson": msgGPSTimeToJson,
     "toMsgGPSTime": toMsgGPSTime,
     "msgGPSTimeGnssToJson": msgGPSTimeGnssToJson,
@@ -3257,6 +3394,8 @@ module.exports = {
     "toMsgInsUpdates": toMsgInsUpdates,
     "msgIonoToJson": msgIonoToJson,
     "toMsgIono": toMsgIono,
+    "msgItrfToJson": msgItrfToJson,
+    "toMsgItrf": toMsgItrf,
     "msgLinuxCPUStateToJson": msgLinuxCPUStateToJson,
     "toMsgLinuxCPUState": toMsgLinuxCPUState,
     "msgLinuxMemStateToJson": msgLinuxMemStateToJson,
@@ -3363,10 +3502,30 @@ module.exports = {
     "toMsgSpecan": toMsgSpecan,
     "msgSsrCodeBiasesToJson": msgSsrCodeBiasesToJson,
     "toMsgSsrCodeBiases": toMsgSsrCodeBiases,
+    "msgSsrCodePhaseBiasesBoundsToJson": msgSsrCodePhaseBiasesBoundsToJson,
+    "toMsgSsrCodePhaseBiasesBounds": toMsgSsrCodePhaseBiasesBounds,
+    "msgSsrFlagHighLevelToJson": msgSsrFlagHighLevelToJson,
+    "toMsgSsrFlagHighLevel": toMsgSsrFlagHighLevel,
+    "msgSsrFlagIonoGridPointSatLosToJson": msgSsrFlagIonoGridPointSatLosToJson,
+    "toMsgSsrFlagIonoGridPointSatLos": toMsgSsrFlagIonoGridPointSatLos,
+    "msgSsrFlagIonoGridPointsToJson": msgSsrFlagIonoGridPointsToJson,
+    "toMsgSsrFlagIonoGridPoints": toMsgSsrFlagIonoGridPoints,
+    "msgSsrFlagIonoTileSatLosToJson": msgSsrFlagIonoTileSatLosToJson,
+    "toMsgSsrFlagIonoTileSatLos": toMsgSsrFlagIonoTileSatLos,
+    "msgSsrFlagSatellitesToJson": msgSsrFlagSatellitesToJson,
+    "toMsgSsrFlagSatellites": toMsgSsrFlagSatellites,
+    "msgSsrFlagTropoGridPointsToJson": msgSsrFlagTropoGridPointsToJson,
+    "toMsgSsrFlagTropoGridPoints": toMsgSsrFlagTropoGridPoints,
     "msgSsrGriddedCorrectionToJson": msgSsrGriddedCorrectionToJson,
     "toMsgSsrGriddedCorrection": toMsgSsrGriddedCorrection,
+    "msgSsrGriddedCorrectionBoundsToJson": msgSsrGriddedCorrectionBoundsToJson,
+    "toMsgSsrGriddedCorrectionBounds": toMsgSsrGriddedCorrectionBounds,
     "msgSsrOrbitClockToJson": msgSsrOrbitClockToJson,
     "toMsgSsrOrbitClock": toMsgSsrOrbitClock,
+    "msgSsrOrbitClockBoundsToJson": msgSsrOrbitClockBoundsToJson,
+    "toMsgSsrOrbitClockBounds": toMsgSsrOrbitClockBounds,
+    "msgSsrOrbitClockBoundsDegradationToJson": msgSsrOrbitClockBoundsDegradationToJson,
+    "toMsgSsrOrbitClockBoundsDegradation": toMsgSsrOrbitClockBoundsDegradation,
     "msgSsrPhaseBiasesToJson": msgSsrPhaseBiasesToJson,
     "toMsgSsrPhaseBiases": toMsgSsrPhaseBiases,
     "msgSsrSatelliteApcToJson": msgSsrSatelliteApcToJson,

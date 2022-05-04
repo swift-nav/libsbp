@@ -1,0 +1,34 @@
+description: Unit tests for swiftnav.sbp.navigation MsgItrf
+generated_on: 2022-05-11 # manually generated
+package: sbp.navigation
+tests:
+
+  - msg:
+      fields:
+        stub: [1,  2,  102, 111, 111, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+               0,  0,  0,   0,   0,   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  3,
+               98, 97, 114, 0,   0,   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+               0,  0,  0,   0,   0,   0,  0,  0,  0,  0,  0,  0,  0,  0,  4,  5,  0,
+               6,  0,  7,   0,   0,   0,  8,  0,  0,  0,  9,  0,  0,  0,  10, 0,  0,
+               0,  11, 0,   0,   0,   12, 0,  0,  0,  13, 0,  0,  0,  14, 0,  0,  0,
+               15, 0,  0,   0,   16,  0,  0,  0,  17, 0,  0,  0,  18, 0,  0,  0,  19,
+               0,  0,  0,   20,  0]
+      c_decoded_fields:
+        n_stub: 124
+      module: sbp.navigation
+      name: MsgItrf
+    msg_type: '580'
+    raw_json: '{"stub": [1,2,102,111,111,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,98,97,114,0,0,0,0,0,
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,5,0,6,0,7,0,0,0,8,0,0,0,9,0,0,0,10,0,0,0,11,0,0,0,12,0,0,0,13,0,0,
+      0,14,0,0,0,15,0,0,0,16,0,0,0,17,0,0,0,18,0,0,0,19,0,0,0,20,0],
+      "preamble": 85, "msg_type": 580, "sender": 66, "length": 124,
+      "payload": "AQJmb28AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2JhcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA==",
+      "crc": 32322}'
+    raw_packet: VUQCQgB8AQJmb28AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2JhcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAEJ+
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x0244'
+      sender: '0x0042'
+      length: 124
+      payload: AQJmb28AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2JhcgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBQAGAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAA==
+      crc: '0x7E42'

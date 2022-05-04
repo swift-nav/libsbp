@@ -25,6 +25,7 @@
 #include <libsbp/flash_macros.h>
 #include <libsbp/gnss_macros.h>
 #include <libsbp/imu_macros.h>
+#include <libsbp/integrity_macros.h>
 #include <libsbp/linux_macros.h>
 #include <libsbp/logging_macros.h>
 #include <libsbp/mag_macros.h>
@@ -126,6 +127,7 @@ typedef enum {
   SbpMsgGloBiases = SBP_MSG_GLO_BIASES,
   SbpMsgGnssCapb = SBP_MSG_GNSS_CAPB,
   SbpMsgGnssTimeOffset = SBP_MSG_GNSS_TIME_OFFSET,
+  SbpMsgGpsLeapSecond = SBP_MSG_GPS_LEAP_SECOND,
   SbpMsgGpsTimeDepA = SBP_MSG_GPS_TIME_DEP_A,
   SbpMsgGpsTimeGnss = SBP_MSG_GPS_TIME_GNSS,
   SbpMsgGpsTime = SBP_MSG_GPS_TIME,
@@ -141,6 +143,7 @@ typedef enum {
   SbpMsgInsStatus = SBP_MSG_INS_STATUS,
   SbpMsgInsUpdates = SBP_MSG_INS_UPDATES,
   SbpMsgIono = SBP_MSG_IONO,
+  SbpMsgItrf = SBP_MSG_ITRF,
   SbpMsgLinuxCpuStateDepA = SBP_MSG_LINUX_CPU_STATE_DEP_A,
   SbpMsgLinuxCpuState = SBP_MSG_LINUX_CPU_STATE,
   SbpMsgLinuxMemStateDepA = SBP_MSG_LINUX_MEM_STATE_DEP_A,
@@ -208,17 +211,30 @@ typedef enum {
   SbpMsgSpecanDep = SBP_MSG_SPECAN_DEP,
   SbpMsgSpecan = SBP_MSG_SPECAN,
   SbpMsgSsrCodeBiases = SBP_MSG_SSR_CODE_BIASES,
+  SbpMsgSsrCodePhaseBiasesBounds = SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS,
+  SbpMsgSsrFlagHighLevel = SBP_MSG_SSR_FLAG_HIGH_LEVEL,
+  SbpMsgSsrFlagIonoGridPointSatLos = SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS,
+  SbpMsgSsrFlagIonoGridPoints = SBP_MSG_SSR_FLAG_IONO_GRID_POINTS,
+  SbpMsgSsrFlagIonoTileSatLos = SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS,
+  SbpMsgSsrFlagSatellites = SBP_MSG_SSR_FLAG_SATELLITES,
+  SbpMsgSsrFlagTropoGridPoints = SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS,
   SbpMsgSsrGridDefinitionDepA = SBP_MSG_SSR_GRID_DEFINITION_DEP_A,
+  SbpMsgSsrGriddedCorrectionBounds = SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS,
   SbpMsgSsrGriddedCorrectionDepA = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A,
   SbpMsgSsrGriddedCorrectionNoStdDepA =
       SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A,
   SbpMsgSsrGriddedCorrection = SBP_MSG_SSR_GRIDDED_CORRECTION,
+  SbpMsgSsrOrbitClockBoundsDegradation =
+      SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION,
+  SbpMsgSsrOrbitClockBounds = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS,
   SbpMsgSsrOrbitClockDepA = SBP_MSG_SSR_ORBIT_CLOCK_DEP_A,
   SbpMsgSsrOrbitClock = SBP_MSG_SSR_ORBIT_CLOCK,
   SbpMsgSsrPhaseBiases = SBP_MSG_SSR_PHASE_BIASES,
   SbpMsgSsrSatelliteApc = SBP_MSG_SSR_SATELLITE_APC,
   SbpMsgSsrStecCorrectionDepA = SBP_MSG_SSR_STEC_CORRECTION_DEP_A,
+  SbpMsgSsrStecCorrectionDep = SBP_MSG_SSR_STEC_CORRECTION_DEP,
   SbpMsgSsrStecCorrection = SBP_MSG_SSR_STEC_CORRECTION,
+  SbpMsgSsrTileDefinitionDep = SBP_MSG_SSR_TILE_DEFINITION_DEP,
   SbpMsgSsrTileDefinition = SBP_MSG_SSR_TILE_DEFINITION,
   SbpMsgStartup = SBP_MSG_STARTUP,
   SbpMsgStatusJournal = SBP_MSG_STATUS_JOURNAL,
