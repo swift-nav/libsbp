@@ -1,7 +1,7 @@
 use std::io;
 
-use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
 use clap::Parser;
+use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
 
 use converters::{sbp2json, Result};
 
