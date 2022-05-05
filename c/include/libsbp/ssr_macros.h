@@ -530,4 +530,34 @@
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_ENCODED_OVERHEAD 0u
 
+/**
+ * Encoded length of sbp_code_phase_biases_sat_sig_t (V4 API) and
+ * code_phase_biases_sat_sig_t (legacy API)
+ */
+#define SBP_CODE_PHASE_BIASES_SAT_SIG_ENCODED_LEN 6u
+
+#define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS 0x05EC
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_code_phase_biases_bounds_t::satellites_signals (V4 API) or
+ * msg_ssr_code_phase_biases_bounds_t::satellites_signals (legacy API) before
+ * the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_SATELLITES_SIGNALS_MAX 40u
+
+/**
+ * Encoded length of sbp_msg_ssr_code_phase_biases_bounds_t (V4 API) and
+ * msg_ssr_code_phase_biases_bounds_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_code_phase_biases_bounds_encoded_len to determine the actual
+ * size of an instance of this message. Users of the legacy API are required to
+ * track the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_ENCODED_OVERHEAD 13u
+
 #endif /* LIBSBP_SSR_MACROS_H */

@@ -3388,3 +3388,248 @@ int sbp_msg_ssr_orbit_clock_bounds_degradation_cmp(
   }
   return ret;
 }
+
+bool sbp_code_phase_biases_sat_sig_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_code_phase_biases_sat_sig_t *msg) {
+  if (!sbp_u8_encode(ctx, &msg->sat_id)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->signal_id)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->code_bias_bound_mu)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->code_bias_bound_sig)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->phase_bias_bound_mu)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->phase_bias_bound_sig)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_code_phase_biases_sat_sig_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_code_phase_biases_sat_sig_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_code_phase_biases_sat_sig_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_code_phase_biases_sat_sig_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_code_phase_biases_sat_sig_t *msg) {
+  if (!sbp_u8_decode(ctx, &msg->sat_id)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->signal_id)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->code_bias_bound_mu)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->code_bias_bound_sig)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->phase_bias_bound_mu)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->phase_bias_bound_sig)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_code_phase_biases_sat_sig_decode(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_code_phase_biases_sat_sig_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_code_phase_biases_sat_sig_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+int sbp_code_phase_biases_sat_sig_cmp(
+    const sbp_code_phase_biases_sat_sig_t *a,
+    const sbp_code_phase_biases_sat_sig_t *b) {
+  int ret = 0;
+
+  ret = sbp_u8_cmp(&a->sat_id, &b->sat_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->signal_id, &b->signal_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->code_bias_bound_mu, &b->code_bias_bound_mu);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->code_bias_bound_sig, &b->code_bias_bound_sig);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->phase_bias_bound_mu, &b->phase_bias_bound_mu);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->phase_bias_bound_sig, &b->phase_bias_bound_sig);
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}
+
+bool sbp_msg_ssr_code_phase_biases_bounds_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_code_phase_biases_bounds_t *msg) {
+  if (!sbp_bounds_header_encode_internal(ctx, &msg->header)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->ssr_iod)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->const_id)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->n_sats_signals)) {
+    return false;
+  }
+  for (size_t i = 0; i < msg->n_sats_signals; i++) {
+    if (!sbp_code_phase_biases_sat_sig_encode_internal(
+            ctx, &msg->satellites_signals[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_ssr_code_phase_biases_bounds_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_code_phase_biases_bounds_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_ssr_code_phase_biases_bounds_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_msg_ssr_code_phase_biases_bounds_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_code_phase_biases_bounds_t *msg) {
+  if (!sbp_bounds_header_decode_internal(ctx, &msg->header)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->ssr_iod)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->const_id)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->n_sats_signals)) {
+    return false;
+  }
+  msg->n_sats_signals = (uint8_t)((ctx->buf_len - ctx->offset) /
+                                  SBP_CODE_PHASE_BIASES_SAT_SIG_ENCODED_LEN);
+  for (uint8_t i = 0; i < msg->n_sats_signals; i++) {
+    if (!sbp_code_phase_biases_sat_sig_decode_internal(
+            ctx, &msg->satellites_signals[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_ssr_code_phase_biases_bounds_decode(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_code_phase_biases_bounds_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_ssr_code_phase_biases_bounds_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+s8 sbp_msg_ssr_code_phase_biases_bounds_send(
+    sbp_state_t *s, u16 sender_id,
+    const sbp_msg_ssr_code_phase_biases_bounds_t *msg, sbp_write_fn_t write) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_msg_ssr_code_phase_biases_bounds_encode(payload, sizeof(payload),
+                                                       &payload_len, msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
+  return sbp_payload_send(s, SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS, sender_id,
+                          payload_len, payload, write);
+}
+
+int sbp_msg_ssr_code_phase_biases_bounds_cmp(
+    const sbp_msg_ssr_code_phase_biases_bounds_t *a,
+    const sbp_msg_ssr_code_phase_biases_bounds_t *b) {
+  int ret = 0;
+
+  ret = sbp_bounds_header_cmp(&a->header, &b->header);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->ssr_iod, &b->ssr_iod);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->const_id, &b->const_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->n_sats_signals, &b->n_sats_signals);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->n_sats_signals, &b->n_sats_signals);
+  for (uint8_t i = 0; ret == 0 && i < a->n_sats_signals; i++) {
+    ret = sbp_code_phase_biases_sat_sig_cmp(&a->satellites_signals[i],
+                                            &b->satellites_signals[i]);
+  }
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}

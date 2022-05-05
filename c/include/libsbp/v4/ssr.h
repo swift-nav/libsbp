@@ -18,6 +18,7 @@
 #ifndef LIBSBP_V4_SSR_MESSAGES_H
 #define LIBSBP_V4_SSR_MESSAGES_H
 #include <libsbp/v4/ssr/CodeBiasesContent.h>
+#include <libsbp/v4/ssr/CodePhaseBiasesSatSig.h>
 #include <libsbp/v4/ssr/GridDefinitionHeaderDepA.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeader.h>
 #include <libsbp/v4/ssr/GriddedCorrectionHeaderDepA.h>
