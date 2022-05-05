@@ -1,0 +1,242 @@
+# Copyright (C) 2018-2022 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.integrity
+description: Integrity flag messages
+stable: False
+public: False
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+  - MSG_SSR_FLAG_HIGH_LEVEL:
+      id: 0x0BB9
+      short_desc: High level integrity flags
+      public: False
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - corr_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the correction associated to the flag.
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - tile_set_id:
+            type: u16
+            desc: Unique identifier of the set this tile belongs to.
+        - tile_id:
+            type: u16
+            desc: Unique identifier of this tile in the tile set.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+        - use_gps_sat:
+            type: u8
+            desc: Use GPS satellites.
+        - use_gal_sat:
+            type: u8
+            desc: Use GAL satellites.
+        - use_bds_sat:
+            type: u8
+            desc: Use BDS satellites.
+        - reserved:
+            type: array
+            size: 6
+            fill: u8
+            desc: Reserved
+        - use_tropo_grid_points:
+            type: u8
+            desc: Use tropo grid points.
+        - use_iono_grid_points:
+            type: u8
+            desc: Use iono grid points.
+        - use_iono_tile_sat_los:
+            type: u8
+            desc: Use iono tile satellite LoS.
+        - use_iono_grid_point_sat_los:
+            type: u8
+            desc: Use iono grid point satellite LoS.
+
+  - MSG_SSR_FLAG_SATELLITES:
+      id: 0x0BBD
+      short_desc: List of satellites which are faulty, per constellation
+      public: False
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - num_msgs:
+            type: u8
+            desc: Number of messages in the dataset
+        - seq_num:
+            type: u8
+            desc: Position of this message in the dataset
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+        - const_id:
+            type: u8
+            desc: Constellation ID.
+        - n_faulty_sats:
+            type: u8
+            desc: Number of faulty satellites.
+        - faulty_sats:
+            type: array
+            fill: u8
+            size_fn: n_faulty_sats
+            desc: List of faulty satellites.
+
+  - MSG_SSR_FLAG_TROPO_GRID_POINTS:
+      id: 0x0BC3
+      short_desc: List of grid points which are faulty
+      public: False
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - num_msgs:
+            type: u8
+            desc: Number of messages in the dataset
+        - seq_num:
+            type: u8
+            desc: Position of this message in the dataset
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - tile_set_id:
+            type: u16
+            desc: Unique identifier of the set this tile belongs to.
+        - tile_id:
+            type: u16
+            desc: Unique identifier of this tile in the tile set.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+        - n_faulty_points:
+            type: u8
+            desc: Number of faulty grid points.
+        - faulty_points:
+            type: array
+            fill: u16
+            size_fn: n_faulty_points
+            desc: List of faulty grid points.
+
+  - MSG_SSR_FLAG_IONO_GRID_POINTS:
+      id: 0x0BC7
+      short_desc: List of grid points which are faulty
+      public: False
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - num_msgs:
+            type: u8
+            desc: Number of messages in the dataset
+        - seq_num:
+            type: u8
+            desc: Position of this message in the dataset
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - tile_set_id:
+            type: u16
+            desc: Unique identifier of the set this tile belongs to.
+        - tile_id:
+            type: u16
+            desc: Unique identifier of this tile in the tile set.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+        - n_faulty_points:
+            type: u8
+            desc: Number of faulty grid points.
+        - faulty_points:
+            type: array
+            fill: u16
+            size_fn: n_faulty_points
+            desc: List of faulty grid points.
+
+  - MSG_SSR_FLAG_IONO_TILE_SAT_LOS:
+      id: 0x0BCD
+      short_desc: List of all the LOS which are faulty
+      public: False
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - num_msgs:
+            type: u8
+            desc: Number of messages in the dataset
+        - seq_num:
+            type: u8
+            desc: Position of this message in the dataset
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - tile_set_id:
+            type: u16
+            desc: Unique identifier of the set this tile belongs to.
+        - tile_id:
+            type: u16
+            desc: Unique identifier of this tile in the tile set.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+        - n_faulty_los:
+            type: u8
+            desc: Number of faulty LOS.
+        - faulty_los:
+            type: array
+            fill: SvId
+            size_fn: n_faulty_los
+            desc: List of faulty LOS
+
+  - MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS:
+      id: 0x0BD1
+      short_desc: List of all the grid points to satellite which are faulty
+      public: False
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - num_msgs:
+            type: u8
+            desc: Number of messages in the dataset
+        - seq_num:
+            type: u8
+            desc: Position of this message in the dataset
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - tile_set_id:
+            type: u16
+            desc: Unique identifier of the set this tile belongs to.
+        - tile_id:
+            type: u16
+            desc: Unique identifier of this tile in the tile set.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+        - grid_point_id:
+            type: u16
+            desc: Index of the grid point.
+        - n_faulty_los:
+            type: u8
+            desc: Number of faulty LOS.
+        - faulty_los:
+            type: array
+            fill: SvId
+            size_fn: n_faulty_los
+            desc: List of faulty LOS
