@@ -1,4 +1,4 @@
-# Copyright (C) 2017 Swift Navigation Inc.
+# Copyright (C) 2017-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -16,8 +16,8 @@ from collections import defaultdict
 from sbp.client.drivers.network_drivers import TCPDriver
 from sbp.client import Handler, Framer
 from sbp.gnss import GPSTimeSec
-from sbp.piksi import SBP_MSG_SPECAN_DEP, MsgSpecanDep
-from sbp.piksi import SBP_MSG_SPECAN, MsgSpecan
+from sbp.piksi import SBP_MSG_SPECAN_DEP
+from sbp.piksi import SBP_MSG_SPECAN
 import numpy as np
 
 class GPSTimeSecCmp(GPSTimeSec):

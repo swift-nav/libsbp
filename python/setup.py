@@ -12,7 +12,6 @@ from setuptools import setup, find_packages
 
 import re
 import os
-import sys
 
 import subprocess
 

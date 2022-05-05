@@ -1,0 +1,121 @@
+# Copyright (C) 2015-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.observation
+description: Satellite observation messages from the device.
+             The SBP sender ID of 0 indicates remote observations
+             from a GNSS base station, correction network, or Skylark,
+             Swift's cloud GNSS correction product.
+stable: True
+public: True
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+
+ - MSG_EPHEMERIS_GPS_DEP_E:
+    id: 0x0081
+    short_desc: Satellite broadcast ephemeris for GPS
+    replaced_by:
+      - MSG_EPHEMERIS
+    desc: >
+      The ephemeris message returns a set of satellite orbit
+      parameters that is used to calculate GPS satellite position,
+      velocity, and clock offset. Please see the Navstar GPS
+      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+      20-III) for more details.
+    fields:
+      - common:
+          type: EphemerisCommonContentDepA
+          desc: Values common for all ephemeris types
+      - tgd:
+          type: double
+          units: s
+          desc: Group delay differential between L1 and L2
+      - c_rs:
+          type: double
+          units: m
+          desc: Amplitude of the sine harmonic correction term to the orbit radius
+      - c_rc:
+          type: double
+          units: m
+          desc: Amplitude of the cosine harmonic correction term to the orbit radius
+      - c_uc:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the argument of latitude
+      - c_us:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the argument of latitude
+      - c_ic:
+          type: double
+          units: rad
+          desc: Amplitude of the cosine harmonic correction term to the angle of inclination
+      - c_is:
+          type: double
+          units: rad
+          desc: Amplitude of the sine harmonic correction term to the angle of inclination
+      - dn:
+          type: double
+          units: rad/s
+          desc: Mean motion difference
+      - m0:
+          type: double
+          units: rad
+          desc: Mean anomaly at reference time
+      - ecc:
+          type: double
+          desc: Eccentricity of satellite orbit
+      - sqrta:
+          type: double
+          units: m^(1/2)
+          desc: Square root of the semi-major axis of orbit
+      - omega0:
+          type: double
+          units: rad
+          desc: Longitude of ascending node of orbit plane at weekly epoch
+      - omegadot:
+          type: double
+          units: rad/s
+          desc: Rate of right ascension
+      - w:
+          type: double
+          units: rad
+          desc: Argument of perigee
+      - inc:
+          type: double
+          units: rad
+          desc: Inclination
+      - inc_dot:
+          type: double
+          units: rad/s
+          desc: Inclination first derivative
+      - af0:
+          type: double
+          units: s
+          desc: Polynomial clock correction coefficient (clock bias)
+      - af1:
+          type: double
+          units: s/s
+          desc: Polynomial clock correction coefficient (clock drift)
+      - af2:
+          type: double
+          units: s/s^2
+          desc: Polynomial clock correction coefficient (rate of clock drift)
+      - toc:
+          type: GPSTimeDep
+          desc: Clock reference
+      - iode:
+          type: u8
+          desc: Issue of ephemeris data
+      - iodc:
+          type: u16
+          desc: Issue of clock data

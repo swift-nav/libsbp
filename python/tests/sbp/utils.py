@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -16,12 +16,51 @@ Utilities for running YAML-defined unit tests.
 import base64
 import os.path
 import json
+import sys
 import unittest
 
 import yaml
 
 from sbp.msg import SBP
 from sbp.table import dispatch, _SBP_TABLE
+
+HERE = os.path.dirname(__file__)
+PYTHON_ROOT = os.path.join(HERE, "..", "..")
+SPEC_ROOT = os.path.join(PYTHON_ROOT, "..", "spec", "yaml", "swiftnav", "sbp")
+_SPECS = {}
+
+def flatten_array(a):
+  """Return a mapping from a yaml array of mappings."""
+  return dict((next(iter(item.keys())), item[next(iter(item.keys()))]) for item in a)
+
+def load_msg_field_classes(msg):
+  """Return a mapping of msg field names to custom classes."""
+  # any_case is only available on Python 3.6+
+  try:
+    from any_case import to_snake_case
+  except ImportError:
+    return {}
+
+  module_name = msg.__class__.__module__
+  msg_name = msg.__class__.__name__
+  if module_name not in _SPECS:
+    sbp_module_name = module_name.rsplit(".", 1)[-1]
+    module_filename = os.path.join(SPEC_ROOT, sbp_module_name + ".yaml")
+    if not os.path.exists(module_filename):
+      raise RuntimeError(module_filename, msg)
+    with open(module_filename) as f:
+      _SPECS[module_name] = yaml.load(f.read(), Loader=yaml.FullLoader)
+  definitions = flatten_array(_SPECS[module_name]["definitions"])
+  msg_key = to_snake_case(msg_name).upper()
+  obj_fields = flatten_array(definitions[msg_key]["fields"])
+  field_classes = {}
+  for field_name, field in obj_fields.items():
+    if field["type"] in definitions:
+      mod = sys.modules[module_name]
+      cls = getattr(mod, field["type"])
+      field_classes[field_name] = cls
+
+  return field_classes
 
 def _encoded_string(s):
   """Encode the string-like argument as bytes if suitable"""
@@ -39,7 +78,7 @@ def _assert_unsorted_equal(a, b):
       pass
     if not hasattr(unittest.TestCase, "assertCountEqual"):
       def assertCountEqual(self, *args, **kw):
-        return self.assertItemsEqual(*args, **kw)
+        return self.assertItemsEqual(*args, **kw)  # pylint: disable=no-member
   case = UnitTestCase()
   case.assertCountEqual(a, b)
 
@@ -55,7 +94,8 @@ def _assert_sbp(sbp, test_case):
     Unit test case parsed from YAML.
 
   """
-  assert sbp.crc == int(test_case['crc'], 0), "Invalid crc."
+  expected = int(test_case['crc'], 0)
+  assert sbp.crc == expected, "Invalid crc. Actual: {:x} vs expected: {:x}.".format(sbp.crc, expected)
   assert sbp.msg_type == int(test_case['msg_type'], 0), "Invalid msg_type."
   assert sbp.sender == int(test_case['sender'], 0), "Invalid sender."
   assert sbp.length == test_case['length'], "Invalid length."
@@ -165,6 +205,25 @@ def _assert_materialization(msg, sbp, raw_json):
 
   assert msg['module']
   assert msg['name']
+
+  # Locate the classes for any fields that use one from the same
+  # module as the test case
+  if not fields:
+    return
+  field_class_map = load_msg_field_classes(live_msg)
+  if not field_class_map:
+    return
+
+  # Instantiate fields as classes and then instantiate msg using those objects
+  member_fields = {}
+  for name, value in fields.items():
+    if name in field_class_map:
+      assert isinstance(value, dict)
+      member_fields[name] = field_class_map[name](sbp=None, **value)
+    else:
+      member_fields[name] = value
+  live_msg = _SBP_TABLE[sbp.msg_type](sbp=None, **member_fields)
+  _assert_unsorted_equal(live_msg.to_json_dict(), json.loads(raw_json))
 
 def _assert_sane_package(pkg_name, pkg):
   """

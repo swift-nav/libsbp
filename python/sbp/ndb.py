@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -12,7 +12,6 @@
 
 """
 Messages for logging NDB events.
-
 """
 
 import json
@@ -21,7 +20,7 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import *
+from sbp.gnss import GnssSignal
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/ndb.yaml with generate.py.
 # Please do not hand edit!
@@ -37,8 +36,7 @@ class MsgNdbEvent(SBP):
 
   
   This message is sent out when an object is stored into NDB. If needed
-message could also be sent out when fetching an object from NDB.
-
+  message could also be sent out when fetching an object from NDB.
 
   Parameters
   ----------
@@ -55,22 +53,16 @@ message could also be sent out when fetching an object from NDB.
   data_source : int
     Data source for STORE event, reserved for other events.
   object_sid : GnssSignal
-    GNSS signal identifier,
-If object_type is Ephemeris OR Almanac, sid indicates for which
-signal the object belongs to. Reserved in other cases.
-
+    GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
+    indicates for which signal the object belongs to. Reserved in other cases.
   src_sid : GnssSignal
-    GNSS signal identifier,
-If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
-AND data_source is NDB_DS_RECEIVER sid indicates from which SV
-data was decoded. Reserved in other cases.
-
+    GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR L2C
+    capabilities AND data_source is NDB_DS_RECEIVER sid indicates from which
+    SV data was decoded. Reserved in other cases.
   original_sender : int
-    A unique identifier of the sending hardware. For v1.0,
-set to the 2 least significant bytes of the device serial
-number, valid only if data_source is NDB_DS_SBP. Reserved in case
-of other data_source.
-
+    A unique identifier of the sending hardware. For v1.0, set to the 2 least
+    significant bytes of the device serial number, valid only if data_source
+    is NDB_DS_SBP. Reserved in case of other data_source.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -81,8 +73,8 @@ of other data_source.
                    'object_type' / construct.Int8ul,
                    'result' / construct.Int8ul,
                    'data_source' / construct.Int8ul,
-                   'object_sid' / construct.Struct(GnssSignal._parser),
-                   'src_sid' / construct.Struct(GnssSignal._parser),
+                   'object_sid' / GnssSignal._parser,
+                   'src_sid' / GnssSignal._parser,
                    'original_sender' / construct.Int16ul,)
   __slots__ = [
                'recv_time',

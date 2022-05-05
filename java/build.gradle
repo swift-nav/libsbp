@@ -1,3 +1,12 @@
+plugins {
+  id 'jacoco'
+  id "org.sonarqube" version "3.3"
+  // spotless pre v5 used to allow gradle 4 on ubuntu-latest
+  id "com.diffplug.gradle.spotless" version "4.5.1"
+  id 'maven-publish'
+  id 'signing'
+}
+
 apply plugin: 'java'
 
 repositories {
@@ -5,14 +14,15 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.scream3r:jssc:2.8.0'
-    implementation 'org.json:json:20131018'
+    implementation 'io.github.java-native:jssc:2.9.4'
+    implementation 'org.json:json:20220320'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 sourceSets {
     test {
         java {
-            srcDir 'example'
+            srcDir 'test'
         }
 
     }
@@ -26,5 +36,117 @@ sourceSets {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true
+}
+
+test {
+    useJUnit()
+    finalizedBy jacocoTestReport
+}
+
 archivesBaseName = 'sbp'
 
+jacocoTestReport {
+    reports {
+        // Using deprecated 'enabled' for gradle 4 compatibility
+        xml.enabled = true
+    }
+}
+
+sonarqube {
+  properties {
+    property 'sonar.projectName', "libsbp-java"
+    property "sonar.projectKey", "swift-nav_libsbp"
+    property "sonar.organization", "swift-nav"
+    property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
+spotless {
+  java {
+    // Use Android Open Source Project style
+    googleJavaFormat().aosp()
+    importOrder()
+    endWithNewline()
+    removeUnusedImports()
+
+    licenseHeader '/* Copyright (C) 2015-2022 Swift Navigation Inc.\n' +
+                  ' * Contact: https://support.swiftnav.com\n' +
+                  ' *\n' +
+                  ' * This source is subject to the license found in the file \'LICENSE\' which must\n' +
+                  ' * be be distributed together with this source. All other rights reserved.\n' +
+                  ' *\n' +
+                  ' * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,\n' +
+                  ' * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED\n' +
+                  ' * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.\n' +
+                  ' */\n'
+  }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+
+        mavenJava(MavenPublication) {
+
+            groupId = 'com.swiftnav'
+            artifactId = 'sbp'
+            version = System.getenv("VERSION") ?: "unset-version-build" // should instead fail if version not provided?
+            from components.java
+
+            pom {
+                name = 'libsbp'
+                description = 'Swift binary protocol client libraries'
+                url = 'https://github.com/swift-nav/libsbp'
+                inceptionYear = '2021'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'adrian-kong'
+                        name = 'Adrian Kong'
+                        email = 'adrian.kong@swift-nav.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git:github.com/swift-nav/libsbp.git'
+                    developerConnection = 'scm:git:ssh://github.com/swift-nav/libsbp.git'
+                    url = 'https://github.com/swift-nav/libsbp'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = project.properties["ossrhUsername"]
+                password = project.properties["ossrhPassword"]
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -20,7 +20,7 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import *
+from sbp.gnss import GnssSignal
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/sbas.yaml with generate.py.
 # Please do not hand edit!
@@ -36,8 +36,7 @@ class MsgSbasRaw(SBP):
 
   
   This message is sent once per second per SBAS satellite. ME checks the
-parity of the data block and sends only blocks that pass the check.
-
+  parity of the data block and sends only blocks that pass the check.
 
   Parameters
   ----------
@@ -56,7 +55,7 @@ parity of the data block and sends only blocks that pass the check.
 
   """
   _parser = construct.Struct(
-                   'sid' / construct.Struct(GnssSignal._parser),
+                   'sid' / GnssSignal._parser,
                    'tow' / construct.Int32ul,
                    'message_type' / construct.Int8ul,
                    'data' / construct.Array(27, construct.Int8ul),)

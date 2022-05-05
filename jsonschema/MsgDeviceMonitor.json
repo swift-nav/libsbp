@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgDeviceMonitor",
   "title":"MsgDeviceMonitor",
-  "description":"This message contains temperature and voltage level measurements from the,\nprocessor's monitoring system and the RF frontend die temperature if,\navailable.\n",
+  "description":"This message contains temperature and voltage level measurements from the processor's monitoring system and the RF frontend die temperature if available.\n",
   "type": "object",
   "properties": {
     "dev_vin": {"type": "integer"},

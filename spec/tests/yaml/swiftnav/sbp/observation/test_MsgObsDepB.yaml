@@ -72,6 +72,8 @@ tests:
           code: 0
           reserved: 0
           sat: 218
+    c_decoded_fields:
+      n_obs: 6
     module: sbp.observation
     name: MsgObsDepB
   msg_type: '0x43'
@@ -134,6 +136,8 @@ tests:
           code: 0
           reserved: 0
           sat: 225
+    c_decoded_fields:
+      n_obs: 3
     module: sbp.observation
     name: MsgObsDepB
   msg_type: '0x43'
@@ -221,6 +225,8 @@ tests:
           code: 0
           reserved: 0
           sat: 218
+    c_decoded_fields:
+      n_obs: 6
     module: sbp.observation
     name: MsgObsDepB
   msg_type: '0x43'
@@ -283,6 +289,8 @@ tests:
           code: 0
           reserved: 0
           sat: 225
+    c_decoded_fields:
+      n_obs: 3
     module: sbp.observation
     name: MsgObsDepB
   msg_type: '0x43'
@@ -370,6 +378,8 @@ tests:
           code: 0
           reserved: 0
           sat: 218
+    c_decoded_fields:
+      n_obs: 6
     module: sbp.observation
     name: MsgObsDepB
   msg_type: '0x43'

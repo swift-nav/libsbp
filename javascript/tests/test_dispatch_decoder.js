@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: Swift Navigation <dev@swift-nav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -19,8 +19,18 @@ var utils = require('./utils');
 
 var yamlTestFiles = utils.getYamlTests();
 
+function dispatchee(err, msg) {
+  assert.equal(err, null);
+  utils.verifyFields(this.testSpec.sbp, msg.sbp);
+  utils.verifyFields(this.testSpec.msg.fields, msg.fields);
+  this.callbacks++;
+  if (this.callbacks === this.expectedCalls) {
+    this.done();
+  }
+}
+
 describe('test packages based on YAML descriptors, through the dispatcher', function () {
-  yamlTestFiles.map(function (filename) {
+  yamlTestFiles.forEach(function (filename) {
     describe(filename, function () {
       var yamlConfig = yaml.safeLoad(fs.readFileSync(filename));
       yamlConfig.tests.map(function (testSpec, i) {
@@ -29,35 +39,35 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
             var rs = new Readable();
             rs.push(new Buffer(testSpec['raw_packet'], 'base64'));
             rs.push(null);
-            dispatch(rs, function (err, msg) {
-              assert.equal(err, null);
-              utils.verifyFields(testSpec.sbp, msg.sbp);
-              utils.verifyFields(testSpec.msg.fields, msg.fields);
-              done();
-            });
+            let ctx = {
+              testSpec,
+              done,
+              expectedCalls: 1,
+              callbacks: 0,
+            };
+            dispatch(rs, dispatchee.bind(ctx));
           });
 
           it('should parse binary sbp and payload with leading extra preamble', function (done) {
             var rs = new Readable();
             rs.push(new Buffer([0x55]));
-            var expectedCalls, bufLength = 0;
-            for (expectedCalls = 0; bufLength < 500; expectedCalls++) {
+            let expectedCalls = 0
+            let bufLength = 0;
+            while (bufLength < 500) {
               var buf = new Buffer(testSpec['raw_packet'], 'base64');
               rs.push(buf);
               bufLength += buf.length;
+              expectedCalls++
             }
             rs.push(null);
 
-            var calls = 0;
-            dispatch(rs, function (err, msg) {
-              calls++;
-              assert.equal(err, null);
-              utils.verifyFields(testSpec.sbp, msg.sbp);
-              utils.verifyFields(testSpec.msg.fields, msg.fields);
-              if (calls === expectedCalls) {
-                done();
-              }
-            });
+            let ctx = {
+              testSpec,
+              done,
+              expectedCalls,
+              callbacks: 0,
+            };
+            dispatch(rs, dispatchee.bind(ctx));
           });
 
           // For both "corrupt preamble" tests, the corrupt "length" field could be much longer than the actual message.
@@ -67,22 +77,21 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
           it('should parse binary sbp and payload with leading extra preamble (2)', function (done) {
             var rs = new Readable();
             var bigBuf = new Buffer(0);
-            var expectedCalls;
-            for (expectedCalls = 0; bigBuf.length < 500; expectedCalls++) {
+            let expectedCalls = 0;
+            while (bigBuf.length < 500) {
               bigBuf = Buffer.concat([bigBuf, new Buffer(testSpec['raw_packet'], 'base64')]);
+              expectedCalls++
             }
             rs.push(Buffer.concat([new Buffer([0x55]), bigBuf]));
             rs.push(null);
-            var calls = 0;
-            dispatch(rs, function (err, msg) {
-              calls++;
-              assert.equal(err, null);
-              utils.verifyFields(testSpec.sbp, msg.sbp);
-              utils.verifyFields(testSpec.msg.fields, msg.fields);
-              if (calls === expectedCalls) {
-                done();
-              }
-            });
+
+            let ctx = {
+              testSpec,
+              done,
+              expectedCalls,
+              callbacks: 0,
+            };
+            dispatch(rs, dispatchee.bind(ctx));
           });
 
           it('should parse binary sbp and payload with leading truncated message', function (done) {
@@ -104,16 +113,13 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
             }
             rs.push(null);
 
-            var calls = 0;
-            dispatch(rs, function (err, msg) {
-              calls++;
-              assert.equal(err, null);
-              utils.verifyFields(testSpec.sbp, msg.sbp);
-              utils.verifyFields(testSpec.msg.fields, msg.fields);
-              if (calls === expectedCalls) {
-                done();
-              }
-            });
+            let ctx = {
+              testSpec,
+              done,
+              expectedCalls,
+              callbacks: 0,
+            };
+            dispatch(rs, dispatchee.bind(ctx));
           });
         });
       });

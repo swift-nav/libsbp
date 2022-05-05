@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Swift Navigation Inc.
+ * Copyright (C) 2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -14,7 +14,7 @@ syntax = "proto3";
 
 /** Tracking
  *
-  * Satellite code and carrier-phase tracking messages from the device.
+ * Satellite code and carrier-phase tracking messages from the device.
  */
 
 package swiftnav.sbp.tracking;
@@ -23,8 +23,8 @@ import "gnss.proto";
 
 /** Signal tracking channel state
  *
- * Tracking channel state for a specific satellite signal and
- * measured signal power.
+ * Tracking channel state for a specific satellite signal and measured signal
+ * power.
  */
 message TrackingChannelState {
     gnss.GnssSignal sid = 1;
@@ -34,9 +34,9 @@ message TrackingChannelState {
 
 /** Signal tracking channel states
  *
- * The tracking message returns a variable-length array of tracking
- * channel states. It reports status and carrier-to-noise density
- * measurements for all tracked satellites.
+ * The tracking message returns a variable-length array of tracking channel
+ * states. It reports status and carrier-to-noise density measurements for all
+ * tracked satellites.
  */
 message MsgTrackingState {
     repeated TrackingChannelState states = 1;
@@ -45,10 +45,8 @@ message MsgTrackingState {
 /** Measurement Engine signal tracking channel state
  *
  * Measurement Engine tracking channel state for a specific satellite signal
- * and measured signal power.
- * The mesid field for Glonass can either
- * carry the FCN as 100 + FCN where FCN is in [-7, +6] or
- * the Slot ID (from 1 to 28)
+ * and measured signal power. The mesid field for Glonass can either carry the
+ * FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28).
  */
 message MeasurementState {
     gnss.GnssSignal mesid = 1;
@@ -57,9 +55,9 @@ message MeasurementState {
 
 /** Measurement Engine signal tracking channel states
  *
- * The tracking message returns a variable-length array of tracking
- * channel states. It reports status and carrier-to-noise density
- * measurements for all tracked satellites.
+ * The tracking message returns a variable-length array of tracking channel
+ * states. It reports status and carrier-to-noise density measurements for all
+ * tracked satellites.
  */
 message MsgMeasurementState {
     repeated MeasurementState states = 1;
@@ -76,8 +74,8 @@ message TrackingChannelCorrelation {
 
 /** Tracking channel correlations
  *
- * When enabled, a tracking channel can output the correlations at each
- * update interval.
+ * When enabled, a tracking channel can output the correlations at each update
+ * interval.
  */
 message MsgTrackingIq {
     uint32 channel = 1;

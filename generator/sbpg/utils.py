@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -54,9 +54,9 @@ def rejig_bitfields(bfs):
     return new_bfs, n_with_values
 
 def comment_links(input_string):
-   pattern = re.compile(r'@@(\S+)\[(.+)\]')
+   pattern = re.compile(r'@@(\S+)\[([^\]]+)\]')
    return pattern.sub( r'\1', input_string) 
 
 def markdown_links(input_string):
-   pattern = re.compile(r'@@(\S+)\[(.+)\]')
+   pattern = re.compile(r'@@(\S+)\[([^\]]+)\]')
    return pattern.sub( r'[\2](\1)', input_string) 

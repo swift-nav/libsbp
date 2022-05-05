@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -22,13 +22,12 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
+var CarrierPhase = require("./gnss").CarrierPhase;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
+var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;
 
 /**
@@ -149,7 +148,7 @@ MsgAcqResultDepB.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldS
  * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field snr number (float, 4 bytes) SNR of best point. Currently dimensonless, but will have units of dB Hz in the
+ * @field snr number (float, 4 bytes) SNR of best point. Currently dimensionless, but will have units of dB Hz in the
  *   revision of this message.
  * @field cp number (float, 4 bytes) Code phase of best point
  * @field cf number (float, 4 bytes) Carrier frequency of best point
@@ -183,7 +182,7 @@ MsgAcqResultDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
 /**
  * SBP class for message fragment AcqSvProfile
  *
- * Profile for a specific SV for debugging purposes The message describes SV
+ * Profile for a specific SV for debugging purposes. The message describes SV
  * profile during acquisition time. The message is used to debug and measure the
  * performance.
  *

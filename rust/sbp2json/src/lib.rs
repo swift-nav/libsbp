@@ -1,75 +1,90 @@
 use std::io::{Read, Write};
 
-use dencode::{Decoder, Encoder, FramedRead, FramedWrite, IterSinkExt};
+use sbp::{
+    json::{Json2JsonEncoder, JsonEncoder},
+    SbpEncoder,
+};
 use serde_json::ser::Formatter;
 
-use sbp::{
-    codec::{
-        json::{Json2JsonDecoder, Json2JsonEncoder, JsonDecoder, JsonEncoder},
-        sbp::{SbpDecoder, SbpEncoder},
-    },
-    Error, Result,
-};
+pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 
-pub fn json2sbp<R, W>(input: R, output: W, buffered: bool) -> Result<()>
+pub fn json2sbp<R, W>(input: R, output: W, buffered: bool, fatal_errors: bool) -> Result<()>
 where
     R: Read,
     W: Write,
 {
-    let source = FramedRead::new(input, JsonDecoder::new());
-    let sink = FramedWrite::new(output, SbpEncoder::new());
-
-    maybe_send_buffered(source, sink, buffered)?;
-
+    let source = maybe_fatal_errors(sbp::json::iter_messages(input), fatal_errors);
+    let mut sink = SbpEncoder::new(output);
+    if buffered {
+        sink.send_all(source)?;
+    } else {
+        for msg in source {
+            sink.send(&msg)?;
+        }
+    }
     Ok(())
 }
 
-pub fn json2json<R, W, F>(input: R, output: W, formatter: F, unbufferd: bool) -> Result<()>
-where
-    R: Read,
-    W: Write,
-    F: Formatter + Clone,
-{
-    let source = FramedRead::new(input, Json2JsonDecoder {});
-    let sink = FramedWrite::new(output, Json2JsonEncoder::new(formatter));
-
-    maybe_send_buffered(source, sink, unbufferd)?;
-
-    Ok(())
-}
-
-pub fn sbp2json<R, W, F>(input: R, output: W, formatter: F, buffered: bool) -> Result<()>
-where
-    R: Read,
-    W: Write,
-    F: Formatter + Clone,
-{
-    let source = FramedRead::new(input, SbpDecoder {});
-    let sink = FramedWrite::new(output, JsonEncoder::new(formatter));
-
-    maybe_send_buffered(source, sink, buffered)?;
-
-    Ok(())
-}
-
-fn maybe_send_buffered<R, W, D, E>(
-    mut source: FramedRead<R, D>,
-    mut sink: FramedWrite<W, E>,
+pub fn json2json<R, W, F>(
+    input: R,
+    output: W,
+    formatter: F,
     buffered: bool,
+    fatal_errors: bool,
 ) -> Result<()>
 where
     R: Read,
     W: Write,
-    D: Decoder<Item = E::Item, Error = Error>,
-    E: Encoder<Error = Error>,
+    F: Formatter + Clone,
 {
+    let source = maybe_fatal_errors(sbp::json::iter_json2json_messages(input), fatal_errors);
+    let mut sink = Json2JsonEncoder::new(output, formatter);
     if buffered {
         sink.send_all(source)?;
     } else {
-        while let Some(msg) = source.next() {
-            sink.send(msg?)?;
+        for msg in source {
+            sink.send(msg)?;
         }
     }
-
     Ok(())
+}
+
+pub fn sbp2json<R, W, F>(
+    input: R,
+    output: W,
+    formatter: F,
+    buffered: bool,
+    fatal_errors: bool,
+) -> Result<()>
+where
+    R: Read,
+    W: Write,
+    F: Formatter + Clone,
+{
+    let source = maybe_fatal_errors(sbp::iter_messages(input), fatal_errors);
+    let mut sink = JsonEncoder::new(output, formatter);
+    if buffered {
+        sink.send_all(source)?;
+    } else {
+        for msg in source {
+            sink.send(&msg)?;
+        }
+    }
+    Ok(())
+}
+
+fn maybe_fatal_errors<'a, M, I, E>(
+    messages: I,
+    fatal_errors: bool,
+) -> Box<dyn Iterator<Item = M> + 'a>
+where
+    M: 'a,
+    I: Iterator<Item = std::result::Result<M, E>> + 'a,
+    E: std::error::Error + 'a,
+{
+    if fatal_errors {
+        Box::new(messages.take_while(|m| m.is_ok()).map(|m| m.unwrap()))
+    } else {
+        Box::new(messages.filter_map(|m| m.ok()))
+    }
 }

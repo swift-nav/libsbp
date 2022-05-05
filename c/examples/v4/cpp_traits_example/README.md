@@ -1,0 +1,1 @@
+A toy example of using message traits.

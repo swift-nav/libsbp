@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -16,11 +16,13 @@ target directory.
 
 """
 
-
 import os
 import os.path
-from sbpg.targets.templating import JENV, ACRONYMS
-from sbpg.utils import comment_links
+
+from jinja2.environment import Environment
+from jinja2.utils import pass_environment
+
+from sbpg.targets.templating import JENV, ACRONYMS, indented_wordwrap
 
 TEMPLATE_NAME = "sbp_java.java.j2"
 TEMPLATE_TABLE_NAME = "MessageTable.java.j2"
@@ -58,17 +60,15 @@ def classnameify(s):
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
 
-def commentify(value):
+@pass_environment
+def commentify(environment: Environment,
+               value: str,
+               indent: int=0):
   """
   Builds a comment.
   """
-  value = comment_links(value)
-  if value is None:
-    return
-  if len(value.split('\n')) == 1:
-    return "* " + value
-  else:
-    return '\n'.join([' * ' + l for l in value.split('\n')[:-1]])
+  return indented_wordwrap(environment, value, indent=(" " * indent) + " * ", first=False)
+
 
 def type_map(field):
   if field.type_id in JAVA_TYPE_MAP:

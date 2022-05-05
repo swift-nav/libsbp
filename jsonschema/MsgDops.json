@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgDops",
   "title":"MsgDops",
-  "description":"This dilution of precision (DOP) message describes the effect of,\nnavigation satellite geometry on positional measurement,\nprecision.  The flags field indicated whether the DOP reported,\ncorresponds to differential or SPP solution.\n",
+  "description":"This dilution of precision (DOP) message describes the effect of navigation satellite geometry on positional measurement precision.  The flags field indicated whether the DOP reported corresponds to differential or SPP solution.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

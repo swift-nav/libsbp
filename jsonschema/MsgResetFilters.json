@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgResetFilters",
   "title":"MsgResetFilters",
-  "description":"This message resets either the DGNSS Kalman filters or Integer,\nAmbiguity Resolution (IAR) process.\n",
+  "description":"This message resets either the DGNSS Kalman filters or Integer Ambiguity Resolution (IAR) process.\n",
   "type": "object",
   "properties": {
     "filter": {"type": "integer"}

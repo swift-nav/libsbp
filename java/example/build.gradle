@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: 'application'
+
+group 'com.swiftnav'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    // jssc, needed when dealing with ports
+    implementation 'io.github.java-native:jssc:2.9.4'
+    // sbp dependency
+    implementation 'com.swiftnav:sbp:1.0.0'
+}
+
+// build fat jar with dependencies
+task fatJar(type: Jar) {
+    classifier = 'all'
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+task tcpExample(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.swiftnav.example.TCPExample"
+}
+
+task serialLink(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.swiftnav.example.SerialLink"
+}
+
+task trackingState(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.swiftnav.example.SerialLink"
+}
+
+test {
+    useJUnitPlatform()
+}

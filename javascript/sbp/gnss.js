@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -26,11 +26,11 @@ var UInt64 = require('cuint').UINT64;
 /**
  * SBP class for message fragment GnssSignal
  *
- * Signal identifier containing constellation, band, and satellite identifier
+ * Signal identifier containing constellation, band, and satellite identifier.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier. This field for Glonass can   either
- *   be (100+FCN) where FCN is in [-7,+6] or  the Slot ID in [1,28]
+ * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier. This field for Glonass can either
+ *   be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -57,7 +57,7 @@ GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
  * SBP class for message fragment SvId
  *
  * A (Constellation ID, satellite ID) tuple that uniquely identifies a space
- * vehicle
+ * vehicle.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field satId number (unsigned 8-bit int, 1 byte) ID of the space vehicle within its constellation

@@ -6,13 +6,16 @@ libsbp Development Procedures
 - [Adding and Testing New Messages](#adding-and-testing-new-messages)
 - [Message Guidelines](#message-guidelines)
 - [Releasing New Versions of the Library](#releasing-new-versions-of-the-library)
+  * [Using Docker](#using-docker)
+  * [The Process](#the-process)
 - [Installing QuickType](#installing-quicktype)
+- [Distributing Rust](#distributing-rust)
 - [Distributing Python](#distributing-python)
-  * [Building on Windows](#building-on-windows)
   * [Troubleshooting](#troubleshooting)
     + [Error: `!!! No Python wheel (.whl) file found...`](#error--no-python-wheel-whl-file-found)
     + [Tox error: `ERROR: FAIL could not package project`](#tox-error-error-fail-could-not-package-project)
     + [Tox error: `ERROR: cowardly refusing to delete envdir`](#tox-error-error-cowardly-refusing-to-delete-envdir)
+- [Distributing Java](#distributing-java)
 - [Contributions](#contributions)
 
 <!-- tocstop -->
@@ -96,7 +99,7 @@ Some thoughts to consider when adding a new message:
 It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
-``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.04.22``
+    docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021-10-13
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
@@ -226,8 +229,9 @@ inside the container (so you don't have to setup git inside the docker container
 
    - `make dist-javascript`
    - `make dist-haskell`
-   - `make dist-pdf`
+   - `make dist-rust` (see section on Rust below)
    - `make dist-python` (see section on Python below)
+   - `make dist-java` (see section on Java below)
 
    You may need credentials on the appropriate package repositories. Ignore the
    GPG error in `stack`, the package will get uploaded correctly anyway.  If
@@ -251,28 +255,57 @@ In order to run the `make quicktype-*` target you need to install the
 quicktype tool first.  No particular version of this tool is required
 at the moment.
 
+# Distributing Rust
+
+To distribute Rust.  Use the `cargo-release` tool:
+
+```
+cargo install cargo-release
+```
+
+**FIRST** just try running the `dist-rust` target:
+
+```
+make dist-rust
+```
+
+If that doesn't work (consider fixing the make target), otherwise try releasing
+`sbp` and `sbp2json` crates separately, first `sbp`, this will do a dry run
+first:
+
+```
+cargo release --package sbp <INCREMENTED_TAG>
+```
+
+Then use `--execute` to actually run the release:
+
+```
+cargo release --package sbp <INCREMENTED_TAG> --execute
+```
+
+Next, release `sbp2son`, first do a dry-run:
+
+```
+cargo release --package sbp2json <INCREMENTED_TAG>
+```
+
+Then, reset any modifications from the dry run, and then actually release `sbp2son`:
+
+```
+git checkout .
+cargo release --package sbp2json <INCREMENTED_TAG> --execute
+```
+
+Then rollback any commits that are created:
+
+```
+git reset --hard v<INCREMENTED_TAG>
+```
+
 # Distributing Python
 
-Python package distribution for each platform can be created by running the
-`make dist-python` target on each platform
-(Windows, Mac OS X, Linux x86/ARM through docker).
-
-For example, running this:
-
-```
-make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
-```
-
-...will produce and upload a `.whl` appropriate for that platform.
-A wheel that targets any platform can be produced and uploaded by
-running the following command:
-
-```
-make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y
-```
-
-The Linux x86 build of libsbp should be done through docker via the
-"manylinux" project by running the following set of commands:
+The build of the libsbp wheel should be done through docker via the "manylinux"
+project by running the following set of commands:
 
 ```
 docker build -f python/Dockerfile.x86_64 -t libsbp-amd64 .
@@ -280,106 +313,6 @@ docker run -v libsbp-amd64-root:/root -v $PWD:/work --rm -it libsbp-amd64 /bin/b
 cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
-
-The Linux ARM build of libsbp can be done through docker via the following set
-of commands:
-
-```
-docker run -v libsbp-arm-root:/root -v $PWD:/work --rm -it swiftnav/libsbp-arm:2020.09.15 libsbp-arm /bin/bash
-cd /work
-make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
-```
-
-## Building on Windows
-
-### Using docker
-
-A Windows docker container is provided to streamline the process of building on Windows.
-To run this container, install Docker for Windows and enable Windows container support
-(see the [Docker documentation][windows-containers] for more details).
-
-[windows-containers]: https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers
-
-Then build the container:
-
-```
-mkdir build
-docker build -t libsbp -f .\python\Dockerfile.win build
-```
-
-And run the container:
-
-```
-docker run --rm -it -v c:\path\to\libsbp:c:/work libsbp
-```
-
-Then proceed to the "Building on Windows" section.
-
-### Manual installation
-
-In order to build on Windows, first install the necessary compilers per the
-instructions [on this Microsoft developer blog][1] (shortcut: install
-[Microsoft Visual Studio Community 2019][msvsc2019] and select the "native
-Python development" option, or you can install [Visual Studio Build
-Tools][vcbuildtools] and install the "C++ build tools", also make sure to
-install MSVC v140 and MSCV v141.  Afterwards install the 64-bit Python 3.7
-version of [Conda][2].  You'll also need to install [Chocolatey][3].
-
-[1]: https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
-[2]: https://docs.conda.io/en/latest/miniconda.html
-[3]: https://chocolatey.org/docs/installation
-[msvsc2019]: https://www.microsoft.com/en-us/download/details.aspx?id=48159
-[vcbuildtools]: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019
-
-For Chocolatey, the following packages are recommended:
-- make
-- vcredist140
-- vcredist2015
-
-### Building on Windows
-
-In order to compile for 64-bit: start a command shell with the x64 set
-of compiler tools (shortcut `x64 Native Tools Command Prompt for VS 2019`).
-Then activate Conda with the `activate.bat` script in the Conda installation.
-
-Alternately, if you're using PowerShell, you can use the utility here:
-https://github.com/olegsych/posh-vs -- in order to  bring Visual Studio
-compilers into your PowerShell session.  For example for 64-bit:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
-    $env:CONDA_FORCE_32BIT = 0
-
-Or if you install the Visual Studio Build tools:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat'
-    $env:CONDA_FORCE_32BIT = 1
-
-And for 32-bit:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat'
-    $env:CONDA_FORCE_32BIT = 1
-
-Or if you install the Visual Studio Build tools:
-
-    Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars32.bat'
-    $env:CONDA_FORCE_32BIT = 0
-
-Then invoke the `dist-python` target from `libsbp` (with appropriate PyPI auth).
-This will need to be once for 32-bit and 64-bit.
-
-If not using PowerShell, to compile for 32-bit: start a command shell with 
-the x86 set of compiler tools (shortcut `x86 Native Tools Command Prompt for VS 2019`).
-Then activate Conda with the `activate.bat` script in the Conda installation.
-
-Prior to invoking the `dist-python` target.  Set the following global variable
-to force Conda to create 32-bit environemnts:
-
-    set CONDA_FORCE_32BIT=1
-
-Then invoke the `dist-python` target per usual. (Side note: at some point
-it was also necessary to delete libraries from `C:\Users\<user>\AppData\Roaming\Python`
-in order to prevent 32-bit Conda Python from loading libraries of the wrong
-architecture).
 
 ## Troubleshooting
 
@@ -412,6 +345,58 @@ There's an open tox issue for this: https://github.com/tox-dev/tox/issues/1354
 -- the only workaround that resolved this was to downgrade tox:
 
     pip install --upgrade --force-reinstall tox==3.12.1
+
+# Distributing Java
+
+To distribute java, ensure you have the correct credentials and prerequisites
+- Gradle 7+
+- gradle.properties
+- Sonatype deployer account
+- Your own GPG key
+
+Add in `gradle.properties` located in `.gradle` or wherever the working
+directory is setup (probably located/have to create it in
+`$HOME/.gradle/gradle.properties`).  It's recommended to create
+`.gradle/gradle.properties` in the `libsbp` checkout directory so you can
+invoke docker like this in order to run the `dist-java` task:
+
+```shell
+docker run -v $PWD/.gradle:/home/dockerdev/.gradle -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021-10-13 /bin/bash
+```
+
+Then, create `gradle.properties` as follows:
+
+```shell
+# last 8 digit of gpg key
+signing.keyId=xxx
+# password for gpg key
+signing.password=xxx
+# path to exported secret gpg keys
+signing.secretKeyRingFile=path_to_secret.gpg
+
+# sonatype logins
+ossrhUsername=xxx
+ossrhPassword=xxx
+```
+
+Modify `ossrhUsername` and `ossrhPassword` with the sonatype deployer account
+(or an individual one with deployer role).  See [SonaType getting started
+guide](https://central.sonatype.org/publish/publish-guide/) for more details.
+Internal Swift developers should have access to shared credentials.
+
+Generate GPG key with
+```shell
+gpg --gen-key
+gpg --export-secret-keys <key> > keys.gpg
+gpg --keyserver keyserver.ubuntu.com --send-keys <key>
+```
+
+To publish, run `gradle publish` (via `make dist-java`) - (might have some
+conflicts with the version, so should use Makefile to actually publish with
+the correct version, so run `make dist-java` in docker)
+
+After publishing, go to Nexus Repository Manager. Select the deployed version,
+close the staging repository and release to finish it off.
 
 # Contributions
 

@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSolnMeta",
   "title":"MsgSolnMeta",
-  "description":"This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.,\nIt focuses primarly, but not only, on GNSS metadata.,\nRegarding the age of the last received valid GNSS solution, the highest two bits are time status, indicating,\nwhether age gnss can or can not be used to retrieve time of measurement (noted TOM, also known as time of validity),\nIf it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is,\ncomplete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.\n",
+  "description":"This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution. It focuses primarily, but not only, on GNSS metadata. Regarding the age of the last received valid GNSS solution, the highest two bits are time status, indicating whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also known as time of validity) If it can, subtract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

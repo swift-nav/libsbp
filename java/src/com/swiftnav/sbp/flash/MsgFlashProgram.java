@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,56 +8,54 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.flash;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/flash.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
-import org.json.JSONObject;
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-/** SBP class for message MSG_FLASH_PROGRAM (0x00E6).
+/**
+ * SBP class for message MSG_FLASH_PROGRAM (0x00E6).
  *
- * You can have MSG_FLASH_PROGRAM inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_FLASH_PROGRAM inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * The flash program message programs a set of addresses of either
- * the STM or M25 flash. The device replies with either a
- * MSG_FLASH_DONE message containing the return code FLASH_OK (0)
- * on success, or FLASH_INVALID_LEN (2) if the maximum write size
- * is exceeded. Note that the sector-containing addresses must be
- * erased before addresses can be programmed. */
-
+ * <p>The flash program message programs a set of addresses of either the STM or M25 flash. The
+ * device replies with either a MSG_FLASH_DONE message containing the return code FLASH_OK (0) on
+ * success, or FLASH_INVALID_LEN (2) if the maximum write size is exceeded. Note that the
+ * sector-containing addresses must be erased before addresses can be programmed.
+ */
 public class MsgFlashProgram extends SBPMessage {
     public static final int TYPE = 0x00E6;
 
-    
     /** Target flags */
     public int target;
-    
+
     /** Starting address offset to program */
     public int[] addr_start;
-    
-    /** Length of set of addresses to program, counting up from
-starting address
- */
+
+    /** Length of set of addresses to program, counting up from starting address */
     public int addr_len;
-    
+
     /** Data to program addresses with, with length N=addr_len */
     public int[] data;
-    
 
-    public MsgFlashProgram (int sender) { super(sender, TYPE); }
-    public MsgFlashProgram () { super(TYPE); }
-    public MsgFlashProgram (SBPMessage msg) throws SBPBinaryException {
+    public MsgFlashProgram(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgFlashProgram() {
+        super(TYPE);
+    }
+
+    public MsgFlashProgram(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgBootloaderHandshakeResp",
   "title":"MsgBootloaderHandshakeResp",
-  "description":"The handshake message response from the device establishes a,\nhandshake between the device bootloader and the host. The,\nrequest from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The,\npayload contains the bootloader version number and the SBP,\nprotocol version number.\n",
+  "description":"The handshake message response from the device establishes a handshake between the device bootloader and the host. The request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The payload contains the bootloader version number and the SBP protocol version number.\n",
   "type": "object",
   "properties": {
     "flags": {"type": "integer"},

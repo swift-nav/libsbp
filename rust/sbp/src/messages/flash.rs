@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -12,725 +12,1052 @@
 // Automatically generated from yaml/swiftnav/sbp/flash.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Messages for reading/writing the device's onboard flash memory. Many
-//! of these messages target specific flash memory peripherals used in
-//! Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
-//! configuration flash from Piksi 2.3.1.  This module does not apply
-//! to Piksi Multi.
-//!
+//! Messages for reading/writing the device's onboard flash memory. Many of
+//! these messages target specific flash memory peripherals used in Swift
+//! Navigation devices: the STM32 flash and the M25Pxx FPGA configuration
+//! flash from Piksi 2.3.1.  This module does not apply to Piksi Multi.
+pub use msg_flash_done::MsgFlashDone;
+pub use msg_flash_erase::MsgFlashErase;
+pub use msg_flash_program::MsgFlashProgram;
+pub use msg_flash_read_req::MsgFlashReadReq;
+pub use msg_flash_read_resp::MsgFlashReadResp;
+pub use msg_m25_flash_write_status::MsgM25FlashWriteStatus;
+pub use msg_stm_flash_lock_sector::MsgStmFlashLockSector;
+pub use msg_stm_flash_unlock_sector::MsgStmFlashUnlockSector;
+pub use msg_stm_unique_id_req::MsgStmUniqueIdReq;
+pub use msg_stm_unique_id_resp::MsgStmUniqueIdResp;
 
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
+pub mod msg_flash_done {
+    #![allow(unused_imports)]
 
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+    use super::*;
+    use crate::messages::lib::*;
 
-/// Flash response message (host <= device).
-///
-/// This message defines success or failure codes for a variety of
-/// flash memory requests from the host to the device. Flash read
-/// and write messages, such as MSG_FLASH_READ_REQ, or
-/// MSG_FLASH_PROGRAM, may return this message on failure.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgFlashDone {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Response flags
-    pub response: u8,
-}
-
-impl MsgFlashDone {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, crate::Error> {
-        Ok( MsgFlashDone{
-            sender_id: None,
-            response: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgFlashDone {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_FLASH_DONE"
+    /// Flash response message (host <= device)
+    ///
+    /// This message defines success or failure codes for a variety of flash
+    /// memory requests from the host to the device. Flash read and write
+    /// messages, such as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return
+    /// this message on failure.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgFlashDone {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Response flags
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "response")))]
+        pub response: u8,
     }
 
-    fn get_message_type(&self) -> u16 {
-        224
+    impl MsgFlashDone {
+        /// Gets the [ResponseCode][self::ResponseCode] stored in the `response` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ResponseCode` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ResponseCode` were added.
+        pub fn response_code(&self) -> Result<ResponseCode, u8> {
+            get_bit_range!(self.response, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [ResponseCode][ResponseCode] of the `response` bitfield.
+        pub fn set_response_code(&mut self, response_code: ResponseCode) {
+            set_bit_range!(&mut self.response, response_code, u8, u8, 2, 0);
+        }
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl ConcreteMessage for MsgFlashDone {
+        const MESSAGE_TYPE: u16 = 224;
+        const MESSAGE_NAME: &'static str = "MSG_FLASH_DONE";
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
+    impl SbpMessage for MsgFlashDone {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    impl TryFrom<Sbp> for MsgFlashDone {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgFlashDone(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgFlashDone {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.response.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.response.sbp_size();
-        size
-    }
-}
-
-/// Erase sector of device flash memory (host => device).
-///
-/// The flash erase message from the host erases a sector of either
-/// the STM or M25 onboard flash memory. The device will reply with a
-/// MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
-/// on success or FLASH_INVALID_FLASH (1) if the flash specified is
-/// invalid.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgFlashErase {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Target flags
-    pub target: u8,
-    /// Flash sector number to erase (0-11 for the STM, 0-15 for the M25)
-    pub sector_num: u32,
-}
-
-impl MsgFlashErase {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, crate::Error> {
-        Ok( MsgFlashErase{
-            sender_id: None,
-            target: _buf.read_u8()?,
-            sector_num: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgFlashErase {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_FLASH_ERASE"
+    impl WireFormat for MsgFlashDone {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.response)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.response, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgFlashDone {
+                sender_id: None,
+                response: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 
-    fn get_message_type(&self) -> u16 {
-        226
+    /// Response code
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum ResponseCode {
+        /// FLASH_OK
+        FlashOk = 0,
+
+        /// FLASH_INVALID_FLASH
+        FlashInvalidFlash = 1,
+
+        /// FLASH_INVALID_LEN
+        FlashInvalidLen = 2,
+
+        /// FLASH_INVALID_ADDR
+        FlashInvalidAddr = 3,
+
+        /// FLASH_INVALID_RANGE
+        FlashInvalidRange = 4,
+
+        /// FLASH_INVALID_SECTOR
+        FlashInvalidSector = 5,
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl std::fmt::Display for ResponseCode {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                ResponseCode::FlashOk => f.write_str("FLASH_OK"),
+                ResponseCode::FlashInvalidFlash => f.write_str("FLASH_INVALID_FLASH"),
+                ResponseCode::FlashInvalidLen => f.write_str("FLASH_INVALID_LEN"),
+                ResponseCode::FlashInvalidAddr => f.write_str("FLASH_INVALID_ADDR"),
+                ResponseCode::FlashInvalidRange => f.write_str("FLASH_INVALID_RANGE"),
+                ResponseCode::FlashInvalidSector => f.write_str("FLASH_INVALID_SECTOR"),
+            }
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgFlashErase {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.target.append_to_sbp_buffer(buf);
-        self.sector_num.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.target.sbp_size();
-        size += self.sector_num.sbp_size();
-        size
-    }
-}
-
-/// Program flash addresses
-///
-/// The flash program message programs a set of addresses of either
-/// the STM or M25 flash. The device replies with either a
-/// MSG_FLASH_DONE message containing the return code FLASH_OK (0)
-/// on success, or FLASH_INVALID_LEN (2) if the maximum write size
-/// is exceeded. Note that the sector-containing addresses must be
-/// erased before addresses can be programmed.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgFlashProgram {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Target flags
-    pub target: u8,
-    /// Starting address offset to program
-    pub addr_start: Vec<u8>,
-    /// Length of set of addresses to program, counting up from starting address
-    pub addr_len: u8,
-    /// Data to program addresses with, with length N=addr_len
-    pub data: Vec<u8>,
-}
-
-impl MsgFlashProgram {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, crate::Error> {
-        Ok( MsgFlashProgram{
-            sender_id: None,
-            target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
-            addr_len: _buf.read_u8()?,
-            data: crate::parser::read_u8_array(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgFlashProgram {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_FLASH_PROGRAM"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        230
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    impl TryFrom<u8> for ResponseCode {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(ResponseCode::FlashOk),
+                1 => Ok(ResponseCode::FlashInvalidFlash),
+                2 => Ok(ResponseCode::FlashInvalidLen),
+                3 => Ok(ResponseCode::FlashInvalidAddr),
+                4 => Ok(ResponseCode::FlashInvalidRange),
+                5 => Ok(ResponseCode::FlashInvalidSector),
+                i => Err(i),
+            }
+        }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFlashProgram {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.target.append_to_sbp_buffer(buf);
-        self.addr_start.append_to_sbp_buffer(buf);
-        self.addr_len.append_to_sbp_buffer(buf);
-        self.data.append_to_sbp_buffer(buf);
+pub mod msg_flash_erase {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Erase sector of device flash memory (host => device)
+    ///
+    /// The flash erase message from the host erases a sector of either the STM or
+    /// M25 onboard flash memory. The device will reply with a MSG_FLASH_DONE
+    /// message containing the return code - FLASH_OK (0) on success or
+    /// FLASH_INVALID_FLASH (1) if the flash specified is invalid.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgFlashErase {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Target flags
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        pub target: u8,
+        /// Flash sector number to erase (0-11 for the STM, 0-15 for the M25)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sector_num")))]
+        pub sector_num: u32,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.target.sbp_size();
-        size += self.addr_start.sbp_size();
-        size += self.addr_len.sbp_size();
-        size += self.data.sbp_size();
-        size
-    }
-}
+    impl MsgFlashErase {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
+        pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into()
+        }
 
-/// Read STM or M25 flash address request (host => device).
-///
-/// The flash read message reads a set of addresses of either the
-/// STM or M25 onboard flash. The device replies with a
-/// MSG_FLASH_READ_RESP message containing either the read data on
-/// success or a MSG_FLASH_DONE message containing the return code
-/// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
-/// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
-/// range.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgFlashReadReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Target flags
-    pub target: u8,
-    /// Starting address offset to read from
-    pub addr_start: Vec<u8>,
-    /// Length of set of addresses to read, counting up from starting address
-    pub addr_len: u8,
-}
-
-impl MsgFlashReadReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, crate::Error> {
-        Ok( MsgFlashReadReq{
-            sender_id: None,
-            target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
-            addr_len: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgFlashReadReq {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_FLASH_READ_REQ"
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
+        pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
+            set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+        }
     }
 
-    fn get_message_type(&self) -> u16 {
-        231
+    impl ConcreteMessage for MsgFlashErase {
+        const MESSAGE_TYPE: u16 = 226;
+        const MESSAGE_NAME: &'static str = "MSG_FLASH_ERASE";
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl SbpMessage for MsgFlashErase {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
+    impl TryFrom<Sbp> for MsgFlashErase {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgFlashErase(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    impl WireFormat for MsgFlashErase {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <u32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.target) + WireFormat::len(&self.sector_num)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.target, buf);
+            WireFormat::write(&self.sector_num, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgFlashErase {
+                sender_id: None,
+                target: WireFormat::parse_unchecked(buf),
+                sector_num: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
+    /// Flash target to read
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum FlashTargetToRead {
+        /// FLASH_STM
+        FlashStm = 0,
 
-impl crate::serialize::SbpSerialize for MsgFlashReadReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.target.append_to_sbp_buffer(buf);
-        self.addr_start.append_to_sbp_buffer(buf);
-        self.addr_len.append_to_sbp_buffer(buf);
+        /// FLASH_M25
+        FlashM25 = 1,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.target.sbp_size();
-        size += self.addr_start.sbp_size();
-        size += self.addr_len.sbp_size();
-        size
-    }
-}
-
-/// Read STM or M25 flash address response (host <= device).
-///
-/// The flash read message reads a set of addresses of either the
-/// STM or M25 onboard flash. The device replies with a
-/// MSG_FLASH_READ_RESP message containing either the read data on
-/// success or a MSG_FLASH_DONE message containing the return code
-/// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
-/// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
-/// range.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgFlashReadResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Target flags
-    pub target: u8,
-    /// Starting address offset to read from
-    pub addr_start: Vec<u8>,
-    /// Length of set of addresses to read, counting up from starting address
-    pub addr_len: u8,
-}
-
-impl MsgFlashReadResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, crate::Error> {
-        Ok( MsgFlashReadResp{
-            sender_id: None,
-            target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
-            addr_len: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgFlashReadResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_FLASH_READ_RESP"
+    impl std::fmt::Display for FlashTargetToRead {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+                FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
     }
 
-    fn get_message_type(&self) -> u16 {
-        225
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                i => Err(i),
+            }
+        }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgFlashReadResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.target.append_to_sbp_buffer(buf);
-        self.addr_start.append_to_sbp_buffer(buf);
-        self.addr_len.append_to_sbp_buffer(buf);
+pub mod msg_flash_program {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Program flash addresses
+    ///
+    /// The flash program message programs a set of addresses of either the STM or
+    /// M25 flash. The device replies with either a MSG_FLASH_DONE message
+    /// containing the return code FLASH_OK (0) on success, or FLASH_INVALID_LEN
+    /// (2) if the maximum write size is exceeded. Note that the sector-containing
+    /// addresses must be erased before addresses can be programmed.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgFlashProgram {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Target flags
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        pub target: u8,
+        /// Starting address offset to program
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_start")))]
+        pub addr_start: [u8; 3],
+        /// Length of set of addresses to program, counting up from starting address
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
+        pub addr_len: u8,
+        /// Data to program addresses with, with length N=addr_len
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
+        pub data: Vec<u8>,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.target.sbp_size();
-        size += self.addr_start.sbp_size();
-        size += self.addr_len.sbp_size();
-        size
-    }
-}
+    impl MsgFlashProgram {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
+        pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into()
+        }
 
-/// Write M25 flash status register (host => device)
-///
-/// The flash status message writes to the 8-bit M25 flash status
-/// register. The device replies with a MSG_FLASH_DONE message.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgM25FlashWriteStatus {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Byte to write to the M25 flash status register
-    pub status: Vec<u8>,
-}
-
-impl MsgM25FlashWriteStatus {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, crate::Error> {
-        Ok( MsgM25FlashWriteStatus{
-            sender_id: None,
-            status: crate::parser::read_u8_array_limit(_buf, 1)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgM25FlashWriteStatus {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_M25_FLASH_WRITE_STATUS"
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
+        pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
+            set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+        }
     }
 
-    fn get_message_type(&self) -> u16 {
-        243
+    impl ConcreteMessage for MsgFlashProgram {
+        const MESSAGE_TYPE: u16 = 230;
+        const MESSAGE_NAME: &'static str = "MSG_FLASH_PROGRAM";
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl SbpMessage for MsgFlashProgram {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
+    impl TryFrom<Sbp> for MsgFlashProgram {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgFlashProgram(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    impl WireFormat for MsgFlashProgram {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <[u8; 3] as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.target)
+                + WireFormat::len(&self.addr_start)
+                + WireFormat::len(&self.addr_len)
+                + WireFormat::len(&self.data)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.target, buf);
+            WireFormat::write(&self.addr_start, buf);
+            WireFormat::write(&self.addr_len, buf);
+            WireFormat::write(&self.data, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgFlashProgram {
+                sender_id: None,
+                target: WireFormat::parse_unchecked(buf),
+                addr_start: WireFormat::parse_unchecked(buf),
+                addr_len: WireFormat::parse_unchecked(buf),
+                data: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
+    /// Flash target to read
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum FlashTargetToRead {
+        /// FLASH_STM
+        FlashStm = 0,
 
-impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.status.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.status.sbp_size();
-        size
-    }
-}
-
-/// Lock sector of STM flash memory (host => device)
-///
-/// The flash lock message locks a sector of the STM flash
-/// memory. The device replies with a MSG_FLASH_DONE message.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgStmFlashLockSector {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Flash sector number to lock
-    pub sector: u32,
-}
-
-impl MsgStmFlashLockSector {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, crate::Error> {
-        Ok( MsgStmFlashLockSector{
-            sender_id: None,
-            sector: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgStmFlashLockSector {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_STM_FLASH_LOCK_SECTOR"
+        /// FLASH_M25
+        FlashM25 = 1,
     }
 
-    fn get_message_type(&self) -> u16 {
-        227
+    impl std::fmt::Display for FlashTargetToRead {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+                FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sector.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sector.sbp_size();
-        size
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                i => Err(i),
+            }
+        }
     }
 }
 
-/// Unlock sector of STM flash memory (host => device)
-///
-/// The flash unlock message unlocks a sector of the STM flash
-/// memory. The device replies with a MSG_FLASH_DONE message.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgStmFlashUnlockSector {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Flash sector number to unlock
-    pub sector: u32,
-}
+pub mod msg_flash_read_req {
+    #![allow(unused_imports)]
 
-impl MsgStmFlashUnlockSector {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, crate::Error> {
-        Ok( MsgStmFlashUnlockSector{
-            sender_id: None,
-            sector: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgStmFlashUnlockSector {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_STM_FLASH_UNLOCK_SECTOR"
-    }
+    use super::*;
+    use crate::messages::lib::*;
 
-    fn get_message_type(&self) -> u16 {
-        228
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    /// Read STM or M25 flash address request (host => device)
+    ///
+    /// The flash read message reads a set of addresses of either the STM or M25
+    /// onboard flash. The device replies with a MSG_FLASH_READ_RESP message
+    /// containing either the read data on success or a MSG_FLASH_DONE message
+    /// containing the return code FLASH_INVALID_LEN (2) if the maximum read size
+    /// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
+    /// allowed range.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgFlashReadReq {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Target flags
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        pub target: u8,
+        /// Starting address offset to read from
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_start")))]
+        pub addr_start: [u8; 3],
+        /// Length of set of addresses to read, counting up from starting address
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
+        pub addr_len: u8,
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
+    impl MsgFlashReadReq {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
+        pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
+        pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
+            set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+        }
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    impl ConcreteMessage for MsgFlashReadReq {
+        const MESSAGE_TYPE: u16 = 231;
+        const MESSAGE_NAME: &'static str = "MSG_FLASH_READ_REQ";
     }
 
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sector.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sector.sbp_size();
-        size
-    }
-}
-
-/// Read device's hardcoded unique ID request (host => device)
-
-///
-/// This message reads the device's hardcoded unique ID. The host
-/// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
-/// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
-/// ID in the payload.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgStmUniqueIdReq {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-}
-
-impl MsgStmUniqueIdReq {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, crate::Error> {
-        Ok( MsgStmUniqueIdReq{
-            sender_id: None,
-        } )
-    }
-}
-impl super::SBPMessage for MsgStmUniqueIdReq {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_STM_UNIQUE_ID_REQ"
+    impl SbpMessage for MsgFlashReadReq {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn get_message_type(&self) -> u16 {
-        232
+    impl TryFrom<Sbp> for MsgFlashReadReq {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgFlashReadReq(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl WireFormat for MsgFlashReadReq {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <[u8; 3] as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.target)
+                + WireFormat::len(&self.addr_start)
+                + WireFormat::len(&self.addr_len)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.target, buf);
+            WireFormat::write(&self.addr_start, buf);
+            WireFormat::write(&self.addr_len, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgFlashReadReq {
+                sender_id: None,
+                target: WireFormat::parse_unchecked(buf),
+                addr_start: WireFormat::parse_unchecked(buf),
+                addr_len: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
+    /// Flash target to read
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum FlashTargetToRead {
+        /// FLASH_STM
+        FlashStm = 0,
+
+        /// FLASH_M25
+        FlashM25 = 1,
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
+    impl std::fmt::Display for FlashTargetToRead {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+                FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
     }
 
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
-
-    fn sbp_size(&self) -> usize {
-        0
-    }
-}
-
-/// Read device's hardcoded unique ID response (host <= device)
-
-///
-/// This message reads the device's hardcoded unique ID. The host
-/// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
-/// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
-/// ID in the payload..
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgStmUniqueIdResp {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// Device unique ID
-    pub stm_id: Vec<u8>,
-}
-
-impl MsgStmUniqueIdResp {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, crate::Error> {
-        Ok( MsgStmUniqueIdResp{
-            sender_id: None,
-            stm_id: crate::parser::read_u8_array_limit(_buf, 12)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgStmUniqueIdResp {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_STM_UNIQUE_ID_RESP"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        229
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                i => Err(i),
+            }
+        }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgStmUniqueIdResp {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.stm_id.append_to_sbp_buffer(buf);
+pub mod msg_flash_read_resp {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Read STM or M25 flash address response (host <= device)
+    ///
+    /// The flash read message reads a set of addresses of either the STM or M25
+    /// onboard flash. The device replies with a MSG_FLASH_READ_RESP message
+    /// containing either the read data on success or a MSG_FLASH_DONE message
+    /// containing the return code FLASH_INVALID_LEN (2) if the maximum read size
+    /// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
+    /// allowed range.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgFlashReadResp {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Target flags
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        pub target: u8,
+        /// Starting address offset to read from
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_start")))]
+        pub addr_start: [u8; 3],
+        /// Length of set of addresses to read, counting up from starting address
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
+        pub addr_len: u8,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.stm_id.sbp_size();
-        size
+    impl MsgFlashReadResp {
+        /// Gets the [FlashTargetToRead][self::FlashTargetToRead] stored in the `target` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `FlashTargetToRead` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `FlashTargetToRead` were added.
+        pub fn flash_target_to_read(&self) -> Result<FlashTargetToRead, u8> {
+            get_bit_range!(self.target, u8, u8, 0, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [FlashTargetToRead][FlashTargetToRead] of the `target` bitfield.
+        pub fn set_flash_target_to_read(&mut self, flash_target_to_read: FlashTargetToRead) {
+            set_bit_range!(&mut self.target, flash_target_to_read, u8, u8, 0, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgFlashReadResp {
+        const MESSAGE_TYPE: u16 = 225;
+        const MESSAGE_NAME: &'static str = "MSG_FLASH_READ_RESP";
+    }
+
+    impl SbpMessage for MsgFlashReadResp {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgFlashReadResp {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgFlashReadResp(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgFlashReadResp {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <[u8; 3] as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.target)
+                + WireFormat::len(&self.addr_start)
+                + WireFormat::len(&self.addr_len)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.target, buf);
+            WireFormat::write(&self.addr_start, buf);
+            WireFormat::write(&self.addr_len, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgFlashReadResp {
+                sender_id: None,
+                target: WireFormat::parse_unchecked(buf),
+                addr_start: WireFormat::parse_unchecked(buf),
+                addr_len: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Flash target to read
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum FlashTargetToRead {
+        /// FLASH_STM
+        FlashStm = 0,
+
+        /// FLASH_M25
+        FlashM25 = 1,
+    }
+
+    impl std::fmt::Display for FlashTargetToRead {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                FlashTargetToRead::FlashStm => f.write_str("FLASH_STM"),
+                FlashTargetToRead::FlashM25 => f.write_str("FLASH_M25"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for FlashTargetToRead {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(FlashTargetToRead::FlashStm),
+                1 => Ok(FlashTargetToRead::FlashM25),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_m25_flash_write_status {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Write M25 flash status register (host => device)
+    ///
+    /// The flash status message writes to the 8-bit M25 flash status register.
+    /// The device replies with a MSG_FLASH_DONE message.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgM25FlashWriteStatus {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Byte to write to the M25 flash status register
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        pub status: [u8; 1],
+    }
+
+    impl ConcreteMessage for MsgM25FlashWriteStatus {
+        const MESSAGE_TYPE: u16 = 243;
+        const MESSAGE_NAME: &'static str = "MSG_M25_FLASH_WRITE_STATUS";
+    }
+
+    impl SbpMessage for MsgM25FlashWriteStatus {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgM25FlashWriteStatus {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgM25FlashWriteStatus(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgM25FlashWriteStatus {
+        const MIN_LEN: usize = <[u8; 1] as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.status)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.status, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgM25FlashWriteStatus {
+                sender_id: None,
+                status: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_stm_flash_lock_sector {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Lock sector of STM flash memory (host => device)
+    ///
+    /// The flash lock message locks a sector of the STM flash memory. The device
+    /// replies with a MSG_FLASH_DONE message.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgStmFlashLockSector {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Flash sector number to lock
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sector")))]
+        pub sector: u32,
+    }
+
+    impl ConcreteMessage for MsgStmFlashLockSector {
+        const MESSAGE_TYPE: u16 = 227;
+        const MESSAGE_NAME: &'static str = "MSG_STM_FLASH_LOCK_SECTOR";
+    }
+
+    impl SbpMessage for MsgStmFlashLockSector {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgStmFlashLockSector {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgStmFlashLockSector(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgStmFlashLockSector {
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.sector)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.sector, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgStmFlashLockSector {
+                sender_id: None,
+                sector: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_stm_flash_unlock_sector {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Unlock sector of STM flash memory (host => device)
+    ///
+    /// The flash unlock message unlocks a sector of the STM flash memory. The
+    /// device replies with a MSG_FLASH_DONE message.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgStmFlashUnlockSector {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Flash sector number to unlock
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sector")))]
+        pub sector: u32,
+    }
+
+    impl ConcreteMessage for MsgStmFlashUnlockSector {
+        const MESSAGE_TYPE: u16 = 228;
+        const MESSAGE_NAME: &'static str = "MSG_STM_FLASH_UNLOCK_SECTOR";
+    }
+
+    impl SbpMessage for MsgStmFlashUnlockSector {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgStmFlashUnlockSector {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgStmFlashUnlockSector(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgStmFlashUnlockSector {
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.sector)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.sector, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgStmFlashUnlockSector {
+                sender_id: None,
+                sector: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_stm_unique_id_req {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Read device's hard-coded unique ID request (host => device)
+
+    ///
+    /// This message reads the device's hard-coded unique ID. The host requests
+    /// the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+    /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgStmUniqueIdReq {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+    }
+
+    impl ConcreteMessage for MsgStmUniqueIdReq {
+        const MESSAGE_TYPE: u16 = 232;
+        const MESSAGE_NAME: &'static str = "MSG_STM_UNIQUE_ID_REQ";
+    }
+
+    impl SbpMessage for MsgStmUniqueIdReq {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgStmUniqueIdReq {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgStmUniqueIdReq(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgStmUniqueIdReq {
+        const MIN_LEN: usize = 0;
+        fn len(&self) -> usize {
+            0
+        }
+        fn write<B: BufMut>(&self, _buf: &mut B) {}
+        fn parse_unchecked<B: Buf>(_buf: &mut B) -> Self {
+            MsgStmUniqueIdReq { sender_id: None }
+        }
+    }
+}
+
+pub mod msg_stm_unique_id_resp {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Read device's hard-coded unique ID response (host <= device)
+
+    ///
+    /// This message reads the device's hard-coded unique ID. The host requests
+    /// the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+    /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgStmUniqueIdResp {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Device unique ID
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "stm_id")))]
+        pub stm_id: [u8; 12],
+    }
+
+    impl ConcreteMessage for MsgStmUniqueIdResp {
+        const MESSAGE_TYPE: u16 = 229;
+        const MESSAGE_NAME: &'static str = "MSG_STM_UNIQUE_ID_RESP";
+    }
+
+    impl SbpMessage for MsgStmUniqueIdResp {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgStmUniqueIdResp {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgStmUniqueIdResp(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgStmUniqueIdResp {
+        const MIN_LEN: usize = <[u8; 12] as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.stm_id)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stm_id, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgStmUniqueIdResp {
+                sender_id: None,
+                stm_id: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }

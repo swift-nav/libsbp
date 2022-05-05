@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -11,7 +11,8 @@
 
 
 """
-Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
+Standardized Metadata messages for Fuzed Solution from Swift Navigation
+devices.
 """
 
 import json
@@ -28,13 +29,12 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 class SolutionInputType(object):
   """SolutionInputType.
   
-  Metadata describing which sensors were involved in the solution.
-The structure is fixed no matter what the actual sensor type is.
-The sensor_type field tells you which sensor we are talking about. It also tells you
-whether the sensor data was actually used or not.
-The flags field, always a u8, contains the sensor-specific data.
-The content of flags, for each sensor type, is described in the relevant structures in this section.
-
+  Metadata describing which sensors were involved in the solution. The
+  structure is fixed no matter what the actual sensor type is. The sensor_type
+  field tells you which sensor we are talking about. It also tells you whether
+  the sensor data was actually used or not. The flags field, always a u8,
+  contains the sensor-specific data. The content of flags, for each sensor
+  type, is described in the relevant structures in this section.
   
   Parameters
   ----------
@@ -44,9 +44,9 @@ The content of flags, for each sensor type, is described in the relevant structu
     Refer to each InputType description
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'sensor_type' / construct.Int8ul,
-                     'flags' / construct.Int8ul,))
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'sensor_type',
                'flags',
@@ -66,17 +66,12 @@ The content of flags, for each sensor type, is described in the relevant structu
     p = SolutionInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SolutionInputType.build(d)
     
 class GNSSInputType(object):
   """GNSSInputType.
   
-  Metadata around the GNSS sensors involved in the fuzed solution.
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
-
+  Metadata around the GNSS sensors involved in the fuzed solution. Accessible
+  through sol_in[N].flags in a MSG_SOLN_META.
   
   Parameters
   ----------
@@ -84,8 +79,8 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     flags that store all relevant info specific to this sensor type.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'flags' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'flags',
               ]
@@ -103,17 +98,12 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     p = GNSSInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GNSSInputType.build(d)
     
 class IMUInputType(object):
   """IMUInputType.
   
-  Metadata around the IMU sensors involved in the fuzed solution.
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
-
+  Metadata around the IMU sensors involved in the fuzed solution. Accessible
+  through sol_in[N].flags in a MSG_SOLN_META.
   
   Parameters
   ----------
@@ -121,8 +111,8 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     Instrument time, grade, and architecture for a sensor.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'flags' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'flags',
               ]
@@ -140,17 +130,12 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     p = IMUInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return IMUInputType.build(d)
     
 class OdoInputType(object):
   """OdoInputType.
   
   Metadata around the Odometry sensors involved in the fuzed solution.
-Accessible through sol_in[N].flags in a MSG_SOLN_META.
-
+  Accessible through sol_in[N].flags in a MSG_SOLN_META.
   
   Parameters
   ----------
@@ -158,8 +143,8 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     Instrument ODO rate, grade, and quality.
 
   """
-  _parser = construct.Embedded(construct.Struct(
-                     'flags' / construct.Int8ul,))
+  _parser = construct.Struct(
+                     'flags' / construct.Int8ul,)
   __slots__ = [
                'flags',
               ]
@@ -177,10 +162,6 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     p = OdoInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return OdoInputType.build(d)
     
 SBP_MSG_SOLN_META_DEP_A = 0xFF0F
 class MsgSolnMetaDepA(SBP):
@@ -191,24 +172,30 @@ class MsgSolnMetaDepA(SBP):
   of its fields.
 
   
-  This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
-It focuses primarly, but not only, on GNSS metadata.
+  Deprecated.
 
+  This message contains all metadata about the sensors received and/or used in
+  computing the Fuzed Solution. It focuses primarily, but not only, on GNSS
+  metadata.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   pdop : int
-    Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Position Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   hdop : int
-    Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Horizontal Dilution of Precision as per last available DOPS from PVT
+    engine (0xFFFF indicates invalid)
   vdop : int
-    Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Vertical Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   n_sats : int
     Number of satellites as per last available solution from PVT engine
   age_corrections : int
-    Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
+    Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    (0xFFFF indicates invalid)
   alignment_status : int
     State of alignment and the status and receipt of the alignment inputs
   last_used_gnss_pos_tow : int
@@ -216,7 +203,10 @@ It focuses primarly, but not only, on GNSS metadata.
   last_used_gnss_vel_tow : int
     Tow of last-used GNSS velocity measurement
   sol_in : array
-    Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
+    Array of Metadata describing the sensors potentially involved in the
+    solution. Each element in the array represents a single sensor type and
+    consists of flags containing (meta)data pertaining to that specific single
+    sensor. Refer to each (XX)InputType descriptor in the present doc.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -230,7 +220,7 @@ It focuses primarly, but not only, on GNSS metadata.
                    'alignment_status' / construct.Int8ul,
                    'last_used_gnss_pos_tow' / construct.Int32ul,
                    'last_used_gnss_vel_tow' / construct.Int32ul,
-                   construct.GreedyRange('sol_in' / construct.Struct(SolutionInputType._parser)),)
+                   'sol_in' / construct.GreedyRange(SolutionInputType._parser),)
   __slots__ = [
                'pdop',
                'hdop',
@@ -322,13 +312,15 @@ class MsgSolnMeta(SBP):
   of its fields.
 
   
-  This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
-It focuses primarly, but not only, on GNSS metadata.
-Regarding the age of the last received valid GNSS solution, the highest two bits are time status, indicating
-whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also known as time of validity)
-If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is
-complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.
-
+  This message contains all metadata about the sensors received and/or used in
+  computing the sensorfusion solution. It focuses primarily, but not only, on
+  GNSS metadata. Regarding the age of the last received valid GNSS solution,
+  the highest two bits are time status, indicating whether age gnss can or can
+  not be used to retrieve time of measurement (noted TOM, also known as time
+  of validity) If it can, subtract 'age gnss' from 'tow' in navigation
+  messages to get TOM. Can be used before alignment is complete in the Fusion
+  Engine, when output solution is the last received valid GNSS solution and
+  its tow is not a TOM.
 
   Parameters
   ----------
@@ -337,17 +329,24 @@ complete in the Fusion Engine, when output solution is the last received valid G
   tow : int
     GPS time of week rounded to the nearest millisecond
   pdop : int
-    Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Position Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   hdop : int
-    Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Horizontal Dilution of Precision as per last available DOPS from PVT
+    engine (0xFFFF indicates invalid)
   vdop : int
-    Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
+    Vertical Dilution of Precision as per last available DOPS from PVT engine
+    (0xFFFF indicates invalid)
   age_corrections : int
-    Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
+    Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    (0xFFFF indicates invalid)
   age_gnss : int
     Age and Time Status of the last received valid GNSS solution.
   sol_in : array
-    Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
+    Array of Metadata describing the sensors potentially involved in the
+    solution. Each element in the array represents a single sensor type and
+    consists of flags containing (meta)data pertaining to that specific single
+    sensor. Refer to each (XX)InputType descriptor in the present doc.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -359,7 +358,7 @@ complete in the Fusion Engine, when output solution is the last received valid G
                    'vdop' / construct.Int16ul,
                    'age_corrections' / construct.Int16ul,
                    'age_gnss' / construct.Int32ul,
-                   construct.GreedyRange('sol_in' / construct.Struct(SolutionInputType._parser)),)
+                   'sol_in' / construct.GreedyRange(SolutionInputType._parser),)
   __slots__ = [
                'tow',
                'pdop',

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2020 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,21 +8,19 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
+package com.swiftnav.sbp.drivers;
 /*
  * Based on community contributed code:
  * https://groups.google.com/forum/#!topic/swiftnav-discuss/s0ouH81Lc88
  */
-package com.swiftnav.sbp.drivers;
+
 
 import com.swiftnav.sbp.client.SBPDriver;
-
 import java.io.*;
 
 /**
- * A Connection which will read it's input and output from the specified
- * streams as hex-encoded ASCII - eg 550100... for a hearbeat message.
- * Whitespace in the streams are ignored
+ * A Connection which will read it's input and output from the specified streams as hex-encoded
+ * ASCII - eg 550100... for a hearbeat message. Whitespace in the streams are ignored
  */
 public class HexStreamConnection implements SBPDriver {
 
@@ -51,12 +48,17 @@ public class HexStreamConnection implements SBPDriver {
                 eof = true;
                 return -1;
             } else if (c != '\n' && c != ' ' && c != '\t' && c != '\r') {
-                c = (c>='0' && c<='9') ? c-'0' : (c>='A' && c<='F') ? c-'A'+10 : (c>='a' && c<='f') ? c-'a'+10 : -1;
+                c =
+                        (c >= '0' && c <= '9')
+                                ? c - '0'
+                                : (c >= 'A' && c <= 'F')
+                                        ? c - 'A' + 10
+                                        : (c >= 'a' && c <= 'f') ? c - 'a' + 10 : -1;
                 if (c < 0) {
-                    throw new IOException("Illegal hex digit 0x"+Integer.toHexString(c));
+                    throw new IOException("Illegal hex digit 0x" + Integer.toHexString(c));
                 } else if (read == 0) {
                     read = 1;
-                    val = c<<4;
+                    val = c << 4;
                 } else {
                     val |= c;
                     break;
@@ -67,20 +69,18 @@ public class HexStreamConnection implements SBPDriver {
     }
 
     public void write(int v) {
-        out.printf("%02x", v&0xFF);
+        out.printf("%02x", v & 0xFF);
     }
 
     @Override
     public byte[] read(int len) throws IOException {
         byte[] ret = new byte[len];
-        for (int i = 0; i < len; i++)
-            ret[i] = (byte)read();
+        for (int i = 0; i < len; i++) ret[i] = (byte) read();
         return ret;
     }
 
     @Override
     public void write(byte[] data) throws IOException {
-        for (byte b : data)
-            write(b);
+        for (byte b : data) write(b);
     }
 }

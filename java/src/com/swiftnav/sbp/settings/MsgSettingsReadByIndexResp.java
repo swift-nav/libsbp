@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,56 +8,54 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.settings;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/settings.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
-
+import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_SETTINGS_READ_BY_INDEX_RESP (0x00A7).
+/**
+ * SBP class for message MSG_SETTINGS_READ_BY_INDEX_RESP (0x00A7).
  *
- * You can have MSG_SETTINGS_READ_BY_INDEX_RESP inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_SETTINGS_READ_BY_INDEX_RESP inherent its fields directly from an inherited
+ * SBP object, or construct it inline using a dict of its fields.
  *
- * The settings message that reports the value of a setting at an index.
- * 
- * In the string field, it reports NULL-terminated and delimited string
- * with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where
- * the '\0' escape sequence denotes the NULL character and where quotation
- * marks are omitted. The FORMAT_TYPE field is optional and denotes
- * possible string values of the setting as a hint to the user. If
- * included, the format type portion of the string has the format
- * "enum:value1,value2,value3". An example string that could be sent from
- * the device is "simulator\0enabled\0True\0enum:True,False\0" */
-
+ * <p>The settings message that reports the value of a setting at an index.
+ *
+ * <p>In the string field, it reports NULL-terminated and delimited string with contents
+ * "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where the '\0' escape sequence denotes the NULL
+ * character and where quotation marks are omitted. The FORMAT_TYPE field is optional and denotes
+ * possible string values of the setting as a hint to the user. If included, the format type portion
+ * of the string has the format "enum:value1,value2,value3". An example string that could be sent
+ * from the device is "simulator\0enabled\0True\0enum:True,False\0".
+ */
 public class MsgSettingsReadByIndexResp extends SBPMessage {
     public static final int TYPE = 0x00A7;
 
-    
-    /** An index into the device settings, with values ranging from
-0 to length(settings)
- */
+    /** An index into the device settings, with values ranging from 0 to length(settings) */
     public int index;
-    
-    /** A NULL-terminated and delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
- */
-    public String setting;
-    
 
-    public MsgSettingsReadByIndexResp (int sender) { super(sender, TYPE); }
-    public MsgSettingsReadByIndexResp () { super(TYPE); }
-    public MsgSettingsReadByIndexResp (SBPMessage msg) throws SBPBinaryException {
+    /**
+     * A NULL-terminated and delimited string with contents
+     * "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
+     */
+    public String setting;
+
+    public MsgSettingsReadByIndexResp(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgSettingsReadByIndexResp() {
+        super(TYPE);
+    }
+
+    public MsgSettingsReadByIndexResp(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

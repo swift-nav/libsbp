@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgFlashReadResp",
   "title":"MsgFlashReadResp",
-  "description":"The flash read message reads a set of addresses of either the,\nSTM or M25 onboard flash. The device replies with a,\nMSG_FLASH_READ_RESP message containing either the read data on,\nsuccess or a MSG_FLASH_DONE message containing the return code,\nFLASH_INVALID_LEN (2) if the maximum read size is exceeded or,\nFLASH_INVALID_ADDR (3) if the address is outside of the allowed,\nrange.\n",
+  "description":"The flash read message reads a set of addresses of either the STM or M25 onboard flash. The device replies with a MSG_FLASH_READ_RESP message containing either the read data on success or a MSG_FLASH_DONE message containing the return code FLASH_INVALID_LEN (2) if the maximum read size is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the allowed range.\n",
   "type": "object",
   "properties": {
     "target": {"type": "integer"},

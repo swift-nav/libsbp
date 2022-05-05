@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Mag
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Magnetometer (mag) messages.\>
+-- \< Magnetometer (mag) messages. \>
 
 module SwiftNav.SBP.Mag
   ( module SwiftNav.SBP.Mag

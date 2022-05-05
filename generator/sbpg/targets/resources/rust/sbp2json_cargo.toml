@@ -1,0 +1,58 @@
+#######################################################################
+###                                                                 ###
+### WARNING: This file is generated, please update the template at: ###
+###            generator/sbpg/targets/resources/sbp2json-cargo.toml ###
+###                                                                 ###
+#######################################################################
+
+[package]
+name = "sbp2json"
+version = "(((release)))"
+description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
+authors = ["Swift Navigation <dev@swiftnav.com>"]
+edition = "2018"
+readme = "./README.md"
+license = "MIT"
+categories = ["parsing"]
+keywords = ["encoding", "parsing"]
+
+[dependencies.sbp]
+path = "../sbp" # TODO: replace with published `sbp` crate version
+features = ["json"]
+
+[dependencies]
+env_logger = "0.8"
+serde_json = "1.0"
+structopt = "0.3"
+mimalloc = { version = "0.1", default-features = false }
+
+[dependencies.dencode]
+version = "0.3.0"
+default-features = false
+
+[dev-dependencies]
+sha2 = "0.8"
+hex = "0.4"
+assert_cmd = "1.0.1"
+serde_json = "1.0"
+assert-json-diff = "2.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+
+[lib]
+name = "converters"
+path = "src/lib.rs"
+
+[[bin]]
+name = "sbp2json"
+path = "src/bin/sbp2json.rs"
+
+[[bin]]
+name = "json2sbp"
+path = "src/bin/json2sbp.rs"
+
+[[bin]]
+name = "json2json"
+path = "src/bin/json2json.rs"

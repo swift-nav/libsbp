@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -13,92 +13,107 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! SBAS data
+pub use msg_sbas_raw::MsgSbasRaw;
 
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
+pub mod msg_sbas_raw {
+    #![allow(unused_imports)]
 
-use super::gnss::*;
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
 
-/// Raw SBAS data
-///
-/// This message is sent once per second per SBAS satellite. ME checks the
-/// parity of the data block and sends only blocks that pass the check.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgSbasRaw {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// GNSS signal identifier.
-    pub sid: GnssSignal,
-    /// GPS time-of-week at the start of the data block.
-    pub tow: u32,
-    /// SBAS message type (0-63)
-    pub message_type: u8,
-    /// Raw SBAS data field of 212 bits (last byte padded with zeros).
-    pub data: Vec<u8>,
-}
-
-impl MsgSbasRaw {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, crate::Error> {
-        Ok( MsgSbasRaw{
-            sender_id: None,
-            sid: GnssSignal::parse(_buf)?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            message_type: _buf.read_u8()?,
-            data: crate::parser::read_u8_array_limit(_buf, 27)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgSbasRaw {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_SBAS_RAW"
+    /// Raw SBAS data
+    ///
+    /// This message is sent once per second per SBAS satellite. ME checks the
+    /// parity of the data block and sends only blocks that pass the check.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSbasRaw {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// GNSS signal identifier.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        pub sid: GnssSignal,
+        /// GPS time-of-week at the start of the data block.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        pub tow: u32,
+        /// SBAS message type (0-63)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "message_type")))]
+        pub message_type: u8,
+        /// Raw SBAS data field of 212 bits (last byte padded with zeros).
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
+        pub data: [u8; 27],
     }
 
-    fn get_message_type(&self) -> u16 {
-        30583
+    impl ConcreteMessage for MsgSbasRaw {
+        const MESSAGE_TYPE: u16 = 30583;
+        const MESSAGE_NAME: &'static str = "MSG_SBAS_RAW";
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl SbpMessage for MsgSbasRaw {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        #[cfg(feature = "swiftnav")]
+        fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            let tow_s = (self.tow as f64) / 1000.0;
+            let gps_time = match time::GpsTime::new(0, tow_s) {
+                Ok(gps_time) => gps_time.tow(),
+                Err(e) => return Some(Err(e.into())),
+            };
+            Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
+    impl TryFrom<Sbp> for MsgSbasRaw {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSbasRaw(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgSbasRaw {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.sid.append_to_sbp_buffer(buf);
-        self.tow.append_to_sbp_buffer(buf);
-        self.message_type.append_to_sbp_buffer(buf);
-        self.data.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.sid.sbp_size();
-        size += self.tow.sbp_size();
-        size += self.message_type.sbp_size();
-        size += self.data.sbp_size();
-        size
+    impl WireFormat for MsgSbasRaw {
+        const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <[u8; 27] as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.sid)
+                + WireFormat::len(&self.tow)
+                + WireFormat::len(&self.message_type)
+                + WireFormat::len(&self.data)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.sid, buf);
+            WireFormat::write(&self.tow, buf);
+            WireFormat::write(&self.message_type, buf);
+            WireFormat::write(&self.data, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSbasRaw {
+                sender_id: None,
+                sid: WireFormat::parse_unchecked(buf),
+                tow: WireFormat::parse_unchecked(buf),
+                message_type: WireFormat::parse_unchecked(buf),
+                data: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,44 +8,44 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.piksi;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_IAR_STATE (0x0019).
+/**
+ * SBP class for message MSG_IAR_STATE (0x0019).
  *
- * You can have MSG_IAR_STATE inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_IAR_STATE inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
  *
- * This message reports the state of the Integer Ambiguity
- * Resolution (IAR) process, which resolves unknown integer
- * ambiguities from double-differenced carrier-phase measurements
- * from satellite observations. */
-
+ * <p>This message reports the state of the Integer Ambiguity Resolution (IAR) process, which
+ * resolves unknown integer ambiguities from double-differenced carrier-phase measurements from
+ * satellite observations.
+ */
 public class MsgIarState extends SBPMessage {
     public static final int TYPE = 0x0019;
 
-    
     /** Number of integer ambiguity hypotheses remaining */
     public long num_hyps;
-    
 
-    public MsgIarState (int sender) { super(sender, TYPE); }
-    public MsgIarState () { super(TYPE); }
-    public MsgIarState (SBPMessage msg) throws SBPBinaryException {
+    public MsgIarState(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgIarState() {
+        super(TYPE);
+    }
+
+    public MsgIarState(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

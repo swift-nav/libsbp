@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,44 +8,45 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.piksi;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/piksi.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
-import com.swiftnav.sbp.SBPStruct;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_MASK_SATELLITE_DEP (0x001B).
+/**
+ * SBP class for message MSG_MASK_SATELLITE_DEP (0x001B).
  *
- * You can have MSG_MASK_SATELLITE_DEP inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_MASK_SATELLITE_DEP inherent its fields directly from an inherited SBP object,
+ * or construct it inline using a dict of its fields.
  *
-* Deprecated. */
-
+ * <p>Deprecated.
+ */
 public class MsgMaskSatelliteDep extends SBPMessage {
     public static final int TYPE = 0x001B;
 
-    
     /** Mask of systems that should ignore this satellite. */
     public int mask;
-    
+
     /** GNSS signal for which the mask is applied */
     public GnssSignalDep sid;
-    
 
-    public MsgMaskSatelliteDep (int sender) { super(sender, TYPE); }
-    public MsgMaskSatelliteDep () { super(TYPE); }
-    public MsgMaskSatelliteDep (SBPMessage msg) throws SBPBinaryException {
+    public MsgMaskSatelliteDep(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgMaskSatelliteDep() {
+        super(TYPE);
+    }
+
+    public MsgMaskSatelliteDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

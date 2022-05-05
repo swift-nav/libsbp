@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -16,6 +16,11 @@ try:
     SerialError = termios.error
 except ImportError:
     SerialError = None
+
+try:
+    SerialTimeoutException = serial.SerialTimeoutException
+except AttributeError:
+    SerialTimeoutException = serial.writeTimeoutError  # pylint: disable=no-member
 
 
 class PySerialDriver(BaseDriver):
@@ -95,9 +100,8 @@ class PySerialDriver(BaseDriver):
         """
         try:
             return self.handle.write(s)
-        except (OSError, serial.SerialException,
-                serial.writeTimeoutError) as e:
-            if e == serial.writeTimeoutError:
+        except (OSError, serial.SerialException, SerialTimeoutException) as e:
+            if e == SerialTimeoutException:
                 print("sbp pyserial_driver: writeTimeoutError")
                 return 0
             else:
@@ -115,5 +119,5 @@ class PySerialDriver(BaseDriver):
         try:
             self.flush()
             self.close()
-        except (OSError, SerialError, serial.SerialException) as e:
+        except (OSError, SerialError, serial.SerialException):
             pass

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -16,7 +16,7 @@ files.
 
 """
 
-from sbpg.targets.templating import JENV
+from sbpg.targets.templating import INCLUDE_MAP, JENV, is_list
 from sbpg.utils import comment_links
 import copy
 import textwrap
@@ -121,7 +121,6 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
   """
   Formats for binary-parser library.
   """
-  formatted = ""
   if type_map.get(f.type_id, None):
     return "%s('%s')" % (type_map.get(f.type_id), f.identifier)
   elif f.type_id == 'string' and f.options.get('size', None):
@@ -141,17 +140,15 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
       field_type = "'%s'" % field_type
     d = { "'uint16'" : "'uint16le'", "'uint32'" : "'uint32le'", "'uint64'" : "'uint16le'",
           "'int16'" : "'int16le'", "'int32'" : "'int32le'", "'int64'" : "'int16le'" }
+    field_type_arr = d.get(field_type, field_type)
     if size is not None:
-      field_type_arr = d.get(field_type, field_type)
       return "array('%s', { length: %d, type: %s })" % (f.identifier, size.value, field_type_arr)
     elif f.options.get('size_fn') is not None:
-      return "array('%s', { type: %s, length: '%s' })" % (f_.identifier, field_type, size_fn.value)
+      return "array('%s', { type: %s, length: '%s' })" % (f_.identifier, field_type_arr, size_fn.value)
     else:
-      field_type_arr = d.get(field_type, field_type)
       return "array('%s', { type: %s, readUntil: 'eof' })" % (f_.identifier, field_type_arr)
   else:
     return "nest('%s', { type: %s.prototype.parser })" % (f.identifier, f.type_id)
-  return formatted
 
 
 def js_classnameify(s):
@@ -168,11 +165,9 @@ def star_wordwrap(s):
 def star_wordwrap_indent(s):
   return "\n *   ".join(textwrap.wrap(' '.join(s.split('\n')), 80))
 
-def islist(x):
-  return isinstance(x, list)
 
 JENV.tests['builtinType'] = builtin_type
-JENV.tests['list'] = islist
+JENV.tests['list'] = is_list
 
 JENV.filters['js_classnameify'] = js_classnameify
 JENV.filters['writeBuffer'] = write_buffer
@@ -195,9 +190,8 @@ def render_source(output_dir, package_spec, jenv=JENV):
   destination_filename = "%s/%s.js" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[1:-1])
-  includeMap = {'gnss': ['GnssSignal', 'GnssSignalDep', 'GPSTime', 'CarrierPhase', 'GPSTime', 'GPSTimeSec', 'GPSTimeDep', 'SvId'] }
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
-  includes = [(i, includeMap.get(i)) for i in includes if i != "types"]
+  includes = [(i, INCLUDE_MAP.get(i)) for i in includes if i != "types"]
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
                                filepath="/".join(package_spec.filepath) + ".yaml",

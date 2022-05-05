@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -131,7 +131,7 @@ MsgHeartbeat.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 /**
  * SBP class for message fragment SubSystemReport
  *
- * Report the general and specific state of a sub-system.  If the generic state is
+ * Report the general and specific state of a subsystem.  If the generic state is
  * reported as initializing, the specific state should be ignored.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -166,10 +166,11 @@ SubSystemReport.prototype.fieldSpec.push(['specific', 'writeUInt8', 1]);
  *
  * The status report is sent periodically to inform the host or other attached
  * devices that the system is running. It is used to monitor system malfunctions.
- * It contains status reports that indicate to the host the status of each sub-
- * system and whether it is operating correctly.  Interpretation of the subsystem
- * specific status code is product dependent, but if the generic status code is
- * initializing, it should be ignored.  Refer to product documentation for details.
+ * It contains status reports that indicate to the host the status of each
+ * subsystem and whether it is operating correctly.  Interpretation of the
+ * subsystem specific status code is product dependent, but if the generic status
+ * code is initializing, it should be ignored.  Refer to product documentation for
+ * details.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field reporting_system number (unsigned 16-bit int, 2 bytes) Identity of reporting system
@@ -204,6 +205,78 @@ MsgStatusReport.prototype.fieldSpec.push(['sbp_version', 'writeUInt16LE', 2]);
 MsgStatusReport.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 MsgStatusReport.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
 MsgStatusReport.prototype.fieldSpec.push(['status', 'array', SubSystemReport.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message fragment StatusJournalItem
+ *
+ * Reports the uptime and the state of a subsystem via generic and specific status
+ * codes.  If the generic state is reported as initializing, the specific state
+ * should be ignored.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field uptime number (unsigned 32-bit int, 4 bytes) Milliseconds since system startup
+ * @field report SubSystemReport
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var StatusJournalItem = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "StatusJournalItem";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+StatusJournalItem.prototype = Object.create(SBP.prototype);
+StatusJournalItem.prototype.messageType = "StatusJournalItem";
+StatusJournalItem.prototype.constructor = StatusJournalItem;
+StatusJournalItem.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('uptime')
+  .nest('report', { type: SubSystemReport.prototype.parser });
+StatusJournalItem.prototype.fieldSpec = [];
+StatusJournalItem.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
+StatusJournalItem.prototype.fieldSpec.push(['report', SubSystemReport.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
+ *
+ * The status journal message contains past status reports (see MSG_STATUS_REPORT)
+ * and functions as a error/event storage for telemetry purposes.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field reporting_system number (unsigned 16-bit int, 2 bytes) Identity of reporting system
+ * @field sbp_version number (unsigned 16-bit int, 2 bytes) SBP protocol version
+ * @field total_status_reports number (unsigned 32-bit int, 4 bytes) Total number of status reports sent since system startup
+ * @field sequence_descriptor number (unsigned 8-bit int, 1 byte) Index and number of messages in this sequence. First nibble is the size of the
+ *   sequence (n), second nibble is the zero-indexed counter (ith packet of n)
+ * @field journal array Status journal
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgStatusJournal = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_STATUS_JOURNAL";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgStatusJournal.prototype = Object.create(SBP.prototype);
+MsgStatusJournal.prototype.messageType = "MSG_STATUS_JOURNAL";
+MsgStatusJournal.prototype.msg_type = 0xFFFD;
+MsgStatusJournal.prototype.constructor = MsgStatusJournal;
+MsgStatusJournal.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('reporting_system')
+  .uint16('sbp_version')
+  .uint32('total_status_reports')
+  .uint8('sequence_descriptor')
+  .array('journal', { type: StatusJournalItem.prototype.parser, readUntil: 'eof' });
+MsgStatusJournal.prototype.fieldSpec = [];
+MsgStatusJournal.prototype.fieldSpec.push(['reporting_system', 'writeUInt16LE', 2]);
+MsgStatusJournal.prototype.fieldSpec.push(['sbp_version', 'writeUInt16LE', 2]);
+MsgStatusJournal.prototype.fieldSpec.push(['total_status_reports', 'writeUInt32LE', 4]);
+MsgStatusJournal.prototype.fieldSpec.push(['sequence_descriptor', 'writeUInt8', 1]);
+MsgStatusJournal.prototype.fieldSpec.push(['journal', 'array', StatusJournalItem.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_INS_STATUS (0xFF03).
@@ -241,7 +314,7 @@ MsgInsStatus.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  * intended to be a low rate message for status purposes.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implementation defined.
  * @field telemetry string Comma separated list of values as defined by the index
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -273,7 +346,7 @@ MsgCsacTelemetry.prototype.fieldSpec.push(['telemetry', 'string', null]);
  * rate than the MSG_CSAC_TELEMETRY.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implemention defined.
+ * @field id number (unsigned 8-bit int, 1 byte) Index representing the type of telemetry in use.  It is implementation defined.
  * @field telemetry_labels string Comma separated list of telemetry field values
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -300,7 +373,7 @@ MsgCsacTelemetryLabels.prototype.fieldSpec.push(['telemetry_labels', 'string', n
 /**
  * SBP class for message MSG_INS_UPDATES (0xFF06).
  *
- * The INS update status message contains informations about executed and rejected
+ * The INS update status message contains information about executed and rejected
  * INS updates. This message is expected to be extended in the future as new types
  * of measurements are being added.
  *
@@ -421,6 +494,57 @@ MsgPpsTime.prototype.fieldSpec.push(['time', 'writeUInt64LE', 8]);
 MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
+ *
+ * This diagnostic message contains state and update status information for all
+ * sensors that are being used by the fusion engine. This message will be generated
+ * asynchronously to the solution messages and will be emitted anytime a sensor
+ * update is being processed.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time number (unsigned 32-bit int, 4 bytes) Update timestamp in milliseconds.
+ * @field sensor_type number (unsigned 8-bit int, 1 byte) Sensor type
+ * @field sensor_id number (unsigned 16-bit int, 2 bytes) Sensor identifier
+ * @field sensor_state number (unsigned 8-bit int, 1 byte) Reserved for future use
+ * @field n_available_meas number (unsigned 8-bit int, 1 byte) Number of available measurements in this epoch
+ * @field n_attempted_meas number (unsigned 8-bit int, 1 byte) Number of attempted measurements in this epoch
+ * @field n_accepted_meas number (unsigned 8-bit int, 1 byte) Number of accepted measurements in this epoch
+ * @field flags number (unsigned 32-bit int, 4 bytes) Reserved for future use
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSensorAidEvent = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SENSOR_AID_EVENT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSensorAidEvent.prototype = Object.create(SBP.prototype);
+MsgSensorAidEvent.prototype.messageType = "MSG_SENSOR_AID_EVENT";
+MsgSensorAidEvent.prototype.msg_type = 0xFF09;
+MsgSensorAidEvent.prototype.constructor = MsgSensorAidEvent;
+MsgSensorAidEvent.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('time')
+  .uint8('sensor_type')
+  .uint16('sensor_id')
+  .uint8('sensor_state')
+  .uint8('n_available_meas')
+  .uint8('n_attempted_meas')
+  .uint8('n_accepted_meas')
+  .uint32('flags');
+MsgSensorAidEvent.prototype.fieldSpec = [];
+MsgSensorAidEvent.prototype.fieldSpec.push(['time', 'writeUInt32LE', 4]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_type', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_id', 'writeUInt16LE', 2]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['sensor_state', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_available_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_attempted_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['n_accepted_meas', 'writeUInt8', 1]);
+MsgSensorAidEvent.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
+
+/**
  * SBP class for message MSG_GROUP_META (0xFF0A).
  *
  * This leading message lists the time metadata of the Solution Group. It also
@@ -431,7 +555,7 @@ MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field group_id number (unsigned 8-bit int, 1 byte) Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
  * @field n_group_msgs number (unsigned 8-bit int, 1 byte) Size of list group_msgs
- * @field group_msgs array An inorder list of message types included in the Solution Group, including
+ * @field group_msgs array An in-order list of message types included in the Solution Group, including
  *   GROUP_META itself
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -452,12 +576,12 @@ MsgGroupMeta.prototype.parser = new Parser()
   .uint8('group_id')
   .uint8('flags')
   .uint8('n_group_msgs')
-  .array('group_msgs', { type: 'uint16le', readUntil: 'eof' });
+  .array('group_msgs', { type: 'uint16le', length: 'n_group_msgs' });
 MsgGroupMeta.prototype.fieldSpec = [];
 MsgGroupMeta.prototype.fieldSpec.push(['group_id', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['n_group_msgs', 'writeUInt8', 1]);
-MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, null]);
+MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, 'n_group_msgs']);
 
 module.exports = {
   0xFF00: MsgStartup,
@@ -469,6 +593,9 @@ module.exports = {
   SubSystemReport: SubSystemReport,
   0xFFFE: MsgStatusReport,
   MsgStatusReport: MsgStatusReport,
+  StatusJournalItem: StatusJournalItem,
+  0xFFFD: MsgStatusJournal,
+  MsgStatusJournal: MsgStatusJournal,
   0xFF03: MsgInsStatus,
   MsgInsStatus: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,
@@ -481,6 +608,8 @@ module.exports = {
   MsgGnssTimeOffset: MsgGnssTimeOffset,
   0xFF08: MsgPpsTime,
   MsgPpsTime: MsgPpsTime,
+  0xFF09: MsgSensorAidEvent,
+  MsgSensorAidEvent: MsgSensorAidEvent,
   0xFF0A: MsgGroupMeta,
   MsgGroupMeta: MsgGroupMeta,
 }

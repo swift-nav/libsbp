@@ -12,22 +12,11 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
-import os
-import shlex
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('..'))
-sys.path.append(os.path.abspath('.'))
-sys.path.append(os.path.abspath('..'))
-sys.path.append(os.path.abspath('../../sbp'))
-
-import pprint
-pprint.pprint(sys.path)
+import distro
 
 # -- General configuration ------------------------------------------------
 
@@ -44,7 +33,16 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.coverage',
               'sphinx.ext.mathjax',
               'sphinx.ext.ifconfig',
-              'sphinx.ext.viewcode',]
+              'sphinx.ext.viewcode',
+              'sphinx.ext.napoleon',
+              'sphinxcontrib.spelling',
+              ]
+
+if distro.codename().lower().startswith('bionic'):
+    # The spelling wordlist on bionic is too old to support.
+    # This effectively silently disables the spelling extension.
+    spelling_exclude_patterns = ['*']
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -62,8 +60,9 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'sbp'
-copyright = '2015, Swift Navigation'
 author = 'Swift Navigation'
+copyright = '2021, ' + author
+_TITLE = 'sbp Documentation'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -152,7 +151,7 @@ html_theme = 'alabaster'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = []
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -237,8 +236,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-                   (master_doc, 'sbp.tex', 'sbp Documentation',
-                    'Swift Navigation', 'manual'),
+                   (master_doc, 'sbp.tex', _TITLE,
+                    author, 'manual'),
                    ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -265,7 +264,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'sbp', 'sbp Documentation',
+man_pages = [(master_doc, project, _TITLE,
               [author], 1)]
 
 # If true, show URL addresses after external links.
@@ -277,8 +276,8 @@ man_pages = [(master_doc, 'sbp', 'sbp Documentation',
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
-texinfo_documents = [(master_doc, 'sbp', 'sbp Documentation',
-                      author, 'sbp', 'One line description of project.',
+texinfo_documents = [(master_doc, project, _TITLE,
+                      author, project, 'One line description of project.',
                       'Miscellaneous'),]
 
 # Documents to append as an appendix to all manuals.
@@ -293,10 +292,12 @@ texinfo_documents = [(master_doc, 'sbp', 'sbp Documentation',
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
+spelling_word_list_filename='spelling_wordlist.txt'
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/': None}
 
-from sphinx.apidoc import main
-main(['--force', '--separate', '-o', '.', '../../sbp'])
+from sphinx.ext.apidoc import main
+# --no-toc prevents creation of modules.rst
+main(['--force', '--no-toc', '--separate', '-o', '.', '../../sbp'])
 doctest_global_setup = "import sbp"

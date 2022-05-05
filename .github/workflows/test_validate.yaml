@@ -1,0 +1,17 @@
+name: Test Message Validation
+
+on:
+  pull_request:
+    paths:
+      - "scripts/spec_validator.py"
+
+jobs:
+  test_validation:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+
+      - name: Run Tests
+        run: |
+          bash ./scripts/validation_test_harness.bash

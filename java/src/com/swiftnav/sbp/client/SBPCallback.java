@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,10 +10,12 @@
  */
 package com.swiftnav.sbp.client;
 
+
 import com.swiftnav.sbp.SBPMessage;
 
 /** Interface for SBP message handlers. */
 public interface SBPCallback {
     void receiveCallback(SBPMessage msg);
+
     void callbacksDone();
 }

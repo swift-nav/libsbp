@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -28,9 +28,8 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 class SubSystemReport(object):
   """SubSystemReport.
   
-  Report the general and specific state of a sub-system.  If the generic
-state is reported as initializing, the specific state should be ignored.
-
+  Report the general and specific state of a subsystem.  If the generic state
+  is reported as initializing, the specific state should be ignored.
   
   Parameters
   ----------
@@ -42,10 +41,10 @@ state is reported as initializing, the specific state should be ignored.
     Subsystem specific status code
 
   """
-  _parser = construct.Embedded(construct.Struct(
+  _parser = construct.Struct(
                      'component' / construct.Int16ul,
                      'generic' / construct.Int8ul,
-                     'specific' / construct.Int8ul,))
+                     'specific' / construct.Int8ul,)
   __slots__ = [
                'component',
                'generic',
@@ -67,10 +66,43 @@ state is reported as initializing, the specific state should be ignored.
     p = SubSystemReport._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
+    
+class StatusJournalItem(object):
+  """StatusJournalItem.
+  
+  Reports the uptime and the state of a subsystem via generic and specific
+  status codes.  If the generic state is reported as initializing, the
+  specific state should be ignored.
+  
+  Parameters
+  ----------
+  uptime : int
+    Milliseconds since system startup
+  report : SubSystemReport
 
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SubSystemReport.build(d)
+  """
+  _parser = construct.Struct(
+                     'uptime' / construct.Int32ul,
+                     'report' / SubSystemReport._parser,)
+  __slots__ = [
+               'uptime',
+               'report',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.uptime = kwargs.pop('uptime')
+      self.report = kwargs.pop('report')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = StatusJournalItem._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
     
 SBP_MSG_STARTUP = 0xFF00
 class MsgStartup(SBP):
@@ -81,11 +113,9 @@ class MsgStartup(SBP):
   of its fields.
 
   
-  The system start-up message is sent once on system
-start-up. It notifies the host or other attached devices that
-the system has started and is now ready to respond to commands
-or configuration requests.
-
+  The system start-up message is sent once on system start-up. It notifies the
+  host or other attached devices that the system has started and is now ready
+  to respond to commands or configuration requests.
 
   Parameters
   ----------
@@ -185,9 +215,8 @@ class MsgDgnssStatus(SBP):
 
   
   This message provides information about the receipt of Differential
-corrections.  It is expected to be sent with each receipt of a complete
-corrections packet.
-
+  corrections.  It is expected to be sent with each receipt of a complete
+  corrections packet.
 
   Parameters
   ----------
@@ -291,17 +320,15 @@ class MsgHeartbeat(SBP):
   of its fields.
 
   
-  The heartbeat message is sent periodically to inform the host
-or other attached devices that the system is running. It is
-used to monitor system malfunctions. It also contains status
-flags that indicate to the host the status of the system and
-whether it is operating correctly. Currently, the expected
-heartbeat interval is 1 sec.
+  The heartbeat message is sent periodically to inform the host or other
+  attached devices that the system is running. It is used to monitor system
+  malfunctions. It also contains status flags that indicate to the host the
+  status of the system and whether it is operating correctly. Currently, the
+  expected heartbeat interval is 1 sec.
 
-The system error flag is used to indicate that an error has
-occurred in the system. To determine the source of the error,
-the remaining error flags should be inspected.
-
+  The system error flag is used to indicate that an error has occurred in the
+  system. To determine the source of the error, the remaining error flags
+  should be inspected.
 
   Parameters
   ----------
@@ -390,16 +417,14 @@ class MsgStatusReport(SBP):
   of its fields.
 
   
-  The status report is sent periodically to inform the host
-or other attached devices that the system is running. It is
-used to monitor system malfunctions. It contains status
-reports that indicate to the host the status of each sub-system and
-whether it is operating correctly.
+  The status report is sent periodically to inform the host or other attached
+  devices that the system is running. It is used to monitor system
+  malfunctions. It contains status reports that indicate to the host the
+  status of each subsystem and whether it is operating correctly.
 
-Interpretation of the subsystem specific status code is product
-dependent, but if the generic status code is initializing, it should
-be ignored.  Refer to product documentation for details.
-
+  Interpretation of the subsystem specific status code is product dependent,
+  but if the generic status code is initializing, it should be ignored.  Refer
+  to product documentation for details.
 
   Parameters
   ----------
@@ -424,7 +449,7 @@ be ignored.  Refer to product documentation for details.
                    'sbp_version' / construct.Int16ul,
                    'sequence' / construct.Int32ul,
                    'uptime' / construct.Int32ul,
-                   construct.GreedyRange('status' / construct.Struct(SubSystemReport._parser)),)
+                   'status' / construct.GreedyRange(SubSystemReport._parser),)
   __slots__ = [
                'reporting_system',
                'sbp_version',
@@ -499,6 +524,119 @@ be ignored.  Refer to product documentation for details.
     d.update(j)
     return d
     
+SBP_MSG_STATUS_JOURNAL = 0xFFFD
+class MsgStatusJournal(SBP):
+  """SBP class for message MSG_STATUS_JOURNAL (0xFFFD).
+
+  You can have MSG_STATUS_JOURNAL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The status journal message contains past status reports (see
+  MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+  purposes.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  reporting_system : int
+    Identity of reporting system
+  sbp_version : int
+    SBP protocol version
+  total_status_reports : int
+    Total number of status reports sent since system startup
+  sequence_descriptor : int
+    Index and number of messages in this sequence. First nibble is the size of
+    the sequence (n), second nibble is the zero-indexed counter (ith packet of
+    n)
+  journal : array
+    Status journal
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'reporting_system' / construct.Int16ul,
+                   'sbp_version' / construct.Int16ul,
+                   'total_status_reports' / construct.Int32ul,
+                   'sequence_descriptor' / construct.Int8ul,
+                   'journal' / construct.GreedyRange(StatusJournalItem._parser),)
+  __slots__ = [
+               'reporting_system',
+               'sbp_version',
+               'total_status_reports',
+               'sequence_descriptor',
+               'journal',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgStatusJournal,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgStatusJournal, self).__init__()
+      self.msg_type = SBP_MSG_STATUS_JOURNAL
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.reporting_system = kwargs.pop('reporting_system')
+      self.sbp_version = kwargs.pop('sbp_version')
+      self.total_status_reports = kwargs.pop('total_status_reports')
+      self.sequence_descriptor = kwargs.pop('sequence_descriptor')
+      self.journal = kwargs.pop('journal')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgStatusJournal.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgStatusJournal(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgStatusJournal._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgStatusJournal._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgStatusJournal._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgStatusJournal, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_INS_STATUS = 0xFF03
 class MsgInsStatus(SBP):
   """SBP class for message MSG_INS_STATUS (0xFF03).
@@ -508,9 +646,8 @@ class MsgInsStatus(SBP):
   of its fields.
 
   
-  The INS status message describes the state of the operation
-and initialization of the inertial navigation system. 
-
+  The INS status message describes the state of the operation and
+  initialization of the inertial navigation system.
 
   Parameters
   ----------
@@ -600,16 +737,16 @@ class MsgCsacTelemetry(SBP):
 
   
   The CSAC telemetry message has an implementation defined telemetry string
-from a device. It is not produced or available on general Swift Products.
-It is intended to be a low rate message for status purposes.
-
+  from a device. It is not produced or available on general Swift Products. It
+  is intended to be a low rate message for status purposes.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   id : int
-    Index representing the type of telemetry in use.  It is implemention defined.
+    Index representing the type of telemetry in use.  It is implementation
+    defined.
   telemetry : string
     Comma separated list of values as defined by the index
   sender : int
@@ -697,16 +834,16 @@ class MsgCsacTelemetryLabels(SBP):
 
   
   The CSAC telemetry message provides labels for each member of the string
-produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
-rate than the MSG_CSAC_TELEMETRY.
-
+  produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+  rate than the MSG_CSAC_TELEMETRY.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
   id : int
-    Index representing the type of telemetry in use.  It is implemention defined.
+    Index representing the type of telemetry in use.  It is implementation
+    defined.
   telemetry_labels : string
     Comma separated list of telemetry field values
   sender : int
@@ -793,9 +930,9 @@ class MsgInsUpdates(SBP):
   of its fields.
 
   
-  The INS update status message contains informations about executed and rejected INS updates.
-This message is expected to be extended in the future as new types of measurements are being added.
-
+  The INS update status message contains information about executed and
+  rejected INS updates. This message is expected to be extended in the future
+  as new types of measurements are being added.
 
   Parameters
   ----------
@@ -914,10 +1051,9 @@ class MsgGnssTimeOffset(SBP):
   of its fields.
 
   
-  The GNSS time offset message contains the information that is needed to translate messages
-tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
-producing this message.
-
+  The GNSS time offset message contains the information that is needed to
+  translate messages tagged with a local timestamp (e.g. IMU or wheeltick
+  messages) to GNSS time for the sender producing this message.
 
   Parameters
   ----------
@@ -1022,19 +1158,16 @@ class MsgPpsTime(SBP):
 
   
   The PPS time message contains the value of the sender's local time in
-microseconds at the moment a pulse is detected on the PPS input. This
-is to be used for syncronisation of sensor data sampled with a local
-timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
-to the sender.
+  microseconds at the moment a pulse is detected on the PPS input. This is to
+  be used for syncronisation of sensor data sampled with a local timestamp
+  (e.g. IMU or wheeltick messages) where GNSS time is unknown to the sender.
 
-The local time used to timestamp the PPS pulse must be generated by the
-same clock which is used to timestamp the IMU/wheel sensor data and
-should follow the same roll-over rules.  A separate MSG_PPS_TIME
-message should be sent for each source of sensor data which uses
-PPS-relative timestamping.  The sender ID for each of these
-MSG_PPS_TIME messages should match the sender ID of the respective
-sensor data.
-
+  The local time used to timestamp the PPS pulse must be generated by the same
+  clock which is used to timestamp the IMU/wheel sensor data and should follow
+  the same roll-over rules.  A separate MSG_PPS_TIME message should be sent
+  for each source of sensor data which uses PPS-relative timestamping.  The
+  sender ID for each of these MSG_PPS_TIME messages should match the sender ID
+  of the respective sensor data.
 
   Parameters
   ----------
@@ -1119,6 +1252,133 @@ sensor data.
     d.update(j)
     return d
     
+SBP_MSG_SENSOR_AID_EVENT = 0xFF09
+class MsgSensorAidEvent(SBP):
+  """SBP class for message MSG_SENSOR_AID_EVENT (0xFF09).
+
+  You can have MSG_SENSOR_AID_EVENT inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This diagnostic message contains state and update status information for all
+  sensors that are being used by the fusion engine. This message will be
+  generated asynchronously to the solution messages and will be emitted
+  anytime a sensor update is being processed.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  time : int
+    Update timestamp in milliseconds.
+  sensor_type : int
+    Sensor type
+  sensor_id : int
+    Sensor identifier
+  sensor_state : int
+    Reserved for future use
+  n_available_meas : int
+    Number of available measurements in this epoch
+  n_attempted_meas : int
+    Number of attempted measurements in this epoch
+  n_accepted_meas : int
+    Number of accepted measurements in this epoch
+  flags : int
+    Reserved for future use
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'time' / construct.Int32ul,
+                   'sensor_type' / construct.Int8ul,
+                   'sensor_id' / construct.Int16ul,
+                   'sensor_state' / construct.Int8ul,
+                   'n_available_meas' / construct.Int8ul,
+                   'n_attempted_meas' / construct.Int8ul,
+                   'n_accepted_meas' / construct.Int8ul,
+                   'flags' / construct.Int32ul,)
+  __slots__ = [
+               'time',
+               'sensor_type',
+               'sensor_id',
+               'sensor_state',
+               'n_available_meas',
+               'n_attempted_meas',
+               'n_accepted_meas',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSensorAidEvent,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSensorAidEvent, self).__init__()
+      self.msg_type = SBP_MSG_SENSOR_AID_EVENT
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.time = kwargs.pop('time')
+      self.sensor_type = kwargs.pop('sensor_type')
+      self.sensor_id = kwargs.pop('sensor_id')
+      self.sensor_state = kwargs.pop('sensor_state')
+      self.n_available_meas = kwargs.pop('n_available_meas')
+      self.n_attempted_meas = kwargs.pop('n_attempted_meas')
+      self.n_accepted_meas = kwargs.pop('n_accepted_meas')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSensorAidEvent.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSensorAidEvent(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSensorAidEvent._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSensorAidEvent._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSensorAidEvent._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSensorAidEvent, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_GROUP_META = 0xFF0A
 class MsgGroupMeta(SBP):
   """SBP class for message MSG_GROUP_META (0xFF0A).
@@ -1128,9 +1388,9 @@ class MsgGroupMeta(SBP):
   of its fields.
 
   
-  This leading message lists the time metadata of the Solution Group.
-It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
-
+  This leading message lists the time metadata of the Solution Group. It also
+  lists the atomic contents (i.e. types of messages included) of the Solution
+  Group.
 
   Parameters
   ----------
@@ -1143,9 +1403,8 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
   n_group_msgs : int
     Size of list group_msgs
   group_msgs : array
-    An inorder list of message types included in the Solution Group,
-including GROUP_META itself
-
+    An in-order list of message types included in the Solution Group,
+    including GROUP_META itself
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1154,7 +1413,7 @@ including GROUP_META itself
                    'group_id' / construct.Int8ul,
                    'flags' / construct.Int8ul,
                    'n_group_msgs' / construct.Int8ul,
-                   construct.GreedyRange('group_msgs' / construct.Int16ul),)
+                   'group_msgs' / construct.GreedyRange(construct.Int16ul),)
   __slots__ = [
                'group_id',
                'flags',
@@ -1233,11 +1492,13 @@ msg_classes = {
   0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
   0xFFFE: MsgStatusReport,
+  0xFFFD: MsgStatusJournal,
   0xFF03: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
   0xFF07: MsgGnssTimeOffset,
   0xFF08: MsgPpsTime,
+  0xFF09: MsgSensorAidEvent,
   0xFF0A: MsgGroupMeta,
 }

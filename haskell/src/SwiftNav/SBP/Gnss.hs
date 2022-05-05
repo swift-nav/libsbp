@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Gnss
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Various structs shared between modules\>
+-- \< Various structs shared between modules \>
 
 module SwiftNav.SBP.Gnss
   ( module SwiftNav.SBP.Gnss
@@ -37,11 +37,11 @@ import SwiftNav.SBP.Types
 
 -- | GnssSignal.
 --
--- Signal identifier containing constellation, band, and satellite identifier
+-- Signal identifier containing constellation, band, and satellite identifier.
 data GnssSignal = GnssSignal
   { _gnssSignal_sat :: !Word8
     -- ^ Constellation-specific satellite identifier. This field for Glonass can
-    -- either be (100+FCN) where FCN is in [-7,+6] or  the Slot ID in [1,28]
+    -- either be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
   , _gnssSignal_code :: !Word8
     -- ^ Signal constellation, band and code
   } deriving ( Show, Read, Eq )
@@ -62,7 +62,7 @@ $(makeLenses ''GnssSignal)
 -- | SvId.
 --
 -- A (Constellation ID, satellite ID) tuple that uniquely identifies a space
--- vehicle
+-- vehicle.
 data SvId = SvId
   { _svId_satId       :: !Word8
     -- ^ ID of the space vehicle within its constellation
@@ -88,9 +88,10 @@ $(makeLenses ''SvId)
 -- Deprecated.
 data GnssSignalDep = GnssSignalDep
   { _gnssSignalDep_sat    :: !Word16
-    -- ^ Constellation-specific satellite identifier.  Note: unlike GnssSignal,
-    -- GPS satellites are encoded as (PRN - 1). Other constellations do not
-    -- have this offset.
+    -- ^ Constellation-specific satellite identifier.
+    --
+    -- Note: unlike GnssSignal, GPS satellites are encoded as (PRN - 1). Other
+    -- constellations do not have this offset.
   , _gnssSignalDep_code   :: !Word8
     -- ^ Signal constellation, band and code
   , _gnssSignalDep_reserved :: !Word8

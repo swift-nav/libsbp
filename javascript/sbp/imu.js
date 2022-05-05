@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -27,7 +27,7 @@ var UInt64 = require('cuint').UINT64;
  * SBP class for message MSG_IMU_RAW (0x0900).
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
- * gyroscope readings. The sense of the measurements are to be aligned with  the
+ * gyroscope readings. The sense of the measurements are to be aligned with the
  * indications on the device itself. Measurement units, which are specific to the
  * device hardware and settings, are communicated via the MSG_IMU_AUX message. If
  * using "time since startup" time tags, the receiving end will expect a

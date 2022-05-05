@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -18,7 +18,7 @@
  * Messages for reading/writing the device's onboard flash memory. Many of these
  * messages target specific flash memory peripherals used in Swift Navigation
  * devices: the STM32 flash and the M25Pxx FPGA configuration flash from Piksi
- * 2.3.1.  This module does not apply  to Piksi Multi.
+ * 2.3.1.  This module does not apply to Piksi Multi.
 ***********************/
 
 var SBP = require('./sbp');
@@ -261,8 +261,8 @@ MsgStmFlashUnlockSector.prototype.fieldSpec.push(['sector', 'writeUInt32LE', 4])
 /**
  * SBP class for message MSG_STM_UNIQUE_ID_REQ (0x00E8).
  *
- * This message reads the device's hardcoded unique ID. The host requests the ID by
- * sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+ * This message reads the device's hard-coded unique ID. The host requests the ID
+ * by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
  * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -285,9 +285,9 @@ MsgStmUniqueIdReq.prototype.fieldSpec = [];
 /**
  * SBP class for message MSG_STM_UNIQUE_ID_RESP (0x00E5).
  *
- * This message reads the device's hardcoded unique ID. The host requests the ID by
- * sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
- * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload..
+ * This message reads the device's hard-coded unique ID. The host requests the ID
+ * by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
+ * MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field stm_id array Device unique ID

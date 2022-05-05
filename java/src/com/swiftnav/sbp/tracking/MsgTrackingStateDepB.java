@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,41 +8,43 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.tracking;
 
-import java.math.BigInteger;
+// This file was auto-generated from yaml/swiftnav/sbp/tracking.yaml by generate.py.
+// Do not modify by hand!
 
-import com.swiftnav.sbp.SBPMessage;
+
 import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-
-/** SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).
+/**
+ * SBP class for message MSG_TRACKING_STATE_DEP_B (0x0013).
  *
- * You can have MSG_TRACKING_STATE_DEP_B inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
+ * <p>You can have MSG_TRACKING_STATE_DEP_B inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
-* Deprecated. */
-
+ * <p>Deprecated.
+ */
 public class MsgTrackingStateDepB extends SBPMessage {
     public static final int TYPE = 0x0013;
 
-    
     /** Signal tracking channel state */
     public TrackingChannelStateDepB[] states;
-    
 
-    public MsgTrackingStateDepB (int sender) { super(sender, TYPE); }
-    public MsgTrackingStateDepB () { super(TYPE); }
-    public MsgTrackingStateDepB (SBPMessage msg) throws SBPBinaryException {
+    public MsgTrackingStateDepB(int sender) {
+        super(sender, TYPE);
+    }
+
+    public MsgTrackingStateDepB() {
+        super(TYPE);
+    }
+
+    public MsgTrackingStateDepB(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type != TYPE;
+        assert msg.type == TYPE;
     }
 
     @Override

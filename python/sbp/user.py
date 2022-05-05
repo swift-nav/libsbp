@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -12,7 +12,6 @@
 
 """
 Messages reserved for use by the user.
-
 """
 
 import json
@@ -35,9 +34,8 @@ class MsgUserData(SBP):
   of its fields.
 
   
-  This message can contain any application specific user data up to a
-maximum length of 255 bytes per message.
-
+  This message can contain any application specific user data up to a maximum
+  length of 255 bytes per message.
 
   Parameters
   ----------
@@ -50,7 +48,7 @@ maximum length of 255 bytes per message.
 
   """
   _parser = construct.Struct(
-                   construct.GreedyRange('contents' / construct.Int8ul),)
+                   'contents' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'contents',
               ]

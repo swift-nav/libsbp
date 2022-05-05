@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -17,7 +16,6 @@ message tests.
 """
 
 import base64
-import datetime
 import json
 import os.path
 
@@ -38,13 +36,13 @@ class PackageTestSpecification(object):
 
   """
 
-  def __init__(self, src_filename=None, package="", suite_no=0, description=None, generated_on=None, tests=[]):
+  def __init__(self, src_filename=None, package="", suite_no=0, description=None, generated_on=None, tests=None):
     self.src_filename = src_filename
     self.package = package
     self.suite_no = suite_no
     self.description = description
     self.generated_on = generated_on
-    self.tests = tests
+    self.tests = tests or []
     self.render_source = True
 
   def __lt__(self, other):
@@ -128,8 +126,8 @@ class TestSpecification(object):
       "sbp": self.sbp,
     }
 
-  def __lt__(self, other):
-    return raw_packet.__lt__(other.raw_packet)
+  def __lt__(self, other: "TestSpecification"):
+    return self.raw_packet.__lt__(other.raw_packet)
 
   @property
   def msg_type_name(self):
@@ -142,4 +140,19 @@ class TestSpecification(object):
   @property
   def fieldskeys(self):
     return sorted(self.msg.get('fields', None) or [])
+
+  @property
+  def c_decoded_fields(self):
+    fields = self.msg.get('fields', None) or {}
+    if 'c_decoded_fields' in self.msg:
+      fields.update(self.msg['c_decoded_fields'])
+    return fields
+
+  @property
+  def c_decoded_fieldskeys(self):
+    fields = self.msg.get('fields', None) or {}
+    if 'c_decoded_fields' in self.msg:
+      fields.update(self.msg['c_decoded_fields'])
+    return sorted(fields)
+
 

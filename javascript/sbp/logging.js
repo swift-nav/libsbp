@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Copyright (C) 2015-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
@@ -60,7 +60,7 @@ MsgLog.prototype.fieldSpec.push(['text', 'string', null]);
  *
  * This message provides the ability to forward messages over SBP.  This may take
  * the form of wrapping up SBP messages received by Piksi for logging purposes or
- * wrapping  another protocol with SBP.  The source identifier indicates from what
+ * wrapping another protocol with SBP.  The source identifier indicates from what
  * interface a forwarded stream derived. The protocol identifier identifies what
  * the expected protocol the forwarded msg contains. Protocol 0 represents SBP and
  * the remaining values are implementation defined.
@@ -68,7 +68,7 @@ MsgLog.prototype.fieldSpec.push(['text', 'string', null]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field source number (unsigned 8-bit int, 1 byte) source identifier
  * @field protocol number (unsigned 8-bit int, 1 byte) protocol identifier
- * @field fwd_payload string variable length wrapped binary message
+ * @field fwd_payload array variable length wrapped binary message
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -87,11 +87,11 @@ MsgFwd.prototype.parser = new Parser()
   .endianess('little')
   .uint8('source')
   .uint8('protocol')
-  .string('fwd_payload', { greedy: true });
+  .array('fwd_payload', { type: 'uint8', readUntil: 'eof' });
 MsgFwd.prototype.fieldSpec = [];
 MsgFwd.prototype.fieldSpec.push(['source', 'writeUInt8', 1]);
 MsgFwd.prototype.fieldSpec.push(['protocol', 'writeUInt8', 1]);
-MsgFwd.prototype.fieldSpec.push(['fwd_payload', 'string', null]);
+MsgFwd.prototype.fieldSpec.push(['fwd_payload', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
  * SBP class for message MSG_PRINT_DEP (0x0010).

@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2015 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -11,20 +10,17 @@
  */
 package com.swiftnav.sbp.loggers;
 
+
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.client.SBPSender;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
+import java.util.Date;
+import java.util.TimeZone;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class JSONLogger implements SBPSender {
     private OutputStream stream;

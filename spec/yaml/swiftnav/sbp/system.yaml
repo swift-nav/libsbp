@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015-2021 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -19,7 +19,7 @@ definitions:
  - MSG_STARTUP:
     id: 0xFF00
     short_desc: System start-up message
-    desc: |
+    desc: >
         The system start-up message is sent once on system
         start-up. It notifies the host or other attached devices that
         the system has started and is now ready to respond to commands
@@ -29,7 +29,7 @@ definitions:
             type: u8
             desc: Cause of startup
             fields:
-              - 0-8:
+              - 0-7:
                   desc: Cause of startup
                   values:
                     - 0: Power on
@@ -39,7 +39,7 @@ definitions:
             type: u8
             desc: Startup type
             fields:
-              - 0-8:
+              - 0-7:
                   values:
                     - 0: Cold start
                     - 1: Warm start
@@ -52,7 +52,7 @@ definitions:
  - MSG_DGNSS_STATUS:
     id: 0xFF02
     short_desc: Status of received corrections
-    desc: |
+    desc: >
         This message provides information about the receipt of Differential
         corrections.  It is expected to be sent with each receipt of a complete
         corrections packet.
@@ -78,19 +78,21 @@ definitions:
             desc: Number of signals from base station
         - source:
             type: string
+            encoding: unterminated
             desc: Corrections source string
 
 
  - MSG_HEARTBEAT:
     id: 0xFFFF
     short_desc: System heartbeat message
-    desc: |
+    desc: >
         The heartbeat message is sent periodically to inform the host
         or other attached devices that the system is running. It is
         used to monitor system malfunctions. It also contains status
         flags that indicate to the host the status of the system and
         whether it is operating correctly. Currently, the expected
         heartbeat interval is 1 sec.
+
 
         The system error flag is used to indicate that an error has
         occurred in the system. To determine the source of the error,
@@ -135,10 +137,10 @@ definitions:
                       - 1: An error has occurred
 
  - SubSystemReport:
-    short_desc: Sub-system Status report
+    short_desc: Subsystem Status report
     embedded_type: true
-    desc: |
-      Report the general and specific state of a sub-system.  If the generic
+    desc: >
+      Report the general and specific state of a subsystem.  If the generic
       state is reported as initializing, the specific state should be ignored.
     fields:
         - component:
@@ -174,12 +176,13 @@ definitions:
  - MSG_STATUS_REPORT:
     id: 0xFFFE
     short_desc: Status report message
-    desc: |
+    desc: >
         The status report is sent periodically to inform the host
         or other attached devices that the system is running. It is
         used to monitor system malfunctions. It contains status
-        reports that indicate to the host the status of each sub-system and
+        reports that indicate to the host the status of each subsystem and
         whether it is operating correctly.
+
 
         Interpretation of the subsystem specific status code is product
         dependent, but if the generic status code is initializing, it should
@@ -198,7 +201,7 @@ definitions:
             type: u16
             desc: SBP protocol version
             fields:
-              - 8-16:
+              - 8-15:
                   desc: SBP major protocol version number
               - 0-7:
                   desc: SBP minor protocol version number
@@ -213,12 +216,65 @@ definitions:
             fill: SubSystemReport
             desc: Reported status of individual subsystems
 
+ - StatusJournalItem:
+    short_desc: Subsystem Status report
+    embedded_type: true
+    desc: >
+      Reports the uptime and the state of a subsystem via generic and specific
+      status codes.  If the generic state is reported as initializing, the
+      specific state should be ignored.
+    fields:
+        - uptime:
+            type: u32
+            desc: Milliseconds since system startup
+        - report:
+            type: SubSystemReport
+
+ - MSG_STATUS_JOURNAL:
+    id: 0xFFFD
+    short_desc: Status report journal
+    desc: >
+        The status journal message contains past status reports (see
+        MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
+        purposes.
+    fields:
+        - reporting_system:
+            type: u16
+            desc: Identity of reporting system
+            fields:
+              - 0-15:
+                 desc: System
+                 values:
+                     - 0: Starling
+                     - 1: Precision GNSS Module (PGM)
+        - sbp_version:
+            type: u16
+            desc: SBP protocol version
+            fields:
+              - 8-15:
+                  desc: SBP major protocol version number
+              - 0-7:
+                  desc: SBP minor protocol version number
+        - total_status_reports:
+            type: u32
+            desc: Total number of status reports sent since system startup
+        - sequence_descriptor:
+            type: u8
+            desc: >
+              Index and number of messages in this sequence. First nibble is
+              the size of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
+        - journal:
+            type: array
+            fill: StatusJournalItem
+            desc: Status journal
+
  - MSG_INS_STATUS:
     id: 0xFF03
     short_desc: Inertial Navigation System status message
-    desc: |
+    desc: >
         The INS status message describes the state of the operation
-        and initialization of the inertial navigation system. 
+        and initialization of the inertial navigation system.
     fields:
         - flags:
             type: u32
@@ -250,7 +306,7 @@ definitions:
                       - 1: Odometry received within last second
                       - 2: Odometry not received within last second
               - 4-7:
-                  desc:  INS Error
+                  desc: INS Error
                   values:
                       - 0: Reserved
                       - 1: IMU Data Error
@@ -275,40 +331,42 @@ definitions:
     id: 0xFF04
     short_desc: Experimental telemetry message
     public: false
-    desc: |
+    desc: >
         The CSAC telemetry message has an implementation defined telemetry string
         from a device. It is not produced or available on general Swift Products.
         It is intended to be a low rate message for status purposes.
     fields:
         - id:
             type: u8
-            desc: Index representing the type of telemetry in use.  It is implemention defined.
+            desc: Index representing the type of telemetry in use.  It is implementation defined.
         - telemetry:
             type: string
+            encoding: unterminated
             desc: Comma separated list of values as defined by the index
 
  - MSG_CSAC_TELEMETRY_LABELS:
     id: 0xFF05
     short_desc: Experimental telemetry message labels
     public: false
-    desc: |
+    desc: >
         The CSAC telemetry message provides labels for each member of the string
         produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
         rate than the MSG_CSAC_TELEMETRY.
     fields:
         - id:
             type: u8
-            desc: Index representing the type of telemetry in use.  It is implemention defined.
+            desc: Index representing the type of telemetry in use.  It is implementation defined.
         - telemetry_labels:
             type: string
+            encoding: unterminated
             desc: Comma separated list of telemetry field values
 
  - MSG_INS_UPDATES:
     id: 0xFF06
     short_desc: Inertial Navigation System update status message
     public: false
-    desc: |
-        The INS update status message contains informations about executed and rejected INS updates.
+    desc: >
+        The INS update status message contains information about executed and rejected INS updates.
         This message is expected to be extended in the future as new types of measurements are being added.
     fields:
         - tow:
@@ -363,11 +421,11 @@ definitions:
                   desc: Number of attempted zero velocity updates since last message.
               - 0-3:
                   desc: Number of rejected zero velocity updates since last message.
-                  
+
  - MSG_GNSS_TIME_OFFSET:
     id: 0xFF07
     short_desc: Offset of the local time with respect to GNSS time
-    desc: |
+    desc: >
         The GNSS time offset message contains the information that is needed to translate messages
         tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
         producing this message.
@@ -391,12 +449,13 @@ definitions:
  - MSG_PPS_TIME:
     id: 0xFF08
     short_desc: Local time at detection of PPS pulse
-    desc: |
+    desc: >
       The PPS time message contains the value of the sender's local time in
       microseconds at the moment a pulse is detected on the PPS input. This
       is to be used for syncronisation of sensor data sampled with a local
       timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
       to the sender.
+
 
       The local time used to timestamp the PPS pulse must be generated by the
       same clock which is used to timestamp the IMU/wheel sensor data and
@@ -424,11 +483,57 @@ definitions:
                     - 2: +/- 10 microseconds
                     - 3: < 1 microseconds
 
+ - MSG_SENSOR_AID_EVENT:
+    id: 0xFF09 # 65289
+    short_desc: Sensor state and update status data
+    desc: >
+      This diagnostic message contains state and update status information for
+      all sensors that are being used by the fusion engine. This message will
+      be generated asynchronously to the solution messages and will be emitted
+      anytime a sensor update is being processed.
+    fields:
+        - time:
+            type: u32
+            units: milliseconds
+            desc: Update timestamp in milliseconds.
+        - sensor_type:
+            type: u8
+            desc: Sensor type
+            fields:
+                - 0-7:
+                    desc: Type identifier
+                    values:
+                        - 0: GNSS position
+                        - 1: GNSS average velocity
+                        - 2: GNSS instantaneous velocity
+                        - 3: Wheel ticks
+                        - 4: Wheel speed
+                        - 5: IMU
+                        - 6: Time differences of carrier phase
+        - sensor_id:
+            type: u16
+            desc: Sensor identifier
+        - sensor_state:
+            type: u8
+            desc: Reserved for future use
+        - n_available_meas:
+            type: u8
+            desc: Number of available measurements in this epoch
+        - n_attempted_meas:
+            type: u8
+            desc: Number of attempted measurements in this epoch
+        - n_accepted_meas:
+            type: u8
+            desc: Number of accepted measurements in this epoch
+        - flags:
+            type: u32
+            desc: Reserved for future use
+
  - MSG_GROUP_META:
      id: 0xFF0A  # 65290
      short_desc: Solution Group Metadata
      public: true
-     desc: |
+     desc: >
        This leading message lists the time metadata of the Solution Group.
        It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
      fields:
@@ -454,6 +559,7 @@ definitions:
        - group_msgs:
            type: array
            fill: u16
-           desc: |
-             An inorder list of message types included in the Solution Group,
+           size_fn: n_group_msgs
+           desc: >
+             An in-order list of message types included in the Solution Group,
              including GROUP_META itself

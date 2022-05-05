@@ -1,6 +1,6 @@
 {
   "copyright": [
-    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
     "Contact: https://support.swiftnav.com",
     "",
     "This source is subject to the license found in the file 'LICENSE' which must",
@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrTileDefinition",
   "title":"MsgSsrTileDefinition",
-  "description":"Provides the correction point coordinates for the atmospheric correction,\nvalues in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION,\nmessages.,\n,\nBased on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information,\nelement GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of,\ncorrection points, not lists of points.\n",
+  "description":"Provides the correction point coordinates for the atmospheric correction values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.,\n,\nBased on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points, not lists of points.\n",
   "type": "object",
   "properties": {
     "tile_set_id": {"type": "integer"},

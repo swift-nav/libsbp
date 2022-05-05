@@ -5,26 +5,30 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Navigation
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Geodetic navigation messages reporting GPS time, position, velocity, and
+-- \< Geodetic navigation messages reporting GPS time, position, velocity, and
 -- baseline position solutions. For position solutions, these messages define
 -- several different position solutions: single-point (SPP), RTK, and pseudo-
--- absolute position solutions.  The SPP is the standalone, absolute GPS
--- position solution using only a single receiver. The RTK solution is the
--- differential GPS solution, which can use either a fixed/integer or floating
--- carrier phase ambiguity. The pseudo-absolute position solution uses a user-
--- provided, well-surveyed base station position (if available) and the RTK
--- solution in tandem.  When the inertial navigation mode indicates that the
--- IMU is used, all messages are reported in the vehicle body frame as defined
--- by device settings.  By default, the vehicle body frame is configured to be
+-- absolute position solutions.
+--
+-- The SPP is the standalone, absolute GPS position solution using only a
+-- single receiver. The RTK solution is the differential GPS solution, which
+-- can use either a fixed/integer or floating carrier phase ambiguity. The
+-- pseudo-absolute position solution uses a user-provided, well-surveyed base
+-- station position (if available) and the RTK solution in tandem.
+--
+-- When the inertial navigation mode indicates that the IMU is used, all
+-- messages are reported in the vehicle body frame as defined by device
+-- settings.  By default, the vehicle body frame is configured to be
 -- coincident with the antenna phase center.  When there is no inertial
 -- navigation, the solution will be reported at the phase center of the
 -- antenna. There is no inertial navigation capability on Piksi Multi or Duro.
+--
 -- The tow field, when valid, is most often the Time of Measurement. When this
 -- is the case, the 5th bit of flags is set to the default value of 0. When
 -- this is not the case, the tow may be a time of arrival or a local system
@@ -58,15 +62,17 @@ msgGpsTime = 0x0102
 
 -- | SBP class for message MSG_GPS_TIME (0x0102).
 --
--- This message reports the GPS time, representing the time since the GPS epoch
--- began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds
--- of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0
--- began at the beginning of the GPS time scale.  Within each week number, the
--- GPS time of the week is between between 0 and 604800 seconds (=60*60*24*7).
--- Note that GPS time does not accumulate leap seconds, and as of now, has a
--- small offset from UTC. In a message stream, this message precedes a set of
--- other navigation messages referenced to the same time (but lacking the ns
--- field) and indicates a more precise time of these messages.
+-- This message reports the GPS time, representing the time since the GPS
+-- epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
+-- seconds of the week. The weeks begin at the Saturday/Sunday transition. GPS
+-- week 0 began at the beginning of the GPS time scale.
+--
+-- Within each week number, the GPS time of the week is between between 0 and
+-- 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
+-- seconds, and as of now, has a small offset from UTC. In a message stream,
+-- this message precedes a set of other navigation messages referenced to the
+-- same time (but lacking the ns field) and indicates a more precise time of
+-- these messages.
 data MsgGpsTime = MsgGpsTime
   { _msgGpsTime_wn        :: !Word16
     -- ^ GPS week number
@@ -102,15 +108,17 @@ msgGpsTimeGnss = 0x0104
 
 -- | SBP class for message MSG_GPS_TIME_GNSS (0x0104).
 --
--- This message reports the GPS time, representing the time since the GPS epoch
--- began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds
--- of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0
--- began at the beginning of the GPS time scale.  Within each week number, the
--- GPS time of the week is between between 0 and 604800 seconds (=60*60*24*7).
--- Note that GPS time does not accumulate leap seconds, and as of now, has a
--- small offset from UTC. In a message stream, this message precedes a set of
--- other navigation messages referenced to the same time (but lacking the ns
--- field) and indicates a more precise time of these messages.
+-- This message reports the GPS time, representing the time since the GPS
+-- epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
+-- seconds of the week. The weeks begin at the Saturday/Sunday transition. GPS
+-- week 0 began at the beginning of the GPS time scale.
+--
+-- Within each week number, the GPS time of the week is between between 0 and
+-- 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
+-- seconds, and as of now, has a small offset from UTC. In a message stream,
+-- this message precedes a set of other navigation messages referenced to the
+-- same time (but lacking the ns field) and indicates a more precise time of
+-- these messages.
 data MsgGpsTimeGnss = MsgGpsTimeGnss
   { _msgGpsTimeGnss_wn        :: !Word16
     -- ^ GPS week number
@@ -365,12 +373,12 @@ msgPosEcefCov = 0x0214
 --
 -- The position solution message reports absolute Earth Centered Earth Fixed
 -- (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
--- the position solution. The message also reports the upper triangular portion
--- of the 3x3 covariance matrix. If the receiver knows the surveyed position of
--- the base station and has an RTK solution, this reports a pseudo-absolute
--- position solution using the base station position and the rover's RTK
--- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
--- with the matching time-of-week (tow).
+-- the position solution. The message also reports the upper triangular
+-- portion of the 3x3 covariance matrix. If the receiver knows the surveyed
+-- position of the base station and has an RTK solution, this reports a
+-- pseudo-absolute position solution using the base station position and the
+-- rover's RTK baseline vector. The full GPS time is given by the preceding
+-- MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgPosEcefCov = MsgPosEcefCov
   { _msgPosEcefCov_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -437,13 +445,13 @@ msgPosLlh = 0x020A
 
 -- | SBP class for message MSG_POS_LLH (0x020A).
 --
--- This position solution message reports the absolute geodetic coordinates and
--- the status (single point vs pseudo-absolute RTK) of the position solution.
--- If the rover receiver knows the surveyed position of the base station and
--- has an RTK solution, this reports a pseudo-absolute position solution using
--- the base station position and the rover's RTK baseline vector. The full GPS
--- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
--- (tow).
+-- This position solution message reports the absolute geodetic coordinates
+-- and the status (single point vs pseudo-absolute RTK) of the position
+-- solution. If the rover receiver knows the surveyed position of the base
+-- station and has an RTK solution, this reports a pseudo-absolute position
+-- solution using the base station position and the rover's RTK baseline
+-- vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
+-- matching time-of-week (tow).
 data MsgPosLlh = MsgPosLlh
   { _msgPosLlh_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -494,12 +502,12 @@ msgPosLlhCov = 0x0211
 
 -- | SBP class for message MSG_POS_LLH_COV (0x0211).
 --
--- This position solution message reports the absolute geodetic coordinates and
--- the status (single point vs pseudo-absolute RTK) of the position solution as
--- well as the upper triangle of the 3x3 covariance matrix.  The position
--- information and Fix Mode flags should follow the MSG_POS_LLH message.  Since
--- the covariance matrix is computed in the local-level North, East, Down
--- frame, the covariance terms follow with that convention. Thus, covariances
+-- This position solution message reports the absolute geodetic coordinates
+-- and the status (single point vs pseudo-absolute RTK) of the position
+-- solution as well as the upper triangle of the 3x3 covariance matrix.  The
+-- position information and Fix Mode flags follow the MSG_POS_LLH message.
+-- Since the covariance matrix is computed in the local-level North, East,
+-- Down frame, the covariance terms follow that convention. Thus, covariances
 -- are reported against the "downward" measurement and care should be taken
 -- with the sign convention.
 data MsgPosLlhCov = MsgPosLlhCov
@@ -562,6 +570,121 @@ instance Binary MsgPosLlhCov where
 $(makeSBP 'msgPosLlhCov ''MsgPosLlhCov)
 $(makeJSON "_msgPosLlhCov_" ''MsgPosLlhCov)
 $(makeLenses ''MsgPosLlhCov)
+
+data EstimatedHorizontalErrorEllipse = EstimatedHorizontalErrorEllipse
+  { _estimatedHorizontalErrorEllipse_semi_major :: !Float
+    -- ^ The semi major axis of the estimated horizontal error ellipse at the
+    -- user-configured confidence level; zero implies invalid.
+  , _estimatedHorizontalErrorEllipse_semi_minor :: !Float
+    -- ^ The semi minor axis of the estimated horizontal error ellipse at the
+    -- user-configured confidence level; zero implies invalid.
+  , _estimatedHorizontalErrorEllipse_orientation :: !Float
+    -- ^ The orientation of the semi major axis of the estimated horizontal
+    -- error ellipse with respect to North.
+  } deriving ( Show, Read, Eq )
+
+instance Binary EstimatedHorizontalErrorEllipse where
+  get = do
+    _estimatedHorizontalErrorEllipse_semi_major <- getFloat32le
+    _estimatedHorizontalErrorEllipse_semi_minor <- getFloat32le
+    _estimatedHorizontalErrorEllipse_orientation <- getFloat32le
+    pure EstimatedHorizontalErrorEllipse {..}
+
+  put EstimatedHorizontalErrorEllipse {..} = do
+    putFloat32le _estimatedHorizontalErrorEllipse_semi_major
+    putFloat32le _estimatedHorizontalErrorEllipse_semi_minor
+    putFloat32le _estimatedHorizontalErrorEllipse_orientation
+
+$(makeJSON "_estimatedHorizontalErrorEllipse_" ''EstimatedHorizontalErrorEllipse)
+$(makeLenses ''EstimatedHorizontalErrorEllipse)
+
+msgPosLlhAcc :: Word16
+msgPosLlhAcc = 0x0218
+
+-- | SBP class for message MSG_POS_LLH_ACC (0x0218).
+--
+-- This position solution message reports the absolute geodetic coordinates
+-- and the status (single point vs pseudo-absolute RTK) of the position
+-- solution as well as the estimated horizontal, vertical, cross-track and
+-- along-track errors.  The position information and Fix Mode flags  follow
+-- the MSG_POS_LLH message. Since the covariance matrix is computed in the
+-- local-level North, East, Down frame, the estimated error terms follow that
+-- convention.
+--
+-- The estimated errors are reported at a user-configurable confidence level.
+-- The user-configured percentile is encoded in the percentile field.
+data MsgPosLlhAcc = MsgPosLlhAcc
+  { _msgPosLlhAcc_tow                :: !Word32
+    -- ^ GPS Time of Week
+  , _msgPosLlhAcc_lat                :: !Double
+    -- ^ Latitude
+  , _msgPosLlhAcc_lon                :: !Double
+    -- ^ Longitude
+  , _msgPosLlhAcc_height             :: !Double
+    -- ^ Height above WGS84 ellipsoid
+  , _msgPosLlhAcc_orthometric_height :: !Double
+    -- ^ Height above the geoid (i.e. height above mean sea level). See
+    -- confidence_and_geoid for geoid model used.
+  , _msgPosLlhAcc_h_accuracy         :: !Float
+    -- ^ Estimated horizontal error at the user-configured confidence level;
+    -- zero implies invalid.
+  , _msgPosLlhAcc_v_accuracy         :: !Float
+    -- ^ Estimated vertical error at the user-configured confidence level; zero
+    -- implies invalid.
+  , _msgPosLlhAcc_ct_accuracy        :: !Float
+    -- ^ Estimated cross-track error at the user-configured confidence level;
+    -- zero implies invalid.
+  , _msgPosLlhAcc_at_accuracy        :: !Float
+    -- ^ Estimated along-track error at the user-configured confidence level;
+    -- zero implies invalid.
+  , _msgPosLlhAcc_h_ellipse          :: !EstimatedHorizontalErrorEllipse
+    -- ^ The estimated horizontal error ellipse at the user-configured
+    -- confidence level.
+  , _msgPosLlhAcc_confidence_and_geoid :: !Word8
+    -- ^ The lower bits describe the configured confidence level for the
+    -- estimated position error. The middle bits describe the geoid model used
+    -- to calculate the orthometric height.
+  , _msgPosLlhAcc_n_sats             :: !Word8
+    -- ^ Number of satellites used in solution.
+  , _msgPosLlhAcc_flags              :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgPosLlhAcc where
+  get = do
+    _msgPosLlhAcc_tow <- getWord32le
+    _msgPosLlhAcc_lat <- getFloat64le
+    _msgPosLlhAcc_lon <- getFloat64le
+    _msgPosLlhAcc_height <- getFloat64le
+    _msgPosLlhAcc_orthometric_height <- getFloat64le
+    _msgPosLlhAcc_h_accuracy <- getFloat32le
+    _msgPosLlhAcc_v_accuracy <- getFloat32le
+    _msgPosLlhAcc_ct_accuracy <- getFloat32le
+    _msgPosLlhAcc_at_accuracy <- getFloat32le
+    _msgPosLlhAcc_h_ellipse <- get
+    _msgPosLlhAcc_confidence_and_geoid <- getWord8
+    _msgPosLlhAcc_n_sats <- getWord8
+    _msgPosLlhAcc_flags <- getWord8
+    pure MsgPosLlhAcc {..}
+
+  put MsgPosLlhAcc {..} = do
+    putWord32le _msgPosLlhAcc_tow
+    putFloat64le _msgPosLlhAcc_lat
+    putFloat64le _msgPosLlhAcc_lon
+    putFloat64le _msgPosLlhAcc_height
+    putFloat64le _msgPosLlhAcc_orthometric_height
+    putFloat32le _msgPosLlhAcc_h_accuracy
+    putFloat32le _msgPosLlhAcc_v_accuracy
+    putFloat32le _msgPosLlhAcc_ct_accuracy
+    putFloat32le _msgPosLlhAcc_at_accuracy
+    put _msgPosLlhAcc_h_ellipse
+    putWord8 _msgPosLlhAcc_confidence_and_geoid
+    putWord8 _msgPosLlhAcc_n_sats
+    putWord8 _msgPosLlhAcc_flags
+
+$(makeSBP 'msgPosLlhAcc ''MsgPosLlhAcc)
+$(makeJSON "_msgPosLlhAcc_" ''MsgPosLlhAcc)
+$(makeLenses ''MsgPosLlhAcc)
 
 msgBaselineEcef :: Word16
 msgBaselineEcef = 0x020B
@@ -793,9 +916,9 @@ msgVelNed = 0x020E
 -- | SBP class for message MSG_VEL_NED (0x020E).
 --
 -- This message reports the velocity in local North East Down (NED)
--- coordinates. The NED coordinate system is defined as the local WGS84 tangent
--- plane centered at the current position. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- coordinates. The NED coordinate system is defined as the local WGS84
+-- tangent plane centered at the current position. The full GPS time is given
+-- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgVelNed = MsgVelNed
   { _msgVelNed_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -847,11 +970,11 @@ msgVelNedCov = 0x0212
 -- | SBP class for message MSG_VEL_NED_COV (0x0212).
 --
 -- This message reports the velocity in local North East Down (NED)
--- coordinates. The NED coordinate system is defined as the local WGS84 tangent
--- plane centered at the current position. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
--- similar to the MSG_VEL_NED, but it includes the upper triangular portion of
--- the 3x3 covariance matrix.
+-- coordinates. The NED coordinate system is defined as the local WGS84
+-- tangent plane centered at the current position. The full GPS time is given
+-- by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
+-- message is similar to the MSG_VEL_NED, but it includes the upper triangular
+-- portion of the 3x3 covariance matrix.
 data MsgVelNedCov = MsgVelNedCov
   { _msgVelNedCov_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -973,12 +1096,12 @@ msgPosEcefCovGnss = 0x0234
 --
 -- The position solution message reports absolute Earth Centered Earth Fixed
 -- (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
--- the position solution. The message also reports the upper triangular portion
--- of the 3x3 covariance matrix. If the receiver knows the surveyed position of
--- the base station and has an RTK solution, this reports a pseudo-absolute
--- position solution using the base station position and the rover's RTK
--- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
--- with the matching time-of-week (tow).
+-- the position solution. The message also reports the upper triangular
+-- portion of the 3x3 covariance matrix. If the receiver knows the surveyed
+-- position of the base station and has an RTK solution, this reports a
+-- pseudo-absolute position solution using the base station position and the
+-- rover's RTK baseline vector. The full GPS time is given by the preceding
+-- MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgPosEcefCovGnss = MsgPosEcefCovGnss
   { _msgPosEcefCovGnss_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1045,13 +1168,13 @@ msgPosLlhGnss = 0x022A
 
 -- | SBP class for message MSG_POS_LLH_GNSS (0x022A).
 --
--- This position solution message reports the absolute geodetic coordinates and
--- the status (single point vs pseudo-absolute RTK) of the position solution.
--- If the rover receiver knows the surveyed position of the base station and
--- has an RTK solution, this reports a pseudo-absolute position solution using
--- the base station position and the rover's RTK baseline vector. The full GPS
--- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
--- (tow).
+-- This position solution message reports the absolute geodetic coordinates
+-- and the status (single point vs pseudo-absolute RTK) of the position
+-- solution. If the rover receiver knows the surveyed position of the base
+-- station and has an RTK solution, this reports a pseudo-absolute position
+-- solution using the base station position and the rover's RTK baseline
+-- vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
+-- matching time-of-week (tow).
 data MsgPosLlhGnss = MsgPosLlhGnss
   { _msgPosLlhGnss_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -1102,14 +1225,14 @@ msgPosLlhCovGnss = 0x0231
 
 -- | SBP class for message MSG_POS_LLH_COV_GNSS (0x0231).
 --
--- This position solution message reports the absolute geodetic coordinates and
--- the status (single point vs pseudo-absolute RTK) of the position solution as
--- well as the upper triangle of the 3x3 covariance matrix.  The position
--- information and Fix Mode flags should follow the MSG_POS_LLH message.  Since
--- the covariance matrix is computed in the local-level North, East, Down
--- frame, the covariance terms follow with that convention. Thus, covariances
--- are reported against the "downward" measurement and care should be taken
--- with the sign convention.
+-- This position solution message reports the absolute geodetic coordinates
+-- and the status (single point vs pseudo-absolute RTK) of the position
+-- solution as well as the upper triangle of the 3x3 covariance matrix.  The
+-- position information and Fix Mode flags should follow the MSG_POS_LLH
+-- message.  Since the covariance matrix is computed in the local-level North,
+-- East, Down frame, the covariance terms follow with that convention. Thus,
+-- covariances are reported against the "downward" measurement and care should
+-- be taken with the sign convention.
 data MsgPosLlhCovGnss = MsgPosLlhCovGnss
   { _msgPosLlhCovGnss_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1295,9 +1418,9 @@ msgVelNedGnss = 0x022E
 -- | SBP class for message MSG_VEL_NED_GNSS (0x022E).
 --
 -- This message reports the velocity in local North East Down (NED)
--- coordinates. The NED coordinate system is defined as the local WGS84 tangent
--- plane centered at the current position. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- coordinates. The NED coordinate system is defined as the local WGS84
+-- tangent plane centered at the current position. The full GPS time is given
+-- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgVelNedGnss = MsgVelNedGnss
   { _msgVelNedGnss_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -1349,11 +1472,11 @@ msgVelNedCovGnss = 0x0232
 -- | SBP class for message MSG_VEL_NED_COV_GNSS (0x0232).
 --
 -- This message reports the velocity in local North East Down (NED)
--- coordinates. The NED coordinate system is defined as the local WGS84 tangent
--- plane centered at the current position. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
--- similar to the MSG_VEL_NED, but it includes the upper triangular portion of
--- the 3x3 covariance matrix.
+-- coordinates. The NED coordinate system is defined as the local WGS84
+-- tangent plane centered at the current position. The full GPS time is given
+-- by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
+-- message is similar to the MSG_VEL_NED, but it includes the upper triangular
+-- portion of the 3x3 covariance matrix.
 data MsgVelNedCovGnss = MsgVelNedCovGnss
   { _msgVelNedCovGnss_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1426,9 +1549,9 @@ msgVelBody = 0x0213
 -- of the vehicle. Since this is a right handed system, z should point out the
 -- bottom of the vehicle. The orientation and origin of the Vehicle Body Frame
 -- are specified via the device settings. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
--- only produced by inertial versions of Swift products and is not available
--- from Piksi Multi or Duro.
+-- preceding MSG_GPS_TIME with the matching time-of-week (tow). This message
+-- is only produced by inertial versions of Swift products and is not
+-- available from Piksi Multi or Duro.
 data MsgVelBody = MsgVelBody
   { _msgVelBody_tow   :: !Word32
     -- ^ GPS Time of Week
@@ -1490,13 +1613,74 @@ $(makeSBP 'msgVelBody ''MsgVelBody)
 $(makeJSON "_msgVelBody_" ''MsgVelBody)
 $(makeLenses ''MsgVelBody)
 
+msgVelCog :: Word16
+msgVelCog = 0x021C
+
+-- | SBP class for message MSG_VEL_COG (0x021C).
+--
+-- This message reports the receiver course over ground (COG) and speed over
+-- ground (SOG) based on the horizontal (N-E) components of the NED velocity
+-- vector. It also includes the vertical velocity coordinate. A flag is
+-- provided to indicate whether the COG value has been frozen. When  the flag
+-- is set to true, the COG field is set to its last valid value until  the
+-- system exceeds a minimum velocity threshold. No other fields are  affected
+-- by this flag.  The NED coordinate system is defined as the local WGS84
+-- tangent  plane centered at the current position. The full GPS time is given
+-- by the  preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
+-- course over ground represents the receiver's direction of travel,  but not
+-- necessarily the device heading.
+data MsgVelCog = MsgVelCog
+  { _msgVelCog_tow         :: !Word32
+    -- ^ GPS Time of Week
+  , _msgVelCog_cog         :: !Word32
+    -- ^ Course over ground relative to north direction
+  , _msgVelCog_sog         :: !Word32
+    -- ^ Speed over ground (based on horizontal velocity)
+  , _msgVelCog_v_up        :: !Int32
+    -- ^ Vertical velocity component (positive up)
+  , _msgVelCog_cog_accuracy :: !Word32
+    -- ^ Course over ground estimated standard deviation
+  , _msgVelCog_sog_accuracy :: !Word32
+    -- ^ Speed over ground estimated standard deviation
+  , _msgVelCog_v_up_accuracy :: !Word32
+    -- ^ Vertical velocity estimated standard deviation
+  , _msgVelCog_flags       :: !Word16
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgVelCog where
+  get = do
+    _msgVelCog_tow <- getWord32le
+    _msgVelCog_cog <- getWord32le
+    _msgVelCog_sog <- getWord32le
+    _msgVelCog_v_up <- (fromIntegral <$> getWord32le)
+    _msgVelCog_cog_accuracy <- getWord32le
+    _msgVelCog_sog_accuracy <- getWord32le
+    _msgVelCog_v_up_accuracy <- getWord32le
+    _msgVelCog_flags <- getWord16le
+    pure MsgVelCog {..}
+
+  put MsgVelCog {..} = do
+    putWord32le _msgVelCog_tow
+    putWord32le _msgVelCog_cog
+    putWord32le _msgVelCog_sog
+    (putWord32le . fromIntegral) _msgVelCog_v_up
+    putWord32le _msgVelCog_cog_accuracy
+    putWord32le _msgVelCog_sog_accuracy
+    putWord32le _msgVelCog_v_up_accuracy
+    putWord16le _msgVelCog_flags
+
+$(makeSBP 'msgVelCog ''MsgVelCog)
+$(makeJSON "_msgVelCog_" ''MsgVelCog)
+$(makeLenses ''MsgVelCog)
+
 msgAgeCorrections :: Word16
 msgAgeCorrections = 0x0210
 
 -- | SBP class for message MSG_AGE_CORRECTIONS (0x0210).
 --
 -- This message reports the Age of the corrections used for the current
--- Differential solution
+-- Differential solution.
 data MsgAgeCorrections = MsgAgeCorrections
   { _msgAgeCorrections_tow :: !Word32
     -- ^ GPS Time of Week
@@ -1523,15 +1707,17 @@ msgGpsTimeDepA = 0x0100
 
 -- | SBP class for message MSG_GPS_TIME_DEP_A (0x0100).
 --
--- This message reports the GPS time, representing the time since the GPS epoch
--- began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds
--- of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0
--- began at the beginning of the GPS time scale.  Within each week number, the
--- GPS time of the week is between between 0 and 604800 seconds (=60*60*24*7).
--- Note that GPS time does not accumulate leap seconds, and as of now, has a
--- small offset from UTC. In a message stream, this message precedes a set of
--- other navigation messages referenced to the same time (but lacking the ns
--- field) and indicates a more precise time of these messages.
+-- This message reports the GPS time, representing the time since the GPS
+-- epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
+-- seconds of the week. The weeks begin at the Saturday/Sunday transition. GPS
+-- week 0 began at the beginning of the GPS time scale.
+--
+-- Within each week number, the GPS time of the week is between between 0 and
+-- 604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
+-- seconds, and as of now, has a small offset from UTC. In a message stream,
+-- this message precedes a set of other navigation messages referenced to the
+-- same time (but lacking the ns field) and indicates a more precise time of
+-- these messages.
 data MsgGpsTimeDepA = MsgGpsTimeDepA
   { _msgGpsTimeDepA_wn        :: !Word16
     -- ^ GPS week number
@@ -1664,13 +1850,13 @@ msgPosLlhDepA = 0x0201
 
 -- | SBP class for message MSG_POS_LLH_DEP_A (0x0201).
 --
--- This position solution message reports the absolute geodetic coordinates and
--- the status (single point vs pseudo-absolute RTK) of the position solution.
--- If the rover receiver knows the surveyed position of the base station and
--- has an RTK solution, this reports a pseudo-absolute position solution using
--- the base station position and the rover's RTK baseline vector. The full GPS
--- time is given by the preceding MSG_GPS_TIME with the matching time-of-week
--- (tow).
+-- This position solution message reports the absolute geodetic coordinates
+-- and the status (single point vs pseudo-absolute RTK) of the position
+-- solution. If the rover receiver knows the surveyed position of the base
+-- station and has an RTK solution, this reports a pseudo-absolute position
+-- solution using the base station position and the rover's RTK baseline
+-- vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
+-- matching time-of-week (tow).
 data MsgPosLlhDepA = MsgPosLlhDepA
   { _msgPosLlhDepA_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -1877,9 +2063,9 @@ msgVelNedDepA = 0x0205
 -- | SBP class for message MSG_VEL_NED_DEP_A (0x0205).
 --
 -- This message reports the velocity in local North East Down (NED)
--- coordinates. The NED coordinate system is defined as the local WGS84 tangent
--- plane centered at the current position. The full GPS time is given by the
--- preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- coordinates. The NED coordinate system is defined as the local WGS84
+-- tangent plane centered at the current position. The full GPS time is given
+-- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgVelNedDepA = MsgVelNedDepA
   { _msgVelNedDepA_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -1968,8 +2154,8 @@ msgProtectionLevelDepA = 0x0216
 -- | SBP class for message MSG_PROTECTION_LEVEL_DEP_A (0x0216).
 --
 -- This message reports the local vertical and horizontal protection levels
--- associated with a given LLH position solution. The full GPS time is given by
--- the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-- associated with a given LLH position solution. The full GPS time is given
+-- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 data MsgProtectionLevelDepA = MsgProtectionLevelDepA
   { _msgProtectionLevelDepA_tow  :: !Word32
     -- ^ GPS Time of Week
@@ -2016,8 +2202,8 @@ msgProtectionLevel = 0x0217
 
 -- | SBP class for message MSG_PROTECTION_LEVEL (0x0217).
 --
--- This message reports the protection levels associated to the given  state
--- estimate. The full GPS time is given by the preceding MSG_GPS_TIME  with the
+-- This message reports the protection levels associated to the given state
+-- estimate. The full GPS time is given by the preceding MSG_GPS_TIME with the
 -- matching time-of-week (tow).
 data MsgProtectionLevel = MsgProtectionLevel
   { _msgProtectionLevel_tow   :: !Word32
@@ -2033,7 +2219,7 @@ data MsgProtectionLevel = MsgProtectionLevel
   , _msgProtectionLevel_ctpl  :: !Word16
     -- ^ Cross-track position error protection level
   , _msgProtectionLevel_hvpl  :: !Word16
-    -- ^ Protection level for the error vector between estimated and  true
+    -- ^ Protection level for the error vector between estimated and true
     -- along/cross track velocity vector
   , _msgProtectionLevel_vvpl  :: !Word16
     -- ^ Protection level for the velocity in vehicle upright direction

@@ -53,20 +53,41 @@ API Reference
 
    sbp
    sbp.client
+   sbp.constants
+   sbp.sbp2json
+   sbp.msg
+   sbp.table
+   sbp.utils
+
+Messages:
+
+.. toctree::
+   :maxdepth: 1
+
    sbp.acquisition
    sbp.bootload
    sbp.ext_events
    sbp.file_io
    sbp.flash
+   sbp.gnss
+   sbp.imu
+   sbp.linux
    sbp.logging
+   sbp.mag
    sbp.navigation
+   sbp.ndb
    sbp.observation
+   sbp.orientation
    sbp.piksi
+   sbp.sbas
    sbp.settings
+   sbp.solution_meta
+   sbp.ssr
    sbp.system
-   sbp.table
    sbp.tracking
-   sbp.utils
+   sbp.user
+   sbp.vehicle
+
 
 Indices and tables
 ------------------

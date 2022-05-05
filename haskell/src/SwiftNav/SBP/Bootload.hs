@@ -5,16 +5,17 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Bootload
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Messages for the bootloading configuration of a Piksi 2.3.1.  This message
--- group does not apply to Piksi Multi.  Note that some of these messages share
--- the same message type ID for both the host request and the device response.
--- \>
+-- \< Messages for the bootloading configuration of a Piksi 2.3.1.  This message
+-- group does not apply to Piksi Multi.
+--
+-- Note that some of these messages share the same message type ID for both
+-- the host request and the device response. \>
 
 module SwiftNav.SBP.Bootload
   ( module SwiftNav.SBP.Bootload
@@ -120,8 +121,9 @@ msgNapDeviceDnaReq = 0x00DE
 -- The device message from the host reads a unique device identifier from the
 -- SwiftNAP, an FPGA. The host requests the ID by sending a
 -- MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
--- MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note that
--- this ID is tied to the FPGA, and not related to the Piksi's serial number.
+-- MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
+-- that this ID is tied to the FPGA, and not related to the Piksi's serial
+-- number.
 data MsgNapDeviceDnaReq = MsgNapDeviceDnaReq
   deriving ( Show, Read, Eq )
 
@@ -143,7 +145,7 @@ msgNapDeviceDnaResp = 0x00DD
 -- The device message from the host reads a unique device identifier from the
 -- SwiftNAP, an FPGA. The host requests the ID by sending a
 -- MSG_NAP_DEVICE_DNA_REQ message. The device responds with a
--- MSG_NAP_DEVICE_DNA_RESP messagage with the device ID in the payload. Note
+-- MSG_NAP_DEVICE_DNA_RESP message with the device ID in the payload. Note
 -- that this ID is tied to the FPGA, and not related to the Piksi's serial
 -- number.
 data MsgNapDeviceDnaResp = MsgNapDeviceDnaResp

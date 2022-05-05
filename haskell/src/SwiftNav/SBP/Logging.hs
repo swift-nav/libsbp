@@ -5,13 +5,13 @@
 
 -- |
 -- Module:      SwiftNav.SBP.Logging
--- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
+-- Copyright:   Copyright (C) 2015-2021 Swift Navigation, Inc.
 -- License:     MIT
 -- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Logging and debugging messages from the device. \>
+-- \< Logging and debugging messages from the device. \>
 
 module SwiftNav.SBP.Logging
   ( module SwiftNav.SBP.Logging
@@ -71,17 +71,18 @@ msgFwd = 0x0402
 --
 -- This message provides the ability to forward messages over SBP.  This may
 -- take the form of wrapping up SBP messages received by Piksi for logging
--- purposes or wrapping  another protocol with SBP.  The source identifier
--- indicates from what interface a forwarded stream derived. The protocol
--- identifier identifies what the expected protocol the forwarded msg contains.
--- Protocol 0 represents SBP and the remaining values are implementation
--- defined.
+-- purposes or wrapping another protocol with SBP.
+--
+-- The source identifier indicates from what interface a forwarded stream
+-- derived. The protocol identifier identifies what the expected protocol the
+-- forwarded msg contains. Protocol 0 represents SBP and the remaining values
+-- are implementation defined.
 data MsgFwd = MsgFwd
   { _msgFwd_source    :: !Word8
     -- ^ source identifier
   , _msgFwd_protocol  :: !Word8
     -- ^ protocol identifier
-  , _msgFwd_fwd_payload :: !Text
+  , _msgFwd_fwd_payload :: ![Word8]
     -- ^ variable length wrapped binary message
   } deriving ( Show, Read, Eq )
 
@@ -89,13 +90,13 @@ instance Binary MsgFwd where
   get = do
     _msgFwd_source <- getWord8
     _msgFwd_protocol <- getWord8
-    _msgFwd_fwd_payload <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    _msgFwd_fwd_payload <- whileM (not <$> isEmpty) getWord8
     pure MsgFwd {..}
 
   put MsgFwd {..} = do
     putWord8 _msgFwd_source
     putWord8 _msgFwd_protocol
-    putByteString $ encodeUtf8 _msgFwd_fwd_payload
+    mapM_ putWord8 _msgFwd_fwd_payload
 
 $(makeSBP 'msgFwd ''MsgFwd)
 $(makeJSON "_msgFwd_" ''MsgFwd)

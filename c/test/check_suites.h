@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011-2018 Swift Navigation Inc.
+ * Copyright (C) 2011-2021 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -53,6 +53,7 @@ Suite* auto_check_sbp_navigation_MsgProtectionLevel_suite(void);
 Suite* auto_check_sbp_navigation_MsgUTCTime_suite(void);
 Suite* auto_check_sbp_navigation_MsgUTCTimeGNSS_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelBody_suite(void);
+Suite* auto_check_sbp_navigation_MsgVelCog_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelECEF_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelECEFCov_suite(void);
 Suite* auto_check_sbp_navigation_MsgVelECEFDepA_suite(void);
@@ -94,7 +95,9 @@ Suite* auto_check_sbp_system_MsgGroupMeta_suite(void);
 Suite* auto_check_sbp_system_MsgHeartbeat_suite(void);
 Suite* auto_check_sbp_system_MsgInsStatus_suite(void);
 Suite* auto_check_sbp_system_MsgInsUpdates_suite(void);
+Suite* auto_check_sbp_system_MsgSensorAidEvent_suite(void);
 Suite* auto_check_sbp_system_MsgStartup_suite(void);
+Suite* auto_check_sbp_system_MsgStatusJournal_suite(void);
 Suite* auto_check_sbp_tracking_MsgMeasurementState_suite(void);
 Suite* auto_check_sbp_tracking_MsgTrackingState_suite(void);
 Suite* auto_check_sbp_tracking_MsgTrackingStateDetailedDep_suite(void);

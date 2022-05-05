@@ -1,5 +1,4 @@
-/*
- * Copyright (C) 2020 Swift Navigation Inc.
+/* Copyright (C) 2015-2022 Swift Navigation Inc.
  * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
@@ -9,11 +8,10 @@
  * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 package com.swiftnav.sbp.client;
 
-import com.swiftnav.sbp.SBPMessage;
 
+import com.swiftnav.sbp.SBPMessage;
 import java.io.IOException;
 
 public class SBPForwarder extends Thread {

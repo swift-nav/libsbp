@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.12)
 project(libsbp C CXX)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DIR}/cmake/common")
@@ -8,6 +8,7 @@ include(CCache)
 include(SwiftCmakeOptions)
 include(CompileOptions)
 include(LanguageStandards)
+include(ClangFormat)
 include(ClangTidy)
 swift_create_project_options(
     HAS_TESTS
@@ -15,9 +16,11 @@ swift_create_project_options(
     TEST_PACKAGES "Check"
     )
 include(CodeCoverage)
+include(SwiftTargets)
 include(TestTargets)
 add_code_coverage_all_targets()
-swift_setup_clang_tidy(PATTERNS 'src/*.c')
+# TODO: Reformatting is limited to generated files; it should be expanded to cover all files
+swift_setup_clang_format(PATTERNS 'include/*.h' 'test/*.c' 'test/*.h' 'test/cpp/*.cc')
 
 if(libsbp_BUILD_TESTS)
   find_package(Googletest)
@@ -30,3 +33,7 @@ endif()
 if(libsbp_BUILD_TESTS)
   add_subdirectory(test)
 endif()
+add_subdirectory(examples)
+
+swift_validate_targets()
+swift_create_clang_tidy_targets()

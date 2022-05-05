@@ -1,4 +1,4 @@
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2015-2021 Swift Navigation Inc.
 // Contact: https://support.swiftnav.com
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -13,677 +13,760 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Satellite acquisition messages from the device.
+pub use acq_sv_profile::AcqSvProfile;
+pub use acq_sv_profile_dep::AcqSvProfileDep;
+pub use msg_acq_result::MsgAcqResult;
+pub use msg_acq_result_dep_a::MsgAcqResultDepA;
+pub use msg_acq_result_dep_b::MsgAcqResultDepB;
+pub use msg_acq_result_dep_c::MsgAcqResultDepC;
+pub use msg_acq_sv_profile::MsgAcqSvProfile;
+pub use msg_acq_sv_profile_dep::MsgAcqSvProfileDep;
 
-#[allow(unused_imports)]
-use byteorder::{LittleEndian, ReadBytesExt};
+pub mod acq_sv_profile {
+    #![allow(unused_imports)]
 
-use super::gnss::*;
-#[allow(unused_imports)]
-use crate::serialize::SbpSerialize;
-#[allow(unused_imports)]
-use crate::SbpString;
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
 
-/// Acq perfomance measurement and debug
-///
-/// Profile for a specific SV for debugging purposes
-/// The message describes SV profile during acquisition time.
-/// The message is used to debug and measure the performance.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct AcqSvProfile {
-    /// SV search job type (deep, fallback, etc)
-    pub job_type: u8,
-    /// Acquisition status 1 is Success, 0 is Failure
-    pub status: u8,
-    /// CN0 value. Only valid if status is '1'
-    pub cn0: u16,
-    /// Acquisition integration time
-    pub int_time: u8,
-    /// GNSS signal for which acquisition was attempted
-    pub sid: GnssSignal,
-    /// Acq frequency bin width
-    pub bin_width: u16,
-    /// Timestamp of the job complete event
-    pub timestamp: u32,
-    /// Time spent to search for sid.code
-    pub time_spent: u32,
-    /// Doppler range lowest frequency
-    pub cf_min: i32,
-    /// Doppler range highest frequency
-    pub cf_max: i32,
-    /// Doppler value of detected peak. Only valid if status is '1'
-    pub cf: i32,
-    /// Codephase of detected peak. Only valid if status is '1'
-    pub cp: u32,
-}
-
-impl AcqSvProfile {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, crate::Error> {
-        Ok( AcqSvProfile{
-            job_type: _buf.read_u8()?,
-            status: _buf.read_u8()?,
-            cn0: _buf.read_u16::<LittleEndian>()?,
-            int_time: _buf.read_u8()?,
-            sid: GnssSignal::parse(_buf)?,
-            bin_width: _buf.read_u16::<LittleEndian>()?,
-            timestamp: _buf.read_u32::<LittleEndian>()?,
-            time_spent: _buf.read_u32::<LittleEndian>()?,
-            cf_min: _buf.read_i32::<LittleEndian>()?,
-            cf_max: _buf.read_i32::<LittleEndian>()?,
-            cf: _buf.read_i32::<LittleEndian>()?,
-            cp: _buf.read_u32::<LittleEndian>()?,
-        } )
+    /// Acq perfomance measurement and debug
+    ///
+    /// Profile for a specific SV for debugging purposes. The message describes SV
+    /// profile during acquisition time. The message is used to debug and measure
+    /// the performance.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct AcqSvProfile {
+        /// SV search job type (deep, fallback, etc)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "job_type")))]
+        pub job_type: u8,
+        /// Acquisition status 1 is Success, 0 is Failure
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        pub status: u8,
+        /// CN0 value. Only valid if status is '1'
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        pub cn0: u16,
+        /// Acquisition integration time
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "int_time")))]
+        pub int_time: u8,
+        /// GNSS signal for which acquisition was attempted
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        pub sid: GnssSignal,
+        /// Acq frequency bin width
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "bin_width")))]
+        pub bin_width: u16,
+        /// Timestamp of the job complete event
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "timestamp")))]
+        pub timestamp: u32,
+        /// Time spent to search for sid.code
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "time_spent")))]
+        pub time_spent: u32,
+        /// Doppler range lowest frequency
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_min")))]
+        pub cf_min: i32,
+        /// Doppler range highest frequency
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_max")))]
+        pub cf_max: i32,
+        /// Doppler value of detected peak. Only valid if status is '1'
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        pub cf: i32,
+        /// Codephase of detected peak. Only valid if status is '1'
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        pub cp: u32,
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AcqSvProfile::parse(buf)?);
+
+    impl WireFormat for AcqSvProfile {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <GnssSignal as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.job_type)
+                + WireFormat::len(&self.status)
+                + WireFormat::len(&self.cn0)
+                + WireFormat::len(&self.int_time)
+                + WireFormat::len(&self.sid)
+                + WireFormat::len(&self.bin_width)
+                + WireFormat::len(&self.timestamp)
+                + WireFormat::len(&self.time_spent)
+                + WireFormat::len(&self.cf_min)
+                + WireFormat::len(&self.cf_max)
+                + WireFormat::len(&self.cf)
+                + WireFormat::len(&self.cp)
         }
-        Ok(v)
-    }
-
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(AcqSvProfile::parse(buf)?);
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.job_type, buf);
+            WireFormat::write(&self.status, buf);
+            WireFormat::write(&self.cn0, buf);
+            WireFormat::write(&self.int_time, buf);
+            WireFormat::write(&self.sid, buf);
+            WireFormat::write(&self.bin_width, buf);
+            WireFormat::write(&self.timestamp, buf);
+            WireFormat::write(&self.time_spent, buf);
+            WireFormat::write(&self.cf_min, buf);
+            WireFormat::write(&self.cf_max, buf);
+            WireFormat::write(&self.cf, buf);
+            WireFormat::write(&self.cp, buf);
         }
-        Ok(v)
-    }
-}
-
-impl crate::serialize::SbpSerialize for AcqSvProfile {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.job_type.append_to_sbp_buffer(buf);
-        self.status.append_to_sbp_buffer(buf);
-        self.cn0.append_to_sbp_buffer(buf);
-        self.int_time.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-        self.bin_width.append_to_sbp_buffer(buf);
-        self.timestamp.append_to_sbp_buffer(buf);
-        self.time_spent.append_to_sbp_buffer(buf);
-        self.cf_min.append_to_sbp_buffer(buf);
-        self.cf_max.append_to_sbp_buffer(buf);
-        self.cf.append_to_sbp_buffer(buf);
-        self.cp.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.job_type.sbp_size();
-        size += self.status.sbp_size();
-        size += self.cn0.sbp_size();
-        size += self.int_time.sbp_size();
-        size += self.sid.sbp_size();
-        size += self.bin_width.sbp_size();
-        size += self.timestamp.sbp_size();
-        size += self.time_spent.sbp_size();
-        size += self.cf_min.sbp_size();
-        size += self.cf_max.sbp_size();
-        size += self.cf.sbp_size();
-        size += self.cp.sbp_size();
-        size
-    }
-}
-
-/// Deprecated
-///
-/// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct AcqSvProfileDep {
-    /// SV search job type (deep, fallback, etc)
-    pub job_type: u8,
-    /// Acquisition status 1 is Success, 0 is Failure
-    pub status: u8,
-    /// CN0 value. Only valid if status is '1'
-    pub cn0: u16,
-    /// Acquisition integration time
-    pub int_time: u8,
-    /// GNSS signal for which acquisition was attempted
-    pub sid: GnssSignalDep,
-    /// Acq frequency bin width
-    pub bin_width: u16,
-    /// Timestamp of the job complete event
-    pub timestamp: u32,
-    /// Time spent to search for sid.code
-    pub time_spent: u32,
-    /// Doppler range lowest frequency
-    pub cf_min: i32,
-    /// Doppler range highest frequency
-    pub cf_max: i32,
-    /// Doppler value of detected peak. Only valid if status is '1'
-    pub cf: i32,
-    /// Codephase of detected peak. Only valid if status is '1'
-    pub cp: u32,
-}
-
-impl AcqSvProfileDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, crate::Error> {
-        Ok( AcqSvProfileDep{
-            job_type: _buf.read_u8()?,
-            status: _buf.read_u8()?,
-            cn0: _buf.read_u16::<LittleEndian>()?,
-            int_time: _buf.read_u8()?,
-            sid: GnssSignalDep::parse(_buf)?,
-            bin_width: _buf.read_u16::<LittleEndian>()?,
-            timestamp: _buf.read_u32::<LittleEndian>()?,
-            time_spent: _buf.read_u32::<LittleEndian>()?,
-            cf_min: _buf.read_i32::<LittleEndian>()?,
-            cf_max: _buf.read_i32::<LittleEndian>()?,
-            cf: _buf.read_i32::<LittleEndian>()?,
-            cp: _buf.read_u32::<LittleEndian>()?,
-        } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AcqSvProfileDep::parse(buf)?);
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            AcqSvProfile {
+                job_type: WireFormat::parse_unchecked(buf),
+                status: WireFormat::parse_unchecked(buf),
+                cn0: WireFormat::parse_unchecked(buf),
+                int_time: WireFormat::parse_unchecked(buf),
+                sid: WireFormat::parse_unchecked(buf),
+                bin_width: WireFormat::parse_unchecked(buf),
+                timestamp: WireFormat::parse_unchecked(buf),
+                time_spent: WireFormat::parse_unchecked(buf),
+                cf_min: WireFormat::parse_unchecked(buf),
+                cf_max: WireFormat::parse_unchecked(buf),
+                cf: WireFormat::parse_unchecked(buf),
+                cp: WireFormat::parse_unchecked(buf),
+            }
         }
-        Ok(v)
+    }
+}
+
+pub mod acq_sv_profile_dep {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct AcqSvProfileDep {
+        /// SV search job type (deep, fallback, etc)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "job_type")))]
+        pub job_type: u8,
+        /// Acquisition status 1 is Success, 0 is Failure
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        pub status: u8,
+        /// CN0 value. Only valid if status is '1'
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        pub cn0: u16,
+        /// Acquisition integration time
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "int_time")))]
+        pub int_time: u8,
+        /// GNSS signal for which acquisition was attempted
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        pub sid: GnssSignalDep,
+        /// Acq frequency bin width
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "bin_width")))]
+        pub bin_width: u16,
+        /// Timestamp of the job complete event
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "timestamp")))]
+        pub timestamp: u32,
+        /// Time spent to search for sid.code
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "time_spent")))]
+        pub time_spent: u32,
+        /// Doppler range lowest frequency
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_min")))]
+        pub cf_min: i32,
+        /// Doppler range highest frequency
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_max")))]
+        pub cf_max: i32,
+        /// Doppler value of detected peak. Only valid if status is '1'
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        pub cf: i32,
+        /// Codephase of detected peak. Only valid if status is '1'
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        pub cp: u32,
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(AcqSvProfileDep::parse(buf)?);
+    impl WireFormat for AcqSvProfileDep {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <GnssSignalDep as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.job_type)
+                + WireFormat::len(&self.status)
+                + WireFormat::len(&self.cn0)
+                + WireFormat::len(&self.int_time)
+                + WireFormat::len(&self.sid)
+                + WireFormat::len(&self.bin_width)
+                + WireFormat::len(&self.timestamp)
+                + WireFormat::len(&self.time_spent)
+                + WireFormat::len(&self.cf_min)
+                + WireFormat::len(&self.cf_max)
+                + WireFormat::len(&self.cf)
+                + WireFormat::len(&self.cp)
         }
-        Ok(v)
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.job_type, buf);
+            WireFormat::write(&self.status, buf);
+            WireFormat::write(&self.cn0, buf);
+            WireFormat::write(&self.int_time, buf);
+            WireFormat::write(&self.sid, buf);
+            WireFormat::write(&self.bin_width, buf);
+            WireFormat::write(&self.timestamp, buf);
+            WireFormat::write(&self.time_spent, buf);
+            WireFormat::write(&self.cf_min, buf);
+            WireFormat::write(&self.cf_max, buf);
+            WireFormat::write(&self.cf, buf);
+            WireFormat::write(&self.cp, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            AcqSvProfileDep {
+                job_type: WireFormat::parse_unchecked(buf),
+                status: WireFormat::parse_unchecked(buf),
+                cn0: WireFormat::parse_unchecked(buf),
+                int_time: WireFormat::parse_unchecked(buf),
+                sid: WireFormat::parse_unchecked(buf),
+                bin_width: WireFormat::parse_unchecked(buf),
+                timestamp: WireFormat::parse_unchecked(buf),
+                time_spent: WireFormat::parse_unchecked(buf),
+                cf_min: WireFormat::parse_unchecked(buf),
+                cf_max: WireFormat::parse_unchecked(buf),
+                cf: WireFormat::parse_unchecked(buf),
+                cp: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }
 
-impl crate::serialize::SbpSerialize for AcqSvProfileDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.job_type.append_to_sbp_buffer(buf);
-        self.status.append_to_sbp_buffer(buf);
-        self.cn0.append_to_sbp_buffer(buf);
-        self.int_time.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-        self.bin_width.append_to_sbp_buffer(buf);
-        self.timestamp.append_to_sbp_buffer(buf);
-        self.time_spent.append_to_sbp_buffer(buf);
-        self.cf_min.append_to_sbp_buffer(buf);
-        self.cf_max.append_to_sbp_buffer(buf);
-        self.cf.append_to_sbp_buffer(buf);
-        self.cp.append_to_sbp_buffer(buf);
+pub mod msg_acq_result {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Satellite acquisition result
+    ///
+    /// This message describes the results from an attempted GPS signal
+    /// acquisition search for a satellite PRN over a code phase/carrier frequency
+    /// range. It contains the parameters of the point in the acquisition search
+    /// space with the best carrier-to-noise (CN/0) ratio.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgAcqResult {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// CN/0 of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        pub cn0: f32,
+        /// Code phase of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        pub cp: f32,
+        /// Carrier frequency of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        pub cf: f32,
+        /// GNSS signal for which acquisition was attempted
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        pub sid: GnssSignal,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.job_type.sbp_size();
-        size += self.status.sbp_size();
-        size += self.cn0.sbp_size();
-        size += self.int_time.sbp_size();
-        size += self.sid.sbp_size();
-        size += self.bin_width.sbp_size();
-        size += self.timestamp.sbp_size();
-        size += self.time_spent.sbp_size();
-        size += self.cf_min.sbp_size();
-        size += self.cf_max.sbp_size();
-        size += self.cf.sbp_size();
-        size += self.cp.sbp_size();
-        size
-    }
-}
-
-/// Satellite acquisition result
-///
-/// This message describes the results from an attempted GPS signal
-/// acquisition search for a satellite PRN over a code phase/carrier
-/// frequency range. It contains the parameters of the point in the
-/// acquisition search space with the best carrier-to-noise (CN/0)
-/// ratio.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAcqResult {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// CN/0 of best point
-    pub cn0: f32,
-    /// Code phase of best point
-    pub cp: f32,
-    /// Carrier frequency of best point
-    pub cf: f32,
-    /// GNSS signal for which acquisition was attempted
-    pub sid: GnssSignal,
-}
-
-impl MsgAcqResult {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, crate::Error> {
-        Ok( MsgAcqResult{
-            sender_id: None,
-            cn0: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            sid: GnssSignal::parse(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgAcqResult {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT"
+    impl ConcreteMessage for MsgAcqResult {
+        const MESSAGE_TYPE: u16 = 47;
+        const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT";
     }
 
-    fn get_message_type(&self) -> u16 {
-        47
+    impl SbpMessage for MsgAcqResult {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl TryFrom<Sbp> for MsgAcqResult {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgAcqResult(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    impl WireFormat for MsgAcqResult {
+        const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <GnssSignal as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.cn0)
+                + WireFormat::len(&self.cp)
+                + WireFormat::len(&self.cf)
+                + WireFormat::len(&self.sid)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.cn0, buf);
+            WireFormat::write(&self.cp, buf);
+            WireFormat::write(&self.cf, buf);
+            WireFormat::write(&self.sid, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgAcqResult {
+                sender_id: None,
+                cn0: WireFormat::parse_unchecked(buf),
+                cp: WireFormat::parse_unchecked(buf),
+                cf: WireFormat::parse_unchecked(buf),
+                sid: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAcqResult {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.cn0.append_to_sbp_buffer(buf);
-        self.cp.append_to_sbp_buffer(buf);
-        self.cf.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
+pub mod msg_acq_result_dep_a {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgAcqResultDepA {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// SNR of best point. Currently dimensionless, but will have units of dB Hz
+        /// in the revision of this message.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "snr")))]
+        pub snr: f32,
+        /// Code phase of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        pub cp: f32,
+        /// Carrier frequency of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        pub cf: f32,
+        /// PRN-1 identifier of the satellite signal for which acquisition was
+        /// attempted
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
+        pub prn: u8,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.cn0.sbp_size();
-        size += self.cp.sbp_size();
-        size += self.cf.sbp_size();
-        size += self.sid.sbp_size();
-        size
-    }
-}
-
-/// Deprecated
-///
-/// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAcqResultDepA {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// SNR of best point. Currently dimensonless, but will have units of dB Hz
-    /// in the revision of this message.
-    pub snr: f32,
-    /// Code phase of best point
-    pub cp: f32,
-    /// Carrier frequency of best point
-    pub cf: f32,
-    /// PRN-1 identifier of the satellite signal for which acquisition was
-    /// attempted
-    pub prn: u8,
-}
-
-impl MsgAcqResultDepA {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, crate::Error> {
-        Ok( MsgAcqResultDepA{
-            sender_id: None,
-            snr: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            prn: _buf.read_u8()?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgAcqResultDepA {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT_DEP_A"
+    impl ConcreteMessage for MsgAcqResultDepA {
+        const MESSAGE_TYPE: u16 = 21;
+        const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_A";
     }
 
-    fn get_message_type(&self) -> u16 {
-        21
+    impl SbpMessage for MsgAcqResultDepA {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl TryFrom<Sbp> for MsgAcqResultDepA {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgAcqResultDepA(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.snr.append_to_sbp_buffer(buf);
-        self.cp.append_to_sbp_buffer(buf);
-        self.cf.append_to_sbp_buffer(buf);
-        self.prn.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.snr.sbp_size();
-        size += self.cp.sbp_size();
-        size += self.cf.sbp_size();
-        size += self.prn.sbp_size();
-        size
+    impl WireFormat for MsgAcqResultDepA {
+        const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.snr)
+                + WireFormat::len(&self.cp)
+                + WireFormat::len(&self.cf)
+                + WireFormat::len(&self.prn)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.snr, buf);
+            WireFormat::write(&self.cp, buf);
+            WireFormat::write(&self.cf, buf);
+            WireFormat::write(&self.prn, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgAcqResultDepA {
+                sender_id: None,
+                snr: WireFormat::parse_unchecked(buf),
+                cp: WireFormat::parse_unchecked(buf),
+                cf: WireFormat::parse_unchecked(buf),
+                prn: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }
 
-/// Deprecated
-///
-/// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAcqResultDepB {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// SNR of best point. Currently in arbitrary SNR points, but will be in
-    /// units of dB Hz in a later revision of this message.
-    pub snr: f32,
-    /// Code phase of best point
-    pub cp: f32,
-    /// Carrier frequency of best point
-    pub cf: f32,
-    /// GNSS signal for which acquisition was attempted
-    pub sid: GnssSignalDep,
-}
+pub mod msg_acq_result_dep_b {
+    #![allow(unused_imports)]
 
-impl MsgAcqResultDepB {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, crate::Error> {
-        Ok( MsgAcqResultDepB{
-            sender_id: None,
-            snr: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgAcqResultDepB {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT_DEP_B"
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgAcqResultDepB {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// SNR of best point. Currently in arbitrary SNR points, but will be in
+        /// units of dB Hz in a later revision of this message.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "snr")))]
+        pub snr: f32,
+        /// Code phase of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        pub cp: f32,
+        /// Carrier frequency of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        pub cf: f32,
+        /// GNSS signal for which acquisition was attempted
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        pub sid: GnssSignalDep,
     }
 
-    fn get_message_type(&self) -> u16 {
-        20
+    impl ConcreteMessage for MsgAcqResultDepB {
+        const MESSAGE_TYPE: u16 = 20;
+        const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_B";
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl SbpMessage for MsgAcqResultDepB {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
+    impl TryFrom<Sbp> for MsgAcqResultDepB {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgAcqResultDepB(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.snr.append_to_sbp_buffer(buf);
-        self.cp.append_to_sbp_buffer(buf);
-        self.cf.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.snr.sbp_size();
-        size += self.cp.sbp_size();
-        size += self.cf.sbp_size();
-        size += self.sid.sbp_size();
-        size
-    }
-}
-
-/// Deprecated
-///
-/// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAcqResultDepC {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// CN/0 of best point
-    pub cn0: f32,
-    /// Code phase of best point
-    pub cp: f32,
-    /// Carrier frequency of best point
-    pub cf: f32,
-    /// GNSS signal for which acquisition was attempted
-    pub sid: GnssSignalDep,
-}
-
-impl MsgAcqResultDepC {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, crate::Error> {
-        Ok( MsgAcqResultDepC{
-            sender_id: None,
-            cn0: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgAcqResultDepC {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ACQ_RESULT_DEP_C"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        31
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    impl WireFormat for MsgAcqResultDepB {
+        const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <GnssSignalDep as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.snr)
+                + WireFormat::len(&self.cp)
+                + WireFormat::len(&self.cf)
+                + WireFormat::len(&self.sid)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.snr, buf);
+            WireFormat::write(&self.cp, buf);
+            WireFormat::write(&self.cf, buf);
+            WireFormat::write(&self.sid, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgAcqResultDepB {
+                sender_id: None,
+                snr: WireFormat::parse_unchecked(buf),
+                cp: WireFormat::parse_unchecked(buf),
+                cf: WireFormat::parse_unchecked(buf),
+                sid: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.cn0.append_to_sbp_buffer(buf);
-        self.cp.append_to_sbp_buffer(buf);
-        self.cf.append_to_sbp_buffer(buf);
-        self.sid.append_to_sbp_buffer(buf);
+pub mod msg_acq_result_dep_c {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgAcqResultDepC {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// CN/0 of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        pub cn0: f32,
+        /// Code phase of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        pub cp: f32,
+        /// Carrier frequency of best point
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        pub cf: f32,
+        /// GNSS signal for which acquisition was attempted
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        pub sid: GnssSignalDep,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.cn0.sbp_size();
-        size += self.cp.sbp_size();
-        size += self.cf.sbp_size();
-        size += self.sid.sbp_size();
-        size
-    }
-}
-
-/// Acquisition perfomance measurement and debug
-///
-/// The message describes all SV profiles during acquisition time.
-/// The message is used to debug and measure the performance.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAcqSvProfile {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// SV profiles during acquisition time
-    pub acq_sv_profile: Vec<AcqSvProfile>,
-}
-
-impl MsgAcqSvProfile {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, crate::Error> {
-        Ok( MsgAcqSvProfile{
-            sender_id: None,
-            acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgAcqSvProfile {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ACQ_SV_PROFILE"
+    impl ConcreteMessage for MsgAcqResultDepC {
+        const MESSAGE_TYPE: u16 = 31;
+        const MESSAGE_NAME: &'static str = "MSG_ACQ_RESULT_DEP_C";
     }
 
-    fn get_message_type(&self) -> u16 {
-        46
+    impl SbpMessage for MsgAcqResultDepC {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
+    impl TryFrom<Sbp> for MsgAcqResultDepC {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgAcqResultDepC(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
     }
 
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
-    }
-}
-
-impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.acq_sv_profile.append_to_sbp_buffer(buf);
-    }
-
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.acq_sv_profile.sbp_size();
-        size
-    }
-}
-
-/// Deprecated.
-///
-/// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
-#[allow(non_snake_case)]
-pub struct MsgAcqSvProfileDep {
-    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
-    pub sender_id: Option<u16>,
-    /// SV profiles during acquisition time
-    pub acq_sv_profile: Vec<AcqSvProfileDep>,
-}
-
-impl MsgAcqSvProfileDep {
-    #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, crate::Error> {
-        Ok( MsgAcqSvProfileDep{
-            sender_id: None,
-            acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
-        } )
-    }
-}
-impl super::SBPMessage for MsgAcqSvProfileDep {
-    fn get_message_name(&self) -> &'static str {
-        "MSG_ACQ_SV_PROFILE_DEP"
-    }
-
-    fn get_message_type(&self) -> u16 {
-        30
-    }
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
-        let mut frame = Vec::new();
-        self.write_frame(&mut frame)?;
-        Ok(frame)
-    }
-
-    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
-        crate::write_frame(self, frame)
+    impl WireFormat for MsgAcqResultDepC {
+        const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <GnssSignalDep as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.cn0)
+                + WireFormat::len(&self.cp)
+                + WireFormat::len(&self.cf)
+                + WireFormat::len(&self.sid)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.cn0, buf);
+            WireFormat::write(&self.cp, buf);
+            WireFormat::write(&self.cf, buf);
+            WireFormat::write(&self.sid, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgAcqResultDepC {
+                sender_id: None,
+                cn0: WireFormat::parse_unchecked(buf),
+                cp: WireFormat::parse_unchecked(buf),
+                cf: WireFormat::parse_unchecked(buf),
+                sid: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgAcqSvProfileDep {
-    #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        self.acq_sv_profile.append_to_sbp_buffer(buf);
+pub mod msg_acq_sv_profile {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Acquisition perfomance measurement and debug
+    ///
+    /// The message describes all SV profiles during acquisition time. The message
+    /// is used to debug and measure the performance.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgAcqSvProfile {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// SV profiles during acquisition time
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "acq_sv_profile")))]
+        pub acq_sv_profile: Vec<AcqSvProfile>,
     }
 
-    fn sbp_size(&self) -> usize {
-        let mut size = 0;
-        size += self.acq_sv_profile.sbp_size();
-        size
+    impl ConcreteMessage for MsgAcqSvProfile {
+        const MESSAGE_TYPE: u16 = 46;
+        const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE";
+    }
+
+    impl SbpMessage for MsgAcqSvProfile {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgAcqSvProfile {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgAcqSvProfile(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgAcqSvProfile {
+        const MIN_LEN: usize = <Vec<AcqSvProfile> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.acq_sv_profile)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.acq_sv_profile, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgAcqSvProfile {
+                sender_id: None,
+                acq_sv_profile: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_acq_sv_profile_dep {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgAcqSvProfileDep {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// SV profiles during acquisition time
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "acq_sv_profile")))]
+        pub acq_sv_profile: Vec<AcqSvProfileDep>,
+    }
+
+    impl ConcreteMessage for MsgAcqSvProfileDep {
+        const MESSAGE_TYPE: u16 = 30;
+        const MESSAGE_NAME: &'static str = "MSG_ACQ_SV_PROFILE_DEP";
+    }
+
+    impl SbpMessage for MsgAcqSvProfileDep {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgAcqSvProfileDep {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgAcqSvProfileDep(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgAcqSvProfileDep {
+        const MIN_LEN: usize = <Vec<AcqSvProfileDep> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.acq_sv_profile)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.acq_sv_profile, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgAcqSvProfileDep {
+                sender_id: None,
+                acq_sv_profile: WireFormat::parse_unchecked(buf),
+            }
+        }
     }
 }
