@@ -58,27 +58,24 @@ def write_test(msg, output, test_set_name="swiftnav"):
 
 def main():
     parser = argparse.ArgumentParser(description="Swift Navigation SBP Test Generator.")
-    parser.add_argument("-id", "--msgid", default="-1", help="specify message id")
-    parser.add_argument("-in", "--input", help="path to input json file", required=True)
-    parser.add_argument("-out", "--output", help="path to output yaml file", required=True)
+    parser.add_argument("--msg-id", help="specify message id", required=False)
+    parser.add_argument("--input", help="path to input json file", required=True)
+    parser.add_argument("--output", help="path to output yaml file", required=True)
     args = parser.parse_args()
 
-    f = open(args.input)
-    msg = json.loads(f.read())
-    f.close()
-    msg_type = args.msgid
-    if args.msgid == "-1":
-        msg_type = msg.get("msg_type")
-    clazz = lookup(msg_type)
-    print("found class: " + str(clazz.__name__))
-    msg_obj = clazz(**msg)
-
-    msg_obj.to_binary()  # sets crc, length, payload
-    try:
-        write_test(msg_obj, args.output)
-    except Exception as e:
-        print("Failed creating test for {}: {}".format(clazz.__name__, e))
-        raise
+    with open(args.input) as f:
+        msg = json.loads(f.read())
+        msg_type = args.msg_id if args.msg_id else msg.get("msg_type")
+        if clazz := lookup(int(msg_type)):
+            print("found class: " + str(clazz.__name__))
+            msg_obj = clazz(**msg)
+            msg_obj.to_binary()  # sets crc, length, payload
+            try:
+                write_test(msg_obj, args.output)
+            except Exception as e:
+                raise Exception(f"Failed creating test for {clazz.__name__}: {e}")
+        else:
+            raise Exception(f"msg id {msg_type} not found!")
 
 
 if __name__ == "__main__":
