@@ -98,3 +98,22 @@ def dispatch(msg, table=_SBP_TABLE):
     warnings.warn("SBP payload deserialization error! 0x%x" % msg.msg_type,
                   RuntimeWarning)
     return msg
+
+def lookup(msg_type, table=_SBP_TABLE):
+    """
+    Finds the SBP message class according to the message id given
+
+    Parameters
+    ----------
+    msg_type : Int
+      Type of the message
+    table : dict
+      Any table mapping unique SBP message type IDs to SBP message
+      constructors.
+
+    Returns
+    ----------
+    SBP Message class
+
+    """
+    return table.get(msg_type)

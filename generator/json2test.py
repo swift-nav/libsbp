@@ -19,6 +19,7 @@ import sys
 import json
 
 from sbp.msg import SBP
+from sbp.table import lookup
 from sbp.client.drivers.network_drivers import TCPDriver
 from sbp.client import Handler, Framer
 from sbp.table import _SBP_TABLE
@@ -78,24 +79,10 @@ def write_test(msg, test_set_name="swiftnav"):
     assert_package(filename)
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="Swift Navigation SBP Test Generator.")
-    parser.add_argument("-id", "--msgid", help="message id of provided input file")
-    parser.add_argument("-in", "--input", help="input json file")
-    parser.add_argument("-out", "--output", help="optional output path")
-    parser.add_argument("-u", "--unique", default=True, help="check uniqueness compared to loaded tests")
-    return parser.parse_args()
-
-
 def main():
-    args = parse_args()
-
-    if not args.msgid and not args.input:
-        print("please provide msgid + input")
-        return
-
     loaded_tests = collections.defaultdict(list)
-    if args.unique:
+    unique = True
+    if unique:
         for dat in load_test_cases().values():
             loaded_tests[(dat["msg"]["module"], dat["msg"]["name"])].append(dat)
 
@@ -121,29 +108,36 @@ def main():
                 classes_without_tests[cls_name] = cls
 
     print(f"Total missing: {len(classes_without_tests)} ({req_resp_missing} Req/Resp; {deprecated_missing} Dep.)")
-    with open(args.input) as f:
-        msg = json.load(f)
-        print(msg)
-        print(SBP.from_json_dict(msg))
+    while True:
+        try:
+            print("=====")
+            inp = input("input: ")
+            msg = json.loads(inp)
+            msg_type = msg.get("msg_type")
+            if not msg_type:
+                print("invalid format, no msg_type found")
+                continue
+            clazz = lookup(msg_type)
+            print("found class: " + str(clazz.__name__))
+            msg_obj = clazz(**msg)
 
-    # with TCPDriver(args.host, args.port) as driver:
-    #     with Handler(Framer(driver.read, None, verbose=True)) as source:
-    #         try:
-    #             for msg, metadata in source:
-    #                 assert msg.__class__ in _SBP_TABLE.values()
-    #                 if msg.__class__ in classes_without_tests.values():
-    #                     print("Found missing test data: {!r}".format(msg))
-    #                     cls_name = msg.__class__.__name__
-    #                     new_test_data[cls_name] = msg
-    #                     try:
-    #                         write_test(msg)
-    #                         del classes_without_tests[cls_name]
-    #                     except Exception as e:
-    #                         print("Failed creating test for {}: {}".format(cls_name, e))
-    #                         raise
-    #
-    #         except KeyboardInterrupt:
-    #             pass
+            # sets crc, length, payload
+            msg_obj.to_binary()
+            if clazz not in classes_without_tests.values():
+                print("test is not missing")
+                continue
+            print("found missing test data")
+            cls_name = clazz.__name__
+            try:
+                write_test(msg_obj)
+                del classes_without_tests[cls_name]
+            except Exception as e:
+                print("Failed creating test for {}: {}".format(cls_name, e))
+                raise
+        except KeyboardInterrupt:
+            pass
+        except Exception as ex:
+            print(ex)
 
 
 if __name__ == "__main__":
