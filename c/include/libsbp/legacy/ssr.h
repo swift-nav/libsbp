@@ -573,6 +573,33 @@ typedef struct SBP_ATTR_PACKED {
                                                   Satellite */
 } msg_ssr_orbit_clock_bounds_t;
 
+typedef struct SBP_ATTR_PACKED {
+  u8 sat_id;               /**< Satellite ID. Similar to either RTCM DF068
+                                (GPS), DF252 (Galileo), or DF488 (BDS)
+                                depending on the constellation. */
+  u8 signal_id;            /**< Signal and Tracking Mode Identifier.
+                                Similar to either RTCM DF380 (GPS), DF382
+                                (Galileo) or DF467 (BDS) depending on the
+                                constellation. */
+  u8 code_bias_bound_mu;   /**< Code Bias Mean (range 0-1.275) [0.005 m] */
+  u8 code_bias_bound_sig;  /**< Code Bias Standard Deviation (range
+                                0-1.275) [0.005 m] */
+  u8 phase_bias_bound_mu;  /**< Phase Bias Mean (range 0-1.275) [0.005 m] */
+  u8 phase_bias_bound_sig; /**< Phase Bias Standard Deviation (range
+                                0-1.275) [0.005 m] */
+} code_phase_biases_sat_sig_t;
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a bounds message. */
+  u8 ssr_iod;             /**< IOD of the SSR bound. */
+  u8 const_id;            /**< Constellation ID to which the SVs belong. */
+  u8 n_sats_signals;      /**< Number of satellite-signal couples. */
+  code_phase_biases_sat_sig_t satellites_signals[0]; /**< Code and Phase
+                                                          Biases Bounds per
+                                                          Satellite-Signal
+                                                          couple. */
+} msg_ssr_code_phase_biases_bounds_t;
+
 /** \} */
 
 SBP_PACK_END

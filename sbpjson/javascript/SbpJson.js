@@ -7,6 +7,7 @@
 //   const boundsHeader = Convert.toBoundsHeader(json);
 //   const carrierPhase = Convert.toCarrierPhase(json);
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
+//   const codePhaseBiasesSatSig = Convert.toCodePhaseBiasesSatSig(json);
 //   const doppler = Convert.toDoppler(json);
 //   const ephemerisCommonContent = Convert.toEphemerisCommonContent(json);
 //   const estimatedHorizontalErrorEllipse = Convert.toEstimatedHorizontalErrorEllipse(json);
@@ -137,6 +138,7 @@
 //   const msgSolnMeta = Convert.toMsgSolnMeta(json);
 //   const msgSpecan = Convert.toMsgSpecan(json);
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
+//   const msgSsrCodePhaseBiasesBounds = Convert.toMsgSsrCodePhaseBiasesBounds(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrOrbitClockBounds = Convert.toMsgSsrOrbitClockBounds(json);
@@ -237,6 +239,14 @@ function toCodeBiasesContent(json) {
 
 function codeBiasesContentToJson(value) {
     return JSON.stringify(uncast(value, r("CodeBiasesContent")), null, 2);
+}
+
+function toCodePhaseBiasesSatSig(json) {
+    return cast(JSON.parse(json), r("CodePhaseBiasesSatSig"));
+}
+
+function codePhaseBiasesSatSigToJson(value) {
+    return JSON.stringify(uncast(value, r("CodePhaseBiasesSatSig")), null, 2);
 }
 
 function toDoppler(json) {
@@ -1277,6 +1287,14 @@ function toMsgSsrCodeBiases(json) {
 
 function msgSsrCodeBiasesToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrCodeBiases")), null, 2);
+}
+
+function toMsgSsrCodePhaseBiasesBounds(json) {
+    return cast(JSON.parse(json), r("MsgSsrCodePhaseBiasesBounds"));
+}
+
+function msgSsrCodePhaseBiasesBoundsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrCodePhaseBiasesBounds")), null, 2);
 }
 
 function toMsgSsrGriddedCorrection(json) {
@@ -2785,6 +2803,28 @@ const typeMap = {
         { json: "code", js: "code", typ: 0 },
         { json: "value", js: "value", typ: 0 },
     ], "any"),
+    "MsgSsrCodePhaseBiasesBounds": o([
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats_signals", js: "n_sats_signals", typ: 0 },
+        { json: "satellites_signals", js: "satellites_signals", typ: a(r("CodePhaseBiasesSatSig")) },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "BoundsHeader": o([
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "CodePhaseBiasesSatSig": o([
+        { json: "code_bias_bound_mu", js: "code_bias_bound_mu", typ: 0 },
+        { json: "code_bias_bound_sig", js: "code_bias_bound_sig", typ: 0 },
+        { json: "phase_bias_bound_mu", js: "phase_bias_bound_mu", typ: 0 },
+        { json: "phase_bias_bound_sig", js: "phase_bias_bound_sig", typ: 0 },
+        { json: "sat_id", js: "sat_id", typ: 0 },
+        { json: "signal_id", js: "signal_id", typ: 0 },
+    ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
         { json: "index", js: "index", typ: 0 },
@@ -2823,13 +2863,6 @@ const typeMap = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "orbit_clock_bounds", js: "orbit_clock_bounds", typ: a(r("OrbitClockBound")) },
         { json: "ssr_iod", js: "ssr_iod", typ: 0 },
-    ], "any"),
-    "BoundsHeader": o([
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "seq_num", js: "seq_num", typ: 0 },
-        { json: "sol_id", js: "sol_id", typ: 0 },
-        { json: "time", js: "time", typ: r("GpsTimeSEC") },
-        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "OrbitClockBound": o([
         { json: "clock_bound_mu", js: "clock_bound_mu", typ: 0 },
@@ -3157,6 +3190,8 @@ module.exports = {
     "toCarrierPhase": toCarrierPhase,
     "codeBiasesContentToJson": codeBiasesContentToJson,
     "toCodeBiasesContent": toCodeBiasesContent,
+    "codePhaseBiasesSatSigToJson": codePhaseBiasesSatSigToJson,
+    "toCodePhaseBiasesSatSig": toCodePhaseBiasesSatSig,
     "dopplerToJson": dopplerToJson,
     "toDoppler": toDoppler,
     "ephemerisCommonContentToJson": ephemerisCommonContentToJson,
@@ -3417,6 +3452,8 @@ module.exports = {
     "toMsgSpecan": toMsgSpecan,
     "msgSsrCodeBiasesToJson": msgSsrCodeBiasesToJson,
     "toMsgSsrCodeBiases": toMsgSsrCodeBiases,
+    "msgSsrCodePhaseBiasesBoundsToJson": msgSsrCodePhaseBiasesBoundsToJson,
+    "toMsgSsrCodePhaseBiasesBounds": toMsgSsrCodePhaseBiasesBounds,
     "msgSsrGriddedCorrectionToJson": msgSsrGriddedCorrectionToJson,
     "toMsgSsrGriddedCorrection": toMsgSsrGriddedCorrection,
     "msgSsrOrbitClockToJson": msgSsrOrbitClockToJson,

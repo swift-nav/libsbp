@@ -803,6 +803,63 @@ class OrbitClockBound(object):
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
+class CodePhaseBiasesSatSig(object):
+  """CodePhaseBiasesSatSig.
+  
+  
+  Parameters
+  ----------
+  sat_id : int
+    Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    DF488 (BDS) depending on the constellation.
+  signal_id : int
+    Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
+    DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+  code_bias_bound_mu : int
+    Code Bias Mean (range 0-1.275)
+  code_bias_bound_sig : int
+    Code Bias Standard Deviation (range 0-1.275)
+  phase_bias_bound_mu : int
+    Phase Bias Mean (range 0-1.275)
+  phase_bias_bound_sig : int
+    Phase Bias Standard Deviation (range 0-1.275)
+
+  """
+  _parser = construct.Struct(
+                     'sat_id' / construct.Int8ul,
+                     'signal_id' / construct.Int8ul,
+                     'code_bias_bound_mu' / construct.Int8ul,
+                     'code_bias_bound_sig' / construct.Int8ul,
+                     'phase_bias_bound_mu' / construct.Int8ul,
+                     'phase_bias_bound_sig' / construct.Int8ul,)
+  __slots__ = [
+               'sat_id',
+               'signal_id',
+               'code_bias_bound_mu',
+               'code_bias_bound_sig',
+               'phase_bias_bound_mu',
+               'phase_bias_bound_sig',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sat_id = kwargs.pop('sat_id')
+      self.signal_id = kwargs.pop('signal_id')
+      self.code_bias_bound_mu = kwargs.pop('code_bias_bound_mu')
+      self.code_bias_bound_sig = kwargs.pop('code_bias_bound_sig')
+      self.phase_bias_bound_mu = kwargs.pop('phase_bias_bound_mu')
+      self.phase_bias_bound_sig = kwargs.pop('phase_bias_bound_sig')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = CodePhaseBiasesSatSig._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
   """SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
@@ -2332,6 +2389,114 @@ class MsgSsrOrbitClockBounds(SBP):
     d.update(j)
     return d
     
+SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS = 0x05EC
+class MsgSsrCodePhaseBiasesBounds(SBP):
+  """SBP class for message MSG_SSR_CODE_PHASE_BIASES_BOUNDS (0x05EC).
+
+  You can have MSG_SSR_CODE_PHASE_BIASES_BOUNDS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod : int
+    IOD of the SSR bound.
+  const_id : int
+    Constellation ID to which the SVs belong.
+  n_sats_signals : int
+    Number of satellite-signal couples.
+  satellites_signals : array
+    Code and Phase Biases Bounds per Satellite-Signal couple.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod' / construct.Int8ul,
+                   'const_id' / construct.Int8ul,
+                   'n_sats_signals' / construct.Int8ul,
+                   'satellites_signals' / construct.GreedyRange(CodePhaseBiasesSatSig._parser),)
+  __slots__ = [
+               'header',
+               'ssr_iod',
+               'const_id',
+               'n_sats_signals',
+               'satellites_signals',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrCodePhaseBiasesBounds,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrCodePhaseBiasesBounds, self).__init__()
+      self.msg_type = SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.ssr_iod = kwargs.pop('ssr_iod')
+      self.const_id = kwargs.pop('const_id')
+      self.n_sats_signals = kwargs.pop('n_sats_signals')
+      self.satellites_signals = kwargs.pop('satellites_signals')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrCodePhaseBiasesBounds.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrCodePhaseBiasesBounds(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrCodePhaseBiasesBounds._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrCodePhaseBiasesBounds._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrCodePhaseBiasesBounds._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrCodePhaseBiasesBounds, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,
@@ -2347,4 +2512,5 @@ msg_classes = {
   0x05FA: MsgSsrGriddedCorrectionDepA,
   0x05F5: MsgSsrGridDefinitionDepA,
   0x05DE: MsgSsrOrbitClockBounds,
+  0x05EC: MsgSsrCodePhaseBiasesBounds,
 }

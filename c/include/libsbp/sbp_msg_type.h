@@ -208,6 +208,7 @@ typedef enum {
   SbpMsgSpecanDep = SBP_MSG_SPECAN_DEP,
   SbpMsgSpecan = SBP_MSG_SPECAN,
   SbpMsgSsrCodeBiases = SBP_MSG_SSR_CODE_BIASES,
+  SbpMsgSsrCodePhaseBiasesBounds = SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS,
   SbpMsgSsrGridDefinitionDepA = SBP_MSG_SSR_GRID_DEFINITION_DEP_A,
   SbpMsgSsrGriddedCorrectionDepA = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A,
   SbpMsgSsrGriddedCorrectionNoStdDepA =

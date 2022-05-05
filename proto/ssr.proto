@@ -292,3 +292,28 @@ message MsgSsrOrbitClockBounds {
     uint32 n_sats = 4;
     repeated OrbitClockBound orbit_clock_bounds = 5;
 }
+
+/** Code and Phase Biases Bounds per Satellite-Signal couple
+ *
+None
+ */
+message CodePhaseBiasesSatSig {
+    uint32 sat_id = 1;
+    uint32 signal_id = 2;
+    uint32 code_bias_bound_mu = 3;
+    uint32 code_bias_bound_sig = 4;
+    uint32 phase_bias_bound_mu = 5;
+    uint32 phase_bias_bound_sig = 6;
+}
+
+/** Combined Code and Phase Biases Bounds
+ *
+None
+ */
+message MsgSsrCodePhaseBiasesBounds {
+    BoundsHeader header = 1;
+    uint32 ssr_iod = 2;
+    uint32 const_id = 3;
+    uint32 n_sats_signals = 4;
+    repeated CodePhaseBiasesSatSig satellites_signals = 5;
+}

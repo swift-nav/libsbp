@@ -214,6 +214,7 @@ typedef union {
   sbp_msg_specan_dep_t specan_dep;
   sbp_msg_specan_t specan;
   sbp_msg_ssr_code_biases_t ssr_code_biases;
+  sbp_msg_ssr_code_phase_biases_bounds_t ssr_code_phase_biases_bounds;
   sbp_msg_ssr_grid_definition_dep_a_t ssr_grid_definition_dep_a;
   sbp_msg_ssr_gridded_correction_dep_a_t ssr_gridded_correction_dep_a;
   sbp_msg_ssr_gridded_correction_no_std_dep_a_t
@@ -707,6 +708,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_encode(buf, len, n_written,
                                             &msg->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_encode(
+          buf, len, n_written, &msg->ssr_code_phase_biases_bounds);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_encode(
           buf, len, n_written, &msg->ssr_grid_definition_dep_a);
@@ -1280,6 +1284,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_decode(buf, len, n_read,
                                             &msg->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_decode(
+          buf, len, n_read, &msg->ssr_code_phase_biases_bounds);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_decode(
           buf, len, n_read, &msg->ssr_grid_definition_dep_a);
@@ -1766,6 +1773,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_specan_encoded_len(&msg->specan);
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_encoded_len(&msg->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_encoded_len(
+          &msg->ssr_code_phase_biases_bounds);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_encoded_len(
           &msg->ssr_grid_definition_dep_a);
@@ -2288,6 +2298,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrCodeBiases:
       return sbp_msg_ssr_code_biases_cmp(&a->ssr_code_biases,
                                          &b->ssr_code_biases);
+    case SbpMsgSsrCodePhaseBiasesBounds:
+      return sbp_msg_ssr_code_phase_biases_bounds_cmp(
+          &a->ssr_code_phase_biases_bounds, &b->ssr_code_phase_biases_bounds);
     case SbpMsgSsrGridDefinitionDepA:
       return sbp_msg_ssr_grid_definition_dep_a_cmp(
           &a->ssr_grid_definition_dep_a, &b->ssr_grid_definition_dep_a);

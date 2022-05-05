@@ -213,6 +213,7 @@ data SBPMsg =
    | SBPMsgSpecan MsgSpecan Msg
    | SBPMsgSpecanDep MsgSpecanDep Msg
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
+   | SBPMsgSsrCodePhaseBiasesBounds MsgSsrCodePhaseBiasesBounds Msg
    | SBPMsgSsrGridDefinitionDepA MsgSsrGridDefinitionDepA Msg
    | SBPMsgSsrGriddedCorrection MsgSsrGriddedCorrection Msg
    | SBPMsgSsrGriddedCorrectionDepA MsgSsrGriddedCorrectionDepA Msg
@@ -432,6 +433,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrectionDepA = SBPMsgSsrGriddedCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -643,6 +645,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSpecan _ m) = put m
       encoder (SBPMsgSpecanDep _ m) = put m
       encoder (SBPMsgSsrCodeBiases _ m) = put m
+      encoder (SBPMsgSsrCodePhaseBiasesBounds _ m) = put m
       encoder (SBPMsgSsrGridDefinitionDepA _ m) = put m
       encoder (SBPMsgSsrGriddedCorrection _ m) = put m
       encoder (SBPMsgSsrGriddedCorrectionDepA _ m) = put m
@@ -858,6 +861,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrectionDepA = SBPMsgSsrGriddedCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1074,6 +1078,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSpecan n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrCodePhaseBiasesBounds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGridDefinitionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrection n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrectionDepA n m) = toJSON n <<>> toJSON m
@@ -1284,6 +1289,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSpecan n m) = SBPMsgSpecan n <$> f m
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
+  msg f (SBPMsgSsrCodePhaseBiasesBounds n m) = SBPMsgSsrCodePhaseBiasesBounds n <$> f m
   msg f (SBPMsgSsrGridDefinitionDepA n m) = SBPMsgSsrGridDefinitionDepA n <$> f m
   msg f (SBPMsgSsrGriddedCorrection n m) = SBPMsgSsrGriddedCorrection n <$> f m
   msg f (SBPMsgSsrGriddedCorrectionDepA n m) = SBPMsgSsrGriddedCorrectionDepA n <$> f m

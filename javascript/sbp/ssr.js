@@ -1192,6 +1192,86 @@ MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['const_id', 'writeUInt8', 1]);
 MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['orbit_clock_bounds', 'array', OrbitClockBound.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats']);
 
+/**
+ * SBP class for message fragment CodePhaseBiasesSatSig
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sat_id number (unsigned 8-bit int, 1 byte) Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or DF488
+ *   (BDS) depending on the constellation.
+ * @field signal_id number (unsigned 8-bit int, 1 byte) Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS), DF382
+ *   (Galileo) or DF467 (BDS) depending on the constellation.
+ * @field code_bias_bound_mu number (unsigned 8-bit int, 1 byte) Code Bias Mean (range 0-1.275)
+ * @field code_bias_bound_sig number (unsigned 8-bit int, 1 byte) Code Bias Standard Deviation (range 0-1.275)
+ * @field phase_bias_bound_mu number (unsigned 8-bit int, 1 byte) Phase Bias Mean (range 0-1.275)
+ * @field phase_bias_bound_sig number (unsigned 8-bit int, 1 byte) Phase Bias Standard Deviation (range 0-1.275)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var CodePhaseBiasesSatSig = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "CodePhaseBiasesSatSig";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+CodePhaseBiasesSatSig.prototype = Object.create(SBP.prototype);
+CodePhaseBiasesSatSig.prototype.messageType = "CodePhaseBiasesSatSig";
+CodePhaseBiasesSatSig.prototype.constructor = CodePhaseBiasesSatSig;
+CodePhaseBiasesSatSig.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('sat_id')
+  .uint8('signal_id')
+  .uint8('code_bias_bound_mu')
+  .uint8('code_bias_bound_sig')
+  .uint8('phase_bias_bound_mu')
+  .uint8('phase_bias_bound_sig');
+CodePhaseBiasesSatSig.prototype.fieldSpec = [];
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['sat_id', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['signal_id', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['code_bias_bound_mu', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['code_bias_bound_sig', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['phase_bias_bound_mu', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['phase_bias_bound_sig', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_SSR_CODE_PHASE_BIASES_BOUNDS (0x05EC).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header BoundsHeader Header of a bounds message.
+ * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound.
+ * @field const_id number (unsigned 8-bit int, 1 byte) Constellation ID to which the SVs belong.
+ * @field n_sats_signals number (unsigned 8-bit int, 1 byte) Number of satellite-signal couples.
+ * @field satellites_signals array Code and Phase Biases Bounds per Satellite-Signal couple.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrCodePhaseBiasesBounds = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrCodePhaseBiasesBounds.prototype = Object.create(SBP.prototype);
+MsgSsrCodePhaseBiasesBounds.prototype.messageType = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
+MsgSsrCodePhaseBiasesBounds.prototype.msg_type = 0x05EC;
+MsgSsrCodePhaseBiasesBounds.prototype.constructor = MsgSsrCodePhaseBiasesBounds;
+MsgSsrCodePhaseBiasesBounds.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod')
+  .uint8('const_id')
+  .uint8('n_sats_signals')
+  .array('satellites_signals', { type: CodePhaseBiasesSatSig.prototype.parser, length: 'n_sats_signals' });
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec = [];
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['const_id', 'writeUInt8', 1]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['n_sats_signals', 'writeUInt8', 1]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['satellites_signals', 'array', CodePhaseBiasesSatSig.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats_signals']);
+
 module.exports = {
   CodeBiasesContent: CodeBiasesContent,
   PhaseBiasesContent: PhaseBiasesContent,
@@ -1234,4 +1314,7 @@ module.exports = {
   OrbitClockBound: OrbitClockBound,
   0x05DE: MsgSsrOrbitClockBounds,
   MsgSsrOrbitClockBounds: MsgSsrOrbitClockBounds,
+  CodePhaseBiasesSatSig: CodePhaseBiasesSatSig,
+  0x05EC: MsgSsrCodePhaseBiasesBounds,
+  MsgSsrCodePhaseBiasesBounds: MsgSsrCodePhaseBiasesBounds,
 }

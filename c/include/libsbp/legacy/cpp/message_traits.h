@@ -967,6 +967,12 @@ struct MessageTraits<msg_ssr_stec_correction_dep_a_t> {
 
 
 template<>
+struct MessageTraits<msg_ssr_code_phase_biases_bounds_t> {
+  static constexpr u16 id = 1516;
+};
+
+
+template<>
 struct MessageTraits<msg_ssr_gridded_correction_no_std_dep_a_t> {
   static constexpr u16 id = 1520;
 };

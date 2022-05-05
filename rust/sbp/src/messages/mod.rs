@@ -201,6 +201,7 @@ use self::settings::msg_settings_write_resp::MsgSettingsWriteResp;
 use self::solution_meta::msg_soln_meta::MsgSolnMeta;
 use self::solution_meta::msg_soln_meta_dep_a::MsgSolnMetaDepA;
 use self::ssr::msg_ssr_code_biases::MsgSsrCodeBiases;
+use self::ssr::msg_ssr_code_phase_biases_bounds::MsgSsrCodePhaseBiasesBounds;
 use self::ssr::msg_ssr_grid_definition_dep_a::MsgSsrGridDefinitionDepA;
 use self::ssr::msg_ssr_gridded_correction::MsgSsrGriddedCorrection;
 use self::ssr::msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
@@ -655,6 +656,8 @@ pub enum Sbp {
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
     /// Deprecated
     MsgSsrStecCorrectionDepA(MsgSsrStecCorrectionDepA),
+    /// Combined Code and Phase Biases Bounds
+    MsgSsrCodePhaseBiasesBounds(MsgSsrCodePhaseBiasesBounds),
     /// Deprecated
     MsgSsrGriddedCorrectionNoStdDepA(MsgSsrGriddedCorrectionNoStdDepA),
     /// Deprecated
@@ -1588,6 +1591,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrStecCorrectionDepA(msg))
             }
+            MsgSsrCodePhaseBiasesBounds::MESSAGE_TYPE => {
+                let mut msg = MsgSsrCodePhaseBiasesBounds::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrCodePhaseBiasesBounds(msg))
+            }
             MsgSsrGriddedCorrectionNoStdDepA::MESSAGE_TYPE => {
                 let mut msg = MsgSsrGriddedCorrectionNoStdDepA::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1978,6 +1986,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => msg.message_name(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.message_name(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.message_name(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_name(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_name(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_name(),
@@ -2190,6 +2199,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => msg.message_type(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.message_type(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.message_type(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_type(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_type(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_type(),
@@ -2402,6 +2412,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => msg.sender_id(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.sender_id(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.sender_id(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrTileDefinition(msg) => msg.sender_id(),
@@ -2614,6 +2625,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrPhaseBiases(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrTileDefinition(msg) => msg.set_sender_id(new_id),
@@ -2826,6 +2838,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => msg.encoded_len(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.encoded_len(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.encoded_len(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrTileDefinition(msg) => msg.encoded_len(),
@@ -3041,6 +3054,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => msg.gps_time(),
             Sbp::MsgSsrPhaseBiases(msg) => msg.gps_time(),
             Sbp::MsgSsrStecCorrectionDepA(msg) => msg.gps_time(),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrTileDefinition(msg) => msg.gps_time(),
@@ -3261,6 +3275,7 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrPhaseBiases(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::write(msg, buf),
@@ -3473,6 +3488,7 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrCodeBiases(msg) => WireFormat::len(msg),
             Sbp::MsgSsrPhaseBiases(msg) => WireFormat::len(msg),
             Sbp::MsgSsrStecCorrectionDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::len(msg),
@@ -4496,6 +4512,12 @@ impl From<MsgSsrPhaseBiases> for Sbp {
 impl From<MsgSsrStecCorrectionDepA> for Sbp {
     fn from(msg: MsgSsrStecCorrectionDepA) -> Self {
         Sbp::MsgSsrStecCorrectionDepA(msg)
+    }
+}
+
+impl From<MsgSsrCodePhaseBiasesBounds> for Sbp {
+    fn from(msg: MsgSsrCodePhaseBiasesBounds) -> Self {
+        Sbp::MsgSsrCodePhaseBiasesBounds(msg)
     }
 }
 

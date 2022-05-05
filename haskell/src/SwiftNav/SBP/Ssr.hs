@@ -1171,3 +1171,77 @@ instance Binary MsgSsrOrbitClockBounds where
 $(makeSBP 'msgSsrOrbitClockBounds ''MsgSsrOrbitClockBounds)
 $(makeJSON "_msgSsrOrbitClockBounds_" ''MsgSsrOrbitClockBounds)
 $(makeLenses ''MsgSsrOrbitClockBounds)
+
+data CodePhaseBiasesSatSig = CodePhaseBiasesSatSig
+  { _codePhaseBiasesSatSig_sat_id             :: !Word8
+    -- ^ Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    -- DF488 (BDS) depending on the constellation.
+  , _codePhaseBiasesSatSig_signal_id          :: !Word8
+    -- ^ Signal and Tracking Mode Identifier. Similar to either RTCM DF380
+    -- (GPS), DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+  , _codePhaseBiasesSatSig_code_bias_bound_mu :: !Word8
+    -- ^ Code Bias Mean (range 0-1.275)
+  , _codePhaseBiasesSatSig_code_bias_bound_sig :: !Word8
+    -- ^ Code Bias Standard Deviation (range 0-1.275)
+  , _codePhaseBiasesSatSig_phase_bias_bound_mu :: !Word8
+    -- ^ Phase Bias Mean (range 0-1.275)
+  , _codePhaseBiasesSatSig_phase_bias_bound_sig :: !Word8
+    -- ^ Phase Bias Standard Deviation (range 0-1.275)
+  } deriving ( Show, Read, Eq )
+
+instance Binary CodePhaseBiasesSatSig where
+  get = do
+    _codePhaseBiasesSatSig_sat_id <- getWord8
+    _codePhaseBiasesSatSig_signal_id <- getWord8
+    _codePhaseBiasesSatSig_code_bias_bound_mu <- getWord8
+    _codePhaseBiasesSatSig_code_bias_bound_sig <- getWord8
+    _codePhaseBiasesSatSig_phase_bias_bound_mu <- getWord8
+    _codePhaseBiasesSatSig_phase_bias_bound_sig <- getWord8
+    pure CodePhaseBiasesSatSig {..}
+
+  put CodePhaseBiasesSatSig {..} = do
+    putWord8 _codePhaseBiasesSatSig_sat_id
+    putWord8 _codePhaseBiasesSatSig_signal_id
+    putWord8 _codePhaseBiasesSatSig_code_bias_bound_mu
+    putWord8 _codePhaseBiasesSatSig_code_bias_bound_sig
+    putWord8 _codePhaseBiasesSatSig_phase_bias_bound_mu
+    putWord8 _codePhaseBiasesSatSig_phase_bias_bound_sig
+
+$(makeJSON "_codePhaseBiasesSatSig_" ''CodePhaseBiasesSatSig)
+$(makeLenses ''CodePhaseBiasesSatSig)
+
+msgSsrCodePhaseBiasesBounds :: Word16
+msgSsrCodePhaseBiasesBounds = 0x05EC
+
+data MsgSsrCodePhaseBiasesBounds = MsgSsrCodePhaseBiasesBounds
+  { _msgSsrCodePhaseBiasesBounds_header           :: !BoundsHeader
+    -- ^ Header of a bounds message.
+  , _msgSsrCodePhaseBiasesBounds_ssr_iod          :: !Word8
+    -- ^ IOD of the SSR bound.
+  , _msgSsrCodePhaseBiasesBounds_const_id         :: !Word8
+    -- ^ Constellation ID to which the SVs belong.
+  , _msgSsrCodePhaseBiasesBounds_n_sats_signals   :: !Word8
+    -- ^ Number of satellite-signal couples.
+  , _msgSsrCodePhaseBiasesBounds_satellites_signals :: ![CodePhaseBiasesSatSig]
+    -- ^ Code and Phase Biases Bounds per Satellite-Signal couple.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrCodePhaseBiasesBounds where
+  get = do
+    _msgSsrCodePhaseBiasesBounds_header <- get
+    _msgSsrCodePhaseBiasesBounds_ssr_iod <- getWord8
+    _msgSsrCodePhaseBiasesBounds_const_id <- getWord8
+    _msgSsrCodePhaseBiasesBounds_n_sats_signals <- getWord8
+    _msgSsrCodePhaseBiasesBounds_satellites_signals <- whileM (not <$> isEmpty) get
+    pure MsgSsrCodePhaseBiasesBounds {..}
+
+  put MsgSsrCodePhaseBiasesBounds {..} = do
+    put _msgSsrCodePhaseBiasesBounds_header
+    putWord8 _msgSsrCodePhaseBiasesBounds_ssr_iod
+    putWord8 _msgSsrCodePhaseBiasesBounds_const_id
+    putWord8 _msgSsrCodePhaseBiasesBounds_n_sats_signals
+    mapM_ put _msgSsrCodePhaseBiasesBounds_satellites_signals
+
+$(makeSBP 'msgSsrCodePhaseBiasesBounds ''MsgSsrCodePhaseBiasesBounds)
+$(makeJSON "_msgSsrCodePhaseBiasesBounds_" ''MsgSsrCodePhaseBiasesBounds)
+$(makeLenses ''MsgSsrCodePhaseBiasesBounds)
