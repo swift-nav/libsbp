@@ -8,21 +8,16 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 """
-Generate missing test cases automatically.
+Generate test case from json input
 """
 
 import argparse
-import collections
 import datetime
+import json
 import os.path
 import sys
-import json
 
-from sbp.msg import SBP
 from sbp.table import lookup
-from sbp.client.drivers.network_drivers import TCPDriver
-from sbp.client import Handler, Framer
-from sbp.table import _SBP_TABLE
 from sbp.utils import walk_json_dict, exclude_fields
 
 from sbpg.test_structs import PackageTestSpecification, TestSpecification
@@ -32,21 +27,7 @@ PYTHON_ROOT = os.path.abspath(os.path.join(HERE, "..", "python"))
 sys.path.insert(0, PYTHON_ROOT)
 
 from tests.sbp.test_messages import CASES, ROOTPATH  # noqa
-from tests.sbp.utils import load_test_package, assert_package  # noqa
-
-
-def load_test_cases():
-    tests = {}
-    for case in CASES:
-        filename = ROOTPATH + "/" + case
-        try:
-            pkg = load_test_package(filename)
-        except Exception as e:
-            print(e)
-            continue
-        for i, test_case_data in enumerate(pkg["tests"]):
-            tests[(case, i)] = test_case_data
-    return tests
+from tests.sbp.utils import assert_package  # noqa
 
 
 def msg_reducer(msg):
@@ -57,13 +38,9 @@ def msg_reducer(msg):
     }
 
 
-def write_test(msg, test_set_name="swiftnav"):
+def write_test(msg, output, test_set_name="swiftnav"):
     module = msg.__class__.__module__
     name = msg.__class__.__name__
-    path_parts = (
-        [ROOTPATH, test_set_name] + module.split(".") + ["test_{}.yaml".format(name)]
-    )
-    filename = os.path.join(*path_parts)
     test_msg_data = msg_reducer(msg)
     test_data = TestSpecification.from_msg(msg, test_msg_data)
     now_str = datetime.datetime.now().isoformat(" ")
@@ -73,71 +50,35 @@ def write_test(msg, test_set_name="swiftnav"):
         generated_on=now_str,
         tests=[test_data],
     )
-    print("Writing {} ...".format(filename))
-    test_package.write(filename, exists_ok=True)
-    print("Wrote {}".format(filename))
-    assert_package(filename)
+    print("Writing {} ...".format(output))
+    test_package.write(output, exists_ok=True)
+    print("Wrote {}".format(output))
+    assert_package(output)
 
 
 def main():
-    loaded_tests = collections.defaultdict(list)
-    unique = True
-    if unique:
-        for dat in load_test_cases().values():
-            loaded_tests[(dat["msg"]["module"], dat["msg"]["name"])].append(dat)
+    parser = argparse.ArgumentParser(description="Swift Navigation SBP Test Generator.")
+    parser.add_argument("-id", "--msgid", default="-1", help="specify message id")
+    parser.add_argument("-in", "--input", help="path to input json file", required=True)
+    parser.add_argument("-out", "--output", help="path to output yaml file", required=True)
+    args = parser.parse_args()
 
-    # Check uniqueness of the msg classes
-    msg_class_tests_2 = {}
-    for (module, name), tests in loaded_tests.items():
-        assert name not in msg_class_tests_2
-        msg_class_tests_2[name] = tests
+    f = open(args.input)
+    msg = json.loads(f.read())
+    f.close()
+    msg_type = args.msgid
+    if args.msgid == "-1":
+        msg_type = msg.get("msg_type")
+    clazz = lookup(msg_type)
+    print("found class: " + str(clazz.__name__))
+    msg_obj = clazz(**msg)
 
-    classes_without_tests = {}
-    req_resp_missing = 0
-    deprecated_missing = 0
-    for msg_type, cls in _SBP_TABLE.items():
-        cls_name = cls.__name__
-        if cls_name not in msg_class_tests_2:
-            is_real_message = hasattr(cls, "_parser")
-            if is_real_message:
-                if cls_name.endswith("Dep") or cls_name[-4:-1] == "Dep":
-                    deprecated_missing += 1
-                if cls_name.endswith("Req") or cls_name.endswith("Resp"):
-                    req_resp_missing += 1
-                print("Missing {}: {}".format(msg_type, cls_name))
-                classes_without_tests[cls_name] = cls
-
-    print(f"Total missing: {len(classes_without_tests)} ({req_resp_missing} Req/Resp; {deprecated_missing} Dep.)")
-    while True:
-        try:
-            print("=====")
-            inp = input("input: ")
-            msg = json.loads(inp)
-            msg_type = msg.get("msg_type")
-            if not msg_type:
-                print("invalid format, no msg_type found")
-                continue
-            clazz = lookup(msg_type)
-            print("found class: " + str(clazz.__name__))
-            msg_obj = clazz(**msg)
-
-            # sets crc, length, payload
-            msg_obj.to_binary()
-            if clazz not in classes_without_tests.values():
-                print("test is not missing")
-                continue
-            print("found missing test data")
-            cls_name = clazz.__name__
-            try:
-                write_test(msg_obj)
-                del classes_without_tests[cls_name]
-            except Exception as e:
-                print("Failed creating test for {}: {}".format(cls_name, e))
-                raise
-        except KeyboardInterrupt:
-            pass
-        except Exception as ex:
-            print(ex)
+    msg_obj.to_binary()  # sets crc, length, payload
+    try:
+        write_test(msg_obj, args.output)
+    except Exception as e:
+        print("Failed creating test for {}: {}".format(clazz.__name__, e))
+        raise
 
 
 if __name__ == "__main__":
