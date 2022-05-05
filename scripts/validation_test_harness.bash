@@ -14,6 +14,13 @@ else
         exit 1
 fi
 
+if python scripts/spec_validator.py spec/validation/previous/message_id_changed_dep spec/validation/current/message_id_changed_dep; then
+        echo "Check Message ID (Dep) Changed: PASS"
+else
+        echo "Check Message ID (Dep) Changed: FAIL"
+        exit 1
+fi
+
 if ! python scripts/spec_validator.py spec/validation/previous/field_order_changed spec/validation/current/field_order_changed; then
         echo "Check Field Order Changed: PASS"
 else
