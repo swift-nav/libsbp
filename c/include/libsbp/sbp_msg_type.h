@@ -210,6 +210,7 @@ typedef enum {
   SbpMsgSsrCodeBiases = SBP_MSG_SSR_CODE_BIASES,
   SbpMsgSsrCodePhaseBiasesBounds = SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS,
   SbpMsgSsrGridDefinitionDepA = SBP_MSG_SSR_GRID_DEFINITION_DEP_A,
+  SbpMsgSsrGriddedCorrectionBounds = SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS,
   SbpMsgSsrGriddedCorrectionDepA = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A,
   SbpMsgSsrGriddedCorrectionNoStdDepA =
       SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A,
@@ -220,7 +221,9 @@ typedef enum {
   SbpMsgSsrPhaseBiases = SBP_MSG_SSR_PHASE_BIASES,
   SbpMsgSsrSatelliteApc = SBP_MSG_SSR_SATELLITE_APC,
   SbpMsgSsrStecCorrectionDepA = SBP_MSG_SSR_STEC_CORRECTION_DEP_A,
+  SbpMsgSsrStecCorrectionDep = SBP_MSG_SSR_STEC_CORRECTION_DEP,
   SbpMsgSsrStecCorrection = SBP_MSG_SSR_STEC_CORRECTION,
+  SbpMsgSsrTileDefinitionDep = SBP_MSG_SSR_TILE_DEFINITION_DEP,
   SbpMsgSsrTileDefinition = SBP_MSG_SSR_TILE_DEFINITION,
   SbpMsgStartup = SBP_MSG_STARTUP,
   SbpMsgStatusJournal = SBP_MSG_STATUS_JOURNAL,

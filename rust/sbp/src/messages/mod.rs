@@ -204,6 +204,7 @@ use self::ssr::msg_ssr_code_biases::MsgSsrCodeBiases;
 use self::ssr::msg_ssr_code_phase_biases_bounds::MsgSsrCodePhaseBiasesBounds;
 use self::ssr::msg_ssr_grid_definition_dep_a::MsgSsrGridDefinitionDepA;
 use self::ssr::msg_ssr_gridded_correction::MsgSsrGriddedCorrection;
+use self::ssr::msg_ssr_gridded_correction_bounds::MsgSsrGriddedCorrectionBounds;
 use self::ssr::msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
 use self::ssr::msg_ssr_gridded_correction_no_std_dep_a::MsgSsrGriddedCorrectionNoStdDepA;
 use self::ssr::msg_ssr_orbit_clock::MsgSsrOrbitClock;
@@ -212,8 +213,10 @@ use self::ssr::msg_ssr_orbit_clock_dep_a::MsgSsrOrbitClockDepA;
 use self::ssr::msg_ssr_phase_biases::MsgSsrPhaseBiases;
 use self::ssr::msg_ssr_satellite_apc::MsgSsrSatelliteApc;
 use self::ssr::msg_ssr_stec_correction::MsgSsrStecCorrection;
+use self::ssr::msg_ssr_stec_correction_dep::MsgSsrStecCorrectionDep;
 use self::ssr::msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
 use self::ssr::msg_ssr_tile_definition::MsgSsrTileDefinition;
+use self::ssr::msg_ssr_tile_definition_dep::MsgSsrTileDefinitionDep;
 use self::system::msg_csac_telemetry::MsgCsacTelemetry;
 use self::system::msg_csac_telemetry_labels::MsgCsacTelemetryLabels;
 use self::system::msg_dgnss_status::MsgDgnssStatus;
@@ -663,13 +666,19 @@ pub enum Sbp {
     /// Deprecated
     MsgSsrGridDefinitionDepA(MsgSsrGridDefinitionDepA),
     /// Definition of a SSR atmospheric correction tile.
+    MsgSsrTileDefinitionDep(MsgSsrTileDefinitionDep),
+    /// Definition of a SSR atmospheric correction tile.
     MsgSsrTileDefinition(MsgSsrTileDefinition),
     /// Deprecated
     MsgSsrGriddedCorrectionDepA(MsgSsrGriddedCorrectionDepA),
     /// STEC correction polynomial coefficients
-    MsgSsrStecCorrection(MsgSsrStecCorrection),
+    MsgSsrStecCorrectionDep(MsgSsrStecCorrectionDep),
     /// Gridded troposphere and STEC correction residuals
     MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
+    /// STEC correction polynomial coefficients
+    MsgSsrStecCorrection(MsgSsrStecCorrection),
+    /// Gridded troposhere and STEC correction residuals bounds
+    MsgSsrGriddedCorrectionBounds(MsgSsrGriddedCorrectionBounds),
     /// Satellite antenna phase center corrections
     MsgSsrSatelliteApc(MsgSsrSatelliteApc),
     /// OSR corrections
@@ -1606,6 +1615,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGridDefinitionDepA(msg))
             }
+            MsgSsrTileDefinitionDep::MESSAGE_TYPE => {
+                let mut msg = MsgSsrTileDefinitionDep::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrTileDefinitionDep(msg))
+            }
             MsgSsrTileDefinition::MESSAGE_TYPE => {
                 let mut msg = MsgSsrTileDefinition::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -1616,15 +1630,25 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGriddedCorrectionDepA(msg))
             }
-            MsgSsrStecCorrection::MESSAGE_TYPE => {
-                let mut msg = MsgSsrStecCorrection::parse(&mut frame.payload)?;
+            MsgSsrStecCorrectionDep::MESSAGE_TYPE => {
+                let mut msg = MsgSsrStecCorrectionDep::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
-                Ok(Sbp::MsgSsrStecCorrection(msg))
+                Ok(Sbp::MsgSsrStecCorrectionDep(msg))
             }
             MsgSsrGriddedCorrection::MESSAGE_TYPE => {
                 let mut msg = MsgSsrGriddedCorrection::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgSsrGriddedCorrection(msg))
+            }
+            MsgSsrStecCorrection::MESSAGE_TYPE => {
+                let mut msg = MsgSsrStecCorrection::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrStecCorrection(msg))
+            }
+            MsgSsrGriddedCorrectionBounds::MESSAGE_TYPE => {
+                let mut msg = MsgSsrGriddedCorrectionBounds::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrGriddedCorrectionBounds(msg))
             }
             MsgSsrSatelliteApc::MESSAGE_TYPE => {
                 let mut msg = MsgSsrSatelliteApc::parse(&mut frame.payload)?;
@@ -1989,10 +2013,13 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_name(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_name(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.message_name(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.message_name(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.message_name(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.message_name(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.message_name(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.message_name(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.message_name(),
             Sbp::MsgOsr(msg) => msg.message_name(),
             Sbp::MsgUserData(msg) => msg.message_name(),
@@ -2202,10 +2229,13 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_type(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_type(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.message_type(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.message_type(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.message_type(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.message_type(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.message_type(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.message_type(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.message_type(),
             Sbp::MsgOsr(msg) => msg.message_type(),
             Sbp::MsgUserData(msg) => msg.message_type(),
@@ -2415,10 +2445,13 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.sender_id(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.sender_id(),
             Sbp::MsgSsrTileDefinition(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.sender_id(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.sender_id(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.sender_id(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.sender_id(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.sender_id(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.sender_id(),
             Sbp::MsgOsr(msg) => msg.sender_id(),
             Sbp::MsgUserData(msg) => msg.sender_id(),
@@ -2628,10 +2661,13 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrTileDefinition(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgSsrStecCorrection(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrStecCorrection(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrSatelliteApc(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOsr(msg) => msg.set_sender_id(new_id),
             Sbp::MsgUserData(msg) => msg.set_sender_id(new_id),
@@ -2841,10 +2877,13 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.encoded_len(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.encoded_len(),
             Sbp::MsgSsrTileDefinition(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.encoded_len(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.encoded_len(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.encoded_len(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.encoded_len(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.encoded_len(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.encoded_len(),
             Sbp::MsgOsr(msg) => msg.encoded_len(),
             Sbp::MsgUserData(msg) => msg.encoded_len(),
@@ -3057,10 +3096,13 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.gps_time(),
+            Sbp::MsgSsrTileDefinitionDep(msg) => msg.gps_time(),
             Sbp::MsgSsrTileDefinition(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.gps_time(),
-            Sbp::MsgSsrStecCorrection(msg) => msg.gps_time(),
+            Sbp::MsgSsrStecCorrectionDep(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrection(msg) => msg.gps_time(),
+            Sbp::MsgSsrStecCorrection(msg) => msg.gps_time(),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => msg.gps_time(),
             Sbp::MsgSsrSatelliteApc(msg) => msg.gps_time(),
             Sbp::MsgOsr(msg) => msg.gps_time(),
             Sbp::MsgUserData(msg) => msg.gps_time(),
@@ -3278,10 +3320,13 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrTileDefinitionDep(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgSsrStecCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrStecCorrectionDep(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrStecCorrection(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrSatelliteApc(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOsr(msg) => WireFormat::write(msg, buf),
             Sbp::MsgUserData(msg) => WireFormat::write(msg, buf),
@@ -3491,10 +3536,13 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrTileDefinitionDep(msg) => WireFormat::len(msg),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::len(msg),
-            Sbp::MsgSsrStecCorrection(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrStecCorrectionDep(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrection(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrStecCorrection(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrGriddedCorrectionBounds(msg) => WireFormat::len(msg),
             Sbp::MsgSsrSatelliteApc(msg) => WireFormat::len(msg),
             Sbp::MsgOsr(msg) => WireFormat::len(msg),
             Sbp::MsgUserData(msg) => WireFormat::len(msg),
@@ -4533,6 +4581,12 @@ impl From<MsgSsrGridDefinitionDepA> for Sbp {
     }
 }
 
+impl From<MsgSsrTileDefinitionDep> for Sbp {
+    fn from(msg: MsgSsrTileDefinitionDep) -> Self {
+        Sbp::MsgSsrTileDefinitionDep(msg)
+    }
+}
+
 impl From<MsgSsrTileDefinition> for Sbp {
     fn from(msg: MsgSsrTileDefinition) -> Self {
         Sbp::MsgSsrTileDefinition(msg)
@@ -4545,15 +4599,27 @@ impl From<MsgSsrGriddedCorrectionDepA> for Sbp {
     }
 }
 
-impl From<MsgSsrStecCorrection> for Sbp {
-    fn from(msg: MsgSsrStecCorrection) -> Self {
-        Sbp::MsgSsrStecCorrection(msg)
+impl From<MsgSsrStecCorrectionDep> for Sbp {
+    fn from(msg: MsgSsrStecCorrectionDep) -> Self {
+        Sbp::MsgSsrStecCorrectionDep(msg)
     }
 }
 
 impl From<MsgSsrGriddedCorrection> for Sbp {
     fn from(msg: MsgSsrGriddedCorrection) -> Self {
         Sbp::MsgSsrGriddedCorrection(msg)
+    }
+}
+
+impl From<MsgSsrStecCorrection> for Sbp {
+    fn from(msg: MsgSsrStecCorrection) -> Self {
+        Sbp::MsgSsrStecCorrection(msg)
+    }
+}
+
+impl From<MsgSsrGriddedCorrectionBounds> for Sbp {
+    fn from(msg: MsgSsrGriddedCorrectionBounds) -> Self {
+        Sbp::MsgSsrGriddedCorrectionBounds(msg)
     }
 }
 

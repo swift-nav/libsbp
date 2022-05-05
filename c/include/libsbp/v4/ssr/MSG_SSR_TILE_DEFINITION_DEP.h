@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_H
-#define LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_H
+#ifndef LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_DEP_H
+#define LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_DEP_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -35,22 +35,18 @@ extern "C" {
 
 /******************************************************************************
  *
- * SBP_MSG_SSR_TILE_DEFINITION
+ * SBP_MSG_SSR_TILE_DEFINITION_DEP
  *
  *****************************************************************************/
 /** Definition of a SSR atmospheric correction tile.
 
  *
  * Provides the correction point coordinates for the atmospheric correction
- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.
+ values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
+ messages.
  *
  */
 typedef struct {
-  /**
-   * SSR Solution ID.
-   */
-  u8 ssr_sol_id;
-
   /**
    * Unique identifier of the tile set this tile belongs to.
    */
@@ -134,22 +130,23 @@ typedef struct {
    * definition of the bits is inverted.
    */
   u64 bitmask;
-} sbp_msg_ssr_tile_definition_t;
+} sbp_msg_ssr_tile_definition_dep_t;
 
 /**
- * Get encoded size of an instance of sbp_msg_ssr_tile_definition_t
+ * Get encoded size of an instance of sbp_msg_ssr_tile_definition_dep_t
  *
- * @param msg sbp_msg_ssr_tile_definition_t instance
+ * @param msg sbp_msg_ssr_tile_definition_dep_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_ssr_tile_definition_encoded_len(
-    const sbp_msg_ssr_tile_definition_t *msg) {
+static inline size_t sbp_msg_ssr_tile_definition_dep_encoded_len(
+    const sbp_msg_ssr_tile_definition_dep_t *msg) {
   (void)msg;
-  return SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN;
+  return SBP_MSG_SSR_TILE_DEFINITION_DEP_ENCODED_LEN;
 }
 
 /**
- * Encode an instance of sbp_msg_ssr_tile_definition_t to wire representation
+ * Encode an instance of sbp_msg_ssr_tile_definition_dep_t to wire
+ * representation
  *
  * This function encodes the given instance in to the user provided buffer. The
  * buffer provided to this function must be large enough to store the encoded
@@ -164,37 +161,39 @@ static inline size_t sbp_msg_ssr_tile_definition_encoded_len(
  * @param len Length of \p buf
  * @param n_written If not null, on success will be set to the number of bytes
  * written to \p buf
- * @param msg Instance of sbp_msg_ssr_tile_definition_t to encode
+ * @param msg Instance of sbp_msg_ssr_tile_definition_dep_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_ssr_tile_definition_encode(
+SBP_EXPORT s8 sbp_msg_ssr_tile_definition_dep_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
-    const sbp_msg_ssr_tile_definition_t *msg);
+    const sbp_msg_ssr_tile_definition_dep_t *msg);
 
 /**
- * Decode an instance of sbp_msg_ssr_tile_definition_t from wire representation
+ * Decode an instance of sbp_msg_ssr_tile_definition_dep_t from wire
+ * representation
  *
  * This function decodes the wire representation of a
- * sbp_msg_ssr_tile_definition_t message to the given instance. The caller must
- * specify the length of the buffer in the \p len parameter. If non-null the
- * number of bytes read from the buffer will be returned in \p n_read.
+ * sbp_msg_ssr_tile_definition_dep_t message to the given instance. The caller
+ * must specify the length of the buffer in the \p len parameter. If non-null
+ * the number of bytes read from the buffer will be returned in \p n_read.
  *
- * @param buf Wire representation of the sbp_msg_ssr_tile_definition_t instance
+ * @param buf Wire representation of the sbp_msg_ssr_tile_definition_dep_t
+ * instance
  * @param len Length of \p buf
  * @param n_read If not null, on success will be set to the number of bytes read
  * from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_ssr_tile_definition_decode(
+SBP_EXPORT s8 sbp_msg_ssr_tile_definition_dep_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
-    sbp_msg_ssr_tile_definition_t *msg);
+    sbp_msg_ssr_tile_definition_dep_t *msg);
 /**
- * Send an instance of sbp_msg_ssr_tile_definition_t with the given write
+ * Send an instance of sbp_msg_ssr_tile_definition_dep_t with the given write
  * function
  *
  * An equivalent of #sbp_message_send which operates specifically on
- * sbp_msg_ssr_tile_definition_t
+ * sbp_msg_ssr_tile_definition_dep_t
  *
  * The given message will be encoded to wire representation and passed in to the
  * given write function callback. The write callback will be called several
@@ -206,12 +205,12 @@ SBP_EXPORT s8 sbp_msg_ssr_tile_definition_decode(
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_ssr_tile_definition_send(
-    sbp_state_t *s, u16 sender_id, const sbp_msg_ssr_tile_definition_t *msg,
+SBP_EXPORT s8 sbp_msg_ssr_tile_definition_dep_send(
+    sbp_state_t *s, u16 sender_id, const sbp_msg_ssr_tile_definition_dep_t *msg,
     sbp_write_fn_t write);
 
 /**
- * Compare two instances of sbp_msg_ssr_tile_definition_t
+ * Compare two instances of sbp_msg_ssr_tile_definition_dep_t
  *
  * The two instances will be compared and a value returned consistent with the
  * return codes of comparison functions from the C standard library
@@ -221,47 +220,47 @@ SBP_EXPORT s8 sbp_msg_ssr_tile_definition_send(
  * b A value greater than 0 will be returned if \p b is considered to be greater
  * than \p b
  *
- * @param a sbp_msg_ssr_tile_definition_t instance
- * @param b sbp_msg_ssr_tile_definition_t instance
+ * @param a sbp_msg_ssr_tile_definition_dep_t instance
+ * @param b sbp_msg_ssr_tile_definition_dep_t instance
  * @return 0, <0, >0
  */
-SBP_EXPORT int sbp_msg_ssr_tile_definition_cmp(
-    const sbp_msg_ssr_tile_definition_t *a,
-    const sbp_msg_ssr_tile_definition_t *b);
+SBP_EXPORT int sbp_msg_ssr_tile_definition_dep_cmp(
+    const sbp_msg_ssr_tile_definition_dep_t *a,
+    const sbp_msg_ssr_tile_definition_dep_t *b);
 
 #ifdef __cplusplus
 }
 
-static inline bool operator==(const sbp_msg_ssr_tile_definition_t &lhs,
-                              const sbp_msg_ssr_tile_definition_t &rhs) {
-  return sbp_msg_ssr_tile_definition_cmp(&lhs, &rhs) == 0;
+static inline bool operator==(const sbp_msg_ssr_tile_definition_dep_t &lhs,
+                              const sbp_msg_ssr_tile_definition_dep_t &rhs) {
+  return sbp_msg_ssr_tile_definition_dep_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ssr_tile_definition_t &lhs,
-                              const sbp_msg_ssr_tile_definition_t &rhs) {
-  return sbp_msg_ssr_tile_definition_cmp(&lhs, &rhs) != 0;
+static inline bool operator!=(const sbp_msg_ssr_tile_definition_dep_t &lhs,
+                              const sbp_msg_ssr_tile_definition_dep_t &rhs) {
+  return sbp_msg_ssr_tile_definition_dep_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ssr_tile_definition_t &lhs,
-                             const sbp_msg_ssr_tile_definition_t &rhs) {
-  return sbp_msg_ssr_tile_definition_cmp(&lhs, &rhs) < 0;
+static inline bool operator<(const sbp_msg_ssr_tile_definition_dep_t &lhs,
+                             const sbp_msg_ssr_tile_definition_dep_t &rhs) {
+  return sbp_msg_ssr_tile_definition_dep_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ssr_tile_definition_t &lhs,
-                              const sbp_msg_ssr_tile_definition_t &rhs) {
-  return sbp_msg_ssr_tile_definition_cmp(&lhs, &rhs) <= 0;
+static inline bool operator<=(const sbp_msg_ssr_tile_definition_dep_t &lhs,
+                              const sbp_msg_ssr_tile_definition_dep_t &rhs) {
+  return sbp_msg_ssr_tile_definition_dep_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ssr_tile_definition_t &lhs,
-                             const sbp_msg_ssr_tile_definition_t &rhs) {
-  return sbp_msg_ssr_tile_definition_cmp(&lhs, &rhs) > 0;
+static inline bool operator>(const sbp_msg_ssr_tile_definition_dep_t &lhs,
+                             const sbp_msg_ssr_tile_definition_dep_t &rhs) {
+  return sbp_msg_ssr_tile_definition_dep_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ssr_tile_definition_t &lhs,
-                              const sbp_msg_ssr_tile_definition_t &rhs) {
-  return sbp_msg_ssr_tile_definition_cmp(&lhs, &rhs) >= 0;
+static inline bool operator>=(const sbp_msg_ssr_tile_definition_dep_t &lhs,
+                              const sbp_msg_ssr_tile_definition_dep_t &rhs) {
+  return sbp_msg_ssr_tile_definition_dep_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_H */
+#endif /* LIBSBP_V4_SSR_MSG_SSR_TILE_DEFINITION_DEP_H */

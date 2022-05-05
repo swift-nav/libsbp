@@ -26,6 +26,7 @@
 #include <libsbp/v4/ssr/MSG_SSR_CODE_BIASES.h>
 #include <libsbp/v4/ssr/MSG_SSR_CODE_PHASE_BIASES_BOUNDS.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION.h>
+#include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_BOUNDS.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRID_DEFINITION_DEP_A.h>
@@ -35,8 +36,10 @@
 #include <libsbp/v4/ssr/MSG_SSR_PHASE_BIASES.h>
 #include <libsbp/v4/ssr/MSG_SSR_SATELLITE_APC.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION.h>
+#include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION.h>
+#include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION_DEP.h>
 #include <libsbp/v4/ssr/OrbitClockBound.h>
 #include <libsbp/v4/ssr/PhaseBiasesContent.h>
 #include <libsbp/v4/ssr/STECHeader.h>
@@ -44,6 +47,7 @@
 #include <libsbp/v4/ssr/STECResidual.h>
 #include <libsbp/v4/ssr/STECResidualNoStd.h>
 #include <libsbp/v4/ssr/STECSatElement.h>
+#include <libsbp/v4/ssr/STECSatElementIntegrity.h>
 #include <libsbp/v4/ssr/SatelliteAPC.h>
 #include <libsbp/v4/ssr/TroposphericDelayCorrection.h>
 #include <libsbp/v4/ssr/TroposphericDelayCorrectionNoStd.h>

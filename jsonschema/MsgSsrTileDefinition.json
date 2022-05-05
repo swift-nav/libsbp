@@ -16,6 +16,7 @@
   "description":"Provides the correction point coordinates for the atmospheric correction values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.,\n,\nBased on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points, not lists of points.\n",
   "type": "object",
   "properties": {
+    "ssr_sol_id": {"type": "integer"},
     "tile_set_id": {"type": "integer"},
     "tile_id": {"type": "integer"},
     "corner_nw_lat": {"type": "integer"},
@@ -27,6 +28,7 @@
     "bitmask": {"type": "integer"}
   },
   "required": [
+    "ssr_sol_id",
     "tile_set_id",
     "tile_id",
     "corner_nw_lat",

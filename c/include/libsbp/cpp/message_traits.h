@@ -5659,6 +5659,47 @@ struct MessageTraits<sbp_msg_ssr_grid_definition_dep_a_t> {
 };
 
 template <>
+struct MessageTraits<sbp_msg_ssr_gridded_correction_bounds_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrGriddedCorrectionBounds;
+  static const sbp_msg_ssr_gridded_correction_bounds_t &get(
+      const sbp_msg_t &msg) {
+    return msg.ssr_gridded_correction_bounds;
+  }
+  static sbp_msg_ssr_gridded_correction_bounds_t &get(sbp_msg_t &msg) {
+    return msg.ssr_gridded_correction_bounds;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_gridded_correction_bounds_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_gridded_correction_bounds = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_ssr_gridded_correction_bounds_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_gridded_correction_bounds = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_gridded_correction_bounds_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_gridded_correction_bounds_send(state, sender_id, &msg,
+                                                      write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_gridded_correction_bounds_t &msg) {
+    return sbp_msg_ssr_gridded_correction_bounds_encode(buf, len, n_written,
+                                                        &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_gridded_correction_bounds_t *msg) {
+    return sbp_msg_ssr_gridded_correction_bounds_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(
+      const sbp_msg_ssr_gridded_correction_bounds_t &msg) {
+    return sbp_msg_ssr_gridded_correction_bounds_encoded_len(&msg);
+  }
+};
+
+template <>
 struct MessageTraits<sbp_msg_ssr_gridded_correction_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrGriddedCorrectionDepA;
   static const sbp_msg_ssr_gridded_correction_dep_a_t &get(
@@ -5992,6 +6033,42 @@ struct MessageTraits<sbp_msg_ssr_stec_correction_dep_a_t> {
 };
 
 template <>
+struct MessageTraits<sbp_msg_ssr_stec_correction_dep_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrStecCorrectionDep;
+  static const sbp_msg_ssr_stec_correction_dep_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_stec_correction_dep;
+  }
+  static sbp_msg_ssr_stec_correction_dep_t &get(sbp_msg_t &msg) {
+    return msg.ssr_stec_correction_dep;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_stec_correction_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_stec_correction_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_stec_correction_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_stec_correction_dep = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_stec_correction_dep_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_stec_correction_dep_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_stec_correction_dep_t &msg) {
+    return sbp_msg_ssr_stec_correction_dep_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_stec_correction_dep_t *msg) {
+    return sbp_msg_ssr_stec_correction_dep_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_stec_correction_dep_t &msg) {
+    return sbp_msg_ssr_stec_correction_dep_encoded_len(&msg);
+  }
+};
+
+template <>
 struct MessageTraits<sbp_msg_ssr_stec_correction_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrStecCorrection;
   static const sbp_msg_ssr_stec_correction_t &get(const sbp_msg_t &msg) {
@@ -6024,6 +6101,42 @@ struct MessageTraits<sbp_msg_ssr_stec_correction_t> {
   }
   static size_t encoded_len(const sbp_msg_ssr_stec_correction_t &msg) {
     return sbp_msg_ssr_stec_correction_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ssr_tile_definition_dep_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrTileDefinitionDep;
+  static const sbp_msg_ssr_tile_definition_dep_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_tile_definition_dep;
+  }
+  static sbp_msg_ssr_tile_definition_dep_t &get(sbp_msg_t &msg) {
+    return msg.ssr_tile_definition_dep;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_tile_definition_dep_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_tile_definition_dep = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_tile_definition_dep_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_tile_definition_dep = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_tile_definition_dep_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_tile_definition_dep_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_tile_definition_dep_t &msg) {
+    return sbp_msg_ssr_tile_definition_dep_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_tile_definition_dep_t *msg) {
+    return sbp_msg_ssr_tile_definition_dep_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_tile_definition_dep_t &msg) {
+    return sbp_msg_ssr_tile_definition_dep_encoded_len(&msg);
   }
 };
 

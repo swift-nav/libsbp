@@ -11,8 +11,8 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgSsrStecCorrection",
-  "title":"MsgSsrStecCorrection",
+  "$id": "#MsgSsrGriddedCorrectionBounds",
+  "title":"MsgSsrGriddedCorrectionBounds",
   "description":"",
   "type": "object",
   "properties": {
@@ -20,14 +20,24 @@
     "ssr_iod_atmo": {"type": "integer"},
     "tile_set_id": {"type": "integer"},
     "tile_id": {"type": "integer"},
+    "tropo_qi": {"type": "integer"},
+    "grid_point_id": {"type": "integer"},
+    "tropo_delay_correction": {"$ref": "TroposphericDelayCorrection.json"},
+    "tropo_bound_mu": {"type": "integer"},
+    "tropo_bound_sig": {"type": "integer"},
     "n_sats": {"type": "integer"},
-    "stec_sat_list": {"type": "array", "items": {"$ref": "STECSatElement.json"}}
+    "stec_sat_list": {"type": "array", "items": {"$ref": "STECSatElementIntegrity.json"}}
   },
   "required": [
     "header",
     "ssr_iod_atmo",
     "tile_set_id",
     "tile_id",
+    "tropo_qi",
+    "grid_point_id",
+    "tropo_delay_correction",
+    "tropo_bound_mu",
+    "tropo_bound_sig",
     "n_sats",
     "stec_sat_list"
   ]

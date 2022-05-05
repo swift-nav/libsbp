@@ -21,23 +21,20 @@ import java.math.BigInteger;
 import org.json.JSONObject;
 
 /**
- * SBP class for message MSG_SSR_TILE_DEFINITION (0x05F7).
+ * SBP class for message MSG_SSR_TILE_DEFINITION_DEP (0x05F6).
  *
- * <p>You can have MSG_SSR_TILE_DEFINITION inherent its fields directly from an inherited SBP
+ * <p>You can have MSG_SSR_TILE_DEFINITION_DEP inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
  * <p>Provides the correction point coordinates for the atmospheric correction values in the
- * MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.
+ * MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION messages.
  *
  * <p>Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element
  * GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points, not lists of
  * points.
  */
-public class MsgSsrTileDefinition extends SBPMessage {
-    public static final int TYPE = 0x05F7;
-
-    /** SSR Solution ID. */
-    public int ssr_sol_id;
+public class MsgSsrTileDefinitionDep extends SBPMessage {
+    public static final int TYPE = 0x05F6;
 
     /** Unique identifier of the tile set this tile belongs to. */
     public int tile_set_id;
@@ -114,15 +111,15 @@ public class MsgSsrTileDefinition extends SBPMessage {
      */
     public BigInteger bitmask;
 
-    public MsgSsrTileDefinition(int sender) {
+    public MsgSsrTileDefinitionDep(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgSsrTileDefinition() {
+    public MsgSsrTileDefinitionDep() {
         super(TYPE);
     }
 
-    public MsgSsrTileDefinition(SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrTileDefinitionDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }
@@ -130,7 +127,6 @@ public class MsgSsrTileDefinition extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        ssr_sol_id = parser.getU8();
         tile_set_id = parser.getU16();
         tile_id = parser.getU16();
         corner_nw_lat = parser.getS16();
@@ -144,7 +140,6 @@ public class MsgSsrTileDefinition extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        builder.putU8(ssr_sol_id);
         builder.putU16(tile_set_id);
         builder.putU16(tile_id);
         builder.putS16(corner_nw_lat);
@@ -159,7 +154,6 @@ public class MsgSsrTileDefinition extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("ssr_sol_id", ssr_sol_id);
         obj.put("tile_set_id", tile_set_id);
         obj.put("tile_id", tile_id);
         obj.put("corner_nw_lat", corner_nw_lat);

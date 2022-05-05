@@ -267,6 +267,27 @@ typedef struct SBP_ATTR_PACKED {
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial
                                             coefficients for each space
                                             vehicle. */
+} msg_ssr_stec_correction_dep_t;
+
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time; /**< GNSS reference time of the bound */
+  u8 num_msgs;         /**< Number of messages in the dataset */
+  u8 seq_num;          /**< Position of this message in the dataset */
+  u8 update_interval;  /**< Update interval between consecutive bounds.
+                            Similar to RTCM DF391. */
+  u8 sol_id;           /**< SSR Solution ID. */
+} bounds_header_t;
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a STEC correction with
+                               bounds message. */
+  u8 ssr_iod_atmo;        /**< IOD of the SSR atmospheric correction */
+  u16 tile_set_id;        /**< Tile set ID */
+  u16 tile_id;            /**< Tile ID */
+  u8 n_sats;              /**< Number of satellites. */
+  stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial
+                                            coefficients for each space
+                                            vehicle. */
 } msg_ssr_stec_correction_t;
 
 /** Gridded troposphere and STEC correction residuals
@@ -292,6 +313,128 @@ typedef struct SBP_ATTR_PACKED {
                                           satellite (mean, stddev). */
 } msg_ssr_gridded_correction_t;
 
+/** None
+ *
+ * STEC polynomial and bounds for the given satellite.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  stec_residual_t stec_residual; /**< STEC residuals (mean, stddev) */
+  u8 stec_bound_mu;      /**< STEC Error Bound Mean (range 0-17.5) i<= 200,
+                              mean = 0.01i 200<i<=230, mean=2+0.1(i-200)
+                              i>230, mean=5+0.5(i-230) [m] */
+  u8 stec_bound_sig;     /**< STEC Error Bound Standard Deviation (range
+                              0-17.5) i<= 200, mean = 0.01i 200<i<=230,
+                              mean=2+0.1(i-200) i>230, mean=5+0.5(i-230) [m] */
+  u8 stec_bound_mu_dot;  /**< STEC Error Bound Mean First derivative
+                              degradation parameter(range 0-0.01275) [0.00005
+                            m/s] */
+  u8 stec_bound_sig_dot; /**< STEC Error Bound Standard Deviation First
+                              derivative degradation parameter (range
+                              0-0.01275) [0.00005 m/s] */
+} stec_sat_element_integrity_t;
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a bounds message. */
+  u8 ssr_iod_atmo;        /**< IOD of the SSR atmospheric correction. */
+  u16 tile_set_id;        /**< Unique identifier of the set this tile
+                               belongs to. */
+  u16 tile_id;            /**< Unique identifier of this tile in the
+                               tile set. */
+  u8 tropo_qi;            /**< Tropo Quality Indicator. Similar to RTCM
+                               DF389. */
+  u16 grid_point_id;      /**< Index of the Grid Point. */
+  tropospheric_delay_correction_t tropo_delay_correction; /**< Tropospheric
+                                                               delay at
+                                                               grid point. */
+  u8 tropo_bound_mu;  /**< Troposphere Error Bound Mean (range
+                           0-1.275). [0.005 m] */
+  u8 tropo_bound_sig; /**< Troposphere Error Bound Standard
+                           Deviation (range 0-1.275) [0.005 m] */
+  u8 n_sats;          /**< Number of satellites. */
+  stec_sat_element_integrity_t stec_sat_list[0]; /**< Array of STEC
+                                                      polynomial
+                                                      coefficients
+                                                      and its bounds
+                                                      for each space
+                                                      vehicle. */
+} msg_ssr_gridded_correction_bounds_t;
+
+/** Definition of a SSR atmospheric correction tile.
+
+ *
+ * Provides the correction point coordinates for the atmospheric correction
+ * values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
+ * messages.
+ *
+ * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+ * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+ * correction points, not lists of points.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u16 tile_set_id;   /**< Unique identifier of the tile set this tile
+                          belongs to. */
+  u16 tile_id;       /**< Unique identifier of this tile in the tile set.
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          correctionPointSetID. */
+  s16 corner_nw_lat; /**< North-West corner correction point latitude.
+
+                          The relation between the latitude X in the range
+                          [-90, 90] and the coded number N is:
+
+                          N = floor((X / 90) * 2^14)
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          referencePointLatitude. [encoded degrees] */
+  s16 corner_nw_lon; /**< North-West corner correction point longitude.
+
+                          The relation between the longitude X in the range
+                          [-180, 180] and the coded number N is:
+
+                          N = floor((X / 180) * 2^15)
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          referencePointLongitude. [encoded degrees] */
+  u16 spacing_lat;   /**< Spacing of the correction points in the latitude
+                          direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          stepOfLatitude. [0.01 degrees] */
+  u16 spacing_lon;   /**< Spacing of the correction points in the longitude
+                          direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          stepOfLongitude. [0.01 degrees] */
+  u16 rows;          /**< Number of steps in the latitude direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          numberOfStepsLatitude. */
+  u16 cols;          /**< Number of steps in the longitude direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          numberOfStepsLongitude. */
+  u64 bitmask;       /**< Specifies the availability of correction data at
+                          the correction points in the array.
+
+                          If a specific bit is enabled (set to 1), the
+                          correction is not available. Only the first rows
+                          * cols bits are used, the remainder are set to 0.
+                          If there are more then 64 correction points the
+                          remaining corrections are always available.
+
+                          Starting with the northwest corner of the array
+                          (top left on a north oriented map) the correction
+                          points are enumerated with row precedence - first
+                          row west to east, second row west to east, until
+                          last row west to east - ending with the southeast
+                          corner of the array.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          bitmaskOfGrids but note the definition of the
+                          bits is inverted. */
+} msg_ssr_tile_definition_dep_t;
+
 /** Definition of a SSR atmospheric correction tile.
 
  *
@@ -305,6 +448,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
+  u8 ssr_sol_id;     /**< SSR Solution ID. */
   u16 tile_set_id;   /**< Unique identifier of the tile set this tile
                           belongs to. */
   u16 tile_id;       /**< Unique identifier of this tile in the tile set.
@@ -519,15 +663,6 @@ typedef struct SBP_ATTR_PACKED {
                        transitions between valid and invalid (and vice versa)
                        are encoded as u8 integers. */
 } msg_ssr_grid_definition_dep_a_t;
-
-typedef struct SBP_ATTR_PACKED {
-  gps_time_sec_t time; /**< GNSS reference time of the bound */
-  u8 num_msgs;         /**< Number of messages in the dataset */
-  u8 seq_num;          /**< Position of this message in the dataset */
-  u8 update_interval;  /**< Update interval between consecutive bounds.
-                            Similar to RTCM DF391. */
-  u8 sol_id;           /**< SSR Solution ID. */
-} bounds_header_t;
 
 /** None
  *

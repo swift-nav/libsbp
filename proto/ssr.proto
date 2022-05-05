@@ -182,18 +182,29 @@ message MsgSsrPhaseBiases {
     repeated PhaseBiasesContent biases = 9;
 }
 
+/** Header for the Bounds messages
+ *
+None
+ */
+message BoundsHeader {
+    gnss.GpsTimeSec time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 update_interval = 4;
+    uint32 sol_id = 5;
+}
+
 /** STEC correction polynomial coefficients
  *
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
- * the atmospheric delay.
- *
- * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+None
  */
 message MsgSsrStecCorrection {
-    STECHeader header = 1;
-    repeated STECSatElement stec_sat_list = 2;
+    BoundsHeader header = 1;
+    uint32 ssr_iod_atmo = 2;
+    uint32 tile_set_id = 3;
+    uint32 tile_id = 4;
+    uint32 n_sats = 5;
+    repeated STECSatElement stec_sat_list = 6;
 }
 
 /** Gridded troposphere and STEC correction residuals
@@ -209,6 +220,36 @@ message MsgSsrGriddedCorrection {
     repeated STECResidual stec_residuals = 4;
 }
 
+/** None
+ *
+ * STEC polynomial and bounds for the given satellite.
+ */
+message STECSatElementIntegrity {
+    STECResidual stec_residual = 1;
+    uint32 stec_bound_mu = 2;
+    uint32 stec_bound_sig = 3;
+    uint32 stec_bound_mu_dot = 4;
+    uint32 stec_bound_sig_dot = 5;
+}
+
+/** Gridded troposhere and STEC correction residuals bounds
+ *
+None
+ */
+message MsgSsrGriddedCorrectionBounds {
+    BoundsHeader header = 1;
+    uint32 ssr_iod_atmo = 2;
+    uint32 tile_set_id = 3;
+    uint32 tile_id = 4;
+    uint32 tropo_qi = 5;
+    uint32 grid_point_id = 6;
+    TroposphericDelayCorrection tropo_delay_correction = 7;
+    uint32 tropo_bound_mu = 8;
+    uint32 tropo_bound_sig = 9;
+    uint32 n_sats = 10;
+    repeated STECSatElementIntegrity stec_sat_list = 11;
+}
+
 /** Definition of a SSR atmospheric correction tile.
 
  *
@@ -221,15 +262,16 @@ message MsgSsrGriddedCorrection {
  * correction points, not lists of points.
  */
 message MsgSsrTileDefinition {
-    uint32 tile_set_id = 1;
-    uint32 tile_id = 2;
-    sint32 corner_nw_lat = 3;
-    sint32 corner_nw_lon = 4;
-    uint32 spacing_lat = 5;
-    uint32 spacing_lon = 6;
-    uint32 rows = 7;
-    uint32 cols = 8;
-    uint64 bitmask = 9;
+    uint32 ssr_sol_id = 1;
+    uint32 tile_set_id = 2;
+    uint32 tile_id = 3;
+    sint32 corner_nw_lat = 4;
+    sint32 corner_nw_lon = 5;
+    uint32 spacing_lat = 6;
+    uint32 spacing_lon = 7;
+    uint32 rows = 8;
+    uint32 cols = 9;
+    uint64 bitmask = 10;
 }
 
 /** Antenna phase center correction
@@ -251,18 +293,6 @@ None
  */
 message MsgSsrSatelliteApc {
     repeated SatelliteAPC apc = 1;
-}
-
-/** Header for the Bounds messages
- *
-None
- */
-message BoundsHeader {
-    gnss.GpsTimeSec time = 1;
-    uint32 num_msgs = 2;
-    uint32 seq_num = 3;
-    uint32 update_interval = 4;
-    uint32 sol_id = 5;
 }
 
 /** None

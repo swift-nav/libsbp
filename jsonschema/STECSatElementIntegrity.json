@@ -11,24 +11,22 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgSsrStecCorrection",
-  "title":"MsgSsrStecCorrection",
-  "description":"",
+  "$id": "#STECSatElementIntegrity",
+  "title":"STECSatElementIntegrity",
+  "description":"STEC polynomial and bounds for the given satellite.\n",
   "type": "object",
   "properties": {
-    "header": {"$ref": "BoundsHeader.json"},
-    "ssr_iod_atmo": {"type": "integer"},
-    "tile_set_id": {"type": "integer"},
-    "tile_id": {"type": "integer"},
-    "n_sats": {"type": "integer"},
-    "stec_sat_list": {"type": "array", "items": {"$ref": "STECSatElement.json"}}
+    "stec_residual": {"$ref": "STECResidual.json"},
+    "stec_bound_mu": {"type": "integer"},
+    "stec_bound_sig": {"type": "integer"},
+    "stec_bound_mu_dot": {"type": "integer"},
+    "stec_bound_sig_dot": {"type": "integer"}
   },
   "required": [
-    "header",
-    "ssr_iod_atmo",
-    "tile_set_id",
-    "tile_id",
-    "n_sats",
-    "stec_sat_list"
+    "stec_residual",
+    "stec_bound_mu",
+    "stec_bound_sig",
+    "stec_bound_mu_dot",
+    "stec_bound_sig_dot"
   ]
 }
