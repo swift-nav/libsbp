@@ -46,13 +46,13 @@ def write_test(msg, output, test_set_name="swiftnav"):
     now_str = datetime.datetime.now().isoformat(" ")
     test_package = PackageTestSpecification(
         package=module,
-        description="Unit tests for {}.{} {}".format(test_set_name, module, name),
+        description=f"Unit tests for {test_set_name}.{module} {name}",
         generated_on=now_str,
         tests=[test_data],
     )
-    print("Writing {} ...".format(output))
+    print(f"Writing {output} ...")
     test_package.write(output, exists_ok=True)
-    print("Wrote {}".format(output))
+    print(f"Wrote {output}")
     assert_package(output)
 
 
@@ -65,17 +65,18 @@ def main():
 
     with open(args.input) as f:
         msg = json.loads(f.read())
-        msg_type = args.msg_id if args.msg_id else msg.get("msg_type")
-        if clazz := lookup(int(msg_type)):
-            print("found class: " + str(clazz.__name__))
-            msg_obj = clazz(**msg)
-            msg_obj.to_binary()  # sets crc, length, payload
-            try:
-                write_test(msg_obj, args.output)
-            except Exception as e:
-                raise Exception(f"Failed creating test for {clazz.__name__}: {e}")
-        else:
-            raise Exception(f"msg id {msg_type} not found!")
+
+    msg_type = args.msg_id if args.msg_id else msg.get("msg_type")
+    if clazz := lookup(int(msg_type)):
+        print("found class: " + str(clazz.__name__))
+        msg_obj = clazz(**msg)
+        msg_obj.to_binary()  # sets crc, length, payload
+        try:
+            write_test(msg_obj, args.output)
+        except Exception as e:
+            raise Exception(f"Failed creating test for {clazz.__name__}: {e}")
+    else:
+        raise Exception(f"msg id {msg_type} not found!")
 
 
 if __name__ == "__main__":
