@@ -1,7 +1,7 @@
 use std::io;
 
 use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
-use structopt::StructOpt;
+use clap::Parser;
 
 use converters::{json2json, Result};
 
@@ -13,28 +13,28 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 /// Typical usage:
 ///
 ///     cat console-json-log.json | json2json
-#[derive(Debug, StructOpt)]
-#[structopt(name = "json2json", verbatim_doc_comment)]
+#[derive(Debug, Parser)]
+#[clap(name = "json2json", verbatim_doc_comment)]
 struct Options {
     /// Print debugging messages to standard error
-    #[structopt(long)]
+    #[clap(long)]
     debug: bool,
 
     /// Try to be compatible with the float formatting of the Haskell version of sbp2json
-    #[structopt(long = "float-compat")]
+    #[clap(long = "float-compat")]
     float_compat: bool,
 
     /// Buffer output before flushing
-    #[structopt(short, long)]
+    #[clap(short, long)]
     buffered: bool,
 
     /// Stop on first error encountered
-    #[structopt(long)]
+    #[clap(long)]
     fatal_errors: bool,
 }
 
 fn main() -> Result<()> {
-    let options = Options::from_args();
+    let options = Options::parse();
 
     if options.debug {
         std::env::set_var("RUST_LOG", "debug");
