@@ -1,4 +1,4 @@
-description: Unit tests for swiftnav.sbp.ssr MsgSsrTileDefinitionNew
+description: Unit tests for swiftnav.sbp.ssr MsgSsrTileDefinition
 generated_on: 2022-04-20 # manually generated
 package: sbp.ssr
 tests:
@@ -16,7 +16,7 @@ tests:
         cols: 32768
         bitmask: 1234567890
       module: sbp.ssr
-      name: MsgSsrTileDefinitionNew
+      name: MsgSsrTileDefinition
     msg_type: '1527'
     raw_json: '{"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048,
     "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85,

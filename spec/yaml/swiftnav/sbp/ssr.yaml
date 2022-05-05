@@ -359,7 +359,7 @@ definitions:
               Phase biases corrections for a
               satellite being tracked.
 
- - MSG_SSR_STEC_CORRECTION:
+ - MSG_SSR_STEC_CORRECTION_DEP:
     id: 0x05FB
     short_desc: STEC correction polynomial coefficients
     desc: >
@@ -370,6 +370,8 @@ definitions:
 
 
       It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+    replaced_by:
+      - MSG_SSR_STEC_CORRECTION
     fields:
         - header:
             type: STECHeader
@@ -400,7 +402,7 @@ definitions:
            type: u8
            desc: SSR Solution ID.
 
- - MSG_SSR_STEC_CORRECTION_NEW:
+ - MSG_SSR_STEC_CORRECTION:
      id: 0x05FD
      short_desc: STEC correction polynomial coefficients
      public: False
@@ -522,19 +524,21 @@ definitions:
            size_fn: n_sats
            desc: Array of STEC polynomial coefficients and its bounds for each space vehicle.
 
- - MSG_SSR_TILE_DEFINITION:
+ - MSG_SSR_TILE_DEFINITION_DEP:
     id: 0x05F6
     short_desc: >
       Definition of a SSR atmospheric correction tile.
     desc: >
       Provides the correction point coordinates for the atmospheric correction
-      values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+      values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
       messages.
 
 
       Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
       element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
       correction points, not lists of points.
+    replaced_by:
+      - MSG_SSR_TILE_DEFINITION
     fields:
         - tile_set_id:
             type: u16
@@ -628,7 +632,7 @@ definitions:
               See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
               note the definition of the bits is inverted.
 
- - MSG_SSR_TILE_DEFINITION_NEW:
+ - MSG_SSR_TILE_DEFINITION:
      id: 0x05F7
      short_desc: >
        Definition of a SSR atmospheric correction tile.
@@ -1018,7 +1022,7 @@ definitions:
     short_desc: Deprecated
     public: False
     replaced_by:
-      - MSG_SSR_TILE_DEFINITION
+      - MSG_SSR_TILE_DEFINITION_DEP
     fields:
         - header:
             type: GridDefinitionHeaderDepA
