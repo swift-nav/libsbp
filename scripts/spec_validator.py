@@ -7,7 +7,6 @@ import glob
 import logging
 import os
 import re
-import sys
 
 from typing import List, Optional, Tuple
 
@@ -27,11 +26,11 @@ def flatten(definitions: List[dict]) -> dict:
     # The entry is a mapping of the definition name to another dictionary object.
     # This flattens the list of dictionaries into a dictionary of dictionaries.
     # This is a much more convenient data structure to perform comparisons.
-    d = {}
+    new_dict = {}
     for item in definitions:
         key, value = unpack(item)
-        d[key] = value
-    return d
+        new_dict[key] = value
+    return new_dict
 
 
 def is_message(name: str) -> bool:
@@ -40,15 +39,15 @@ def is_message(name: str) -> bool:
 
 def parse_packages(root: str) -> dict:
     paths = glob.glob(f"{root}/*.yaml")
-    d = {}
+    new_dict = {}
     for path in paths:
-        with open(path, "r") as file:
+        with open(path, "r", encoding="utf8") as file:
             spec = yaml.safe_load(file)
             package = unpack(spec)[1]
             PACKAGES[package] = os.path.basename(path)
             definitions = spec["definitions"]
-            d[package] = flatten(definitions)
-    return d
+            new_dict[package] = flatten(definitions)
+    return new_dict
 
 
 def type_to_digit(type_str: str) -> int:
@@ -64,7 +63,7 @@ def check_bitfield_range(type_str: str, bitfields: List[dict]) -> None:
     for item in bitfields:
         bitfield = unpack(item)[0]
         val = bitfield if isinstance(bitfield, int) else get_upper(bitfield)
-        if not val < limit:
+        if val >= limit:
             raise RuntimeError(
                 f"Invalid Bitfield Range!: Type {type}, Range: {bitfield}"
             )
@@ -82,9 +81,9 @@ def check_incoming_packages(packages: dict) -> None:
                     name, field = unpack(item)
                     if "fields" in field:
                         logging.info(f"Processing Field: {name}")
-                        type = field["type"]
+                        type_str = field["type"]
                         bitfields = field["fields"]
-                        check_bitfield_range(type, bitfields)
+                        check_bitfield_range(type_str, bitfields)
             else:  # skip empty messages
                 continue
 
@@ -113,6 +112,10 @@ def validate_bitfields(
 
 
 def validate_fields(filename: str, previous_fields: dict, current_fields: dict) -> None:
+    if len(previous_fields) != len(current_fields):
+        raise RuntimeError(
+            "Breaking Message Mutation Detected!\n" "Number of fields has changed!\n"
+        )
     for previous, current in zip(previous_fields, current_fields):
         previous_key, previous_value = unpack(previous)
         current_key, current_value = unpack(current)
@@ -146,7 +149,6 @@ def validate_id(
     key: str,
     previous: dict,
     current: dict,
-    previous_definitions: dict,
     current_definitions: dict,
 ) -> None:
     if is_message(key):
@@ -167,14 +169,37 @@ def validate_id(
                 )
 
 
-def validate_definitions(
+def map_by_id(definitions: dict) -> dict:
+    """Takes a dictionary of message definitions (indexed by message name) and
+    transforms them to be indexed by message ID instead."""
+    new_definitions = {}
+    for (key, value) in definitions.items():
+        if not is_message(key):
+            continue
+        msg_id = value["id"]
+        new_definitions[msg_id] = value
+        new_definitions[msg_id]["name"] = key
+    return new_definitions
+
+
+def filter_subtypes(definitions: dict) -> dict:
+    """Takes a dictionary of message definitions (indexed by message name) and
+    filters in only subtype definitions."""
+    new_definitions = {}
+    for (key, value) in definitions.items():
+        if not is_message(key):
+            new_definitions[key] = value
+    return new_definitions
+
+
+def validate_subtypes(
     filename: str, previous_definitions: dict, current_definitions: dict
 ) -> None:
-    for key in previous_definitions.keys():
-        logging.info(f"Processing Definition: {key}")
-        previous = previous_definitions[key]
+    previous_definitions = filter_subtypes(previous_definitions)
+    current_definitions = filter_subtypes(current_definitions)
+    for (key, previous) in previous_definitions.items():
         current = current_definitions[key]
-        validate_id(key, previous, current, previous_definitions, current_definitions)
+        logging.info(f"Processing Definition: {key}")
         # bail if message has no fields
         # assumes adding fields to an empty message is ok.
         if "fields" not in previous:
@@ -184,15 +209,43 @@ def validate_definitions(
         validate_fields(filename, previous_fields, current_fields)
 
 
+def validate_messages(
+    filename: str, previous_definitions: dict, current_definitions: dict
+) -> None:
+    previous_definitions = map_by_id(previous_definitions)
+    current_definitions = map_by_id(current_definitions)
+    for (msg_id, previous) in previous_definitions.items():
+        current = current_definitions[msg_id]
+        previous_name = previous["name"]
+        current_name = current_definitions[msg_id]["name"]
+        logging.info(
+            f"Processing Definition: {msg_id} (current: {current_name}, previous: {previous_name})"
+        )
+        validate_id(previous_name, previous, current, current_definitions)
+        # bail if message has no fields
+        # assumes adding fields to an empty message is ok.
+        if "fields" not in previous:
+            continue
+        previous_fields = previous["fields"]
+        current_fields = current["fields"]
+        validate_fields(filename, previous_fields, current_fields)
+
+
+def validate_definitions(
+    filename: str, previous_definitions: dict, current_definitions: dict
+) -> None:
+    validate_subtypes(filename, previous_definitions, current_definitions)
+    validate_messages(filename, previous_definitions, current_definitions)
+
+
 def validate(previous: str, current: str) -> None:
     previous_packages = parse_packages(previous)
     current_packages = parse_packages(current)
     check_incoming_packages(current_packages)
-    for previous_package in previous_packages.keys():
+    for (previous_package, previous_def) in previous_packages.items():
         logging.info(f"Processing Package: {previous_package}")
         check_package_exists(previous_package, current_packages)
         filename = PACKAGES[previous_package]
-        previous_def = previous_packages[previous_package]
         current_def = current_packages[previous_package]
         validate_definitions(filename, previous_def, current_def)
 
