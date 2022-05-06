@@ -5,14 +5,57 @@ tests:
 
   - msg:
       fields:
-        stub: [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,39,232,3,244,1,100,200,150,100,2,5,10,16,0,17,18,19,20,21,6,10,22,0,23,24,25,26,27]
-      c_decoded_fields:
-        n_stub: 43
+        header:
+          time:
+            tow: 180
+            wn: 3
+          num_msgs: 1
+          seq_num: 1
+          update_interval: 10
+          sol_id: 0
+        ssr_iod_atmo: 15
+        tile_set_id: 1
+        tile_id: 10
+        tropo_qi: 39
+        grid_point_id: 1000
+        tropo_delay_correction:
+          hydro: 500
+          wet: 100
+          stddev: 200
+        tropo_bound_mu: 150
+        tropo_bound_sig: 100
+        n_sats: 2
+        stec_sat_list:
+        - stec_residual:
+            sv_id:
+              satId: 5
+              constellation: 10
+            residual: 16
+            stddev: 17
+          stec_bound_mu: 18
+          stec_bound_sig: 19
+          stec_bound_mu_dot: 20
+          stec_bound_sig_dot: 21
+        - stec_residual:
+            sv_id:
+              satId: 6
+              constellation: 10
+            residual: 22
+            stddev: 23
+          stec_bound_mu: 24
+          stec_bound_sig: 25
+          stec_bound_mu_dot: 26
+          stec_bound_sig_dot: 27
       module: sbp.ssr
       name: MsgSsrGriddedCorrectionBounds
     msg_type: '1534'
-    raw_json: '{"stub": [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,39,232,3,244,1,100,200,150,100,2,5,10,16,0,17,18,19,20,21,6,10,22,0,23,24,25,26,27],
-    "preamble": 85, "msg_type": 1534, "sender": 66, "length": 43,
+    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0},
+    "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction":
+    {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_bound_mu": 150, "tropo_bound_sig": 100, "n_sats": 2, "stec_sat_list":
+    [{"stec_residual": {"sv_id": {"satId": 5, "constellation": 10}, "residual": 16, "stddev": 17}, "stec_bound_mu": 18,
+    "stec_bound_sig": 19, "stec_bound_mu_dot": 20, "stec_bound_sig_dot": 21}, {"stec_residual": {"sv_id": {"satId": 6,
+    "constellation": 10}, "residual": 22, "stddev": 23}, "stec_bound_mu": 24, "stec_bound_sig": 25, "stec_bound_mu_dot": 26,
+    "stec_bound_sig_dot": 27}], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 43,
     "payload": "tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZkAgUKEAAREhMUFQYKFgAXGBkaGw==", "crc": 37232}'
     raw_packet: Vf4FQgArtAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZkAgUKEAAREhMUFQYKFgAXGBkaG3CR
     sbp:

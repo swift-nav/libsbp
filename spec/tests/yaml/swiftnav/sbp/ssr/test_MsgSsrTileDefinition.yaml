@@ -5,13 +5,21 @@ tests:
 
   - msg:
       fields:
-        stub: [31,0,1,0,2,0,4,0,8,0,16,0,32,0,64,0,128,210,2,150,73,0,0,0,0]
-      c_decoded_fields:
-        n_stub: 25
+        ssr_sol_id: 31
+        tile_set_id: 256
+        tile_id: 512
+        corner_nw_lat: 1024
+        corner_nw_lon: 2048
+        spacing_lat: 4096
+        spacing_lon: 8192
+        rows: 16384
+        cols: 32768
+        bitmask: 1234567890
       module: sbp.ssr
       name: MsgSsrTileDefinition
     msg_type: '1527'
-    raw_json: '{"stub": [31,0,1,0,2,0,4,0,8,0,16,0,32,0,64,0,128,210,2,150,73,0,0,0,0], "preamble": 85,
+    raw_json: '{"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048,
+    "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85,
     "msg_type": 1527, "sender": 66, "length": 25, "payload": "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==", "crc": 18390}'
     raw_packet: VfcFQgAZHwABAAIABAAIABAAIABAAIDSApZJAAAAANZH
     sbp:
