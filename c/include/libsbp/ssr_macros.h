@@ -560,4 +560,17 @@
  */
 #define SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_ENCODED_OVERHEAD 13u
 
+/**
+ * Encoded length of sbp_orbit_clock_bound_degradation_t (V4 API) and
+ * orbit_clock_bound_degradation_t (legacy API)
+ */
+#define SBP_ORBIT_CLOCK_BOUND_DEGRADATION_ENCODED_LEN 8u
+
+#define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION 0x05DF
+/**
+ * Encoded length of sbp_msg_ssr_orbit_clock_bounds_degradation_t (V4 API) and
+ * msg_ssr_orbit_clock_bounds_degradation_t (legacy API)
+ */
+#define SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION_ENCODED_LEN 28u
+
 #endif /* LIBSBP_SSR_MACROS_H */
