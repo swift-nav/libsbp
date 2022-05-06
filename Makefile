@@ -497,7 +497,7 @@ java-examples:
 	$(call announce-end,"Finished building fat jar")
 
 spec-validator-fmt:
-	black scripts/spec_validator.py
+	python -m black scripts/spec_validator.py
 
 spec-validator-test:
 	python -m pylint --disable=C0116,W1203 scripts/spec_validator.py
