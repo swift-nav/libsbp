@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -143,6 +143,7 @@
 //   const msgSsrGriddedCorrectionBounds = Convert.toMsgSsrGriddedCorrectionBounds(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrOrbitClockBounds = Convert.toMsgSsrOrbitClockBounds(json);
+//   const msgSsrOrbitClockBoundsDegradation = Convert.toMsgSsrOrbitClockBoundsDegradation(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
@@ -177,6 +178,7 @@
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const odoInputType = Convert.toOdoInputType(json);
 //   const orbitClockBound = Convert.toOrbitClockBound(json);
+//   const orbitClockBoundDegradation = Convert.toOrbitClockBoundDegradation(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
@@ -2085,6 +2087,28 @@ export interface OrbitClockBound {
     sat_id:               number;
 }
 
+export interface MsgSsrOrbitClockBoundsDegradation {
+    const_id:                       number;
+    header:                         BoundsHeader;
+    orbit_clock_bounds_degradation: OrbitClockBoundDegradation;
+    sat_bitmask:                    number;
+    ssr_iod:                        number;
+}
+
+/**
+ * Orbit and clock bound degradation.
+ */
+export interface OrbitClockBoundDegradation {
+    clock_bound_mu_dot:       number;
+    clock_bound_sig_dot:      number;
+    orb_along_bound_mu_dot:   number;
+    orb_along_bound_sig_dot:  number;
+    orb_cross_bound_mu_dot:   number;
+    orb_cross_bound_sig_dot:  number;
+    orb_radial_bound_mu_dot:  number;
+    orb_radial_bound_sig_dot: number;
+}
+
 /**
  * The precise phase biases message contains the biases to be added to the carrier phase of
  * the corresponding signal to get corrected carrier phase measurement, as well as the
@@ -3774,6 +3798,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBounds")), null, 2);
     }
 
+    public static toMsgSsrOrbitClockBoundsDegradation(json: string): MsgSsrOrbitClockBoundsDegradation {
+        return cast(JSON.parse(json), r("MsgSsrOrbitClockBoundsDegradation"));
+    }
+
+    public static msgSsrOrbitClockBoundsDegradationToJson(value: MsgSsrOrbitClockBoundsDegradation): string {
+        return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBoundsDegradation")), null, 2);
+    }
+
     public static toMsgSsrPhaseBiases(json: string): MsgSsrPhaseBiases {
         return cast(JSON.parse(json), r("MsgSsrPhaseBiases"));
     }
@@ -4044,6 +4076,14 @@ export class Convert {
 
     public static orbitClockBoundToJson(value: OrbitClockBound): string {
         return JSON.stringify(uncast(value, r("OrbitClockBound")), null, 2);
+    }
+
+    public static toOrbitClockBoundDegradation(json: string): OrbitClockBoundDegradation {
+        return cast(JSON.parse(json), r("OrbitClockBoundDegradation"));
+    }
+
+    public static orbitClockBoundDegradationToJson(value: OrbitClockBoundDegradation): string {
+        return JSON.stringify(uncast(value, r("OrbitClockBoundDegradation")), null, 2);
     }
 
     public static toPackedObsContent(json: string): PackedObsContent {
@@ -5356,6 +5396,23 @@ const typeMap: any = {
         { json: "orb_radial_bound_mu", js: "orb_radial_bound_mu", typ: 0 },
         { json: "orb_radial_bound_sig", js: "orb_radial_bound_sig", typ: 0 },
         { json: "sat_id", js: "sat_id", typ: 0 },
+    ], "any"),
+    "MsgSsrOrbitClockBoundsDegradation": o([
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "orbit_clock_bounds_degradation", js: "orbit_clock_bounds_degradation", typ: r("OrbitClockBoundDegradation") },
+        { json: "sat_bitmask", js: "sat_bitmask", typ: 0 },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "OrbitClockBoundDegradation": o([
+        { json: "clock_bound_mu_dot", js: "clock_bound_mu_dot", typ: 0 },
+        { json: "clock_bound_sig_dot", js: "clock_bound_sig_dot", typ: 0 },
+        { json: "orb_along_bound_mu_dot", js: "orb_along_bound_mu_dot", typ: 0 },
+        { json: "orb_along_bound_sig_dot", js: "orb_along_bound_sig_dot", typ: 0 },
+        { json: "orb_cross_bound_mu_dot", js: "orb_cross_bound_mu_dot", typ: 0 },
+        { json: "orb_cross_bound_sig_dot", js: "orb_cross_bound_sig_dot", typ: 0 },
+        { json: "orb_radial_bound_mu_dot", js: "orb_radial_bound_mu_dot", typ: 0 },
+        { json: "orb_radial_bound_sig_dot", js: "orb_radial_bound_sig_dot", typ: 0 },
     ], "any"),
     "MsgSsrPhaseBiases": o([
         { json: "biases", js: "biases", typ: a(r("PhaseBiasesContent")) },

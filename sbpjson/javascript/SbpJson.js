@@ -143,6 +143,7 @@
 //   const msgSsrGriddedCorrectionBounds = Convert.toMsgSsrGriddedCorrectionBounds(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrOrbitClockBounds = Convert.toMsgSsrOrbitClockBounds(json);
+//   const msgSsrOrbitClockBoundsDegradation = Convert.toMsgSsrOrbitClockBoundsDegradation(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrSatelliteApc = Convert.toMsgSsrSatelliteApc(json);
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
@@ -177,6 +178,7 @@
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const odoInputType = Convert.toOdoInputType(json);
 //   const orbitClockBound = Convert.toOrbitClockBound(json);
+//   const orbitClockBoundDegradation = Convert.toOrbitClockBoundDegradation(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
@@ -1331,6 +1333,14 @@ function msgSsrOrbitClockBoundsToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBounds")), null, 2);
 }
 
+function toMsgSsrOrbitClockBoundsDegradation(json) {
+    return cast(JSON.parse(json), r("MsgSsrOrbitClockBoundsDegradation"));
+}
+
+function msgSsrOrbitClockBoundsDegradationToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrOrbitClockBoundsDegradation")), null, 2);
+}
+
 function toMsgSsrPhaseBiases(json) {
     return cast(JSON.parse(json), r("MsgSsrPhaseBiases"));
 }
@@ -1601,6 +1611,14 @@ function toOrbitClockBound(json) {
 
 function orbitClockBoundToJson(value) {
     return JSON.stringify(uncast(value, r("OrbitClockBound")), null, 2);
+}
+
+function toOrbitClockBoundDegradation(json) {
+    return cast(JSON.parse(json), r("OrbitClockBoundDegradation"));
+}
+
+function orbitClockBoundDegradationToJson(value) {
+    return JSON.stringify(uncast(value, r("OrbitClockBoundDegradation")), null, 2);
 }
 
 function toPackedObsContent(json) {
@@ -2913,6 +2931,23 @@ const typeMap = {
         { json: "orb_radial_bound_sig", js: "orb_radial_bound_sig", typ: 0 },
         { json: "sat_id", js: "sat_id", typ: 0 },
     ], "any"),
+    "MsgSsrOrbitClockBoundsDegradation": o([
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "orbit_clock_bounds_degradation", js: "orbit_clock_bounds_degradation", typ: r("OrbitClockBoundDegradation") },
+        { json: "sat_bitmask", js: "sat_bitmask", typ: 0 },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "OrbitClockBoundDegradation": o([
+        { json: "clock_bound_mu_dot", js: "clock_bound_mu_dot", typ: 0 },
+        { json: "clock_bound_sig_dot", js: "clock_bound_sig_dot", typ: 0 },
+        { json: "orb_along_bound_mu_dot", js: "orb_along_bound_mu_dot", typ: 0 },
+        { json: "orb_along_bound_sig_dot", js: "orb_along_bound_sig_dot", typ: 0 },
+        { json: "orb_cross_bound_mu_dot", js: "orb_cross_bound_mu_dot", typ: 0 },
+        { json: "orb_cross_bound_sig_dot", js: "orb_cross_bound_sig_dot", typ: 0 },
+        { json: "orb_radial_bound_mu_dot", js: "orb_radial_bound_mu_dot", typ: 0 },
+        { json: "orb_radial_bound_sig_dot", js: "orb_radial_bound_sig_dot", typ: 0 },
+    ], "any"),
     "MsgSsrPhaseBiases": o([
         { json: "biases", js: "biases", typ: a(r("PhaseBiasesContent")) },
         { json: "dispersive_bias", js: "dispersive_bias", typ: 0 },
@@ -3505,6 +3540,8 @@ module.exports = {
     "toMsgSsrOrbitClock": toMsgSsrOrbitClock,
     "msgSsrOrbitClockBoundsToJson": msgSsrOrbitClockBoundsToJson,
     "toMsgSsrOrbitClockBounds": toMsgSsrOrbitClockBounds,
+    "msgSsrOrbitClockBoundsDegradationToJson": msgSsrOrbitClockBoundsDegradationToJson,
+    "toMsgSsrOrbitClockBoundsDegradation": toMsgSsrOrbitClockBoundsDegradation,
     "msgSsrPhaseBiasesToJson": msgSsrPhaseBiasesToJson,
     "toMsgSsrPhaseBiases": toMsgSsrPhaseBiases,
     "msgSsrSatelliteApcToJson": msgSsrSatelliteApcToJson,
@@ -3573,6 +3610,8 @@ module.exports = {
     "toOdoInputType": toOdoInputType,
     "orbitClockBoundToJson": orbitClockBoundToJson,
     "toOrbitClockBound": toOrbitClockBound,
+    "orbitClockBoundDegradationToJson": orbitClockBoundDegradationToJson,
+    "toOrbitClockBoundDegradation": toOrbitClockBoundDegradation,
     "packedObsContentToJson": packedObsContentToJson,
     "toPackedObsContent": toPackedObsContent,
     "packedOsrContentToJson": packedOsrContentToJson,

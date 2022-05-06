@@ -347,3 +347,30 @@ message MsgSsrCodePhaseBiasesBounds {
     uint32 n_sats_signals = 4;
     repeated CodePhaseBiasesSatSig satellites_signals = 5;
 }
+
+/** None
+ *
+ * Orbit and clock bound degradation.
+ */
+message OrbitClockBoundDegradation {
+    uint32 orb_radial_bound_mu_dot = 1;
+    uint32 orb_along_bound_mu_dot = 2;
+    uint32 orb_cross_bound_mu_dot = 3;
+    uint32 orb_radial_bound_sig_dot = 4;
+    uint32 orb_along_bound_sig_dot = 5;
+    uint32 orb_cross_bound_sig_dot = 6;
+    uint32 clock_bound_mu_dot = 7;
+    uint32 clock_bound_sig_dot = 8;
+}
+
+/** Combined Orbit and Clock Bound Degradation Parameter
+ *
+None
+ */
+message MsgSsrOrbitClockBoundsDegradation {
+    BoundsHeader header = 1;
+    uint32 ssr_iod = 2;
+    uint32 const_id = 3;
+    uint64 sat_bitmask = 4;
+    OrbitClockBoundDegradation orbit_clock_bounds_degradation = 5;
+}

@@ -1486,6 +1486,98 @@ MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['const_id', 'writeUInt8', 
 MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['n_sats_signals', 'writeUInt8', 1]);
 MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['satellites_signals', 'array', CodePhaseBiasesSatSig.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats_signals']);
 
+/**
+ * SBP class for message fragment OrbitClockBoundDegradation
+ *
+ * Orbit and clock bound degradation.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field orb_radial_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Radial First derivative degradation parameter (range 0-0.255)
+ * @field orb_along_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Along-Track First derivative degradation parameter (range
+ *   0-0.255)
+ * @field orb_cross_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Cross-Track First derivative degradation parameter (range
+ *   0-0.255)
+ * @field orb_radial_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Radial First derivative degradation parameter
+ *   (range 0-0.255)
+ * @field orb_along_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Along-Track First derivative degradation
+ *   parameter (range 0-0.255)
+ * @field orb_cross_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Cross-Track First derivative degradation
+ *   parameter (range 0-0.255)
+ * @field clock_bound_mu_dot number (unsigned 8-bit int, 1 byte) Clock Bound Mean First derivative degradation parameter (range 0-0.255)
+ * @field clock_bound_sig_dot number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation First derivative degradation parameter (range
+ *   0-0.255)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var OrbitClockBoundDegradation = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "OrbitClockBoundDegradation";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+OrbitClockBoundDegradation.prototype = Object.create(SBP.prototype);
+OrbitClockBoundDegradation.prototype.messageType = "OrbitClockBoundDegradation";
+OrbitClockBoundDegradation.prototype.constructor = OrbitClockBoundDegradation;
+OrbitClockBoundDegradation.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('orb_radial_bound_mu_dot')
+  .uint8('orb_along_bound_mu_dot')
+  .uint8('orb_cross_bound_mu_dot')
+  .uint8('orb_radial_bound_sig_dot')
+  .uint8('orb_along_bound_sig_dot')
+  .uint8('orb_cross_bound_sig_dot')
+  .uint8('clock_bound_mu_dot')
+  .uint8('clock_bound_sig_dot');
+OrbitClockBoundDegradation.prototype.fieldSpec = [];
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_radial_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_along_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_cross_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_radial_bound_sig_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_along_bound_sig_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_cross_bound_sig_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['clock_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['clock_bound_sig_dot', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION (0x05DF).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header BoundsHeader Header of a bounds message.
+ * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound degradation parameter.
+ * @field const_id number (unsigned 8-bit int, 1 byte) Constellation ID to which the SVs belong.
+ * @field sat_bitmask number (unsigned 64-bit int, 8 bytes) Satellite Bit Mask. Put 1 for each satellite where the following degradation
+ *   parameters are applicable, 0 otherwise.
+ * @field orbit_clock_bounds_degradation OrbitClockBoundDegradation Orbit and Clock Bounds Degradation Parameters
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrOrbitClockBoundsDegradation = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrOrbitClockBoundsDegradation.prototype = Object.create(SBP.prototype);
+MsgSsrOrbitClockBoundsDegradation.prototype.messageType = "MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION";
+MsgSsrOrbitClockBoundsDegradation.prototype.msg_type = 0x05DF;
+MsgSsrOrbitClockBoundsDegradation.prototype.constructor = MsgSsrOrbitClockBoundsDegradation;
+MsgSsrOrbitClockBoundsDegradation.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod')
+  .uint8('const_id')
+  .uint64('sat_bitmask')
+  .nest('orbit_clock_bounds_degradation', { type: OrbitClockBoundDegradation.prototype.parser });
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec = [];
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['const_id', 'writeUInt8', 1]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['sat_bitmask', 'writeUInt64LE', 8]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['orbit_clock_bounds_degradation', OrbitClockBoundDegradation.prototype.fieldSpec]);
+
 module.exports = {
   CodeBiasesContent: CodeBiasesContent,
   PhaseBiasesContent: PhaseBiasesContent,
@@ -1538,4 +1630,7 @@ module.exports = {
   CodePhaseBiasesSatSig: CodePhaseBiasesSatSig,
   0x05EC: MsgSsrCodePhaseBiasesBounds,
   MsgSsrCodePhaseBiasesBounds: MsgSsrCodePhaseBiasesBounds,
+  OrbitClockBoundDegradation: OrbitClockBoundDegradation,
+  0x05DF: MsgSsrOrbitClockBoundsDegradation,
+  MsgSsrOrbitClockBoundsDegradation: MsgSsrOrbitClockBoundsDegradation,
 }

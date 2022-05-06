@@ -221,6 +221,8 @@ typedef union {
   sbp_msg_ssr_gridded_correction_no_std_dep_a_t
       ssr_gridded_correction_no_std_dep_a;
   sbp_msg_ssr_gridded_correction_t ssr_gridded_correction;
+  sbp_msg_ssr_orbit_clock_bounds_degradation_t
+      ssr_orbit_clock_bounds_degradation;
   sbp_msg_ssr_orbit_clock_bounds_t ssr_orbit_clock_bounds;
   sbp_msg_ssr_orbit_clock_dep_a_t ssr_orbit_clock_dep_a;
   sbp_msg_ssr_orbit_clock_t ssr_orbit_clock;
@@ -729,6 +731,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_encode(
           buf, len, n_written, &msg->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_encode(
+          buf, len, n_written, &msg->ssr_orbit_clock_bounds_degradation);
     case SbpMsgSsrOrbitClockBounds:
       return sbp_msg_ssr_orbit_clock_bounds_encode(
           buf, len, n_written, &msg->ssr_orbit_clock_bounds);
@@ -1314,6 +1319,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_decode(
           buf, len, n_read, &msg->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_decode(
+          buf, len, n_read, &msg->ssr_orbit_clock_bounds_degradation);
     case SbpMsgSsrOrbitClockBounds:
       return sbp_msg_ssr_orbit_clock_bounds_decode(
           buf, len, n_read, &msg->ssr_orbit_clock_bounds);
@@ -1812,6 +1820,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_encoded_len(
           &msg->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_encoded_len(
+          &msg->ssr_orbit_clock_bounds_degradation);
     case SbpMsgSsrOrbitClockBounds:
       return sbp_msg_ssr_orbit_clock_bounds_encoded_len(
           &msg->ssr_orbit_clock_bounds);
@@ -2347,6 +2358,10 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrGriddedCorrection:
       return sbp_msg_ssr_gridded_correction_cmp(&a->ssr_gridded_correction,
                                                 &b->ssr_gridded_correction);
+    case SbpMsgSsrOrbitClockBoundsDegradation:
+      return sbp_msg_ssr_orbit_clock_bounds_degradation_cmp(
+          &a->ssr_orbit_clock_bounds_degradation,
+          &b->ssr_orbit_clock_bounds_degradation);
     case SbpMsgSsrOrbitClockBounds:
       return sbp_msg_ssr_orbit_clock_bounds_cmp(&a->ssr_orbit_clock_bounds,
                                                 &b->ssr_orbit_clock_bounds);

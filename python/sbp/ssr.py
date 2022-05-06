@@ -915,6 +915,79 @@ class CodePhaseBiasesSatSig(object):
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
+class OrbitClockBoundDegradation(object):
+  """OrbitClockBoundDegradation.
+  
+  Orbit and clock bound degradation.
+  
+  Parameters
+  ----------
+  orb_radial_bound_mu_dot : int
+    Orbit Bound Mean Radial First derivative degradation parameter (range
+    0-0.255)
+  orb_along_bound_mu_dot : int
+    Orbit Bound Mean Along-Track First derivative degradation parameter (range
+    0-0.255)
+  orb_cross_bound_mu_dot : int
+    Orbit Bound Mean Cross-Track First derivative degradation parameter (range
+    0-0.255)
+  orb_radial_bound_sig_dot : int
+    Orbit Bound Standard Deviation Radial First derivative degradation
+    parameter (range 0-0.255)
+  orb_along_bound_sig_dot : int
+    Orbit Bound Standard Deviation Along-Track First derivative degradation
+    parameter (range 0-0.255)
+  orb_cross_bound_sig_dot : int
+    Orbit Bound Standard Deviation Cross-Track First derivative degradation
+    parameter (range 0-0.255)
+  clock_bound_mu_dot : int
+    Clock Bound Mean First derivative degradation parameter (range 0-0.255)
+  clock_bound_sig_dot : int
+    Clock Bound Standard Deviation First derivative degradation parameter
+    (range 0-0.255)
+
+  """
+  _parser = construct.Struct(
+                     'orb_radial_bound_mu_dot' / construct.Int8ul,
+                     'orb_along_bound_mu_dot' / construct.Int8ul,
+                     'orb_cross_bound_mu_dot' / construct.Int8ul,
+                     'orb_radial_bound_sig_dot' / construct.Int8ul,
+                     'orb_along_bound_sig_dot' / construct.Int8ul,
+                     'orb_cross_bound_sig_dot' / construct.Int8ul,
+                     'clock_bound_mu_dot' / construct.Int8ul,
+                     'clock_bound_sig_dot' / construct.Int8ul,)
+  __slots__ = [
+               'orb_radial_bound_mu_dot',
+               'orb_along_bound_mu_dot',
+               'orb_cross_bound_mu_dot',
+               'orb_radial_bound_sig_dot',
+               'orb_along_bound_sig_dot',
+               'orb_cross_bound_sig_dot',
+               'clock_bound_mu_dot',
+               'clock_bound_sig_dot',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.orb_radial_bound_mu_dot = kwargs.pop('orb_radial_bound_mu_dot')
+      self.orb_along_bound_mu_dot = kwargs.pop('orb_along_bound_mu_dot')
+      self.orb_cross_bound_mu_dot = kwargs.pop('orb_cross_bound_mu_dot')
+      self.orb_radial_bound_sig_dot = kwargs.pop('orb_radial_bound_sig_dot')
+      self.orb_along_bound_sig_dot = kwargs.pop('orb_along_bound_sig_dot')
+      self.orb_cross_bound_sig_dot = kwargs.pop('orb_cross_bound_sig_dot')
+      self.clock_bound_mu_dot = kwargs.pop('clock_bound_mu_dot')
+      self.clock_bound_sig_dot = kwargs.pop('clock_bound_sig_dot')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = OrbitClockBoundDegradation._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
   """SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
@@ -2981,6 +3054,115 @@ class MsgSsrCodePhaseBiasesBounds(SBP):
     d.update(j)
     return d
     
+SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION = 0x05DF
+class MsgSsrOrbitClockBoundsDegradation(SBP):
+  """SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION (0x05DF).
+
+  You can have MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod : int
+    IOD of the SSR bound degradation parameter.
+  const_id : int
+    Constellation ID to which the SVs belong.
+  sat_bitmask : int
+    Satellite Bit Mask. Put 1 for each satellite where the following
+    degradation parameters are applicable, 0 otherwise.
+  orbit_clock_bounds_degradation : OrbitClockBoundDegradation
+    Orbit and Clock Bounds Degradation Parameters
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod' / construct.Int8ul,
+                   'const_id' / construct.Int8ul,
+                   'sat_bitmask' / construct.Int64ul,
+                   'orbit_clock_bounds_degradation' / OrbitClockBoundDegradation._parser,)
+  __slots__ = [
+               'header',
+               'ssr_iod',
+               'const_id',
+               'sat_bitmask',
+               'orbit_clock_bounds_degradation',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrOrbitClockBoundsDegradation,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrOrbitClockBoundsDegradation, self).__init__()
+      self.msg_type = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.ssr_iod = kwargs.pop('ssr_iod')
+      self.const_id = kwargs.pop('const_id')
+      self.sat_bitmask = kwargs.pop('sat_bitmask')
+      self.orbit_clock_bounds_degradation = kwargs.pop('orbit_clock_bounds_degradation')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrOrbitClockBoundsDegradation.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrOrbitClockBoundsDegradation(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrOrbitClockBoundsDegradation._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrOrbitClockBoundsDegradation._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrOrbitClockBoundsDegradation._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrOrbitClockBoundsDegradation, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,
@@ -3000,4 +3182,5 @@ msg_classes = {
   0x05F5: MsgSsrGridDefinitionDepA,
   0x05DE: MsgSsrOrbitClockBounds,
   0x05EC: MsgSsrCodePhaseBiasesBounds,
+  0x05DF: MsgSsrOrbitClockBoundsDegradation,
 }

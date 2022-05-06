@@ -32,6 +32,7 @@
 #include <libsbp/v4/ssr/MSG_SSR_GRID_DEFINITION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK.h>
 #include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_BOUNDS.h>
+#include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION.h>
 #include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_PHASE_BIASES.h>
 #include <libsbp/v4/ssr/MSG_SSR_SATELLITE_APC.h>
@@ -41,6 +42,7 @@
 #include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION.h>
 #include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION_DEP.h>
 #include <libsbp/v4/ssr/OrbitClockBound.h>
+#include <libsbp/v4/ssr/OrbitClockBoundDegradation.h>
 #include <libsbp/v4/ssr/PhaseBiasesContent.h>
 #include <libsbp/v4/ssr/STECHeader.h>
 #include <libsbp/v4/ssr/STECHeaderDepA.h>

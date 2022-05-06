@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -150,6 +150,7 @@
 --     decodeString msgSsrGriddedCorrectionBounds myJsonString
 --     decodeString msgSsrOrbitClock myJsonString
 --     decodeString msgSsrOrbitClockBounds myJsonString
+--     decodeString msgSsrOrbitClockBoundsDegradation myJsonString
 --     decodeString msgSsrPhaseBiases myJsonString
 --     decodeString msgSsrSatelliteApc myJsonString
 --     decodeString msgSsrStecCorrection myJsonString
@@ -184,6 +185,7 @@
 --     decodeString observationHeader myJsonString
 --     decodeString odoInputType myJsonString
 --     decodeString orbitClockBound myJsonString
+--     decodeString orbitClockBoundDegradation myJsonString
 --     decodeString packedObsContent myJsonString
 --     decodeString packedOsrContent myJsonString
 --     decodeString period myJsonString
@@ -629,6 +631,9 @@ module SbpJson exposing
     , MsgSsrOrbitClockBounds
     , msgSsrOrbitClockBoundsToString
     , msgSsrOrbitClockBounds
+    , MsgSsrOrbitClockBoundsDegradation
+    , msgSsrOrbitClockBoundsDegradationToString
+    , msgSsrOrbitClockBoundsDegradation
     , MsgSsrPhaseBiases
     , msgSsrPhaseBiasesToString
     , msgSsrPhaseBiases
@@ -731,6 +736,9 @@ module SbpJson exposing
     , OrbitClockBound
     , orbitClockBoundToString
     , orbitClockBound
+    , OrbitClockBoundDegradation
+    , orbitClockBoundDegradationToString
+    , orbitClockBoundDegradation
     , PackedObsContent
     , packedObsContentToString
     , packedObsContent
@@ -2547,6 +2555,26 @@ type alias OrbitClockBound =
     , satID : Int
     }
 
+type alias MsgSsrOrbitClockBoundsDegradation =
+    { constID : Int
+    , header : BoundsHeader
+    , orbitClockBoundsDegradation : OrbitClockBoundDegradation
+    , satBitmask : Int
+    , ssrIod : Int
+    }
+
+{-| Orbit and clock bound degradation. -}
+type alias OrbitClockBoundDegradation =
+    { clockBoundMuDot : Int
+    , clockBoundSigDot : Int
+    , orbAlongBoundMuDot : Int
+    , orbAlongBoundSigDot : Int
+    , orbCrossBoundMuDot : Int
+    , orbCrossBoundSigDot : Int
+    , orbRadialBoundMuDot : Int
+    , orbRadialBoundSigDot : Int
+    }
+
 {-| The precise phase biases message contains the biases to be added to the carrier phase of
 the corresponding signal to get corrected carrier phase measurement, as well as the
 satellite yaw angle to be applied to compute the phase wind-up correction. It is
@@ -3511,6 +3539,9 @@ msgSsrOrbitClockToString r = Jenc.encode 0 (encodeMsgSsrOrbitClock r)
 msgSsrOrbitClockBoundsToString : MsgSsrOrbitClockBounds -> String
 msgSsrOrbitClockBoundsToString r = Jenc.encode 0 (encodeMsgSsrOrbitClockBounds r)
 
+msgSsrOrbitClockBoundsDegradationToString : MsgSsrOrbitClockBoundsDegradation -> String
+msgSsrOrbitClockBoundsDegradationToString r = Jenc.encode 0 (encodeMsgSsrOrbitClockBoundsDegradation r)
+
 msgSsrPhaseBiasesToString : MsgSsrPhaseBiases -> String
 msgSsrPhaseBiasesToString r = Jenc.encode 0 (encodeMsgSsrPhaseBiases r)
 
@@ -3615,6 +3646,9 @@ odoInputTypeToString r = Jenc.encode 0 (encodeOdoInputType r)
 
 orbitClockBoundToString : OrbitClockBound -> String
 orbitClockBoundToString r = Jenc.encode 0 (encodeOrbitClockBound r)
+
+orbitClockBoundDegradationToString : OrbitClockBoundDegradation -> String
+orbitClockBoundDegradationToString r = Jenc.encode 0 (encodeOrbitClockBoundDegradation r)
 
 packedObsContentToString : PackedObsContent -> String
 packedObsContentToString r = Jenc.encode 0 (encodePackedObsContent r)
@@ -6423,6 +6457,50 @@ encodeOrbitClockBound x =
         , ("orb_radial_bound_mu", Jenc.int x.orbRadialBoundMu)
         , ("orb_radial_bound_sig", Jenc.int x.orbRadialBoundSig)
         , ("sat_id", Jenc.int x.satID)
+        ]
+
+msgSsrOrbitClockBoundsDegradation : Jdec.Decoder MsgSsrOrbitClockBoundsDegradation
+msgSsrOrbitClockBoundsDegradation =
+    Jpipe.decode MsgSsrOrbitClockBoundsDegradation
+        |> Jpipe.required "const_id" Jdec.int
+        |> Jpipe.required "header" boundsHeader
+        |> Jpipe.required "orbit_clock_bounds_degradation" orbitClockBoundDegradation
+        |> Jpipe.required "sat_bitmask" Jdec.int
+        |> Jpipe.required "ssr_iod" Jdec.int
+
+encodeMsgSsrOrbitClockBoundsDegradation : MsgSsrOrbitClockBoundsDegradation -> Jenc.Value
+encodeMsgSsrOrbitClockBoundsDegradation x =
+    Jenc.object
+        [ ("const_id", Jenc.int x.constID)
+        , ("header", encodeBoundsHeader x.header)
+        , ("orbit_clock_bounds_degradation", encodeOrbitClockBoundDegradation x.orbitClockBoundsDegradation)
+        , ("sat_bitmask", Jenc.int x.satBitmask)
+        , ("ssr_iod", Jenc.int x.ssrIod)
+        ]
+
+orbitClockBoundDegradation : Jdec.Decoder OrbitClockBoundDegradation
+orbitClockBoundDegradation =
+    Jpipe.decode OrbitClockBoundDegradation
+        |> Jpipe.required "clock_bound_mu_dot" Jdec.int
+        |> Jpipe.required "clock_bound_sig_dot" Jdec.int
+        |> Jpipe.required "orb_along_bound_mu_dot" Jdec.int
+        |> Jpipe.required "orb_along_bound_sig_dot" Jdec.int
+        |> Jpipe.required "orb_cross_bound_mu_dot" Jdec.int
+        |> Jpipe.required "orb_cross_bound_sig_dot" Jdec.int
+        |> Jpipe.required "orb_radial_bound_mu_dot" Jdec.int
+        |> Jpipe.required "orb_radial_bound_sig_dot" Jdec.int
+
+encodeOrbitClockBoundDegradation : OrbitClockBoundDegradation -> Jenc.Value
+encodeOrbitClockBoundDegradation x =
+    Jenc.object
+        [ ("clock_bound_mu_dot", Jenc.int x.clockBoundMuDot)
+        , ("clock_bound_sig_dot", Jenc.int x.clockBoundSigDot)
+        , ("orb_along_bound_mu_dot", Jenc.int x.orbAlongBoundMuDot)
+        , ("orb_along_bound_sig_dot", Jenc.int x.orbAlongBoundSigDot)
+        , ("orb_cross_bound_mu_dot", Jenc.int x.orbCrossBoundMuDot)
+        , ("orb_cross_bound_sig_dot", Jenc.int x.orbCrossBoundSigDot)
+        , ("orb_radial_bound_mu_dot", Jenc.int x.orbRadialBoundMuDot)
+        , ("orb_radial_bound_sig_dot", Jenc.int x.orbRadialBoundSigDot)
         ]
 
 msgSsrPhaseBiases : Jdec.Decoder MsgSsrPhaseBiases
