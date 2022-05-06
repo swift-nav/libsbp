@@ -14,7 +14,7 @@ import yaml
 
 
 PACKAGES = {}
-DEP_MESSAGE_PATTERN = re.compile("^.*(_DEP)|(_DEP_[A-Z])$")
+DEP_MESSAGE_PATTERN = re.compile("^.*(_DEP|_DEP_[A-Z])$")
 
 
 def unpack(value: dict):
