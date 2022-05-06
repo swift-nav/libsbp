@@ -3,6 +3,7 @@ name: Test Message Validation
 on:
   pull_request:
     paths:
+      - "spec/validation/**"
       - "scripts/spec_validator.py"
 
 jobs:
