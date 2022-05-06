@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - staging
     tags:
       - "*"
   pull_request:
@@ -39,8 +40,8 @@ jobs:
       - name: Check generated tests are up to date
         run: |
           git add c/test/ rust/sbp/tests/
-          git diff --cached --name-only --exit-code
-          git diff --name-only --exit-code
+          git diff --cached --exit-code
+          git diff --exit-code
 
       - name: Generate html
         run: make html-python  # emits python/docs/build/html, not checked in

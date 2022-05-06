@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - staging
   pull_request:
     types: [opened, synchronize, reopened]
 name: SonarCloud

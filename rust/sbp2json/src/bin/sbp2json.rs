@@ -1,7 +1,7 @@
 use std::io;
 
+use clap::Parser;
 use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
-use structopt::StructOpt;
 
 use converters::{sbp2json, Result};
 
@@ -17,28 +17,28 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 /// Or combined with socat:
 ///
 ///     socat tcp:192.168.1.222:55555 - | sbp2json
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Parser)]
 #[structopt(name = "sbp2json", verbatim_doc_comment)]
 pub struct Options {
     /// Try to be compatible with the float formatting of the Haskell version of sbp2json
-    #[structopt(long)]
+    #[clap(long)]
     float_compat: bool,
 
     /// Print debugging messages to standard error
-    #[structopt(short = "d", long)]
+    #[clap(short = 'd', long)]
     debug: bool,
 
     /// Buffer output before flushing
-    #[structopt(short, long)]
+    #[clap(short, long)]
     buffered: bool,
 
     /// Stop on first error encountered
-    #[structopt(long)]
+    #[clap(long)]
     fatal_errors: bool,
 }
 
 fn main() -> Result<()> {
-    let options = Options::from_args();
+    let options = Options::parse();
 
     if options.debug {
         std::env::set_var("RUST_LOG", "debug");

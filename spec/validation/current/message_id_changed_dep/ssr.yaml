@@ -1,0 +1,66 @@
+# Copyright (C) 2018-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.ssr
+description: Precise State Space Representation (SSR) corrections format
+stable: False
+public: True
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+ - MSG_SSR_STEC_CORRECTION_DEP:
+    id: 0x05FB
+    short_desc: STEC correction polynomial coefficients
+    desc: >
+      The Slant Total Electron Content per space vehicle, given as polynomial
+      approximation for a given tile. This should be combined with the
+      MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
+      of the atmospheric delay.
+
+
+      It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+    replaced_by:
+      - MSG_SSR_STEC_CORRECTION
+    fields:
+        - header:
+            type: STECHeader
+            desc: Header of a STEC polynomial coefficient message.
+        - stec_sat_list:
+            type: array
+            fill: STECSatElement
+            desc: Array of STEC polynomial coefficients for each space vehicle.
+
+ - MSG_SSR_STEC_CORRECTION:
+     id: 0x05FD
+     short_desc: STEC correction polynomial coefficients
+     public: False
+     fields:
+       - header:
+           type: BoundsHeader
+           desc: Header of a STEC correction with bounds message.
+       - ssr_iod_atmo:
+           type: u8
+           desc: IOD of the SSR atmospheric correction
+       - tile_set_id:
+           type: u16
+           desc: Tile set ID
+       - tile_id:
+           type: u16
+           desc: Tile ID
+       - n_sats:
+           type: u8
+           desc: Number of satellites.
+       - stec_sat_list:
+           type: array
+           fill: STECSatElement
+           size_fn: n_sats
+           desc: Array of STEC polynomial coefficients for each space vehicle.
+

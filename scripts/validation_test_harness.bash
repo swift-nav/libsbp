@@ -14,6 +14,20 @@ else
         exit 1
 fi
 
+if ! python scripts/spec_validator.py spec/validation/previous/message_id_changed_dep_fail spec/validation/current/message_id_changed_dep_fail; then
+        echo "Check Message ID (Dep) Changed: PASS"
+else
+        echo "Check Message ID (Dep) Changed: FAIL"
+        exit 1
+fi
+
+if python scripts/spec_validator.py spec/validation/previous/message_id_changed_dep spec/validation/current/message_id_changed_dep; then
+        echo "Check Message ID (Dep) Changed: PASS"
+else
+        echo "Check Message ID (Dep) Changed: FAIL"
+        exit 1
+fi
+
 if ! python scripts/spec_validator.py spec/validation/previous/field_order_changed spec/validation/current/field_order_changed; then
         echo "Check Field Order Changed: PASS"
 else
@@ -28,7 +42,7 @@ else
         exit 1
 fi
 
-if python scripts/spec_validator.py spec/validation/previous/new_field_appended spec/validation/current/new_field_appended; then
+if ! python scripts/spec_validator.py spec/validation/previous/new_field_appended spec/validation/current/new_field_appended; then
         echo "Check New Field Appended: PASS"
 else
         echo "Check New Field Appended: FAIL"
