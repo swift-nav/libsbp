@@ -4,6 +4,7 @@ libsbp Development Procedures
 <!-- toc -->
 
 - [Adding and Testing New Messages](#adding-and-testing-new-messages)
+  * [Generating Missing Tests](#generating-missing-tests)
 - [Message Guidelines](#message-guidelines)
 - [Releasing New Versions of the Library](#releasing-new-versions-of-the-library)
   * [Using Docker](#using-docker)
@@ -60,6 +61,28 @@ process. This is likely to change in the future.
 7. If Swift's internal test tooling needs to be updated to use your
    new message, deploy the updated Python client first, and then the C
    client. We haven't quite decided on the details of this process.
+
+##  Generating missing tests
+
+Using `generator/missing.py` and `generator/json2test.py`, the yaml files 
+for test cases can be generated using either `missing.py` to listen via socket
+or using `json2test.py` to translate json input files into yaml directly
+
+Usage for `missing`:
+
+```shell
+python missing.py --host [HOST] --port [PORT]
+```
+
+* `missing.py` checks whether the message contains a test before writing one
+
+Usage for `json2test`
+
+```shell
+python json2test --input [PATH_TO_JSON_IN] --output [PATH_TO_YAML_OUT]
+```
+
+* can also provide message id with parameter `--msg-id [MESSAGE_ID]`
 
 # Message Guidelines
 

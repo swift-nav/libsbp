@@ -1,15 +1,4 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-package com.swiftnav.sbp.examples;
-
+package com.swiftnav.example;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.client.SBPFramer;
@@ -22,7 +11,7 @@ import jssc.SerialPortException;
 public class SerialLink {
     private SBPHandler handler;
     private SBPFramer framer;
-    private String[] fix_type = new String[8];
+    private final String[] fix_type = new String[8];
 
     public static void main(String[] args) {
         if (args.length == 1) {
@@ -56,18 +45,18 @@ public class SerialLink {
         System.exit(-1);
     }
 
-    SerialLink(String port) {
+    public SerialLink(String port) {
         this(port, SBPDriverJSSC.BAUDRATE_DEFAULT);
     }
 
-    SerialLink(String port, int baudrate) {
+    public SerialLink(String port, int baudrate) {
         populate_fix_type();
         try {
             framer = new SBPFramer(new SBPDriverJSSC(port, baudrate));
             handler = new SBPHandler(framer);
             handler.start();
         } catch (SerialPortException e) {
-            System.err.println("Failed to open serial port: " + e.toString());
+            System.err.println("Failed to open serial port: " + e);
             System.exit(-2);
         }
         for (SBPMessage msg : handler) {
@@ -90,18 +79,9 @@ public class SerialLink {
     public void llhHandler(SBPMessage msg_) {
         MsgPosLLH msg = (MsgPosLLH) msg_;
         int fix_type = msg.flags & 0x7;
-        System.out.printf(
-                "POSLLH message received -- fix_type: %s, tow [ms]: %d",
-                this.fix_type[fix_type], msg.tow);
+        System.out.printf("POSLLH message received -- fix_type: %s, tow [ms]: %d", this.fix_type[fix_type], msg.tow);
         if (fix_type != 0) {
-            System.out.printf(
-                    ", lat[deg]: %f, lon[deg]: %f, ellipsoid alt[m]: %f, horizontal accuracy[m]: %f, vertical_accuracy[m]: %f, n_sats: %d",
-                    msg.lat,
-                    msg.lon,
-                    msg.height,
-                    msg.h_accuracy / 1000.0,
-                    msg.v_accuracy / 1000.0,
-                    msg.n_sats);
+            System.out.printf(", lat[deg]: %f, lon[deg]: %f, ellipsoid alt[m]: %f, horizontal accuracy[m]: %f, vertical_accuracy[m]: %f, n_sats: %d", msg.lat, msg.lon, msg.height, msg.h_accuracy / 1000.0, msg.v_accuracy / 1000.0, msg.n_sats);
         }
         System.out.println();
     }

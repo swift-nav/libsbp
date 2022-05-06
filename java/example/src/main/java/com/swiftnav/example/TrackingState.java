@@ -1,15 +1,4 @@
-/* Copyright (C) 2015-2022 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-package com.swiftnav.sbp.examples;
-
+package com.swiftnav.example;
 
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.client.SBPFramer;
@@ -45,11 +34,11 @@ public class TrackingState {
         System.exit(-1);
     }
 
-    TrackingState(String port) {
+    public TrackingState(String port) {
         this(port, SBPDriverJSSC.BAUDRATE_DEFAULT);
     }
 
-    TrackingState(String port, int baudrate) {
+    public TrackingState(String port, int baudrate) {
         try {
             framer = new SBPFramer(new SBPDriverJSSC(port, baudrate));
             handler = new SBPHandler(framer);
@@ -80,15 +69,19 @@ public class TrackingState {
         MsgTrackingState msg = (MsgTrackingState) msg_;
 
         boolean tracking = false;
-        for (TrackingChannelState state : msg.states) if (state.cn0 != 0) tracking = true;
+        for (TrackingChannelState state : msg.states)
+            if (state.cn0 != 0) {
+                tracking = true;
+                break;
+            }
 
         if (!tracking) return;
 
         System.out.print("Tracking: ");
         for (TrackingChannelState state : msg.states) {
-            if (state.cn0 != 0)
-                System.out.printf(
-                        "sat=%d, code=%d, cn0=%.1f ", state.sid.sat, state.sid.code, state.cn0);
+            if (state.cn0 != 0) {
+                System.out.printf("sat=%d, code=%d, cn0=%.1f ", state.sid.sat, state.sid.code, state.cn0);
+            }
         }
         System.out.println();
     }
