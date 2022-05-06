@@ -1,0 +1,73 @@
+# Copyright (C) 2015-2021 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.observation
+description: Satellite observation messages from the device.
+             The SBP sender ID of 0 indicates remote observations
+             from a GNSS base station, correction network, or Skylark,
+             Swift's cloud GNSS correction product.
+stable: True
+public: True
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+
+ - MSG_BASE_POS_LLH:
+    id: 0x0045
+    short_desc: Base station position
+    desc: >
+      The base station position message is the position reported by
+      the base station itself. It is used for pseudo-absolute RTK
+      positioning, and is required to be a high-accuracy surveyed
+      location of the base station. Any error here will result in an
+      error in the pseudo-absolute position output.
+    fields:
+        - lat:
+            type: double 
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        - height:
+            type: double
+            units: m
+            desc: Height
+        - height_acc:
+            type: float
+            units: m
+
+
+ - MSG_BASE_POS_LLH_DEP:
+    id: 0x0044
+    short_desc: Base station position
+    desc: >
+      The base station position message is the position reported by
+      the base station itself. It is used for pseudo-absolute RTK
+      positioning, and is required to be a high-accuracy surveyed
+      location of the base station. Any error here will result in an
+      error in the pseudo-absolute position output.
+    fields:
+        - lat:
+            type: double
+            units: deg
+            desc: Latitude
+        - lon:
+            type: double
+            units: deg
+            desc: Longitude
+        # Should cause failure, field removed from existing message
+        #   (and id the same, but name changed)
+#        - height:
+#            type: double
+#            units: m
+#            desc: Height

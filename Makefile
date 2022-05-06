@@ -495,3 +495,12 @@ java-examples:
 	$(call announce-begin,"Building java example fat jar")
 	cd $(SWIFTNAV_ROOT)/java/example && gradle clean fatjar
 	$(call announce-end,"Finished building fat jar")
+
+spec-validator-fmt:
+	python -m black scripts/spec_validator.py
+
+spec-validator-test:
+	python -m pylint --disable=C0116,W1203 scripts/spec_validator.py
+	python -m mypy --install scripts/spec_validator.py
+	python -m black --check scripts/spec_validator.py
+	./scripts/validation_test_harness.bash 2>&1 | grep -E 'PASS|FAIL'
