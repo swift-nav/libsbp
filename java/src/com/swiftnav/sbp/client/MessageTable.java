@@ -185,6 +185,7 @@ import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
 import com.swiftnav.sbp.ssr.MsgSsrCodePhaseBiasesBounds;
 import com.swiftnav.sbp.ssr.MsgSsrGridDefinitionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
+import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionBounds;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionNoStdDepA;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
@@ -193,8 +194,10 @@ import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrSatelliteApc;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
+import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrTileDefinition;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDep;
 import com.swiftnav.sbp.system.MsgCsacTelemetry;
 import com.swiftnav.sbp.system.MsgCsacTelemetryLabels;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
@@ -566,10 +569,16 @@ final class MessageTable {
                 return new MsgSsrCodeBiases(msg);
             case MsgSsrPhaseBiases.TYPE:
                 return new MsgSsrPhaseBiases(msg);
+            case MsgSsrStecCorrectionDep.TYPE:
+                return new MsgSsrStecCorrectionDep(msg);
             case MsgSsrStecCorrection.TYPE:
                 return new MsgSsrStecCorrection(msg);
             case MsgSsrGriddedCorrection.TYPE:
                 return new MsgSsrGriddedCorrection(msg);
+            case MsgSsrGriddedCorrectionBounds.TYPE:
+                return new MsgSsrGriddedCorrectionBounds(msg);
+            case MsgSsrTileDefinitionDep.TYPE:
+                return new MsgSsrTileDefinitionDep(msg);
             case MsgSsrTileDefinition.TYPE:
                 return new MsgSsrTileDefinition(msg);
             case MsgSsrSatelliteApc.TYPE:

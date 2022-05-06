@@ -1,0 +1,31 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrTileDefinition
+generated_on: 2022-04-20 # manually generated
+package: sbp.ssr
+tests:
+
+  - msg:
+      fields:
+        ssr_sol_id: 31
+        tile_set_id: 256
+        tile_id: 512
+        corner_nw_lat: 1024
+        corner_nw_lon: 2048
+        spacing_lat: 4096
+        spacing_lon: 8192
+        rows: 16384
+        cols: 32768
+        bitmask: 1234567890
+      module: sbp.ssr
+      name: MsgSsrTileDefinition
+    msg_type: '1527'
+    raw_json: '{"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048,
+    "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85,
+    "msg_type": 1527, "sender": 66, "length": 25, "payload": "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==", "crc": 18390}'
+    raw_packet: VfcFQgAZHwABAAIABAAIABAAIABAAIDSApZJAAAAANZH
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x05F7'
+      sender: '0x0042'
+      length: 25
+      payload: HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==
+      crc: '0x47D6'

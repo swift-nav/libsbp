@@ -447,6 +447,111 @@ class STECResidual(object):
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
+class BoundsHeader(object):
+  """BoundsHeader.
+  
+  
+  Parameters
+  ----------
+  time : GPSTimeSec
+    GNSS reference time of the bound
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  update_interval : int
+    Update interval between consecutive bounds. Similar to RTCM DF391.
+  sol_id : int
+    SSR Solution ID.
+
+  """
+  _parser = construct.Struct(
+                     'time' / GPSTimeSec._parser,
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,
+                     'update_interval' / construct.Int8ul,
+                     'sol_id' / construct.Int8ul,)
+  __slots__ = [
+               'time',
+               'num_msgs',
+               'seq_num',
+               'update_interval',
+               'sol_id',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.time = kwargs.pop('time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.update_interval = kwargs.pop('update_interval')
+      self.sol_id = kwargs.pop('sol_id')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = BoundsHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class STECSatElementIntegrity(object):
+  """STECSatElementIntegrity.
+  
+  STEC polynomial and bounds for the given satellite.
+  
+  Parameters
+  ----------
+  stec_residual : STECResidual
+    STEC residuals (mean, stddev)
+  stec_bound_mu : int
+    STEC Error Bound Mean (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230,
+    mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+  stec_bound_sig : int
+    STEC Error Bound Standard Deviation (range 0-17.5) i<= 200, mean = 0.01i
+    200<i<=230, mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+  stec_bound_mu_dot : int
+    STEC Error Bound Mean First derivative degradation parameter(range
+    0-0.01275)
+  stec_bound_sig_dot : int
+    STEC Error Bound Standard Deviation First derivative degradation parameter
+    (range 0-0.01275)
+
+  """
+  _parser = construct.Struct(
+                     'stec_residual' / STECResidual._parser,
+                     'stec_bound_mu' / construct.Int8ul,
+                     'stec_bound_sig' / construct.Int8ul,
+                     'stec_bound_mu_dot' / construct.Int8ul,
+                     'stec_bound_sig_dot' / construct.Int8ul,)
+  __slots__ = [
+               'stec_residual',
+               'stec_bound_mu',
+               'stec_bound_sig',
+               'stec_bound_mu_dot',
+               'stec_bound_sig_dot',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.stec_residual = kwargs.pop('stec_residual')
+      self.stec_bound_mu = kwargs.pop('stec_bound_mu')
+      self.stec_bound_sig = kwargs.pop('stec_bound_sig')
+      self.stec_bound_mu_dot = kwargs.pop('stec_bound_mu_dot')
+      self.stec_bound_sig_dot = kwargs.pop('stec_bound_sig_dot')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = STECSatElementIntegrity._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
 class SatelliteAPC(object):
   """SatelliteAPC.
   
@@ -670,56 +775,6 @@ class GridDefinitionHeaderDepA(object):
   
   def from_binary(self, d):
     p = GridDefinitionHeaderDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-    
-class BoundsHeader(object):
-  """BoundsHeader.
-  
-  
-  Parameters
-  ----------
-  time : GPSTimeSec
-    GNSS reference time of the bound
-  num_msgs : int
-    Number of messages in the dataset
-  seq_num : int
-    Position of this message in the dataset
-  update_interval : int
-    Update interval between consecutive bounds. Similar to RTCM DF391.
-  sol_id : int
-    SSR Solution ID.
-
-  """
-  _parser = construct.Struct(
-                     'time' / GPSTimeSec._parser,
-                     'num_msgs' / construct.Int8ul,
-                     'seq_num' / construct.Int8ul,
-                     'update_interval' / construct.Int8ul,
-                     'sol_id' / construct.Int8ul,)
-  __slots__ = [
-               'time',
-               'num_msgs',
-               'seq_num',
-               'update_interval',
-               'sol_id',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.time = kwargs.pop('time')
-      self.num_msgs = kwargs.pop('num_msgs')
-      self.seq_num = kwargs.pop('seq_num')
-      self.update_interval = kwargs.pop('update_interval')
-      self.sol_id = kwargs.pop('sol_id')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = BoundsHeader._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
@@ -1266,11 +1321,11 @@ class MsgSsrPhaseBiases(SBP):
     d.update(j)
     return d
     
-SBP_MSG_SSR_STEC_CORRECTION = 0x05FB
-class MsgSsrStecCorrection(SBP):
-  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
+SBP_MSG_SSR_STEC_CORRECTION_DEP = 0x05FB
+class MsgSsrStecCorrectionDep(SBP):
+  """SBP class for message MSG_SSR_STEC_CORRECTION_DEP (0x05FB).
 
-  You can have MSG_SSR_STEC_CORRECTION inherit its fields directly
+  You can have MSG_SSR_STEC_CORRECTION_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1304,6 +1359,115 @@ class MsgSsrStecCorrection(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
+      super( MsgSsrStecCorrectionDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrStecCorrectionDep, self).__init__()
+      self.msg_type = SBP_MSG_SSR_STEC_CORRECTION_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.stec_sat_list = kwargs.pop('stec_sat_list')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrStecCorrectionDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrStecCorrectionDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrStecCorrectionDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrStecCorrectionDep._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrStecCorrectionDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrStecCorrectionDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_STEC_CORRECTION = 0x05FD
+class MsgSsrStecCorrection(SBP):
+  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05FD).
+
+  You can have MSG_SSR_STEC_CORRECTION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : BoundsHeader
+    Header of a STEC correction with bounds message.
+  ssr_iod_atmo : int
+    IOD of the SSR atmospheric correction
+  tile_set_id : int
+    Tile set ID
+  tile_id : int
+    Tile ID
+  n_sats : int
+    Number of satellites.
+  stec_sat_list : array
+    Array of STEC polynomial coefficients for each space vehicle.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod_atmo' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElement._parser),)
+  __slots__ = [
+               'header',
+               'ssr_iod_atmo',
+               'tile_set_id',
+               'tile_id',
+               'n_sats',
+               'stec_sat_list',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
       super( MsgSsrStecCorrection,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
@@ -1313,6 +1477,10 @@ class MsgSsrStecCorrection(SBP):
       self.msg_type = SBP_MSG_SSR_STEC_CORRECTION
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
+      self.ssr_iod_atmo = kwargs.pop('ssr_iod_atmo')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.n_sats = kwargs.pop('n_sats')
       self.stec_sat_list = kwargs.pop('stec_sat_list')
 
   def __repr__(self):
@@ -1471,17 +1639,156 @@ class MsgSsrGriddedCorrection(SBP):
     d.update(j)
     return d
     
-SBP_MSG_SSR_TILE_DEFINITION = 0x05F6
-class MsgSsrTileDefinition(SBP):
-  """SBP class for message MSG_SSR_TILE_DEFINITION (0x05F6).
+SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS = 0x05FE
+class MsgSsrGriddedCorrectionBounds(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
 
-  You can have MSG_SSR_TILE_DEFINITION inherit its fields directly
+  You can have MSG_SSR_GRIDDED_CORRECTION_BOUNDS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod_atmo : int
+    IOD of the SSR atmospheric correction.
+  tile_set_id : int
+    Unique identifier of the set this tile belongs to.
+  tile_id : int
+    Unique identifier of this tile in the tile set.
+  tropo_qi : int
+    Tropo Quality Indicator. Similar to RTCM DF389.
+  grid_point_id : int
+    Index of the Grid Point.
+  tropo_delay_correction : TroposphericDelayCorrection
+    Tropospheric delay at grid point.
+  tropo_bound_mu : int
+    Troposphere Error Bound Mean (range 0-1.275).
+  tropo_bound_sig : int
+    Troposphere Error Bound Standard Deviation (range 0-1.275)
+  n_sats : int
+    Number of satellites.
+  stec_sat_list : array
+    Array of STEC polynomial coefficients and its bounds for each space
+    vehicle.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod_atmo' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
+                   'tropo_qi' / construct.Int8ul,
+                   'grid_point_id' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrection._parser,
+                   'tropo_bound_mu' / construct.Int8ul,
+                   'tropo_bound_sig' / construct.Int8ul,
+                   'n_sats' / construct.Int8ul,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElementIntegrity._parser),)
+  __slots__ = [
+               'header',
+               'ssr_iod_atmo',
+               'tile_set_id',
+               'tile_id',
+               'tropo_qi',
+               'grid_point_id',
+               'tropo_delay_correction',
+               'tropo_bound_mu',
+               'tropo_bound_sig',
+               'n_sats',
+               'stec_sat_list',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrGriddedCorrectionBounds,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrGriddedCorrectionBounds, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.ssr_iod_atmo = kwargs.pop('ssr_iod_atmo')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.tropo_qi = kwargs.pop('tropo_qi')
+      self.grid_point_id = kwargs.pop('grid_point_id')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.tropo_bound_mu = kwargs.pop('tropo_bound_mu')
+      self.tropo_bound_sig = kwargs.pop('tropo_bound_sig')
+      self.n_sats = kwargs.pop('n_sats')
+      self.stec_sat_list = kwargs.pop('stec_sat_list')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrGriddedCorrectionBounds.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrGriddedCorrectionBounds(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGriddedCorrectionBounds._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGriddedCorrectionBounds._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGriddedCorrectionBounds._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGriddedCorrectionBounds, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_TILE_DEFINITION_DEP = 0x05F6
+class MsgSsrTileDefinitionDep(SBP):
+  """SBP class for message MSG_SSR_TILE_DEFINITION_DEP (0x05F6).
+
+  You can have MSG_SSR_TILE_DEFINITION_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
   Provides the correction point coordinates for the atmospheric correction
-  values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+  values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
   messages.
 
   Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
@@ -1575,6 +1882,182 @@ class MsgSsrTileDefinition(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
+      super( MsgSsrTileDefinitionDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrTileDefinitionDep, self).__init__()
+      self.msg_type = SBP_MSG_SSR_TILE_DEFINITION_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.corner_nw_lat = kwargs.pop('corner_nw_lat')
+      self.corner_nw_lon = kwargs.pop('corner_nw_lon')
+      self.spacing_lat = kwargs.pop('spacing_lat')
+      self.spacing_lon = kwargs.pop('spacing_lon')
+      self.rows = kwargs.pop('rows')
+      self.cols = kwargs.pop('cols')
+      self.bitmask = kwargs.pop('bitmask')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrTileDefinitionDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrTileDefinitionDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrTileDefinitionDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrTileDefinitionDep._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrTileDefinitionDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrTileDefinitionDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_TILE_DEFINITION = 0x05F7
+class MsgSsrTileDefinition(SBP):
+  """SBP class for message MSG_SSR_TILE_DEFINITION (0x05F7).
+
+  You can have MSG_SSR_TILE_DEFINITION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Provides the correction point coordinates for the atmospheric correction
+  values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+  messages.
+
+  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+  element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+  correction points, not lists of points.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  ssr_sol_id : int
+    SSR Solution ID.
+  tile_set_id : int
+    Unique identifier of the tile set this tile belongs to.
+  tile_id : int
+    Unique identifier of this tile in the tile set.
+    See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+  corner_nw_lat : int
+    North-West corner correction point latitude.
+
+    The relation between the latitude X in the range [-90, 90] and the coded
+    number N is:
+
+    N = floor((X / 90) * 2^14)
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+  corner_nw_lon : int
+    North-West corner correction point longitude.
+
+    The relation between the longitude X in the range [-180, 180] and the
+    coded number N is:
+
+    N = floor((X / 180) * 2^15)
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+  spacing_lat : int
+    Spacing of the correction points in the latitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+  spacing_lon : int
+    Spacing of the correction points in the longitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
+  rows : int
+    Number of steps in the latitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+  cols : int
+    Number of steps in the longitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
+  bitmask : int
+    Specifies the availability of correction data at the correction points in
+    the array.
+
+    If a specific bit is enabled (set to 1), the correction is not available.
+    Only the first rows * cols bits are used, the remainder are set to 0. If
+    there are more then 64 correction points the remaining corrections are
+    always available.
+
+    Starting with the northwest corner of the array (top left on a north
+    oriented map) the correction points are enumerated with row precedence -
+    first row west to east, second row west to east, until last row west to
+    east - ending with the southeast corner of the array.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    definition of the bits is inverted.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'ssr_sol_id' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
+                   'corner_nw_lat' / construct.Int16sl,
+                   'corner_nw_lon' / construct.Int16sl,
+                   'spacing_lat' / construct.Int16ul,
+                   'spacing_lon' / construct.Int16ul,
+                   'rows' / construct.Int16ul,
+                   'cols' / construct.Int16ul,
+                   'bitmask' / construct.Int64ul,)
+  __slots__ = [
+               'ssr_sol_id',
+               'tile_set_id',
+               'tile_id',
+               'corner_nw_lat',
+               'corner_nw_lon',
+               'spacing_lat',
+               'spacing_lon',
+               'rows',
+               'cols',
+               'bitmask',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
       super( MsgSsrTileDefinition,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
@@ -1583,6 +2066,7 @@ class MsgSsrTileDefinition(SBP):
       super( MsgSsrTileDefinition, self).__init__()
       self.msg_type = SBP_MSG_SSR_TILE_DEFINITION
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
       self.tile_set_id = kwargs.pop('tile_set_id')
       self.tile_id = kwargs.pop('tile_id')
       self.corner_nw_lat = kwargs.pop('corner_nw_lat')
@@ -2502,9 +2986,12 @@ msg_classes = {
   0x05DD: MsgSsrOrbitClock,
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
-  0x05FB: MsgSsrStecCorrection,
+  0x05FB: MsgSsrStecCorrectionDep,
+  0x05FD: MsgSsrStecCorrection,
   0x05FC: MsgSsrGriddedCorrection,
-  0x05F6: MsgSsrTileDefinition,
+  0x05FE: MsgSsrGriddedCorrectionBounds,
+  0x05F6: MsgSsrTileDefinitionDep,
+  0x05F7: MsgSsrTileDefinition,
   0x0604: MsgSsrSatelliteApc,
   0x05DC: MsgSsrOrbitClockDepA,
   0x05EB: MsgSsrStecCorrectionDepA,

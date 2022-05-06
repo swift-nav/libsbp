@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrGriddedCorrection, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -140,6 +140,7 @@
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
 //   const msgSsrCodePhaseBiasesBounds = Convert.toMsgSsrCodePhaseBiasesBounds(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
+//   const msgSsrGriddedCorrectionBounds = Convert.toMsgSsrGriddedCorrectionBounds(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrOrbitClockBounds = Convert.toMsgSsrOrbitClockBounds(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
@@ -184,6 +185,7 @@
 //   const sTECResidual = Convert.toSTECResidual(json);
 //   const sTECResidualNoStd = Convert.toSTECResidualNoStd(json);
 //   const sTECSatElement = Convert.toSTECSatElement(json);
+//   const sTECSatElementIntegrity = Convert.toSTECSatElementIntegrity(json);
 //   const satelliteAPC = Convert.toSatelliteAPC(json);
 //   const solutionInputType = Convert.toSolutionInputType(json);
 //   const statusJournalItem = Convert.toStatusJournalItem(json);
@@ -2014,6 +2016,31 @@ export interface GriddedCorrectionHeader {
     update_interval:         number;
 }
 
+export interface MsgSsrGriddedCorrectionBounds {
+    grid_point_id:          number;
+    header:                 BoundsHeader;
+    n_sats:                 number;
+    ssr_iod_atmo:           number;
+    stec_sat_list:          STECSatElementIntegrity[];
+    tile_id:                number;
+    tile_set_id:            number;
+    tropo_bound_mu:         number;
+    tropo_bound_sig:        number;
+    tropo_delay_correction: TroposphericDelayCorrection;
+    tropo_qi:               number;
+}
+
+/**
+ * STEC polynomial and bounds for the given satellite.
+ */
+export interface STECSatElementIntegrity {
+    stec_bound_mu:      number;
+    stec_bound_mu_dot:  number;
+    stec_bound_sig:     number;
+    stec_bound_sig_dot: number;
+    stec_residual:      STECResidual;
+}
+
 /**
  * The precise orbit and clock correction message is to be applied as a delta correction to
  * broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM message types.
@@ -2103,30 +2130,13 @@ export interface SatelliteAPC {
     svn:      number;
 }
 
-/**
- * The Slant Total Electron Content per space vehicle, given as polynomial approximation for
- * a given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get
- * the state space representation of the atmospheric delay.,
- * ,
- * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
- */
 export interface MsgSsrStecCorrection {
-    header:        STECHeader;
+    header:        BoundsHeader;
+    n_sats:        number;
+    ssr_iod_atmo:  number;
     stec_sat_list: STECSatElement[];
-}
-
-/**
- * A full set of STEC information will likely span multiple SBP messages, since SBP message
- * a limited to 255 bytes.  The header is used to tie multiple SBP messages into a sequence.
- */
-export interface STECHeader {
-    iod_atmo:        number;
-    num_msgs:        number;
-    seq_num:         number;
-    tile_id:         number;
-    tile_set_id:     number;
-    time:            GpsTimeSEC;
-    update_interval: number;
+    tile_id:       number;
+    tile_set_id:   number;
 }
 
 /**
@@ -2154,6 +2164,7 @@ export interface MsgSsrTileDefinition {
     rows:          number;
     spacing_lat:   number;
     spacing_lon:   number;
+    ssr_sol_id:    number;
     tile_id:       number;
     tile_set_id:   number;
 }
@@ -2616,6 +2627,20 @@ export interface MsgWheeltick {
  */
 export interface OdoInputType {
     flags: number;
+}
+
+/**
+ * A full set of STEC information will likely span multiple SBP messages, since SBP message
+ * a limited to 255 bytes.  The header is used to tie multiple SBP messages into a sequence.
+ */
+export interface STECHeader {
+    iod_atmo:        number;
+    num_msgs:        number;
+    seq_num:         number;
+    tile_id:         number;
+    tile_set_id:     number;
+    time:            GpsTimeSEC;
+    update_interval: number;
 }
 
 // Converts JSON strings to/from your types
@@ -3725,6 +3750,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrection")), null, 2);
     }
 
+    public static toMsgSsrGriddedCorrectionBounds(json: string): MsgSsrGriddedCorrectionBounds {
+        return cast(JSON.parse(json), r("MsgSsrGriddedCorrectionBounds"));
+    }
+
+    public static msgSsrGriddedCorrectionBoundsToJson(value: MsgSsrGriddedCorrectionBounds): string {
+        return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrectionBounds")), null, 2);
+    }
+
     public static toMsgSsrOrbitClock(json: string): MsgSsrOrbitClock {
         return cast(JSON.parse(json), r("MsgSsrOrbitClock"));
     }
@@ -4075,6 +4108,14 @@ export class Convert {
 
     public static sTECSatElementToJson(value: STECSatElement): string {
         return JSON.stringify(uncast(value, r("STECSatElement")), null, 2);
+    }
+
+    public static toSTECSatElementIntegrity(json: string): STECSatElementIntegrity {
+        return cast(JSON.parse(json), r("STECSatElementIntegrity"));
+    }
+
+    public static sTECSatElementIntegrityToJson(value: STECSatElementIntegrity): string {
+        return JSON.stringify(uncast(value, r("STECSatElementIntegrity")), null, 2);
     }
 
     public static toSatelliteAPC(json: string): SatelliteAPC {
@@ -5262,6 +5303,26 @@ const typeMap: any = {
         { json: "tropo_quality_indicator", js: "tropo_quality_indicator", typ: 0 },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
+    "MsgSsrGriddedCorrectionBounds": o([
+        { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "ssr_iod_atmo", js: "ssr_iod_atmo", typ: 0 },
+        { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElementIntegrity")) },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "tropo_bound_mu", js: "tropo_bound_mu", typ: 0 },
+        { json: "tropo_bound_sig", js: "tropo_bound_sig", typ: 0 },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
+        { json: "tropo_qi", js: "tropo_qi", typ: 0 },
+    ], "any"),
+    "STECSatElementIntegrity": o([
+        { json: "stec_bound_mu", js: "stec_bound_mu", typ: 0 },
+        { json: "stec_bound_mu_dot", js: "stec_bound_mu_dot", typ: 0 },
+        { json: "stec_bound_sig", js: "stec_bound_sig", typ: 0 },
+        { json: "stec_bound_sig_dot", js: "stec_bound_sig_dot", typ: 0 },
+        { json: "stec_residual", js: "stec_residual", typ: r("STECResidual") },
+    ], "any"),
     "MsgSsrOrbitClock": o([
         { json: "along", js: "along", typ: 0 },
         { json: "c0", js: "c0", typ: 0 },
@@ -5325,17 +5386,12 @@ const typeMap: any = {
         { json: "svn", js: "svn", typ: 0 },
     ], "any"),
     "MsgSsrStecCorrection": o([
-        { json: "header", js: "header", typ: r("STECHeader") },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "ssr_iod_atmo", js: "ssr_iod_atmo", typ: 0 },
         { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElement")) },
-    ], "any"),
-    "STECHeader": o([
-        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "seq_num", js: "seq_num", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
-        { json: "time", js: "time", typ: r("GpsTimeSEC") },
-        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "STECSatElement": o([
         { json: "stec_coeff", js: "stec_coeff", typ: a(0) },
@@ -5350,6 +5406,7 @@ const typeMap: any = {
         { json: "rows", js: "rows", typ: 0 },
         { json: "spacing_lat", js: "spacing_lat", typ: 0 },
         { json: "spacing_lon", js: "spacing_lon", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
@@ -5597,5 +5654,14 @@ const typeMap: any = {
     ], "any"),
     "OdoInputType": o([
         { json: "flags", js: "flags", typ: 0 },
+    ], "any"),
+    "STECHeader": o([
+        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
 };

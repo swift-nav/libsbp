@@ -276,6 +276,46 @@ bool sbp_msg_ssr_phase_biases_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
+bool sbp_msg_ssr_stec_correction_dep_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_stec_correction_dep_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_stec_correction_dep_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_stec_correction_dep_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_bounds_header_encode_internal(sbp_encode_ctx_t *ctx,
+                                       const sbp_bounds_header_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_bounds_header_decode_internal(sbp_decode_ctx_t *ctx,
+                                       sbp_bounds_header_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_ssr_stec_correction_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_stec_correction_t *msg);
 
@@ -308,6 +348,66 @@ bool sbp_msg_ssr_gridded_correction_encode_internal(
  */
 bool sbp_msg_ssr_gridded_correction_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_gridded_correction_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_stec_sat_element_integrity_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_stec_sat_element_integrity_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_stec_sat_element_integrity_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_stec_sat_element_integrity_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_gridded_correction_bounds_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_gridded_correction_bounds_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_gridded_correction_bounds_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_gridded_correction_bounds_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_tile_definition_dep_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_dep_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_tile_definition_dep_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_dep_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -529,26 +629,6 @@ bool sbp_msg_ssr_grid_definition_dep_a_encode_internal(
  */
 bool sbp_msg_ssr_grid_definition_dep_a_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_grid_definition_dep_a_t *msg);
-
-/**
- * Internal function to encode an SBP type to a buffer
- *
- * @param ctx Encode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
-bool sbp_bounds_header_encode_internal(sbp_encode_ctx_t *ctx,
-                                       const sbp_bounds_header_t *msg);
-
-/**
- * Internal function to decode an SBP type from a buffer
- *
- * @param ctx Decode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
-bool sbp_bounds_header_decode_internal(sbp_decode_ctx_t *ctx,
-                                       sbp_bounds_header_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer

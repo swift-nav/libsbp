@@ -1,0 +1,45 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrStecCorrection
+generated_on: 2022-04-19 # manually generated
+package: sbp.ssr
+tests:
+
+  - msg:
+      fields:
+        header:
+          time:
+            tow: 180
+            wn: 3
+          num_msgs: 1
+          seq_num: 1
+          update_interval: 10
+          sol_id: 0
+        ssr_iod_atmo: 15
+        tile_set_id: 1
+        tile_id: 10
+        n_sats: 2
+        stec_sat_list:
+        - sv_id:
+            satId: 1
+            constellation: 1
+          stec_quality_indicator: 1
+          stec_coeff: [63,62,61,60]
+        - sv_id:
+            satId: 31
+            constellation: 15
+          stec_quality_indicator: 5
+          stec_coeff: [63,64,65,66]
+      module: sbp.ssr
+      name: MsgSsrStecCorrection
+    msg_type: '1533'
+    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0},
+    "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "n_sats": 2, "stec_sat_list": [{"sv_id": {"satId": 1, "constellation": 1},
+    "stec_quality_indicator": 1, "stec_coeff": [63, 62, 61, 60]}, {"sv_id": {"satId": 31, "constellation": 15}, "stec_quality_indicator": 5, "stec_coeff": [63, 64, 65, 66]}],
+    "preamble": 85, "msg_type": 1533, "sender": 66, "length": 38, "payload": "tAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgA=", "crc": 12919}'
+    raw_packet: Vf0FQgAmtAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgB3Mg==
+    sbp:
+      preamble: '0x55'
+      msg_type: '0x05FD'
+      sender: '0x0042'
+      length: 38
+      payload: tAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgA=
+      crc: '0x3277'

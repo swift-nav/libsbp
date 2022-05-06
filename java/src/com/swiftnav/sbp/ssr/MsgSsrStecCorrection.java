@@ -20,23 +20,23 @@ import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
 import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
- *
- * <p>You can have MSG_SSR_STEC_CORRECTION inherent its fields directly from an inherited SBP
- * object, or construct it inline using a dict of its fields.
- *
- * <p>The Slant Total Electron Content per space vehicle, given as polynomial approximation for a
- * given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get the state
- * space representation of the atmospheric delay.
- *
- * <p>It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
- */
 public class MsgSsrStecCorrection extends SBPMessage {
-    public static final int TYPE = 0x05FB;
+    public static final int TYPE = 0x05FD;
 
-    /** Header of a STEC polynomial coefficient message. */
-    public STECHeader header;
+    /** Header of a STEC correction with bounds message. */
+    public BoundsHeader header;
+
+    /** IOD of the SSR atmospheric correction */
+    public int ssr_iod_atmo;
+
+    /** Tile set ID */
+    public int tile_set_id;
+
+    /** Tile ID */
+    public int tile_id;
+
+    /** Number of satellites. */
+    public int n_sats;
 
     /** Array of STEC polynomial coefficients for each space vehicle. */
     public STECSatElement[] stec_sat_list;
@@ -57,13 +57,21 @@ public class MsgSsrStecCorrection extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        header = new STECHeader().parse(parser);
+        header = new BoundsHeader().parse(parser);
+        ssr_iod_atmo = parser.getU8();
+        tile_set_id = parser.getU16();
+        tile_id = parser.getU16();
+        n_sats = parser.getU8();
         stec_sat_list = parser.getArray(STECSatElement.class);
     }
 
     @Override
     protected void build(Builder builder) {
         header.build(builder);
+        builder.putU8(ssr_iod_atmo);
+        builder.putU16(tile_set_id);
+        builder.putU16(tile_id);
+        builder.putU8(n_sats);
         builder.putArray(stec_sat_list);
     }
 
@@ -71,6 +79,10 @@ public class MsgSsrStecCorrection extends SBPMessage {
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
+        obj.put("ssr_iod_atmo", ssr_iod_atmo);
+        obj.put("tile_set_id", tile_set_id);
+        obj.put("tile_id", tile_id);
+        obj.put("n_sats", n_sats);
         obj.put("stec_sat_list", SBPStruct.toJSONArray(stec_sat_list));
         return obj;
     }

@@ -47,6 +47,11 @@ extern "C" {
  */
 typedef struct {
   /**
+   * SSR Solution ID.
+   */
+  u8 ssr_sol_id;
+
+  /**
    * Unique identifier of the tile set this tile belongs to.
    */
   u16 tile_set_id;

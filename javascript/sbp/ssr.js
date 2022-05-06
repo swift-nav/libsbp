@@ -521,7 +521,7 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw_rate', 'writeInt8', 1]);
 MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesContent.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message MSG_SSR_STEC_CORRECTION (0x05FB).
+ * SBP class for message MSG_SSR_STEC_CORRECTION_DEP (0x05FB).
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
  * approximation for a given tile. This should be combined with the
@@ -535,6 +535,76 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesConten
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
+var MsgSsrStecCorrectionDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_STEC_CORRECTION_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrStecCorrectionDep.prototype = Object.create(SBP.prototype);
+MsgSsrStecCorrectionDep.prototype.messageType = "MSG_SSR_STEC_CORRECTION_DEP";
+MsgSsrStecCorrectionDep.prototype.msg_type = 0x05FB;
+MsgSsrStecCorrectionDep.prototype.constructor = MsgSsrStecCorrectionDep;
+MsgSsrStecCorrectionDep.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: STECHeader.prototype.parser })
+  .array('stec_sat_list', { type: STECSatElement.prototype.parser, readUntil: 'eof' });
+MsgSsrStecCorrectionDep.prototype.fieldSpec = [];
+MsgSsrStecCorrectionDep.prototype.fieldSpec.push(['header', STECHeader.prototype.fieldSpec]);
+MsgSsrStecCorrectionDep.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message fragment BoundsHeader
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the bound
+ * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
+ * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive bounds. Similar to RTCM DF391.
+ * @field sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var BoundsHeader = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "BoundsHeader";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+BoundsHeader.prototype = Object.create(SBP.prototype);
+BoundsHeader.prototype.messageType = "BoundsHeader";
+BoundsHeader.prototype.constructor = BoundsHeader;
+BoundsHeader.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .uint8('num_msgs')
+  .uint8('seq_num')
+  .uint8('update_interval')
+  .uint8('sol_id');
+BoundsHeader.prototype.fieldSpec = [];
+BoundsHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+BoundsHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
+BoundsHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
+BoundsHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+BoundsHeader.prototype.fieldSpec.push(['sol_id', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_SSR_STEC_CORRECTION (0x05FD).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header BoundsHeader Header of a STEC correction with bounds message.
+ * @field ssr_iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Tile set ID
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Tile ID
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites.
+ * @field stec_sat_list array Array of STEC polynomial coefficients for each space vehicle.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
 var MsgSsrStecCorrection = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_STEC_CORRECTION";
@@ -544,15 +614,23 @@ var MsgSsrStecCorrection = function (sbp, fields) {
 };
 MsgSsrStecCorrection.prototype = Object.create(SBP.prototype);
 MsgSsrStecCorrection.prototype.messageType = "MSG_SSR_STEC_CORRECTION";
-MsgSsrStecCorrection.prototype.msg_type = 0x05FB;
+MsgSsrStecCorrection.prototype.msg_type = 0x05FD;
 MsgSsrStecCorrection.prototype.constructor = MsgSsrStecCorrection;
 MsgSsrStecCorrection.prototype.parser = new Parser()
   .endianess('little')
-  .nest('header', { type: STECHeader.prototype.parser })
-  .array('stec_sat_list', { type: STECSatElement.prototype.parser, readUntil: 'eof' });
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod_atmo')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .uint8('n_sats')
+  .array('stec_sat_list', { type: STECSatElement.prototype.parser, length: 'n_sats' });
 MsgSsrStecCorrection.prototype.fieldSpec = [];
-MsgSsrStecCorrection.prototype.fieldSpec.push(['header', STECHeader.prototype.fieldSpec]);
-MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['ssr_iod_atmo', 'writeUInt8', 1]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats']);
 
 /**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
@@ -592,7 +670,177 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['tropo_delay_correction', Trop
 MsgSsrGriddedCorrection.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message MSG_SSR_TILE_DEFINITION (0x05F6).
+ * SBP class for message fragment STECSatElementIntegrity
+ *
+ * STEC polynomial and bounds for the given satellite.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field stec_residual STECResidual STEC residuals (mean, stddev)
+ * @field stec_bound_mu number (unsigned 8-bit int, 1 byte) STEC Error Bound Mean (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230,
+ *   mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+ * @field stec_bound_sig number (unsigned 8-bit int, 1 byte) STEC Error Bound Standard Deviation (range 0-17.5) i<= 200, mean = 0.01i
+ *   200<i<=230, mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+ * @field stec_bound_mu_dot number (unsigned 8-bit int, 1 byte) STEC Error Bound Mean First derivative degradation parameter(range 0-0.01275)
+ * @field stec_bound_sig_dot number (unsigned 8-bit int, 1 byte) STEC Error Bound Standard Deviation First derivative degradation parameter
+ *   (range 0-0.01275)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var STECSatElementIntegrity = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "STECSatElementIntegrity";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+STECSatElementIntegrity.prototype = Object.create(SBP.prototype);
+STECSatElementIntegrity.prototype.messageType = "STECSatElementIntegrity";
+STECSatElementIntegrity.prototype.constructor = STECSatElementIntegrity;
+STECSatElementIntegrity.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('stec_residual', { type: STECResidual.prototype.parser })
+  .uint8('stec_bound_mu')
+  .uint8('stec_bound_sig')
+  .uint8('stec_bound_mu_dot')
+  .uint8('stec_bound_sig_dot');
+STECSatElementIntegrity.prototype.fieldSpec = [];
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_residual', STECResidual.prototype.fieldSpec]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_mu', 'writeUInt8', 1]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_sig', 'writeUInt8', 1]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_mu_dot', 'writeUInt8', 1]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_sig_dot', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header BoundsHeader Header of a bounds message.
+ * @field ssr_iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
+ * @field tropo_qi number (unsigned 8-bit int, 1 byte) Tropo Quality Indicator. Similar to RTCM DF389.
+ * @field grid_point_id number (unsigned 16-bit int, 2 bytes) Index of the Grid Point.
+ * @field tropo_delay_correction TroposphericDelayCorrection Tropospheric delay at grid point.
+ * @field tropo_bound_mu number (unsigned 8-bit int, 1 byte) Troposphere Error Bound Mean (range 0-1.275).
+ * @field tropo_bound_sig number (unsigned 8-bit int, 1 byte) Troposphere Error Bound Standard Deviation (range 0-1.275)
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites.
+ * @field stec_sat_list array Array of STEC polynomial coefficients and its bounds for each space vehicle.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrGriddedCorrectionBounds = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_GRIDDED_CORRECTION_BOUNDS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrGriddedCorrectionBounds.prototype = Object.create(SBP.prototype);
+MsgSsrGriddedCorrectionBounds.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION_BOUNDS";
+MsgSsrGriddedCorrectionBounds.prototype.msg_type = 0x05FE;
+MsgSsrGriddedCorrectionBounds.prototype.constructor = MsgSsrGriddedCorrectionBounds;
+MsgSsrGriddedCorrectionBounds.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod_atmo')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .uint8('tropo_qi')
+  .uint16('grid_point_id')
+  .nest('tropo_delay_correction', { type: TroposphericDelayCorrection.prototype.parser })
+  .uint8('tropo_bound_mu')
+  .uint8('tropo_bound_sig')
+  .uint8('n_sats')
+  .array('stec_sat_list', { type: STECSatElementIntegrity.prototype.parser, length: 'n_sats' });
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec = [];
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['ssr_iod_atmo', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_qi', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['grid_point_id', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrection.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_bound_mu', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_bound_sig', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElementIntegrity.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats']);
+
+/**
+ * SBP class for message MSG_SSR_TILE_DEFINITION_DEP (0x05F6).
+ *
+ * Provides the correction point coordinates for the atmospheric correction values
+ * in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION messages.
+ * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element
+ * GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction
+ * points, not lists of points.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set. See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field correctionPointSetID.
+ * @field corner_nw_lat number (signed 16-bit int, 2 bytes) North-West corner correction point latitude.  The relation between the latitude
+ *   X in the range [-90, 90] and the coded number N is:  N = floor((X / 90) * 2^14)
+ *   See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+ * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longitude.  The relation between the
+ *   longitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
+ *   180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
+ *   referencePointLongitude.
+ * @field spacing_lat number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the latitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field stepOfLatitude.
+ * @field spacing_lon number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field stepOfLongitude.
+ * @field rows number (unsigned 16-bit int, 2 bytes) Number of steps in the latitude direction.  See GNSS-SSR-ArrayOfCorrectionPoints
+ *   field numberOfStepsLatitude.
+ * @field cols number (unsigned 16-bit int, 2 bytes) Number of steps in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field numberOfStepsLongitude.
+ * @field bitmask number (unsigned 64-bit int, 8 bytes) Specifies the availability of correction data at the correction points in the
+ *   array.  If a specific bit is enabled (set to 1), the correction is not
+ *   available. Only the first rows * cols bits are used, the remainder are set to 0.
+ *   If there are more then 64 correction points the remaining corrections are always
+ *   available.  Starting with the northwest corner of the array (top left on a north
+ *   oriented map) the correction points are enumerated with row precedence - first
+ *   row west to east, second row west to east, until last row west to east - ending
+ *   with the southeast corner of the array.  See GNSS-SSR-ArrayOfCorrectionPoints
+ *   field bitmaskOfGrids but note the definition of the bits is inverted.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrTileDefinitionDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_TILE_DEFINITION_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrTileDefinitionDep.prototype = Object.create(SBP.prototype);
+MsgSsrTileDefinitionDep.prototype.messageType = "MSG_SSR_TILE_DEFINITION_DEP";
+MsgSsrTileDefinitionDep.prototype.msg_type = 0x05F6;
+MsgSsrTileDefinitionDep.prototype.constructor = MsgSsrTileDefinitionDep;
+MsgSsrTileDefinitionDep.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .int16('corner_nw_lat')
+  .int16('corner_nw_lon')
+  .uint16('spacing_lat')
+  .uint16('spacing_lon')
+  .uint16('rows')
+  .uint16('cols')
+  .uint64('bitmask');
+MsgSsrTileDefinitionDep.prototype.fieldSpec = [];
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['corner_nw_lat', 'writeInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['corner_nw_lon', 'writeInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['spacing_lat', 'writeUInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['spacing_lon', 'writeUInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['rows', 'writeUInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['cols', 'writeUInt16LE', 2]);
+MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]);
+
+/**
+ * SBP class for message MSG_SSR_TILE_DEFINITION (0x05F7).
  *
  * Provides the correction point coordinates for the atmospheric correction values
  * in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.  Based
@@ -601,6 +849,7 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['stec_residuals', 'array', STE
  * lists of points.
  *
  * Fields in the SBP payload (`sbp.payload`):
+ * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
  * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set. See GNSS-SSR-
  *   ArrayOfCorrectionPoints field correctionPointSetID.
@@ -640,10 +889,11 @@ var MsgSsrTileDefinition = function (sbp, fields) {
 };
 MsgSsrTileDefinition.prototype = Object.create(SBP.prototype);
 MsgSsrTileDefinition.prototype.messageType = "MSG_SSR_TILE_DEFINITION";
-MsgSsrTileDefinition.prototype.msg_type = 0x05F6;
+MsgSsrTileDefinition.prototype.msg_type = 0x05F7;
 MsgSsrTileDefinition.prototype.constructor = MsgSsrTileDefinition;
 MsgSsrTileDefinition.prototype.parser = new Parser()
   .endianess('little')
+  .uint8('ssr_sol_id')
   .uint16('tile_set_id')
   .uint16('tile_id')
   .int16('corner_nw_lat')
@@ -654,6 +904,7 @@ MsgSsrTileDefinition.prototype.parser = new Parser()
   .uint16('cols')
   .uint64('bitmask');
 MsgSsrTileDefinition.prototype.fieldSpec = [];
+MsgSsrTileDefinition.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lat', 'writeInt16LE', 2]);
@@ -1059,43 +1310,6 @@ MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['header', GridDefinitionHeade
 MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['rle_list', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
- * SBP class for message fragment BoundsHeader
- *
- 
- * Fields in the SBP payload (`sbp.payload`):
- * @field time GPSTimeSec GNSS reference time of the bound
- * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
- * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive bounds. Similar to RTCM DF391.
- * @field sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var BoundsHeader = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "BoundsHeader";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-BoundsHeader.prototype = Object.create(SBP.prototype);
-BoundsHeader.prototype.messageType = "BoundsHeader";
-BoundsHeader.prototype.constructor = BoundsHeader;
-BoundsHeader.prototype.parser = new Parser()
-  .endianess('little')
-  .nest('time', { type: GPSTimeSec.prototype.parser })
-  .uint8('num_msgs')
-  .uint8('seq_num')
-  .uint8('update_interval')
-  .uint8('sol_id');
-BoundsHeader.prototype.fieldSpec = [];
-BoundsHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
-BoundsHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
-BoundsHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-BoundsHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
-BoundsHeader.prototype.fieldSpec.push(['sol_id', 'writeUInt8', 1]);
-
-/**
  * SBP class for message fragment OrbitClockBound
  *
  * Orbit and clock bound.
@@ -1288,11 +1502,19 @@ module.exports = {
   MsgSsrCodeBiases: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   MsgSsrPhaseBiases: MsgSsrPhaseBiases,
-  0x05FB: MsgSsrStecCorrection,
+  0x05FB: MsgSsrStecCorrectionDep,
+  MsgSsrStecCorrectionDep: MsgSsrStecCorrectionDep,
+  BoundsHeader: BoundsHeader,
+  0x05FD: MsgSsrStecCorrection,
   MsgSsrStecCorrection: MsgSsrStecCorrection,
   0x05FC: MsgSsrGriddedCorrection,
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
-  0x05F6: MsgSsrTileDefinition,
+  STECSatElementIntegrity: STECSatElementIntegrity,
+  0x05FE: MsgSsrGriddedCorrectionBounds,
+  MsgSsrGriddedCorrectionBounds: MsgSsrGriddedCorrectionBounds,
+  0x05F6: MsgSsrTileDefinitionDep,
+  MsgSsrTileDefinitionDep: MsgSsrTileDefinitionDep,
+  0x05F7: MsgSsrTileDefinition,
   MsgSsrTileDefinition: MsgSsrTileDefinition,
   SatelliteAPC: SatelliteAPC,
   0x0604: MsgSsrSatelliteApc,
@@ -1310,7 +1532,6 @@ module.exports = {
   MsgSsrGriddedCorrectionDepA: MsgSsrGriddedCorrectionDepA,
   0x05F5: MsgSsrGridDefinitionDepA,
   MsgSsrGridDefinitionDepA: MsgSsrGridDefinitionDepA,
-  BoundsHeader: BoundsHeader,
   OrbitClockBound: OrbitClockBound,
   0x05DE: MsgSsrOrbitClockBounds,
   MsgSsrOrbitClockBounds: MsgSsrOrbitClockBounds,
