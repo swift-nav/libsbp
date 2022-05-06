@@ -735,6 +735,58 @@ typedef struct SBP_ATTR_PACKED {
                                                           couple. */
 } msg_ssr_code_phase_biases_bounds_t;
 
+/** None
+ *
+ * Orbit and clock bound degradation.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 orb_radial_bound_mu_dot;  /**< Orbit Bound Mean Radial First
+                                    derivative degradation parameter (range
+                                    0-0.255) [0.001 m/s] */
+  u8 orb_along_bound_mu_dot;   /**< Orbit Bound Mean Along-Track First
+                                    derivative degradation parameter (range
+                                    0-0.255) [0.001 m/s] */
+  u8 orb_cross_bound_mu_dot;   /**< Orbit Bound Mean Cross-Track First
+                                    derivative degradation parameter (range
+                                    0-0.255) [0.001 m/s] */
+  u8 orb_radial_bound_sig_dot; /**< Orbit Bound Standard Deviation Radial
+                                    First derivative degradation parameter
+                                    (range 0-0.255) [0.001 m/s] */
+  u8 orb_along_bound_sig_dot;  /**< Orbit Bound Standard Deviation Along-
+                                    Track First derivative degradation
+                                    parameter (range 0-0.255) [0.001 m/s] */
+  u8 orb_cross_bound_sig_dot;  /**< Orbit Bound Standard Deviation Cross-
+                                    Track First derivative degradation
+                                    parameter (range 0-0.255) [0.001 m/s] */
+  u8 clock_bound_mu_dot;       /**< Clock Bound Mean First derivative
+                                    degradation parameter (range 0-0.255) [0.001 m/s]
+                                */
+  u8 clock_bound_sig_dot;      /**< Clock Bound Standard Deviation First
+                                    derivative degradation parameter (range
+                                    0-0.255) [0.001 m/s] */
+} orbit_clock_bound_degradation_t;
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a bounds
+                               message. */
+  u8 ssr_iod;             /**< IOD of the SSR bound degradation
+                               parameter. */
+  u8 const_id;            /**< Constellation ID to which the SVs
+                               belong. */
+  u64 sat_bitmask;        /**< Satellite Bit Mask. Put 1 for
+                               each satellite where the
+                               following degradation parameters
+                               are applicable, 0 otherwise. */
+  orbit_clock_bound_degradation_t
+      orbit_clock_bounds_degradation; /**< Orbit
+                                           and
+                                           Clock
+                                           Bounds
+                                           Degradation
+                                           Parameters */
+} msg_ssr_orbit_clock_bounds_degradation_t;
+
 /** \} */
 
 SBP_PACK_END

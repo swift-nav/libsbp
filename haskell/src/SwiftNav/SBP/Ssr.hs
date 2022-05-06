@@ -1487,3 +1487,94 @@ instance Binary MsgSsrCodePhaseBiasesBounds where
 $(makeSBP 'msgSsrCodePhaseBiasesBounds ''MsgSsrCodePhaseBiasesBounds)
 $(makeJSON "_msgSsrCodePhaseBiasesBounds_" ''MsgSsrCodePhaseBiasesBounds)
 $(makeLenses ''MsgSsrCodePhaseBiasesBounds)
+
+-- | OrbitClockBoundDegradation.
+--
+-- Orbit and clock bound degradation.
+data OrbitClockBoundDegradation = OrbitClockBoundDegradation
+  { _orbitClockBoundDegradation_orb_radial_bound_mu_dot :: !Word8
+    -- ^ Orbit Bound Mean Radial First derivative degradation parameter (range
+    -- 0-0.255)
+  , _orbitClockBoundDegradation_orb_along_bound_mu_dot :: !Word8
+    -- ^ Orbit Bound Mean Along-Track First derivative degradation parameter
+    -- (range 0-0.255)
+  , _orbitClockBoundDegradation_orb_cross_bound_mu_dot :: !Word8
+    -- ^ Orbit Bound Mean Cross-Track First derivative degradation parameter
+    -- (range 0-0.255)
+  , _orbitClockBoundDegradation_orb_radial_bound_sig_dot :: !Word8
+    -- ^ Orbit Bound Standard Deviation Radial First derivative degradation
+    -- parameter (range 0-0.255)
+  , _orbitClockBoundDegradation_orb_along_bound_sig_dot :: !Word8
+    -- ^ Orbit Bound Standard Deviation Along-Track First derivative degradation
+    -- parameter (range 0-0.255)
+  , _orbitClockBoundDegradation_orb_cross_bound_sig_dot :: !Word8
+    -- ^ Orbit Bound Standard Deviation Cross-Track First derivative degradation
+    -- parameter (range 0-0.255)
+  , _orbitClockBoundDegradation_clock_bound_mu_dot     :: !Word8
+    -- ^ Clock Bound Mean First derivative degradation parameter (range 0-0.255)
+  , _orbitClockBoundDegradation_clock_bound_sig_dot    :: !Word8
+    -- ^ Clock Bound Standard Deviation First derivative degradation parameter
+    -- (range 0-0.255)
+  } deriving ( Show, Read, Eq )
+
+instance Binary OrbitClockBoundDegradation where
+  get = do
+    _orbitClockBoundDegradation_orb_radial_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_orb_along_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_orb_cross_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_orb_radial_bound_sig_dot <- getWord8
+    _orbitClockBoundDegradation_orb_along_bound_sig_dot <- getWord8
+    _orbitClockBoundDegradation_orb_cross_bound_sig_dot <- getWord8
+    _orbitClockBoundDegradation_clock_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_clock_bound_sig_dot <- getWord8
+    pure OrbitClockBoundDegradation {..}
+
+  put OrbitClockBoundDegradation {..} = do
+    putWord8 _orbitClockBoundDegradation_orb_radial_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_orb_along_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_orb_cross_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_orb_radial_bound_sig_dot
+    putWord8 _orbitClockBoundDegradation_orb_along_bound_sig_dot
+    putWord8 _orbitClockBoundDegradation_orb_cross_bound_sig_dot
+    putWord8 _orbitClockBoundDegradation_clock_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_clock_bound_sig_dot
+
+$(makeJSON "_orbitClockBoundDegradation_" ''OrbitClockBoundDegradation)
+$(makeLenses ''OrbitClockBoundDegradation)
+
+msgSsrOrbitClockBoundsDegradation :: Word16
+msgSsrOrbitClockBoundsDegradation = 0x05DF
+
+data MsgSsrOrbitClockBoundsDegradation = MsgSsrOrbitClockBoundsDegradation
+  { _msgSsrOrbitClockBoundsDegradation_header                       :: !BoundsHeader
+    -- ^ Header of a bounds message.
+  , _msgSsrOrbitClockBoundsDegradation_ssr_iod                      :: !Word8
+    -- ^ IOD of the SSR bound degradation parameter.
+  , _msgSsrOrbitClockBoundsDegradation_const_id                     :: !Word8
+    -- ^ Constellation ID to which the SVs belong.
+  , _msgSsrOrbitClockBoundsDegradation_sat_bitmask                  :: !Word64
+    -- ^ Satellite Bit Mask. Put 1 for each satellite where the following
+    -- degradation parameters are applicable, 0 otherwise.
+  , _msgSsrOrbitClockBoundsDegradation_orbit_clock_bounds_degradation :: !OrbitClockBoundDegradation
+    -- ^ Orbit and Clock Bounds Degradation Parameters
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrOrbitClockBoundsDegradation where
+  get = do
+    _msgSsrOrbitClockBoundsDegradation_header <- get
+    _msgSsrOrbitClockBoundsDegradation_ssr_iod <- getWord8
+    _msgSsrOrbitClockBoundsDegradation_const_id <- getWord8
+    _msgSsrOrbitClockBoundsDegradation_sat_bitmask <- getWord64le
+    _msgSsrOrbitClockBoundsDegradation_orbit_clock_bounds_degradation <- get
+    pure MsgSsrOrbitClockBoundsDegradation {..}
+
+  put MsgSsrOrbitClockBoundsDegradation {..} = do
+    put _msgSsrOrbitClockBoundsDegradation_header
+    putWord8 _msgSsrOrbitClockBoundsDegradation_ssr_iod
+    putWord8 _msgSsrOrbitClockBoundsDegradation_const_id
+    putWord64le _msgSsrOrbitClockBoundsDegradation_sat_bitmask
+    put _msgSsrOrbitClockBoundsDegradation_orbit_clock_bounds_degradation
+
+$(makeSBP 'msgSsrOrbitClockBoundsDegradation ''MsgSsrOrbitClockBoundsDegradation)
+$(makeJSON "_msgSsrOrbitClockBoundsDegradation_" ''MsgSsrOrbitClockBoundsDegradation)
+$(makeLenses ''MsgSsrOrbitClockBoundsDegradation)

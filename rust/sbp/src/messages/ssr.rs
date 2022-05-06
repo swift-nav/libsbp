@@ -28,6 +28,7 @@ pub use msg_ssr_gridded_correction_dep_a::MsgSsrGriddedCorrectionDepA;
 pub use msg_ssr_gridded_correction_no_std_dep_a::MsgSsrGriddedCorrectionNoStdDepA;
 pub use msg_ssr_orbit_clock::MsgSsrOrbitClock;
 pub use msg_ssr_orbit_clock_bounds::MsgSsrOrbitClockBounds;
+pub use msg_ssr_orbit_clock_bounds_degradation::MsgSsrOrbitClockBoundsDegradation;
 pub use msg_ssr_orbit_clock_dep_a::MsgSsrOrbitClockDepA;
 pub use msg_ssr_phase_biases::MsgSsrPhaseBiases;
 pub use msg_ssr_satellite_apc::MsgSsrSatelliteApc;
@@ -37,6 +38,7 @@ pub use msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
 pub use msg_ssr_tile_definition::MsgSsrTileDefinition;
 pub use msg_ssr_tile_definition_dep::MsgSsrTileDefinitionDep;
 pub use orbit_clock_bound::OrbitClockBound;
+pub use orbit_clock_bound_degradation::OrbitClockBoundDegradation;
 pub use phase_biases_content::PhaseBiasesContent;
 pub use satellite_apc::SatelliteAPC;
 pub use stec_header::STECHeader;
@@ -1408,6 +1410,106 @@ pub mod msg_ssr_orbit_clock_bounds {
     }
 }
 
+pub mod msg_ssr_orbit_clock_bounds_degradation {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Combined Orbit and Clock Bound Degradation Parameter
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgSsrOrbitClockBoundsDegradation {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Header of a bounds message.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        pub header: BoundsHeader,
+        /// IOD of the SSR bound degradation parameter.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        pub ssr_iod: u8,
+        /// Constellation ID to which the SVs belong.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
+        pub const_id: u8,
+        /// Satellite Bit Mask. Put 1 for each satellite where the following
+        /// degradation parameters are applicable, 0 otherwise.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_bitmask")))]
+        pub sat_bitmask: u64,
+        /// Orbit and Clock Bounds Degradation Parameters
+        #[cfg_attr(
+            feature = "serde",
+            serde(rename(serialize = "orbit_clock_bounds_degradation"))
+        )]
+        pub orbit_clock_bounds_degradation: OrbitClockBoundDegradation,
+    }
+
+    impl ConcreteMessage for MsgSsrOrbitClockBoundsDegradation {
+        const MESSAGE_TYPE: u16 = 1503;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION";
+    }
+
+    impl SbpMessage for MsgSsrOrbitClockBoundsDegradation {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrOrbitClockBoundsDegradation {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrOrbitClockBoundsDegradation(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrOrbitClockBoundsDegradation {
+        const MIN_LEN: usize = <BoundsHeader as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u64 as WireFormat>::MIN_LEN
+            + <OrbitClockBoundDegradation as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.header)
+                + WireFormat::len(&self.ssr_iod)
+                + WireFormat::len(&self.const_id)
+                + WireFormat::len(&self.sat_bitmask)
+                + WireFormat::len(&self.orbit_clock_bounds_degradation)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.header, buf);
+            WireFormat::write(&self.ssr_iod, buf);
+            WireFormat::write(&self.const_id, buf);
+            WireFormat::write(&self.sat_bitmask, buf);
+            WireFormat::write(&self.orbit_clock_bounds_degradation, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrOrbitClockBoundsDegradation {
+                sender_id: None,
+                header: WireFormat::parse_unchecked(buf),
+                ssr_iod: WireFormat::parse_unchecked(buf),
+                const_id: WireFormat::parse_unchecked(buf),
+                sat_bitmask: WireFormat::parse_unchecked(buf),
+                orbit_clock_bounds_degradation: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
 pub mod msg_ssr_orbit_clock_dep_a {
     #![allow(unused_imports)]
 
@@ -2477,6 +2579,109 @@ pub mod orbit_clock_bound {
                 orb_cross_bound_sig: WireFormat::parse_unchecked(buf),
                 clock_bound_mu: WireFormat::parse_unchecked(buf),
                 clock_bound_sig: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod orbit_clock_bound_degradation {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// None
+    ///
+    /// Orbit and clock bound degradation.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct OrbitClockBoundDegradation {
+        /// Orbit Bound Mean Radial First derivative degradation parameter (range
+        /// 0-0.255)
+        #[cfg_attr(
+            feature = "serde",
+            serde(rename(serialize = "orb_radial_bound_mu_dot"))
+        )]
+        pub orb_radial_bound_mu_dot: u8,
+        /// Orbit Bound Mean Along-Track First derivative degradation parameter
+        /// (range 0-0.255)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_mu_dot")))]
+        pub orb_along_bound_mu_dot: u8,
+        /// Orbit Bound Mean Cross-Track First derivative degradation parameter
+        /// (range 0-0.255)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu_dot")))]
+        pub orb_cross_bound_mu_dot: u8,
+        /// Orbit Bound Standard Deviation Radial First derivative degradation
+        /// parameter (range 0-0.255)
+        #[cfg_attr(
+            feature = "serde",
+            serde(rename(serialize = "orb_radial_bound_sig_dot"))
+        )]
+        pub orb_radial_bound_sig_dot: u8,
+        /// Orbit Bound Standard Deviation Along-Track First derivative degradation
+        /// parameter (range 0-0.255)
+        #[cfg_attr(
+            feature = "serde",
+            serde(rename(serialize = "orb_along_bound_sig_dot"))
+        )]
+        pub orb_along_bound_sig_dot: u8,
+        /// Orbit Bound Standard Deviation Cross-Track First derivative degradation
+        /// parameter (range 0-0.255)
+        #[cfg_attr(
+            feature = "serde",
+            serde(rename(serialize = "orb_cross_bound_sig_dot"))
+        )]
+        pub orb_cross_bound_sig_dot: u8,
+        /// Clock Bound Mean First derivative degradation parameter (range 0-0.255)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu_dot")))]
+        pub clock_bound_mu_dot: u8,
+        /// Clock Bound Standard Deviation First derivative degradation parameter
+        /// (range 0-0.255)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig_dot")))]
+        pub clock_bound_sig_dot: u8,
+    }
+
+    impl WireFormat for OrbitClockBoundDegradation {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.orb_radial_bound_mu_dot)
+                + WireFormat::len(&self.orb_along_bound_mu_dot)
+                + WireFormat::len(&self.orb_cross_bound_mu_dot)
+                + WireFormat::len(&self.orb_radial_bound_sig_dot)
+                + WireFormat::len(&self.orb_along_bound_sig_dot)
+                + WireFormat::len(&self.orb_cross_bound_sig_dot)
+                + WireFormat::len(&self.clock_bound_mu_dot)
+                + WireFormat::len(&self.clock_bound_sig_dot)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.orb_radial_bound_mu_dot, buf);
+            WireFormat::write(&self.orb_along_bound_mu_dot, buf);
+            WireFormat::write(&self.orb_cross_bound_mu_dot, buf);
+            WireFormat::write(&self.orb_radial_bound_sig_dot, buf);
+            WireFormat::write(&self.orb_along_bound_sig_dot, buf);
+            WireFormat::write(&self.orb_cross_bound_sig_dot, buf);
+            WireFormat::write(&self.clock_bound_mu_dot, buf);
+            WireFormat::write(&self.clock_bound_sig_dot, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            OrbitClockBoundDegradation {
+                orb_radial_bound_mu_dot: WireFormat::parse_unchecked(buf),
+                orb_along_bound_mu_dot: WireFormat::parse_unchecked(buf),
+                orb_cross_bound_mu_dot: WireFormat::parse_unchecked(buf),
+                orb_radial_bound_sig_dot: WireFormat::parse_unchecked(buf),
+                orb_along_bound_sig_dot: WireFormat::parse_unchecked(buf),
+                orb_cross_bound_sig_dot: WireFormat::parse_unchecked(buf),
+                clock_bound_mu_dot: WireFormat::parse_unchecked(buf),
+                clock_bound_sig_dot: WireFormat::parse_unchecked(buf),
             }
         }
     }

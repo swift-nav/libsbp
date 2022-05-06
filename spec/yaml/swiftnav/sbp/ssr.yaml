@@ -1186,3 +1186,78 @@ definitions:
            size_fn: n_sats_signals
            map_by: sat_id
            desc: Code and Phase Biases Bounds per Satellite-Signal couple.
+
+ - OrbitClockBoundDegradation:
+     desc: Orbit and clock bound degradation.
+     fields:
+       - orb_radial_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Mean Radial First derivative degradation parameter
+             (range 0-0.255)
+       - orb_along_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Mean Along-Track First derivative degradation parameter
+             (range 0-0.255)
+       - orb_cross_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Mean Cross-Track First derivative degradation parameter
+             (range 0-0.255)
+       - orb_radial_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Standard Deviation Radial First derivative degradation parameter
+             (range 0-0.255)
+       - orb_along_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Standard Deviation Along-Track First derivative degradation parameter
+             (range 0-0.255)
+       - orb_cross_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Standard Deviation Cross-Track First derivative degradation parameter
+             (range 0-0.255)
+       - clock_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Clock Bound Mean First derivative degradation parameter
+             (range 0-0.255)
+       - clock_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Clock Bound Standard Deviation First derivative degradation parameter
+             (range 0-0.255)
+
+ - MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION:
+     id: 0x05DF
+     short_desc: Combined Orbit and Clock Bound Degradation Parameter
+     public: False
+     fields:
+       - header:
+           type: BoundsHeader
+           desc: Header of a bounds message.
+       - ssr_iod:
+           type: u8
+           desc: IOD of the SSR bound degradation parameter.
+       - const_id:
+           type: u8
+           desc: Constellation ID to which the SVs belong.
+       - sat_bitmask:
+           type: u64
+           desc: >
+             Satellite Bit Mask. Put 1 for each satellite where the following
+             degradation parameters are applicable, 0 otherwise.
+       - orbit_clock_bounds_degradation:
+           type: OrbitClockBoundDegradation
+           desc: Orbit and Clock Bounds Degradation Parameters
