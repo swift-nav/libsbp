@@ -6,8 +6,9 @@ on:
       - "spec/**"
   push:
     branches:
-      - 'starling-v*-release'
       - 'v*-release'
+      - 'starling-v*-release'
+      - 'libsbp-v*-release'
     tags:
       - 'v*'
     paths:
@@ -26,7 +27,7 @@ jobs:
           ref: master
           path: previous
 
-      - name: Prepare Yaml Comparison
+      - name: Prepare YAML Comparison
         run: |
           mkdir previous-spec
           mkdir current-spec

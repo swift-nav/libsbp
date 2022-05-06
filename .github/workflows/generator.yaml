@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - staging
     tags:
       - "*"
   pull_request:
