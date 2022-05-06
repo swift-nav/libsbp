@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - libsbp-v3.4.11-release
   pull_request:
     types: [opened, synchronize, reopened]
 name: SonarCloud

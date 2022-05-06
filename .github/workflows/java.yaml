@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - libsbp-v3.4.11-release
     tags:
       - "*"
   pull_request:
