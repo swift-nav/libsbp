@@ -16,6 +16,31 @@ include:
   - types.yaml
   - gnss.yaml
 definitions:
+  - IntegritySSRHeader:
+      short_desc: Common fields for SSR integrity messages
+      fields:
+        - obs_time:
+            type: GPSTimeSec
+            desc: GNSS reference time of the observation used to generate the flag.
+        - num_msgs:
+            type: u8
+            desc: Number of messages in the dataset
+        - seq_num:
+            type: u8
+            desc: Position of this message in the dataset
+        - ssr_sol_id:
+            type: u8
+            desc: SSR Solution ID.
+        - tile_set_id:
+            type: u16
+            desc: Unique identifier of the set this tile belongs to.
+        - tile_id:
+            type: u16
+            desc: Unique identifier of this tile in the tile set.
+        - chain_id:
+            type: u8
+            desc: Chain and type of flag.
+
   - MSG_SSR_FLAG_HIGH_LEVEL:
       id: 0x0BB9
       short_desc: High level integrity flags
@@ -103,27 +128,9 @@ definitions:
       short_desc: List of grid points which are faulty
       public: False
       fields:
-        - obs_time:
-            type: GPSTimeSec
-            desc: GNSS reference time of the observation used to generate the flag.
-        - num_msgs:
-            type: u8
-            desc: Number of messages in the dataset
-        - seq_num:
-            type: u8
-            desc: Position of this message in the dataset
-        - ssr_sol_id:
-            type: u8
-            desc: SSR Solution ID.
-        - tile_set_id:
-            type: u16
-            desc: Unique identifier of the set this tile belongs to.
-        - tile_id:
-            type: u16
-            desc: Unique identifier of this tile in the tile set.
-        - chain_id:
-            type: u8
-            desc: Chain and type of flag.
+        - header:
+            type: IntegritySSRHeader
+            desc: Header of an integrity message.
         - n_faulty_points:
             type: u8
             desc: Number of faulty grid points.
@@ -138,27 +145,9 @@ definitions:
       short_desc: List of grid points which are faulty
       public: False
       fields:
-        - obs_time:
-            type: GPSTimeSec
-            desc: GNSS reference time of the observation used to generate the flag.
-        - num_msgs:
-            type: u8
-            desc: Number of messages in the dataset
-        - seq_num:
-            type: u8
-            desc: Position of this message in the dataset
-        - ssr_sol_id:
-            type: u8
-            desc: SSR Solution ID.
-        - tile_set_id:
-            type: u16
-            desc: Unique identifier of the set this tile belongs to.
-        - tile_id:
-            type: u16
-            desc: Unique identifier of this tile in the tile set.
-        - chain_id:
-            type: u8
-            desc: Chain and type of flag.
+        - header:
+            type: IntegritySSRHeader
+            desc: Header of an integrity message.
         - n_faulty_points:
             type: u8
             desc: Number of faulty grid points.
@@ -173,27 +162,9 @@ definitions:
       short_desc: List of all the LOS which are faulty
       public: False
       fields:
-        - obs_time:
-            type: GPSTimeSec
-            desc: GNSS reference time of the observation used to generate the flag.
-        - num_msgs:
-            type: u8
-            desc: Number of messages in the dataset
-        - seq_num:
-            type: u8
-            desc: Position of this message in the dataset
-        - ssr_sol_id:
-            type: u8
-            desc: SSR Solution ID.
-        - tile_set_id:
-            type: u16
-            desc: Unique identifier of the set this tile belongs to.
-        - tile_id:
-            type: u16
-            desc: Unique identifier of this tile in the tile set.
-        - chain_id:
-            type: u8
-            desc: Chain and type of flag.
+        - header:
+            type: IntegritySSRHeader
+            desc: Header of an integrity message.
         - n_faulty_los:
             type: u8
             desc: Number of faulty LOS.
@@ -208,27 +179,9 @@ definitions:
       short_desc: List of all the grid points to satellite which are faulty
       public: False
       fields:
-        - obs_time:
-            type: GPSTimeSec
-            desc: GNSS reference time of the observation used to generate the flag.
-        - num_msgs:
-            type: u8
-            desc: Number of messages in the dataset
-        - seq_num:
-            type: u8
-            desc: Position of this message in the dataset
-        - ssr_sol_id:
-            type: u8
-            desc: SSR Solution ID.
-        - tile_set_id:
-            type: u16
-            desc: Unique identifier of the set this tile belongs to.
-        - tile_id:
-            type: u16
-            desc: Unique identifier of this tile in the tile set.
-        - chain_id:
-            type: u8
-            desc: Chain and type of flag.
+        - header:
+            type: IntegritySSRHeader
+            desc: Header of an integrity message.
         - grid_point_id:
             type: u16
             desc: Index of the grid point.

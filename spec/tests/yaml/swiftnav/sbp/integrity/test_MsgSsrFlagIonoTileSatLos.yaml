@@ -5,15 +5,16 @@ tests:
 
 - msg:
     fields:
-      obs_time:
-        tow: 180
-        wn: 3
-      num_msgs: 1
-      seq_num: 2
-      ssr_sol_id: 3
-      tile_set_id: 4
-      tile_id: 5
-      chain_id: 6
+      header:
+        obs_time:
+          tow: 180
+          wn: 3
+        num_msgs: 1
+        seq_num: 2
+        ssr_sol_id: 3
+        tile_set_id: 4
+        tile_id: 5
+        chain_id: 6
       n_faulty_los: 2
       faulty_los:
       - satId: 10
@@ -23,8 +24,8 @@ tests:
     module: sbp.integrity
     name: MsgSsrFlagIonoTileSatLos
   msg_type: '3021'
-  raw_json: '{"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4,
-    "tile_id": 5, "chain_id": 6, "n_faulty_los": 2, "faulty_los": [{"satId": 10, "constellation": 11}, {"satId": 15,
+  raw_json: '{"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4,
+    "tile_id": 5, "chain_id": 6}, "n_faulty_los": 2, "faulty_los": [{"satId": 10, "constellation": 11}, {"satId": 15,
     "constellation": 14}], "preamble": 85, "msg_type": 3021, "sender": 66, "length": 19,
     "payload": "tAAAAAMAAQIDBAAFAAYCCgsPDg==", "crc": 60399}'
   raw_packet: Vc0LQgATtAAAAAMAAQIDBAAFAAYCCgsPDu/r
