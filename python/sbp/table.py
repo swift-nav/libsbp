@@ -30,6 +30,7 @@ from . import tracking as trac
 from . import ext_events as ext_events
 from . import user as user
 from . import imu as imu
+from . import integrity as integrity
 from . import mag as mag
 from . import ndb as ndb
 from . import vehicle as vehicle
@@ -54,6 +55,7 @@ _SBP_TABLE = dict(list(acq.msg_classes.items())
                   + list(trac.msg_classes.items())
                   + list(user.msg_classes.items())
                   + list(imu.msg_classes.items())
+                  + list(integrity.msg_classes.items())
                   + list(mag.msg_classes.items())
                   + list(ext_events.msg_classes.items())
                   + list(ndb.msg_classes.items())
