@@ -61,11 +61,11 @@ def dump(args, res):
 
 
 def module_main():
-    if args := get_args():
+    args = get_args()
+    if args:
         with Handler(Framer(args.file.read, None, verbose=True)) as source:
             try:
-                it = source.__iter__()
-                while msg_meta := next(it, None):
-                    dump(args, msg_meta[0])
+                for msg, meta in source:
+                    dump(args, msg)
             except KeyboardInterrupt:
                 pass
