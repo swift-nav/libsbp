@@ -25,7 +25,7 @@ tests:
     name: MsgSsrFlagIonoGridPointSatLos
   msg_type: '3025'
   raw_json: '{"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4,
-    "tile_id": 5, "chain_id": 6, "grid_point_id": 30, "n_faulty_los": 3, "faulty_los": [{"satId": 10,
+    "tile_id": 5, "chain_id": 6, "grid_point_id": 30, "n_faulty_los": 2, "faulty_los": [{"satId": 10,
     "constellation": 11}, {"satId": 15, "constellation": 14}], "preamble": 85, "msg_type": 3025, "sender": 66, "length": 21,
     "payload": "tAAAAAMAAQIDBAAFAAYeAAIKCw8O", "crc": 37986}'
   raw_packet: VdELQgAVtAAAAAMAAQIDBAAFAAYeAAIKCw8OYpQ=
