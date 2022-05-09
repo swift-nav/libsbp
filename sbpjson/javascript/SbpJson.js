@@ -139,6 +139,12 @@
 //   const msgSpecan = Convert.toMsgSpecan(json);
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
 //   const msgSsrCodePhaseBiasesBounds = Convert.toMsgSsrCodePhaseBiasesBounds(json);
+//   const msgSsrFlagHighLevel = Convert.toMsgSsrFlagHighLevel(json);
+//   const msgSsrFlagIonoGridPointSatLos = Convert.toMsgSsrFlagIonoGridPointSatLos(json);
+//   const msgSsrFlagIonoGridPoints = Convert.toMsgSsrFlagIonoGridPoints(json);
+//   const msgSsrFlagIonoTileSatLos = Convert.toMsgSsrFlagIonoTileSatLos(json);
+//   const msgSsrFlagSatellites = Convert.toMsgSsrFlagSatellites(json);
+//   const msgSsrFlagTropoGridPoints = Convert.toMsgSsrFlagTropoGridPoints(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
 //   const msgSsrGriddedCorrectionBounds = Convert.toMsgSsrGriddedCorrectionBounds(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
@@ -1299,6 +1305,54 @@ function toMsgSsrCodePhaseBiasesBounds(json) {
 
 function msgSsrCodePhaseBiasesBoundsToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrCodePhaseBiasesBounds")), null, 2);
+}
+
+function toMsgSsrFlagHighLevel(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagHighLevel"));
+}
+
+function msgSsrFlagHighLevelToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagHighLevel")), null, 2);
+}
+
+function toMsgSsrFlagIonoGridPointSatLos(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagIonoGridPointSatLos"));
+}
+
+function msgSsrFlagIonoGridPointSatLosToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagIonoGridPointSatLos")), null, 2);
+}
+
+function toMsgSsrFlagIonoGridPoints(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagIonoGridPoints"));
+}
+
+function msgSsrFlagIonoGridPointsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagIonoGridPoints")), null, 2);
+}
+
+function toMsgSsrFlagIonoTileSatLos(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagIonoTileSatLos"));
+}
+
+function msgSsrFlagIonoTileSatLosToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagIonoTileSatLos")), null, 2);
+}
+
+function toMsgSsrFlagSatellites(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagSatellites"));
+}
+
+function msgSsrFlagSatellitesToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagSatellites")), null, 2);
+}
+
+function toMsgSsrFlagTropoGridPoints(json) {
+    return cast(JSON.parse(json), r("MsgSsrFlagTropoGridPoints"));
+}
+
+function msgSsrFlagTropoGridPointsToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrFlagTropoGridPoints")), null, 2);
 }
 
 function toMsgSsrGriddedCorrection(json) {
@@ -2861,6 +2915,76 @@ const typeMap = {
         { json: "sat_id", js: "sat_id", typ: 0 },
         { json: "signal_id", js: "signal_id", typ: 0 },
     ], "any"),
+    "MsgSsrFlagHighLevel": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "corr_time", js: "corr_time", typ: r("GpsTimeSEC") },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "use_bds_sat", js: "use_bds_sat", typ: 0 },
+        { json: "use_gal_sat", js: "use_gal_sat", typ: 0 },
+        { json: "use_gps_sat", js: "use_gps_sat", typ: 0 },
+        { json: "use_iono_grid_point_sat_los", js: "use_iono_grid_point_sat_los", typ: 0 },
+        { json: "use_iono_grid_points", js: "use_iono_grid_points", typ: 0 },
+        { json: "use_iono_tile_sat_los", js: "use_iono_tile_sat_los", typ: 0 },
+        { json: "use_tropo_grid_points", js: "use_tropo_grid_points", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagIonoGridPointSatLos": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagIonoGridPoints": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagIonoTileSatLos": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagSatellites": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "faulty_sats", js: "faulty_sats", typ: a(0) },
+        { json: "n_faulty_sats", js: "n_faulty_sats", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagTropoGridPoints": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+    ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
         { json: "index", js: "index", typ: 0 },
@@ -3532,6 +3656,18 @@ module.exports = {
     "toMsgSsrCodeBiases": toMsgSsrCodeBiases,
     "msgSsrCodePhaseBiasesBoundsToJson": msgSsrCodePhaseBiasesBoundsToJson,
     "toMsgSsrCodePhaseBiasesBounds": toMsgSsrCodePhaseBiasesBounds,
+    "msgSsrFlagHighLevelToJson": msgSsrFlagHighLevelToJson,
+    "toMsgSsrFlagHighLevel": toMsgSsrFlagHighLevel,
+    "msgSsrFlagIonoGridPointSatLosToJson": msgSsrFlagIonoGridPointSatLosToJson,
+    "toMsgSsrFlagIonoGridPointSatLos": toMsgSsrFlagIonoGridPointSatLos,
+    "msgSsrFlagIonoGridPointsToJson": msgSsrFlagIonoGridPointsToJson,
+    "toMsgSsrFlagIonoGridPoints": toMsgSsrFlagIonoGridPoints,
+    "msgSsrFlagIonoTileSatLosToJson": msgSsrFlagIonoTileSatLosToJson,
+    "toMsgSsrFlagIonoTileSatLos": toMsgSsrFlagIonoTileSatLos,
+    "msgSsrFlagSatellitesToJson": msgSsrFlagSatellitesToJson,
+    "toMsgSsrFlagSatellites": toMsgSsrFlagSatellites,
+    "msgSsrFlagTropoGridPointsToJson": msgSsrFlagTropoGridPointsToJson,
+    "toMsgSsrFlagTropoGridPoints": toMsgSsrFlagTropoGridPoints,
     "msgSsrGriddedCorrectionToJson": msgSsrGriddedCorrectionToJson,
     "toMsgSsrGriddedCorrection": toMsgSsrGriddedCorrection,
     "msgSsrGriddedCorrectionBoundsToJson": msgSsrGriddedCorrectionBoundsToJson,
