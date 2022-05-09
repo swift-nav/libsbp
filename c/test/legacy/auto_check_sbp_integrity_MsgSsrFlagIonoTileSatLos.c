@@ -134,7 +134,6 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
     msg_ssr_flag_iono_tile_sat_los_t *test_msg =
         (msg_ssr_flag_iono_tile_sat_los_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->chain_id = 6;
     if (sizeof(test_msg->faulty_los) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->faulty_los[0]);
@@ -147,14 +146,15 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
     }
     test_msg->faulty_los[1].constellation = 14;
     test_msg->faulty_los[1].satId = 15;
+    test_msg->header.chain_id = 6;
+    test_msg->header.num_msgs = 1;
+    test_msg->header.obs_time.tow = 180;
+    test_msg->header.obs_time.wn = 3;
+    test_msg->header.seq_num = 2;
+    test_msg->header.ssr_sol_id = 3;
+    test_msg->header.tile_id = 5;
+    test_msg->header.tile_set_id = 4;
     test_msg->n_faulty_los = 2;
-    test_msg->num_msgs = 1;
-    test_msg->obs_time.tow = 180;
-    test_msg->obs_time.wn = 3;
-    test_msg->seq_num = 2;
-    test_msg->ssr_sol_id = 3;
-    test_msg->tile_id = 5;
-    test_msg->tile_set_id = 4;
     sbp_payload_send(&sbp_state, 3021, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -210,9 +210,6 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
         (msg_ssr_flag_iono_tile_sat_los_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->chain_id == 6,
-                  "incorrect value for chain_id, expected 6, is %d",
-                  check_msg->chain_id);
     ck_assert_msg(
         check_msg->faulty_los[0].constellation == 11,
         "incorrect value for faulty_los[0].constellation, expected 11, is %d",
@@ -227,30 +224,34 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
     ck_assert_msg(check_msg->faulty_los[1].satId == 15,
                   "incorrect value for faulty_los[1].satId, expected 15, is %d",
                   check_msg->faulty_los[1].satId);
+    ck_assert_msg(check_msg->header.chain_id == 6,
+                  "incorrect value for header.chain_id, expected 6, is %d",
+                  check_msg->header.chain_id);
+    ck_assert_msg(check_msg->header.num_msgs == 1,
+                  "incorrect value for header.num_msgs, expected 1, is %d",
+                  check_msg->header.num_msgs);
+    ck_assert_msg(
+        check_msg->header.obs_time.tow == 180,
+        "incorrect value for header.obs_time.tow, expected 180, is %d",
+        check_msg->header.obs_time.tow);
+    ck_assert_msg(check_msg->header.obs_time.wn == 3,
+                  "incorrect value for header.obs_time.wn, expected 3, is %d",
+                  check_msg->header.obs_time.wn);
+    ck_assert_msg(check_msg->header.seq_num == 2,
+                  "incorrect value for header.seq_num, expected 2, is %d",
+                  check_msg->header.seq_num);
+    ck_assert_msg(check_msg->header.ssr_sol_id == 3,
+                  "incorrect value for header.ssr_sol_id, expected 3, is %d",
+                  check_msg->header.ssr_sol_id);
+    ck_assert_msg(check_msg->header.tile_id == 5,
+                  "incorrect value for header.tile_id, expected 5, is %d",
+                  check_msg->header.tile_id);
+    ck_assert_msg(check_msg->header.tile_set_id == 4,
+                  "incorrect value for header.tile_set_id, expected 4, is %d",
+                  check_msg->header.tile_set_id);
     ck_assert_msg(check_msg->n_faulty_los == 2,
                   "incorrect value for n_faulty_los, expected 2, is %d",
                   check_msg->n_faulty_los);
-    ck_assert_msg(check_msg->num_msgs == 1,
-                  "incorrect value for num_msgs, expected 1, is %d",
-                  check_msg->num_msgs);
-    ck_assert_msg(check_msg->obs_time.tow == 180,
-                  "incorrect value for obs_time.tow, expected 180, is %d",
-                  check_msg->obs_time.tow);
-    ck_assert_msg(check_msg->obs_time.wn == 3,
-                  "incorrect value for obs_time.wn, expected 3, is %d",
-                  check_msg->obs_time.wn);
-    ck_assert_msg(check_msg->seq_num == 2,
-                  "incorrect value for seq_num, expected 2, is %d",
-                  check_msg->seq_num);
-    ck_assert_msg(check_msg->ssr_sol_id == 3,
-                  "incorrect value for ssr_sol_id, expected 3, is %d",
-                  check_msg->ssr_sol_id);
-    ck_assert_msg(check_msg->tile_id == 5,
-                  "incorrect value for tile_id, expected 5, is %d",
-                  check_msg->tile_id);
-    ck_assert_msg(check_msg->tile_set_id == 4,
-                  "incorrect value for tile_set_id, expected 4, is %d",
-                  check_msg->tile_set_id);
   }
 }
 END_TEST

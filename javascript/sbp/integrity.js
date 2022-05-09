@@ -31,6 +31,49 @@ var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;
 
 /**
+ * SBP class for message fragment IntegritySSRHeader
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
+ * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
+ * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
+ * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
+ * @field chain_id number (unsigned 8-bit int, 1 byte) Chain and type of flag.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var IntegritySSRHeader = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "IntegritySSRHeader";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+IntegritySSRHeader.prototype = Object.create(SBP.prototype);
+IntegritySSRHeader.prototype.messageType = "IntegritySSRHeader";
+IntegritySSRHeader.prototype.constructor = IntegritySSRHeader;
+IntegritySSRHeader.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('obs_time', { type: GPSTimeSec.prototype.parser })
+  .uint8('num_msgs')
+  .uint8('seq_num')
+  .uint8('ssr_sol_id')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .uint8('chain_id');
+IntegritySSRHeader.prototype.fieldSpec = [];
+IntegritySSRHeader.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
+IntegritySSRHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
+IntegritySSRHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
+IntegritySSRHeader.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
+IntegritySSRHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+IntegritySSRHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+IntegritySSRHeader.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
  *
  
@@ -147,13 +190,7 @@ MsgSsrFlagSatellites.prototype.fieldSpec.push(['faulty_sats', 'array', 'writeUIn
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
- * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
- * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
- * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
- * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
- * @field chain_id number (unsigned 8-bit int, 1 byte) Chain and type of flag.
+ * @field header IntegritySSRHeader Header of an integrity message.
  * @field n_faulty_points number (unsigned 8-bit int, 1 byte) Number of faulty grid points.
  * @field faulty_points array List of faulty grid points.
  *
@@ -172,23 +209,11 @@ MsgSsrFlagTropoGridPoints.prototype.msg_type = 0x0BC3;
 MsgSsrFlagTropoGridPoints.prototype.constructor = MsgSsrFlagTropoGridPoints;
 MsgSsrFlagTropoGridPoints.prototype.parser = new Parser()
   .endianess('little')
-  .nest('obs_time', { type: GPSTimeSec.prototype.parser })
-  .uint8('num_msgs')
-  .uint8('seq_num')
-  .uint8('ssr_sol_id')
-  .uint16('tile_set_id')
-  .uint16('tile_id')
-  .uint8('chain_id')
+  .nest('header', { type: IntegritySSRHeader.prototype.parser })
   .uint8('n_faulty_points')
   .array('faulty_points', { type: 'uint16le', length: 'n_faulty_points' });
 MsgSsrFlagTropoGridPoints.prototype.fieldSpec = [];
-MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
-MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
-MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
-MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
-MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
-MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
+MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['header', IntegritySSRHeader.prototype.fieldSpec]);
 MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['n_faulty_points', 'writeUInt8', 1]);
 MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['faulty_points', 'array', 'writeUInt16LE', function () { return 2; }, 'n_faulty_points']);
 
@@ -197,13 +222,7 @@ MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['faulty_points', 'array', 'w
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
- * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
- * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
- * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
- * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
- * @field chain_id number (unsigned 8-bit int, 1 byte) Chain and type of flag.
+ * @field header IntegritySSRHeader Header of an integrity message.
  * @field n_faulty_points number (unsigned 8-bit int, 1 byte) Number of faulty grid points.
  * @field faulty_points array List of faulty grid points.
  *
@@ -222,23 +241,11 @@ MsgSsrFlagIonoGridPoints.prototype.msg_type = 0x0BC7;
 MsgSsrFlagIonoGridPoints.prototype.constructor = MsgSsrFlagIonoGridPoints;
 MsgSsrFlagIonoGridPoints.prototype.parser = new Parser()
   .endianess('little')
-  .nest('obs_time', { type: GPSTimeSec.prototype.parser })
-  .uint8('num_msgs')
-  .uint8('seq_num')
-  .uint8('ssr_sol_id')
-  .uint16('tile_set_id')
-  .uint16('tile_id')
-  .uint8('chain_id')
+  .nest('header', { type: IntegritySSRHeader.prototype.parser })
   .uint8('n_faulty_points')
   .array('faulty_points', { type: 'uint16le', length: 'n_faulty_points' });
 MsgSsrFlagIonoGridPoints.prototype.fieldSpec = [];
-MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
-MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
-MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
-MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
-MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
-MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
+MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['header', IntegritySSRHeader.prototype.fieldSpec]);
 MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['n_faulty_points', 'writeUInt8', 1]);
 MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['faulty_points', 'array', 'writeUInt16LE', function () { return 2; }, 'n_faulty_points']);
 
@@ -247,13 +254,7 @@ MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['faulty_points', 'array', 'wr
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
- * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
- * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
- * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
- * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
- * @field chain_id number (unsigned 8-bit int, 1 byte) Chain and type of flag.
+ * @field header IntegritySSRHeader Header of an integrity message.
  * @field n_faulty_los number (unsigned 8-bit int, 1 byte) Number of faulty LOS.
  * @field faulty_los array List of faulty LOS
  *
@@ -272,23 +273,11 @@ MsgSsrFlagIonoTileSatLos.prototype.msg_type = 0x0BCD;
 MsgSsrFlagIonoTileSatLos.prototype.constructor = MsgSsrFlagIonoTileSatLos;
 MsgSsrFlagIonoTileSatLos.prototype.parser = new Parser()
   .endianess('little')
-  .nest('obs_time', { type: GPSTimeSec.prototype.parser })
-  .uint8('num_msgs')
-  .uint8('seq_num')
-  .uint8('ssr_sol_id')
-  .uint16('tile_set_id')
-  .uint16('tile_id')
-  .uint8('chain_id')
+  .nest('header', { type: IntegritySSRHeader.prototype.parser })
   .uint8('n_faulty_los')
   .array('faulty_los', { type: SvId.prototype.parser, length: 'n_faulty_los' });
 MsgSsrFlagIonoTileSatLos.prototype.fieldSpec = [];
-MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
-MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
-MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
-MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
-MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
-MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
+MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['header', IntegritySSRHeader.prototype.fieldSpec]);
 MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['n_faulty_los', 'writeUInt8', 1]);
 MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['faulty_los', 'array', SvId.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_faulty_los']);
 
@@ -297,13 +286,7 @@ MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['faulty_los', 'array', SvId.p
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
- * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
- * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
- * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
- * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
- * @field chain_id number (unsigned 8-bit int, 1 byte) Chain and type of flag.
+ * @field header IntegritySSRHeader Header of an integrity message.
  * @field grid_point_id number (unsigned 16-bit int, 2 bytes) Index of the grid point.
  * @field n_faulty_los number (unsigned 8-bit int, 1 byte) Number of faulty LOS.
  * @field faulty_los array List of faulty LOS
@@ -323,29 +306,18 @@ MsgSsrFlagIonoGridPointSatLos.prototype.msg_type = 0x0BD1;
 MsgSsrFlagIonoGridPointSatLos.prototype.constructor = MsgSsrFlagIonoGridPointSatLos;
 MsgSsrFlagIonoGridPointSatLos.prototype.parser = new Parser()
   .endianess('little')
-  .nest('obs_time', { type: GPSTimeSec.prototype.parser })
-  .uint8('num_msgs')
-  .uint8('seq_num')
-  .uint8('ssr_sol_id')
-  .uint16('tile_set_id')
-  .uint16('tile_id')
-  .uint8('chain_id')
+  .nest('header', { type: IntegritySSRHeader.prototype.parser })
   .uint16('grid_point_id')
   .uint8('n_faulty_los')
   .array('faulty_los', { type: SvId.prototype.parser, length: 'n_faulty_los' });
 MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec = [];
-MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['obs_time', GPSTimeSec.prototype.fieldSpec]);
-MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
-MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
-MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
-MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
-MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
+MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['header', IntegritySSRHeader.prototype.fieldSpec]);
 MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['grid_point_id', 'writeUInt16LE', 2]);
 MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['n_faulty_los', 'writeUInt8', 1]);
 MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['faulty_los', 'array', SvId.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_faulty_los']);
 
 module.exports = {
+  IntegritySSRHeader: IntegritySSRHeader,
   0x0BB9: MsgSsrFlagHighLevel,
   MsgSsrFlagHighLevel: MsgSsrFlagHighLevel,
   0x0BBD: MsgSsrFlagSatellites,

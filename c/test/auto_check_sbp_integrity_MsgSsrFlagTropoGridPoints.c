@@ -103,29 +103,29 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagTropoGridPoints) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_flag_tropo_grid_points.chain_id = 6;
-
     test_msg.ssr_flag_tropo_grid_points.faulty_points[0] = 10;
 
     test_msg.ssr_flag_tropo_grid_points.faulty_points[1] = 11;
 
     test_msg.ssr_flag_tropo_grid_points.faulty_points[2] = 12;
 
+    test_msg.ssr_flag_tropo_grid_points.header.chain_id = 6;
+
+    test_msg.ssr_flag_tropo_grid_points.header.num_msgs = 1;
+
+    test_msg.ssr_flag_tropo_grid_points.header.obs_time.tow = 180;
+
+    test_msg.ssr_flag_tropo_grid_points.header.obs_time.wn = 3;
+
+    test_msg.ssr_flag_tropo_grid_points.header.seq_num = 2;
+
+    test_msg.ssr_flag_tropo_grid_points.header.ssr_sol_id = 3;
+
+    test_msg.ssr_flag_tropo_grid_points.header.tile_id = 5;
+
+    test_msg.ssr_flag_tropo_grid_points.header.tile_set_id = 4;
+
     test_msg.ssr_flag_tropo_grid_points.n_faulty_points = 3;
-
-    test_msg.ssr_flag_tropo_grid_points.num_msgs = 1;
-
-    test_msg.ssr_flag_tropo_grid_points.obs_time.tow = 180;
-
-    test_msg.ssr_flag_tropo_grid_points.obs_time.wn = 3;
-
-    test_msg.ssr_flag_tropo_grid_points.seq_num = 2;
-
-    test_msg.ssr_flag_tropo_grid_points.ssr_sol_id = 3;
-
-    test_msg.ssr_flag_tropo_grid_points.tile_id = 5;
-
-    test_msg.ssr_flag_tropo_grid_points.tile_set_id = 4;
 
     sbp_message_send(&sbp_state, SbpMsgSsrFlagTropoGridPoints, 66, &test_msg,
                      &dummy_write);
@@ -152,12 +152,6 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagTropoGridPoints) {
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_tropo_grid_points.chain_id == 6,
-        "incorrect value for last_msg.msg.ssr_flag_tropo_grid_points.chain_id, "
-        "expected 6, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.chain_id);
-
-    ck_assert_msg(
         last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[0] == 10,
         "incorrect value for "
         "last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[0], expected "
@@ -176,53 +170,63 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagTropoGridPoints) {
         "12, is %d",
         last_msg.msg.ssr_flag_tropo_grid_points.faulty_points[2]);
 
+    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id == 6,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id, "
+                  "expected 6, is %d",
+                  last_msg.msg.ssr_flag_tropo_grid_points.header.chain_id);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs == 1,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs, "
+                  "expected 1, is %d",
+                  last_msg.msg.ssr_flag_tropo_grid_points.header.num_msgs);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.tow == 180,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.tow, expected "
+        "180, is %d",
+        last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.tow);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.wn == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.wn, expected "
+        "3, is %d",
+        last_msg.msg.ssr_flag_tropo_grid_points.header.obs_time.wn);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num == 2,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num, "
+                  "expected 2, is %d",
+                  last_msg.msg.ssr_flag_tropo_grid_points.header.seq_num);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.ssr_sol_id == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.ssr_sol_id, expected "
+        "3, is %d",
+        last_msg.msg.ssr_flag_tropo_grid_points.header.ssr_sol_id);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id == 5,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id, "
+                  "expected 5, is %d",
+                  last_msg.msg.ssr_flag_tropo_grid_points.header.tile_id);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_tropo_grid_points.header.tile_set_id == 4,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_tropo_grid_points.header.tile_set_id, expected "
+        "4, is %d",
+        last_msg.msg.ssr_flag_tropo_grid_points.header.tile_set_id);
+
     ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points == 3,
                   "incorrect value for "
                   "last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points, "
                   "expected 3, is %d",
                   last_msg.msg.ssr_flag_tropo_grid_points.n_faulty_points);
-
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_tropo_grid_points.num_msgs == 1,
-        "incorrect value for last_msg.msg.ssr_flag_tropo_grid_points.num_msgs, "
-        "expected 1, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.num_msgs);
-
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.obs_time.tow == 180,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.obs_time.tow, "
-                  "expected 180, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.obs_time.tow);
-
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.obs_time.wn == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.obs_time.wn, "
-                  "expected 3, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.obs_time.wn);
-
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_tropo_grid_points.seq_num == 2,
-        "incorrect value for last_msg.msg.ssr_flag_tropo_grid_points.seq_num, "
-        "expected 2, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.seq_num);
-
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_tropo_grid_points.ssr_sol_id == 3,
-        "incorrect value for "
-        "last_msg.msg.ssr_flag_tropo_grid_points.ssr_sol_id, expected 3, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.ssr_sol_id);
-
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_tropo_grid_points.tile_id == 5,
-        "incorrect value for last_msg.msg.ssr_flag_tropo_grid_points.tile_id, "
-        "expected 5, is %d",
-        last_msg.msg.ssr_flag_tropo_grid_points.tile_id);
-
-    ck_assert_msg(last_msg.msg.ssr_flag_tropo_grid_points.tile_set_id == 4,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_tropo_grid_points.tile_set_id, "
-                  "expected 4, is %d",
-                  last_msg.msg.ssr_flag_tropo_grid_points.tile_set_id);
   }
 }
 END_TEST

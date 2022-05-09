@@ -18,6 +18,12 @@
 #ifndef LIBSBP_INTEGRITY_MACROS_H
 #define LIBSBP_INTEGRITY_MACROS_H
 
+/**
+ * Encoded length of sbp_integrity_ssr_header_t (V4 API) and
+ * integrity_ssr_header_t (legacy API)
+ */
+#define SBP_INTEGRITY_SSR_HEADER_ENCODED_LEN 14u
+
 #define SBP_MSG_SSR_FLAG_HIGH_LEVEL 0x0BB9
 /**
  * The maximum number of items that can be stored in

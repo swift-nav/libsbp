@@ -43,11 +43,6 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.chain_id, 6,
-                    "incorrect value for chain_id, expected 6, is {}",
-                    msg.chain_id
-                );
-                assert_eq!(
                     msg.faulty_los[0].constellation, 11,
                     "incorrect value for faulty_los[0].constellation, expected 11, is {}",
                     msg.faulty_los[0].constellation
@@ -73,44 +68,49 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los() {
                     msg.grid_point_id
                 );
                 assert_eq!(
+                    msg.header.chain_id, 6,
+                    "incorrect value for header.chain_id, expected 6, is {}",
+                    msg.header.chain_id
+                );
+                assert_eq!(
+                    msg.header.num_msgs, 1,
+                    "incorrect value for header.num_msgs, expected 1, is {}",
+                    msg.header.num_msgs
+                );
+                assert_eq!(
+                    msg.header.obs_time.tow, 180,
+                    "incorrect value for header.obs_time.tow, expected 180, is {}",
+                    msg.header.obs_time.tow
+                );
+                assert_eq!(
+                    msg.header.obs_time.wn, 3,
+                    "incorrect value for header.obs_time.wn, expected 3, is {}",
+                    msg.header.obs_time.wn
+                );
+                assert_eq!(
+                    msg.header.seq_num, 2,
+                    "incorrect value for header.seq_num, expected 2, is {}",
+                    msg.header.seq_num
+                );
+                assert_eq!(
+                    msg.header.ssr_sol_id, 3,
+                    "incorrect value for header.ssr_sol_id, expected 3, is {}",
+                    msg.header.ssr_sol_id
+                );
+                assert_eq!(
+                    msg.header.tile_id, 5,
+                    "incorrect value for header.tile_id, expected 5, is {}",
+                    msg.header.tile_id
+                );
+                assert_eq!(
+                    msg.header.tile_set_id, 4,
+                    "incorrect value for header.tile_set_id, expected 4, is {}",
+                    msg.header.tile_set_id
+                );
+                assert_eq!(
                     msg.n_faulty_los, 2,
                     "incorrect value for n_faulty_los, expected 2, is {}",
                     msg.n_faulty_los
-                );
-                assert_eq!(
-                    msg.num_msgs, 1,
-                    "incorrect value for num_msgs, expected 1, is {}",
-                    msg.num_msgs
-                );
-                assert_eq!(
-                    msg.obs_time.tow, 180,
-                    "incorrect value for obs_time.tow, expected 180, is {}",
-                    msg.obs_time.tow
-                );
-                assert_eq!(
-                    msg.obs_time.wn, 3,
-                    "incorrect value for obs_time.wn, expected 3, is {}",
-                    msg.obs_time.wn
-                );
-                assert_eq!(
-                    msg.seq_num, 2,
-                    "incorrect value for seq_num, expected 2, is {}",
-                    msg.seq_num
-                );
-                assert_eq!(
-                    msg.ssr_sol_id, 3,
-                    "incorrect value for ssr_sol_id, expected 3, is {}",
-                    msg.ssr_sol_id
-                );
-                assert_eq!(
-                    msg.tile_id, 5,
-                    "incorrect value for tile_id, expected 5, is {}",
-                    msg.tile_id
-                );
-                assert_eq!(
-                    msg.tile_set_id, 4,
-                    "incorrect value for tile_set_id, expected 4, is {}",
-                    msg.tile_set_id
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrFlagIonoGridPointSatLos"),

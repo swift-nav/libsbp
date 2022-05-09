@@ -27,7 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/integrity_macros.h>
-#include <libsbp/v4/gnss/GPSTimeSec.h>
+#include <libsbp/v4/integrity/IntegritySSRHeader.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -41,39 +41,9 @@ extern "C" {
  *****************************************************************************/
 typedef struct {
   /**
-   * GNSS reference time of the observation used to generate the flag.
+   * Header of an integrity message.
    */
-  sbp_gps_time_sec_t obs_time;
-
-  /**
-   * Number of messages in the dataset
-   */
-  u8 num_msgs;
-
-  /**
-   * Position of this message in the dataset
-   */
-  u8 seq_num;
-
-  /**
-   * SSR Solution ID.
-   */
-  u8 ssr_sol_id;
-
-  /**
-   * Unique identifier of the set this tile belongs to.
-   */
-  u16 tile_set_id;
-
-  /**
-   * Unique identifier of this tile in the tile set.
-   */
-  u16 tile_id;
-
-  /**
-   * Chain and type of flag.
-   */
-  u8 chain_id;
+  sbp_integrity_ssr_header_t header;
 
   /**
    * Number of faulty grid points.

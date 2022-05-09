@@ -36,6 +36,46 @@ import SwiftNav.SBP.Gnss
 {-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
 
 
+data IntegritySSRHeader = IntegritySSRHeader
+  { _integritySSRHeader_obs_time  :: !GpsTimeSec
+    -- ^ GNSS reference time of the observation used to generate the flag.
+  , _integritySSRHeader_num_msgs  :: !Word8
+    -- ^ Number of messages in the dataset
+  , _integritySSRHeader_seq_num   :: !Word8
+    -- ^ Position of this message in the dataset
+  , _integritySSRHeader_ssr_sol_id :: !Word8
+    -- ^ SSR Solution ID.
+  , _integritySSRHeader_tile_set_id :: !Word16
+    -- ^ Unique identifier of the set this tile belongs to.
+  , _integritySSRHeader_tile_id   :: !Word16
+    -- ^ Unique identifier of this tile in the tile set.
+  , _integritySSRHeader_chain_id  :: !Word8
+    -- ^ Chain and type of flag.
+  } deriving ( Show, Read, Eq )
+
+instance Binary IntegritySSRHeader where
+  get = do
+    _integritySSRHeader_obs_time <- get
+    _integritySSRHeader_num_msgs <- getWord8
+    _integritySSRHeader_seq_num <- getWord8
+    _integritySSRHeader_ssr_sol_id <- getWord8
+    _integritySSRHeader_tile_set_id <- getWord16le
+    _integritySSRHeader_tile_id <- getWord16le
+    _integritySSRHeader_chain_id <- getWord8
+    pure IntegritySSRHeader {..}
+
+  put IntegritySSRHeader {..} = do
+    put _integritySSRHeader_obs_time
+    putWord8 _integritySSRHeader_num_msgs
+    putWord8 _integritySSRHeader_seq_num
+    putWord8 _integritySSRHeader_ssr_sol_id
+    putWord16le _integritySSRHeader_tile_set_id
+    putWord16le _integritySSRHeader_tile_id
+    putWord8 _integritySSRHeader_chain_id
+
+$(makeJSON "_integritySSRHeader_" ''IntegritySSRHeader)
+$(makeLenses ''IntegritySSRHeader)
+
 msgSsrFlagHighLevel :: Word16
 msgSsrFlagHighLevel = 0x0BB9
 
@@ -160,20 +200,8 @@ msgSsrFlagTropoGridPoints :: Word16
 msgSsrFlagTropoGridPoints = 0x0BC3
 
 data MsgSsrFlagTropoGridPoints = MsgSsrFlagTropoGridPoints
-  { _msgSsrFlagTropoGridPoints_obs_time      :: !GpsTimeSec
-    -- ^ GNSS reference time of the observation used to generate the flag.
-  , _msgSsrFlagTropoGridPoints_num_msgs      :: !Word8
-    -- ^ Number of messages in the dataset
-  , _msgSsrFlagTropoGridPoints_seq_num       :: !Word8
-    -- ^ Position of this message in the dataset
-  , _msgSsrFlagTropoGridPoints_ssr_sol_id    :: !Word8
-    -- ^ SSR Solution ID.
-  , _msgSsrFlagTropoGridPoints_tile_set_id   :: !Word16
-    -- ^ Unique identifier of the set this tile belongs to.
-  , _msgSsrFlagTropoGridPoints_tile_id       :: !Word16
-    -- ^ Unique identifier of this tile in the tile set.
-  , _msgSsrFlagTropoGridPoints_chain_id      :: !Word8
-    -- ^ Chain and type of flag.
+  { _msgSsrFlagTropoGridPoints_header        :: !IntegritySSRHeader
+    -- ^ Header of an integrity message.
   , _msgSsrFlagTropoGridPoints_n_faulty_points :: !Word8
     -- ^ Number of faulty grid points.
   , _msgSsrFlagTropoGridPoints_faulty_points :: ![Word16]
@@ -182,25 +210,13 @@ data MsgSsrFlagTropoGridPoints = MsgSsrFlagTropoGridPoints
 
 instance Binary MsgSsrFlagTropoGridPoints where
   get = do
-    _msgSsrFlagTropoGridPoints_obs_time <- get
-    _msgSsrFlagTropoGridPoints_num_msgs <- getWord8
-    _msgSsrFlagTropoGridPoints_seq_num <- getWord8
-    _msgSsrFlagTropoGridPoints_ssr_sol_id <- getWord8
-    _msgSsrFlagTropoGridPoints_tile_set_id <- getWord16le
-    _msgSsrFlagTropoGridPoints_tile_id <- getWord16le
-    _msgSsrFlagTropoGridPoints_chain_id <- getWord8
+    _msgSsrFlagTropoGridPoints_header <- get
     _msgSsrFlagTropoGridPoints_n_faulty_points <- getWord8
     _msgSsrFlagTropoGridPoints_faulty_points <- whileM (not <$> isEmpty) getWord16le
     pure MsgSsrFlagTropoGridPoints {..}
 
   put MsgSsrFlagTropoGridPoints {..} = do
-    put _msgSsrFlagTropoGridPoints_obs_time
-    putWord8 _msgSsrFlagTropoGridPoints_num_msgs
-    putWord8 _msgSsrFlagTropoGridPoints_seq_num
-    putWord8 _msgSsrFlagTropoGridPoints_ssr_sol_id
-    putWord16le _msgSsrFlagTropoGridPoints_tile_set_id
-    putWord16le _msgSsrFlagTropoGridPoints_tile_id
-    putWord8 _msgSsrFlagTropoGridPoints_chain_id
+    put _msgSsrFlagTropoGridPoints_header
     putWord8 _msgSsrFlagTropoGridPoints_n_faulty_points
     mapM_ putWord16le _msgSsrFlagTropoGridPoints_faulty_points
 
@@ -212,20 +228,8 @@ msgSsrFlagIonoGridPoints :: Word16
 msgSsrFlagIonoGridPoints = 0x0BC7
 
 data MsgSsrFlagIonoGridPoints = MsgSsrFlagIonoGridPoints
-  { _msgSsrFlagIonoGridPoints_obs_time      :: !GpsTimeSec
-    -- ^ GNSS reference time of the observation used to generate the flag.
-  , _msgSsrFlagIonoGridPoints_num_msgs      :: !Word8
-    -- ^ Number of messages in the dataset
-  , _msgSsrFlagIonoGridPoints_seq_num       :: !Word8
-    -- ^ Position of this message in the dataset
-  , _msgSsrFlagIonoGridPoints_ssr_sol_id    :: !Word8
-    -- ^ SSR Solution ID.
-  , _msgSsrFlagIonoGridPoints_tile_set_id   :: !Word16
-    -- ^ Unique identifier of the set this tile belongs to.
-  , _msgSsrFlagIonoGridPoints_tile_id       :: !Word16
-    -- ^ Unique identifier of this tile in the tile set.
-  , _msgSsrFlagIonoGridPoints_chain_id      :: !Word8
-    -- ^ Chain and type of flag.
+  { _msgSsrFlagIonoGridPoints_header        :: !IntegritySSRHeader
+    -- ^ Header of an integrity message.
   , _msgSsrFlagIonoGridPoints_n_faulty_points :: !Word8
     -- ^ Number of faulty grid points.
   , _msgSsrFlagIonoGridPoints_faulty_points :: ![Word16]
@@ -234,25 +238,13 @@ data MsgSsrFlagIonoGridPoints = MsgSsrFlagIonoGridPoints
 
 instance Binary MsgSsrFlagIonoGridPoints where
   get = do
-    _msgSsrFlagIonoGridPoints_obs_time <- get
-    _msgSsrFlagIonoGridPoints_num_msgs <- getWord8
-    _msgSsrFlagIonoGridPoints_seq_num <- getWord8
-    _msgSsrFlagIonoGridPoints_ssr_sol_id <- getWord8
-    _msgSsrFlagIonoGridPoints_tile_set_id <- getWord16le
-    _msgSsrFlagIonoGridPoints_tile_id <- getWord16le
-    _msgSsrFlagIonoGridPoints_chain_id <- getWord8
+    _msgSsrFlagIonoGridPoints_header <- get
     _msgSsrFlagIonoGridPoints_n_faulty_points <- getWord8
     _msgSsrFlagIonoGridPoints_faulty_points <- whileM (not <$> isEmpty) getWord16le
     pure MsgSsrFlagIonoGridPoints {..}
 
   put MsgSsrFlagIonoGridPoints {..} = do
-    put _msgSsrFlagIonoGridPoints_obs_time
-    putWord8 _msgSsrFlagIonoGridPoints_num_msgs
-    putWord8 _msgSsrFlagIonoGridPoints_seq_num
-    putWord8 _msgSsrFlagIonoGridPoints_ssr_sol_id
-    putWord16le _msgSsrFlagIonoGridPoints_tile_set_id
-    putWord16le _msgSsrFlagIonoGridPoints_tile_id
-    putWord8 _msgSsrFlagIonoGridPoints_chain_id
+    put _msgSsrFlagIonoGridPoints_header
     putWord8 _msgSsrFlagIonoGridPoints_n_faulty_points
     mapM_ putWord16le _msgSsrFlagIonoGridPoints_faulty_points
 
@@ -264,20 +256,8 @@ msgSsrFlagIonoTileSatLos :: Word16
 msgSsrFlagIonoTileSatLos = 0x0BCD
 
 data MsgSsrFlagIonoTileSatLos = MsgSsrFlagIonoTileSatLos
-  { _msgSsrFlagIonoTileSatLos_obs_time   :: !GpsTimeSec
-    -- ^ GNSS reference time of the observation used to generate the flag.
-  , _msgSsrFlagIonoTileSatLos_num_msgs   :: !Word8
-    -- ^ Number of messages in the dataset
-  , _msgSsrFlagIonoTileSatLos_seq_num    :: !Word8
-    -- ^ Position of this message in the dataset
-  , _msgSsrFlagIonoTileSatLos_ssr_sol_id :: !Word8
-    -- ^ SSR Solution ID.
-  , _msgSsrFlagIonoTileSatLos_tile_set_id :: !Word16
-    -- ^ Unique identifier of the set this tile belongs to.
-  , _msgSsrFlagIonoTileSatLos_tile_id    :: !Word16
-    -- ^ Unique identifier of this tile in the tile set.
-  , _msgSsrFlagIonoTileSatLos_chain_id   :: !Word8
-    -- ^ Chain and type of flag.
+  { _msgSsrFlagIonoTileSatLos_header     :: !IntegritySSRHeader
+    -- ^ Header of an integrity message.
   , _msgSsrFlagIonoTileSatLos_n_faulty_los :: !Word8
     -- ^ Number of faulty LOS.
   , _msgSsrFlagIonoTileSatLos_faulty_los :: ![SvId]
@@ -286,25 +266,13 @@ data MsgSsrFlagIonoTileSatLos = MsgSsrFlagIonoTileSatLos
 
 instance Binary MsgSsrFlagIonoTileSatLos where
   get = do
-    _msgSsrFlagIonoTileSatLos_obs_time <- get
-    _msgSsrFlagIonoTileSatLos_num_msgs <- getWord8
-    _msgSsrFlagIonoTileSatLos_seq_num <- getWord8
-    _msgSsrFlagIonoTileSatLos_ssr_sol_id <- getWord8
-    _msgSsrFlagIonoTileSatLos_tile_set_id <- getWord16le
-    _msgSsrFlagIonoTileSatLos_tile_id <- getWord16le
-    _msgSsrFlagIonoTileSatLos_chain_id <- getWord8
+    _msgSsrFlagIonoTileSatLos_header <- get
     _msgSsrFlagIonoTileSatLos_n_faulty_los <- getWord8
     _msgSsrFlagIonoTileSatLos_faulty_los <- whileM (not <$> isEmpty) get
     pure MsgSsrFlagIonoTileSatLos {..}
 
   put MsgSsrFlagIonoTileSatLos {..} = do
-    put _msgSsrFlagIonoTileSatLos_obs_time
-    putWord8 _msgSsrFlagIonoTileSatLos_num_msgs
-    putWord8 _msgSsrFlagIonoTileSatLos_seq_num
-    putWord8 _msgSsrFlagIonoTileSatLos_ssr_sol_id
-    putWord16le _msgSsrFlagIonoTileSatLos_tile_set_id
-    putWord16le _msgSsrFlagIonoTileSatLos_tile_id
-    putWord8 _msgSsrFlagIonoTileSatLos_chain_id
+    put _msgSsrFlagIonoTileSatLos_header
     putWord8 _msgSsrFlagIonoTileSatLos_n_faulty_los
     mapM_ put _msgSsrFlagIonoTileSatLos_faulty_los
 
@@ -316,20 +284,8 @@ msgSsrFlagIonoGridPointSatLos :: Word16
 msgSsrFlagIonoGridPointSatLos = 0x0BD1
 
 data MsgSsrFlagIonoGridPointSatLos = MsgSsrFlagIonoGridPointSatLos
-  { _msgSsrFlagIonoGridPointSatLos_obs_time    :: !GpsTimeSec
-    -- ^ GNSS reference time of the observation used to generate the flag.
-  , _msgSsrFlagIonoGridPointSatLos_num_msgs    :: !Word8
-    -- ^ Number of messages in the dataset
-  , _msgSsrFlagIonoGridPointSatLos_seq_num     :: !Word8
-    -- ^ Position of this message in the dataset
-  , _msgSsrFlagIonoGridPointSatLos_ssr_sol_id  :: !Word8
-    -- ^ SSR Solution ID.
-  , _msgSsrFlagIonoGridPointSatLos_tile_set_id :: !Word16
-    -- ^ Unique identifier of the set this tile belongs to.
-  , _msgSsrFlagIonoGridPointSatLos_tile_id     :: !Word16
-    -- ^ Unique identifier of this tile in the tile set.
-  , _msgSsrFlagIonoGridPointSatLos_chain_id    :: !Word8
-    -- ^ Chain and type of flag.
+  { _msgSsrFlagIonoGridPointSatLos_header      :: !IntegritySSRHeader
+    -- ^ Header of an integrity message.
   , _msgSsrFlagIonoGridPointSatLos_grid_point_id :: !Word16
     -- ^ Index of the grid point.
   , _msgSsrFlagIonoGridPointSatLos_n_faulty_los :: !Word8
@@ -340,26 +296,14 @@ data MsgSsrFlagIonoGridPointSatLos = MsgSsrFlagIonoGridPointSatLos
 
 instance Binary MsgSsrFlagIonoGridPointSatLos where
   get = do
-    _msgSsrFlagIonoGridPointSatLos_obs_time <- get
-    _msgSsrFlagIonoGridPointSatLos_num_msgs <- getWord8
-    _msgSsrFlagIonoGridPointSatLos_seq_num <- getWord8
-    _msgSsrFlagIonoGridPointSatLos_ssr_sol_id <- getWord8
-    _msgSsrFlagIonoGridPointSatLos_tile_set_id <- getWord16le
-    _msgSsrFlagIonoGridPointSatLos_tile_id <- getWord16le
-    _msgSsrFlagIonoGridPointSatLos_chain_id <- getWord8
+    _msgSsrFlagIonoGridPointSatLos_header <- get
     _msgSsrFlagIonoGridPointSatLos_grid_point_id <- getWord16le
     _msgSsrFlagIonoGridPointSatLos_n_faulty_los <- getWord8
     _msgSsrFlagIonoGridPointSatLos_faulty_los <- whileM (not <$> isEmpty) get
     pure MsgSsrFlagIonoGridPointSatLos {..}
 
   put MsgSsrFlagIonoGridPointSatLos {..} = do
-    put _msgSsrFlagIonoGridPointSatLos_obs_time
-    putWord8 _msgSsrFlagIonoGridPointSatLos_num_msgs
-    putWord8 _msgSsrFlagIonoGridPointSatLos_seq_num
-    putWord8 _msgSsrFlagIonoGridPointSatLos_ssr_sol_id
-    putWord16le _msgSsrFlagIonoGridPointSatLos_tile_set_id
-    putWord16le _msgSsrFlagIonoGridPointSatLos_tile_id
-    putWord8 _msgSsrFlagIonoGridPointSatLos_chain_id
+    put _msgSsrFlagIonoGridPointSatLos_header
     putWord16le _msgSsrFlagIonoGridPointSatLos_grid_point_id
     putWord8 _msgSsrFlagIonoGridPointSatLos_n_faulty_los
     mapM_ put _msgSsrFlagIonoGridPointSatLos_faulty_los

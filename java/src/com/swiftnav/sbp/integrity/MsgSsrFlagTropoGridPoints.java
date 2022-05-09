@@ -23,26 +23,8 @@ import org.json.JSONObject;
 public class MsgSsrFlagTropoGridPoints extends SBPMessage {
     public static final int TYPE = 0x0BC3;
 
-    /** GNSS reference time of the observation used to generate the flag. */
-    public GPSTimeSec obs_time;
-
-    /** Number of messages in the dataset */
-    public int num_msgs;
-
-    /** Position of this message in the dataset */
-    public int seq_num;
-
-    /** SSR Solution ID. */
-    public int ssr_sol_id;
-
-    /** Unique identifier of the set this tile belongs to. */
-    public int tile_set_id;
-
-    /** Unique identifier of this tile in the tile set. */
-    public int tile_id;
-
-    /** Chain and type of flag. */
-    public int chain_id;
+    /** Header of an integrity message. */
+    public IntegritySSRHeader header;
 
     /** Number of faulty grid points. */
     public int n_faulty_points;
@@ -66,26 +48,14 @@ public class MsgSsrFlagTropoGridPoints extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        obs_time = new GPSTimeSec().parse(parser);
-        num_msgs = parser.getU8();
-        seq_num = parser.getU8();
-        ssr_sol_id = parser.getU8();
-        tile_set_id = parser.getU16();
-        tile_id = parser.getU16();
-        chain_id = parser.getU8();
+        header = new IntegritySSRHeader().parse(parser);
         n_faulty_points = parser.getU8();
         faulty_points = parser.getArrayofU16();
     }
 
     @Override
     protected void build(Builder builder) {
-        obs_time.build(builder);
-        builder.putU8(num_msgs);
-        builder.putU8(seq_num);
-        builder.putU8(ssr_sol_id);
-        builder.putU16(tile_set_id);
-        builder.putU16(tile_id);
-        builder.putU8(chain_id);
+        header.build(builder);
         builder.putU8(n_faulty_points);
         builder.putArrayofU16(faulty_points);
     }
@@ -93,13 +63,7 @@ public class MsgSsrFlagTropoGridPoints extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("obs_time", obs_time.toJSON());
-        obj.put("num_msgs", num_msgs);
-        obj.put("seq_num", seq_num);
-        obj.put("ssr_sol_id", ssr_sol_id);
-        obj.put("tile_set_id", tile_set_id);
-        obj.put("tile_id", tile_id);
-        obj.put("chain_id", chain_id);
+        obj.put("header", header.toJSON());
         obj.put("n_faulty_points", n_faulty_points);
         obj.put("faulty_points", new JSONArray(faulty_points));
         return obj;

@@ -11,18 +11,26 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgSsrFlagTropoGridPoints",
-  "title":"MsgSsrFlagTropoGridPoints",
+  "$id": "#IntegritySSRHeader",
+  "title":"IntegritySSRHeader",
   "description":"",
   "type": "object",
   "properties": {
-    "header": {"$ref": "IntegritySSRHeader.json"},
-    "n_faulty_points": {"type": "integer"},
-    "faulty_points": {"type": "array", "items": {"type": "integer"}}
+    "obs_time": {"$ref": "GpsTimeSec.json"},
+    "num_msgs": {"type": "integer"},
+    "seq_num": {"type": "integer"},
+    "ssr_sol_id": {"type": "integer"},
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"},
+    "chain_id": {"type": "integer"}
   },
   "required": [
-    "header",
-    "n_faulty_points",
-    "faulty_points"
+    "obs_time",
+    "num_msgs",
+    "seq_num",
+    "ssr_sol_id",
+    "tile_set_id",
+    "tile_id",
+    "chain_id"
   ]
 }

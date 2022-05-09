@@ -60,15 +60,6 @@ public class auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLosTest {
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
-        value = msg.chain_id;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.chain_id + "' != '" + 6 + "'", value.equals(BigInteger.valueOf(6L)));
-        } else {
-            value = value.longValue();
-            expected = 6L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.faulty_los[0].constellation;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -119,6 +110,86 @@ public class auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLosTest {
             expected = 30L;
             org.junit.Assert.assertEquals(value, expected);
         }
+        value = msg.header.chain_id;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.chain_id + "' != '" + 6 + "'",
+                    value.equals(BigInteger.valueOf(6L)));
+        } else {
+            value = value.longValue();
+            expected = 6L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.header.num_msgs;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.num_msgs + "' != '" + 1 + "'",
+                    value.equals(BigInteger.valueOf(1L)));
+        } else {
+            value = value.longValue();
+            expected = 1L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.header.obs_time.tow;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.obs_time.tow + "' != '" + 180 + "'",
+                    value.equals(BigInteger.valueOf(180L)));
+        } else {
+            value = value.longValue();
+            expected = 180L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.header.obs_time.wn;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.obs_time.wn + "' != '" + 3 + "'",
+                    value.equals(BigInteger.valueOf(3L)));
+        } else {
+            value = value.longValue();
+            expected = 3L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.header.seq_num;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.seq_num + "' != '" + 2 + "'",
+                    value.equals(BigInteger.valueOf(2L)));
+        } else {
+            value = value.longValue();
+            expected = 2L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.header.ssr_sol_id;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.ssr_sol_id + "' != '" + 3 + "'",
+                    value.equals(BigInteger.valueOf(3L)));
+        } else {
+            value = value.longValue();
+            expected = 3L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.header.tile_id;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.tile_id + "' != '" + 5 + "'",
+                    value.equals(BigInteger.valueOf(5L)));
+        } else {
+            value = value.longValue();
+            expected = 5L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.header.tile_set_id;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.header.tile_set_id + "' != '" + 4 + "'",
+                    value.equals(BigInteger.valueOf(4L)));
+        } else {
+            value = value.longValue();
+            expected = 4L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
         value = msg.n_faulty_los;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -127,73 +198,6 @@ public class auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLosTest {
         } else {
             value = value.longValue();
             expected = 2L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.num_msgs;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.num_msgs + "' != '" + 1 + "'", value.equals(BigInteger.valueOf(1L)));
-        } else {
-            value = value.longValue();
-            expected = 1L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.obs_time.tow;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.obs_time.tow + "' != '" + 180 + "'",
-                    value.equals(BigInteger.valueOf(180L)));
-        } else {
-            value = value.longValue();
-            expected = 180L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.obs_time.wn;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.obs_time.wn + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
-        } else {
-            value = value.longValue();
-            expected = 3L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.seq_num;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.seq_num + "' != '" + 2 + "'", value.equals(BigInteger.valueOf(2L)));
-        } else {
-            value = value.longValue();
-            expected = 2L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.ssr_sol_id;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.ssr_sol_id + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
-        } else {
-            value = value.longValue();
-            expected = 3L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.tile_id;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tile_id + "' != '" + 5 + "'", value.equals(BigInteger.valueOf(5L)));
-        } else {
-            value = value.longValue();
-            expected = 5L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.tile_set_id;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tile_set_id + "' != '" + 4 + "'",
-                    value.equals(BigInteger.valueOf(4L)));
-        } else {
-            value = value.longValue();
-            expected = 4L;
             org.junit.Assert.assertEquals(value, expected);
         }
     }

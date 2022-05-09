@@ -23,26 +23,8 @@ import org.json.JSONObject;
 public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
     public static final int TYPE = 0x0BD1;
 
-    /** GNSS reference time of the observation used to generate the flag. */
-    public GPSTimeSec obs_time;
-
-    /** Number of messages in the dataset */
-    public int num_msgs;
-
-    /** Position of this message in the dataset */
-    public int seq_num;
-
-    /** SSR Solution ID. */
-    public int ssr_sol_id;
-
-    /** Unique identifier of the set this tile belongs to. */
-    public int tile_set_id;
-
-    /** Unique identifier of this tile in the tile set. */
-    public int tile_id;
-
-    /** Chain and type of flag. */
-    public int chain_id;
+    /** Header of an integrity message. */
+    public IntegritySSRHeader header;
 
     /** Index of the grid point. */
     public int grid_point_id;
@@ -69,13 +51,7 @@ public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        obs_time = new GPSTimeSec().parse(parser);
-        num_msgs = parser.getU8();
-        seq_num = parser.getU8();
-        ssr_sol_id = parser.getU8();
-        tile_set_id = parser.getU16();
-        tile_id = parser.getU16();
-        chain_id = parser.getU8();
+        header = new IntegritySSRHeader().parse(parser);
         grid_point_id = parser.getU16();
         n_faulty_los = parser.getU8();
         faulty_los = parser.getArray(SvId.class);
@@ -83,13 +59,7 @@ public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        obs_time.build(builder);
-        builder.putU8(num_msgs);
-        builder.putU8(seq_num);
-        builder.putU8(ssr_sol_id);
-        builder.putU16(tile_set_id);
-        builder.putU16(tile_id);
-        builder.putU8(chain_id);
+        header.build(builder);
         builder.putU16(grid_point_id);
         builder.putU8(n_faulty_los);
         builder.putArray(faulty_los);
@@ -98,13 +68,7 @@ public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("obs_time", obs_time.toJSON());
-        obj.put("num_msgs", num_msgs);
-        obj.put("seq_num", seq_num);
-        obj.put("ssr_sol_id", ssr_sol_id);
-        obj.put("tile_set_id", tile_set_id);
-        obj.put("tile_id", tile_id);
-        obj.put("chain_id", chain_id);
+        obj.put("header", header.toJSON());
         obj.put("grid_point_id", grid_point_id);
         obj.put("n_faulty_los", n_faulty_los);
         obj.put("faulty_los", SBPStruct.toJSONArray(faulty_los));

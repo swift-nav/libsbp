@@ -16,6 +16,131 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/integrity.h>
 
+bool sbp_integrity_ssr_header_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_integrity_ssr_header_t *msg) {
+  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->obs_time)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->num_msgs)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->seq_num)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->ssr_sol_id)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->tile_id)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->chain_id)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_integrity_ssr_header_encode(uint8_t *buf, uint8_t len,
+                                   uint8_t *n_written,
+                                   const sbp_integrity_ssr_header_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_integrity_ssr_header_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_integrity_ssr_header_decode_internal(sbp_decode_ctx_t *ctx,
+                                              sbp_integrity_ssr_header_t *msg) {
+  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->obs_time)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->num_msgs)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->seq_num)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->ssr_sol_id)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->tile_id)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->chain_id)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_integrity_ssr_header_decode(const uint8_t *buf, uint8_t len,
+                                   uint8_t *n_read,
+                                   sbp_integrity_ssr_header_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_integrity_ssr_header_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+int sbp_integrity_ssr_header_cmp(const sbp_integrity_ssr_header_t *a,
+                                 const sbp_integrity_ssr_header_t *b) {
+  int ret = 0;
+
+  ret = sbp_gps_time_sec_cmp(&a->obs_time, &b->obs_time);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->num_msgs, &b->num_msgs);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->seq_num, &b->seq_num);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->ssr_sol_id, &b->ssr_sol_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->tile_set_id, &b->tile_set_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->tile_id, &b->tile_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->chain_id, &b->chain_id);
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}
+
 bool sbp_msg_ssr_flag_high_level_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_flag_high_level_t *msg) {
   if (!sbp_gps_time_sec_encode_internal(ctx, &msg->obs_time)) {
@@ -401,25 +526,7 @@ int sbp_msg_ssr_flag_satellites_cmp(const sbp_msg_ssr_flag_satellites_t *a,
 
 bool sbp_msg_ssr_flag_tropo_grid_points_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_flag_tropo_grid_points_t *msg) {
-  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_encode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->n_faulty_points)) {
@@ -451,25 +558,7 @@ s8 sbp_msg_ssr_flag_tropo_grid_points_encode(
 
 bool sbp_msg_ssr_flag_tropo_grid_points_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_flag_tropo_grid_points_t *msg) {
-  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_decode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_faulty_points)) {
@@ -520,37 +609,7 @@ int sbp_msg_ssr_flag_tropo_grid_points_cmp(
     const sbp_msg_ssr_flag_tropo_grid_points_t *b) {
   int ret = 0;
 
-  ret = sbp_gps_time_sec_cmp(&a->obs_time, &b->obs_time);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->num_msgs, &b->num_msgs);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->seq_num, &b->seq_num);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->ssr_sol_id, &b->ssr_sol_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_set_id, &b->tile_set_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_id, &b->tile_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->chain_id, &b->chain_id);
+  ret = sbp_integrity_ssr_header_cmp(&a->header, &b->header);
   if (ret != 0) {
     return ret;
   }
@@ -572,25 +631,7 @@ int sbp_msg_ssr_flag_tropo_grid_points_cmp(
 
 bool sbp_msg_ssr_flag_iono_grid_points_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_flag_iono_grid_points_t *msg) {
-  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_encode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->n_faulty_points)) {
@@ -622,25 +663,7 @@ s8 sbp_msg_ssr_flag_iono_grid_points_encode(
 
 bool sbp_msg_ssr_flag_iono_grid_points_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_flag_iono_grid_points_t *msg) {
-  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_decode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_faulty_points)) {
@@ -691,37 +714,7 @@ int sbp_msg_ssr_flag_iono_grid_points_cmp(
     const sbp_msg_ssr_flag_iono_grid_points_t *b) {
   int ret = 0;
 
-  ret = sbp_gps_time_sec_cmp(&a->obs_time, &b->obs_time);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->num_msgs, &b->num_msgs);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->seq_num, &b->seq_num);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->ssr_sol_id, &b->ssr_sol_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_set_id, &b->tile_set_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_id, &b->tile_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->chain_id, &b->chain_id);
+  ret = sbp_integrity_ssr_header_cmp(&a->header, &b->header);
   if (ret != 0) {
     return ret;
   }
@@ -743,25 +736,7 @@ int sbp_msg_ssr_flag_iono_grid_points_cmp(
 
 bool sbp_msg_ssr_flag_iono_tile_sat_los_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_flag_iono_tile_sat_los_t *msg) {
-  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_encode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->n_faulty_los)) {
@@ -793,25 +768,7 @@ s8 sbp_msg_ssr_flag_iono_tile_sat_los_encode(
 
 bool sbp_msg_ssr_flag_iono_tile_sat_los_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_flag_iono_tile_sat_los_t *msg) {
-  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_decode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_faulty_los)) {
@@ -862,37 +819,7 @@ int sbp_msg_ssr_flag_iono_tile_sat_los_cmp(
     const sbp_msg_ssr_flag_iono_tile_sat_los_t *b) {
   int ret = 0;
 
-  ret = sbp_gps_time_sec_cmp(&a->obs_time, &b->obs_time);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->num_msgs, &b->num_msgs);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->seq_num, &b->seq_num);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->ssr_sol_id, &b->ssr_sol_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_set_id, &b->tile_set_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_id, &b->tile_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->chain_id, &b->chain_id);
+  ret = sbp_integrity_ssr_header_cmp(&a->header, &b->header);
   if (ret != 0) {
     return ret;
   }
@@ -915,25 +842,7 @@ int sbp_msg_ssr_flag_iono_tile_sat_los_cmp(
 bool sbp_msg_ssr_flag_iono_grid_point_sat_los_encode_internal(
     sbp_encode_ctx_t *ctx,
     const sbp_msg_ssr_flag_iono_grid_point_sat_los_t *msg) {
-  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_encode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_encode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->grid_point_id)) {
@@ -968,25 +877,7 @@ s8 sbp_msg_ssr_flag_iono_grid_point_sat_los_encode(
 
 bool sbp_msg_ssr_flag_iono_grid_point_sat_los_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_flag_iono_grid_point_sat_los_t *msg) {
-  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->obs_time)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->num_msgs)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->seq_num)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->ssr_sol_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
-    return false;
-  }
-  if (!sbp_u16_decode(ctx, &msg->tile_id)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->chain_id)) {
+  if (!sbp_integrity_ssr_header_decode_internal(ctx, &msg->header)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->grid_point_id)) {
@@ -1041,37 +932,7 @@ int sbp_msg_ssr_flag_iono_grid_point_sat_los_cmp(
     const sbp_msg_ssr_flag_iono_grid_point_sat_los_t *b) {
   int ret = 0;
 
-  ret = sbp_gps_time_sec_cmp(&a->obs_time, &b->obs_time);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->num_msgs, &b->num_msgs);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->seq_num, &b->seq_num);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->ssr_sol_id, &b->ssr_sol_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_set_id, &b->tile_set_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u16_cmp(&a->tile_id, &b->tile_id);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->chain_id, &b->chain_id);
+  ret = sbp_integrity_ssr_header_cmp(&a->header, &b->header);
   if (ret != 0) {
     return ret;
   }

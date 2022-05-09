@@ -82,21 +82,21 @@ TEST_F(Test_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos0, Test) {
   };
 
   sbp_msg_ssr_flag_iono_tile_sat_los_t test_msg{};
-  test_msg.chain_id = 6;
 
   test_msg.faulty_los[0].constellation = 11;
   test_msg.faulty_los[0].satId = 10;
 
   test_msg.faulty_los[1].constellation = 14;
   test_msg.faulty_los[1].satId = 15;
+  test_msg.header.chain_id = 6;
+  test_msg.header.num_msgs = 1;
+  test_msg.header.obs_time.tow = 180;
+  test_msg.header.obs_time.wn = 3;
+  test_msg.header.seq_num = 2;
+  test_msg.header.ssr_sol_id = 3;
+  test_msg.header.tile_id = 5;
+  test_msg.header.tile_set_id = 4;
   test_msg.n_faulty_los = 2;
-  test_msg.num_msgs = 1;
-  test_msg.obs_time.tow = 180;
-  test_msg.obs_time.wn = 3;
-  test_msg.seq_num = 2;
-  test_msg.ssr_sol_id = 3;
-  test_msg.tile_id = 5;
-  test_msg.tile_set_id = 4;
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -110,9 +110,6 @@ TEST_F(Test_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.chain_id, 6)
-      << "incorrect value for last_msg_.chain_id, expected 6, is "
-      << last_msg_.chain_id;
   EXPECT_EQ(last_msg_.faulty_los[0].constellation, 11)
       << "incorrect value for last_msg_.faulty_los[0].constellation, expected "
          "11, is "
@@ -127,28 +124,31 @@ TEST_F(Test_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos0, Test) {
   EXPECT_EQ(last_msg_.faulty_los[1].satId, 15)
       << "incorrect value for last_msg_.faulty_los[1].satId, expected 15, is "
       << last_msg_.faulty_los[1].satId;
+  EXPECT_EQ(last_msg_.header.chain_id, 6)
+      << "incorrect value for last_msg_.header.chain_id, expected 6, is "
+      << last_msg_.header.chain_id;
+  EXPECT_EQ(last_msg_.header.num_msgs, 1)
+      << "incorrect value for last_msg_.header.num_msgs, expected 1, is "
+      << last_msg_.header.num_msgs;
+  EXPECT_EQ(last_msg_.header.obs_time.tow, 180)
+      << "incorrect value for last_msg_.header.obs_time.tow, expected 180, is "
+      << last_msg_.header.obs_time.tow;
+  EXPECT_EQ(last_msg_.header.obs_time.wn, 3)
+      << "incorrect value for last_msg_.header.obs_time.wn, expected 3, is "
+      << last_msg_.header.obs_time.wn;
+  EXPECT_EQ(last_msg_.header.seq_num, 2)
+      << "incorrect value for last_msg_.header.seq_num, expected 2, is "
+      << last_msg_.header.seq_num;
+  EXPECT_EQ(last_msg_.header.ssr_sol_id, 3)
+      << "incorrect value for last_msg_.header.ssr_sol_id, expected 3, is "
+      << last_msg_.header.ssr_sol_id;
+  EXPECT_EQ(last_msg_.header.tile_id, 5)
+      << "incorrect value for last_msg_.header.tile_id, expected 5, is "
+      << last_msg_.header.tile_id;
+  EXPECT_EQ(last_msg_.header.tile_set_id, 4)
+      << "incorrect value for last_msg_.header.tile_set_id, expected 4, is "
+      << last_msg_.header.tile_set_id;
   EXPECT_EQ(last_msg_.n_faulty_los, 2)
       << "incorrect value for last_msg_.n_faulty_los, expected 2, is "
       << last_msg_.n_faulty_los;
-  EXPECT_EQ(last_msg_.num_msgs, 1)
-      << "incorrect value for last_msg_.num_msgs, expected 1, is "
-      << last_msg_.num_msgs;
-  EXPECT_EQ(last_msg_.obs_time.tow, 180)
-      << "incorrect value for last_msg_.obs_time.tow, expected 180, is "
-      << last_msg_.obs_time.tow;
-  EXPECT_EQ(last_msg_.obs_time.wn, 3)
-      << "incorrect value for last_msg_.obs_time.wn, expected 3, is "
-      << last_msg_.obs_time.wn;
-  EXPECT_EQ(last_msg_.seq_num, 2)
-      << "incorrect value for last_msg_.seq_num, expected 2, is "
-      << last_msg_.seq_num;
-  EXPECT_EQ(last_msg_.ssr_sol_id, 3)
-      << "incorrect value for last_msg_.ssr_sol_id, expected 3, is "
-      << last_msg_.ssr_sol_id;
-  EXPECT_EQ(last_msg_.tile_id, 5)
-      << "incorrect value for last_msg_.tile_id, expected 5, is "
-      << last_msg_.tile_id;
-  EXPECT_EQ(last_msg_.tile_set_id, 4)
-      << "incorrect value for last_msg_.tile_set_id, expected 4, is "
-      << last_msg_.tile_set_id;
 }

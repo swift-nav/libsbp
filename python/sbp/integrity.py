@@ -26,6 +26,66 @@ from sbp.gnss import GPSTimeSec, SvId
 # Please do not hand edit!
 
 
+class IntegritySSRHeader(object):
+  """IntegritySSRHeader.
+  
+  
+  Parameters
+  ----------
+  obs_time : GPSTimeSec
+    GNSS reference time of the observation used to generate the flag.
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  ssr_sol_id : int
+    SSR Solution ID.
+  tile_set_id : int
+    Unique identifier of the set this tile belongs to.
+  tile_id : int
+    Unique identifier of this tile in the tile set.
+  chain_id : int
+    Chain and type of flag.
+
+  """
+  _parser = construct.Struct(
+                     'obs_time' / GPSTimeSec._parser,
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,
+                     'ssr_sol_id' / construct.Int8ul,
+                     'tile_set_id' / construct.Int16ul,
+                     'tile_id' / construct.Int16ul,
+                     'chain_id' / construct.Int8ul,)
+  __slots__ = [
+               'obs_time',
+               'num_msgs',
+               'seq_num',
+               'ssr_sol_id',
+               'tile_set_id',
+               'tile_id',
+               'chain_id',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.obs_time = kwargs.pop('obs_time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.chain_id = kwargs.pop('chain_id')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = IntegritySSRHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
 SBP_MSG_SSR_FLAG_HIGH_LEVEL = 0x0BB9
 class MsgSsrFlagHighLevel(SBP):
   """SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
@@ -316,20 +376,8 @@ class MsgSsrFlagTropoGridPoints(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  obs_time : GPSTimeSec
-    GNSS reference time of the observation used to generate the flag.
-  num_msgs : int
-    Number of messages in the dataset
-  seq_num : int
-    Position of this message in the dataset
-  ssr_sol_id : int
-    SSR Solution ID.
-  tile_set_id : int
-    Unique identifier of the set this tile belongs to.
-  tile_id : int
-    Unique identifier of this tile in the tile set.
-  chain_id : int
-    Chain and type of flag.
+  header : IntegritySSRHeader
+    Header of an integrity message.
   n_faulty_points : int
     Number of faulty grid points.
   faulty_points : array
@@ -339,23 +387,11 @@ class MsgSsrFlagTropoGridPoints(SBP):
 
   """
   _parser = construct.Struct(
-                   'obs_time' / GPSTimeSec._parser,
-                   'num_msgs' / construct.Int8ul,
-                   'seq_num' / construct.Int8ul,
-                   'ssr_sol_id' / construct.Int8ul,
-                   'tile_set_id' / construct.Int16ul,
-                   'tile_id' / construct.Int16ul,
-                   'chain_id' / construct.Int8ul,
+                   'header' / IntegritySSRHeader._parser,
                    'n_faulty_points' / construct.Int8ul,
                    'faulty_points' / construct.GreedyRange(construct.Int16ul),)
   __slots__ = [
-               'obs_time',
-               'num_msgs',
-               'seq_num',
-               'ssr_sol_id',
-               'tile_set_id',
-               'tile_id',
-               'chain_id',
+               'header',
                'n_faulty_points',
                'faulty_points',
               ]
@@ -370,13 +406,7 @@ class MsgSsrFlagTropoGridPoints(SBP):
       super( MsgSsrFlagTropoGridPoints, self).__init__()
       self.msg_type = SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.obs_time = kwargs.pop('obs_time')
-      self.num_msgs = kwargs.pop('num_msgs')
-      self.seq_num = kwargs.pop('seq_num')
-      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
-      self.tile_set_id = kwargs.pop('tile_set_id')
-      self.tile_id = kwargs.pop('tile_id')
-      self.chain_id = kwargs.pop('chain_id')
+      self.header = kwargs.pop('header')
       self.n_faulty_points = kwargs.pop('n_faulty_points')
       self.faulty_points = kwargs.pop('faulty_points')
 
@@ -444,20 +474,8 @@ class MsgSsrFlagIonoGridPoints(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  obs_time : GPSTimeSec
-    GNSS reference time of the observation used to generate the flag.
-  num_msgs : int
-    Number of messages in the dataset
-  seq_num : int
-    Position of this message in the dataset
-  ssr_sol_id : int
-    SSR Solution ID.
-  tile_set_id : int
-    Unique identifier of the set this tile belongs to.
-  tile_id : int
-    Unique identifier of this tile in the tile set.
-  chain_id : int
-    Chain and type of flag.
+  header : IntegritySSRHeader
+    Header of an integrity message.
   n_faulty_points : int
     Number of faulty grid points.
   faulty_points : array
@@ -467,23 +485,11 @@ class MsgSsrFlagIonoGridPoints(SBP):
 
   """
   _parser = construct.Struct(
-                   'obs_time' / GPSTimeSec._parser,
-                   'num_msgs' / construct.Int8ul,
-                   'seq_num' / construct.Int8ul,
-                   'ssr_sol_id' / construct.Int8ul,
-                   'tile_set_id' / construct.Int16ul,
-                   'tile_id' / construct.Int16ul,
-                   'chain_id' / construct.Int8ul,
+                   'header' / IntegritySSRHeader._parser,
                    'n_faulty_points' / construct.Int8ul,
                    'faulty_points' / construct.GreedyRange(construct.Int16ul),)
   __slots__ = [
-               'obs_time',
-               'num_msgs',
-               'seq_num',
-               'ssr_sol_id',
-               'tile_set_id',
-               'tile_id',
-               'chain_id',
+               'header',
                'n_faulty_points',
                'faulty_points',
               ]
@@ -498,13 +504,7 @@ class MsgSsrFlagIonoGridPoints(SBP):
       super( MsgSsrFlagIonoGridPoints, self).__init__()
       self.msg_type = SBP_MSG_SSR_FLAG_IONO_GRID_POINTS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.obs_time = kwargs.pop('obs_time')
-      self.num_msgs = kwargs.pop('num_msgs')
-      self.seq_num = kwargs.pop('seq_num')
-      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
-      self.tile_set_id = kwargs.pop('tile_set_id')
-      self.tile_id = kwargs.pop('tile_id')
-      self.chain_id = kwargs.pop('chain_id')
+      self.header = kwargs.pop('header')
       self.n_faulty_points = kwargs.pop('n_faulty_points')
       self.faulty_points = kwargs.pop('faulty_points')
 
@@ -572,20 +572,8 @@ class MsgSsrFlagIonoTileSatLos(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  obs_time : GPSTimeSec
-    GNSS reference time of the observation used to generate the flag.
-  num_msgs : int
-    Number of messages in the dataset
-  seq_num : int
-    Position of this message in the dataset
-  ssr_sol_id : int
-    SSR Solution ID.
-  tile_set_id : int
-    Unique identifier of the set this tile belongs to.
-  tile_id : int
-    Unique identifier of this tile in the tile set.
-  chain_id : int
-    Chain and type of flag.
+  header : IntegritySSRHeader
+    Header of an integrity message.
   n_faulty_los : int
     Number of faulty LOS.
   faulty_los : array
@@ -595,23 +583,11 @@ class MsgSsrFlagIonoTileSatLos(SBP):
 
   """
   _parser = construct.Struct(
-                   'obs_time' / GPSTimeSec._parser,
-                   'num_msgs' / construct.Int8ul,
-                   'seq_num' / construct.Int8ul,
-                   'ssr_sol_id' / construct.Int8ul,
-                   'tile_set_id' / construct.Int16ul,
-                   'tile_id' / construct.Int16ul,
-                   'chain_id' / construct.Int8ul,
+                   'header' / IntegritySSRHeader._parser,
                    'n_faulty_los' / construct.Int8ul,
                    'faulty_los' / construct.GreedyRange(SvId._parser),)
   __slots__ = [
-               'obs_time',
-               'num_msgs',
-               'seq_num',
-               'ssr_sol_id',
-               'tile_set_id',
-               'tile_id',
-               'chain_id',
+               'header',
                'n_faulty_los',
                'faulty_los',
               ]
@@ -626,13 +602,7 @@ class MsgSsrFlagIonoTileSatLos(SBP):
       super( MsgSsrFlagIonoTileSatLos, self).__init__()
       self.msg_type = SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.obs_time = kwargs.pop('obs_time')
-      self.num_msgs = kwargs.pop('num_msgs')
-      self.seq_num = kwargs.pop('seq_num')
-      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
-      self.tile_set_id = kwargs.pop('tile_set_id')
-      self.tile_id = kwargs.pop('tile_id')
-      self.chain_id = kwargs.pop('chain_id')
+      self.header = kwargs.pop('header')
       self.n_faulty_los = kwargs.pop('n_faulty_los')
       self.faulty_los = kwargs.pop('faulty_los')
 
@@ -700,20 +670,8 @@ class MsgSsrFlagIonoGridPointSatLos(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  obs_time : GPSTimeSec
-    GNSS reference time of the observation used to generate the flag.
-  num_msgs : int
-    Number of messages in the dataset
-  seq_num : int
-    Position of this message in the dataset
-  ssr_sol_id : int
-    SSR Solution ID.
-  tile_set_id : int
-    Unique identifier of the set this tile belongs to.
-  tile_id : int
-    Unique identifier of this tile in the tile set.
-  chain_id : int
-    Chain and type of flag.
+  header : IntegritySSRHeader
+    Header of an integrity message.
   grid_point_id : int
     Index of the grid point.
   n_faulty_los : int
@@ -725,24 +683,12 @@ class MsgSsrFlagIonoGridPointSatLos(SBP):
 
   """
   _parser = construct.Struct(
-                   'obs_time' / GPSTimeSec._parser,
-                   'num_msgs' / construct.Int8ul,
-                   'seq_num' / construct.Int8ul,
-                   'ssr_sol_id' / construct.Int8ul,
-                   'tile_set_id' / construct.Int16ul,
-                   'tile_id' / construct.Int16ul,
-                   'chain_id' / construct.Int8ul,
+                   'header' / IntegritySSRHeader._parser,
                    'grid_point_id' / construct.Int16ul,
                    'n_faulty_los' / construct.Int8ul,
                    'faulty_los' / construct.GreedyRange(SvId._parser),)
   __slots__ = [
-               'obs_time',
-               'num_msgs',
-               'seq_num',
-               'ssr_sol_id',
-               'tile_set_id',
-               'tile_id',
-               'chain_id',
+               'header',
                'grid_point_id',
                'n_faulty_los',
                'faulty_los',
@@ -758,13 +704,7 @@ class MsgSsrFlagIonoGridPointSatLos(SBP):
       super( MsgSsrFlagIonoGridPointSatLos, self).__init__()
       self.msg_type = SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.obs_time = kwargs.pop('obs_time')
-      self.num_msgs = kwargs.pop('num_msgs')
-      self.seq_num = kwargs.pop('seq_num')
-      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
-      self.tile_set_id = kwargs.pop('tile_set_id')
-      self.tile_id = kwargs.pop('tile_id')
-      self.chain_id = kwargs.pop('chain_id')
+      self.header = kwargs.pop('header')
       self.grid_point_id = kwargs.pop('grid_point_id')
       self.n_faulty_los = kwargs.pop('n_faulty_los')
       self.faulty_los = kwargs.pop('faulty_los')

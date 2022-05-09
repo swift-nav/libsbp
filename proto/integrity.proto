@@ -21,6 +21,20 @@ package swiftnav.sbp.integrity;
 
 import "gnss.proto";
 
+/** Common fields for SSR integrity messages
+ *
+None
+ */
+message IntegritySSRHeader {
+    gnss.GpsTimeSec obs_time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_sol_id = 4;
+    uint32 tile_set_id = 5;
+    uint32 tile_id = 6;
+    uint32 chain_id = 7;
+}
+
 /** High level integrity flags
  *
 None
@@ -61,15 +75,9 @@ message MsgSsrFlagSatellites {
 None
  */
 message MsgSsrFlagTropoGridPoints {
-    gnss.GpsTimeSec obs_time = 1;
-    uint32 num_msgs = 2;
-    uint32 seq_num = 3;
-    uint32 ssr_sol_id = 4;
-    uint32 tile_set_id = 5;
-    uint32 tile_id = 6;
-    uint32 chain_id = 7;
-    uint32 n_faulty_points = 8;
-    repeated uint32 faulty_points = 9;
+    IntegritySSRHeader header = 1;
+    uint32 n_faulty_points = 2;
+    repeated uint32 faulty_points = 3;
 }
 
 /** List of grid points which are faulty
@@ -77,15 +85,9 @@ message MsgSsrFlagTropoGridPoints {
 None
  */
 message MsgSsrFlagIonoGridPoints {
-    gnss.GpsTimeSec obs_time = 1;
-    uint32 num_msgs = 2;
-    uint32 seq_num = 3;
-    uint32 ssr_sol_id = 4;
-    uint32 tile_set_id = 5;
-    uint32 tile_id = 6;
-    uint32 chain_id = 7;
-    uint32 n_faulty_points = 8;
-    repeated uint32 faulty_points = 9;
+    IntegritySSRHeader header = 1;
+    uint32 n_faulty_points = 2;
+    repeated uint32 faulty_points = 3;
 }
 
 /** List of all the LOS which are faulty
@@ -93,15 +95,9 @@ message MsgSsrFlagIonoGridPoints {
 None
  */
 message MsgSsrFlagIonoTileSatLos {
-    gnss.GpsTimeSec obs_time = 1;
-    uint32 num_msgs = 2;
-    uint32 seq_num = 3;
-    uint32 ssr_sol_id = 4;
-    uint32 tile_set_id = 5;
-    uint32 tile_id = 6;
-    uint32 chain_id = 7;
-    uint32 n_faulty_los = 8;
-    repeated SvId faulty_los = 9;
+    IntegritySSRHeader header = 1;
+    uint32 n_faulty_los = 2;
+    repeated SvId faulty_los = 3;
 }
 
 /** List of all the grid points to satellite which are faulty
@@ -109,14 +105,8 @@ message MsgSsrFlagIonoTileSatLos {
 None
  */
 message MsgSsrFlagIonoGridPointSatLos {
-    gnss.GpsTimeSec obs_time = 1;
-    uint32 num_msgs = 2;
-    uint32 seq_num = 3;
-    uint32 ssr_sol_id = 4;
-    uint32 tile_set_id = 5;
-    uint32 tile_id = 6;
-    uint32 chain_id = 7;
-    uint32 grid_point_id = 8;
-    uint32 n_faulty_los = 9;
-    repeated SvId faulty_los = 10;
+    IntegritySSRHeader header = 1;
+    uint32 grid_point_id = 2;
+    uint32 n_faulty_los = 3;
+    repeated SvId faulty_los = 4;
 }

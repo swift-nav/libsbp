@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -20,6 +20,7 @@
 //   const gridElementNoStd = Convert.toGridElementNoStd(json);
 //   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
 //   const iMUInputType = Convert.toIMUInputType(json);
+//   const integritySSRHeader = Convert.toIntegritySSRHeader(json);
 //   const latency = Convert.toLatency(json);
 //   const measurementState = Convert.toMeasurementState(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
@@ -2014,40 +2015,32 @@ export interface MsgSsrFlagHighLevel {
 }
 
 export interface MsgSsrFlagIonoGridPointSatLos {
-    chain_id:      number;
     faulty_los:    SvID[];
     grid_point_id: number;
+    header:        IntegritySSRHeader;
     n_faulty_los:  number;
-    num_msgs:      number;
-    obs_time:      GpsTimeSEC;
-    seq_num:       number;
-    ssr_sol_id:    number;
-    tile_id:       number;
-    tile_set_id:   number;
+}
+
+export interface IntegritySSRHeader {
+    chain_id:    number;
+    num_msgs:    number;
+    obs_time:    GpsTimeSEC;
+    seq_num:     number;
+    ssr_sol_id:  number;
+    tile_id:     number;
+    tile_set_id: number;
 }
 
 export interface MsgSsrFlagIonoGridPoints {
-    chain_id:        number;
     faulty_points:   number[];
+    header:          IntegritySSRHeader;
     n_faulty_points: number;
-    num_msgs:        number;
-    obs_time:        GpsTimeSEC;
-    seq_num:         number;
-    ssr_sol_id:      number;
-    tile_id:         number;
-    tile_set_id:     number;
 }
 
 export interface MsgSsrFlagIonoTileSatLos {
-    chain_id:     number;
     faulty_los:   SvID[];
+    header:       IntegritySSRHeader;
     n_faulty_los: number;
-    num_msgs:     number;
-    obs_time:     GpsTimeSEC;
-    seq_num:      number;
-    ssr_sol_id:   number;
-    tile_id:      number;
-    tile_set_id:  number;
 }
 
 export interface MsgSsrFlagSatellites {
@@ -2062,15 +2055,9 @@ export interface MsgSsrFlagSatellites {
 }
 
 export interface MsgSsrFlagTropoGridPoints {
-    chain_id:        number;
     faulty_points:   number[];
+    header:          IntegritySSRHeader;
     n_faulty_points: number;
-    num_msgs:        number;
-    obs_time:        GpsTimeSEC;
-    seq_num:         number;
-    ssr_sol_id:      number;
-    tile_id:         number;
-    tile_set_id:     number;
 }
 
 /**
@@ -2894,6 +2881,14 @@ export class Convert {
 
     public static iMUInputTypeToJson(value: IMUInputType): string {
         return JSON.stringify(uncast(value, r("IMUInputType")), null, 2);
+    }
+
+    public static toIntegritySSRHeader(json: string): IntegritySSRHeader {
+        return cast(JSON.parse(json), r("IntegritySSRHeader"));
+    }
+
+    public static integritySSRHeaderToJson(value: IntegritySSRHeader): string {
+        return JSON.stringify(uncast(value, r("IntegritySSRHeader")), null, 2);
     }
 
     public static toLatency(json: string): Latency {
@@ -5473,10 +5468,13 @@ const typeMap: any = {
         { json: "use_tropo_grid_points", js: "use_tropo_grid_points", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPointSatLos": o([
-        { json: "chain_id", js: "chain_id", typ: 0 },
         { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
         { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
         { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
+    ], "any"),
+    "IntegritySSRHeader": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
         { json: "num_msgs", js: "num_msgs", typ: 0 },
         { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
         { json: "seq_num", js: "seq_num", typ: 0 },
@@ -5485,26 +5483,14 @@ const typeMap: any = {
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPoints": o([
-        { json: "chain_id", js: "chain_id", typ: 0 },
         { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
         { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
-        { json: "seq_num", js: "seq_num", typ: 0 },
-        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
-        { json: "tile_id", js: "tile_id", typ: 0 },
-        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoTileSatLos": o([
-        { json: "chain_id", js: "chain_id", typ: 0 },
         { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
         { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
-        { json: "seq_num", js: "seq_num", typ: 0 },
-        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
-        { json: "tile_id", js: "tile_id", typ: 0 },
-        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagSatellites": o([
         { json: "chain_id", js: "chain_id", typ: 0 },
@@ -5517,15 +5503,9 @@ const typeMap: any = {
         { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagTropoGridPoints": o([
-        { json: "chain_id", js: "chain_id", typ: 0 },
         { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
         { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
-        { json: "seq_num", js: "seq_num", typ: 0 },
-        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
-        { json: "tile_id", js: "tile_id", typ: 0 },
-        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
