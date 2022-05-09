@@ -24,6 +24,7 @@
 #include <libsbp/v4/flash.h>
 #include <libsbp/v4/gnss.h>
 #include <libsbp/v4/imu.h>
+#include <libsbp/v4/integrity.h>
 #include <libsbp/v4/linux.h>
 #include <libsbp/v4/logging.h>
 #include <libsbp/v4/mag.h>
@@ -5618,6 +5619,231 @@ struct MessageTraits<sbp_msg_ssr_code_phase_biases_bounds_t> {
   }
   static size_t encoded_len(const sbp_msg_ssr_code_phase_biases_bounds_t &msg) {
     return sbp_msg_ssr_code_phase_biases_bounds_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ssr_flag_high_level_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrFlagHighLevel;
+  static const sbp_msg_ssr_flag_high_level_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_flag_high_level;
+  }
+  static sbp_msg_ssr_flag_high_level_t &get(sbp_msg_t &msg) {
+    return msg.ssr_flag_high_level;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_flag_high_level_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_flag_high_level = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_flag_high_level_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_flag_high_level = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_flag_high_level_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_flag_high_level_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_flag_high_level_t &msg) {
+    return sbp_msg_ssr_flag_high_level_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_flag_high_level_t *msg) {
+    return sbp_msg_ssr_flag_high_level_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_flag_high_level_t &msg) {
+    return sbp_msg_ssr_flag_high_level_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ssr_flag_iono_grid_point_sat_los_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrFlagIonoGridPointSatLos;
+  static const sbp_msg_ssr_flag_iono_grid_point_sat_los_t &get(
+      const sbp_msg_t &msg) {
+    return msg.ssr_flag_iono_grid_point_sat_los;
+  }
+  static sbp_msg_ssr_flag_iono_grid_point_sat_los_t &get(sbp_msg_t &msg) {
+    return msg.ssr_flag_iono_grid_point_sat_los;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_flag_iono_grid_point_sat_los_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_flag_iono_grid_point_sat_los = msg;
+  }
+  static sbp_msg_t to_sbp_msg(
+      const sbp_msg_ssr_flag_iono_grid_point_sat_los_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_flag_iono_grid_point_sat_los = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_flag_iono_grid_point_sat_los_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_flag_iono_grid_point_sat_los_send(state, sender_id, &msg,
+                                                         write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_flag_iono_grid_point_sat_los_t &msg) {
+    return sbp_msg_ssr_flag_iono_grid_point_sat_los_encode(buf, len, n_written,
+                                                           &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_flag_iono_grid_point_sat_los_t *msg) {
+    return sbp_msg_ssr_flag_iono_grid_point_sat_los_decode(buf, len, n_read,
+                                                           msg);
+  }
+  static size_t encoded_len(
+      const sbp_msg_ssr_flag_iono_grid_point_sat_los_t &msg) {
+    return sbp_msg_ssr_flag_iono_grid_point_sat_los_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ssr_flag_iono_grid_points_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrFlagIonoGridPoints;
+  static const sbp_msg_ssr_flag_iono_grid_points_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_flag_iono_grid_points;
+  }
+  static sbp_msg_ssr_flag_iono_grid_points_t &get(sbp_msg_t &msg) {
+    return msg.ssr_flag_iono_grid_points;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_flag_iono_grid_points_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_flag_iono_grid_points = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_flag_iono_grid_points_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_flag_iono_grid_points = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_flag_iono_grid_points_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_flag_iono_grid_points_send(state, sender_id, &msg,
+                                                  write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_flag_iono_grid_points_t &msg) {
+    return sbp_msg_ssr_flag_iono_grid_points_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_flag_iono_grid_points_t *msg) {
+    return sbp_msg_ssr_flag_iono_grid_points_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_flag_iono_grid_points_t &msg) {
+    return sbp_msg_ssr_flag_iono_grid_points_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ssr_flag_iono_tile_sat_los_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrFlagIonoTileSatLos;
+  static const sbp_msg_ssr_flag_iono_tile_sat_los_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_flag_iono_tile_sat_los;
+  }
+  static sbp_msg_ssr_flag_iono_tile_sat_los_t &get(sbp_msg_t &msg) {
+    return msg.ssr_flag_iono_tile_sat_los;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_flag_iono_tile_sat_los_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_flag_iono_tile_sat_los = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_flag_iono_tile_sat_los_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_flag_iono_tile_sat_los = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_flag_iono_tile_sat_los_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_flag_iono_tile_sat_los_send(state, sender_id, &msg,
+                                                   write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_flag_iono_tile_sat_los_t &msg) {
+    return sbp_msg_ssr_flag_iono_tile_sat_los_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_flag_iono_tile_sat_los_t *msg) {
+    return sbp_msg_ssr_flag_iono_tile_sat_los_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_flag_iono_tile_sat_los_t &msg) {
+    return sbp_msg_ssr_flag_iono_tile_sat_los_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ssr_flag_satellites_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrFlagSatellites;
+  static const sbp_msg_ssr_flag_satellites_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_flag_satellites;
+  }
+  static sbp_msg_ssr_flag_satellites_t &get(sbp_msg_t &msg) {
+    return msg.ssr_flag_satellites;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_flag_satellites_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_flag_satellites = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_flag_satellites_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_flag_satellites = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_flag_satellites_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_flag_satellites_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_flag_satellites_t &msg) {
+    return sbp_msg_ssr_flag_satellites_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_flag_satellites_t *msg) {
+    return sbp_msg_ssr_flag_satellites_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_flag_satellites_t &msg) {
+    return sbp_msg_ssr_flag_satellites_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ssr_flag_tropo_grid_points_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgSsrFlagTropoGridPoints;
+  static const sbp_msg_ssr_flag_tropo_grid_points_t &get(const sbp_msg_t &msg) {
+    return msg.ssr_flag_tropo_grid_points;
+  }
+  static sbp_msg_ssr_flag_tropo_grid_points_t &get(sbp_msg_t &msg) {
+    return msg.ssr_flag_tropo_grid_points;
+  }
+  static void to_sbp_msg(const sbp_msg_ssr_flag_tropo_grid_points_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ssr_flag_tropo_grid_points = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ssr_flag_tropo_grid_points_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ssr_flag_tropo_grid_points = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ssr_flag_tropo_grid_points_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ssr_flag_tropo_grid_points_send(state, sender_id, &msg,
+                                                   write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ssr_flag_tropo_grid_points_t &msg) {
+    return sbp_msg_ssr_flag_tropo_grid_points_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ssr_flag_tropo_grid_points_t *msg) {
+    return sbp_msg_ssr_flag_tropo_grid_points_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ssr_flag_tropo_grid_points_t &msg) {
+    return sbp_msg_ssr_flag_tropo_grid_points_encoded_len(&msg);
   }
 };
 

@@ -31,6 +31,7 @@ import SwiftNav.SBP.FileIo
 import SwiftNav.SBP.Flash
 import SwiftNav.SBP.Gnss
 import SwiftNav.SBP.Imu
+import SwiftNav.SBP.Integrity
 import SwiftNav.SBP.Linux
 import SwiftNav.SBP.Logging
 import SwiftNav.SBP.Mag
@@ -214,6 +215,12 @@ data SBPMsg =
    | SBPMsgSpecanDep MsgSpecanDep Msg
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
    | SBPMsgSsrCodePhaseBiasesBounds MsgSsrCodePhaseBiasesBounds Msg
+   | SBPMsgSsrFlagHighLevel MsgSsrFlagHighLevel Msg
+   | SBPMsgSsrFlagIonoGridPointSatLos MsgSsrFlagIonoGridPointSatLos Msg
+   | SBPMsgSsrFlagIonoGridPoints MsgSsrFlagIonoGridPoints Msg
+   | SBPMsgSsrFlagIonoTileSatLos MsgSsrFlagIonoTileSatLos Msg
+   | SBPMsgSsrFlagSatellites MsgSsrFlagSatellites Msg
+   | SBPMsgSsrFlagTropoGridPoints MsgSsrFlagTropoGridPoints Msg
    | SBPMsgSsrGridDefinitionDepA MsgSsrGridDefinitionDepA Msg
    | SBPMsgSsrGriddedCorrection MsgSsrGriddedCorrection Msg
    | SBPMsgSsrGriddedCorrectionBounds MsgSsrGriddedCorrectionBounds Msg
@@ -438,6 +445,12 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagHighLevel = SBPMsgSsrFlagHighLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagIonoGridPointSatLos = SBPMsgSsrFlagIonoGridPointSatLos (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagIonoGridPoints = SBPMsgSsrFlagIonoGridPoints (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagIonoTileSatLos = SBPMsgSsrFlagIonoTileSatLos (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagSatellites = SBPMsgSsrFlagSatellites (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrFlagTropoGridPoints = SBPMsgSsrFlagTropoGridPoints (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrectionBounds = SBPMsgSsrGriddedCorrectionBounds (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -654,6 +667,12 @@ instance Binary SBPMsg where
       encoder (SBPMsgSpecanDep _ m) = put m
       encoder (SBPMsgSsrCodeBiases _ m) = put m
       encoder (SBPMsgSsrCodePhaseBiasesBounds _ m) = put m
+      encoder (SBPMsgSsrFlagHighLevel _ m) = put m
+      encoder (SBPMsgSsrFlagIonoGridPointSatLos _ m) = put m
+      encoder (SBPMsgSsrFlagIonoGridPoints _ m) = put m
+      encoder (SBPMsgSsrFlagIonoTileSatLos _ m) = put m
+      encoder (SBPMsgSsrFlagSatellites _ m) = put m
+      encoder (SBPMsgSsrFlagTropoGridPoints _ m) = put m
       encoder (SBPMsgSsrGridDefinitionDepA _ m) = put m
       encoder (SBPMsgSsrGriddedCorrection _ m) = put m
       encoder (SBPMsgSsrGriddedCorrectionBounds _ m) = put m
@@ -874,6 +893,12 @@ instance FromJSON SBPMsg where
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodePhaseBiasesBounds = SBPMsgSsrCodePhaseBiasesBounds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagHighLevel = SBPMsgSsrFlagHighLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagIonoGridPointSatLos = SBPMsgSsrFlagIonoGridPointSatLos <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagIonoGridPoints = SBPMsgSsrFlagIonoGridPoints <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagIonoTileSatLos = SBPMsgSsrFlagIonoTileSatLos <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagSatellites = SBPMsgSsrFlagSatellites <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrFlagTropoGridPoints = SBPMsgSsrFlagTropoGridPoints <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrectionBounds = SBPMsgSsrGriddedCorrectionBounds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1095,6 +1120,12 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodePhaseBiasesBounds n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagHighLevel n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagIonoGridPointSatLos n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagIonoGridPoints n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagIonoTileSatLos n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagSatellites n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrFlagTropoGridPoints n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGridDefinitionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrection n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrectionBounds n m) = toJSON n <<>> toJSON m
@@ -1310,6 +1341,12 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
   msg f (SBPMsgSsrCodePhaseBiasesBounds n m) = SBPMsgSsrCodePhaseBiasesBounds n <$> f m
+  msg f (SBPMsgSsrFlagHighLevel n m) = SBPMsgSsrFlagHighLevel n <$> f m
+  msg f (SBPMsgSsrFlagIonoGridPointSatLos n m) = SBPMsgSsrFlagIonoGridPointSatLos n <$> f m
+  msg f (SBPMsgSsrFlagIonoGridPoints n m) = SBPMsgSsrFlagIonoGridPoints n <$> f m
+  msg f (SBPMsgSsrFlagIonoTileSatLos n m) = SBPMsgSsrFlagIonoTileSatLos n <$> f m
+  msg f (SBPMsgSsrFlagSatellites n m) = SBPMsgSsrFlagSatellites n <$> f m
+  msg f (SBPMsgSsrFlagTropoGridPoints n m) = SBPMsgSsrFlagTropoGridPoints n <$> f m
   msg f (SBPMsgSsrGridDefinitionDepA n m) = SBPMsgSsrGridDefinitionDepA n <$> f m
   msg f (SBPMsgSsrGriddedCorrection n m) = SBPMsgSsrGriddedCorrection n <$> f m
   msg f (SBPMsgSsrGriddedCorrectionBounds n m) = SBPMsgSsrGriddedCorrectionBounds n <$> f m

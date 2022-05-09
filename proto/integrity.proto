@@ -1,0 +1,122 @@
+/*
+ * Copyright (C) 2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Integrity
+ *
+ * Integrity flag messages
+ */
+
+package swiftnav.sbp.integrity;
+
+import "gnss.proto";
+
+/** High level integrity flags
+ *
+None
+ */
+message MsgSsrFlagHighLevel {
+    gnss.GpsTimeSec obs_time = 1;
+    gnss.GpsTimeSec corr_time = 2;
+    uint32 ssr_sol_id = 3;
+    uint32 tile_set_id = 4;
+    uint32 tile_id = 5;
+    uint32 chain_id = 6;
+    uint32 use_gps_sat = 7;
+    uint32 use_gal_sat = 8;
+    uint32 use_bds_sat = 9;
+    uint32 use_tropo_grid_points = 11;
+    uint32 use_iono_grid_points = 12;
+    uint32 use_iono_tile_sat_los = 13;
+    uint32 use_iono_grid_point_sat_los = 14;
+}
+
+/** List of satellites which are faulty, per constellation
+ *
+None
+ */
+message MsgSsrFlagSatellites {
+    gnss.GpsTimeSec obs_time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_sol_id = 4;
+    uint32 chain_id = 5;
+    uint32 const_id = 6;
+    uint32 n_faulty_sats = 7;
+    repeated uint32 faulty_sats = 8;
+}
+
+/** List of grid points which are faulty
+ *
+None
+ */
+message MsgSsrFlagTropoGridPoints {
+    gnss.GpsTimeSec obs_time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_sol_id = 4;
+    uint32 tile_set_id = 5;
+    uint32 tile_id = 6;
+    uint32 chain_id = 7;
+    uint32 n_faulty_points = 8;
+    repeated uint32 faulty_points = 9;
+}
+
+/** List of grid points which are faulty
+ *
+None
+ */
+message MsgSsrFlagIonoGridPoints {
+    gnss.GpsTimeSec obs_time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_sol_id = 4;
+    uint32 tile_set_id = 5;
+    uint32 tile_id = 6;
+    uint32 chain_id = 7;
+    uint32 n_faulty_points = 8;
+    repeated uint32 faulty_points = 9;
+}
+
+/** List of all the LOS which are faulty
+ *
+None
+ */
+message MsgSsrFlagIonoTileSatLos {
+    gnss.GpsTimeSec obs_time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_sol_id = 4;
+    uint32 tile_set_id = 5;
+    uint32 tile_id = 6;
+    uint32 chain_id = 7;
+    uint32 n_faulty_los = 8;
+    repeated SvId faulty_los = 9;
+}
+
+/** List of all the grid points to satellite which are faulty
+ *
+None
+ */
+message MsgSsrFlagIonoGridPointSatLos {
+    gnss.GpsTimeSec obs_time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_sol_id = 4;
+    uint32 tile_set_id = 5;
+    uint32 tile_id = 6;
+    uint32 chain_id = 7;
+    uint32 grid_point_id = 8;
+    uint32 n_faulty_los = 9;
+    repeated SvId faulty_los = 10;
+}

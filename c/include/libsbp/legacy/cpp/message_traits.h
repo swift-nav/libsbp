@@ -19,6 +19,7 @@
 #include <libsbp/legacy/flash.h>
 #include <libsbp/legacy/gnss.h>
 #include <libsbp/legacy/imu.h>
+#include <libsbp/legacy/integrity.h>
 #include <libsbp/legacy/linux.h>
 #include <libsbp/legacy/logging.h>
 #include <libsbp/legacy/mag.h>
@@ -1077,6 +1078,42 @@ struct MessageTraits<msg_odometry_t> {
 template<>
 struct MessageTraits<msg_wheeltick_t> {
   static constexpr u16 id = 2308;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_high_level_t> {
+  static constexpr u16 id = 3001;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_satellites_t> {
+  static constexpr u16 id = 3005;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_tropo_grid_points_t> {
+  static constexpr u16 id = 3011;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_iono_grid_points_t> {
+  static constexpr u16 id = 3015;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_iono_tile_sat_los_t> {
+  static constexpr u16 id = 3021;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_flag_iono_grid_point_sat_los_t> {
+  static constexpr u16 id = 3025;
 };
 
 

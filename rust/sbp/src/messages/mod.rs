@@ -15,6 +15,7 @@ pub mod file_io;
 pub mod flash;
 pub mod gnss;
 pub mod imu;
+pub mod integrity;
 pub mod linux;
 pub mod logging;
 pub mod mag;
@@ -66,6 +67,12 @@ use self::flash::msg_stm_unique_id_req::MsgStmUniqueIdReq;
 use self::flash::msg_stm_unique_id_resp::MsgStmUniqueIdResp;
 use self::imu::msg_imu_aux::MsgImuAux;
 use self::imu::msg_imu_raw::MsgImuRaw;
+use self::integrity::msg_ssr_flag_high_level::MsgSsrFlagHighLevel;
+use self::integrity::msg_ssr_flag_iono_grid_point_sat_los::MsgSsrFlagIonoGridPointSatLos;
+use self::integrity::msg_ssr_flag_iono_grid_points::MsgSsrFlagIonoGridPoints;
+use self::integrity::msg_ssr_flag_iono_tile_sat_los::MsgSsrFlagIonoTileSatLos;
+use self::integrity::msg_ssr_flag_satellites::MsgSsrFlagSatellites;
+use self::integrity::msg_ssr_flag_tropo_grid_points::MsgSsrFlagTropoGridPoints;
 use self::linux::msg_linux_cpu_state::MsgLinuxCpuState;
 use self::linux::msg_linux_cpu_state_dep_a::MsgLinuxCpuStateDepA;
 use self::linux::msg_linux_mem_state::MsgLinuxMemState;
@@ -698,6 +705,18 @@ pub enum Sbp {
     MsgOdometry(MsgOdometry),
     /// Accumulated wheeltick count message
     MsgWheeltick(MsgWheeltick),
+    /// High level integrity flags
+    MsgSsrFlagHighLevel(MsgSsrFlagHighLevel),
+    /// List of satellites which are faulty, per constellation
+    MsgSsrFlagSatellites(MsgSsrFlagSatellites),
+    /// List of grid points which are faulty
+    MsgSsrFlagTropoGridPoints(MsgSsrFlagTropoGridPoints),
+    /// List of grid points which are faulty
+    MsgSsrFlagIonoGridPoints(MsgSsrFlagIonoGridPoints),
+    /// List of all the LOS which are faulty
+    MsgSsrFlagIonoTileSatLos(MsgSsrFlagIonoTileSatLos),
+    /// List of all the grid points to satellite which are faulty
+    MsgSsrFlagIonoGridPointSatLos(MsgSsrFlagIonoGridPointSatLos),
     /// Request advice on the optimal configuration for FileIO
     MsgFileioConfigReq(MsgFileioConfigReq),
     /// Response with advice on the optimal configuration for FileIO.
@@ -1698,6 +1717,36 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgWheeltick(msg))
             }
+            MsgSsrFlagHighLevel::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagHighLevel::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagHighLevel(msg))
+            }
+            MsgSsrFlagSatellites::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagSatellites::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagSatellites(msg))
+            }
+            MsgSsrFlagTropoGridPoints::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagTropoGridPoints::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagTropoGridPoints(msg))
+            }
+            MsgSsrFlagIonoGridPoints::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagIonoGridPoints::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagIonoGridPoints(msg))
+            }
+            MsgSsrFlagIonoTileSatLos::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagIonoTileSatLos::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagIonoTileSatLos(msg))
+            }
+            MsgSsrFlagIonoGridPointSatLos::MESSAGE_TYPE => {
+                let mut msg = MsgSsrFlagIonoGridPointSatLos::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgSsrFlagIonoGridPointSatLos(msg))
+            }
             MsgFileioConfigReq::MESSAGE_TYPE => {
                 let mut msg = MsgFileioConfigReq::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -2037,6 +2086,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.message_name(),
             Sbp::MsgOdometry(msg) => msg.message_name(),
             Sbp::MsgWheeltick(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_name(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_name(),
             Sbp::MsgSbasRaw(msg) => msg.message_name(),
@@ -2254,6 +2309,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.message_type(),
             Sbp::MsgOdometry(msg) => msg.message_type(),
             Sbp::MsgWheeltick(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_type(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_type(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_type(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_type(),
             Sbp::MsgSbasRaw(msg) => msg.message_type(),
@@ -2471,6 +2532,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.sender_id(),
             Sbp::MsgOdometry(msg) => msg.sender_id(),
             Sbp::MsgWheeltick(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.sender_id(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigReq(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigResp(msg) => msg.sender_id(),
             Sbp::MsgSbasRaw(msg) => msg.sender_id(),
@@ -2688,6 +2755,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.set_sender_id(new_id),
             Sbp::MsgOdometry(msg) => msg.set_sender_id(new_id),
             Sbp::MsgWheeltick(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigReq(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigResp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSbasRaw(msg) => msg.set_sender_id(new_id),
@@ -2905,6 +2978,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.encoded_len(),
             Sbp::MsgOdometry(msg) => msg.encoded_len(),
             Sbp::MsgWheeltick(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.encoded_len(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigReq(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigResp(msg) => msg.encoded_len(),
             Sbp::MsgSbasRaw(msg) => msg.encoded_len(),
@@ -3125,6 +3204,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgMagRaw(msg) => msg.gps_time(),
             Sbp::MsgOdometry(msg) => msg.gps_time(),
             Sbp::MsgWheeltick(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagHighLevel(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagSatellites(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.gps_time(),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigReq(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigResp(msg) => msg.gps_time(),
             Sbp::MsgSbasRaw(msg) => msg.gps_time(),
@@ -3350,6 +3435,12 @@ impl WireFormat for Sbp {
             Sbp::MsgMagRaw(msg) => WireFormat::write(msg, buf),
             Sbp::MsgOdometry(msg) => WireFormat::write(msg, buf),
             Sbp::MsgWheeltick(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagHighLevel(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagSatellites(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSbasRaw(msg) => WireFormat::write(msg, buf),
@@ -3567,6 +3658,12 @@ impl WireFormat for Sbp {
             Sbp::MsgMagRaw(msg) => WireFormat::len(msg),
             Sbp::MsgOdometry(msg) => WireFormat::len(msg),
             Sbp::MsgWheeltick(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagHighLevel(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagSatellites(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagTropoGridPoints(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagIonoGridPoints(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::len(msg),
             Sbp::MsgSbasRaw(msg) => WireFormat::len(msg),
@@ -4690,6 +4787,42 @@ impl From<MsgOdometry> for Sbp {
 impl From<MsgWheeltick> for Sbp {
     fn from(msg: MsgWheeltick) -> Self {
         Sbp::MsgWheeltick(msg)
+    }
+}
+
+impl From<MsgSsrFlagHighLevel> for Sbp {
+    fn from(msg: MsgSsrFlagHighLevel) -> Self {
+        Sbp::MsgSsrFlagHighLevel(msg)
+    }
+}
+
+impl From<MsgSsrFlagSatellites> for Sbp {
+    fn from(msg: MsgSsrFlagSatellites) -> Self {
+        Sbp::MsgSsrFlagSatellites(msg)
+    }
+}
+
+impl From<MsgSsrFlagTropoGridPoints> for Sbp {
+    fn from(msg: MsgSsrFlagTropoGridPoints) -> Self {
+        Sbp::MsgSsrFlagTropoGridPoints(msg)
+    }
+}
+
+impl From<MsgSsrFlagIonoGridPoints> for Sbp {
+    fn from(msg: MsgSsrFlagIonoGridPoints) -> Self {
+        Sbp::MsgSsrFlagIonoGridPoints(msg)
+    }
+}
+
+impl From<MsgSsrFlagIonoTileSatLos> for Sbp {
+    fn from(msg: MsgSsrFlagIonoTileSatLos) -> Self {
+        Sbp::MsgSsrFlagIonoTileSatLos(msg)
+    }
+}
+
+impl From<MsgSsrFlagIonoGridPointSatLos> for Sbp {
+    fn from(msg: MsgSsrFlagIonoGridPointSatLos) -> Self {
+        Sbp::MsgSsrFlagIonoGridPointSatLos(msg)
     }
 }
 
