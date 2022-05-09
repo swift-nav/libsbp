@@ -63,9 +63,14 @@ def dump(args, res):
 def module_main():
     args = get_args()
     if args:
-        with Handler(Framer(args.file.read, None, verbose=True)) as source:
+        with Handler(Framer(args.file.read, None, verbose=True, stop_when_empty=True), autostart=False) as source:
             try:
-                for msg, meta in source:
+                it = iter(source)
+                source.start()
+                msg, meta = next(it, (None, None))
+                while msg:
                     dump(args, msg)
+                    msg, meta = next(it, (None, None))
             except KeyboardInterrupt:
                 pass
+        args.file.close()

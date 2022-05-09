@@ -48,7 +48,8 @@ class Framer(six.Iterator):
                  dispatcher=dispatch,
                  into_buffer=True,
                  skip_metadata=False,
-                 sender_id_filter_list=[]):
+                 sender_id_filter_list=[],
+                 stop_when_empty=False):
         self._read = read
         self._write = write
         self._verbose = verbose
@@ -59,6 +60,7 @@ class Framer(six.Iterator):
         self._into_buffer = into_buffer
         self._skip_metadata = skip_metadata
         self._sender_id_filter_list = sender_id_filter_list
+        self._stop_when_empty = stop_when_empty
 
     def __iter__(self):
         self._broken = False
@@ -86,6 +88,8 @@ class Framer(six.Iterator):
         while msg is None:
             try:
                 msg = self._receive()
+                if self._stop_when_empty and not msg:
+                    raise StopIteration
                 if self._broken:
                     raise StopIteration
             except IOError:
