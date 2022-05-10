@@ -1,4 +1,7 @@
+use std::fs::File;
 use std::io;
+use std::io::{Read, Write};
+use std::path::PathBuf;
 
 use clap::Parser;
 use sbp::json::{CompactFormatter, HaskellishFloatFormatter};
@@ -12,6 +15,8 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 /// Typical usage:
 ///
+///     sbp2json --input [PATH] --output [PATH]
+///
 ///     cat sbp.dat | sbp2json
 ///
 /// Or combined with socat:
@@ -20,6 +25,12 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 #[derive(Debug, Parser)]
 #[structopt(name = "sbp2json", verbatim_doc_comment)]
 pub struct Options {
+    /// Path to input file
+    input: Option<PathBuf>,
+
+    /// Path to output file
+    output: Option<PathBuf>,
+
     /// Try to be compatible with the float formatting of the Haskell version of sbp2json
     #[clap(long)]
     float_compat: bool,
@@ -46,8 +57,15 @@ fn main() -> Result<()> {
 
     env_logger::init();
 
-    let stdin = io::stdin();
-    let stdout = io::stdout();
+    let stdin: Box<dyn Read> = match options.input {
+        Some(path) => Box::new(File::open(path)?),
+        _ => Box::new(io::stdin()),
+    };
+
+    let stdout: Box<dyn Write> = match options.output {
+        Some(path) => Box::new(File::create(path)?),
+        _ => Box::new(io::stdout()),
+    };
 
     if options.float_compat {
         sbp2json(

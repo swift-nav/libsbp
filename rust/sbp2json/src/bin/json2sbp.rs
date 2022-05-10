@@ -1,4 +1,7 @@
+use std::fs::File;
 use std::io;
+use std::io::{Read, Write};
+use std::path::PathBuf;
 
 use clap::Parser;
 
@@ -11,10 +14,18 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 /// Typical usage:
 ///
+///     json2sbp --input [PATH] --output [PATH]
+///
 ///     cat sbp.json | json2sbp
 #[derive(Debug, Parser)]
 #[clap(name = "json2sbp", verbatim_doc_comment)]
 struct Options {
+    /// Path to input file
+    input: Option<PathBuf>,
+
+    /// Path to output file
+    output: Option<PathBuf>,
+
     /// Print debugging messages to standard error
     #[clap(long)]
     debug: bool,
@@ -37,8 +48,15 @@ fn main() -> Result<()> {
 
     env_logger::init();
 
-    let stdin = io::stdin();
-    let stdout = io::stdout();
+    let stdin: Box<dyn Read> = match options.input {
+        Some(path) => Box::new(File::open(path)?),
+        _ => Box::new(io::stdin()),
+    };
+
+    let stdout: Box<dyn Write> = match options.output {
+        Some(path) => Box::new(File::create(path)?),
+        _ => Box::new(io::stdout()),
+    };
 
     json2sbp(stdin, stdout, options.buffered, options.fatal_errors)
 }
