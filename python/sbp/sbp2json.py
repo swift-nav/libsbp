@@ -107,9 +107,7 @@ def sbp_main(args):
                         m = sbp.table.dispatch(m)
                         dump(args, m)
                     consumed = header_len + m.length + 2
-                except (UnpackError, StreamError):
-                    break
-                except ValueError:
+                except (UnpackError, StreamError, ValueError):
                     consumed = 1
             unconsumed_offset += consumed
 
