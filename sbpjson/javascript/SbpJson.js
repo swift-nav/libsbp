@@ -18,6 +18,7 @@
 //   const gridElementNoStd = Convert.toGridElementNoStd(json);
 //   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
 //   const iMUInputType = Convert.toIMUInputType(json);
+//   const integritySSRHeader = Convert.toIntegritySSRHeader(json);
 //   const latency = Convert.toLatency(json);
 //   const measurementState = Convert.toMeasurementState(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
@@ -334,6 +335,14 @@ function toIMUInputType(json) {
 
 function iMUInputTypeToJson(value) {
     return JSON.stringify(uncast(value, r("IMUInputType")), null, 2);
+}
+
+function toIntegritySSRHeader(json) {
+    return cast(JSON.parse(json), r("IntegritySSRHeader"));
+}
+
+function integritySSRHeaderToJson(value) {
+    return JSON.stringify(uncast(value, r("IntegritySSRHeader")), null, 2);
 }
 
 function toLatency(json) {
@@ -2890,6 +2899,61 @@ const typeMap = {
     "MsgSsrFlagTropoGridPoints": o([
         { json: "stub", js: "stub", typ: a(0) },
     ], "any"),
+    "MsgSsrFlagHighLevel": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "corr_time", js: "corr_time", typ: r("GpsTimeSEC") },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "use_bds_sat", js: "use_bds_sat", typ: 0 },
+        { json: "use_gal_sat", js: "use_gal_sat", typ: 0 },
+        { json: "use_gps_sat", js: "use_gps_sat", typ: 0 },
+        { json: "use_iono_grid_point_sat_los", js: "use_iono_grid_point_sat_los", typ: 0 },
+        { json: "use_iono_grid_points", js: "use_iono_grid_points", typ: 0 },
+        { json: "use_iono_tile_sat_los", js: "use_iono_tile_sat_los", typ: 0 },
+        { json: "use_tropo_grid_points", js: "use_tropo_grid_points", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagIonoGridPointSatLos": o([
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
+    ], "any"),
+    "IntegritySSRHeader": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagIonoGridPoints": o([
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagIonoTileSatLos": o([
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagSatellites": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "faulty_sats", js: "faulty_sats", typ: a(0) },
+        { json: "n_faulty_sats", js: "n_faulty_sats", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+    ], "any"),
+    "MsgSsrFlagTropoGridPoints": o([
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
+    ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
         { json: "index", js: "index", typ: 0 },
@@ -3262,6 +3326,8 @@ module.exports = {
     "toGriddedCorrectionHeader": toGriddedCorrectionHeader,
     "iMUInputTypeToJson": iMUInputTypeToJson,
     "toIMUInputType": toIMUInputType,
+    "integritySSRHeaderToJson": integritySSRHeaderToJson,
+    "toIntegritySSRHeader": toIntegritySSRHeader,
     "latencyToJson": latencyToJson,
     "toLatency": toLatency,
     "measurementStateToJson": measurementStateToJson,

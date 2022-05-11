@@ -3,21 +3,36 @@ generated_on: 2022-04-22 # manually generated
 package: sbp.integrity
 tests:
 
-  - msg:
-      fields:
-        stub: [180,0,0,0,3,0,1,2,3,4,0,5,0,6,2,10,11,15,14]
-      c_decoded_fields:
-        n_stub: 19
-      module: sbp.integrity
-      name: MsgSsrFlagIonoTileSatLos
-    msg_type: '3021'
-    raw_json: '{"stub": [180,0,0,0,3,0,1,2,3,4,0,5,0,6,2,10,11,15,14], "preamble": 85, "msg_type": 3021, "sender": 66, "length": 19,
+- msg:
+    fields:
+      header:
+        obs_time:
+          tow: 180
+          wn: 3
+        num_msgs: 1
+        seq_num: 2
+        ssr_sol_id: 3
+        tile_set_id: 4
+        tile_id: 5
+        chain_id: 6
+      n_faulty_los: 2
+      faulty_los:
+      - satId: 10
+        constellation: 11
+      - satId: 15
+        constellation: 14
+    module: sbp.integrity
+    name: MsgSsrFlagIonoTileSatLos
+  msg_type: '3021'
+  raw_json: '{"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4,
+    "tile_id": 5, "chain_id": 6}, "n_faulty_los": 2, "faulty_los": [{"satId": 10, "constellation": 11}, {"satId": 15,
+    "constellation": 14}], "preamble": 85, "msg_type": 3021, "sender": 66, "length": 19,
     "payload": "tAAAAAMAAQIDBAAFAAYCCgsPDg==", "crc": 60399}'
-    raw_packet: Vc0LQgATtAAAAAMAAQIDBAAFAAYCCgsPDu/r
-    sbp:
-      preamble: '0x55'
-      msg_type: '0x0BCD'
-      sender: '0x0042'
-      length: 19
-      payload: tAAAAAMAAQIDBAAFAAYCCgsPDg==
-      crc: '0xEBEF'
+  raw_packet: Vc0LQgATtAAAAAMAAQIDBAAFAAYCCgsPDu/r
+  sbp:
+    preamble: '0x55'
+    msg_type: '0x0BCD'
+    sender: '0x0042'
+    length: 19
+    payload: tAAAAAMAAQIDBAAFAAYCCgsPDg==
+    crc: '0xEBEF'
