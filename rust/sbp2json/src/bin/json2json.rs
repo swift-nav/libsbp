@@ -15,8 +15,6 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 /// Typical usage:
 ///
-///     json2json --input [PATH] --output [PATH]
-///
 ///     cat console-json-log.json | json2json
 #[derive(Debug, Parser)]
 #[clap(name = "json2json", verbatim_doc_comment)]

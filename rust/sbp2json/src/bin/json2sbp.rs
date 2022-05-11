@@ -14,8 +14,6 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 /// Typical usage:
 ///
-///     json2sbp --input [PATH] --output [PATH]
-///
 ///     cat sbp.json | json2sbp
 #[derive(Debug, Parser)]
 #[clap(name = "json2sbp", verbatim_doc_comment)]
