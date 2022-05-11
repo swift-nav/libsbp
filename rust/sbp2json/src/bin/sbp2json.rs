@@ -15,8 +15,6 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 /// Typical usage:
 ///
-///     sbp2json --input [PATH] --output [PATH]
-///
 ///     cat sbp.dat | sbp2json
 ///
 /// Or combined with socat:
