@@ -2428,6 +2428,57 @@ definitions:
                 - 31:
                     desc: Safe state ROPL
 
+ - MSG_GPS_LEAP_SECOND:
+    id: 0x023A
+    short_desc: >
+      Leap second SBP message.
+    desc: >
+      Emulates the GPS CNAV message, reserving bytes for future broadcast of
+      the drift model parameters.
+    fields:
+      - bias_coeff:
+          type: s16
+          units: 2^-35 s
+          desc: >
+            Reserved. Bias coefficient of GPS time scale with respect to UTC
+            drift model.
+      - drift_coeff:
+          type: s16
+          units: 2^-51 s/s
+          desc: >
+            Reserved. Drift coefficient of GPS time scale with respect to UTC
+            drift model.
+      - drift_rate_coeff:
+          type: s8
+          units: 2^-68 s/s^2
+          desc: >
+            Reserved. Drift rate correction coefficient of GPS time scale with
+            respect to UTC drift model.
+      - count_before:
+          type: s8
+          units: s
+          desc: Leap second count before insertion.
+      - tow_s:
+          type: u16
+          units: s
+          desc: Reserved. Drift model reference week second.
+      - wn:
+          type: u16
+          units: weeks
+          desc: Reserved. Drift model reference week number.
+      - ref_wn:
+          type: u16
+          units: weeks
+          desc: Leap second reference week number.
+      - ref_dn:
+          type: u8
+          units: days
+          desc: Leap second reference day number.
+      - count_after:
+          type: s8
+          units: s
+          desc: Leap second count after insertion.
+
  - MSG_ITRF:
      id: 0x0244
      short_desc: Reference Frame Transformation Parameter
