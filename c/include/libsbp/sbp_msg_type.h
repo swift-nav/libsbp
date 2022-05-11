@@ -25,6 +25,7 @@
 #include <libsbp/flash_macros.h>
 #include <libsbp/gnss_macros.h>
 #include <libsbp/imu_macros.h>
+#include <libsbp/integrity_macros.h>
 #include <libsbp/linux_macros.h>
 #include <libsbp/logging_macros.h>
 #include <libsbp/mag_macros.h>
@@ -209,6 +210,12 @@ typedef enum {
   SbpMsgSpecan = SBP_MSG_SPECAN,
   SbpMsgSsrCodeBiases = SBP_MSG_SSR_CODE_BIASES,
   SbpMsgSsrCodePhaseBiasesBounds = SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS,
+  SbpMsgSsrFlagHighLevel = SBP_MSG_SSR_FLAG_HIGH_LEVEL,
+  SbpMsgSsrFlagIonoGridPointSatLos = SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS,
+  SbpMsgSsrFlagIonoGridPoints = SBP_MSG_SSR_FLAG_IONO_GRID_POINTS,
+  SbpMsgSsrFlagIonoTileSatLos = SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS,
+  SbpMsgSsrFlagSatellites = SBP_MSG_SSR_FLAG_SATELLITES,
+  SbpMsgSsrFlagTropoGridPoints = SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS,
   SbpMsgSsrGridDefinitionDepA = SBP_MSG_SSR_GRID_DEFINITION_DEP_A,
   SbpMsgSsrGriddedCorrectionBounds = SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS,
   SbpMsgSsrGriddedCorrectionDepA = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A,

@@ -47,6 +47,12 @@ import com.swiftnav.sbp.flash.MsgStmUniqueIdReq;
 import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
 import com.swiftnav.sbp.imu.MsgImuAux;
 import com.swiftnav.sbp.imu.MsgImuRaw;
+import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevel;
+import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPointSatLos;
+import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPoints;
+import com.swiftnav.sbp.integrity.MsgSsrFlagIonoTileSatLos;
+import com.swiftnav.sbp.integrity.MsgSsrFlagSatellites;
+import com.swiftnav.sbp.integrity.MsgSsrFlagTropoGridPoints;
 import com.swiftnav.sbp.linux.MsgLinuxCpuState;
 import com.swiftnav.sbp.linux.MsgLinuxCpuStateDepA;
 import com.swiftnav.sbp.linux.MsgLinuxMemState;
@@ -296,6 +302,18 @@ final class MessageTable {
                 return new MsgImuRaw(msg);
             case MsgImuAux.TYPE:
                 return new MsgImuAux(msg);
+            case MsgSsrFlagHighLevel.TYPE:
+                return new MsgSsrFlagHighLevel(msg);
+            case MsgSsrFlagSatellites.TYPE:
+                return new MsgSsrFlagSatellites(msg);
+            case MsgSsrFlagTropoGridPoints.TYPE:
+                return new MsgSsrFlagTropoGridPoints(msg);
+            case MsgSsrFlagIonoGridPoints.TYPE:
+                return new MsgSsrFlagIonoGridPoints(msg);
+            case MsgSsrFlagIonoTileSatLos.TYPE:
+                return new MsgSsrFlagIonoTileSatLos(msg);
+            case MsgSsrFlagIonoGridPointSatLos.TYPE:
+                return new MsgSsrFlagIonoGridPointSatLos(msg);
             case MsgLinuxCpuStateDepA.TYPE:
                 return new MsgLinuxCpuStateDepA(msg);
             case MsgLinuxMemStateDepA.TYPE:

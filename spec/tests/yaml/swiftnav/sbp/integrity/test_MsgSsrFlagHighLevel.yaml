@@ -1,0 +1,46 @@
+description: Unit tests for swiftnav.sbp.integrity MsgSsrFlagHighLevel
+generated_on: 2022-04-21 # manually generated
+package: sbp.integrity
+tests:
+
+- msg:
+    fields:
+      obs_time:
+        tow: 180
+        wn: 3
+      corr_time:
+        tow: 360
+        wn: 6
+      ssr_sol_id: 10
+      tile_set_id: 20
+      tile_id: 30
+      chain_id: 40
+      use_gps_sat: 1
+      use_gal_sat: 2
+      use_bds_sat: 3
+      reserved:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      use_tropo_grid_points: 4
+      use_iono_grid_points: 5
+      use_iono_tile_sat_los: 6
+      use_iono_grid_point_sat_los: 7
+    module: sbp.integrity
+    name: MsgSsrFlagHighLevel
+  msg_type: '3001'
+  raw_json: '{"obs_time": {"tow": 180, "wn": 3}, "corr_time": {"tow": 360, "wn": 6}, "ssr_sol_id": 10, "tile_set_id": 20,
+    "tile_id": 30, "chain_id": 40, "use_gps_sat": 1, "use_gal_sat": 2, "use_bds_sat": 3, "reserved": [0,0,0,0,0,0],
+    "use_tropo_grid_points": 4, "use_iono_grid_points": 5, "use_iono_tile_sat_los": 6, "use_iono_grid_point_sat_los": 7,
+    "preamble": 85, "msg_type": 3001, "sender": 66, "length": 31, "payload": "tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==", "crc": 17254}'
+  raw_packet: VbkLQgAftAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGB2ZD
+  sbp:
+    preamble: '0x55'
+    msg_type: '0x0BB9'
+    sender: '0x0042'
+    length: 31
+    payload: tAAAAAMAaAEAAAYAChQAHgAoAQIDAAAAAAAABAUGBw==
+    crc: '0x4366'

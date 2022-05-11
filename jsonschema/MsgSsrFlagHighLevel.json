@@ -1,0 +1,48 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrFlagHighLevel",
+  "title":"MsgSsrFlagHighLevel",
+  "description":"",
+  "type": "object",
+  "properties": {
+    "obs_time": {"$ref": "GpsTimeSec.json"},
+    "corr_time": {"$ref": "GpsTimeSec.json"},
+    "ssr_sol_id": {"type": "integer"},
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"},
+    "chain_id": {"type": "integer"},
+    "use_gps_sat": {"type": "integer"},
+    "use_gal_sat": {"type": "integer"},
+    "use_bds_sat": {"type": "integer"},
+    "use_tropo_grid_points": {"type": "integer"},
+    "use_iono_grid_points": {"type": "integer"},
+    "use_iono_tile_sat_los": {"type": "integer"},
+    "use_iono_grid_point_sat_los": {"type": "integer"}
+  },
+  "required": [
+    "obs_time",
+    "corr_time",
+    "ssr_sol_id",
+    "tile_set_id",
+    "tile_id",
+    "chain_id",
+    "use_gps_sat",
+    "use_gal_sat",
+    "use_bds_sat",
+    "use_tropo_grid_points",
+    "use_iono_grid_points",
+    "use_iono_tile_sat_los",
+    "use_iono_grid_point_sat_los"
+  ]
+}

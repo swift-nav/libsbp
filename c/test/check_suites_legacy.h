@@ -26,6 +26,13 @@ Suite* legacy_auto_check_sbp_ext_events_MsgExtEvent_suite(void);
 Suite* legacy_auto_check_sbp_file_io_MsgFileioWriteResp_suite(void);
 Suite* legacy_auto_check_sbp_imu_MsgImuAux_suite(void);
 Suite* legacy_auto_check_sbp_imu_MsgImuRaw_suite(void);
+Suite* legacy_auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite(void);
+Suite* legacy_auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLos_suite(
+    void);
+Suite* legacy_auto_check_sbp_integrity_MsgSsrFlagIonoGridPoints_suite(void);
+Suite* legacy_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos_suite(void);
+Suite* legacy_auto_check_sbp_integrity_MsgSsrFlagSatellites_suite(void);
+Suite* legacy_auto_check_sbp_integrity_MsgSsrFlagTropoGridPoints_suite(void);
 Suite* legacy_auto_check_sbp_logging_MsgFwd_suite(void);
 Suite* legacy_auto_check_sbp_logging_MsgLog_suite(void);
 Suite* legacy_auto_check_sbp_logging_MsgPrintDep_suite(void);

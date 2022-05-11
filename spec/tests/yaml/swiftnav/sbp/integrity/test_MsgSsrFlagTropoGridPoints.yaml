@@ -1,0 +1,36 @@
+description: Unit tests for swiftnav.sbp.integrity MsgSsrFlagTropoGridPoints
+generated_on: 2022-04-22 # manually generated
+package: sbp.integrity
+tests:
+
+- msg:
+    fields:
+      header:
+        obs_time:
+          tow: 180
+          wn: 3
+        num_msgs: 1
+        seq_num: 2
+        ssr_sol_id: 3
+        tile_set_id: 4
+        tile_id: 5
+        chain_id: 6
+      n_faulty_points: 3
+      faulty_points:
+      - 10
+      - 11
+      - 12
+    module: sbp.integrity
+    name: MsgSsrFlagTropoGridPoints
+  msg_type: '3011'
+  raw_json: '{"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4,
+    "tile_id": 5, "chain_id": 6}, "n_faulty_points": 3, "faulty_points": [10, 11, 12], "preamble": 85, "msg_type": 3011,
+    "sender": 66, "length": 21, "payload": "tAAAAAMAAQIDBAAFAAYDCgALAAwA", "crc": 38643}'
+  raw_packet: VcMLQgAVtAAAAAMAAQIDBAAFAAYDCgALAAwA85Y=
+  sbp:
+    preamble: '0x55'
+    msg_type: '0x0BC3'
+    sender: '0x0042'
+    length: 21
+    payload: tAAAAAMAAQIDBAAFAAYDCgALAAwA
+    crc: '0x96F3'

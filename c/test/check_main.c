@@ -34,6 +34,16 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_file_io_MsgFileioWriteResp_suite());
   srunner_add_suite(sr, auto_check_sbp_imu_MsgImuAux_suite());
   srunner_add_suite(sr, auto_check_sbp_imu_MsgImuRaw_suite());
+  srunner_add_suite(sr, auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite());
+  srunner_add_suite(
+      sr, auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLos_suite());
+  srunner_add_suite(sr,
+                    auto_check_sbp_integrity_MsgSsrFlagIonoGridPoints_suite());
+  srunner_add_suite(sr,
+                    auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos_suite());
+  srunner_add_suite(sr, auto_check_sbp_integrity_MsgSsrFlagSatellites_suite());
+  srunner_add_suite(sr,
+                    auto_check_sbp_integrity_MsgSsrFlagTropoGridPoints_suite());
   srunner_add_suite(sr, auto_check_sbp_logging_MsgFwd_suite());
   srunner_add_suite(sr, auto_check_sbp_logging_MsgLog_suite());
   srunner_add_suite(sr, auto_check_sbp_logging_MsgPrintDep_suite());

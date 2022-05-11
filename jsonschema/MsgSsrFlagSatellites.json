@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrFlagSatellites",
+  "title":"MsgSsrFlagSatellites",
+  "description":"",
+  "type": "object",
+  "properties": {
+    "obs_time": {"$ref": "GpsTimeSec.json"},
+    "num_msgs": {"type": "integer"},
+    "seq_num": {"type": "integer"},
+    "ssr_sol_id": {"type": "integer"},
+    "chain_id": {"type": "integer"},
+    "const_id": {"type": "integer"},
+    "n_faulty_sats": {"type": "integer"},
+    "faulty_sats": {"type": "array", "items": {"type": "integer"}}
+  },
+  "required": [
+    "obs_time",
+    "num_msgs",
+    "seq_num",
+    "ssr_sol_id",
+    "chain_id",
+    "const_id",
+    "n_faulty_sats",
+    "faulty_sats"
+  ]
+}

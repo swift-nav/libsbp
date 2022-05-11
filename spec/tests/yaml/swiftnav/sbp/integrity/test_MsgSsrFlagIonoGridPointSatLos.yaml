@@ -1,0 +1,39 @@
+description: Unit tests for swiftnav.sbp.integrity MsgSsrFlagIonoGridPointSatLos
+generated_on: 2022-04-22 # manually generated
+package: sbp.integrity
+tests:
+
+- msg:
+    fields:
+      header:
+        obs_time:
+          tow: 180
+          wn: 3
+        num_msgs: 1
+        seq_num: 2
+        ssr_sol_id: 3
+        tile_set_id: 4
+        tile_id: 5
+        chain_id: 6
+      grid_point_id: 30
+      n_faulty_los: 2
+      faulty_los:
+      - satId: 10
+        constellation: 11
+      - satId: 15
+        constellation: 14
+    module: sbp.integrity
+    name: MsgSsrFlagIonoGridPointSatLos
+  msg_type: '3025'
+  raw_json: '{"header": {"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "tile_set_id": 4,
+    "tile_id": 5, "chain_id": 6}, "grid_point_id": 30, "n_faulty_los": 2, "faulty_los": [{"satId": 10,
+    "constellation": 11}, {"satId": 15, "constellation": 14}], "preamble": 85, "msg_type": 3025, "sender": 66, "length": 21,
+    "payload": "tAAAAAMAAQIDBAAFAAYeAAIKCw8O", "crc": 37986}'
+  raw_packet: VdELQgAVtAAAAAMAAQIDBAAFAAYeAAIKCw8OYpQ=
+  sbp:
+    preamble: '0x55'
+    msg_type: '0x0BD1'
+    sender: '0x0042'
+    length: 21
+    payload: tAAAAAMAAQIDBAAFAAYeAAIKCw8O
+    crc: '0x9462'
