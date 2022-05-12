@@ -5972,6 +5972,166 @@ int sbp_msg_protection_level_cmp(const sbp_msg_protection_level_t *a,
   return ret;
 }
 
+bool sbp_msg_gps_leap_second_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_gps_leap_second_t *msg) {
+  if (!sbp_s16_encode(ctx, &msg->bias_coeff)) {
+    return false;
+  }
+  if (!sbp_s16_encode(ctx, &msg->drift_coeff)) {
+    return false;
+  }
+  if (!sbp_s8_encode(ctx, &msg->drift_rate_coeff)) {
+    return false;
+  }
+  if (!sbp_s8_encode(ctx, &msg->count_before)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->tow_s)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->wn)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->ref_wn)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->ref_dn)) {
+    return false;
+  }
+  if (!sbp_s8_encode(ctx, &msg->count_after)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_msg_gps_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_gps_leap_second_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_gps_leap_second_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_msg_gps_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_gps_leap_second_t *msg) {
+  if (!sbp_s16_decode(ctx, &msg->bias_coeff)) {
+    return false;
+  }
+  if (!sbp_s16_decode(ctx, &msg->drift_coeff)) {
+    return false;
+  }
+  if (!sbp_s8_decode(ctx, &msg->drift_rate_coeff)) {
+    return false;
+  }
+  if (!sbp_s8_decode(ctx, &msg->count_before)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->tow_s)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->wn)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->ref_wn)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->ref_dn)) {
+    return false;
+  }
+  if (!sbp_s8_decode(ctx, &msg->count_after)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_msg_gps_leap_second_decode(const uint8_t *buf, uint8_t len,
+                                  uint8_t *n_read,
+                                  sbp_msg_gps_leap_second_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_gps_leap_second_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+s8 sbp_msg_gps_leap_second_send(sbp_state_t *s, u16 sender_id,
+                                const sbp_msg_gps_leap_second_t *msg,
+                                sbp_write_fn_t write) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_msg_gps_leap_second_encode(payload, sizeof(payload),
+                                          &payload_len, msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
+  return sbp_payload_send(s, SBP_MSG_GPS_LEAP_SECOND, sender_id, payload_len,
+                          payload, write);
+}
+
+int sbp_msg_gps_leap_second_cmp(const sbp_msg_gps_leap_second_t *a,
+                                const sbp_msg_gps_leap_second_t *b) {
+  int ret = 0;
+
+  ret = sbp_s16_cmp(&a->bias_coeff, &b->bias_coeff);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_s16_cmp(&a->drift_coeff, &b->drift_coeff);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_s8_cmp(&a->drift_rate_coeff, &b->drift_rate_coeff);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_s8_cmp(&a->count_before, &b->count_before);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->tow_s, &b->tow_s);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->wn, &b->wn);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->ref_wn, &b->ref_wn);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->ref_dn, &b->ref_dn);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_s8_cmp(&a->count_after, &b->count_after);
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}
+
 bool sbp_msg_itrf_encode_internal(sbp_encode_ctx_t *ctx,
                                   const sbp_msg_itrf_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->ssr_iod)) {

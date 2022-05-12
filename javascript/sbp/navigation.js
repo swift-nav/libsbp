@@ -2133,6 +2133,59 @@ MsgProtectionLevel.prototype.fieldSpec.push(['heading', 'writeInt32LE', 4]);
 MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
+ * SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+ *
+ * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift
+ * model parameters.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field bias_coeff number (signed 16-bit int, 2 bytes) Reserved. Bias coefficient of GPS time scale with respect to UTC drift model.
+ * @field drift_coeff number (signed 16-bit int, 2 bytes) Reserved. Drift coefficient of GPS time scale with respect to UTC drift model.
+ * @field drift_rate_coeff number (signed 8-bit int, 1 byte) Reserved. Drift rate correction coefficient of GPS time scale with respect to
+ *   UTC drift model.
+ * @field count_before number (signed 8-bit int, 1 byte) Leap second count before insertion.
+ * @field tow_s number (unsigned 16-bit int, 2 bytes) Reserved. Drift model reference week second.
+ * @field wn number (unsigned 16-bit int, 2 bytes) Reserved. Drift model reference week number.
+ * @field ref_wn number (unsigned 16-bit int, 2 bytes) Leap second reference week number.
+ * @field ref_dn number (unsigned 8-bit int, 1 byte) Leap second reference day number.
+ * @field count_after number (signed 8-bit int, 1 byte) Leap second count after insertion.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGpsLeapSecond = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GPS_LEAP_SECOND";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGpsLeapSecond.prototype = Object.create(SBP.prototype);
+MsgGpsLeapSecond.prototype.messageType = "MSG_GPS_LEAP_SECOND";
+MsgGpsLeapSecond.prototype.msg_type = 0x023A;
+MsgGpsLeapSecond.prototype.constructor = MsgGpsLeapSecond;
+MsgGpsLeapSecond.prototype.parser = new Parser()
+  .endianess('little')
+  .int16('bias_coeff')
+  .int16('drift_coeff')
+  .int8('drift_rate_coeff')
+  .int8('count_before')
+  .uint16('tow_s')
+  .uint16('wn')
+  .uint16('ref_wn')
+  .uint8('ref_dn')
+  .int8('count_after');
+MsgGpsLeapSecond.prototype.fieldSpec = [];
+MsgGpsLeapSecond.prototype.fieldSpec.push(['bias_coeff', 'writeInt16LE', 2]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['drift_coeff', 'writeInt16LE', 2]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['drift_rate_coeff', 'writeInt8', 1]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['count_before', 'writeInt8', 1]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['tow_s', 'writeUInt16LE', 2]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['ref_wn', 'writeUInt16LE', 2]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['ref_dn', 'writeUInt8', 1]);
+MsgGpsLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
+
+/**
  * SBP class for message MSG_ITRF (0x0244).
  *
  
@@ -2300,6 +2353,8 @@ module.exports = {
   MsgProtectionLevelDepA: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
   MsgProtectionLevel: MsgProtectionLevel,
+  0x023A: MsgGpsLeapSecond,
+  MsgGpsLeapSecond: MsgGpsLeapSecond,
   0x0244: MsgItrf,
   MsgItrf: MsgItrf,
 }

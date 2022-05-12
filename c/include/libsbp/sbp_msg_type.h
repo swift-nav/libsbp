@@ -127,6 +127,7 @@ typedef enum {
   SbpMsgGloBiases = SBP_MSG_GLO_BIASES,
   SbpMsgGnssCapb = SBP_MSG_GNSS_CAPB,
   SbpMsgGnssTimeOffset = SBP_MSG_GNSS_TIME_OFFSET,
+  SbpMsgGpsLeapSecond = SBP_MSG_GPS_LEAP_SECOND,
   SbpMsgGpsTimeDepA = SBP_MSG_GPS_TIME_DEP_A,
   SbpMsgGpsTimeGnss = SBP_MSG_GPS_TIME_GNSS,
   SbpMsgGpsTime = SBP_MSG_GPS_TIME,

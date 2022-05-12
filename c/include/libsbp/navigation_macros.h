@@ -1736,6 +1736,13 @@
  */
 #define SBP_MSG_PROTECTION_LEVEL_ENCODED_LEN 76u
 
+#define SBP_MSG_GPS_LEAP_SECOND 0x023A
+/**
+ * Encoded length of sbp_msg_gps_leap_second_t (V4 API) and
+ * msg_gps_leap_second_t (legacy API)
+ */
+#define SBP_MSG_GPS_LEAP_SECOND_ENCODED_LEN 14u
+
 #define SBP_MSG_ITRF 0x0244
 /**
  * The maximum number of items that can be stored in sbp_msg_itrf_t::sn (V4 API)

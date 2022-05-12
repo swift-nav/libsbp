@@ -5105,6 +5105,139 @@ class MsgProtectionLevel(SBP):
     d.update(j)
     return d
     
+SBP_MSG_GPS_LEAP_SECOND = 0x023A
+class MsgGPSLeapSecond(SBP):
+  """SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+
+  You can have MSG_GPS_LEAP_SECOND inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+  drift model parameters.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  bias_coeff : int
+    Reserved. Bias coefficient of GPS time scale with respect to UTC drift
+    model.
+  drift_coeff : int
+    Reserved. Drift coefficient of GPS time scale with respect to UTC drift
+    model.
+  drift_rate_coeff : int
+    Reserved. Drift rate correction coefficient of GPS time scale with respect
+    to UTC drift model.
+  count_before : int
+    Leap second count before insertion.
+  tow_s : int
+    Reserved. Drift model reference week second.
+  wn : int
+    Reserved. Drift model reference week number.
+  ref_wn : int
+    Leap second reference week number.
+  ref_dn : int
+    Leap second reference day number.
+  count_after : int
+    Leap second count after insertion.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'bias_coeff' / construct.Int16sl,
+                   'drift_coeff' / construct.Int16sl,
+                   'drift_rate_coeff' / construct.Int8sl,
+                   'count_before' / construct.Int8sl,
+                   'tow_s' / construct.Int16ul,
+                   'wn' / construct.Int16ul,
+                   'ref_wn' / construct.Int16ul,
+                   'ref_dn' / construct.Int8ul,
+                   'count_after' / construct.Int8sl,)
+  __slots__ = [
+               'bias_coeff',
+               'drift_coeff',
+               'drift_rate_coeff',
+               'count_before',
+               'tow_s',
+               'wn',
+               'ref_wn',
+               'ref_dn',
+               'count_after',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGPSLeapSecond,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGPSLeapSecond, self).__init__()
+      self.msg_type = SBP_MSG_GPS_LEAP_SECOND
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.bias_coeff = kwargs.pop('bias_coeff')
+      self.drift_coeff = kwargs.pop('drift_coeff')
+      self.drift_rate_coeff = kwargs.pop('drift_rate_coeff')
+      self.count_before = kwargs.pop('count_before')
+      self.tow_s = kwargs.pop('tow_s')
+      self.wn = kwargs.pop('wn')
+      self.ref_wn = kwargs.pop('ref_wn')
+      self.ref_dn = kwargs.pop('ref_dn')
+      self.count_after = kwargs.pop('count_after')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGPSLeapSecond.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGPSLeapSecond(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGPSLeapSecond._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGPSLeapSecond._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgGPSLeapSecond._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGPSLeapSecond, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_ITRF = 0x0244
 class MsgItrf(SBP):
   """SBP class for message MSG_ITRF (0x0244).
@@ -5339,5 +5472,6 @@ msg_classes = {
   0x0207: MsgBaselineHeadingDepA,
   0x0216: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
+  0x023A: MsgGPSLeapSecond,
   0x0244: MsgItrf,
 }

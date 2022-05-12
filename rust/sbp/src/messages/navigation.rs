@@ -45,6 +45,7 @@ pub use msg_baseline_ned::MsgBaselineNed;
 pub use msg_baseline_ned_dep_a::MsgBaselineNedDepA;
 pub use msg_dops::MsgDops;
 pub use msg_dops_dep_a::MsgDopsDepA;
+pub use msg_gps_leap_second::MsgGpsLeapSecond;
 pub use msg_gps_time::MsgGpsTime;
 pub use msg_gps_time_dep_a::MsgGpsTimeDepA;
 pub use msg_gps_time_gnss::MsgGpsTimeGnss;
@@ -1680,6 +1681,138 @@ pub mod msg_dops_dep_a {
                 tdop: WireFormat::parse_unchecked(buf),
                 hdop: WireFormat::parse_unchecked(buf),
                 vdop: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_gps_leap_second {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Leap second SBP message.
+
+    ///
+    /// Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+    /// drift model parameters.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[derive(Debug, Clone)]
+    pub struct MsgGpsLeapSecond {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        pub sender_id: Option<u16>,
+        /// Reserved. Bias coefficient of GPS time scale with respect to UTC drift
+        /// model.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "bias_coeff")))]
+        pub bias_coeff: i16,
+        /// Reserved. Drift coefficient of GPS time scale with respect to UTC drift
+        /// model.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_coeff")))]
+        pub drift_coeff: i16,
+        /// Reserved. Drift rate correction coefficient of GPS time scale with
+        /// respect to UTC drift model.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_rate_coeff")))]
+        pub drift_rate_coeff: i8,
+        /// Leap second count before insertion.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_before")))]
+        pub count_before: i8,
+        /// Reserved. Drift model reference week second.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_s")))]
+        pub tow_s: u16,
+        /// Reserved. Drift model reference week number.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        pub wn: u16,
+        /// Leap second reference week number.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_wn")))]
+        pub ref_wn: u16,
+        /// Leap second reference day number.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_dn")))]
+        pub ref_dn: u8,
+        /// Leap second count after insertion.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_after")))]
+        pub count_after: i8,
+    }
+
+    impl ConcreteMessage for MsgGpsLeapSecond {
+        const MESSAGE_TYPE: u16 = 570;
+        const MESSAGE_NAME: &'static str = "MSG_GPS_LEAP_SECOND";
+    }
+
+    impl SbpMessage for MsgGpsLeapSecond {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgGpsLeapSecond {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgGpsLeapSecond(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgGpsLeapSecond {
+        const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN
+            + <i16 as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.bias_coeff)
+                + WireFormat::len(&self.drift_coeff)
+                + WireFormat::len(&self.drift_rate_coeff)
+                + WireFormat::len(&self.count_before)
+                + WireFormat::len(&self.tow_s)
+                + WireFormat::len(&self.wn)
+                + WireFormat::len(&self.ref_wn)
+                + WireFormat::len(&self.ref_dn)
+                + WireFormat::len(&self.count_after)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.bias_coeff, buf);
+            WireFormat::write(&self.drift_coeff, buf);
+            WireFormat::write(&self.drift_rate_coeff, buf);
+            WireFormat::write(&self.count_before, buf);
+            WireFormat::write(&self.tow_s, buf);
+            WireFormat::write(&self.wn, buf);
+            WireFormat::write(&self.ref_wn, buf);
+            WireFormat::write(&self.ref_dn, buf);
+            WireFormat::write(&self.count_after, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgGpsLeapSecond {
+                sender_id: None,
+                bias_coeff: WireFormat::parse_unchecked(buf),
+                drift_coeff: WireFormat::parse_unchecked(buf),
+                drift_rate_coeff: WireFormat::parse_unchecked(buf),
+                count_before: WireFormat::parse_unchecked(buf),
+                tow_s: WireFormat::parse_unchecked(buf),
+                wn: WireFormat::parse_unchecked(buf),
+                ref_wn: WireFormat::parse_unchecked(buf),
+                ref_dn: WireFormat::parse_unchecked(buf),
+                count_after: WireFormat::parse_unchecked(buf),
             }
         }
     }

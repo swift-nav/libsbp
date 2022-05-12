@@ -914,6 +914,12 @@ struct MessageTraits<msg_vel_ecef_cov_gnss_t> {
 
 
 template<>
+struct MessageTraits<msg_gps_leap_second_t> {
+  static constexpr u16 id = 570;
+};
+
+
+template<>
 struct MessageTraits<msg_itrf_t> {
   static constexpr u16 id = 580;
 };
