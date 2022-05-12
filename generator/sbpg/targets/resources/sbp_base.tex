@@ -225,6 +225,54 @@ byte array and its contents break down as follows:
   \label{tab:example_breakdown}
 \end{table}
 
+\newpage
+
+\section{GNSS Signals}
+\label{sec:signals}
+\begin{large}
+Code, Constellation, and Band. Signal descriptions are provided in both RINEX and ICD Conventions.
+\end{large}\\
+
+\begin{center}
+  \begin{longtable}{{llllllp{6.5cm}}}
+    \toprule
+    Value & Rinex Desc. & ICD Desc. & Value & Rinex Desc. & ICD Desc. \\
+    \midrule
+    {0} & {GPS L1CA} & {GPS L1 C/A} & {30} & {GLO L2P} & {GLONASS L2SF} \\
+    {1} & {GPS L2CM} & {GPS L2C M} & {31} & {QZS L1CA} & {QZS L1 C/A} \\
+    {2} & {SBAS L1CA} & {SBAS L1 C/A} & {32} & {QZS L1CI} & {QZS L1C D} \\
+    {3} & {GLO L1OF} & {GLONASS L10F} & {33} & {QZS L1CQ} & {QZS L1C P} \\
+    {4} & {GLO L20F} & {GLONASS L20F} & {34} & {QZS L1CX} & {QZS L1C D+P} \\
+    {5} & {GPS L1P} & {GPS L1 P(Y)} & {35} & {QZS L2CM} & {QZS L2C M} \\
+    {6} & {GPS L2P} & {GPS L2 P(Y)} & {36} & {QZS L2CL} & {QZS L2C L} \\
+    {7} & {GPS L2CL} & {GPS L2C L} & {37} & {QZS L2CX} & {QZS L2C ML} \\
+    {8} & {GPS L2CX} & {GPS L2C M+L} & {38} & {QZS L5I} & {QZS L5 I} \\
+    {9} & {GPS L5I} & {GPS L5 I} & {39} & {QZS L5Q} & {QZS L5 Q} \\
+    {10} & {GPS L5Q} & {GPS L5 Q} & {40} & {QZS L5X} & {QZS L5 I+Q} \\
+    {11} & {GPS L5X} & {GPS L5 I+Q} & {41} & {SBAS L5I} & {SBAS L5 I} \\
+    {12} & {BDS2 B1} & {BDS B1I} & {42} & {SBAS L5Q} & {SBAS L5 Q} \\
+    {13} & {BDS2 B2} & {BDS B2I} & {43} & {SBAS L5X} & {SBAS L5 I+Q} \\
+    {14} & {GAL E1B} & {GAL E1 B} & {44} & {BDS3 B1CI} & {BDS B1C D} \\
+    {15} & {GAL E1C} & {GAL E1 C} & {45} & {BDS3 B1CQ} & {BDS B1C P} \\
+    {16} & {GAL E1X} & {GAL E1 B+C} & {46} & {BDS3 B1CX} & {BDS B1C D+P} \\
+    {17} & {GAL E6B} & {GAL E6 B} & {47} & {BDS3 B5I} & {BDS B2a D} \\
+    {18} & {GAL E6C} & {GAL E6 C} & {48} & {BDS3 B5Q} & {BDS B2a P} \\
+    {19} & {GAL E6X} & {GAL E6 B+C} & {49} & {BDS3 B5X} & {BDS B2a D+P} \\
+    {20} & {GAL E7I} & {GAL E5b I} & {50} & {BDS3 B7I} & {BDS B2b D} \\
+    {21} & {GAL E7Q} & {GAL E5b Q} & {51} & {BDS3 B7Q} & {BDS B2b P} \\
+    {22} & {GAL E7X} & {GAL E5b I+Q} & {52} & {BDS3 B7X} & {BDS B2b D+P} \\
+    {23} & {GAL E8I} & {GAL E5a+b I} & {53} & {BDS3 B3I} & {BDS B3I} \\
+    {24} & {GAL E8I} & {GAL E5a+b Q} & {54} & {BDS3 B3Q} & {BDS B3Q} \\
+    {25} & {GAL E8X} & {GAL E5a+b I+Q} & {55} & {BDS3 B3X} & {BDS B3 I+Q} \\
+    {26} & {GAL E5I} & {GAL E5a I} & {56} & {GPS L1CI} & {GPS L1C D} \\
+    {27} & {GAL E5Q} & {GAL E5a Q} & {57} & {GPS L1CQ} & {GPS L1C P} \\
+    {28} & {GAL E5X} & {GAL E5a I+Q} & {58} & {GPS L1CX} & {GPS L1C D+P} \\ 
+    {29} & {GLO L1P} & {GLONASS L1SF} \\
+    \bottomrule
+  \end{longtable}
+\captionof{table}{GNSS Signals Table}
+\end{center}
+
 ((* block messages_table *))
 ((* endblock *))
 
