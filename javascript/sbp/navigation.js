@@ -2132,6 +2132,96 @@ MsgProtectionLevel.prototype.fieldSpec.push(['pitch', 'writeInt32LE', 4]);
 MsgProtectionLevel.prototype.fieldSpec.push(['heading', 'writeInt32LE', 4]);
 MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
+/**
+ * SBP class for message MSG_ITRF (0x0244).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field ssr_iod number (unsigned 8-bit int, 1 byte) SSR IOD parameter.
+ * @field sn_counter_n number (unsigned 8-bit int, 1 byte) Source-Name Counter N.
+ * @field sn string Source-Name
+ * @field tn_counter_m number (unsigned 8-bit int, 1 byte) Target-Name Counter M.
+ * @field tn string Target-Name
+ * @field sin number (unsigned 8-bit int, 1 byte) System Identification Number.
+ * @field utn number (unsigned 16-bit int, 2 bytes) Utilized Transformation Message.
+ * @field re_t0 number (unsigned 16-bit int, 2 bytes) Reference Epoch t0 for transformation parameter set given as Modified Julian Day
+ *   (MDJ) Number minus 44244 days.
+ * @field delta_X0 number (signed 32-bit int, 4 bytes) Translation in X for Reference Epoch t0.
+ * @field delta_Y0 number (signed 32-bit int, 4 bytes) Translation in Y for Reference Epoch t0.
+ * @field delta_Z0 number (signed 32-bit int, 4 bytes) Translation in Z for Reference Epoch t0.
+ * @field theta_01 number (signed 32-bit int, 4 bytes) Rotation around the X-axis for Reference Epoch t0.
+ * @field theta_02 number (signed 32-bit int, 4 bytes) Rotation around the Y-axis for Reference Epoch t0.
+ * @field theta_03 number (signed 32-bit int, 4 bytes) Rotation around the Z-axis for Reference Epoch t0.
+ * @field scale number (signed 32-bit int, 4 bytes) Scale correction for Reference Epoch t0.
+ * @field dot_delta_X0 number (signed 32-bit int, 4 bytes) Rate of change of translation in X.
+ * @field dot_delta_Y0 number (signed 32-bit int, 4 bytes) Rate of change of translation in Y.
+ * @field dot_delta_Z0 number (signed 32-bit int, 4 bytes) Rate of change of translation in Z.
+ * @field dot_theta_01 number (signed 32-bit int, 4 bytes) Rate of change of rotation around the X-axis.
+ * @field dot_theta_02 number (signed 32-bit int, 4 bytes) Rate of change of rotation around the Y-axis.
+ * @field dot_theta_03 number (signed 32-bit int, 4 bytes) Rate of change of rotation around the Z-axis.
+ * @field dot_scale number (signed 16-bit int, 2 bytes) Rate of change of scale correction.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgItrf = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ITRF";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgItrf.prototype = Object.create(SBP.prototype);
+MsgItrf.prototype.messageType = "MSG_ITRF";
+MsgItrf.prototype.msg_type = 0x0244;
+MsgItrf.prototype.constructor = MsgItrf;
+MsgItrf.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('ssr_iod')
+  .uint8('sn_counter_n')
+  .string('sn', { length: 31 })
+  .uint8('tn_counter_m')
+  .string('tn', { length: 31 })
+  .uint8('sin')
+  .uint16('utn')
+  .uint16('re_t0')
+  .int32('delta_X0')
+  .int32('delta_Y0')
+  .int32('delta_Z0')
+  .int32('theta_01')
+  .int32('theta_02')
+  .int32('theta_03')
+  .int32('scale')
+  .int32('dot_delta_X0')
+  .int32('dot_delta_Y0')
+  .int32('dot_delta_Z0')
+  .int32('dot_theta_01')
+  .int32('dot_theta_02')
+  .int32('dot_theta_03')
+  .int16('dot_scale');
+MsgItrf.prototype.fieldSpec = [];
+MsgItrf.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgItrf.prototype.fieldSpec.push(['sn_counter_n', 'writeUInt8', 1]);
+MsgItrf.prototype.fieldSpec.push(['sn', 'string', 31]);
+MsgItrf.prototype.fieldSpec.push(['tn_counter_m', 'writeUInt8', 1]);
+MsgItrf.prototype.fieldSpec.push(['tn', 'string', 31]);
+MsgItrf.prototype.fieldSpec.push(['sin', 'writeUInt8', 1]);
+MsgItrf.prototype.fieldSpec.push(['utn', 'writeUInt16LE', 2]);
+MsgItrf.prototype.fieldSpec.push(['re_t0', 'writeUInt16LE', 2]);
+MsgItrf.prototype.fieldSpec.push(['delta_X0', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['delta_Y0', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['delta_Z0', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['theta_01', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['theta_02', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['theta_03', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['scale', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['dot_delta_X0', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['dot_delta_Y0', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['dot_delta_Z0', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['dot_theta_01', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['dot_theta_02', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['dot_theta_03', 'writeInt32LE', 4]);
+MsgItrf.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]);
+
 module.exports = {
   0x0102: MsgGpsTime,
   MsgGpsTime: MsgGpsTime,
@@ -2210,4 +2300,6 @@ module.exports = {
   MsgProtectionLevelDepA: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
   MsgProtectionLevel: MsgProtectionLevel,
+  0x0244: MsgItrf,
+  MsgItrf: MsgItrf,
 }

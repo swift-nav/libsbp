@@ -79,6 +79,7 @@ import com.swiftnav.sbp.navigation.MsgDopsDepA;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
 import com.swiftnav.sbp.navigation.MsgGPSTimeDepA;
 import com.swiftnav.sbp.navigation.MsgGPSTimeGnss;
+import com.swiftnav.sbp.navigation.MsgItrf;
 import com.swiftnav.sbp.navigation.MsgPosECEF;
 import com.swiftnav.sbp.navigation.MsgPosECEFCov;
 import com.swiftnav.sbp.navigation.MsgPosECEFCovGnss;
@@ -420,6 +421,8 @@ final class MessageTable {
                 return new MsgProtectionLevelDepA(msg);
             case MsgProtectionLevel.TYPE:
                 return new MsgProtectionLevel(msg);
+            case MsgItrf.TYPE:
+                return new MsgItrf(msg);
             case MsgNdbEvent.TYPE:
                 return new MsgNdbEvent(msg);
             case MsgObs.TYPE:

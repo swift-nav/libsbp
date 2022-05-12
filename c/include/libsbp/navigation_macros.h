@@ -1736,4 +1736,25 @@
  */
 #define SBP_MSG_PROTECTION_LEVEL_ENCODED_LEN 76u
 
+#define SBP_MSG_ITRF 0x0244
+/**
+ * The maximum number of items that can be stored in sbp_msg_itrf_t::sn (V4 API)
+ * or msg_itrf_t::sn (legacy API) before the maximum SBP message size is
+ * exceeded
+ */
+#define SBP_MSG_ITRF_SN_MAX 31u
+
+/**
+ * The maximum number of items that can be stored in sbp_msg_itrf_t::tn (V4 API)
+ * or msg_itrf_t::tn (legacy API) before the maximum SBP message size is
+ * exceeded
+ */
+#define SBP_MSG_ITRF_TN_MAX 31u
+
+/**
+ * Encoded length of sbp_msg_itrf_t (V4 API) and
+ * msg_itrf_t (legacy API)
+ */
+#define SBP_MSG_ITRF_ENCODED_LEN 124u
+
 #endif /* LIBSBP_NAVIGATION_MACROS_H */

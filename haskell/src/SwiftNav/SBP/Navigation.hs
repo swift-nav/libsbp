@@ -2303,3 +2303,108 @@ instance Binary MsgProtectionLevel where
 $(makeSBP 'msgProtectionLevel ''MsgProtectionLevel)
 $(makeJSON "_msgProtectionLevel_" ''MsgProtectionLevel)
 $(makeLenses ''MsgProtectionLevel)
+
+msgItrf :: Word16
+msgItrf = 0x0244
+
+data MsgItrf = MsgItrf
+  { _msgItrf_ssr_iod    :: !Word8
+    -- ^ SSR IOD parameter.
+  , _msgItrf_sn_counter_n :: !Word8
+    -- ^ Source-Name Counter N.
+  , _msgItrf_sn         :: !Text
+    -- ^ Source-Name
+  , _msgItrf_tn_counter_m :: !Word8
+    -- ^ Target-Name Counter M.
+  , _msgItrf_tn         :: !Text
+    -- ^ Target-Name
+  , _msgItrf_sin        :: !Word8
+    -- ^ System Identification Number.
+  , _msgItrf_utn        :: !Word16
+    -- ^ Utilized Transformation Message.
+  , _msgItrf_re_t0      :: !Word16
+    -- ^ Reference Epoch t0 for transformation parameter set given as Modified
+    -- Julian Day (MDJ) Number minus 44244 days.
+  , _msgItrf_delta_X0   :: !Int32
+    -- ^ Translation in X for Reference Epoch t0.
+  , _msgItrf_delta_Y0   :: !Int32
+    -- ^ Translation in Y for Reference Epoch t0.
+  , _msgItrf_delta_Z0   :: !Int32
+    -- ^ Translation in Z for Reference Epoch t0.
+  , _msgItrf_theta_01   :: !Int32
+    -- ^ Rotation around the X-axis for Reference Epoch t0.
+  , _msgItrf_theta_02   :: !Int32
+    -- ^ Rotation around the Y-axis for Reference Epoch t0.
+  , _msgItrf_theta_03   :: !Int32
+    -- ^ Rotation around the Z-axis for Reference Epoch t0.
+  , _msgItrf_scale      :: !Int32
+    -- ^ Scale correction for Reference Epoch t0.
+  , _msgItrf_dot_delta_X0 :: !Int32
+    -- ^ Rate of change of translation in X.
+  , _msgItrf_dot_delta_Y0 :: !Int32
+    -- ^ Rate of change of translation in Y.
+  , _msgItrf_dot_delta_Z0 :: !Int32
+    -- ^ Rate of change of translation in Z.
+  , _msgItrf_dot_theta_01 :: !Int32
+    -- ^ Rate of change of rotation around the X-axis.
+  , _msgItrf_dot_theta_02 :: !Int32
+    -- ^ Rate of change of rotation around the Y-axis.
+  , _msgItrf_dot_theta_03 :: !Int32
+    -- ^ Rate of change of rotation around the Z-axis.
+  , _msgItrf_dot_scale  :: !Int16
+    -- ^ Rate of change of scale correction.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgItrf where
+  get = do
+    _msgItrf_ssr_iod <- getWord8
+    _msgItrf_sn_counter_n <- getWord8
+    _msgItrf_sn <- decodeUtf8 <$> getByteString 31
+    _msgItrf_tn_counter_m <- getWord8
+    _msgItrf_tn <- decodeUtf8 <$> getByteString 31
+    _msgItrf_sin <- getWord8
+    _msgItrf_utn <- getWord16le
+    _msgItrf_re_t0 <- getWord16le
+    _msgItrf_delta_X0 <- (fromIntegral <$> getWord32le)
+    _msgItrf_delta_Y0 <- (fromIntegral <$> getWord32le)
+    _msgItrf_delta_Z0 <- (fromIntegral <$> getWord32le)
+    _msgItrf_theta_01 <- (fromIntegral <$> getWord32le)
+    _msgItrf_theta_02 <- (fromIntegral <$> getWord32le)
+    _msgItrf_theta_03 <- (fromIntegral <$> getWord32le)
+    _msgItrf_scale <- (fromIntegral <$> getWord32le)
+    _msgItrf_dot_delta_X0 <- (fromIntegral <$> getWord32le)
+    _msgItrf_dot_delta_Y0 <- (fromIntegral <$> getWord32le)
+    _msgItrf_dot_delta_Z0 <- (fromIntegral <$> getWord32le)
+    _msgItrf_dot_theta_01 <- (fromIntegral <$> getWord32le)
+    _msgItrf_dot_theta_02 <- (fromIntegral <$> getWord32le)
+    _msgItrf_dot_theta_03 <- (fromIntegral <$> getWord32le)
+    _msgItrf_dot_scale <- (fromIntegral <$> getWord16le)
+    pure MsgItrf {..}
+
+  put MsgItrf {..} = do
+    putWord8 _msgItrf_ssr_iod
+    putWord8 _msgItrf_sn_counter_n
+    putByteString $ encodeUtf8 _msgItrf_sn
+    putWord8 _msgItrf_tn_counter_m
+    putByteString $ encodeUtf8 _msgItrf_tn
+    putWord8 _msgItrf_sin
+    putWord16le _msgItrf_utn
+    putWord16le _msgItrf_re_t0
+    (putWord32le . fromIntegral) _msgItrf_delta_X0
+    (putWord32le . fromIntegral) _msgItrf_delta_Y0
+    (putWord32le . fromIntegral) _msgItrf_delta_Z0
+    (putWord32le . fromIntegral) _msgItrf_theta_01
+    (putWord32le . fromIntegral) _msgItrf_theta_02
+    (putWord32le . fromIntegral) _msgItrf_theta_03
+    (putWord32le . fromIntegral) _msgItrf_scale
+    (putWord32le . fromIntegral) _msgItrf_dot_delta_X0
+    (putWord32le . fromIntegral) _msgItrf_dot_delta_Y0
+    (putWord32le . fromIntegral) _msgItrf_dot_delta_Z0
+    (putWord32le . fromIntegral) _msgItrf_dot_theta_01
+    (putWord32le . fromIntegral) _msgItrf_dot_theta_02
+    (putWord32le . fromIntegral) _msgItrf_dot_theta_03
+    (putWord16le . fromIntegral) _msgItrf_dot_scale
+
+$(makeSBP 'msgItrf ''MsgItrf)
+$(makeJSON "_msgItrf_" ''MsgItrf)
+$(makeLenses ''MsgItrf)

@@ -648,3 +648,32 @@ message MsgProtectionLevel {
     sint32 heading = 20;
     uint32 flags = 21;
 }
+
+/** Reference Frame Transformation Parameter
+ *
+None
+ */
+message MsgItrf {
+    uint32 ssr_iod = 1;
+    uint32 sn_counter_n = 2;
+    string sn = 3;
+    uint32 tn_counter_m = 4;
+    string tn = 5;
+    uint32 sin = 6;
+    uint32 utn = 7;
+    uint32 re_t0 = 8;
+    sint32 delta_X0 = 9;
+    sint32 delta_Y0 = 10;
+    sint32 delta_Z0 = 11;
+    sint32 theta_01 = 12;
+    sint32 theta_02 = 13;
+    sint32 theta_03 = 14;
+    sint32 scale = 15;
+    sint32 dot_delta_X0 = 16;
+    sint32 dot_delta_Y0 = 17;
+    sint32 dot_delta_Z0 = 18;
+    sint32 dot_theta_01 = 19;
+    sint32 dot_theta_02 = 20;
+    sint32 dot_theta_03 = 21;
+    sint32 dot_scale = 22;
+}

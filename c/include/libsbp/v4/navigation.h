@@ -29,6 +29,7 @@
 #include <libsbp/v4/navigation/MSG_GPS_TIME.h>
 #include <libsbp/v4/navigation/MSG_GPS_TIME_DEP_A.h>
 #include <libsbp/v4/navigation/MSG_GPS_TIME_GNSS.h>
+#include <libsbp/v4/navigation/MSG_ITRF.h>
 #include <libsbp/v4/navigation/MSG_POS_ECEF.h>
 #include <libsbp/v4/navigation/MSG_POS_ECEF_COV.h>
 #include <libsbp/v4/navigation/MSG_POS_ECEF_COV_GNSS.h>

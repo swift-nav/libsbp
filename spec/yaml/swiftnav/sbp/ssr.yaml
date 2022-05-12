@@ -485,6 +485,7 @@ definitions:
  - MSG_SSR_GRIDDED_CORRECTION_BOUNDS:
      id: 0x05FE
      short_desc: Gridded troposhere and STEC correction residuals bounds
+     public: False
      fields:
        - header:
            type: BoundsHeader
@@ -645,6 +646,7 @@ definitions:
        Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
        element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
        correction points, not lists of points.
+     public: False
      fields:
        - ssr_sol_id:
            type: u8
