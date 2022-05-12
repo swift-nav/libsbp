@@ -2428,24 +2428,93 @@ definitions:
                 - 31:
                     desc: Safe state ROPL
 
- - MSG_UTC_LEAP_SECOND:
-     id: 0x023A
-     short_desc: >
-       Leap second SBP message.
-     desc: >
-       Emulates the GPS CNAV message, reserving bytes for future broadcast of
-       the drift model parameters.
-     public: False
-     fields:
-       - stub:
-           type: array
-           fill: u8
-
- - MSG_REFERENCE_FRAME_PARAM:
+ - MSG_ITRF:
      id: 0x0244
      short_desc: Reference Frame Transformation Parameter
      public: False
      fields:
-       - stub:
-           type: array
-           fill: u8
+       - ssr_iod:
+           type: u8
+           desc: SSR IOD parameter.
+       - sn_counter_n:
+           type: u8
+           desc: Source-Name Counter N.
+       - sn:
+           type: string
+           size: 31
+           desc: Source-Name
+       - tn_counter_m:
+           type: u8
+           desc: Target-Name Counter M.
+       - tn:
+           type: string
+           size: 31
+           desc: Target-Name
+       - sin:
+           type: u8
+           desc: System Identification Number.
+       - utn:
+           type: u16
+           desc: Utilized Transformation Message.
+       - re_t0:
+           type: u16
+           units: 1 day
+           desc: >
+             Reference Epoch t0 for transformation parameter set given as
+             Modified Julian Day (MDJ) Number minus 44244 days.
+       - delta_X0:
+           type: s32
+           units: 0.001 m
+           desc: Translation in X for Reference Epoch t0.
+       - delta_Y0:
+           type: s32
+           units: 0.001 m
+           desc: Translation in Y for Reference Epoch t0.
+       - delta_Z0:
+           type: s32
+           units: 0.001 m
+           desc: Translation in Z for Reference Epoch t0.
+       - theta_01:
+           type: s32
+           units: 0.00002 "
+           desc: Rotation around the X-axis for Reference Epoch t0.
+       - theta_02:
+           type: s32
+           units: 0.00002 "
+           desc: Rotation around the Y-axis for Reference Epoch t0.
+       - theta_03:
+           type: s32
+           units: 0.00002 "
+           desc: Rotation around the Z-axis for Reference Epoch t0.
+       - scale:
+           type: s32
+           units: 0.00001 ppm
+           desc: Scale correction for Reference Epoch t0.
+       - dot_delta_X0:
+           type: s32
+           units: 0.00002 m/yr
+           desc: Rate of change of translation in X.
+       - dot_delta_Y0:
+           type: s32
+           units: 0.00002 m/yr
+           desc: Rate of change of translation in Y.
+       - dot_delta_Z0:
+           type: s32
+           units: 0.00002 m/yr
+           desc: Rate of change of translation in Z.
+       - dot_theta_01:
+           type: s32
+           units: 0.0000004 "/yr
+           desc: Rate of change of rotation around the X-axis.
+       - dot_theta_02:
+           type: s32
+           units: 0.0000004 "/yr
+           desc: Rate of change of rotation around the Y-axis.
+       - dot_theta_03:
+           type: s32
+           units: 0.0000004 "/yr
+           desc: Rate of change of rotation around the Z-axis.
+       - dot_scale:
+           type: s16
+           units: 0.0000002 ppm/yr
+           desc: Rate of change of scale correction.

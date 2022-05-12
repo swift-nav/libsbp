@@ -148,6 +148,7 @@ typedef union {
   sbp_msg_ins_status_t ins_status;
   sbp_msg_ins_updates_t ins_updates;
   sbp_msg_iono_t iono;
+  sbp_msg_itrf_t itrf;
   sbp_msg_linux_cpu_state_dep_a_t linux_cpu_state_dep_a;
   sbp_msg_linux_cpu_state_t linux_cpu_state;
   sbp_msg_linux_mem_state_dep_a_t linux_mem_state_dep_a;
@@ -544,6 +545,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_ins_updates_encode(buf, len, n_written, &msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_encode(buf, len, n_written, &msg->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_encode(buf, len, n_written, &msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_encode(buf, len, n_written,
                                                   &msg->linux_cpu_state_dep_a);
@@ -1159,6 +1162,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_ins_updates_decode(buf, len, n_read, &msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_decode(buf, len, n_read, &msg->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_decode(buf, len, n_read, &msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_decode(buf, len, n_read,
                                                   &msg->linux_cpu_state_dep_a);
@@ -1711,6 +1716,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ins_updates_encoded_len(&msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_encoded_len(&msg->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_encoded_len(&msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_encoded_len(
           &msg->linux_cpu_state_dep_a);
@@ -2249,6 +2256,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_ins_updates_cmp(&a->ins_updates, &b->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_cmp(&a->iono, &b->iono);
+    case SbpMsgItrf:
+      return sbp_msg_itrf_cmp(&a->itrf, &b->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_cmp(&a->linux_cpu_state_dep_a,
                                                &b->linux_cpu_state_dep_a);

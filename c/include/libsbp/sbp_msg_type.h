@@ -142,6 +142,7 @@ typedef enum {
   SbpMsgInsStatus = SBP_MSG_INS_STATUS,
   SbpMsgInsUpdates = SBP_MSG_INS_UPDATES,
   SbpMsgIono = SBP_MSG_IONO,
+  SbpMsgItrf = SBP_MSG_ITRF,
   SbpMsgLinuxCpuStateDepA = SBP_MSG_LINUX_CPU_STATE_DEP_A,
   SbpMsgLinuxCpuState = SBP_MSG_LINUX_CPU_STATE,
   SbpMsgLinuxMemStateDepA = SBP_MSG_LINUX_MEM_STATE_DEP_A,

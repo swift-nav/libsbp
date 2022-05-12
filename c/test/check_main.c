@@ -57,6 +57,7 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_navigation_MsgGPSTime_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_MsgGPSTimeDepA_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_MsgGPSTimeGNSS_suite());
+  srunner_add_suite(sr, auto_check_sbp_navigation_MsgItrf_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_MsgPosECEF_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_MsgPosECEFCov_suite());
   srunner_add_suite(sr, auto_check_sbp_navigation_MsgPosECEFCovGNSS_suite());

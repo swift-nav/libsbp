@@ -46,6 +46,7 @@ Suite* legacy_auto_check_sbp_navigation_MsgDopsDepA_suite(void);
 Suite* legacy_auto_check_sbp_navigation_MsgGPSTime_suite(void);
 Suite* legacy_auto_check_sbp_navigation_MsgGPSTimeDepA_suite(void);
 Suite* legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS_suite(void);
+Suite* legacy_auto_check_sbp_navigation_MsgItrf_suite(void);
 Suite* legacy_auto_check_sbp_navigation_MsgPosECEF_suite(void);
 Suite* legacy_auto_check_sbp_navigation_MsgPosECEFCov_suite(void);
 Suite* legacy_auto_check_sbp_navigation_MsgPosECEFCovGNSS_suite(void);

@@ -37,6 +37,7 @@ mod auto_check_sbp_navigation_msg_dops_dep_a;
 mod auto_check_sbp_navigation_msg_gps_time;
 mod auto_check_sbp_navigation_msg_gps_time_dep_a;
 mod auto_check_sbp_navigation_msg_gps_time_gnss;
+mod auto_check_sbp_navigation_msg_itrf;
 mod auto_check_sbp_navigation_msg_pos_ecef;
 mod auto_check_sbp_navigation_msg_pos_ecef_cov;
 mod auto_check_sbp_navigation_msg_pos_ecef_cov_gnss;
