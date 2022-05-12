@@ -5105,6 +5105,200 @@ class MsgProtectionLevel(SBP):
     d.update(j)
     return d
     
+SBP_MSG_ITRF = 0x0244
+class MsgItrf(SBP):
+  """SBP class for message MSG_ITRF (0x0244).
+
+  You can have MSG_ITRF inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  ssr_iod : int
+    SSR IOD parameter.
+  sn_counter_n : int
+    Source-Name Counter N.
+  sn : string
+    Source-Name
+  tn_counter_m : int
+    Target-Name Counter M.
+  tn : string
+    Target-Name
+  sin : int
+    System Identification Number.
+  utn : int
+    Utilized Transformation Message.
+  re_t0 : int
+    Reference Epoch t0 for transformation parameter set given as Modified
+    Julian Day (MDJ) Number minus 44244 days.
+  delta_X0 : int
+    Translation in X for Reference Epoch t0.
+  delta_Y0 : int
+    Translation in Y for Reference Epoch t0.
+  delta_Z0 : int
+    Translation in Z for Reference Epoch t0.
+  theta_01 : int
+    Rotation around the X-axis for Reference Epoch t0.
+  theta_02 : int
+    Rotation around the Y-axis for Reference Epoch t0.
+  theta_03 : int
+    Rotation around the Z-axis for Reference Epoch t0.
+  scale : int
+    Scale correction for Reference Epoch t0.
+  dot_delta_X0 : int
+    Rate of change of translation in X.
+  dot_delta_Y0 : int
+    Rate of change of translation in Y.
+  dot_delta_Z0 : int
+    Rate of change of translation in Z.
+  dot_theta_01 : int
+    Rate of change of rotation around the X-axis.
+  dot_theta_02 : int
+    Rate of change of rotation around the Y-axis.
+  dot_theta_03 : int
+    Rate of change of rotation around the Z-axis.
+  dot_scale : int
+    Rate of change of scale correction.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'ssr_iod' / construct.Int8ul,
+                   'sn_counter_n' / construct.Int8ul,
+                   'sn'/ construct.Bytes(31),
+                   'tn_counter_m' / construct.Int8ul,
+                   'tn'/ construct.Bytes(31),
+                   'sin' / construct.Int8ul,
+                   'utn' / construct.Int16ul,
+                   're_t0' / construct.Int16ul,
+                   'delta_X0' / construct.Int32sl,
+                   'delta_Y0' / construct.Int32sl,
+                   'delta_Z0' / construct.Int32sl,
+                   'theta_01' / construct.Int32sl,
+                   'theta_02' / construct.Int32sl,
+                   'theta_03' / construct.Int32sl,
+                   'scale' / construct.Int32sl,
+                   'dot_delta_X0' / construct.Int32sl,
+                   'dot_delta_Y0' / construct.Int32sl,
+                   'dot_delta_Z0' / construct.Int32sl,
+                   'dot_theta_01' / construct.Int32sl,
+                   'dot_theta_02' / construct.Int32sl,
+                   'dot_theta_03' / construct.Int32sl,
+                   'dot_scale' / construct.Int16sl,)
+  __slots__ = [
+               'ssr_iod',
+               'sn_counter_n',
+               'sn',
+               'tn_counter_m',
+               'tn',
+               'sin',
+               'utn',
+               're_t0',
+               'delta_X0',
+               'delta_Y0',
+               'delta_Z0',
+               'theta_01',
+               'theta_02',
+               'theta_03',
+               'scale',
+               'dot_delta_X0',
+               'dot_delta_Y0',
+               'dot_delta_Z0',
+               'dot_theta_01',
+               'dot_theta_02',
+               'dot_theta_03',
+               'dot_scale',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgItrf,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgItrf, self).__init__()
+      self.msg_type = SBP_MSG_ITRF
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.ssr_iod = kwargs.pop('ssr_iod')
+      self.sn_counter_n = kwargs.pop('sn_counter_n')
+      self.sn = kwargs.pop('sn')
+      self.tn_counter_m = kwargs.pop('tn_counter_m')
+      self.tn = kwargs.pop('tn')
+      self.sin = kwargs.pop('sin')
+      self.utn = kwargs.pop('utn')
+      self.re_t0 = kwargs.pop('re_t0')
+      self.delta_X0 = kwargs.pop('delta_X0')
+      self.delta_Y0 = kwargs.pop('delta_Y0')
+      self.delta_Z0 = kwargs.pop('delta_Z0')
+      self.theta_01 = kwargs.pop('theta_01')
+      self.theta_02 = kwargs.pop('theta_02')
+      self.theta_03 = kwargs.pop('theta_03')
+      self.scale = kwargs.pop('scale')
+      self.dot_delta_X0 = kwargs.pop('dot_delta_X0')
+      self.dot_delta_Y0 = kwargs.pop('dot_delta_Y0')
+      self.dot_delta_Z0 = kwargs.pop('dot_delta_Z0')
+      self.dot_theta_01 = kwargs.pop('dot_theta_01')
+      self.dot_theta_02 = kwargs.pop('dot_theta_02')
+      self.dot_theta_03 = kwargs.pop('dot_theta_03')
+      self.dot_scale = kwargs.pop('dot_scale')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgItrf.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgItrf(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgItrf._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgItrf._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgItrf._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgItrf, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0102: MsgGPSTime,
@@ -5145,4 +5339,5 @@ msg_classes = {
   0x0207: MsgBaselineHeadingDepA,
   0x0216: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
+  0x0244: MsgItrf,
 }

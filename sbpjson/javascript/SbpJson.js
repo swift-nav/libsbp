@@ -86,6 +86,7 @@
 //   const msgInsStatus = Convert.toMsgInsStatus(json);
 //   const msgInsUpdates = Convert.toMsgInsUpdates(json);
 //   const msgIono = Convert.toMsgIono(json);
+//   const msgItrf = Convert.toMsgItrf(json);
 //   const msgLinuxCPUState = Convert.toMsgLinuxCPUState(json);
 //   const msgLinuxMemState = Convert.toMsgLinuxMemState(json);
 //   const msgLinuxProcessFdCount = Convert.toMsgLinuxProcessFdCount(json);
@@ -882,6 +883,14 @@ function toMsgIono(json) {
 
 function msgIonoToJson(value) {
     return JSON.stringify(uncast(value, r("MsgIono")), null, 2);
+}
+
+function toMsgItrf(json) {
+    return cast(JSON.parse(json), r("MsgItrf"));
+}
+
+function msgItrfToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgItrf")), null, 2);
 }
 
 function toMsgLinuxCPUState(json) {
@@ -2488,6 +2497,30 @@ const typeMap = {
         { json: "b3", js: "b3", typ: 3.14 },
         { json: "t_nmct", js: "t_nmct", typ: r("GpsTimeSEC") },
     ], "any"),
+    "MsgItrf": o([
+        { json: "delta_X0", js: "delta_X0", typ: 0 },
+        { json: "delta_Y0", js: "delta_Y0", typ: 0 },
+        { json: "delta_Z0", js: "delta_Z0", typ: 0 },
+        { json: "dot_delta_X0", js: "dot_delta_X0", typ: 0 },
+        { json: "dot_delta_Y0", js: "dot_delta_Y0", typ: 0 },
+        { json: "dot_delta_Z0", js: "dot_delta_Z0", typ: 0 },
+        { json: "dot_scale", js: "dot_scale", typ: 0 },
+        { json: "dot_theta_01", js: "dot_theta_01", typ: 0 },
+        { json: "dot_theta_02", js: "dot_theta_02", typ: 0 },
+        { json: "dot_theta_03", js: "dot_theta_03", typ: 0 },
+        { json: "re_t0", js: "re_t0", typ: 0 },
+        { json: "scale", js: "scale", typ: 0 },
+        { json: "sin", js: "sin", typ: 0 },
+        { json: "sn", js: "sn", typ: "" },
+        { json: "sn_counter_n", js: "sn_counter_n", typ: 0 },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+        { json: "theta_01", js: "theta_01", typ: 0 },
+        { json: "theta_02", js: "theta_02", typ: 0 },
+        { json: "theta_03", js: "theta_03", typ: 0 },
+        { json: "tn", js: "tn", typ: "" },
+        { json: "tn_counter_m", js: "tn_counter_m", typ: 0 },
+        { json: "utn", js: "utn", typ: 0 },
+    ], "any"),
     "MsgLinuxCPUState": o([
         { json: "cmdline", js: "cmdline", typ: "" },
         { json: "flags", js: "flags", typ: 0 },
@@ -3544,6 +3577,8 @@ module.exports = {
     "toMsgInsUpdates": toMsgInsUpdates,
     "msgIonoToJson": msgIonoToJson,
     "toMsgIono": toMsgIono,
+    "msgItrfToJson": msgItrfToJson,
+    "toMsgItrf": toMsgItrf,
     "msgLinuxCPUStateToJson": msgLinuxCPUStateToJson,
     "toMsgLinuxCPUState": toMsgLinuxCPUState,
     "msgLinuxMemStateToJson": msgLinuxMemStateToJson,

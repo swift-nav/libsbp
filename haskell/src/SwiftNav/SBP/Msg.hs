@@ -147,6 +147,7 @@ data SBPMsg =
    | SBPMsgInsStatus MsgInsStatus Msg
    | SBPMsgInsUpdates MsgInsUpdates Msg
    | SBPMsgIono MsgIono Msg
+   | SBPMsgItrf MsgItrf Msg
    | SBPMsgLinuxCpuState MsgLinuxCpuState Msg
    | SBPMsgLinuxCpuStateDepA MsgLinuxCpuStateDepA Msg
    | SBPMsgLinuxMemState MsgLinuxMemState Msg
@@ -377,6 +378,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInsUpdates = SBPMsgInsUpdates (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgItrf = SBPMsgItrf (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuState = SBPMsgLinuxCpuState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxMemState = SBPMsgLinuxMemState (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -599,6 +601,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgInsStatus _ m) = put m
       encoder (SBPMsgInsUpdates _ m) = put m
       encoder (SBPMsgIono _ m) = put m
+      encoder (SBPMsgItrf _ m) = put m
       encoder (SBPMsgLinuxCpuState _ m) = put m
       encoder (SBPMsgLinuxCpuStateDepA _ m) = put m
       encoder (SBPMsgLinuxMemState _ m) = put m
@@ -825,6 +828,7 @@ instance FromJSON SBPMsg where
         | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInsUpdates = SBPMsgInsUpdates <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgItrf = SBPMsgItrf <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuState = SBPMsgLinuxCpuState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxMemState = SBPMsgLinuxMemState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1052,6 +1056,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgInsUpdates n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgItrf n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxMemState n m) = toJSON n <<>> toJSON m
@@ -1273,6 +1278,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m
   msg f (SBPMsgInsUpdates n m) = SBPMsgInsUpdates n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
+  msg f (SBPMsgItrf n m) = SBPMsgItrf n <$> f m
   msg f (SBPMsgLinuxCpuState n m) = SBPMsgLinuxCpuState n <$> f m
   msg f (SBPMsgLinuxCpuStateDepA n m) = SBPMsgLinuxCpuStateDepA n <$> f m
   msg f (SBPMsgLinuxMemState n m) = SBPMsgLinuxMemState n <$> f m
