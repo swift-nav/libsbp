@@ -34,6 +34,7 @@ mod auto_check_sbp_navigation_msg_baseline_ned;
 mod auto_check_sbp_navigation_msg_baseline_ned_dep_a;
 mod auto_check_sbp_navigation_msg_dops;
 mod auto_check_sbp_navigation_msg_dops_dep_a;
+mod auto_check_sbp_navigation_msg_gps_leap_second;
 mod auto_check_sbp_navigation_msg_gps_time;
 mod auto_check_sbp_navigation_msg_gps_time_dep_a;
 mod auto_check_sbp_navigation_msg_gps_time_gnss;

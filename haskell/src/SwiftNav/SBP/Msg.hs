@@ -132,6 +132,7 @@ data SBPMsg =
    | SBPMsgGloBiases MsgGloBiases Msg
    | SBPMsgGnssCapb MsgGnssCapb Msg
    | SBPMsgGnssTimeOffset MsgGnssTimeOffset Msg
+   | SBPMsgGpsLeapSecond MsgGpsLeapSecond Msg
    | SBPMsgGpsTime MsgGpsTime Msg
    | SBPMsgGpsTimeDepA MsgGpsTimeDepA Msg
    | SBPMsgGpsTimeGnss MsgGpsTimeGnss Msg
@@ -365,6 +366,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGloBiases = SBPMsgGloBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssCapb = SBPMsgGnssCapb (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssTimeOffset = SBPMsgGnssTimeOffset (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGpsLeapSecond = SBPMsgGpsLeapSecond (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeGnss = SBPMsgGpsTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -590,6 +592,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgGloBiases _ m) = put m
       encoder (SBPMsgGnssCapb _ m) = put m
       encoder (SBPMsgGnssTimeOffset _ m) = put m
+      encoder (SBPMsgGpsLeapSecond _ m) = put m
       encoder (SBPMsgGpsTime _ m) = put m
       encoder (SBPMsgGpsTimeDepA _ m) = put m
       encoder (SBPMsgGpsTimeGnss _ m) = put m
@@ -819,6 +822,7 @@ instance FromJSON SBPMsg where
         | msgType == msgGloBiases = SBPMsgGloBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssCapb = SBPMsgGnssCapb <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssTimeOffset = SBPMsgGnssTimeOffset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGpsLeapSecond = SBPMsgGpsLeapSecond <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeGnss = SBPMsgGpsTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1049,6 +1053,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGloBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssCapb n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssTimeOffset n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGpsLeapSecond n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeGnss n m) = toJSON n <<>> toJSON m
@@ -1273,6 +1278,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGloBiases n m) = SBPMsgGloBiases n <$> f m
   msg f (SBPMsgGnssCapb n m) = SBPMsgGnssCapb n <$> f m
   msg f (SBPMsgGnssTimeOffset n m) = SBPMsgGnssTimeOffset n <$> f m
+  msg f (SBPMsgGpsLeapSecond n m) = SBPMsgGpsLeapSecond n <$> f m
   msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
   msg f (SBPMsgGpsTimeDepA n m) = SBPMsgGpsTimeDepA n <$> f m
   msg f (SBPMsgGpsTimeGnss n m) = SBPMsgGpsTimeGnss n <$> f m

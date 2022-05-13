@@ -70,6 +70,7 @@
 //   const msgFlashReadResp = Convert.toMsgFlashReadResp(json);
 //   const msgFrontEndGain = Convert.toMsgFrontEndGain(json);
 //   const msgFwd = Convert.toMsgFwd(json);
+//   const msgGPSLeapSecond = Convert.toMsgGPSLeapSecond(json);
 //   const msgGPSTime = Convert.toMsgGPSTime(json);
 //   const msgGPSTimeGnss = Convert.toMsgGPSTimeGnss(json);
 //   const msgGloBiases = Convert.toMsgGloBiases(json);
@@ -752,6 +753,14 @@ function toMsgFwd(json) {
 
 function msgFwdToJson(value) {
     return JSON.stringify(uncast(value, r("MsgFwd")), null, 2);
+}
+
+function toMsgGPSLeapSecond(json) {
+    return cast(JSON.parse(json), r("MsgGPSLeapSecond"));
+}
+
+function msgGPSLeapSecondToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgGPSLeapSecond")), null, 2);
 }
 
 function toMsgGPSTime(json) {
@@ -2366,6 +2375,17 @@ const typeMap = {
         { json: "protocol", js: "protocol", typ: 0 },
         { json: "source", js: "source", typ: 0 },
     ], "any"),
+    "MsgGPSLeapSecond": o([
+        { json: "bias_coeff", js: "bias_coeff", typ: 0 },
+        { json: "count_after", js: "count_after", typ: 0 },
+        { json: "count_before", js: "count_before", typ: 0 },
+        { json: "drift_coeff", js: "drift_coeff", typ: 0 },
+        { json: "drift_rate_coeff", js: "drift_rate_coeff", typ: 0 },
+        { json: "ref_dn", js: "ref_dn", typ: 0 },
+        { json: "ref_wn", js: "ref_wn", typ: 0 },
+        { json: "tow_s", js: "tow_s", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
+    ], "any"),
     "MsgGPSTime": o([
         { json: "flags", js: "flags", typ: 0 },
         { json: "ns_residual", js: "ns_residual", typ: 0 },
@@ -3463,6 +3483,8 @@ module.exports = {
     "toMsgFrontEndGain": toMsgFrontEndGain,
     "msgFwdToJson": msgFwdToJson,
     "toMsgFwd": toMsgFwd,
+    "msgGPSLeapSecondToJson": msgGPSLeapSecondToJson,
+    "toMsgGPSLeapSecond": toMsgGPSLeapSecond,
     "msgGPSTimeToJson": msgGPSTimeToJson,
     "toMsgGPSTime": toMsgGPSTime,
     "msgGPSTimeGnssToJson": msgGPSTimeGnssToJson,

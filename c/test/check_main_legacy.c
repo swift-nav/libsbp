@@ -66,6 +66,8 @@ int main(void) {
       sr, legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgDops_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgDopsDepA_suite());
+  srunner_add_suite(sr,
+                    legacy_auto_check_sbp_navigation_MsgGPSLeapSecond_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgGPSTime_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_navigation_MsgGPSTimeDepA_suite());
