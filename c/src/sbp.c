@@ -468,7 +468,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   u16 crc;
   s32 rd = 0;
   s8 ret = SBP_OK;
-  u8 buf[2] = {0};
+  u8 buf[8] = {0};
 
   switch (s->state) {
   case SBP_WAITING:
@@ -583,7 +583,7 @@ static s8 send_payload(sbp_state_t *s, sbp_msg_type_t msg_type, u16 sender_id, u
     return SBP_NULL_ERROR;
   }
 
-  u8 buf[2];
+  u8 buf[8];
   u16 crc;
   s32 wr = 0;
 
