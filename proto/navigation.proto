@@ -649,6 +649,24 @@ message MsgProtectionLevel {
     uint32 flags = 21;
 }
 
+/** Leap second SBP message.
+
+ *
+ * Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+ * drift model parameters.
+ */
+message MsgGpsLeapSecond {
+    sint32 bias_coeff = 1;
+    sint32 drift_coeff = 2;
+    sint32 drift_rate_coeff = 3;
+    sint32 count_before = 4;
+    uint32 tow_s = 5;
+    uint32 wn = 6;
+    uint32 ref_wn = 7;
+    uint32 ref_dn = 8;
+    sint32 count_after = 9;
+}
+
 /** Reference Frame Transformation Parameter
  *
 None

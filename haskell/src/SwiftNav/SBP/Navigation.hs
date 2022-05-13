@@ -2304,6 +2304,65 @@ $(makeSBP 'msgProtectionLevel ''MsgProtectionLevel)
 $(makeJSON "_msgProtectionLevel_" ''MsgProtectionLevel)
 $(makeLenses ''MsgProtectionLevel)
 
+msgGpsLeapSecond :: Word16
+msgGpsLeapSecond = 0x023A
+
+-- | SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+--
+-- Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+-- drift model parameters.
+data MsgGpsLeapSecond = MsgGpsLeapSecond
+  { _msgGpsLeapSecond_bias_coeff     :: !Int16
+    -- ^ Reserved. Bias coefficient of GPS time scale with respect to UTC drift
+    -- model.
+  , _msgGpsLeapSecond_drift_coeff    :: !Int16
+    -- ^ Reserved. Drift coefficient of GPS time scale with respect to UTC drift
+    -- model.
+  , _msgGpsLeapSecond_drift_rate_coeff :: !Int8
+    -- ^ Reserved. Drift rate correction coefficient of GPS time scale with
+    -- respect to UTC drift model.
+  , _msgGpsLeapSecond_count_before   :: !Int8
+    -- ^ Leap second count before insertion.
+  , _msgGpsLeapSecond_tow_s          :: !Word16
+    -- ^ Reserved. Drift model reference week second.
+  , _msgGpsLeapSecond_wn             :: !Word16
+    -- ^ Reserved. Drift model reference week number.
+  , _msgGpsLeapSecond_ref_wn         :: !Word16
+    -- ^ Leap second reference week number.
+  , _msgGpsLeapSecond_ref_dn         :: !Word8
+    -- ^ Leap second reference day number.
+  , _msgGpsLeapSecond_count_after    :: !Int8
+    -- ^ Leap second count after insertion.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGpsLeapSecond where
+  get = do
+    _msgGpsLeapSecond_bias_coeff <- (fromIntegral <$> getWord16le)
+    _msgGpsLeapSecond_drift_coeff <- (fromIntegral <$> getWord16le)
+    _msgGpsLeapSecond_drift_rate_coeff <- (fromIntegral <$> getWord8)
+    _msgGpsLeapSecond_count_before <- (fromIntegral <$> getWord8)
+    _msgGpsLeapSecond_tow_s <- getWord16le
+    _msgGpsLeapSecond_wn <- getWord16le
+    _msgGpsLeapSecond_ref_wn <- getWord16le
+    _msgGpsLeapSecond_ref_dn <- getWord8
+    _msgGpsLeapSecond_count_after <- (fromIntegral <$> getWord8)
+    pure MsgGpsLeapSecond {..}
+
+  put MsgGpsLeapSecond {..} = do
+    (putWord16le . fromIntegral) _msgGpsLeapSecond_bias_coeff
+    (putWord16le . fromIntegral) _msgGpsLeapSecond_drift_coeff
+    (putWord8 . fromIntegral) _msgGpsLeapSecond_drift_rate_coeff
+    (putWord8 . fromIntegral) _msgGpsLeapSecond_count_before
+    putWord16le _msgGpsLeapSecond_tow_s
+    putWord16le _msgGpsLeapSecond_wn
+    putWord16le _msgGpsLeapSecond_ref_wn
+    putWord8 _msgGpsLeapSecond_ref_dn
+    (putWord8 . fromIntegral) _msgGpsLeapSecond_count_after
+
+$(makeSBP 'msgGpsLeapSecond ''MsgGpsLeapSecond)
+$(makeJSON "_msgGpsLeapSecond_" ''MsgGpsLeapSecond)
+$(makeLenses ''MsgGpsLeapSecond)
+
 msgItrf :: Word16
 msgItrf = 0x0244
 

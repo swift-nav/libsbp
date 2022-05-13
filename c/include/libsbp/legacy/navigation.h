@@ -919,6 +919,29 @@ typedef struct SBP_ATTR_PACKED {
   u32 flags;     /**< Status flags */
 } msg_protection_level_t;
 
+/** Leap second SBP message.
+
+ *
+ * Emulates the GPS CNAV message, reserving bytes for future broadcast of the
+ * drift model parameters.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  s16 bias_coeff;      /**< Reserved. Bias coefficient of GPS time scale
+                            with respect to UTC drift model. [2^-35 s] */
+  s16 drift_coeff;     /**< Reserved. Drift coefficient of GPS time scale
+                            with respect to UTC drift model. [2^-51 s/s] */
+  s8 drift_rate_coeff; /**< Reserved. Drift rate correction coefficient of
+                            GPS time scale with respect to UTC drift model.
+                          [2^-68 s/s^2] */
+  s8 count_before;     /**< Leap second count before insertion. [s] */
+  u16 tow_s;           /**< Reserved. Drift model reference week second. [s] */
+  u16 wn;         /**< Reserved. Drift model reference week number. [weeks] */
+  u16 ref_wn;     /**< Leap second reference week number. [weeks] */
+  u8 ref_dn;      /**< Leap second reference day number. [days] */
+  s8 count_after; /**< Leap second count after insertion. [s] */
+} msg_gps_leap_second_t;
+
 typedef struct SBP_ATTR_PACKED {
   u8 ssr_iod;      /**< SSR IOD parameter. */
   u8 sn_counter_n; /**< Source-Name Counter N. */
