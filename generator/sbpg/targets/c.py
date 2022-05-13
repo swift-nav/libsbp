@@ -692,5 +692,6 @@ def render_version(output_dir, release: ReleaseVersion):
                 minor=release.minor,
                 patch=release.patch,
                 full_version=release.full_version,
+                is_staging=release.is_staging,
             )
         )
