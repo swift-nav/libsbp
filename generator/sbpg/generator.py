@@ -77,6 +77,10 @@ def get_args():
                       nargs=1,
                       required=True,
                       help='Release version.')
+  parser.add_argument('-s',
+                      '--staging',
+                      action="store_true",
+                      help='Is a staging branch')
   parser.add_argument('-v',
                       '--verbose',
                       action="store_true",
@@ -84,7 +88,7 @@ def get_args():
   return parser
 
 
-def parse_release_version(release: str) -> ReleaseVersion:
+def parse_release_version(release: str, staging: bool) -> ReleaseVersion:
   major, minor, patch = release.split('.')[:3]
   major = major.lstrip('v')
   if '-' in patch:
@@ -94,11 +98,14 @@ def parse_release_version(release: str) -> ReleaseVersion:
   else:
     patch_pre = patch
     full_version = "{}.{}.{}".format(major, minor, patch)
+  if staging:
+    full_version += '-staging'
   return ReleaseVersion(major=major,
                         minor=minor,
                         patch=patch,
                         patch_pre=patch_pre,
-                        full_version=full_version)
+                        full_version=full_version,
+                        is_staging=int(staging),)
 
 def main():
   try:
@@ -125,7 +132,7 @@ def main():
 
     # Sort the files - we need them to be in a stable order for some test generation
     file_index_items = sorted(file_index.items(), key=lambda f: f[0])
-    release = parse_release_version(args.release[0])
+    release = parse_release_version(args.release[0], args.staging)
     if verbose:
       print("Reading files...")
       pprint.pprint(list(file_index.keys()))

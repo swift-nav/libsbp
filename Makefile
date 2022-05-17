@@ -180,12 +180,17 @@ deps-quicktype-elm: verify-prereq-quicktype
 gen: gen-c gen-python gen-javascript gen-java gen-haskell gen-rust gen-protobuf gen-jsonschema gen-quicktype
 gen-quicktype: gen-quicktype-typescript gen-quicktype-elm
 
+gen-c_args = -i $(SBP_SPEC_DIR) \
+             -o $(SWIFTNAV_ROOT)/c \
+             -r $(SBP_VERSION)
+ifeq ($(SBP_STAGING), 1)
+	gen-c_args += -s
+endif
+
 gen-c:
 	$(call announce-begin,"Generating C headers and sources")
 	cd $(SWIFTNAV_ROOT)/generator; \
-	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
-		       -o $(SWIFTNAV_ROOT)/c \
-		       -r $(SBP_VERSION) \
+	$(SBP_GEN_BIN) $(gen-c_args) \
 	               --c
 
 	$(call announce-begin,"Generating C tests")

@@ -7,3 +7,4 @@ class ReleaseVersion:
   patch: str
   patch_pre: str
   full_version: str
+  is_staging: int

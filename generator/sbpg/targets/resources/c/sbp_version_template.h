@@ -30,6 +30,9 @@
 /** Full SBP version string. */
 #define SBP_VERSION "(((full_version)))"
 
+/** Is this a staging branch? */
+#define SBP_STAGING (((is_staging)))
+
 /** \} */
 
 

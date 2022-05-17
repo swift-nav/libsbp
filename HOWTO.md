@@ -4,7 +4,7 @@ libsbp Development Procedures
 <!-- toc -->
 
 - [Adding and Testing New Messages](#adding-and-testing-new-messages)
-  * [Generating Missing Tests](#generating-missing-tests)
+  * [Generating missing tests](#generating-missing-tests)
 - [Message Guidelines](#message-guidelines)
 - [Releasing New Versions of the Library](#releasing-new-versions-of-the-library)
   * [Using Docker](#using-docker)
