@@ -2435,6 +2435,7 @@ definitions:
      desc: >
        Emulates the GPS CNAV message, reserving bytes for future broadcast of
        the drift model parameters.
+     public: False
      fields:
        - stub:
            type: array
