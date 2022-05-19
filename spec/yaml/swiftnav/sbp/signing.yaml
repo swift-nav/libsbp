@@ -1,0 +1,50 @@
+# Copyright (C) 2018-2022 Swift Navigation Inc.
+# Contact: https://support.swiftnav.com
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.signing
+description: Messages relating to signatures
+stable: False
+public: False
+include:
+  - types.yaml
+  - gnss.yaml
+definitions:
+  - MSG_ED25519_SIGNATURE:
+      id: 0x0BD2
+      short_desc: ED25519 signature for groups of RTCM messages
+      fields:
+        - signature:
+            type: array
+            fill: u8
+            size: 64
+            desc: ED25519 signature for messages.
+        - fingerprint:
+            type: array
+            fill: u8
+            size: 20
+            desc: SHA-1 fingerprint of the associated certificate.
+        - signed_messages:
+            type: array
+            fill: u32
+            desc: CRCs of signed messages.
+  - MSG_ED25519_CERTIFICATE:
+      id: 0x0BD3
+      short_desc: ED25519 certificate, split over multiple messages
+      fields:
+        - message_number:
+            type: u8
+            desc: Message number out of total_messages (0 indexed).
+        - total_messages:
+            type: u8
+            desc: Total number of messages.
+        - certificate_bytes:
+            type: array
+            fill: u8
+            desc: ED25519 certificate bytes.

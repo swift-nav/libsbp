@@ -49,6 +49,8 @@
 //   const msgDeviceMonitor = Convert.toMsgDeviceMonitor(json);
 //   const msgDgnssStatus = Convert.toMsgDgnssStatus(json);
 //   const msgDops = Convert.toMsgDops(json);
+//   const msgEd25519Certificate = Convert.toMsgEd25519Certificate(json);
+//   const msgEd25519Signature = Convert.toMsgEd25519Signature(json);
 //   const msgEphemerisBds = Convert.toMsgEphemerisBds(json);
 //   const msgEphemerisGPS = Convert.toMsgEphemerisGPS(json);
 //   const msgEphemerisGal = Convert.toMsgEphemerisGal(json);
@@ -588,6 +590,22 @@ function toMsgDops(json) {
 
 function msgDopsToJson(value) {
     return JSON.stringify(uncast(value, r("MsgDops")), null, 2);
+}
+
+function toMsgEd25519Certificate(json) {
+    return cast(JSON.parse(json), r("MsgEd25519Certificate"));
+}
+
+function msgEd25519CertificateToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgEd25519Certificate")), null, 2);
+}
+
+function toMsgEd25519Signature(json) {
+    return cast(JSON.parse(json), r("MsgEd25519Signature"));
+}
+
+function msgEd25519SignatureToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgEd25519Signature")), null, 2);
 }
 
 function toMsgEphemerisBds(json) {
@@ -2193,6 +2211,16 @@ const typeMap = {
         { json: "tow", js: "tow", typ: 0 },
         { json: "vdop", js: "vdop", typ: 0 },
     ], "any"),
+    "MsgEd25519Certificate": o([
+        { json: "certificate_bytes", js: "certificate_bytes", typ: a(0) },
+        { json: "message_number", js: "message_number", typ: 0 },
+        { json: "total_messages", js: "total_messages", typ: 0 },
+    ], "any"),
+    "MsgEd25519Signature": o([
+        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "signature", js: "signature", typ: a(0) },
+        { json: "signed_messages", js: "signed_messages", typ: a(0) },
+    ], "any"),
     "MsgEphemerisBds": o([
         { json: "af0", js: "af0", typ: 3.14 },
         { json: "af1", js: "af1", typ: 3.14 },
@@ -3523,6 +3551,10 @@ module.exports = {
     "toMsgDgnssStatus": toMsgDgnssStatus,
     "msgDopsToJson": msgDopsToJson,
     "toMsgDops": toMsgDops,
+    "msgEd25519CertificateToJson": msgEd25519CertificateToJson,
+    "toMsgEd25519Certificate": toMsgEd25519Certificate,
+    "msgEd25519SignatureToJson": msgEd25519SignatureToJson,
+    "toMsgEd25519Signature": toMsgEd25519Signature,
     "msgEphemerisBdsToJson": msgEphemerisBdsToJson,
     "toMsgEphemerisBds": toMsgEphemerisBds,
     "msgEphemerisGPSToJson": msgEphemerisGPSToJson,
