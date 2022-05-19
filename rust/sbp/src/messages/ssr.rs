@@ -169,16 +169,16 @@ pub mod code_phase_biases_sat_sig {
         /// DF382 (Galileo) or DF467 (BDS) depending on the constellation.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "signal_id")))]
         pub signal_id: u8,
-        /// Code Bias Mean (range 0-1.275)
+        /// Code Bias Mean. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename(serialize = "code_bias_bound_mu")))]
         pub code_bias_bound_mu: u8,
-        /// Code Bias Standard Deviation (range 0-1.275)
+        /// Code Bias Standard Deviation.  Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename(serialize = "code_bias_bound_sig")))]
         pub code_bias_bound_sig: u8,
-        /// Phase Bias Mean (range 0-1.275)
+        /// Phase Bias Mean. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename(serialize = "phase_bias_bound_mu")))]
         pub phase_bias_bound_mu: u8,
-        /// Phase Bias Standard Deviation (range 0-1.275)
+        /// Phase Bias Standard Deviation.  Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename(serialize = "phase_bias_bound_sig")))]
         pub phase_bias_bound_sig: u8,
     }
@@ -759,7 +759,12 @@ pub mod msg_ssr_gridded_correction_bounds {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
+
     /// Gridded troposhere and STEC correction residuals bounds
+    ///
+    /// Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+    /// mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
     pub struct MsgSsrGriddedCorrectionBounds {
@@ -787,10 +792,10 @@ pub mod msg_ssr_gridded_correction_bounds {
         /// Tropospheric delay at grid point.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_delay_correction")))]
         pub tropo_delay_correction: TroposphericDelayCorrection,
-        /// Troposphere Error Bound Mean (range 0-1.275).
+        /// Troposphere Error Bound Mean. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_bound_mu")))]
         pub tropo_bound_mu: u8,
-        /// Troposphere Error Bound Standard Deviation (range 0-1.275)
+        /// Troposphere Error Bound StDev. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_bound_sig")))]
         pub tropo_bound_sig: u8,
         /// Number of satellites.
@@ -1320,7 +1325,12 @@ pub mod msg_ssr_orbit_clock_bounds {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
+
     /// Combined Orbit and Clock Bound
+    ///
+    /// Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240,
+    /// mean=5+0.5(i-200); i>240, mean=25+2(i-240).
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
     pub struct MsgSsrOrbitClockBounds {
@@ -2502,36 +2512,28 @@ pub mod orbit_clock_bound {
         /// DF488 (BDS) depending on the constellation.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_id")))]
         pub sat_id: u8,
-        /// Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Mean Radial. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_mu")))]
         pub orb_radial_bound_mu: u8,
-        /// Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Mean Along-Track. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_mu")))]
         pub orb_along_bound_mu: u8,
-        /// Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Mean Cross-Track. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu")))]
         pub orb_cross_bound_mu: u8,
-        /// Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Standard Deviation Radial. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_sig")))]
         pub orb_radial_bound_sig: u8,
-        /// Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i
-        /// 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Standard Deviation Along-Track. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_sig")))]
         pub orb_along_bound_sig: u8,
-        /// Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i
-        /// 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Standard Deviation Cross-Track. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_sig")))]
         pub orb_cross_bound_sig: u8,
-        /// Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-        /// mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Clock Bound Mean. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu")))]
         pub clock_bound_mu: u8,
-        /// Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i
-        /// 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+        /// Clock Bound Standard Deviation. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig")))]
         pub clock_bound_sig: u8,
     }
@@ -2598,47 +2600,43 @@ pub mod orbit_clock_bound_degradation {
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
     pub struct OrbitClockBoundDegradation {
-        /// Orbit Bound Mean Radial First derivative degradation parameter (range
-        /// 0-0.255)
+        /// Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
         #[cfg_attr(
             feature = "serde",
             serde(rename(serialize = "orb_radial_bound_mu_dot"))
         )]
         pub orb_radial_bound_mu_dot: u8,
-        /// Orbit Bound Mean Along-Track First derivative degradation parameter
-        /// (range 0-0.255)
+        /// Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_mu_dot")))]
         pub orb_along_bound_mu_dot: u8,
-        /// Orbit Bound Mean Cross-Track First derivative degradation parameter
-        /// (range 0-0.255)
+        /// Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu_dot")))]
         pub orb_cross_bound_mu_dot: u8,
-        /// Orbit Bound Standard Deviation Radial First derivative degradation
-        /// parameter (range 0-0.255)
+        /// Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255
+        /// m/s
         #[cfg_attr(
             feature = "serde",
             serde(rename(serialize = "orb_radial_bound_sig_dot"))
         )]
         pub orb_radial_bound_sig_dot: u8,
-        /// Orbit Bound Standard Deviation Along-Track First derivative degradation
-        /// parameter (range 0-0.255)
+        /// Orbit Bound Standard Deviation Along-Track First derivative. Range:
+        /// 0-0.255 m/s
         #[cfg_attr(
             feature = "serde",
             serde(rename(serialize = "orb_along_bound_sig_dot"))
         )]
         pub orb_along_bound_sig_dot: u8,
-        /// Orbit Bound Standard Deviation Cross-Track First derivative degradation
-        /// parameter (range 0-0.255)
+        /// Orbit Bound Standard Deviation Cross-Track First derivative. Range:
+        /// 0-0.255 m/s
         #[cfg_attr(
             feature = "serde",
             serde(rename(serialize = "orb_cross_bound_sig_dot"))
         )]
         pub orb_cross_bound_sig_dot: u8,
-        /// Clock Bound Mean First derivative degradation parameter (range 0-0.255)
+        /// Clock Bound Mean First derivative. Range: 0-0.255 m/s
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu_dot")))]
         pub clock_bound_mu_dot: u8,
-        /// Clock Bound Standard Deviation First derivative degradation parameter
-        /// (range 0-0.255)
+        /// Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig_dot")))]
         pub clock_bound_sig_dot: u8,
     }
@@ -2922,7 +2920,8 @@ pub mod stec_residual {
         /// STEC residual
         #[cfg_attr(feature = "serde", serde(rename(serialize = "residual")))]
         pub residual: i16,
-        /// stddev
+        /// Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+        /// (3^class * (1 + value/16) - 1) * 10 TECU
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stddev")))]
         pub stddev: u8,
     }
@@ -3012,7 +3011,8 @@ pub mod stec_sat_element {
         /// in units of TECU instead of m.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_quality_indicator")))]
         pub stec_quality_indicator: u8,
-        /// Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+        /// Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
+        /// C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_coeff")))]
         pub stec_coeff: [i16; 4],
     }
@@ -3058,20 +3058,16 @@ pub mod stec_sat_element_integrity {
         /// STEC residuals (mean, stddev)
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_residual")))]
         pub stec_residual: STECResidual,
-        /// STEC Error Bound Mean (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230,
-        /// mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+        /// Error Bound Mean. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_mu")))]
         pub stec_bound_mu: u8,
-        /// STEC Error Bound Standard Deviation (range 0-17.5) i<= 200, mean = 0.01i
-        /// 200<i<=230, mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+        /// Error Bound StDev. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_sig")))]
         pub stec_bound_sig: u8,
-        /// STEC Error Bound Mean First derivative degradation parameter(range
-        /// 0-0.01275)
+        /// Error Bound Mean First derivative. Range: 0-0.01275 m/s
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_mu_dot")))]
         pub stec_bound_mu_dot: u8,
-        /// STEC Error Bound Standard Deviation First derivative degradation
-        /// parameter (range 0-0.01275)
+        /// Error Bound StDev First derivative. Range: 0-0.01275 m/s
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_sig_dot")))]
         pub stec_bound_sig_dot: u8,
     }
@@ -3326,13 +3322,14 @@ pub mod tropospheric_delay_correction {
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
     pub struct TroposphericDelayCorrection {
-        /// Hydrostatic vertical delay
+        /// Hydrostatic vertical delay. Add 2.3 m to get actual value.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "hydro")))]
         pub hydro: i16,
-        /// Wet vertical delay
+        /// Wet vertical delay. Add 0.252 m to get actual value.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "wet")))]
         pub wet: i8,
-        /// stddev
+        /// Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+        /// (3^class * (1 + value/16) - 1) mm
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stddev")))]
         pub stddev: u8,
     }

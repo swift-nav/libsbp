@@ -2482,7 +2482,6 @@ definitions:
  - MSG_ITRF:
      id: 0x0244
      short_desc: Reference Frame Transformation Parameter
-     public: False
      fields:
        - ssr_iod:
            type: u8

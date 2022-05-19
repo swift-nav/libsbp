@@ -40,6 +40,11 @@ extern "C" {
  * SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS
  *
  *****************************************************************************/
+/** Combined Orbit and Clock Bound
+ *
+ * Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
+ * i>240, mean=25+2(i-240).
+ */
 typedef struct {
   /**
    * Header of a bounds message.

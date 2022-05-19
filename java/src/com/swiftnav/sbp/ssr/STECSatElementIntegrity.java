@@ -25,24 +25,16 @@ public class STECSatElementIntegrity extends SBPStruct {
     /** STEC residuals (mean, stddev) */
     public STECResidual stec_residual;
 
-    /**
-     * STEC Error Bound Mean (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230, mean=2+0.1(i-200)
-     * i>230, mean=5+0.5(i-230)
-     */
+    /** Error Bound Mean. See Note 1. */
     public int stec_bound_mu;
 
-    /**
-     * STEC Error Bound Standard Deviation (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230,
-     * mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
-     */
+    /** Error Bound StDev. See Note 1. */
     public int stec_bound_sig;
 
-    /** STEC Error Bound Mean First derivative degradation parameter(range 0-0.01275) */
+    /** Error Bound Mean First derivative. Range: 0-0.01275 m/s */
     public int stec_bound_mu_dot;
 
-    /**
-     * STEC Error Bound Standard Deviation First derivative degradation parameter (range 0-0.01275)
-     */
+    /** Error Bound StDev First derivative. Range: 0-0.01275 m/s */
     public int stec_bound_sig_dot;
 
     public STECSatElementIntegrity() {}

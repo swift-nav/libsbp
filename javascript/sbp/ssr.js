@@ -204,7 +204,8 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'wr
  * @field sv_id SvId Unique space vehicle identifier
  * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specification but in
  *   units of TECU instead of m.
- * @field stec_coeff array Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+ * @field stec_coeff array Coefficients of the STEC polynomial in the order of C00, C01, C10, C11. C00 =
+ *   0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -263,9 +264,10 @@ TroposphericDelayCorrectionNoStd.prototype.fieldSpec.push(['wet', 'writeInt8', 1
  * Troposphere vertical delays (mean and standard deviation) at the grid point.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay
- * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay
- * @field stddev number (unsigned 8-bit int, 1 byte) stddev
+ * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay. Add 2.3 m to get actual value.
+ * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay. Add 0.252 m to get actual value.
+ * @field stddev number (unsigned 8-bit int, 1 byte) Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+ *   (3^class * (1 + value/16) - 1) mm
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -327,7 +329,8 @@ STECResidualNoStd.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
  * @field residual number (signed 16-bit int, 2 bytes) STEC residual
- * @field stddev number (unsigned 8-bit int, 1 byte) stddev
+ * @field stddev number (unsigned 8-bit int, 1 byte) Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+ *   (3^class * (1 + value/16) - 1) * 10 TECU
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -676,13 +679,10 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['stec_residuals', 'array', STE
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field stec_residual STECResidual STEC residuals (mean, stddev)
- * @field stec_bound_mu number (unsigned 8-bit int, 1 byte) STEC Error Bound Mean (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230,
- *   mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
- * @field stec_bound_sig number (unsigned 8-bit int, 1 byte) STEC Error Bound Standard Deviation (range 0-17.5) i<= 200, mean = 0.01i
- *   200<i<=230, mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
- * @field stec_bound_mu_dot number (unsigned 8-bit int, 1 byte) STEC Error Bound Mean First derivative degradation parameter(range 0-0.01275)
- * @field stec_bound_sig_dot number (unsigned 8-bit int, 1 byte) STEC Error Bound Standard Deviation First derivative degradation parameter
- *   (range 0-0.01275)
+ * @field stec_bound_mu number (unsigned 8-bit int, 1 byte) Error Bound Mean. See Note 1.
+ * @field stec_bound_sig number (unsigned 8-bit int, 1 byte) Error Bound StDev. See Note 1.
+ * @field stec_bound_mu_dot number (unsigned 8-bit int, 1 byte) Error Bound Mean First derivative. Range: 0-0.01275 m/s
+ * @field stec_bound_sig_dot number (unsigned 8-bit int, 1 byte) Error Bound StDev First derivative. Range: 0-0.01275 m/s
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -713,7 +713,9 @@ STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_sig_dot', 'writeUI
 /**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
  *
- 
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header BoundsHeader Header of a bounds message.
  * @field ssr_iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction.
@@ -722,8 +724,8 @@ STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_sig_dot', 'writeUI
  * @field tropo_qi number (unsigned 8-bit int, 1 byte) Tropo Quality Indicator. Similar to RTCM DF389.
  * @field grid_point_id number (unsigned 16-bit int, 2 bytes) Index of the Grid Point.
  * @field tropo_delay_correction TroposphericDelayCorrection Tropospheric delay at grid point.
- * @field tropo_bound_mu number (unsigned 8-bit int, 1 byte) Troposphere Error Bound Mean (range 0-1.275).
- * @field tropo_bound_sig number (unsigned 8-bit int, 1 byte) Troposphere Error Bound Standard Deviation (range 0-1.275)
+ * @field tropo_bound_mu number (unsigned 8-bit int, 1 byte) Troposphere Error Bound Mean. Range: 0-1.275 m
+ * @field tropo_bound_sig number (unsigned 8-bit int, 1 byte) Troposphere Error Bound StDev. Range: 0-1.275 m
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites.
  * @field stec_sat_list array Array of STEC polynomial coefficients and its bounds for each space vehicle.
  *
@@ -1317,22 +1319,14 @@ MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['rle_list', 'array', 'writeUI
  * Fields in the SBP payload (`sbp.payload`):
  * @field sat_id number (unsigned 8-bit int, 1 byte) Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or DF488
  *   (BDS) depending on the constellation.
- * @field orb_radial_bound_mu number (unsigned 8-bit int, 1 byte) Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
- *   i>240, mean=25+2(i-240)
- * @field orb_along_bound_mu number (unsigned 8-bit int, 1 byte) Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
- *   i>240, mean=25+2(i-240)
- * @field orb_cross_bound_mu number (unsigned 8-bit int, 1 byte) Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
- *   i>240, mean=25+2(i-240)
- * @field orb_radial_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
- *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
- * @field orb_along_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
- *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
- * @field orb_cross_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
- *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
- * @field clock_bound_mu number (unsigned 8-bit int, 1 byte) Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
- *   i>240, mean=25+2(i-240)
- * @field clock_bound_sig number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i 200<i<=240,
- *   mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+ * @field orb_radial_bound_mu number (unsigned 8-bit int, 1 byte) Mean Radial. See Note 1.
+ * @field orb_along_bound_mu number (unsigned 8-bit int, 1 byte) Mean Along-Track. See Note 1.
+ * @field orb_cross_bound_mu number (unsigned 8-bit int, 1 byte) Mean Cross-Track. See Note 1.
+ * @field orb_radial_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Radial. See Note 1.
+ * @field orb_along_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Along-Track. See Note 1.
+ * @field orb_cross_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Cross-Track. See Note 1.
+ * @field clock_bound_mu number (unsigned 8-bit int, 1 byte) Clock Bound Mean. See Note 1.
+ * @field clock_bound_sig number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation. See Note 1.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1371,7 +1365,9 @@ OrbitClockBound.prototype.fieldSpec.push(['clock_bound_sig', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
  *
- 
+ * Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
+ * i>240, mean=25+2(i-240).
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header BoundsHeader Header of a bounds message.
  * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound.
@@ -1415,10 +1411,10 @@ MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['orbit_clock_bounds', 'array', 
  *   (BDS) depending on the constellation.
  * @field signal_id number (unsigned 8-bit int, 1 byte) Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS), DF382
  *   (Galileo) or DF467 (BDS) depending on the constellation.
- * @field code_bias_bound_mu number (unsigned 8-bit int, 1 byte) Code Bias Mean (range 0-1.275)
- * @field code_bias_bound_sig number (unsigned 8-bit int, 1 byte) Code Bias Standard Deviation (range 0-1.275)
- * @field phase_bias_bound_mu number (unsigned 8-bit int, 1 byte) Phase Bias Mean (range 0-1.275)
- * @field phase_bias_bound_sig number (unsigned 8-bit int, 1 byte) Phase Bias Standard Deviation (range 0-1.275)
+ * @field code_bias_bound_mu number (unsigned 8-bit int, 1 byte) Code Bias Mean. Range: 0-1.275 m
+ * @field code_bias_bound_sig number (unsigned 8-bit int, 1 byte) Code Bias Standard Deviation.  Range: 0-1.275 m
+ * @field phase_bias_bound_mu number (unsigned 8-bit int, 1 byte) Phase Bias Mean. Range: 0-1.275 m
+ * @field phase_bias_bound_sig number (unsigned 8-bit int, 1 byte) Phase Bias Standard Deviation.  Range: 0-1.275 m
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1492,20 +1488,14 @@ MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['satellites_signals', 'arr
  * Orbit and clock bound degradation.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field orb_radial_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Radial First derivative degradation parameter (range 0-0.255)
- * @field orb_along_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Along-Track First derivative degradation parameter (range
- *   0-0.255)
- * @field orb_cross_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Cross-Track First derivative degradation parameter (range
- *   0-0.255)
- * @field orb_radial_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Radial First derivative degradation parameter
- *   (range 0-0.255)
- * @field orb_along_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Along-Track First derivative degradation
- *   parameter (range 0-0.255)
- * @field orb_cross_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Cross-Track First derivative degradation
- *   parameter (range 0-0.255)
- * @field clock_bound_mu_dot number (unsigned 8-bit int, 1 byte) Clock Bound Mean First derivative degradation parameter (range 0-0.255)
- * @field clock_bound_sig_dot number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation First derivative degradation parameter (range
- *   0-0.255)
+ * @field orb_radial_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
+ * @field orb_along_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
+ * @field orb_cross_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
+ * @field orb_radial_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255 m/s
+ * @field orb_along_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Along-Track First derivative. Range: 0-0.255 m/s
+ * @field orb_cross_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Cross-Track First derivative. Range: 0-0.255 m/s
+ * @field clock_bound_mu_dot number (unsigned 8-bit int, 1 byte) Clock Bound Mean First derivative. Range: 0-0.255 m/s
+ * @field clock_bound_sig_dot number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
  *
  * @param sbp An SBP object with a payload to be decoded.
  */

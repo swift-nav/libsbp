@@ -11,7 +11,7 @@
 package: swiftnav.sbp.integrity
 description: Integrity flag messages
 stable: False
-public: False
+public: True
 include:
   - types.yaml
   - gnss.yaml
@@ -44,7 +44,6 @@ definitions:
   - MSG_SSR_FLAG_HIGH_LEVEL:
       id: 0x0BB9
       short_desc: High level integrity flags
-      public: False
       fields:
         - obs_time:
             type: GPSTimeSec
@@ -94,7 +93,6 @@ definitions:
   - MSG_SSR_FLAG_SATELLITES:
       id: 0x0BBD
       short_desc: List of satellites which are faulty, per constellation
-      public: False
       fields:
         - obs_time:
             type: GPSTimeSec
@@ -126,7 +124,6 @@ definitions:
   - MSG_SSR_FLAG_TROPO_GRID_POINTS:
       id: 0x0BC3
       short_desc: List of grid points which are faulty
-      public: False
       fields:
         - header:
             type: IntegritySSRHeader
@@ -143,7 +140,6 @@ definitions:
   - MSG_SSR_FLAG_IONO_GRID_POINTS:
       id: 0x0BC7
       short_desc: List of grid points which are faulty
-      public: False
       fields:
         - header:
             type: IntegritySSRHeader
@@ -160,7 +156,6 @@ definitions:
   - MSG_SSR_FLAG_IONO_TILE_SAT_LOS:
       id: 0x0BCD
       short_desc: List of all the LOS which are faulty
-      public: False
       fields:
         - header:
             type: IntegritySSRHeader
@@ -177,7 +172,6 @@ definitions:
   - MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS:
       id: 0x0BD1
       short_desc: List of all the grid points to satellite which are faulty
-      public: False
       fields:
         - header:
             type: IntegritySSRHeader

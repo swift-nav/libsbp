@@ -115,8 +115,9 @@ typedef struct SBP_ATTR_PACKED {
                                   following RTCM DF389 specification but in
                                   units of TECU instead of m. */
   s16 stec_coeff[4];         /**< Coefficients of the STEC polynomial in
-                                  the order of C00, C01, C10, C11 [C00 = 0.05 TECU,
-                                C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2] */
+                                  the order of C00, C01, C10, C11. C00 =
+                                  0.05 TECU, C01/C10 = 0.02 TECU/deg, C11
+                                  0.02 TECU/deg^2 */
 } stec_sat_element_t;
 
 /** None
@@ -138,13 +139,11 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  s16 hydro; /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual
-                vertical hydro delay)] */
-  s8 wet; /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet
-             delay)] */
-  u8 stddev; /**< stddev [modified DF389 scale; class is upper 3 bits, value is
-lower 5 stddev <= (3^class * (1 + value/16) - 1) mm
-] */
+  s16 hydro; /**< Hydrostatic vertical delay. Add 2.3 m to get actual
+                  value. [4 mm] */
+  s8 wet;    /**< Wet vertical delay. Add 0.252 m to get actual value. [4 mm] */
+  u8 stddev; /**< Modified DF389 scale. Class is upper 3 bits, value is
+                  lower 5. stddev <= (3^class * (1 + value/16) - 1) mm [mm] */
 } tropospheric_delay_correction_t;
 
 /** None
@@ -166,9 +165,9 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id; /**< space vehicle identifier */
   s16 residual;  /**< STEC residual [0.04 TECU] */
-  u8 stddev; /**< stddev [modified DF389 scale; class is upper 3 bits, value is
-lower 5 stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
-] */
+  u8 stddev;     /**< Modified DF389 scale. Class is upper 3 bits, value is
+                      lower 5. stddev <= (3^class * (1 + value/16) - 1) * 10
+                      TECU */
 } stec_residual_t;
 
 /** Precise orbit and clock correction
@@ -320,19 +319,19 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   stec_residual_t stec_residual; /**< STEC residuals (mean, stddev) */
-  u8 stec_bound_mu;      /**< STEC Error Bound Mean (range 0-17.5) i<= 200,
-                              mean = 0.01i 200<i<=230, mean=2+0.1(i-200)
-                              i>230, mean=5+0.5(i-230) [m] */
-  u8 stec_bound_sig;     /**< STEC Error Bound Standard Deviation (range
-                              0-17.5) i<= 200, mean = 0.01i 200<i<=230,
-                              mean=2+0.1(i-200) i>230, mean=5+0.5(i-230) [m] */
-  u8 stec_bound_mu_dot;  /**< STEC Error Bound Mean First derivative
-                              degradation parameter(range 0-0.01275) [0.00005
-                            m/s] */
-  u8 stec_bound_sig_dot; /**< STEC Error Bound Standard Deviation First
-                              derivative degradation parameter (range
-                              0-0.01275) [0.00005 m/s] */
+  u8 stec_bound_mu;              /**< Error Bound Mean. See Note 1. [m] */
+  u8 stec_bound_sig;             /**< Error Bound StDev. See Note 1. [m] */
+  u8 stec_bound_mu_dot;          /**< Error Bound Mean First derivative. Range:
+                                      0-0.01275 m/s [0.00005 m/s] */
+  u8 stec_bound_sig_dot;         /**< Error Bound StDev First derivative. Range:
+                                      0-0.01275 m/s [0.00005 m/s] */
 } stec_sat_element_integrity_t;
+
+/** Gridded troposhere and STEC correction residuals bounds
+ *
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+ * mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
+ */
 
 typedef struct SBP_ATTR_PACKED {
   bounds_header_t header; /**< Header of a bounds message. */
@@ -347,10 +346,10 @@ typedef struct SBP_ATTR_PACKED {
   tropospheric_delay_correction_t tropo_delay_correction; /**< Tropospheric
                                                                delay at
                                                                grid point. */
-  u8 tropo_bound_mu;  /**< Troposphere Error Bound Mean (range
-                           0-1.275). [0.005 m] */
-  u8 tropo_bound_sig; /**< Troposphere Error Bound Standard
-                           Deviation (range 0-1.275) [0.005 m] */
+  u8 tropo_bound_mu;  /**< Troposphere Error Bound Mean. Range:
+                           0-1.275 m [0.005 m] */
+  u8 tropo_bound_sig; /**< Troposphere Error Bound StDev. Range:
+                           0-1.275 m [0.005 m] */
   u8 n_sats;          /**< Number of satellites. */
   stec_sat_element_integrity_t stec_sat_list[0]; /**< Array of STEC
                                                       polynomial
@@ -673,31 +672,23 @@ typedef struct SBP_ATTR_PACKED {
   u8 sat_id;               /**< Satellite ID. Similar to either RTCM DF068
                                 (GPS), DF252 (Galileo), or DF488 (BDS)
                                 depending on the constellation. */
-  u8 orb_radial_bound_mu;  /**< Mean Radial (range 0-55) i<=200,
-                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
-                                i>240, mean=25+2(i-240) [m] */
-  u8 orb_along_bound_mu;   /**< Mean Along-Track (range 0-55) i<=200,
-                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
-                                i>240, mean=25+2(i-240) [m] */
-  u8 orb_cross_bound_mu;   /**< Mean Cross-Track (range 0-55) i<=200,
-                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
-                                i>240, mean=25+2(i-240) [m] */
-  u8 orb_radial_bound_sig; /**< Standard Deviation Radial (range 0-55)
-                                i<=200, mean=0.0251i 200<i<=240,
-                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
-  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track (range 0-55)
-                                i<=200, mean=0.0251i 200<i<=240,
-                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
-  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track (range 0-55)
-                                i<=200, mean=0.0251i 200<i<=240,
-                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
-  u8 clock_bound_mu;       /**< Clock Bound Mean (range 0-55) i<=200,
-                                mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
-                                i>240, mean=25+2(i-240) [m] */
-  u8 clock_bound_sig;      /**< Clock Bound Standard Deviation (range 0-55)
-                                i<=200, mean=0.0251i 200<i<=240,
-                                mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m] */
+  u8 orb_radial_bound_mu;  /**< Mean Radial. See Note 1. [m] */
+  u8 orb_along_bound_mu;   /**< Mean Along-Track. See Note 1. [m] */
+  u8 orb_cross_bound_mu;   /**< Mean Cross-Track. See Note 1. [m] */
+  u8 orb_radial_bound_sig; /**< Standard Deviation Radial. See Note 1. [m] */
+  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track. See Note 1. [m]
+                            */
+  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track. See Note 1. [m]
+                            */
+  u8 clock_bound_mu;       /**< Clock Bound Mean. See Note 1. [m] */
+  u8 clock_bound_sig; /**< Clock Bound Standard Deviation. See Note 1. [m] */
 } orbit_clock_bound_t;
+
+/** Combined Orbit and Clock Bound
+ *
+ * Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
+ * i>240, mean=25+2(i-240).
+ */
 
 typedef struct SBP_ATTR_PACKED {
   bounds_header_t header; /**< Header of a bounds message. */
@@ -716,12 +707,12 @@ typedef struct SBP_ATTR_PACKED {
                                 Similar to either RTCM DF380 (GPS), DF382
                                 (Galileo) or DF467 (BDS) depending on the
                                 constellation. */
-  u8 code_bias_bound_mu;   /**< Code Bias Mean (range 0-1.275) [0.005 m] */
-  u8 code_bias_bound_sig;  /**< Code Bias Standard Deviation (range
-                                0-1.275) [0.005 m] */
-  u8 phase_bias_bound_mu;  /**< Phase Bias Mean (range 0-1.275) [0.005 m] */
-  u8 phase_bias_bound_sig; /**< Phase Bias Standard Deviation (range
-                                0-1.275) [0.005 m] */
+  u8 code_bias_bound_mu;   /**< Code Bias Mean. Range: 0-1.275 m [0.005 m] */
+  u8 code_bias_bound_sig;  /**< Code Bias Standard Deviation.  Range:
+                                0-1.275 m [0.005 m] */
+  u8 phase_bias_bound_mu;  /**< Phase Bias Mean. Range: 0-1.275 m [0.005 m] */
+  u8 phase_bias_bound_sig; /**< Phase Bias Standard Deviation.  Range:
+                                0-1.275 m [0.005 m] */
 } code_phase_biases_sat_sig_t;
 
 typedef struct SBP_ATTR_PACKED {
@@ -742,29 +733,24 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 orb_radial_bound_mu_dot;  /**< Orbit Bound Mean Radial First
-                                    derivative degradation parameter (range
-                                    0-0.255) [0.001 m/s] */
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
   u8 orb_along_bound_mu_dot;   /**< Orbit Bound Mean Along-Track First
-                                    derivative degradation parameter (range
-                                    0-0.255) [0.001 m/s] */
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
   u8 orb_cross_bound_mu_dot;   /**< Orbit Bound Mean Cross-Track First
-                                    derivative degradation parameter (range
-                                    0-0.255) [0.001 m/s] */
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
   u8 orb_radial_bound_sig_dot; /**< Orbit Bound Standard Deviation Radial
-                                    First derivative degradation parameter
-                                    (range 0-0.255) [0.001 m/s] */
+                                    First derivative. Range: 0-0.255 m/s [0.001
+                                  m/s] */
   u8 orb_along_bound_sig_dot;  /**< Orbit Bound Standard Deviation Along-
-                                    Track First derivative degradation
-                                    parameter (range 0-0.255) [0.001 m/s] */
+                                    Track First derivative. Range: 0-0.255
+                                    m/s [0.001 m/s] */
   u8 orb_cross_bound_sig_dot;  /**< Orbit Bound Standard Deviation Cross-
-                                    Track First derivative degradation
-                                    parameter (range 0-0.255) [0.001 m/s] */
-  u8 clock_bound_mu_dot;       /**< Clock Bound Mean First derivative
-                                    degradation parameter (range 0-0.255) [0.001 m/s]
-                                */
+                                    Track First derivative. Range: 0-0.255
+                                    m/s [0.001 m/s] */
+  u8 clock_bound_mu_dot;       /**< Clock Bound Mean First derivative.
+                                    Range: 0-0.255 m/s [0.001 m/s] */
   u8 clock_bound_sig_dot;      /**< Clock Bound Standard Deviation First
-                                    derivative degradation parameter (range
-                                    0-0.255) [0.001 m/s] */
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
 } orbit_clock_bound_degradation_t;
 
 typedef struct SBP_ATTR_PACKED {

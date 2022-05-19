@@ -41,6 +41,11 @@ extern "C" {
  * SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS
  *
  *****************************************************************************/
+/** Gridded troposhere and STEC correction residuals bounds
+ *
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+ * mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
+ */
 typedef struct {
   /**
    * Header of a bounds message.
@@ -78,12 +83,12 @@ typedef struct {
   sbp_tropospheric_delay_correction_t tropo_delay_correction;
 
   /**
-   * Troposphere Error Bound Mean (range 0-1.275). [0.005 m]
+   * Troposphere Error Bound Mean. Range: 0-1.275 m [0.005 m]
    */
   u8 tropo_bound_mu;
 
   /**
-   * Troposphere Error Bound Standard Deviation (range 0-1.275) [0.005 m]
+   * Troposphere Error Bound StDev. Range: 0-1.275 m [0.005 m]
    */
   u8 tropo_bound_sig;
 
