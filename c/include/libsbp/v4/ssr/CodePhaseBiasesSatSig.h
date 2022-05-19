@@ -52,22 +52,22 @@ typedef struct {
   u8 signal_id;
 
   /**
-   * Code Bias Mean (range 0-1.275) [0.005 m]
+   * Code Bias Mean. Range: 0-1.275 m [0.005 m]
    */
   u8 code_bias_bound_mu;
 
   /**
-   * Code Bias Standard Deviation (range 0-1.275) [0.005 m]
+   * Code Bias Standard Deviation.  Range: 0-1.275 m [0.005 m]
    */
   u8 code_bias_bound_sig;
 
   /**
-   * Phase Bias Mean (range 0-1.275) [0.005 m]
+   * Phase Bias Mean. Range: 0-1.275 m [0.005 m]
    */
   u8 phase_bias_bound_mu;
 
   /**
-   * Phase Bias Standard Deviation (range 0-1.275) [0.005 m]
+   * Phase Bias Standard Deviation.  Range: 0-1.275 m [0.005 m]
    */
   u8 phase_bias_bound_sig;
 } sbp_code_phase_biases_sat_sig_t;

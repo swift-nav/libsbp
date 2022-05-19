@@ -28,52 +28,28 @@ public class OrbitClockBound extends SBPStruct {
      */
     public int sat_id;
 
-    /**
-     * Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200) i>240,
-     * mean=25+2(i-240)
-     */
+    /** Mean Radial. See Note 1. */
     public int orb_radial_bound_mu;
 
-    /**
-     * Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200) i>240,
-     * mean=25+2(i-240)
-     */
+    /** Mean Along-Track. See Note 1. */
     public int orb_along_bound_mu;
 
-    /**
-     * Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200) i>240,
-     * mean=25+2(i-240)
-     */
+    /** Mean Cross-Track. See Note 1. */
     public int orb_cross_bound_mu;
 
-    /**
-     * Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
-     * i>240, mean=25+2(i-240)
-     */
+    /** Standard Deviation Radial. See Note 1. */
     public int orb_radial_bound_sig;
 
-    /**
-     * Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-     * mean=5+0.5(i-200) i>240, mean=25+2(i-240)
-     */
+    /** Standard Deviation Along-Track. See Note 1. */
     public int orb_along_bound_sig;
 
-    /**
-     * Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-     * mean=5+0.5(i-200) i>240, mean=25+2(i-240)
-     */
+    /** Standard Deviation Cross-Track. See Note 1. */
     public int orb_cross_bound_sig;
 
-    /**
-     * Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200) i>240,
-     * mean=25+2(i-240)
-     */
+    /** Clock Bound Mean. See Note 1. */
     public int clock_bound_mu;
 
-    /**
-     * Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-     * mean=5+0.5(i-200) i>240, mean=25+2(i-240)
-     */
+    /** Clock Bound Standard Deviation. See Note 1. */
     public int clock_bound_sig;
 
     public OrbitClockBound() {}

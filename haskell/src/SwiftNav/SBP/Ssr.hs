@@ -204,7 +204,8 @@ data STECSatElement = STECSatElement
     -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification
     -- but in units of TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
-    -- ^ Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+    -- ^ Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
+    -- C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
   } deriving ( Show, Read, Eq )
 
 instance Binary STECSatElement where
@@ -251,11 +252,12 @@ $(makeLenses ''TroposphericDelayCorrectionNoStd)
 -- point.
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
-    -- ^ Hydrostatic vertical delay
+    -- ^ Hydrostatic vertical delay. Add 2.3 m to get actual value.
   , _troposphericDelayCorrection_wet  :: !Int8
-    -- ^ Wet vertical delay
+    -- ^ Wet vertical delay. Add 0.252 m to get actual value.
   , _troposphericDelayCorrection_stddev :: !Word8
-    -- ^ stddev
+    -- ^ Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev
+    -- <= (3^class * (1 + value/16) - 1) mm
   } deriving ( Show, Read, Eq )
 
 instance Binary TroposphericDelayCorrection where
@@ -306,7 +308,8 @@ data STECResidual = STECResidual
   , _sTECResidual_residual :: !Int16
     -- ^ STEC residual
   , _sTECResidual_stddev :: !Word8
-    -- ^ stddev
+    -- ^ Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev
+    -- <= (3^class * (1 + value/16) - 1) * 10 TECU
   } deriving ( Show, Read, Eq )
 
 instance Binary STECResidual where
@@ -655,17 +658,13 @@ data STECSatElementIntegrity = STECSatElementIntegrity
   { _sTECSatElementIntegrity_stec_residual    :: !STECResidual
     -- ^ STEC residuals (mean, stddev)
   , _sTECSatElementIntegrity_stec_bound_mu    :: !Word8
-    -- ^ STEC Error Bound Mean (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230,
-    -- mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+    -- ^ Error Bound Mean. See Note 1.
   , _sTECSatElementIntegrity_stec_bound_sig   :: !Word8
-    -- ^ STEC Error Bound Standard Deviation (range 0-17.5) i<= 200, mean =
-    -- 0.01i 200<i<=230, mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+    -- ^ Error Bound StDev. See Note 1.
   , _sTECSatElementIntegrity_stec_bound_mu_dot :: !Word8
-    -- ^ STEC Error Bound Mean First derivative degradation parameter(range
-    -- 0-0.01275)
+    -- ^ Error Bound Mean First derivative. Range: 0-0.01275 m/s
   , _sTECSatElementIntegrity_stec_bound_sig_dot :: !Word8
-    -- ^ STEC Error Bound Standard Deviation First derivative degradation
-    -- parameter (range 0-0.01275)
+    -- ^ Error Bound StDev First derivative. Range: 0-0.01275 m/s
   } deriving ( Show, Read, Eq )
 
 instance Binary STECSatElementIntegrity where
@@ -690,6 +689,10 @@ $(makeLenses ''STECSatElementIntegrity)
 msgSsrGriddedCorrectionBounds :: Word16
 msgSsrGriddedCorrectionBounds = 0x05FE
 
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
+--
+-- Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+-- mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
 data MsgSsrGriddedCorrectionBounds = MsgSsrGriddedCorrectionBounds
   { _msgSsrGriddedCorrectionBounds_header               :: !BoundsHeader
     -- ^ Header of a bounds message.
@@ -706,9 +709,9 @@ data MsgSsrGriddedCorrectionBounds = MsgSsrGriddedCorrectionBounds
   , _msgSsrGriddedCorrectionBounds_tropo_delay_correction :: !TroposphericDelayCorrection
     -- ^ Tropospheric delay at grid point.
   , _msgSsrGriddedCorrectionBounds_tropo_bound_mu       :: !Word8
-    -- ^ Troposphere Error Bound Mean (range 0-1.275).
+    -- ^ Troposphere Error Bound Mean. Range: 0-1.275 m
   , _msgSsrGriddedCorrectionBounds_tropo_bound_sig      :: !Word8
-    -- ^ Troposphere Error Bound Standard Deviation (range 0-1.275)
+    -- ^ Troposphere Error Bound StDev. Range: 0-1.275 m
   , _msgSsrGriddedCorrectionBounds_n_sats               :: !Word8
     -- ^ Number of satellites.
   , _msgSsrGriddedCorrectionBounds_stec_sat_list        :: ![STECSatElementIntegrity]
@@ -1326,29 +1329,21 @@ data OrbitClockBound = OrbitClockBound
     -- ^ Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
     -- DF488 (BDS) depending on the constellation.
   , _orbitClockBound_orb_radial_bound_mu :: !Word8
-    -- ^ Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Mean Radial. See Note 1.
   , _orbitClockBound_orb_along_bound_mu :: !Word8
-    -- ^ Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Mean Along-Track. See Note 1.
   , _orbitClockBound_orb_cross_bound_mu :: !Word8
-    -- ^ Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Mean Cross-Track. See Note 1.
   , _orbitClockBound_orb_radial_bound_sig :: !Word8
-    -- ^ Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Standard Deviation Radial. See Note 1.
   , _orbitClockBound_orb_along_bound_sig :: !Word8
-    -- ^ Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i
-    -- 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Standard Deviation Along-Track. See Note 1.
   , _orbitClockBound_orb_cross_bound_sig :: !Word8
-    -- ^ Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i
-    -- 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Standard Deviation Cross-Track. See Note 1.
   , _orbitClockBound_clock_bound_mu     :: !Word8
-    -- ^ Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    -- mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Clock Bound Mean. See Note 1.
   , _orbitClockBound_clock_bound_sig    :: !Word8
-    -- ^ Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i
-    -- 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    -- ^ Clock Bound Standard Deviation. See Note 1.
   } deriving ( Show, Read, Eq )
 
 instance Binary OrbitClockBound where
@@ -1381,6 +1376,10 @@ $(makeLenses ''OrbitClockBound)
 msgSsrOrbitClockBounds :: Word16
 msgSsrOrbitClockBounds = 0x05DE
 
+-- | SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
+--
+-- Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
+-- i>240, mean=25+2(i-240).
 data MsgSsrOrbitClockBounds = MsgSsrOrbitClockBounds
   { _msgSsrOrbitClockBounds_header           :: !BoundsHeader
     -- ^ Header of a bounds message.
@@ -1422,13 +1421,13 @@ data CodePhaseBiasesSatSig = CodePhaseBiasesSatSig
     -- ^ Signal and Tracking Mode Identifier. Similar to either RTCM DF380
     -- (GPS), DF382 (Galileo) or DF467 (BDS) depending on the constellation.
   , _codePhaseBiasesSatSig_code_bias_bound_mu :: !Word8
-    -- ^ Code Bias Mean (range 0-1.275)
+    -- ^ Code Bias Mean. Range: 0-1.275 m
   , _codePhaseBiasesSatSig_code_bias_bound_sig :: !Word8
-    -- ^ Code Bias Standard Deviation (range 0-1.275)
+    -- ^ Code Bias Standard Deviation.  Range: 0-1.275 m
   , _codePhaseBiasesSatSig_phase_bias_bound_mu :: !Word8
-    -- ^ Phase Bias Mean (range 0-1.275)
+    -- ^ Phase Bias Mean. Range: 0-1.275 m
   , _codePhaseBiasesSatSig_phase_bias_bound_sig :: !Word8
-    -- ^ Phase Bias Standard Deviation (range 0-1.275)
+    -- ^ Phase Bias Standard Deviation.  Range: 0-1.275 m
   } deriving ( Show, Read, Eq )
 
 instance Binary CodePhaseBiasesSatSig where
@@ -1493,28 +1492,24 @@ $(makeLenses ''MsgSsrCodePhaseBiasesBounds)
 -- Orbit and clock bound degradation.
 data OrbitClockBoundDegradation = OrbitClockBoundDegradation
   { _orbitClockBoundDegradation_orb_radial_bound_mu_dot :: !Word8
-    -- ^ Orbit Bound Mean Radial First derivative degradation parameter (range
-    -- 0-0.255)
+    -- ^ Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
   , _orbitClockBoundDegradation_orb_along_bound_mu_dot :: !Word8
-    -- ^ Orbit Bound Mean Along-Track First derivative degradation parameter
-    -- (range 0-0.255)
+    -- ^ Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
   , _orbitClockBoundDegradation_orb_cross_bound_mu_dot :: !Word8
-    -- ^ Orbit Bound Mean Cross-Track First derivative degradation parameter
-    -- (range 0-0.255)
+    -- ^ Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
   , _orbitClockBoundDegradation_orb_radial_bound_sig_dot :: !Word8
-    -- ^ Orbit Bound Standard Deviation Radial First derivative degradation
-    -- parameter (range 0-0.255)
+    -- ^ Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255
+    -- m/s
   , _orbitClockBoundDegradation_orb_along_bound_sig_dot :: !Word8
-    -- ^ Orbit Bound Standard Deviation Along-Track First derivative degradation
-    -- parameter (range 0-0.255)
+    -- ^ Orbit Bound Standard Deviation Along-Track First derivative. Range:
+    -- 0-0.255 m/s
   , _orbitClockBoundDegradation_orb_cross_bound_sig_dot :: !Word8
-    -- ^ Orbit Bound Standard Deviation Cross-Track First derivative degradation
-    -- parameter (range 0-0.255)
+    -- ^ Orbit Bound Standard Deviation Cross-Track First derivative. Range:
+    -- 0-0.255 m/s
   , _orbitClockBoundDegradation_clock_bound_mu_dot     :: !Word8
-    -- ^ Clock Bound Mean First derivative degradation parameter (range 0-0.255)
+    -- ^ Clock Bound Mean First derivative. Range: 0-0.255 m/s
   , _orbitClockBoundDegradation_clock_bound_sig_dot    :: !Word8
-    -- ^ Clock Bound Standard Deviation First derivative degradation parameter
-    -- (range 0-0.255)
+    -- ^ Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
   } deriving ( Show, Read, Eq )
 
 instance Binary OrbitClockBoundDegradation where

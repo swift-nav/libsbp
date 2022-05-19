@@ -263,7 +263,8 @@ class STECSatElement(object):
     Quality of the STEC data. Encoded following RTCM DF389 specification but
     in units of TECU instead of m.
   stec_coeff : array
-    Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+    Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
+    C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
 
   """
   _parser = construct.Struct(
@@ -336,11 +337,12 @@ class TroposphericDelayCorrection(object):
   Parameters
   ----------
   hydro : int
-    Hydrostatic vertical delay
+    Hydrostatic vertical delay. Add 2.3 m to get actual value.
   wet : int
-    Wet vertical delay
+    Wet vertical delay. Add 0.252 m to get actual value.
   stddev : int
-    stddev
+    Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+    (3^class * (1 + value/16) - 1) mm
 
   """
   _parser = construct.Struct(
@@ -418,7 +420,8 @@ class STECResidual(object):
   residual : int
     STEC residual
   stddev : int
-    stddev
+    Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+    (3^class * (1 + value/16) - 1) * 10 TECU
 
   """
   _parser = construct.Struct(
@@ -507,17 +510,13 @@ class STECSatElementIntegrity(object):
   stec_residual : STECResidual
     STEC residuals (mean, stddev)
   stec_bound_mu : int
-    STEC Error Bound Mean (range 0-17.5) i<= 200, mean = 0.01i 200<i<=230,
-    mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+    Error Bound Mean. See Note 1.
   stec_bound_sig : int
-    STEC Error Bound Standard Deviation (range 0-17.5) i<= 200, mean = 0.01i
-    200<i<=230, mean=2+0.1(i-200) i>230, mean=5+0.5(i-230)
+    Error Bound StDev. See Note 1.
   stec_bound_mu_dot : int
-    STEC Error Bound Mean First derivative degradation parameter(range
-    0-0.01275)
+    Error Bound Mean First derivative. Range: 0-0.01275 m/s
   stec_bound_sig_dot : int
-    STEC Error Bound Standard Deviation First derivative degradation parameter
-    (range 0-0.01275)
+    Error Bound StDev First derivative. Range: 0-0.01275 m/s
 
   """
   _parser = construct.Struct(
@@ -789,29 +788,21 @@ class OrbitClockBound(object):
     Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
     DF488 (BDS) depending on the constellation.
   orb_radial_bound_mu : int
-    Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Mean Radial. See Note 1.
   orb_along_bound_mu : int
-    Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Mean Along-Track. See Note 1.
   orb_cross_bound_mu : int
-    Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Mean Cross-Track. See Note 1.
   orb_radial_bound_sig : int
-    Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Standard Deviation Radial. See Note 1.
   orb_along_bound_sig : int
-    Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i
-    200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Standard Deviation Along-Track. See Note 1.
   orb_cross_bound_sig : int
-    Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i
-    200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Standard Deviation Cross-Track. See Note 1.
   clock_bound_mu : int
-    Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-    mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Clock Bound Mean. See Note 1.
   clock_bound_sig : int
-    Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i
-    200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240)
+    Clock Bound Standard Deviation. See Note 1.
 
   """
   _parser = construct.Struct(
@@ -871,13 +862,13 @@ class CodePhaseBiasesSatSig(object):
     Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
     DF382 (Galileo) or DF467 (BDS) depending on the constellation.
   code_bias_bound_mu : int
-    Code Bias Mean (range 0-1.275)
+    Code Bias Mean. Range: 0-1.275 m
   code_bias_bound_sig : int
-    Code Bias Standard Deviation (range 0-1.275)
+    Code Bias Standard Deviation.  Range: 0-1.275 m
   phase_bias_bound_mu : int
-    Phase Bias Mean (range 0-1.275)
+    Phase Bias Mean. Range: 0-1.275 m
   phase_bias_bound_sig : int
-    Phase Bias Standard Deviation (range 0-1.275)
+    Phase Bias Standard Deviation.  Range: 0-1.275 m
 
   """
   _parser = construct.Struct(
@@ -923,28 +914,23 @@ class OrbitClockBoundDegradation(object):
   Parameters
   ----------
   orb_radial_bound_mu_dot : int
-    Orbit Bound Mean Radial First derivative degradation parameter (range
-    0-0.255)
+    Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
   orb_along_bound_mu_dot : int
-    Orbit Bound Mean Along-Track First derivative degradation parameter (range
-    0-0.255)
+    Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
   orb_cross_bound_mu_dot : int
-    Orbit Bound Mean Cross-Track First derivative degradation parameter (range
-    0-0.255)
+    Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
   orb_radial_bound_sig_dot : int
-    Orbit Bound Standard Deviation Radial First derivative degradation
-    parameter (range 0-0.255)
+    Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255 m/s
   orb_along_bound_sig_dot : int
-    Orbit Bound Standard Deviation Along-Track First derivative degradation
-    parameter (range 0-0.255)
+    Orbit Bound Standard Deviation Along-Track First derivative. Range:
+    0-0.255 m/s
   orb_cross_bound_sig_dot : int
-    Orbit Bound Standard Deviation Cross-Track First derivative degradation
-    parameter (range 0-0.255)
+    Orbit Bound Standard Deviation Cross-Track First derivative. Range:
+    0-0.255 m/s
   clock_bound_mu_dot : int
-    Clock Bound Mean First derivative degradation parameter (range 0-0.255)
+    Clock Bound Mean First derivative. Range: 0-0.255 m/s
   clock_bound_sig_dot : int
-    Clock Bound Standard Deviation First derivative degradation parameter
-    (range 0-0.255)
+    Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
 
   """
   _parser = construct.Struct(
@@ -1721,6 +1707,8 @@ class MsgSsrGriddedCorrectionBounds(SBP):
   of its fields.
 
   
+  Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+  mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
 
   Parameters
   ----------
@@ -1741,9 +1729,9 @@ class MsgSsrGriddedCorrectionBounds(SBP):
   tropo_delay_correction : TroposphericDelayCorrection
     Tropospheric delay at grid point.
   tropo_bound_mu : int
-    Troposphere Error Bound Mean (range 0-1.275).
+    Troposphere Error Bound Mean. Range: 0-1.275 m
   tropo_bound_sig : int
-    Troposphere Error Bound Standard Deviation (range 0-1.275)
+    Troposphere Error Bound StDev. Range: 0-1.275 m
   n_sats : int
     Number of satellites.
   stec_sat_list : array
@@ -2847,6 +2835,8 @@ class MsgSsrOrbitClockBounds(SBP):
   of its fields.
 
   
+  Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
+  i>240, mean=25+2(i-240).
 
   Parameters
   ----------

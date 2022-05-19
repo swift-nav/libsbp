@@ -50,50 +50,42 @@ typedef struct {
   u8 sat_id;
 
   /**
-   * Mean Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240, mean=5+0.5(i-200)
-   * i>240, mean=25+2(i-240) [m]
+   * Mean Radial. See Note 1. [m]
    */
   u8 orb_radial_bound_mu;
 
   /**
-   * Mean Along-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-   * mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m]
+   * Mean Along-Track. See Note 1. [m]
    */
   u8 orb_along_bound_mu;
 
   /**
-   * Mean Cross-Track (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-   * mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m]
+   * Mean Cross-Track. See Note 1. [m]
    */
   u8 orb_cross_bound_mu;
 
   /**
-   * Standard Deviation Radial (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-   * mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m]
+   * Standard Deviation Radial. See Note 1. [m]
    */
   u8 orb_radial_bound_sig;
 
   /**
-   * Standard Deviation Along-Track (range 0-55) i<=200, mean=0.0251i
-   * 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m]
+   * Standard Deviation Along-Track. See Note 1. [m]
    */
   u8 orb_along_bound_sig;
 
   /**
-   * Standard Deviation Cross-Track (range 0-55) i<=200, mean=0.0251i
-   * 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m]
+   * Standard Deviation Cross-Track. See Note 1. [m]
    */
   u8 orb_cross_bound_sig;
 
   /**
-   * Clock Bound Mean (range 0-55) i<=200, mean=0.0251i 200<i<=240,
-   * mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m]
+   * Clock Bound Mean. See Note 1. [m]
    */
   u8 clock_bound_mu;
 
   /**
-   * Clock Bound Standard Deviation (range 0-55) i<=200, mean=0.0251i
-   * 200<i<=240, mean=5+0.5(i-200) i>240, mean=25+2(i-240) [m]
+   * Clock Bound Standard Deviation. See Note 1. [m]
    */
   u8 clock_bound_sig;
 } sbp_orbit_clock_bound_t;

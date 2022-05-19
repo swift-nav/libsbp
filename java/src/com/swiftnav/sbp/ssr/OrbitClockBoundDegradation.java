@@ -22,36 +22,28 @@ import org.json.JSONObject;
 
 public class OrbitClockBoundDegradation extends SBPStruct {
 
-    /** Orbit Bound Mean Radial First derivative degradation parameter (range 0-0.255) */
+    /** Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s */
     public int orb_radial_bound_mu_dot;
 
-    /** Orbit Bound Mean Along-Track First derivative degradation parameter (range 0-0.255) */
+    /** Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s */
     public int orb_along_bound_mu_dot;
 
-    /** Orbit Bound Mean Cross-Track First derivative degradation parameter (range 0-0.255) */
+    /** Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s */
     public int orb_cross_bound_mu_dot;
 
-    /**
-     * Orbit Bound Standard Deviation Radial First derivative degradation parameter (range 0-0.255)
-     */
+    /** Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255 m/s */
     public int orb_radial_bound_sig_dot;
 
-    /**
-     * Orbit Bound Standard Deviation Along-Track First derivative degradation parameter (range
-     * 0-0.255)
-     */
+    /** Orbit Bound Standard Deviation Along-Track First derivative. Range: 0-0.255 m/s */
     public int orb_along_bound_sig_dot;
 
-    /**
-     * Orbit Bound Standard Deviation Cross-Track First derivative degradation parameter (range
-     * 0-0.255)
-     */
+    /** Orbit Bound Standard Deviation Cross-Track First derivative. Range: 0-0.255 m/s */
     public int orb_cross_bound_sig_dot;
 
-    /** Clock Bound Mean First derivative degradation parameter (range 0-0.255) */
+    /** Clock Bound Mean First derivative. Range: 0-0.255 m/s */
     public int clock_bound_mu_dot;
 
-    /** Clock Bound Standard Deviation First derivative degradation parameter (range 0-0.255) */
+    /** Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s */
     public int clock_bound_sig_dot;
 
     public OrbitClockBoundDegradation() {}

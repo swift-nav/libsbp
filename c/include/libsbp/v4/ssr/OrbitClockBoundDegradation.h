@@ -44,50 +44,48 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Orbit Bound Mean Radial First derivative degradation parameter (range
-   * 0-0.255) [0.001 m/s]
+   * Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s [0.001 m/s]
    */
   u8 orb_radial_bound_mu_dot;
 
   /**
-   * Orbit Bound Mean Along-Track First derivative degradation parameter (range
-   * 0-0.255) [0.001 m/s]
+   * Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s [0.001
+   * m/s]
    */
   u8 orb_along_bound_mu_dot;
 
   /**
-   * Orbit Bound Mean Cross-Track First derivative degradation parameter (range
-   * 0-0.255) [0.001 m/s]
+   * Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s [0.001
+   * m/s]
    */
   u8 orb_cross_bound_mu_dot;
 
   /**
-   * Orbit Bound Standard Deviation Radial First derivative degradation
-   * parameter (range 0-0.255) [0.001 m/s]
+   * Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255 m/s
+   * [0.001 m/s]
    */
   u8 orb_radial_bound_sig_dot;
 
   /**
-   * Orbit Bound Standard Deviation Along-Track First derivative degradation
-   * parameter (range 0-0.255) [0.001 m/s]
+   * Orbit Bound Standard Deviation Along-Track First derivative. Range: 0-0.255
+   * m/s [0.001 m/s]
    */
   u8 orb_along_bound_sig_dot;
 
   /**
-   * Orbit Bound Standard Deviation Cross-Track First derivative degradation
-   * parameter (range 0-0.255) [0.001 m/s]
+   * Orbit Bound Standard Deviation Cross-Track First derivative. Range: 0-0.255
+   * m/s [0.001 m/s]
    */
   u8 orb_cross_bound_sig_dot;
 
   /**
-   * Clock Bound Mean First derivative degradation parameter (range 0-0.255)
-   * [0.001 m/s]
+   * Clock Bound Mean First derivative. Range: 0-0.255 m/s [0.001 m/s]
    */
   u8 clock_bound_mu_dot;
 
   /**
-   * Clock Bound Standard Deviation First derivative degradation parameter
-   * (range 0-0.255) [0.001 m/s]
+   * Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s [0.001
+   * m/s]
    */
   u8 clock_bound_sig_dot;
 } sbp_orbit_clock_bound_degradation_t;

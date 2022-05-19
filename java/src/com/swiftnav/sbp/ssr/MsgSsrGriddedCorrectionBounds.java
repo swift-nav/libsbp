@@ -20,6 +20,15 @@ import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
+ *
+ * <p>You can have MSG_SSR_GRIDDED_CORRECTION_BOUNDS inherent its fields directly from an inherited
+ * SBP object, or construct it inline using a dict of its fields.
+ *
+ * <p>Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230, mean=2+0.1(i-200); i>230,
+ * mean=5+0.5(i-230).
+ */
 public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
     public static final int TYPE = 0x05FE;
 
@@ -44,10 +53,10 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
     /** Tropospheric delay at grid point. */
     public TroposphericDelayCorrection tropo_delay_correction;
 
-    /** Troposphere Error Bound Mean (range 0-1.275). */
+    /** Troposphere Error Bound Mean. Range: 0-1.275 m */
     public int tropo_bound_mu;
 
-    /** Troposphere Error Bound Standard Deviation (range 0-1.275) */
+    /** Troposphere Error Bound StDev. Range: 0-1.275 m */
     public int tropo_bound_sig;
 
     /** Number of satellites. */
