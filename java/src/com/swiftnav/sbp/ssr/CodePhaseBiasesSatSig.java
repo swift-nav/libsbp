@@ -34,16 +34,16 @@ public class CodePhaseBiasesSatSig extends SBPStruct {
      */
     public int signal_id;
 
-    /** Code Bias Mean (range 0-1.275) */
+    /** Code Bias Mean. Range: 0-1.275 m */
     public int code_bias_bound_mu;
 
-    /** Code Bias Standard Deviation (range 0-1.275) */
+    /** Code Bias Standard Deviation. Range: 0-1.275 m */
     public int code_bias_bound_sig;
 
-    /** Phase Bias Mean (range 0-1.275) */
+    /** Phase Bias Mean. Range: 0-1.275 m */
     public int phase_bias_bound_mu;
 
-    /** Phase Bias Standard Deviation (range 0-1.275) */
+    /** Phase Bias Standard Deviation. Range: 0-1.275 m */
     public int phase_bias_bound_sig;
 
     public CodePhaseBiasesSatSig() {}

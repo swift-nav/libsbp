@@ -22,13 +22,16 @@ import org.json.JSONObject;
 
 public class TroposphericDelayCorrection extends SBPStruct {
 
-    /** Hydrostatic vertical delay */
+    /** Hydrostatic vertical delay. Add 2.3 m to get actual value. */
     public int hydro;
 
-    /** Wet vertical delay */
+    /** Wet vertical delay. Add 0.252 m to get actual value. */
     public int wet;
 
-    /** stddev */
+    /**
+     * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <= (3^class * (1 +
+     * value/16) - 1) mm
+     */
     public int stddev;
 
     public TroposphericDelayCorrection() {}

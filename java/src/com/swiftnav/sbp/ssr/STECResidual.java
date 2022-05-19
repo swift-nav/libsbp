@@ -28,7 +28,10 @@ public class STECResidual extends SBPStruct {
     /** STEC residual */
     public int residual;
 
-    /** stddev */
+    /**
+     * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <= (3^class * (1 +
+     * value/16) - 1) * 10 TECU
+     */
     public int stddev;
 
     public STECResidual() {}

@@ -2510,6 +2510,9 @@ type alias GriddedCorrectionHeader =
     , updateInterval : Int
     }
 
+{-| Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230, mean=2+0.1(i-200); i>230,
+mean=5+0.5(i-230).
+-}
 type alias MsgSsrGriddedCorrectionBounds =
     { stub : Array Int
     }
@@ -2534,6 +2537,9 @@ type alias MsgSsrOrbitClock =
     , updateInterval : Int
     }
 
+{-| Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200); i>240,
+mean=25+2(i-240).
+-}
 type alias MsgSsrOrbitClockBounds =
     { stub : Array Int
     }

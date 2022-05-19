@@ -142,9 +142,11 @@ definitions:
         type: array
         size: 4
         fill: s16
-        units: C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
         desc: >
-          Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+          Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
+          C00 = 0.05 TECU,
+          C01/C10 = 0.02 TECU/deg,
+          C11 0.02 TECU/deg^2
 
  - TroposphericDelayCorrectionNoStd:
     desc: >
@@ -166,18 +168,23 @@ definitions:
     fields:
     - hydro:
         type: s16
-        units: 4 mm (add 2.3 m to get actual vertical hydro delay)
-        desc: Hydrostatic vertical delay
+        units: 4 mm
+        desc: >
+          Hydrostatic vertical delay.
+          Add 2.3 m to get actual value.
     - wet:
         type: s8
-        units: 4 mm (add 0.252 m to get actual vertical wet delay)
-        desc: Wet vertical delay
+        units: 4 mm
+        desc: >
+          Wet vertical delay.
+          Add 0.252 m to get actual value.
     - stddev:
         type: u8
-        units: >
-          modified DF389 scale; class is upper 3 bits, value is lower 5
+        units: mm
+        desc: >
+          Modified DF389 scale.
+          Class is upper 3 bits, value is lower 5.
           stddev <= (3^class * (1 + value/16) - 1) mm
-        desc: stddev
 
  - STECResidualNoStd:
     desc: STEC residual for the given satellite at the grid point.
@@ -204,10 +211,9 @@ definitions:
         desc: STEC residual
     - stddev:
         type: u8
-        units: >
-          modified DF389 scale; class is upper 3 bits, value is lower 5
+        desc: >
+          Modified DF389 scale. Class is upper 3 bits, value is lower 5.
           stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
-        desc: stddev
 
  - MSG_SSR_ORBIT_CLOCK:
     id: 0x05DD
@@ -405,7 +411,6 @@ definitions:
  - MSG_SSR_STEC_CORRECTION:
      id: 0x05FD
      short_desc: STEC correction polynomial coefficients
-     public: False
      fields:
        - header:
            type: BoundsHeader
@@ -461,31 +466,35 @@ definitions:
            type: u8
            units: m
            desc: >
-             STEC Error Bound Mean (range 0-17.5)
-             i<= 200, mean = 0.01i
-             200<i<=230, mean=2+0.1(i-200)
-             i>230, mean=5+0.5(i-230)
+             Error Bound Mean.
+             See Note 1.
        - stec_bound_sig:
            type: u8
            units: m
            desc: >
-             STEC Error Bound Standard Deviation (range 0-17.5)
-             i<= 200, mean = 0.01i
-             200<i<=230, mean=2+0.1(i-200)
-             i>230, mean=5+0.5(i-230)
+             Error Bound StDev.
+             See Note 1.
        - stec_bound_mu_dot:
            type: u8
            units: 0.00005 m/s
-           desc: STEC Error Bound Mean First derivative degradation parameter(range 0-0.01275)
+           desc: >
+             Error Bound Mean First derivative.
+             Range: 0-0.01275 m/s
        - stec_bound_sig_dot:
            type: u8
            units: 0.00005 m/s
-           desc: STEC Error Bound Standard Deviation First derivative degradation parameter (range 0-0.01275)
+           desc: >
+             Error Bound StDev First derivative.
+             Range: 0-0.01275 m/s
 
  - MSG_SSR_GRIDDED_CORRECTION_BOUNDS:
      id: 0x05FE
      short_desc: Gridded troposhere and STEC correction residuals bounds
-     public: False
+     desc: >
+       Note 1: Range: 0-17.5 m.
+       i<= 200, mean = 0.01i;
+       200<i<=230, mean=2+0.1(i-200);
+       i>230, mean=5+0.5(i-230).
      fields:
        - header:
            type: BoundsHeader
@@ -511,11 +520,15 @@ definitions:
        - tropo_bound_mu:
            type: u8
            units: 0.005 m
-           desc: Troposphere Error Bound Mean (range 0-1.275).
+           desc: >
+             Troposphere Error Bound Mean.
+             Range: 0-1.275 m
        - tropo_bound_sig:
            type: u8
            units: 0.005 m
-           desc: Troposphere Error Bound Standard Deviation (range 0-1.275)
+           desc: >
+             Troposphere Error Bound StDev.
+             Range: 0-1.275 m
        - n_sats:
            type: u8
            desc: Number of satellites.
@@ -646,7 +659,6 @@ definitions:
        Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
        element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
        correction points, not lists of points.
-     public: False
      fields:
        - ssr_sol_id:
            type: u8
@@ -1050,71 +1062,59 @@ definitions:
            type: u8
            units: m
            desc: >
-             Mean Radial (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Mean Radial.
+             See Note 1.
        - orb_along_bound_mu:
            type: u8
            units: m
            desc: >
-             Mean Along-Track (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Mean Along-Track.
+             See Note 1.
        - orb_cross_bound_mu:
            type: u8
            units: m
            desc: >
-             Mean Cross-Track (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Mean Cross-Track.
+             See Note 1.
        - orb_radial_bound_sig:
            type: u8
            units: m
            desc: >
-             Standard Deviation Radial (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Standard Deviation Radial.
+             See Note 1.
        - orb_along_bound_sig:
            type: u8
            units: m
            desc: >
-             Standard Deviation Along-Track (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Standard Deviation Along-Track.
+             See Note 1.
        - orb_cross_bound_sig:
            type: u8
            units: m
            desc: >
-             Standard Deviation Cross-Track (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Standard Deviation Cross-Track.
+             See Note 1.
        - clock_bound_mu:
            type: u8
            units: m
            desc: >
-             Clock Bound Mean (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Clock Bound Mean.
+             See Note 1.
        - clock_bound_sig:
            type: u8
            units: m
            desc: >
-             Clock Bound Standard Deviation (range 0-55)
-             i<=200, mean=0.0251i
-             200<i<=240, mean=5+0.5(i-200)
-             i>240, mean=25+2(i-240)
+             Clock Bound Standard Deviation.
+             See Note 1.
 
  - MSG_SSR_ORBIT_CLOCK_BOUNDS:
      id: 0x05DE
      short_desc: Combined Orbit and Clock Bound
-     public: False
+     desc: >
+       Note 1: Range: 0-55 m.
+       i<=200, mean=0.0251i;
+       200<i<=240, mean=5+0.5(i-200);
+       i>240, mean=25+2(i-240).
      fields:
        - header:
            type: BoundsHeader
@@ -1151,24 +1151,31 @@ definitions:
        - code_bias_bound_mu:
            type: u8
            units: 0.005 m
-           desc: Code Bias Mean (range 0-1.275)
+           desc: >
+             Code Bias Mean.
+             Range: 0-1.275 m
        - code_bias_bound_sig:
            type: u8
            units: 0.005 m
-           desc: Code Bias Standard Deviation (range 0-1.275)
+           desc: >
+             Code Bias Standard Deviation. 
+             Range: 0-1.275 m
        - phase_bias_bound_mu:
            type: u8
            units: 0.005 m
-           desc: Phase Bias Mean (range 0-1.275)
+           desc: >
+             Phase Bias Mean.
+             Range: 0-1.275 m
        - phase_bias_bound_sig:
            type: u8
            units: 0.005 m
-           desc: Phase Bias Standard Deviation (range 0-1.275)
+           desc: >
+             Phase Bias Standard Deviation. 
+             Range: 0-1.275 m
 
  - MSG_SSR_CODE_PHASE_BIASES_BOUNDS:
      id: 0x05EC
      short_desc: Combined Code and Phase Biases Bounds
-     public: False
      fields:
        - header:
            type: BoundsHeader
@@ -1196,55 +1203,54 @@ definitions:
            type: u8
            units: 0.001 m/s
            desc: >
-             Orbit Bound Mean Radial First derivative degradation parameter
-             (range 0-0.255)
+             Orbit Bound Mean Radial First derivative.
+             Range: 0-0.255 m/s
        - orb_along_bound_mu_dot:
            type: u8
            units: 0.001 m/s
            desc: >
-             Orbit Bound Mean Along-Track First derivative degradation parameter
-             (range 0-0.255)
+             Orbit Bound Mean Along-Track First derivative.
+             Range: 0-0.255 m/s
        - orb_cross_bound_mu_dot:
            type: u8
            units: 0.001 m/s
            desc: >
-             Orbit Bound Mean Cross-Track First derivative degradation parameter
-             (range 0-0.255)
+             Orbit Bound Mean Cross-Track First derivative.
+             Range: 0-0.255 m/s
        - orb_radial_bound_sig_dot:
            type: u8
            units: 0.001 m/s
            desc: >
-             Orbit Bound Standard Deviation Radial First derivative degradation parameter
-             (range 0-0.255)
+             Orbit Bound Standard Deviation Radial First derivative.
+             Range: 0-0.255 m/s
        - orb_along_bound_sig_dot:
            type: u8
            units: 0.001 m/s
            desc: >
-             Orbit Bound Standard Deviation Along-Track First derivative degradation parameter
-             (range 0-0.255)
+             Orbit Bound Standard Deviation Along-Track First derivative.
+             Range: 0-0.255 m/s
        - orb_cross_bound_sig_dot:
            type: u8
            units: 0.001 m/s
            desc: >
-             Orbit Bound Standard Deviation Cross-Track First derivative degradation parameter
-             (range 0-0.255)
+             Orbit Bound Standard Deviation Cross-Track First derivative.
+             Range: 0-0.255 m/s
        - clock_bound_mu_dot:
            type: u8
            units: 0.001 m/s
            desc: >
-             Clock Bound Mean First derivative degradation parameter
-             (range 0-0.255)
+             Clock Bound Mean First derivative.
+             Range: 0-0.255 m/s
        - clock_bound_sig_dot:
            type: u8
            units: 0.001 m/s
            desc: >
-             Clock Bound Standard Deviation First derivative degradation parameter
-             (range 0-0.255)
+             Clock Bound Standard Deviation First derivative.
+             Range: 0-0.255 m/s
 
  - MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION:
      id: 0x05DF
      short_desc: Combined Orbit and Clock Bound Degradation Parameter
-     public: False
      fields:
        - header:
            type: BoundsHeader

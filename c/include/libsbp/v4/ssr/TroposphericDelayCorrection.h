@@ -44,20 +44,18 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro
-   * delay)]
+   * Hydrostatic vertical delay. Add 2.3 m to get actual value. [4 mm]
    */
   s16 hydro;
 
   /**
-   * Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)]
+   * Wet vertical delay. Add 0.252 m to get actual value. [4 mm]
    */
   s8 wet;
 
   /**
-* stddev [modified DF389 scale; class is upper 3 bits, value is lower 5 stddev
-<= (3^class * (1 + value/16) - 1) mm
-]
+   * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+   * (3^class * (1 + value/16) - 1) mm [mm]
    */
   u8 stddev;
 } sbp_tropospheric_delay_correction_t;
