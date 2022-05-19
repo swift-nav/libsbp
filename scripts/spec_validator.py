@@ -112,6 +112,9 @@ def validate_bitfields(
 
 
 def validate_fields(filename: str, previous_fields: dict, current_fields: dict) -> None:
+    if "stub" in [list(K.keys())[0] for K in previous_fields]:
+        logging.warning("Found stubbed message, skipping validation check...")
+        return
     if len(previous_fields) != len(current_fields):
         raise RuntimeError(
             "Breaking Message Mutation Detected!\n" "Number of fields has changed!\n"
