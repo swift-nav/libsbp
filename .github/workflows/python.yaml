@@ -27,3 +27,5 @@ jobs:
 
       - name: Run tests
         run: make test-python
+        env:
+          TOX_PARALLEL_NO_SPINNER: 1
