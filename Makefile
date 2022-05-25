@@ -361,7 +361,7 @@ test-c-v4:
 
 test-python:
 	$(call announce-begin,"Running Python tests")
-	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters
+	cd $(SWIFTNAV_ROOT)/python/ && tox --parallel --skip-missing-interpreters
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:

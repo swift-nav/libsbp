@@ -1,5 +1,25 @@
 # Changelog
 
+## [v4.3.0](https://github.com/swift-nav/libsbp/tree/v4.3.0) (2022-05-25)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.2.0...v4.3.0)
+
+**Merged pull requests:**
+
+- validator: skip stubbed messages \[OTA-150\] [\#1151](https://github.com/swift-nav/libsbp/pull/1151) ([silverjam](https://github.com/silverjam))
+- hide stubbed messages from sbp.pdf [\#1148](https://github.com/swift-nav/libsbp/pull/1148) ([fpezzinosn](https://github.com/fpezzinosn))
+- make: add commands to detect staging [\#1146](https://github.com/swift-nav/libsbp/pull/1146) ([silverjam](https://github.com/silverjam))
+- sbp2json small usage comment fix [\#1143](https://github.com/swift-nav/libsbp/pull/1143) ([adrian-kong](https://github.com/adrian-kong))
+- Added input and output parameters to rust sbp2json [\#1142](https://github.com/swift-nav/libsbp/pull/1142) ([adrian-kong](https://github.com/adrian-kong))
+- ci: enable on staging branch [\#1135](https://github.com/swift-nav/libsbp/pull/1135) ([silverjam](https://github.com/silverjam))
+- validator: allow message deprecation [\#1134](https://github.com/swift-nav/libsbp/pull/1134) ([silverjam](https://github.com/silverjam))
+- Converted structopt into clap [\#1133](https://github.com/swift-nav/libsbp/pull/1133) ([adrian-kong](https://github.com/adrian-kong))
+- Add stubbed version of new Integrity Bounds/Flags \[OTA-134\] [\#1130](https://github.com/swift-nav/libsbp/pull/1130) ([fpezzinosn](https://github.com/fpezzinosn))
+- Fixing unconsumed 4096 error sbp2json [\#1128](https://github.com/swift-nav/libsbp/pull/1128) ([adrian-kong](https://github.com/adrian-kong))
+- Generate missing tests via JSON [\#1125](https://github.com/swift-nav/libsbp/pull/1125) ([adrian-kong](https://github.com/adrian-kong))
+- Update sbp Docs to Include L5 Signals [\#1124](https://github.com/swift-nav/libsbp/pull/1124) ([isaactorz](https://github.com/isaactorz))
+- Runnable sbp java example [\#1122](https://github.com/swift-nav/libsbp/pull/1122) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.2.0](https://github.com/swift-nav/libsbp/tree/v4.2.0) (2022-05-03)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.6...v4.2.0)
