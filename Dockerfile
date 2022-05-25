@@ -13,7 +13,7 @@
 
 ARG UBUNTU_RELEASE=focal
 
-FROM ubuntu:focal
+FROM ubuntu:${UBUNTU_RELEASE}
 
 # Re-declare UBUNTU_RELEASE to be visible after FROM
 ARG UBUNTU_RELEASE
