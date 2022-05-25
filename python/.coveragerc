@@ -1,6 +1,7 @@
 [run]
 branch = True
 include = sbp/*
+parallel = true
 
 [report]
 exclude_lines =
