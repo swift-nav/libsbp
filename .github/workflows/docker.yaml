@@ -25,4 +25,6 @@ jobs:
 
       - name: Run make all inside image
         run: |
-          docker run --rm -v $PWD:/mnt/workspace -t libsbp-build:latest make all
+          docker run --rm -v $PWD:/mnt/workspace \
+            --build-arg TOX_PARALLEL_NO_SPINNER=1 \
+            -t libsbp-build:latest make all
