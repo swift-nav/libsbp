@@ -217,10 +217,10 @@ are both valid. To see a list of all valid targets, run `make help`.
 **Python version notes:**
 1. By default the Python targets `make python` and `make test-python` (as well
    as `make all`) run tests on all Python versions officially supported by *the
-   libsbp Python bindings*, currently **2.7, 3.5-3.9**, skipping any versions
-   not installed. To run tests on just specific Python version(s), specify the
-   `TOXENV` environment variable, e.g., `TOXENV=py27,py35 make python`. Travis
-   runs Python tests on all supported versions.
+   libsbp Python bindings*, currently **3.6-3.9**, skipping any versions not
+   installed. To run tests on just specific Python version(s), specify the
+   `TOXENV` environment variable, e.g., `TOXENV=py36 make python`. Travis runs
+   Python tests on all supported versions.
 2. By default *the code generators* are run on the system's (or virtual env's)
    default Python interpreter. Currently Python versions **2.7, 3.5, and 3.7**
    are officially supported, other versions may or may not work. The generated
@@ -229,7 +229,7 @@ are both valid. To see a list of all valid targets, run `make help`.
    `GENENV` environment variable, e.g., `GENENV=py27 make all` (you must have
    that version of Python installed beforehand).
 3. To run both the generator and the Python tests on specific Python versions,
-   specify both envs, e.g., `GENENV=py37 TOXENV=py27,py37 make python`
+   specify both envs, e.g., `GENENV=py37 TOXENV=py37 make python`
 
 ## SBP Development Procedures
 
