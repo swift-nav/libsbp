@@ -2428,7 +2428,7 @@ definitions:
                 - 31:
                     desc: Safe state ROPL
 
- - MSG_GPS_LEAP_SECOND:
+ - MSG_UTC_LEAP_SECOND:
     id: 0x023A
     short_desc: >
       Leap second SBP message.
@@ -2479,7 +2479,7 @@ definitions:
           units: s
           desc: Leap second count after insertion.
 
- - MSG_ITRF:
+ - MSG_REFERENCE_FRAME_PARAM:
      id: 0x0244
      short_desc: Reference Frame Transformation Parameter
      fields:

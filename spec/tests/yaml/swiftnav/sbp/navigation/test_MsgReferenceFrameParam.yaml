@@ -1,4 +1,4 @@
-description: Unit tests for swiftnav.sbp.navigation MsgItrf
+description: Unit tests for swiftnav.sbp.navigation MsgReferenceFrameParam
 generated_on: 2022-05-11 # manually generated
 package: sbp.navigation
 tests:
@@ -28,7 +28,7 @@ tests:
         dot_theta_03: 19
         dot_scale: 20
       module: sbp.navigation
-      name: MsgItrf
+      name: MsgReferenceFrameParam
     msg_type: '580'
     raw_json: '{"ssr_iod": 1, "sn_counter_n": 2, "sn": "foo\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
       "tn_counter_m": 3, "tn": "bar\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
