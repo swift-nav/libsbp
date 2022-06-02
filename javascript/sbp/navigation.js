@@ -2133,7 +2133,7 @@ MsgProtectionLevel.prototype.fieldSpec.push(['heading', 'writeInt32LE', 4]);
 MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+ * SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
  *
  * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift
  * model parameters.
@@ -2143,25 +2143,25 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGpsLeapSecond = function (sbp, fields) {
+var MsgUtcLeapSecond = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_GPS_LEAP_SECOND";
+  this.messageType = "MSG_UTC_LEAP_SECOND";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgGpsLeapSecond.prototype = Object.create(SBP.prototype);
-MsgGpsLeapSecond.prototype.messageType = "MSG_GPS_LEAP_SECOND";
-MsgGpsLeapSecond.prototype.msg_type = 0x023A;
-MsgGpsLeapSecond.prototype.constructor = MsgGpsLeapSecond;
-MsgGpsLeapSecond.prototype.parser = new Parser()
+MsgUtcLeapSecond.prototype = Object.create(SBP.prototype);
+MsgUtcLeapSecond.prototype.messageType = "MSG_UTC_LEAP_SECOND";
+MsgUtcLeapSecond.prototype.msg_type = 0x023A;
+MsgUtcLeapSecond.prototype.constructor = MsgUtcLeapSecond;
+MsgUtcLeapSecond.prototype.parser = new Parser()
   .endianess('little')
   .array('stub', { type: 'uint8', readUntil: 'eof' });
-MsgGpsLeapSecond.prototype.fieldSpec = [];
-MsgGpsLeapSecond.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgUtcLeapSecond.prototype.fieldSpec = [];
+MsgUtcLeapSecond.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
- * SBP class for message MSG_ITRF (0x0244).
+ * SBP class for message MSG_REFERENCE_FRAME_PARAM (0x0244).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
@@ -2169,22 +2169,22 @@ MsgGpsLeapSecond.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', functi
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgItrf = function (sbp, fields) {
+var MsgReferenceFrameParam = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_ITRF";
+  this.messageType = "MSG_REFERENCE_FRAME_PARAM";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgItrf.prototype = Object.create(SBP.prototype);
-MsgItrf.prototype.messageType = "MSG_ITRF";
-MsgItrf.prototype.msg_type = 0x0244;
-MsgItrf.prototype.constructor = MsgItrf;
-MsgItrf.prototype.parser = new Parser()
+MsgReferenceFrameParam.prototype = Object.create(SBP.prototype);
+MsgReferenceFrameParam.prototype.messageType = "MSG_REFERENCE_FRAME_PARAM";
+MsgReferenceFrameParam.prototype.msg_type = 0x0244;
+MsgReferenceFrameParam.prototype.constructor = MsgReferenceFrameParam;
+MsgReferenceFrameParam.prototype.parser = new Parser()
   .endianess('little')
   .array('stub', { type: 'uint8', readUntil: 'eof' });
-MsgItrf.prototype.fieldSpec = [];
-MsgItrf.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgReferenceFrameParam.prototype.fieldSpec = [];
+MsgReferenceFrameParam.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
   0x0102: MsgGpsTime,
@@ -2264,8 +2264,8 @@ module.exports = {
   MsgProtectionLevelDepA: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
   MsgProtectionLevel: MsgProtectionLevel,
-  0x023A: MsgGpsLeapSecond,
-  MsgGpsLeapSecond: MsgGpsLeapSecond,
-  0x0244: MsgItrf,
-  MsgItrf: MsgItrf,
+  0x023A: MsgUtcLeapSecond,
+  MsgUtcLeapSecond: MsgUtcLeapSecond,
+  0x0244: MsgReferenceFrameParam,
+  MsgReferenceFrameParam: MsgReferenceFrameParam,
 }

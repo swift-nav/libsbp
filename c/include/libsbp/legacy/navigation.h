@@ -928,11 +928,11 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 stub[0];
-} msg_gps_leap_second_t;
+} msg_utc_leap_second_t;
 
 typedef struct SBP_ATTR_PACKED {
   u8 stub[0];
-} msg_itrf_t;
+} msg_reference_frame_param_t;
 
 /** \} */
 

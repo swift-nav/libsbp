@@ -5972,8 +5972,8 @@ int sbp_msg_protection_level_cmp(const sbp_msg_protection_level_t *a,
   return ret;
 }
 
-bool sbp_msg_gps_leap_second_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_gps_leap_second_t *msg) {
+bool sbp_msg_utc_leap_second_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_utc_leap_second_t *msg) {
   for (size_t i = 0; i < msg->n_stub; i++) {
     if (!sbp_u8_encode(ctx, &msg->stub[i])) {
       return false;
@@ -5982,13 +5982,13 @@ bool sbp_msg_gps_leap_second_encode_internal(
   return true;
 }
 
-s8 sbp_msg_gps_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                  const sbp_msg_gps_leap_second_t *msg) {
+s8 sbp_msg_utc_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_utc_leap_second_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_gps_leap_second_encode_internal(&ctx, msg)) {
+  if (!sbp_msg_utc_leap_second_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -5997,8 +5997,8 @@ s8 sbp_msg_gps_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_gps_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
-                                             sbp_msg_gps_leap_second_t *msg) {
+bool sbp_msg_utc_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_utc_leap_second_t *msg) {
   msg->n_stub = (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_stub; i++) {
     if (!sbp_u8_decode(ctx, &msg->stub[i])) {
@@ -6008,14 +6008,14 @@ bool sbp_msg_gps_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_msg_gps_leap_second_decode(const uint8_t *buf, uint8_t len,
+s8 sbp_msg_utc_leap_second_decode(const uint8_t *buf, uint8_t len,
                                   uint8_t *n_read,
-                                  sbp_msg_gps_leap_second_t *msg) {
+                                  sbp_msg_utc_leap_second_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_gps_leap_second_decode_internal(&ctx, msg)) {
+  if (!sbp_msg_utc_leap_second_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -6024,22 +6024,22 @@ s8 sbp_msg_gps_leap_second_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_gps_leap_second_send(sbp_state_t *s, u16 sender_id,
-                                const sbp_msg_gps_leap_second_t *msg,
+s8 sbp_msg_utc_leap_second_send(sbp_state_t *s, u16 sender_id,
+                                const sbp_msg_utc_leap_second_t *msg,
                                 sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_msg_gps_leap_second_encode(payload, sizeof(payload),
+  s8 ret = sbp_msg_utc_leap_second_encode(payload, sizeof(payload),
                                           &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GPS_LEAP_SECOND, sender_id, payload_len,
+  return sbp_payload_send(s, SBP_MSG_UTC_LEAP_SECOND, sender_id, payload_len,
                           payload, write);
 }
 
-int sbp_msg_gps_leap_second_cmp(const sbp_msg_gps_leap_second_t *a,
-                                const sbp_msg_gps_leap_second_t *b) {
+int sbp_msg_utc_leap_second_cmp(const sbp_msg_utc_leap_second_t *a,
+                                const sbp_msg_utc_leap_second_t *b) {
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->n_stub, &b->n_stub);
@@ -6052,8 +6052,8 @@ int sbp_msg_gps_leap_second_cmp(const sbp_msg_gps_leap_second_t *a,
   return ret;
 }
 
-bool sbp_msg_itrf_encode_internal(sbp_encode_ctx_t *ctx,
-                                  const sbp_msg_itrf_t *msg) {
+bool sbp_msg_reference_frame_param_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_reference_frame_param_t *msg) {
   for (size_t i = 0; i < msg->n_stub; i++) {
     if (!sbp_u8_encode(ctx, &msg->stub[i])) {
       return false;
@@ -6062,13 +6062,14 @@ bool sbp_msg_itrf_encode_internal(sbp_encode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_msg_itrf_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                       const sbp_msg_itrf_t *msg) {
+s8 sbp_msg_reference_frame_param_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_reference_frame_param_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_itrf_encode_internal(&ctx, msg)) {
+  if (!sbp_msg_reference_frame_param_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -6077,7 +6078,8 @@ s8 sbp_msg_itrf_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_itrf_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_itrf_t *msg) {
+bool sbp_msg_reference_frame_param_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_reference_frame_param_t *msg) {
   msg->n_stub = (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
   for (uint8_t i = 0; i < msg->n_stub; i++) {
     if (!sbp_u8_decode(ctx, &msg->stub[i])) {
@@ -6087,13 +6089,14 @@ bool sbp_msg_itrf_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_itrf_t *msg) {
   return true;
 }
 
-s8 sbp_msg_itrf_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                       sbp_msg_itrf_t *msg) {
+s8 sbp_msg_reference_frame_param_decode(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_reference_frame_param_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_itrf_decode_internal(&ctx, msg)) {
+  if (!sbp_msg_reference_frame_param_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -6102,19 +6105,23 @@ s8 sbp_msg_itrf_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_itrf_send(sbp_state_t *s, u16 sender_id, const sbp_msg_itrf_t *msg,
-                     sbp_write_fn_t write) {
+s8 sbp_msg_reference_frame_param_send(
+    sbp_state_t *s, u16 sender_id, const sbp_msg_reference_frame_param_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_msg_itrf_encode(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_msg_reference_frame_param_encode(payload, sizeof(payload),
+                                                &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ITRF, sender_id, payload_len, payload,
-                          write);
+  return sbp_payload_send(s, SBP_MSG_REFERENCE_FRAME_PARAM, sender_id,
+                          payload_len, payload, write);
 }
 
-int sbp_msg_itrf_cmp(const sbp_msg_itrf_t *a, const sbp_msg_itrf_t *b) {
+int sbp_msg_reference_frame_param_cmp(
+    const sbp_msg_reference_frame_param_t *a,
+    const sbp_msg_reference_frame_param_t *b) {
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->n_stub, &b->n_stub);

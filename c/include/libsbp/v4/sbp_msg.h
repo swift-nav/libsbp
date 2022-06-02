@@ -133,7 +133,6 @@ typedef union {
   sbp_msg_glo_biases_t glo_biases;
   sbp_msg_gnss_capb_t gnss_capb;
   sbp_msg_gnss_time_offset_t gnss_time_offset;
-  sbp_msg_gps_leap_second_t gps_leap_second;
   sbp_msg_gps_time_dep_a_t gps_time_dep_a;
   sbp_msg_gps_time_gnss_t gps_time_gnss;
   sbp_msg_gps_time_t gps_time;
@@ -149,7 +148,6 @@ typedef union {
   sbp_msg_ins_status_t ins_status;
   sbp_msg_ins_updates_t ins_updates;
   sbp_msg_iono_t iono;
-  sbp_msg_itrf_t itrf;
   sbp_msg_linux_cpu_state_dep_a_t linux_cpu_state_dep_a;
   sbp_msg_linux_cpu_state_t linux_cpu_state;
   sbp_msg_linux_mem_state_dep_a_t linux_mem_state_dep_a;
@@ -196,6 +194,7 @@ typedef union {
   sbp_msg_print_dep_t print_dep;
   sbp_msg_protection_level_dep_a_t protection_level_dep_a;
   sbp_msg_protection_level_t protection_level;
+  sbp_msg_reference_frame_param_t reference_frame_param;
   sbp_msg_reset_dep_t reset_dep;
   sbp_msg_reset_filters_t reset_filters;
   sbp_msg_reset_t reset;
@@ -263,6 +262,7 @@ typedef union {
   sbp_msg_uart_state_depa_t uart_state_depa;
   sbp_msg_uart_state_t uart_state;
   sbp_msg_user_data_t user_data;
+  sbp_msg_utc_leap_second_t utc_leap_second;
   sbp_msg_utc_time_gnss_t utc_time_gnss;
   sbp_msg_utc_time_t utc_time;
   sbp_msg_vel_body_t vel_body;
@@ -509,9 +509,6 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_encode(buf, len, n_written,
                                              &msg->gnss_time_offset);
-    case SbpMsgGpsLeapSecond:
-      return sbp_msg_gps_leap_second_encode(buf, len, n_written,
-                                            &msg->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_encode(buf, len, n_written,
                                            &msg->gps_time_dep_a);
@@ -547,8 +544,6 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_ins_updates_encode(buf, len, n_written, &msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_encode(buf, len, n_written, &msg->iono);
-    case SbpMsgItrf:
-      return sbp_msg_itrf_encode(buf, len, n_written, &msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_encode(buf, len, n_written,
                                                   &msg->linux_cpu_state_dep_a);
@@ -671,6 +666,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgProtectionLevel:
       return sbp_msg_protection_level_encode(buf, len, n_written,
                                              &msg->protection_level);
+    case SbpMsgReferenceFrameParam:
+      return sbp_msg_reference_frame_param_encode(buf, len, n_written,
+                                                  &msg->reference_frame_param);
     case SbpMsgResetDep:
       return sbp_msg_reset_dep_encode(buf, len, n_written, &msg->reset_dep);
     case SbpMsgResetFilters:
@@ -854,6 +852,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_uart_state_encode(buf, len, n_written, &msg->uart_state);
     case SbpMsgUserData:
       return sbp_msg_user_data_encode(buf, len, n_written, &msg->user_data);
+    case SbpMsgUtcLeapSecond:
+      return sbp_msg_utc_leap_second_encode(buf, len, n_written,
+                                            &msg->utc_leap_second);
     case SbpMsgUtcTimeGnss:
       return sbp_msg_utc_time_gnss_encode(buf, len, n_written,
                                           &msg->utc_time_gnss);
@@ -1123,9 +1124,6 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_decode(buf, len, n_read,
                                              &msg->gnss_time_offset);
-    case SbpMsgGpsLeapSecond:
-      return sbp_msg_gps_leap_second_decode(buf, len, n_read,
-                                            &msg->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_decode(buf, len, n_read,
                                            &msg->gps_time_dep_a);
@@ -1161,8 +1159,6 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_ins_updates_decode(buf, len, n_read, &msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_decode(buf, len, n_read, &msg->iono);
-    case SbpMsgItrf:
-      return sbp_msg_itrf_decode(buf, len, n_read, &msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_decode(buf, len, n_read,
                                                   &msg->linux_cpu_state_dep_a);
@@ -1282,6 +1278,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgProtectionLevel:
       return sbp_msg_protection_level_decode(buf, len, n_read,
                                              &msg->protection_level);
+    case SbpMsgReferenceFrameParam:
+      return sbp_msg_reference_frame_param_decode(buf, len, n_read,
+                                                  &msg->reference_frame_param);
     case SbpMsgResetDep:
       return sbp_msg_reset_dep_decode(buf, len, n_read, &msg->reset_dep);
     case SbpMsgResetFilters:
@@ -1464,6 +1463,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_uart_state_decode(buf, len, n_read, &msg->uart_state);
     case SbpMsgUserData:
       return sbp_msg_user_data_decode(buf, len, n_read, &msg->user_data);
+    case SbpMsgUtcLeapSecond:
+      return sbp_msg_utc_leap_second_decode(buf, len, n_read,
+                                            &msg->utc_leap_second);
     case SbpMsgUtcTimeGnss:
       return sbp_msg_utc_time_gnss_decode(buf, len, n_read,
                                           &msg->utc_time_gnss);
@@ -1679,8 +1681,6 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_gnss_capb_encoded_len(&msg->gnss_capb);
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_encoded_len(&msg->gnss_time_offset);
-    case SbpMsgGpsLeapSecond:
-      return sbp_msg_gps_leap_second_encoded_len(&msg->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_encoded_len(&msg->gps_time_dep_a);
     case SbpMsgGpsTimeGnss:
@@ -1711,8 +1711,6 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ins_updates_encoded_len(&msg->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_encoded_len(&msg->iono);
-    case SbpMsgItrf:
-      return sbp_msg_itrf_encoded_len(&msg->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_encoded_len(
           &msg->linux_cpu_state_dep_a);
@@ -1815,6 +1813,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
           &msg->protection_level_dep_a);
     case SbpMsgProtectionLevel:
       return sbp_msg_protection_level_encoded_len(&msg->protection_level);
+    case SbpMsgReferenceFrameParam:
+      return sbp_msg_reference_frame_param_encoded_len(
+          &msg->reference_frame_param);
     case SbpMsgResetDep:
       return sbp_msg_reset_dep_encoded_len(&msg->reset_dep);
     case SbpMsgResetFilters:
@@ -1972,6 +1973,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_uart_state_encoded_len(&msg->uart_state);
     case SbpMsgUserData:
       return sbp_msg_user_data_encoded_len(&msg->user_data);
+    case SbpMsgUtcLeapSecond:
+      return sbp_msg_utc_leap_second_encoded_len(&msg->utc_leap_second);
     case SbpMsgUtcTimeGnss:
       return sbp_msg_utc_time_gnss_encoded_len(&msg->utc_time_gnss);
     case SbpMsgUtcTime:
@@ -2214,9 +2217,6 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgGnssTimeOffset:
       return sbp_msg_gnss_time_offset_cmp(&a->gnss_time_offset,
                                           &b->gnss_time_offset);
-    case SbpMsgGpsLeapSecond:
-      return sbp_msg_gps_leap_second_cmp(&a->gps_leap_second,
-                                         &b->gps_leap_second);
     case SbpMsgGpsTimeDepA:
       return sbp_msg_gps_time_dep_a_cmp(&a->gps_time_dep_a, &b->gps_time_dep_a);
     case SbpMsgGpsTimeGnss:
@@ -2249,8 +2249,6 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_ins_updates_cmp(&a->ins_updates, &b->ins_updates);
     case SbpMsgIono:
       return sbp_msg_iono_cmp(&a->iono, &b->iono);
-    case SbpMsgItrf:
-      return sbp_msg_itrf_cmp(&a->itrf, &b->itrf);
     case SbpMsgLinuxCpuStateDepA:
       return sbp_msg_linux_cpu_state_dep_a_cmp(&a->linux_cpu_state_dep_a,
                                                &b->linux_cpu_state_dep_a);
@@ -2366,6 +2364,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgProtectionLevel:
       return sbp_msg_protection_level_cmp(&a->protection_level,
                                           &b->protection_level);
+    case SbpMsgReferenceFrameParam:
+      return sbp_msg_reference_frame_param_cmp(&a->reference_frame_param,
+                                               &b->reference_frame_param);
     case SbpMsgResetDep:
       return sbp_msg_reset_dep_cmp(&a->reset_dep, &b->reset_dep);
     case SbpMsgResetFilters:
@@ -2545,6 +2546,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_uart_state_cmp(&a->uart_state, &b->uart_state);
     case SbpMsgUserData:
       return sbp_msg_user_data_cmp(&a->user_data, &b->user_data);
+    case SbpMsgUtcLeapSecond:
+      return sbp_msg_utc_leap_second_cmp(&a->utc_leap_second,
+                                         &b->utc_leap_second);
     case SbpMsgUtcTimeGnss:
       return sbp_msg_utc_time_gnss_cmp(&a->utc_time_gnss, &b->utc_time_gnss);
     case SbpMsgUtcTime:

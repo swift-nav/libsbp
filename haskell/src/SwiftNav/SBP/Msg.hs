@@ -132,7 +132,6 @@ data SBPMsg =
    | SBPMsgGloBiases MsgGloBiases Msg
    | SBPMsgGnssCapb MsgGnssCapb Msg
    | SBPMsgGnssTimeOffset MsgGnssTimeOffset Msg
-   | SBPMsgGpsLeapSecond MsgGpsLeapSecond Msg
    | SBPMsgGpsTime MsgGpsTime Msg
    | SBPMsgGpsTimeDepA MsgGpsTimeDepA Msg
    | SBPMsgGpsTimeGnss MsgGpsTimeGnss Msg
@@ -148,7 +147,6 @@ data SBPMsg =
    | SBPMsgInsStatus MsgInsStatus Msg
    | SBPMsgInsUpdates MsgInsUpdates Msg
    | SBPMsgIono MsgIono Msg
-   | SBPMsgItrf MsgItrf Msg
    | SBPMsgLinuxCpuState MsgLinuxCpuState Msg
    | SBPMsgLinuxCpuStateDepA MsgLinuxCpuStateDepA Msg
    | SBPMsgLinuxMemState MsgLinuxMemState Msg
@@ -195,6 +193,7 @@ data SBPMsg =
    | SBPMsgPrintDep MsgPrintDep Msg
    | SBPMsgProtectionLevel MsgProtectionLevel Msg
    | SBPMsgProtectionLevelDepA MsgProtectionLevelDepA Msg
+   | SBPMsgReferenceFrameParam MsgReferenceFrameParam Msg
    | SBPMsgReset MsgReset Msg
    | SBPMsgResetDep MsgResetDep Msg
    | SBPMsgResetFilters MsgResetFilters Msg
@@ -260,6 +259,7 @@ data SBPMsg =
    | SBPMsgUartState MsgUartState Msg
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
    | SBPMsgUserData MsgUserData Msg
+   | SBPMsgUtcLeapSecond MsgUtcLeapSecond Msg
    | SBPMsgUtcTime MsgUtcTime Msg
    | SBPMsgUtcTimeGnss MsgUtcTimeGnss Msg
    | SBPMsgVelBody MsgVelBody Msg
@@ -364,7 +364,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGloBiases = SBPMsgGloBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssCapb = SBPMsgGnssCapb (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssTimeOffset = SBPMsgGnssTimeOffset (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgGpsLeapSecond = SBPMsgGpsLeapSecond (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeGnss = SBPMsgGpsTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -380,7 +379,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInsUpdates = SBPMsgInsUpdates (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgItrf = SBPMsgItrf (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuState = SBPMsgLinuxCpuState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxMemState = SBPMsgLinuxMemState (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -427,6 +425,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgProtectionLevel = SBPMsgProtectionLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgProtectionLevelDepA = SBPMsgProtectionLevelDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgReferenceFrameParam = SBPMsgReferenceFrameParam (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -492,6 +491,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgUartState = SBPMsgUartState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgUtcLeapSecond = SBPMsgUtcLeapSecond (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUtcTimeGnss = SBPMsgUtcTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelBody = SBPMsgVelBody (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -588,7 +588,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgGloBiases _ m) = put m
       encoder (SBPMsgGnssCapb _ m) = put m
       encoder (SBPMsgGnssTimeOffset _ m) = put m
-      encoder (SBPMsgGpsLeapSecond _ m) = put m
       encoder (SBPMsgGpsTime _ m) = put m
       encoder (SBPMsgGpsTimeDepA _ m) = put m
       encoder (SBPMsgGpsTimeGnss _ m) = put m
@@ -604,7 +603,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgInsStatus _ m) = put m
       encoder (SBPMsgInsUpdates _ m) = put m
       encoder (SBPMsgIono _ m) = put m
-      encoder (SBPMsgItrf _ m) = put m
       encoder (SBPMsgLinuxCpuState _ m) = put m
       encoder (SBPMsgLinuxCpuStateDepA _ m) = put m
       encoder (SBPMsgLinuxMemState _ m) = put m
@@ -651,6 +649,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgPrintDep _ m) = put m
       encoder (SBPMsgProtectionLevel _ m) = put m
       encoder (SBPMsgProtectionLevelDepA _ m) = put m
+      encoder (SBPMsgReferenceFrameParam _ m) = put m
       encoder (SBPMsgReset _ m) = put m
       encoder (SBPMsgResetDep _ m) = put m
       encoder (SBPMsgResetFilters _ m) = put m
@@ -716,6 +715,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgUartState _ m) = put m
       encoder (SBPMsgUartStateDepa _ m) = put m
       encoder (SBPMsgUserData _ m) = put m
+      encoder (SBPMsgUtcLeapSecond _ m) = put m
       encoder (SBPMsgUtcTime _ m) = put m
       encoder (SBPMsgUtcTimeGnss _ m) = put m
       encoder (SBPMsgVelBody _ m) = put m
@@ -816,7 +816,6 @@ instance FromJSON SBPMsg where
         | msgType == msgGloBiases = SBPMsgGloBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssCapb = SBPMsgGnssCapb <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssTimeOffset = SBPMsgGnssTimeOffset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgGpsLeapSecond = SBPMsgGpsLeapSecond <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeGnss = SBPMsgGpsTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -832,7 +831,6 @@ instance FromJSON SBPMsg where
         | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInsUpdates = SBPMsgInsUpdates <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgItrf = SBPMsgItrf <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuState = SBPMsgLinuxCpuState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxMemState = SBPMsgLinuxMemState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -879,6 +877,7 @@ instance FromJSON SBPMsg where
         | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgProtectionLevel = SBPMsgProtectionLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgProtectionLevelDepA = SBPMsgProtectionLevelDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgReferenceFrameParam = SBPMsgReferenceFrameParam <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -944,6 +943,7 @@ instance FromJSON SBPMsg where
         | msgType == msgUartState = SBPMsgUartState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgUtcLeapSecond = SBPMsgUtcLeapSecond <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUtcTimeGnss = SBPMsgUtcTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelBody = SBPMsgVelBody <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1045,7 +1045,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGloBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssCapb n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssTimeOffset n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgGpsLeapSecond n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeGnss n m) = toJSON n <<>> toJSON m
@@ -1061,7 +1060,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgInsUpdates n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgItrf n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxMemState n m) = toJSON n <<>> toJSON m
@@ -1108,6 +1106,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgPrintDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgProtectionLevel n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgProtectionLevelDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgReferenceFrameParam n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgReset n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgResetDep _ m) = toJSON m
   toJSON (SBPMsgResetFilters n m) = toJSON n <<>> toJSON m
@@ -1173,6 +1172,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgUartState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUartStateDepa n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUserData n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgUtcLeapSecond n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUtcTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUtcTimeGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelBody n m) = toJSON n <<>> toJSON m
@@ -1268,7 +1268,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGloBiases n m) = SBPMsgGloBiases n <$> f m
   msg f (SBPMsgGnssCapb n m) = SBPMsgGnssCapb n <$> f m
   msg f (SBPMsgGnssTimeOffset n m) = SBPMsgGnssTimeOffset n <$> f m
-  msg f (SBPMsgGpsLeapSecond n m) = SBPMsgGpsLeapSecond n <$> f m
   msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
   msg f (SBPMsgGpsTimeDepA n m) = SBPMsgGpsTimeDepA n <$> f m
   msg f (SBPMsgGpsTimeGnss n m) = SBPMsgGpsTimeGnss n <$> f m
@@ -1284,7 +1283,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m
   msg f (SBPMsgInsUpdates n m) = SBPMsgInsUpdates n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
-  msg f (SBPMsgItrf n m) = SBPMsgItrf n <$> f m
   msg f (SBPMsgLinuxCpuState n m) = SBPMsgLinuxCpuState n <$> f m
   msg f (SBPMsgLinuxCpuStateDepA n m) = SBPMsgLinuxCpuStateDepA n <$> f m
   msg f (SBPMsgLinuxMemState n m) = SBPMsgLinuxMemState n <$> f m
@@ -1331,6 +1329,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
   msg f (SBPMsgProtectionLevel n m) = SBPMsgProtectionLevel n <$> f m
   msg f (SBPMsgProtectionLevelDepA n m) = SBPMsgProtectionLevelDepA n <$> f m
+  msg f (SBPMsgReferenceFrameParam n m) = SBPMsgReferenceFrameParam n <$> f m
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
   msg f (SBPMsgResetDep n m) = SBPMsgResetDep n <$> f m
   msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m
@@ -1396,6 +1395,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgUartState n m) = SBPMsgUartState n <$> f m
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m
   msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m
+  msg f (SBPMsgUtcLeapSecond n m) = SBPMsgUtcLeapSecond n <$> f m
   msg f (SBPMsgUtcTime n m) = SBPMsgUtcTime n <$> f m
   msg f (SBPMsgUtcTimeGnss n m) = SBPMsgUtcTimeGnss n <$> f m
   msg f (SBPMsgVelBody n m) = SBPMsgVelBody n <$> f m
