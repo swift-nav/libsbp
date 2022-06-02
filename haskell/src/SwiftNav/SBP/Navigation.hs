@@ -2304,166 +2304,166 @@ $(makeSBP 'msgProtectionLevel ''MsgProtectionLevel)
 $(makeJSON "_msgProtectionLevel_" ''MsgProtectionLevel)
 $(makeLenses ''MsgProtectionLevel)
 
-msgGpsLeapSecond :: Word16
-msgGpsLeapSecond = 0x023A
+msgUtcLeapSecond :: Word16
+msgUtcLeapSecond = 0x023A
 
--- | SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+-- | SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
 --
 -- Emulates the GPS CNAV message, reserving bytes for future broadcast of the
 -- drift model parameters.
-data MsgGpsLeapSecond = MsgGpsLeapSecond
-  { _msgGpsLeapSecond_bias_coeff     :: !Int16
+data MsgUtcLeapSecond = MsgUtcLeapSecond
+  { _msgUtcLeapSecond_bias_coeff     :: !Int16
     -- ^ Reserved. Bias coefficient of GPS time scale with respect to UTC drift
     -- model.
-  , _msgGpsLeapSecond_drift_coeff    :: !Int16
+  , _msgUtcLeapSecond_drift_coeff    :: !Int16
     -- ^ Reserved. Drift coefficient of GPS time scale with respect to UTC drift
     -- model.
-  , _msgGpsLeapSecond_drift_rate_coeff :: !Int8
+  , _msgUtcLeapSecond_drift_rate_coeff :: !Int8
     -- ^ Reserved. Drift rate correction coefficient of GPS time scale with
     -- respect to UTC drift model.
-  , _msgGpsLeapSecond_count_before   :: !Int8
+  , _msgUtcLeapSecond_count_before   :: !Int8
     -- ^ Leap second count before insertion.
-  , _msgGpsLeapSecond_tow_s          :: !Word16
+  , _msgUtcLeapSecond_tow_s          :: !Word16
     -- ^ Reserved. Drift model reference week second.
-  , _msgGpsLeapSecond_wn             :: !Word16
+  , _msgUtcLeapSecond_wn             :: !Word16
     -- ^ Reserved. Drift model reference week number.
-  , _msgGpsLeapSecond_ref_wn         :: !Word16
+  , _msgUtcLeapSecond_ref_wn         :: !Word16
     -- ^ Leap second reference week number.
-  , _msgGpsLeapSecond_ref_dn         :: !Word8
+  , _msgUtcLeapSecond_ref_dn         :: !Word8
     -- ^ Leap second reference day number.
-  , _msgGpsLeapSecond_count_after    :: !Int8
+  , _msgUtcLeapSecond_count_after    :: !Int8
     -- ^ Leap second count after insertion.
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgGpsLeapSecond where
+instance Binary MsgUtcLeapSecond where
   get = do
-    _msgGpsLeapSecond_bias_coeff <- (fromIntegral <$> getWord16le)
-    _msgGpsLeapSecond_drift_coeff <- (fromIntegral <$> getWord16le)
-    _msgGpsLeapSecond_drift_rate_coeff <- (fromIntegral <$> getWord8)
-    _msgGpsLeapSecond_count_before <- (fromIntegral <$> getWord8)
-    _msgGpsLeapSecond_tow_s <- getWord16le
-    _msgGpsLeapSecond_wn <- getWord16le
-    _msgGpsLeapSecond_ref_wn <- getWord16le
-    _msgGpsLeapSecond_ref_dn <- getWord8
-    _msgGpsLeapSecond_count_after <- (fromIntegral <$> getWord8)
-    pure MsgGpsLeapSecond {..}
+    _msgUtcLeapSecond_bias_coeff <- (fromIntegral <$> getWord16le)
+    _msgUtcLeapSecond_drift_coeff <- (fromIntegral <$> getWord16le)
+    _msgUtcLeapSecond_drift_rate_coeff <- (fromIntegral <$> getWord8)
+    _msgUtcLeapSecond_count_before <- (fromIntegral <$> getWord8)
+    _msgUtcLeapSecond_tow_s <- getWord16le
+    _msgUtcLeapSecond_wn <- getWord16le
+    _msgUtcLeapSecond_ref_wn <- getWord16le
+    _msgUtcLeapSecond_ref_dn <- getWord8
+    _msgUtcLeapSecond_count_after <- (fromIntegral <$> getWord8)
+    pure MsgUtcLeapSecond {..}
 
-  put MsgGpsLeapSecond {..} = do
-    (putWord16le . fromIntegral) _msgGpsLeapSecond_bias_coeff
-    (putWord16le . fromIntegral) _msgGpsLeapSecond_drift_coeff
-    (putWord8 . fromIntegral) _msgGpsLeapSecond_drift_rate_coeff
-    (putWord8 . fromIntegral) _msgGpsLeapSecond_count_before
-    putWord16le _msgGpsLeapSecond_tow_s
-    putWord16le _msgGpsLeapSecond_wn
-    putWord16le _msgGpsLeapSecond_ref_wn
-    putWord8 _msgGpsLeapSecond_ref_dn
-    (putWord8 . fromIntegral) _msgGpsLeapSecond_count_after
+  put MsgUtcLeapSecond {..} = do
+    (putWord16le . fromIntegral) _msgUtcLeapSecond_bias_coeff
+    (putWord16le . fromIntegral) _msgUtcLeapSecond_drift_coeff
+    (putWord8 . fromIntegral) _msgUtcLeapSecond_drift_rate_coeff
+    (putWord8 . fromIntegral) _msgUtcLeapSecond_count_before
+    putWord16le _msgUtcLeapSecond_tow_s
+    putWord16le _msgUtcLeapSecond_wn
+    putWord16le _msgUtcLeapSecond_ref_wn
+    putWord8 _msgUtcLeapSecond_ref_dn
+    (putWord8 . fromIntegral) _msgUtcLeapSecond_count_after
 
-$(makeSBP 'msgGpsLeapSecond ''MsgGpsLeapSecond)
-$(makeJSON "_msgGpsLeapSecond_" ''MsgGpsLeapSecond)
-$(makeLenses ''MsgGpsLeapSecond)
+$(makeSBP 'msgUtcLeapSecond ''MsgUtcLeapSecond)
+$(makeJSON "_msgUtcLeapSecond_" ''MsgUtcLeapSecond)
+$(makeLenses ''MsgUtcLeapSecond)
 
-msgItrf :: Word16
-msgItrf = 0x0244
+msgReferenceFrameParam :: Word16
+msgReferenceFrameParam = 0x0244
 
-data MsgItrf = MsgItrf
-  { _msgItrf_ssr_iod    :: !Word8
+data MsgReferenceFrameParam = MsgReferenceFrameParam
+  { _msgReferenceFrameParam_ssr_iod    :: !Word8
     -- ^ SSR IOD parameter.
-  , _msgItrf_sn_counter_n :: !Word8
+  , _msgReferenceFrameParam_sn_counter_n :: !Word8
     -- ^ Source-Name Counter N.
-  , _msgItrf_sn         :: !Text
+  , _msgReferenceFrameParam_sn         :: !Text
     -- ^ Source-Name
-  , _msgItrf_tn_counter_m :: !Word8
+  , _msgReferenceFrameParam_tn_counter_m :: !Word8
     -- ^ Target-Name Counter M.
-  , _msgItrf_tn         :: !Text
+  , _msgReferenceFrameParam_tn         :: !Text
     -- ^ Target-Name
-  , _msgItrf_sin        :: !Word8
+  , _msgReferenceFrameParam_sin        :: !Word8
     -- ^ System Identification Number.
-  , _msgItrf_utn        :: !Word16
+  , _msgReferenceFrameParam_utn        :: !Word16
     -- ^ Utilized Transformation Message.
-  , _msgItrf_re_t0      :: !Word16
+  , _msgReferenceFrameParam_re_t0      :: !Word16
     -- ^ Reference Epoch t0 for transformation parameter set given as Modified
     -- Julian Day (MDJ) Number minus 44244 days.
-  , _msgItrf_delta_X0   :: !Int32
+  , _msgReferenceFrameParam_delta_X0   :: !Int32
     -- ^ Translation in X for Reference Epoch t0.
-  , _msgItrf_delta_Y0   :: !Int32
+  , _msgReferenceFrameParam_delta_Y0   :: !Int32
     -- ^ Translation in Y for Reference Epoch t0.
-  , _msgItrf_delta_Z0   :: !Int32
+  , _msgReferenceFrameParam_delta_Z0   :: !Int32
     -- ^ Translation in Z for Reference Epoch t0.
-  , _msgItrf_theta_01   :: !Int32
+  , _msgReferenceFrameParam_theta_01   :: !Int32
     -- ^ Rotation around the X-axis for Reference Epoch t0.
-  , _msgItrf_theta_02   :: !Int32
+  , _msgReferenceFrameParam_theta_02   :: !Int32
     -- ^ Rotation around the Y-axis for Reference Epoch t0.
-  , _msgItrf_theta_03   :: !Int32
+  , _msgReferenceFrameParam_theta_03   :: !Int32
     -- ^ Rotation around the Z-axis for Reference Epoch t0.
-  , _msgItrf_scale      :: !Int32
+  , _msgReferenceFrameParam_scale      :: !Int32
     -- ^ Scale correction for Reference Epoch t0.
-  , _msgItrf_dot_delta_X0 :: !Int32
+  , _msgReferenceFrameParam_dot_delta_X0 :: !Int32
     -- ^ Rate of change of translation in X.
-  , _msgItrf_dot_delta_Y0 :: !Int32
+  , _msgReferenceFrameParam_dot_delta_Y0 :: !Int32
     -- ^ Rate of change of translation in Y.
-  , _msgItrf_dot_delta_Z0 :: !Int32
+  , _msgReferenceFrameParam_dot_delta_Z0 :: !Int32
     -- ^ Rate of change of translation in Z.
-  , _msgItrf_dot_theta_01 :: !Int32
+  , _msgReferenceFrameParam_dot_theta_01 :: !Int32
     -- ^ Rate of change of rotation around the X-axis.
-  , _msgItrf_dot_theta_02 :: !Int32
+  , _msgReferenceFrameParam_dot_theta_02 :: !Int32
     -- ^ Rate of change of rotation around the Y-axis.
-  , _msgItrf_dot_theta_03 :: !Int32
+  , _msgReferenceFrameParam_dot_theta_03 :: !Int32
     -- ^ Rate of change of rotation around the Z-axis.
-  , _msgItrf_dot_scale  :: !Int16
+  , _msgReferenceFrameParam_dot_scale  :: !Int16
     -- ^ Rate of change of scale correction.
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgItrf where
+instance Binary MsgReferenceFrameParam where
   get = do
-    _msgItrf_ssr_iod <- getWord8
-    _msgItrf_sn_counter_n <- getWord8
-    _msgItrf_sn <- decodeUtf8 <$> getByteString 31
-    _msgItrf_tn_counter_m <- getWord8
-    _msgItrf_tn <- decodeUtf8 <$> getByteString 31
-    _msgItrf_sin <- getWord8
-    _msgItrf_utn <- getWord16le
-    _msgItrf_re_t0 <- getWord16le
-    _msgItrf_delta_X0 <- (fromIntegral <$> getWord32le)
-    _msgItrf_delta_Y0 <- (fromIntegral <$> getWord32le)
-    _msgItrf_delta_Z0 <- (fromIntegral <$> getWord32le)
-    _msgItrf_theta_01 <- (fromIntegral <$> getWord32le)
-    _msgItrf_theta_02 <- (fromIntegral <$> getWord32le)
-    _msgItrf_theta_03 <- (fromIntegral <$> getWord32le)
-    _msgItrf_scale <- (fromIntegral <$> getWord32le)
-    _msgItrf_dot_delta_X0 <- (fromIntegral <$> getWord32le)
-    _msgItrf_dot_delta_Y0 <- (fromIntegral <$> getWord32le)
-    _msgItrf_dot_delta_Z0 <- (fromIntegral <$> getWord32le)
-    _msgItrf_dot_theta_01 <- (fromIntegral <$> getWord32le)
-    _msgItrf_dot_theta_02 <- (fromIntegral <$> getWord32le)
-    _msgItrf_dot_theta_03 <- (fromIntegral <$> getWord32le)
-    _msgItrf_dot_scale <- (fromIntegral <$> getWord16le)
-    pure MsgItrf {..}
+    _msgReferenceFrameParam_ssr_iod <- getWord8
+    _msgReferenceFrameParam_sn_counter_n <- getWord8
+    _msgReferenceFrameParam_sn <- decodeUtf8 <$> getByteString 31
+    _msgReferenceFrameParam_tn_counter_m <- getWord8
+    _msgReferenceFrameParam_tn <- decodeUtf8 <$> getByteString 31
+    _msgReferenceFrameParam_sin <- getWord8
+    _msgReferenceFrameParam_utn <- getWord16le
+    _msgReferenceFrameParam_re_t0 <- getWord16le
+    _msgReferenceFrameParam_delta_X0 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_delta_Y0 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_delta_Z0 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_theta_01 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_theta_02 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_theta_03 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_scale <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_dot_delta_X0 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_dot_delta_Y0 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_dot_delta_Z0 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_dot_theta_01 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_dot_theta_02 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_dot_theta_03 <- (fromIntegral <$> getWord32le)
+    _msgReferenceFrameParam_dot_scale <- (fromIntegral <$> getWord16le)
+    pure MsgReferenceFrameParam {..}
 
-  put MsgItrf {..} = do
-    putWord8 _msgItrf_ssr_iod
-    putWord8 _msgItrf_sn_counter_n
-    putByteString $ encodeUtf8 _msgItrf_sn
-    putWord8 _msgItrf_tn_counter_m
-    putByteString $ encodeUtf8 _msgItrf_tn
-    putWord8 _msgItrf_sin
-    putWord16le _msgItrf_utn
-    putWord16le _msgItrf_re_t0
-    (putWord32le . fromIntegral) _msgItrf_delta_X0
-    (putWord32le . fromIntegral) _msgItrf_delta_Y0
-    (putWord32le . fromIntegral) _msgItrf_delta_Z0
-    (putWord32le . fromIntegral) _msgItrf_theta_01
-    (putWord32le . fromIntegral) _msgItrf_theta_02
-    (putWord32le . fromIntegral) _msgItrf_theta_03
-    (putWord32le . fromIntegral) _msgItrf_scale
-    (putWord32le . fromIntegral) _msgItrf_dot_delta_X0
-    (putWord32le . fromIntegral) _msgItrf_dot_delta_Y0
-    (putWord32le . fromIntegral) _msgItrf_dot_delta_Z0
-    (putWord32le . fromIntegral) _msgItrf_dot_theta_01
-    (putWord32le . fromIntegral) _msgItrf_dot_theta_02
-    (putWord32le . fromIntegral) _msgItrf_dot_theta_03
-    (putWord16le . fromIntegral) _msgItrf_dot_scale
+  put MsgReferenceFrameParam {..} = do
+    putWord8 _msgReferenceFrameParam_ssr_iod
+    putWord8 _msgReferenceFrameParam_sn_counter_n
+    putByteString $ encodeUtf8 _msgReferenceFrameParam_sn
+    putWord8 _msgReferenceFrameParam_tn_counter_m
+    putByteString $ encodeUtf8 _msgReferenceFrameParam_tn
+    putWord8 _msgReferenceFrameParam_sin
+    putWord16le _msgReferenceFrameParam_utn
+    putWord16le _msgReferenceFrameParam_re_t0
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_delta_X0
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_delta_Y0
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_delta_Z0
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_theta_01
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_theta_02
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_theta_03
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_scale
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_dot_delta_X0
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_dot_delta_Y0
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_dot_delta_Z0
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_dot_theta_01
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_dot_theta_02
+    (putWord32le . fromIntegral) _msgReferenceFrameParam_dot_theta_03
+    (putWord16le . fromIntegral) _msgReferenceFrameParam_dot_scale
 
-$(makeSBP 'msgItrf ''MsgItrf)
-$(makeJSON "_msgItrf_" ''MsgItrf)
-$(makeLenses ''MsgItrf)
+$(makeSBP 'msgReferenceFrameParam ''MsgReferenceFrameParam)
+$(makeJSON "_msgReferenceFrameParam_" ''MsgReferenceFrameParam)
+$(makeLenses ''MsgReferenceFrameParam)

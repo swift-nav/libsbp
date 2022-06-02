@@ -66,14 +66,11 @@ int main(void) {
       sr, legacy_auto_check_sbp_navigation_MsgBaselineNEDDepA_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgDops_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgDopsDepA_suite());
-  srunner_add_suite(sr,
-                    legacy_auto_check_sbp_navigation_MsgGPSLeapSecond_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgGPSTime_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_navigation_MsgGPSTimeDepA_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_navigation_MsgGPSTimeGNSS_suite());
-  srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgItrf_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgPosECEF_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgPosECEFCov_suite());
   srunner_add_suite(sr,
@@ -90,6 +87,10 @@ int main(void) {
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgPosLlhGnss_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_navigation_MsgProtectionLevel_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_navigation_MsgReferenceFrameParam_suite());
+  srunner_add_suite(sr,
+                    legacy_auto_check_sbp_navigation_MsgUTCLeapSecond_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgUTCTime_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_navigation_MsgUTCTimeGNSS_suite());

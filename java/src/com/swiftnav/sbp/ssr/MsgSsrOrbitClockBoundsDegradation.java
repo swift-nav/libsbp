@@ -34,7 +34,7 @@ public class MsgSsrOrbitClockBoundsDegradation extends SBPMessage {
 
     /**
      * Satellite Bit Mask. Put 1 for each satellite where the following degradation parameters are
-     * applicable, 0 otherwise.
+     * applicable, 0 otherwise. Encoded following RTCM DF394 specification.
      */
     public BigInteger sat_bitmask;
 

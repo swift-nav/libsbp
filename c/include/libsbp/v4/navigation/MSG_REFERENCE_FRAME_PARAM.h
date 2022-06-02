@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NAVIGATION_MSG_ITRF_H
-#define LIBSBP_V4_NAVIGATION_MSG_ITRF_H
+#ifndef LIBSBP_V4_NAVIGATION_MSG_REFERENCE_FRAME_PARAM_H
+#define LIBSBP_V4_NAVIGATION_MSG_REFERENCE_FRAME_PARAM_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -35,7 +35,7 @@ extern "C" {
 
 /******************************************************************************
  *
- * SBP_MSG_ITRF
+ * SBP_MSG_REFERENCE_FRAME_PARAM
  *
  *****************************************************************************/
 typedef struct {
@@ -52,7 +52,7 @@ typedef struct {
   /**
    * Source-Name
    */
-  char sn[SBP_MSG_ITRF_SN_MAX];
+  char sn[SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX];
 
   /**
    * Target-Name Counter M.
@@ -62,7 +62,7 @@ typedef struct {
   /**
    * Target-Name
    */
-  char tn[SBP_MSG_ITRF_TN_MAX];
+  char tn[SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX];
 
   /**
    * System Identification Number.
@@ -149,21 +149,22 @@ typedef struct {
    * Rate of change of scale correction. [0.0000002 ppm/yr]
    */
   s16 dot_scale;
-} sbp_msg_itrf_t;
+} sbp_msg_reference_frame_param_t;
 
 /**
- * Get encoded size of an instance of sbp_msg_itrf_t
+ * Get encoded size of an instance of sbp_msg_reference_frame_param_t
  *
- * @param msg sbp_msg_itrf_t instance
+ * @param msg sbp_msg_reference_frame_param_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_itrf_encoded_len(const sbp_msg_itrf_t *msg) {
+static inline size_t sbp_msg_reference_frame_param_encoded_len(
+    const sbp_msg_reference_frame_param_t *msg) {
   (void)msg;
-  return SBP_MSG_ITRF_ENCODED_LEN;
+  return SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_LEN;
 }
 
 /**
- * Encode an instance of sbp_msg_itrf_t to wire representation
+ * Encode an instance of sbp_msg_reference_frame_param_t to wire representation
  *
  * This function encodes the given instance in to the user provided buffer. The
  * buffer provided to this function must be large enough to store the encoded
@@ -178,34 +179,39 @@ static inline size_t sbp_msg_itrf_encoded_len(const sbp_msg_itrf_t *msg) {
  * @param len Length of \p buf
  * @param n_written If not null, on success will be set to the number of bytes
  * written to \p buf
- * @param msg Instance of sbp_msg_itrf_t to encode
+ * @param msg Instance of sbp_msg_reference_frame_param_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_itrf_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                  const sbp_msg_itrf_t *msg);
+SBP_EXPORT s8 sbp_msg_reference_frame_param_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_reference_frame_param_t *msg);
 
 /**
- * Decode an instance of sbp_msg_itrf_t from wire representation
+ * Decode an instance of sbp_msg_reference_frame_param_t from wire
+ * representation
  *
- * This function decodes the wire representation of a sbp_msg_itrf_t message to
- * the given instance. The caller must specify the length of the buffer in the
- * \p len parameter. If non-null the number of bytes read from the buffer will
- * be returned in \p n_read.
+ * This function decodes the wire representation of a
+ * sbp_msg_reference_frame_param_t message to the given instance. The caller
+ * must specify the length of the buffer in the \p len parameter. If non-null
+ * the number of bytes read from the buffer will be returned in \p n_read.
  *
- * @param buf Wire representation of the sbp_msg_itrf_t instance
+ * @param buf Wire representation of the sbp_msg_reference_frame_param_t
+ * instance
  * @param len Length of \p buf
  * @param n_read If not null, on success will be set to the number of bytes read
  * from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_itrf_decode(const uint8_t *buf, uint8_t len,
-                                  uint8_t *n_read, sbp_msg_itrf_t *msg);
+SBP_EXPORT s8 sbp_msg_reference_frame_param_decode(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_reference_frame_param_t *msg);
 /**
- * Send an instance of sbp_msg_itrf_t with the given write function
+ * Send an instance of sbp_msg_reference_frame_param_t with the given write
+ * function
  *
  * An equivalent of #sbp_message_send which operates specifically on
- * sbp_msg_itrf_t
+ * sbp_msg_reference_frame_param_t
  *
  * The given message will be encoded to wire representation and passed in to the
  * given write function callback. The write callback will be called several
@@ -217,12 +223,12 @@ SBP_EXPORT s8 sbp_msg_itrf_decode(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_itrf_send(sbp_state_t *s, u16 sender_id,
-                                const sbp_msg_itrf_t *msg,
-                                sbp_write_fn_t write);
+SBP_EXPORT s8 sbp_msg_reference_frame_param_send(
+    sbp_state_t *s, u16 sender_id, const sbp_msg_reference_frame_param_t *msg,
+    sbp_write_fn_t write);
 
 /**
- * Compare two instances of sbp_msg_itrf_t
+ * Compare two instances of sbp_msg_reference_frame_param_t
  *
  * The two instances will be compared and a value returned consistent with the
  * return codes of comparison functions from the C standard library
@@ -232,46 +238,47 @@ SBP_EXPORT s8 sbp_msg_itrf_send(sbp_state_t *s, u16 sender_id,
  * b A value greater than 0 will be returned if \p b is considered to be greater
  * than \p b
  *
- * @param a sbp_msg_itrf_t instance
- * @param b sbp_msg_itrf_t instance
+ * @param a sbp_msg_reference_frame_param_t instance
+ * @param b sbp_msg_reference_frame_param_t instance
  * @return 0, <0, >0
  */
-SBP_EXPORT int sbp_msg_itrf_cmp(const sbp_msg_itrf_t *a,
-                                const sbp_msg_itrf_t *b);
+SBP_EXPORT int sbp_msg_reference_frame_param_cmp(
+    const sbp_msg_reference_frame_param_t *a,
+    const sbp_msg_reference_frame_param_t *b);
 
 #ifdef __cplusplus
 }
 
-static inline bool operator==(const sbp_msg_itrf_t &lhs,
-                              const sbp_msg_itrf_t &rhs) {
-  return sbp_msg_itrf_cmp(&lhs, &rhs) == 0;
+static inline bool operator==(const sbp_msg_reference_frame_param_t &lhs,
+                              const sbp_msg_reference_frame_param_t &rhs) {
+  return sbp_msg_reference_frame_param_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_itrf_t &lhs,
-                              const sbp_msg_itrf_t &rhs) {
-  return sbp_msg_itrf_cmp(&lhs, &rhs) != 0;
+static inline bool operator!=(const sbp_msg_reference_frame_param_t &lhs,
+                              const sbp_msg_reference_frame_param_t &rhs) {
+  return sbp_msg_reference_frame_param_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_itrf_t &lhs,
-                             const sbp_msg_itrf_t &rhs) {
-  return sbp_msg_itrf_cmp(&lhs, &rhs) < 0;
+static inline bool operator<(const sbp_msg_reference_frame_param_t &lhs,
+                             const sbp_msg_reference_frame_param_t &rhs) {
+  return sbp_msg_reference_frame_param_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_itrf_t &lhs,
-                              const sbp_msg_itrf_t &rhs) {
-  return sbp_msg_itrf_cmp(&lhs, &rhs) <= 0;
+static inline bool operator<=(const sbp_msg_reference_frame_param_t &lhs,
+                              const sbp_msg_reference_frame_param_t &rhs) {
+  return sbp_msg_reference_frame_param_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_itrf_t &lhs,
-                             const sbp_msg_itrf_t &rhs) {
-  return sbp_msg_itrf_cmp(&lhs, &rhs) > 0;
+static inline bool operator>(const sbp_msg_reference_frame_param_t &lhs,
+                             const sbp_msg_reference_frame_param_t &rhs) {
+  return sbp_msg_reference_frame_param_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_itrf_t &lhs,
-                              const sbp_msg_itrf_t &rhs) {
-  return sbp_msg_itrf_cmp(&lhs, &rhs) >= 0;
+static inline bool operator>=(const sbp_msg_reference_frame_param_t &lhs,
+                              const sbp_msg_reference_frame_param_t &rhs) {
+  return sbp_msg_reference_frame_param_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_NAVIGATION_MSG_ITRF_H */
+#endif /* LIBSBP_V4_NAVIGATION_MSG_REFERENCE_FRAME_PARAM_H */

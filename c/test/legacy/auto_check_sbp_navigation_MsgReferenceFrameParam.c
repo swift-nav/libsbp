@@ -11,8 +11,8 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgItrf.yaml by generate.py. Do
-// not modify by hand!
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgReferenceFrameParam.yaml by
+// generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <libsbp/legacy/navigation.h>
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
+START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -137,7 +137,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_itrf_t *test_msg = (msg_itrf_t *)test_msg_storage;
+    msg_reference_frame_param_t *test_msg =
+        (msg_reference_frame_param_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->delta_X0 = 7;
     test_msg->delta_Y0 = 8;
@@ -234,7 +235,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_itrf_t *check_msg = (msg_itrf_t *)((void *)last_msg.msg);
+    msg_reference_frame_param_t *check_msg =
+        (msg_reference_frame_param_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->delta_X0 == 7,
@@ -323,12 +325,15 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
 }
 END_TEST
 
-Suite *legacy_auto_check_sbp_navigation_MsgItrf_suite(void) {
+Suite *legacy_auto_check_sbp_navigation_MsgReferenceFrameParam_suite(void) {
   Suite *s = suite_create(
-      "SBP generated test suite: legacy_auto_check_sbp_navigation_MsgItrf");
-  TCase *tc_acq =
-      tcase_create("Automated_Suite_legacy_auto_check_sbp_navigation_MsgItrf");
-  tcase_add_test(tc_acq, test_legacy_auto_check_sbp_navigation_MsgItrf);
+      "SBP generated test suite: "
+      "legacy_auto_check_sbp_navigation_MsgReferenceFrameParam");
+  TCase *tc_acq = tcase_create(
+      "Automated_Suite_legacy_auto_check_sbp_navigation_"
+      "MsgReferenceFrameParam");
+  tcase_add_test(tc_acq,
+                 test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam);
   suite_add_tcase(s, tc_acq);
   return s;
 }

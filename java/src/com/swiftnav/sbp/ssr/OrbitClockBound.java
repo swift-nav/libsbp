@@ -37,19 +37,19 @@ public class OrbitClockBound extends SBPStruct {
     /** Mean Cross-Track. See Note 1. */
     public int orb_cross_bound_mu;
 
-    /** Standard Deviation Radial. See Note 1. */
+    /** Standard Deviation Radial. See Note 2. */
     public int orb_radial_bound_sig;
 
-    /** Standard Deviation Along-Track. See Note 1. */
+    /** Standard Deviation Along-Track. See Note 2. */
     public int orb_along_bound_sig;
 
-    /** Standard Deviation Cross-Track. See Note 1. */
+    /** Standard Deviation Cross-Track. See Note 2. */
     public int orb_cross_bound_sig;
 
     /** Clock Bound Mean. See Note 1. */
     public int clock_bound_mu;
 
-    /** Clock Bound Standard Deviation. See Note 1. */
+    /** Clock Bound Standard Deviation. See Note 2. */
     public int clock_bound_sig;
 
     public OrbitClockBound() {}

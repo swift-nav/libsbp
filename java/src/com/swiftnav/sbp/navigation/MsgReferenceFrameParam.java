@@ -18,7 +18,7 @@ import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
 
-public class MsgItrf extends SBPMessage {
+public class MsgReferenceFrameParam extends SBPMessage {
     public static final int TYPE = 0x0244;
 
     /** SSR IOD parameter. */
@@ -90,15 +90,15 @@ public class MsgItrf extends SBPMessage {
     /** Rate of change of scale correction. */
     public int dot_scale;
 
-    public MsgItrf(int sender) {
+    public MsgReferenceFrameParam(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgItrf() {
+    public MsgReferenceFrameParam() {
         super(TYPE);
     }
 
-    public MsgItrf(SBPMessage msg) throws SBPBinaryException {
+    public MsgReferenceFrameParam(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

@@ -1736,32 +1736,34 @@
  */
 #define SBP_MSG_PROTECTION_LEVEL_ENCODED_LEN 76u
 
-#define SBP_MSG_GPS_LEAP_SECOND 0x023A
+#define SBP_MSG_UTC_LEAP_SECOND 0x023A
 /**
- * Encoded length of sbp_msg_gps_leap_second_t (V4 API) and
- * msg_gps_leap_second_t (legacy API)
+ * Encoded length of sbp_msg_utc_leap_second_t (V4 API) and
+ * msg_utc_leap_second_t (legacy API)
  */
-#define SBP_MSG_GPS_LEAP_SECOND_ENCODED_LEN 14u
+#define SBP_MSG_UTC_LEAP_SECOND_ENCODED_LEN 14u
 
-#define SBP_MSG_ITRF 0x0244
+#define SBP_MSG_REFERENCE_FRAME_PARAM 0x0244
 /**
- * The maximum number of items that can be stored in sbp_msg_itrf_t::sn (V4 API)
- * or msg_itrf_t::sn (legacy API) before the maximum SBP message size is
- * exceeded
+ * The maximum number of items that can be stored in
+ * sbp_msg_reference_frame_param_t::sn (V4 API) or
+ * msg_reference_frame_param_t::sn (legacy API) before the maximum SBP message
+ * size is exceeded
  */
-#define SBP_MSG_ITRF_SN_MAX 31u
-
-/**
- * The maximum number of items that can be stored in sbp_msg_itrf_t::tn (V4 API)
- * or msg_itrf_t::tn (legacy API) before the maximum SBP message size is
- * exceeded
- */
-#define SBP_MSG_ITRF_TN_MAX 31u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX 31u
 
 /**
- * Encoded length of sbp_msg_itrf_t (V4 API) and
- * msg_itrf_t (legacy API)
+ * The maximum number of items that can be stored in
+ * sbp_msg_reference_frame_param_t::tn (V4 API) or
+ * msg_reference_frame_param_t::tn (legacy API) before the maximum SBP message
+ * size is exceeded
  */
-#define SBP_MSG_ITRF_ENCODED_LEN 124u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX 31u
+
+/**
+ * Encoded length of sbp_msg_reference_frame_param_t (V4 API) and
+ * msg_reference_frame_param_t (legacy API)
+ */
+#define SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_LEN 124u
 
 #endif /* LIBSBP_NAVIGATION_MACROS_H */

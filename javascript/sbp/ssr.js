@@ -1322,11 +1322,11 @@ MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['rle_list', 'array', 'writeUI
  * @field orb_radial_bound_mu number (unsigned 8-bit int, 1 byte) Mean Radial. See Note 1.
  * @field orb_along_bound_mu number (unsigned 8-bit int, 1 byte) Mean Along-Track. See Note 1.
  * @field orb_cross_bound_mu number (unsigned 8-bit int, 1 byte) Mean Cross-Track. See Note 1.
- * @field orb_radial_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Radial. See Note 1.
- * @field orb_along_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Along-Track. See Note 1.
- * @field orb_cross_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Cross-Track. See Note 1.
+ * @field orb_radial_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Radial. See Note 2.
+ * @field orb_along_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Along-Track. See Note 2.
+ * @field orb_cross_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Cross-Track. See Note 2.
  * @field clock_bound_mu number (unsigned 8-bit int, 1 byte) Clock Bound Mean. See Note 1.
- * @field clock_bound_sig number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation. See Note 1.
+ * @field clock_bound_sig number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation. See Note 2.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1365,8 +1365,9 @@ OrbitClockBound.prototype.fieldSpec.push(['clock_bound_sig', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
  *
- * Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
- * i>240, mean=25+2(i-240).
+ * Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).  Note 2: Range: 0-17.5 m. i<=200, std=0.01i;
+ * 200<i<=230, std=2+0.1(i-200) i>230, std=5+0.5(i-230).
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header BoundsHeader Header of a bounds message.
@@ -1538,7 +1539,8 @@ OrbitClockBoundDegradation.prototype.fieldSpec.push(['clock_bound_sig_dot', 'wri
  * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound degradation parameter.
  * @field const_id number (unsigned 8-bit int, 1 byte) Constellation ID to which the SVs belong.
  * @field sat_bitmask number (unsigned 64-bit int, 8 bytes) Satellite Bit Mask. Put 1 for each satellite where the following degradation
- *   parameters are applicable, 0 otherwise.
+ *   parameters are applicable, 0 otherwise. Encoded following RTCM DF394
+ *   specification.
  * @field orbit_clock_bounds_degradation OrbitClockBoundDegradation Orbit and Clock Bounds Degradation Parameters
  *
  * @param sbp An SBP object with a payload to be decoded.

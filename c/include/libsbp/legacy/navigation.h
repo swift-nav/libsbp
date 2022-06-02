@@ -940,7 +940,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 ref_wn;     /**< Leap second reference week number. [weeks] */
   u8 ref_dn;      /**< Leap second reference day number. [days] */
   s8 count_after; /**< Leap second count after insertion. [s] */
-} msg_gps_leap_second_t;
+} msg_utc_leap_second_t;
 
 typedef struct SBP_ATTR_PACKED {
   u8 ssr_iod;      /**< SSR IOD parameter. */
@@ -973,7 +973,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 dot_theta_03; /**< Rate of change of rotation around the Z-axis.
                        [0.0000004 "/yr] */
   s16 dot_scale; /**< Rate of change of scale correction. [0.0000002 ppm/yr] */
-} msg_itrf_t;
+} msg_reference_frame_param_t;
 
 /** \} */
 

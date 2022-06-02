@@ -9,12 +9,12 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSLeapSecond.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCLeapSecond.yaml by generate.py. Do not modify by hand!
 
 use crate::*;
 
 #[test]
-fn test_auto_check_sbp_navigation_msg_gps_leap_second() {
+fn test_auto_check_sbp_navigation_msg_utc_leap_second() {
     {
         let mut payload = Cursor::new(vec![
             85, 58, 2, 66, 0, 14, 1, 0, 2, 0, 3, 4, 5, 0, 6, 0, 7, 0, 8, 9, 50, 232,
@@ -28,7 +28,7 @@ fn test_auto_check_sbp_navigation_msg_gps_leap_second() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgGpsLeapSecond(msg) => {
+            sbp::messages::Sbp::MsgUtcLeapSecond(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     570,
@@ -87,7 +87,7 @@ fn test_auto_check_sbp_navigation_msg_gps_leap_second() {
                     msg.wn
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgGPSLeapSecond"),
+            _ => panic!("Invalid message type! Expected a MsgUtcLeapSecond"),
         };
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());

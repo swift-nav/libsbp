@@ -655,7 +655,7 @@ message MsgProtectionLevel {
  * Emulates the GPS CNAV message, reserving bytes for future broadcast of the
  * drift model parameters.
  */
-message MsgGpsLeapSecond {
+message MsgUtcLeapSecond {
     sint32 bias_coeff = 1;
     sint32 drift_coeff = 2;
     sint32 drift_rate_coeff = 3;
@@ -671,7 +671,7 @@ message MsgGpsLeapSecond {
  *
 None
  */
-message MsgItrf {
+message MsgReferenceFrameParam {
     uint32 ssr_iod = 1;
     uint32 sn_counter_n = 2;
     string sn = 3;

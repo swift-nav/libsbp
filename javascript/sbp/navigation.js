@@ -2133,7 +2133,7 @@ MsgProtectionLevel.prototype.fieldSpec.push(['heading', 'writeInt32LE', 4]);
 MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+ * SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
  *
  * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift
  * model parameters.
@@ -2152,18 +2152,18 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGpsLeapSecond = function (sbp, fields) {
+var MsgUtcLeapSecond = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_GPS_LEAP_SECOND";
+  this.messageType = "MSG_UTC_LEAP_SECOND";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgGpsLeapSecond.prototype = Object.create(SBP.prototype);
-MsgGpsLeapSecond.prototype.messageType = "MSG_GPS_LEAP_SECOND";
-MsgGpsLeapSecond.prototype.msg_type = 0x023A;
-MsgGpsLeapSecond.prototype.constructor = MsgGpsLeapSecond;
-MsgGpsLeapSecond.prototype.parser = new Parser()
+MsgUtcLeapSecond.prototype = Object.create(SBP.prototype);
+MsgUtcLeapSecond.prototype.messageType = "MSG_UTC_LEAP_SECOND";
+MsgUtcLeapSecond.prototype.msg_type = 0x023A;
+MsgUtcLeapSecond.prototype.constructor = MsgUtcLeapSecond;
+MsgUtcLeapSecond.prototype.parser = new Parser()
   .endianess('little')
   .int16('bias_coeff')
   .int16('drift_coeff')
@@ -2174,19 +2174,19 @@ MsgGpsLeapSecond.prototype.parser = new Parser()
   .uint16('ref_wn')
   .uint8('ref_dn')
   .int8('count_after');
-MsgGpsLeapSecond.prototype.fieldSpec = [];
-MsgGpsLeapSecond.prototype.fieldSpec.push(['bias_coeff', 'writeInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['drift_coeff', 'writeInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['drift_rate_coeff', 'writeInt8', 1]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['count_before', 'writeInt8', 1]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['tow_s', 'writeUInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['ref_wn', 'writeUInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['ref_dn', 'writeUInt8', 1]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec = [];
+MsgUtcLeapSecond.prototype.fieldSpec.push(['bias_coeff', 'writeInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_coeff', 'writeInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_rate_coeff', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['count_before', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['tow_s', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_wn', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_dn', 'writeUInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
 
 /**
- * SBP class for message MSG_ITRF (0x0244).
+ * SBP class for message MSG_REFERENCE_FRAME_PARAM (0x0244).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
@@ -2216,18 +2216,18 @@ MsgGpsLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgItrf = function (sbp, fields) {
+var MsgReferenceFrameParam = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_ITRF";
+  this.messageType = "MSG_REFERENCE_FRAME_PARAM";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgItrf.prototype = Object.create(SBP.prototype);
-MsgItrf.prototype.messageType = "MSG_ITRF";
-MsgItrf.prototype.msg_type = 0x0244;
-MsgItrf.prototype.constructor = MsgItrf;
-MsgItrf.prototype.parser = new Parser()
+MsgReferenceFrameParam.prototype = Object.create(SBP.prototype);
+MsgReferenceFrameParam.prototype.messageType = "MSG_REFERENCE_FRAME_PARAM";
+MsgReferenceFrameParam.prototype.msg_type = 0x0244;
+MsgReferenceFrameParam.prototype.constructor = MsgReferenceFrameParam;
+MsgReferenceFrameParam.prototype.parser = new Parser()
   .endianess('little')
   .uint8('ssr_iod')
   .uint8('sn_counter_n')
@@ -2251,29 +2251,29 @@ MsgItrf.prototype.parser = new Parser()
   .int32('dot_theta_02')
   .int32('dot_theta_03')
   .int16('dot_scale');
-MsgItrf.prototype.fieldSpec = [];
-MsgItrf.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['sn_counter_n', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['sn', 'string', 31]);
-MsgItrf.prototype.fieldSpec.push(['tn_counter_m', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['tn', 'string', 31]);
-MsgItrf.prototype.fieldSpec.push(['sin', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['utn', 'writeUInt16LE', 2]);
-MsgItrf.prototype.fieldSpec.push(['re_t0', 'writeUInt16LE', 2]);
-MsgItrf.prototype.fieldSpec.push(['delta_X0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['delta_Y0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['delta_Z0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['theta_01', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['theta_02', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['theta_03', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['scale', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_delta_X0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_delta_Y0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_delta_Z0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_theta_01', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_theta_02', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_theta_03', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]);
+MsgReferenceFrameParam.prototype.fieldSpec = [];
+MsgReferenceFrameParam.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['sn_counter_n', 'writeUInt8', 1]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['sn', 'string', 31]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['tn_counter_m', 'writeUInt8', 1]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['tn', 'string', 31]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['sin', 'writeUInt8', 1]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['utn', 'writeUInt16LE', 2]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['re_t0', 'writeUInt16LE', 2]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_X0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_Y0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_Z0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_01', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_02', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_03', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['scale', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_X0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_Y0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_Z0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_01', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_02', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_03', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]);
 
 module.exports = {
   0x0102: MsgGpsTime,
@@ -2353,8 +2353,8 @@ module.exports = {
   MsgProtectionLevelDepA: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
   MsgProtectionLevel: MsgProtectionLevel,
-  0x023A: MsgGpsLeapSecond,
-  MsgGpsLeapSecond: MsgGpsLeapSecond,
-  0x0244: MsgItrf,
-  MsgItrf: MsgItrf,
+  0x023A: MsgUtcLeapSecond,
+  MsgUtcLeapSecond: MsgUtcLeapSecond,
+  0x0244: MsgReferenceFrameParam,
+  MsgReferenceFrameParam: MsgReferenceFrameParam,
 }

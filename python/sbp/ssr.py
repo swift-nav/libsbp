@@ -794,15 +794,15 @@ class OrbitClockBound(object):
   orb_cross_bound_mu : int
     Mean Cross-Track. See Note 1.
   orb_radial_bound_sig : int
-    Standard Deviation Radial. See Note 1.
+    Standard Deviation Radial. See Note 2.
   orb_along_bound_sig : int
-    Standard Deviation Along-Track. See Note 1.
+    Standard Deviation Along-Track. See Note 2.
   orb_cross_bound_sig : int
-    Standard Deviation Cross-Track. See Note 1.
+    Standard Deviation Cross-Track. See Note 2.
   clock_bound_mu : int
     Clock Bound Mean. See Note 1.
   clock_bound_sig : int
-    Clock Bound Standard Deviation. See Note 1.
+    Clock Bound Standard Deviation. See Note 2.
 
   """
   _parser = construct.Struct(
@@ -2835,8 +2835,11 @@ class MsgSsrOrbitClockBounds(SBP):
   of its fields.
 
   
-  Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
-  i>240, mean=25+2(i-240).
+  Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+  i>230, mean=5+0.5(i-230).
+
+  Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+  i>230, std=5+0.5(i-230).
 
   Parameters
   ----------
@@ -3066,7 +3069,8 @@ class MsgSsrOrbitClockBoundsDegradation(SBP):
     Constellation ID to which the SVs belong.
   sat_bitmask : int
     Satellite Bit Mask. Put 1 for each satellite where the following
-    degradation parameters are applicable, 0 otherwise.
+    degradation parameters are applicable, 0 otherwise. Encoded following RTCM
+    DF394 specification.
   orbit_clock_bounds_degradation : OrbitClockBoundDegradation
     Orbit and Clock Bounds Degradation Parameters
   sender : int

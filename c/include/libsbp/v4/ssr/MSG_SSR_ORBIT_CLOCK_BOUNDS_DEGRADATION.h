@@ -58,7 +58,8 @@ typedef struct {
 
   /**
    * Satellite Bit Mask. Put 1 for each satellite where the following
-   * degradation parameters are applicable, 0 otherwise.
+   * degradation parameters are applicable, 0 otherwise. Encoded following RTCM
+   * DF394 specification.
    */
   u64 sat_bitmask;
 

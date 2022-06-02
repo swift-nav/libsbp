@@ -10,24 +10,27 @@
  */
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgItrf.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgReferenceFrameParam.yaml by generate.py. Do not
+// modify by hand!
 
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.navigation.MsgItrf;
+import com.swiftnav.sbp.navigation.MsgReferenceFrameParam;
 import java.math.BigInteger;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class auto_check_sbp_navigation_MsgItrfTest {
+public class auto_check_sbp_navigation_MsgReferenceFrameParamTest {
 
     public static boolean debug = false;
     private static final double DELTA = 1e-15;
 
     @Test
     public void test1() throws Throwable {
-        if (debug) System.out.format("%n%s%n", "auto_check_sbp_navigation_MsgItrfTest.test1");
+        if (debug)
+            System.out.format(
+                    "%n%s%n", "auto_check_sbp_navigation_MsgReferenceFrameParamTest.test1");
         byte[] payload =
                 new byte[] {
                     (byte) 1,
@@ -156,7 +159,7 @@ public class auto_check_sbp_navigation_MsgItrfTest {
                     (byte) 0,
                 };
         SBPMessage sbp = new SBPMessage(0x0042, 0x0244, payload);
-        MsgItrf msg = new MsgItrf(sbp);
+        MsgReferenceFrameParam msg = new MsgReferenceFrameParam(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;

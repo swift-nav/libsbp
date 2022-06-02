@@ -675,19 +675,22 @@ typedef struct SBP_ATTR_PACKED {
   u8 orb_radial_bound_mu;  /**< Mean Radial. See Note 1. [m] */
   u8 orb_along_bound_mu;   /**< Mean Along-Track. See Note 1. [m] */
   u8 orb_cross_bound_mu;   /**< Mean Cross-Track. See Note 1. [m] */
-  u8 orb_radial_bound_sig; /**< Standard Deviation Radial. See Note 1. [m] */
-  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track. See Note 1. [m]
+  u8 orb_radial_bound_sig; /**< Standard Deviation Radial. See Note 2. [m] */
+  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track. See Note 2. [m]
                             */
-  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track. See Note 1. [m]
+  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track. See Note 2. [m]
                             */
   u8 clock_bound_mu;       /**< Clock Bound Mean. See Note 1. [m] */
-  u8 clock_bound_sig; /**< Clock Bound Standard Deviation. See Note 1. [m] */
+  u8 clock_bound_sig; /**< Clock Bound Standard Deviation. See Note 2. [m] */
 } orbit_clock_bound_t;
 
 /** Combined Orbit and Clock Bound
  *
- * Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
- * i>240, mean=25+2(i-240).
+ * Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).
+ *
+ * Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+ * i>230, std=5+0.5(i-230).
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -763,7 +766,9 @@ typedef struct SBP_ATTR_PACKED {
   u64 sat_bitmask;        /**< Satellite Bit Mask. Put 1 for
                                each satellite where the
                                following degradation parameters
-                               are applicable, 0 otherwise. */
+                               are applicable, 0 otherwise.
+                               Encoded following RTCM DF394
+                               specification. */
   orbit_clock_bound_degradation_t
       orbit_clock_bounds_degradation; /**< Orbit
                                            and

@@ -11,8 +11,8 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgItrf",
-  "title":"MsgItrf",
+  "$id": "#MsgReferenceFrameParam",
+  "title":"MsgReferenceFrameParam",
   "description":"",
   "type": "object",
   "properties": {

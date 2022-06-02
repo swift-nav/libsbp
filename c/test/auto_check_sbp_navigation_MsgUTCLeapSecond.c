@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSLeapSecond.yaml by
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCLeapSecond.yaml by
 // generate.py. Do not modify by hand!
 
 #include <check.h>
@@ -68,7 +68,7 @@ static void msg_callback(u16 sender_id, sbp_msg_type_t msg_type,
   last_msg.context = context;
 }
 
-START_TEST(test_auto_check_sbp_navigation_MsgGPSLeapSecond) {
+START_TEST(test_auto_check_sbp_navigation_MsgUTCLeapSecond) {
   static sbp_msg_callbacks_node_t n;
 
   // State of the SBP message parser.
@@ -102,25 +102,25 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSLeapSecond) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.gps_leap_second.bias_coeff = 1;
+    test_msg.utc_leap_second.bias_coeff = 1;
 
-    test_msg.gps_leap_second.count_after = 9;
+    test_msg.utc_leap_second.count_after = 9;
 
-    test_msg.gps_leap_second.count_before = 4;
+    test_msg.utc_leap_second.count_before = 4;
 
-    test_msg.gps_leap_second.drift_coeff = 2;
+    test_msg.utc_leap_second.drift_coeff = 2;
 
-    test_msg.gps_leap_second.drift_rate_coeff = 3;
+    test_msg.utc_leap_second.drift_rate_coeff = 3;
 
-    test_msg.gps_leap_second.ref_dn = 8;
+    test_msg.utc_leap_second.ref_dn = 8;
 
-    test_msg.gps_leap_second.ref_wn = 7;
+    test_msg.utc_leap_second.ref_wn = 7;
 
-    test_msg.gps_leap_second.tow_s = 5;
+    test_msg.utc_leap_second.tow_s = 5;
 
-    test_msg.gps_leap_second.wn = 6;
+    test_msg.utc_leap_second.wn = 6;
 
-    sbp_message_send(&sbp_state, SbpMsgGpsLeapSecond, 66, &test_msg,
+    sbp_message_send(&sbp_state, SbpMsgUtcLeapSecond, 66, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -141,65 +141,65 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSLeapSecond) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_message_cmp(SbpMsgGpsLeapSecond, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SbpMsgUtcLeapSecond, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.bias_coeff == 1,
+    ck_assert_msg(last_msg.msg.utc_leap_second.bias_coeff == 1,
                   "incorrect value for "
-                  "last_msg.msg.gps_leap_second.bias_coeff, expected 1, is %d",
-                  last_msg.msg.gps_leap_second.bias_coeff);
+                  "last_msg.msg.utc_leap_second.bias_coeff, expected 1, is %d",
+                  last_msg.msg.utc_leap_second.bias_coeff);
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.count_after == 9,
+    ck_assert_msg(last_msg.msg.utc_leap_second.count_after == 9,
                   "incorrect value for "
-                  "last_msg.msg.gps_leap_second.count_after, expected 9, is %d",
-                  last_msg.msg.gps_leap_second.count_after);
+                  "last_msg.msg.utc_leap_second.count_after, expected 9, is %d",
+                  last_msg.msg.utc_leap_second.count_after);
 
     ck_assert_msg(
-        last_msg.msg.gps_leap_second.count_before == 4,
-        "incorrect value for last_msg.msg.gps_leap_second.count_before, "
+        last_msg.msg.utc_leap_second.count_before == 4,
+        "incorrect value for last_msg.msg.utc_leap_second.count_before, "
         "expected 4, is %d",
-        last_msg.msg.gps_leap_second.count_before);
+        last_msg.msg.utc_leap_second.count_before);
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.drift_coeff == 2,
+    ck_assert_msg(last_msg.msg.utc_leap_second.drift_coeff == 2,
                   "incorrect value for "
-                  "last_msg.msg.gps_leap_second.drift_coeff, expected 2, is %d",
-                  last_msg.msg.gps_leap_second.drift_coeff);
+                  "last_msg.msg.utc_leap_second.drift_coeff, expected 2, is %d",
+                  last_msg.msg.utc_leap_second.drift_coeff);
 
     ck_assert_msg(
-        last_msg.msg.gps_leap_second.drift_rate_coeff == 3,
-        "incorrect value for last_msg.msg.gps_leap_second.drift_rate_coeff, "
+        last_msg.msg.utc_leap_second.drift_rate_coeff == 3,
+        "incorrect value for last_msg.msg.utc_leap_second.drift_rate_coeff, "
         "expected 3, is %d",
-        last_msg.msg.gps_leap_second.drift_rate_coeff);
+        last_msg.msg.utc_leap_second.drift_rate_coeff);
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.ref_dn == 8,
-                  "incorrect value for last_msg.msg.gps_leap_second.ref_dn, "
+    ck_assert_msg(last_msg.msg.utc_leap_second.ref_dn == 8,
+                  "incorrect value for last_msg.msg.utc_leap_second.ref_dn, "
                   "expected 8, is %d",
-                  last_msg.msg.gps_leap_second.ref_dn);
+                  last_msg.msg.utc_leap_second.ref_dn);
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.ref_wn == 7,
-                  "incorrect value for last_msg.msg.gps_leap_second.ref_wn, "
+    ck_assert_msg(last_msg.msg.utc_leap_second.ref_wn == 7,
+                  "incorrect value for last_msg.msg.utc_leap_second.ref_wn, "
                   "expected 7, is %d",
-                  last_msg.msg.gps_leap_second.ref_wn);
+                  last_msg.msg.utc_leap_second.ref_wn);
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.tow_s == 5,
-                  "incorrect value for last_msg.msg.gps_leap_second.tow_s, "
+    ck_assert_msg(last_msg.msg.utc_leap_second.tow_s == 5,
+                  "incorrect value for last_msg.msg.utc_leap_second.tow_s, "
                   "expected 5, is %d",
-                  last_msg.msg.gps_leap_second.tow_s);
+                  last_msg.msg.utc_leap_second.tow_s);
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.wn == 6,
-                  "incorrect value for last_msg.msg.gps_leap_second.wn, "
+    ck_assert_msg(last_msg.msg.utc_leap_second.wn == 6,
+                  "incorrect value for last_msg.msg.utc_leap_second.wn, "
                   "expected 6, is %d",
-                  last_msg.msg.gps_leap_second.wn);
+                  last_msg.msg.utc_leap_second.wn);
   }
 }
 END_TEST
 
-Suite *auto_check_sbp_navigation_MsgGPSLeapSecond_suite(void) {
+Suite *auto_check_sbp_navigation_MsgUTCLeapSecond_suite(void) {
   Suite *s = suite_create(
-      "SBP generated test suite: auto_check_sbp_navigation_MsgGPSLeapSecond");
+      "SBP generated test suite: auto_check_sbp_navigation_MsgUTCLeapSecond");
   TCase *tc_acq = tcase_create(
-      "Automated_Suite_auto_check_sbp_navigation_MsgGPSLeapSecond");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgGPSLeapSecond);
+      "Automated_Suite_auto_check_sbp_navigation_MsgUTCLeapSecond");
+  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgUTCLeapSecond);
   suite_add_tcase(s, tc_acq);
   return s;
 }

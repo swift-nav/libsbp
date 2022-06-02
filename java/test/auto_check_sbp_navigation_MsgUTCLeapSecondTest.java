@@ -11,17 +11,17 @@
 package com.swiftnav.sbp.test;
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSLeapSecond.yaml by generate.py. Do not modify
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCLeapSecond.yaml by generate.py. Do not modify
 // by hand!
 
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.navigation.MsgGPSLeapSecond;
+import com.swiftnav.sbp.navigation.MsgUtcLeapSecond;
 import java.math.BigInteger;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class auto_check_sbp_navigation_MsgGPSLeapSecondTest {
+public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
 
     public static boolean debug = false;
     private static final double DELTA = 1e-15;
@@ -29,14 +29,14 @@ public class auto_check_sbp_navigation_MsgGPSLeapSecondTest {
     @Test
     public void test1() throws Throwable {
         if (debug)
-            System.out.format("%n%s%n", "auto_check_sbp_navigation_MsgGPSLeapSecondTest.test1");
+            System.out.format("%n%s%n", "auto_check_sbp_navigation_MsgUTCLeapSecondTest.test1");
         byte[] payload =
                 new byte[] {
                     (byte) 1, (byte) 0, (byte) 2, (byte) 0, (byte) 3, (byte) 4, (byte) 5, (byte) 0,
                     (byte) 6, (byte) 0, (byte) 7, (byte) 0, (byte) 8, (byte) 9,
                 };
         SBPMessage sbp = new SBPMessage(0x0042, 0x023A, payload);
-        MsgGPSLeapSecond msg = new MsgGPSLeapSecond(sbp);
+        MsgUtcLeapSecond msg = new MsgUtcLeapSecond(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;

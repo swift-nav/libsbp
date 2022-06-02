@@ -1328,8 +1328,11 @@ pub mod msg_ssr_orbit_clock_bounds {
 
     /// Combined Orbit and Clock Bound
     ///
-    /// Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240,
-    /// mean=5+0.5(i-200); i>240, mean=25+2(i-240).
+    /// Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230,
+    /// mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
+    ///
+    /// Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+    /// i>230, std=5+0.5(i-230).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
@@ -1443,7 +1446,8 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
         #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
         pub const_id: u8,
         /// Satellite Bit Mask. Put 1 for each satellite where the following
-        /// degradation parameters are applicable, 0 otherwise.
+        /// degradation parameters are applicable, 0 otherwise. Encoded following
+        /// RTCM DF394 specification.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_bitmask")))]
         pub sat_bitmask: u64,
         /// Orbit and Clock Bounds Degradation Parameters
@@ -2521,19 +2525,19 @@ pub mod orbit_clock_bound {
         /// Mean Cross-Track. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu")))]
         pub orb_cross_bound_mu: u8,
-        /// Standard Deviation Radial. See Note 1.
+        /// Standard Deviation Radial. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_sig")))]
         pub orb_radial_bound_sig: u8,
-        /// Standard Deviation Along-Track. See Note 1.
+        /// Standard Deviation Along-Track. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_sig")))]
         pub orb_along_bound_sig: u8,
-        /// Standard Deviation Cross-Track. See Note 1.
+        /// Standard Deviation Cross-Track. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_sig")))]
         pub orb_cross_bound_sig: u8,
         /// Clock Bound Mean. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu")))]
         pub clock_bound_mu: u8,
-        /// Clock Bound Standard Deviation. See Note 1.
+        /// Clock Bound Standard Deviation. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig")))]
         pub clock_bound_sig: u8,
     }
