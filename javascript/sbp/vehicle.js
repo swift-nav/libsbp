@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/vehicle.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/vehicle.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,10 +18,10 @@
  * Messages from a vehicle.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_ODOMETRY (0x0903).
@@ -44,7 +44,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgOdometry = function (sbp, fields) {
+let MsgOdometry = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ODOMETRY";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -91,7 +91,7 @@ MsgOdometry.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgWheeltick = function (sbp, fields) {
+let MsgWheeltick = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_WHEELTICK";
   this.fields = (fields || this.parser.parse(sbp.payload));

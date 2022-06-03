@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/integrity.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/integrity.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,17 +18,17 @@
  * Integrity flag messages
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignalDep = require("./gnss").GnssSignalDep;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeDep = require("./gnss").GPSTimeDep;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
-var SvId = require("./gnss").SvId;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
+let CarrierPhase = require("./gnss").CarrierPhase;
+let GnssSignal = require("./gnss").GnssSignal;
+let GnssSignalDep = require("./gnss").GnssSignalDep;
+let GPSTime = require("./gnss").GPSTime;
+let GPSTimeDep = require("./gnss").GPSTimeDep;
+let GPSTimeSec = require("./gnss").GPSTimeSec;
+let SvId = require("./gnss").SvId;
 
 /**
  * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
@@ -39,7 +39,7 @@ var SvId = require("./gnss").SvId;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrFlagHighLevel = function (sbp, fields) {
+let MsgSsrFlagHighLevel = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_FLAG_HIGH_LEVEL";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -65,7 +65,7 @@ MsgSsrFlagHighLevel.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', fun
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrFlagSatellites = function (sbp, fields) {
+let MsgSsrFlagSatellites = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_FLAG_SATELLITES";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -91,7 +91,7 @@ MsgSsrFlagSatellites.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', fu
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrFlagTropoGridPoints = function (sbp, fields) {
+let MsgSsrFlagTropoGridPoints = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_FLAG_TROPO_GRID_POINTS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -117,7 +117,7 @@ MsgSsrFlagTropoGridPoints.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrFlagIonoGridPoints = function (sbp, fields) {
+let MsgSsrFlagIonoGridPoints = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_FLAG_IONO_GRID_POINTS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -143,7 +143,7 @@ MsgSsrFlagIonoGridPoints.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrFlagIonoTileSatLos = function (sbp, fields) {
+let MsgSsrFlagIonoTileSatLos = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_FLAG_IONO_TILE_SAT_LOS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -169,7 +169,7 @@ MsgSsrFlagIonoTileSatLos.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrFlagIonoGridPointSatLos = function (sbp, fields) {
+let MsgSsrFlagIonoGridPointSatLos = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS";
   this.fields = (fields || this.parser.parse(sbp.payload));

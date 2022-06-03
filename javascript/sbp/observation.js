@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/observation.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -20,17 +20,17 @@
  * Swift's cloud GNSS correction product.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignalDep = require("./gnss").GnssSignalDep;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeDep = require("./gnss").GPSTimeDep;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
-var SvId = require("./gnss").SvId;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
+let CarrierPhase = require("./gnss").CarrierPhase;
+let GnssSignal = require("./gnss").GnssSignal;
+let GnssSignalDep = require("./gnss").GnssSignalDep;
+let GPSTime = require("./gnss").GPSTime;
+let GPSTimeDep = require("./gnss").GPSTimeDep;
+let GPSTimeSec = require("./gnss").GPSTimeSec;
+let SvId = require("./gnss").SvId;
 
 /**
  * SBP class for message fragment ObservationHeader
@@ -44,7 +44,7 @@ var SvId = require("./gnss").SvId;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var ObservationHeader = function (sbp, fields) {
+let ObservationHeader = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "ObservationHeader";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -75,7 +75,7 @@ ObservationHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var Doppler = function (sbp, fields) {
+let Doppler = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "Doppler";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -119,7 +119,7 @@ Doppler.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var PackedObsContent = function (sbp, fields) {
+let PackedObsContent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "PackedObsContent";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -168,7 +168,7 @@ PackedObsContent.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var PackedOsrContent = function (sbp, fields) {
+let PackedOsrContent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "PackedOsrContent";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -214,7 +214,7 @@ PackedOsrContent.prototype.fieldSpec.push(['range_std', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgObs = function (sbp, fields) {
+let MsgObs = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_OBS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -248,7 +248,7 @@ MsgObs.prototype.fieldSpec.push(['obs', 'array', PackedObsContent.prototype.fiel
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBasePosLlh = function (sbp, fields) {
+let MsgBasePosLlh = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASE_POS_LLH";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -285,7 +285,7 @@ MsgBasePosLlh.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBasePosEcef = function (sbp, fields) {
+let MsgBasePosEcef = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASE_POS_ECEF";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -321,7 +321,7 @@ MsgBasePosEcef.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var EphemerisCommonContent = function (sbp, fields) {
+let EphemerisCommonContent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "EphemerisCommonContent";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -362,7 +362,7 @@ EphemerisCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var EphemerisCommonContentDepB = function (sbp, fields) {
+let EphemerisCommonContentDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "EphemerisCommonContentDepB";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -403,7 +403,7 @@ EphemerisCommonContentDepB.prototype.fieldSpec.push(['health_bits', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var EphemerisCommonContentDepA = function (sbp, fields) {
+let EphemerisCommonContentDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "EphemerisCommonContentDepA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -464,7 +464,7 @@ EphemerisCommonContentDepA.prototype.fieldSpec.push(['health_bits', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGpsDepE = function (sbp, fields) {
+let MsgEphemerisGpsDepE = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GPS_DEP_E";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -558,7 +558,7 @@ MsgEphemerisGpsDepE.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGpsDepF = function (sbp, fields) {
+let MsgEphemerisGpsDepF = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GPS_DEP_F";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -654,7 +654,7 @@ MsgEphemerisGpsDepF.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGps = function (sbp, fields) {
+let MsgEphemerisGps = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GPS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -748,7 +748,7 @@ MsgEphemerisGps.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisQzss = function (sbp, fields) {
+let MsgEphemerisQzss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_QZSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -847,7 +847,7 @@ MsgEphemerisQzss.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisBds = function (sbp, fields) {
+let MsgEphemerisBds = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_BDS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -944,7 +944,7 @@ MsgEphemerisBds.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGalDepA = function (sbp, fields) {
+let MsgEphemerisGalDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GAL_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1043,7 +1043,7 @@ MsgEphemerisGalDepA.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGal = function (sbp, fields) {
+let MsgEphemerisGal = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GAL";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1122,7 +1122,7 @@ MsgEphemerisGal.prototype.fieldSpec.push(['source', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisSbasDepA = function (sbp, fields) {
+let MsgEphemerisSbasDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_SBAS_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1167,7 +1167,7 @@ MsgEphemerisSbasDepA.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGloDepA = function (sbp, fields) {
+let MsgEphemerisGloDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GLO_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1210,7 +1210,7 @@ MsgEphemerisGloDepA.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', f
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisSbasDepB = function (sbp, fields) {
+let MsgEphemerisSbasDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_SBAS_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1251,7 +1251,7 @@ MsgEphemerisSbasDepB.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisSbas = function (sbp, fields) {
+let MsgEphemerisSbas = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_SBAS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1296,7 +1296,7 @@ MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeFloatLE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGloDepB = function (sbp, fields) {
+let MsgEphemerisGloDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GLO_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1343,7 +1343,7 @@ MsgEphemerisGloDepB.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', f
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGloDepC = function (sbp, fields) {
+let MsgEphemerisGloDepC = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GLO_DEP_C";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1393,7 +1393,7 @@ MsgEphemerisGloDepC.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGloDepD = function (sbp, fields) {
+let MsgEphemerisGloDepD = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GLO_DEP_D";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1447,7 +1447,7 @@ MsgEphemerisGloDepD.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisGlo = function (sbp, fields) {
+let MsgEphemerisGlo = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_GLO";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1521,7 +1521,7 @@ MsgEphemerisGlo.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisDepD = function (sbp, fields) {
+let MsgEphemerisDepD = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_DEP_D";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1629,7 +1629,7 @@ MsgEphemerisDepD.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisDepA = function (sbp, fields) {
+let MsgEphemerisDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1732,7 +1732,7 @@ MsgEphemerisDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisDepB = function (sbp, fields) {
+let MsgEphemerisDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1842,7 +1842,7 @@ MsgEphemerisDepB.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgEphemerisDepC = function (sbp, fields) {
+let MsgEphemerisDepC = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_EPHEMERIS_DEP_C";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1927,7 +1927,7 @@ MsgEphemerisDepC.prototype.fieldSpec.push(['reserved', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var ObservationHeaderDep = function (sbp, fields) {
+let ObservationHeaderDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "ObservationHeaderDep";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1959,7 +1959,7 @@ ObservationHeaderDep.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var CarrierPhaseDepA = function (sbp, fields) {
+let CarrierPhaseDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "CarrierPhaseDepA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1992,7 +1992,7 @@ CarrierPhaseDepA.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var PackedObsContentDepA = function (sbp, fields) {
+let PackedObsContentDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "PackedObsContentDepA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2032,7 +2032,7 @@ PackedObsContentDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var PackedObsContentDepB = function (sbp, fields) {
+let PackedObsContentDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "PackedObsContentDepB";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2073,7 +2073,7 @@ PackedObsContentDepB.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fi
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var PackedObsContentDepC = function (sbp, fields) {
+let PackedObsContentDepC = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "PackedObsContentDepC";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2108,7 +2108,7 @@ PackedObsContentDepC.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fi
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgObsDepA = function (sbp, fields) {
+let MsgObsDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_OBS_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2141,7 +2141,7 @@ MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.protot
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgObsDepB = function (sbp, fields) {
+let MsgObsDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_OBS_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2176,7 +2176,7 @@ MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.protot
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgObsDepC = function (sbp, fields) {
+let MsgObsDepC = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_OBS_DEP_C";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2215,7 +2215,7 @@ MsgObsDepC.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepC.protot
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgIono = function (sbp, fields) {
+let MsgIono = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_IONO";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2259,7 +2259,7 @@ MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSvConfigurationGpsDep = function (sbp, fields) {
+let MsgSvConfigurationGpsDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SV_CONFIGURATION_GPS_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2303,7 +2303,7 @@ MsgSvConfigurationGpsDep.prototype.fieldSpec.push(['l2c_mask', 'writeUInt32LE', 
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GnssCapb = function (sbp, fields) {
+let GnssCapb = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "GnssCapb";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2357,7 +2357,7 @@ GnssCapb.prototype.fieldSpec.push(['gal_e5', 'writeUInt64LE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGnssCapb = function (sbp, fields) {
+let MsgGnssCapb = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GNSS_CAPB";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2392,7 +2392,7 @@ MsgGnssCapb.prototype.fieldSpec.push(['gc', GnssCapb.prototype.fieldSpec]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGroupDelayDepA = function (sbp, fields) {
+let MsgGroupDelayDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GROUP_DELAY_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2435,7 +2435,7 @@ MsgGroupDelayDepA.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGroupDelayDepB = function (sbp, fields) {
+let MsgGroupDelayDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GROUP_DELAY_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2478,7 +2478,7 @@ MsgGroupDelayDepB.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGroupDelay = function (sbp, fields) {
+let MsgGroupDelay = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GROUP_DELAY";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2527,7 +2527,7 @@ MsgGroupDelay.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var AlmanacCommonContent = function (sbp, fields) {
+let AlmanacCommonContent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "AlmanacCommonContent";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2575,7 +2575,7 @@ AlmanacCommonContent.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var AlmanacCommonContentDep = function (sbp, fields) {
+let AlmanacCommonContentDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "AlmanacCommonContentDep";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2623,7 +2623,7 @@ AlmanacCommonContentDep.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAlmanacGpsDep = function (sbp, fields) {
+let MsgAlmanacGpsDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ALMANAC_GPS_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2680,7 +2680,7 @@ MsgAlmanacGpsDep.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAlmanacGps = function (sbp, fields) {
+let MsgAlmanacGps = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ALMANAC_GPS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2734,7 +2734,7 @@ MsgAlmanacGps.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAlmanacGloDep = function (sbp, fields) {
+let MsgAlmanacGloDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ALMANAC_GLO_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2784,7 +2784,7 @@ MsgAlmanacGloDep.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAlmanacGlo = function (sbp, fields) {
+let MsgAlmanacGlo = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ALMANAC_GLO";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2831,7 +2831,7 @@ MsgAlmanacGlo.prototype.fieldSpec.push(['omega', 'writeDoubleLE', 8]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGloBiases = function (sbp, fields) {
+let MsgGloBiases = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GLO_BIASES";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2868,7 +2868,7 @@ MsgGloBiases.prototype.fieldSpec.push(['l2p_bias', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var SvAzEl = function (sbp, fields) {
+let SvAzEl = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "SvAzEl";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2899,7 +2899,7 @@ SvAzEl.prototype.fieldSpec.push(['el', 'writeInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSvAzEl = function (sbp, fields) {
+let MsgSvAzEl = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SV_AZ_EL";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2927,7 +2927,7 @@ MsgSvAzEl.prototype.fieldSpec.push(['azel', 'array', SvAzEl.prototype.fieldSpec,
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgOsr = function (sbp, fields) {
+let MsgOsr = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_OSR";
   this.fields = (fields || this.parser.parse(sbp.payload));
