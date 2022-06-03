@@ -28,7 +28,7 @@ jobs:
       - name: Installing dependencies
         run: |
           sudo apt-get -qq update
-          sudo apt-get install -y tox python3-sphinx clang-format-6.0 enchant python-enchant
+          sudo apt-get install -y tox python3-sphinx clang-format-6.0 enchant
           pip3 install tox-run-command
           tox -e py --notest
 
