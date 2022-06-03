@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/settings.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/settings.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -38,10 +38,10 @@
  * example.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_SETTINGS_SAVE (0x00A1).
@@ -51,7 +51,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsSave = function (sbp, fields) {
+let MsgSettingsSave = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_SAVE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -82,7 +82,7 @@ MsgSettingsSave.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsWrite = function (sbp, fields) {
+let MsgSettingsWrite = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_WRITE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -116,7 +116,7 @@ MsgSettingsWrite.prototype.fieldSpec.push(['setting', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsWriteResp = function (sbp, fields) {
+let MsgSettingsWriteResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_WRITE_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -152,7 +152,7 @@ MsgSettingsWriteResp.prototype.fieldSpec.push(['setting', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadReq = function (sbp, fields) {
+let MsgSettingsReadReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -184,7 +184,7 @@ MsgSettingsReadReq.prototype.fieldSpec.push(['setting', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadResp = function (sbp, fields) {
+let MsgSettingsReadResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -213,7 +213,7 @@ MsgSettingsReadResp.prototype.fieldSpec.push(['setting', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadByIndexReq = function (sbp, fields) {
+let MsgSettingsReadByIndexReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_BY_INDEX_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -250,7 +250,7 @@ MsgSettingsReadByIndexReq.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadByIndexResp = function (sbp, fields) {
+let MsgSettingsReadByIndexResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_BY_INDEX_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -276,7 +276,7 @@ MsgSettingsReadByIndexResp.prototype.fieldSpec.push(['setting', 'string', null])
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsReadByIndexDone = function (sbp, fields) {
+let MsgSettingsReadByIndexDone = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_READ_BY_INDEX_DONE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -304,7 +304,7 @@ MsgSettingsReadByIndexDone.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsRegister = function (sbp, fields) {
+let MsgSettingsRegister = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_REGISTER";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -337,7 +337,7 @@ MsgSettingsRegister.prototype.fieldSpec.push(['setting', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSettingsRegisterResp = function (sbp, fields) {
+let MsgSettingsRegisterResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SETTINGS_REGISTER_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));

@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/bootload.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/bootload.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -20,10 +20,10 @@
  * message type ID for both the host request and the device response.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_BOOTLOADER_HANDSHAKE_REQ (0x00B3).
@@ -34,7 +34,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBootloaderHandshakeReq = function (sbp, fields) {
+let MsgBootloaderHandshakeReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BOOTLOADER_HANDSHAKE_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -63,7 +63,7 @@ MsgBootloaderHandshakeReq.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBootloaderHandshakeResp = function (sbp, fields) {
+let MsgBootloaderHandshakeResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BOOTLOADER_HANDSHAKE_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -92,7 +92,7 @@ MsgBootloaderHandshakeResp.prototype.fieldSpec.push(['version', 'string', null])
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBootloaderJumpToApp = function (sbp, fields) {
+let MsgBootloaderJumpToApp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BOOTLOADER_JUMP_TO_APP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -120,7 +120,7 @@ MsgBootloaderJumpToApp.prototype.fieldSpec.push(['jump', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgNapDeviceDnaReq = function (sbp, fields) {
+let MsgNapDeviceDnaReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_NAP_DEVICE_DNA_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -149,7 +149,7 @@ MsgNapDeviceDnaReq.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgNapDeviceDnaResp = function (sbp, fields) {
+let MsgNapDeviceDnaResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_NAP_DEVICE_DNA_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -176,7 +176,7 @@ MsgNapDeviceDnaResp.prototype.fieldSpec.push(['dna', 'array', 'writeUInt8', func
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBootloaderHandshakeDepA = function (sbp, fields) {
+let MsgBootloaderHandshakeDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BOOTLOADER_HANDSHAKE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));

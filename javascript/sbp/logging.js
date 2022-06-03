@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/logging.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/logging.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,10 +18,10 @@
  * Logging and debugging messages from the device.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_LOG (0x0401).
@@ -36,7 +36,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLog = function (sbp, fields) {
+let MsgLog = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LOG";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -72,7 +72,7 @@ MsgLog.prototype.fieldSpec.push(['text', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFwd = function (sbp, fields) {
+let MsgFwd = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FWD";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -103,7 +103,7 @@ MsgFwd.prototype.fieldSpec.push(['fwd_payload', 'array', 'writeUInt8', function 
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPrintDep = function (sbp, fields) {
+let MsgPrintDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_PRINT_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
