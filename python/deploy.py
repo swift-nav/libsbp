@@ -73,7 +73,7 @@ def run_bdist(deploy_dir):
 
     shutil.copytree(os.path.join(repo_dir, ".git"), ".git")
 
-    shutil.copy(os.path.join(script_dir, ".coveragerc"), "module/.coveragerc")
+    # shutil.copy(os.path.join(script_dir, ".coveragerc"), "module/.coveragerc")
     shutil.copy(os.path.join(script_dir, ".gitignore"), "module/.gitignore")
     shutil.copy(os.path.join(script_dir, ".flake8"), "module/.flake8")
 
