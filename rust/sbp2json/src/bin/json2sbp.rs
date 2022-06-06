@@ -16,7 +16,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 ///     cat sbp.json | json2sbp
 #[derive(Debug, Parser)]
-#[clap(name = "json2sbp", verbatim_doc_comment)]
+#[clap(name = "json2sbp", verbatim_doc_comment, version)]
 struct Options {
     /// Path to input file
     input: Option<PathBuf>,
