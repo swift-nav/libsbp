@@ -57,12 +57,12 @@ fn main() -> Result<()> {
 
     let stdin: Box<dyn Read> = match options.input {
         Some(path) => Box::new(File::open(path)?),
-        _ => Box::new(io::stdin()),
+        _ => Box::new(io::stdin().lock()),
     };
 
     let stdout: Box<dyn Write> = match options.output {
         Some(path) => Box::new(File::create(path)?),
-        _ => Box::new(io::stdout()),
+        _ => Box::new(io::stdout().lock()),
     };
 
     if options.float_compat {
