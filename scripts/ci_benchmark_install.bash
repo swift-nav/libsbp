@@ -2,7 +2,7 @@
 
 set -ex
 
-HYPERFINE_RELEASE=v1.9.0
+HYPERFINE_RELEASE=v1.14.0
 HYPERFINE_BASENAME=hyperfine-${HYPERFINE_RELEASE}-x86_64-unknown-linux-musl
 HYPERFINE_URL_BASE=https://github.com/sharkdp/hyperfine/releases/download
 HYPERFINE_URL=${HYPERFINE_URL_BASE}/${HYPERFINE_RELEASE}/${HYPERFINE_BASENAME}.tar.gz
