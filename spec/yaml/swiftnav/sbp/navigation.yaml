@@ -2488,12 +2488,12 @@ definitions:
            desc: SSR IOD parameter.
        - sn:
            type: string
-           encoding: null-terminated
+           encoding: null_terminated
            size: 32
            desc: Name of source coordinate-system using the EPSG identification code.
        - tn:
            type: string
-           encoding: null-terminated
+           encoding: null_terminated
            size: 32
            desc: Name of target coordinate-system using the EPSG identification code.
        - sin:
