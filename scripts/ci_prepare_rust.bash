@@ -4,7 +4,7 @@ set -ex
 
 if [ "$RUNNER_OS" == "Linux" ]; then
     sudo apt-get -qq update
-    sudo apt-get -qq install -y pkg-config build-essential libudev-dev musl-tools
+    sudo apt-get -qq install -y pkg-config build-essential libudev-dev
 elif [ "$RUNNER_OS" == "macOS" ]; then
     brew install cmake
 elif [ "$RUNNER_OS" == "Windows" ]; then
