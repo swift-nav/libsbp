@@ -21,7 +21,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 ///     socat tcp:192.168.1.222:55555 - | sbp2json
 #[derive(Debug, Parser)]
-#[structopt(name = "sbp2json", verbatim_doc_comment)]
+#[structopt(name = "sbp2json", verbatim_doc_comment, version)]
 pub struct Options {
     /// Path to input file
     input: Option<PathBuf>,
