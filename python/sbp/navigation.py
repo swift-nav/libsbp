@@ -5254,14 +5254,10 @@ class MsgReferenceFrameParam(SBP):
     SBP parent object to inherit from.
   ssr_iod : int
     SSR IOD parameter.
-  sn_counter_n : int
-    Source-Name Counter N.
   sn : string
-    Source-Name
-  tn_counter_m : int
-    Target-Name Counter M.
+    Name of source coordinate-system using the EPSG identification code.
   tn : string
-    Target-Name
+    Name of target coordinate-system using the EPSG identification code.
   sin : int
     System Identification Number.
   utn : int
@@ -5303,10 +5299,8 @@ class MsgReferenceFrameParam(SBP):
   """
   _parser = construct.Struct(
                    'ssr_iod' / construct.Int8ul,
-                   'sn_counter_n' / construct.Int8ul,
-                   'sn'/ construct.Bytes(31),
-                   'tn_counter_m' / construct.Int8ul,
-                   'tn'/ construct.Bytes(31),
+                   'sn'/ construct.Bytes(32),
+                   'tn'/ construct.Bytes(32),
                    'sin' / construct.Int8ul,
                    'utn' / construct.Int16ul,
                    're_t0' / construct.Int16ul,
@@ -5326,9 +5320,7 @@ class MsgReferenceFrameParam(SBP):
                    'dot_scale' / construct.Int16sl,)
   __slots__ = [
                'ssr_iod',
-               'sn_counter_n',
                'sn',
-               'tn_counter_m',
                'tn',
                'sin',
                'utn',
@@ -5360,9 +5352,7 @@ class MsgReferenceFrameParam(SBP):
       self.msg_type = SBP_MSG_REFERENCE_FRAME_PARAM
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.ssr_iod = kwargs.pop('ssr_iod')
-      self.sn_counter_n = kwargs.pop('sn_counter_n')
       self.sn = kwargs.pop('sn')
-      self.tn_counter_m = kwargs.pop('tn_counter_m')
       self.tn = kwargs.pop('tn')
       self.sin = kwargs.pop('sin')
       self.utn = kwargs.pop('utn')

@@ -2191,10 +2191,8 @@ MsgUtcLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
  
  * Fields in the SBP payload (`sbp.payload`):
  * @field ssr_iod number (unsigned 8-bit int, 1 byte) SSR IOD parameter.
- * @field sn_counter_n number (unsigned 8-bit int, 1 byte) Source-Name Counter N.
- * @field sn string Source-Name
- * @field tn_counter_m number (unsigned 8-bit int, 1 byte) Target-Name Counter M.
- * @field tn string Target-Name
+ * @field sn string Name of source coordinate-system using the EPSG identification code.
+ * @field tn string Name of target coordinate-system using the EPSG identification code.
  * @field sin number (unsigned 8-bit int, 1 byte) System Identification Number.
  * @field utn number (unsigned 16-bit int, 2 bytes) Utilized Transformation Message.
  * @field re_t0 number (unsigned 16-bit int, 2 bytes) Reference Epoch t0 for transformation parameter set given as Modified Julian Day
@@ -2230,10 +2228,8 @@ MsgReferenceFrameParam.prototype.constructor = MsgReferenceFrameParam;
 MsgReferenceFrameParam.prototype.parser = new Parser()
   .endianess('little')
   .uint8('ssr_iod')
-  .uint8('sn_counter_n')
-  .string('sn', { length: 31 })
-  .uint8('tn_counter_m')
-  .string('tn', { length: 31 })
+  .string('sn', { length: 32 })
+  .string('tn', { length: 32 })
   .uint8('sin')
   .uint16('utn')
   .uint16('re_t0')
@@ -2253,10 +2249,8 @@ MsgReferenceFrameParam.prototype.parser = new Parser()
   .int16('dot_scale');
 MsgReferenceFrameParam.prototype.fieldSpec = [];
 MsgReferenceFrameParam.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['sn_counter_n', 'writeUInt8', 1]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['sn', 'string', 31]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['tn_counter_m', 'writeUInt8', 1]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['tn', 'string', 31]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['sn', 'string', 32]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['tn', 'string', 32]);
 MsgReferenceFrameParam.prototype.fieldSpec.push(['sin', 'writeUInt8', 1]);
 MsgReferenceFrameParam.prototype.fieldSpec.push(['utn', 'writeUInt16LE', 2]);
 MsgReferenceFrameParam.prototype.fieldSpec.push(['re_t0', 'writeUInt16LE', 2]);

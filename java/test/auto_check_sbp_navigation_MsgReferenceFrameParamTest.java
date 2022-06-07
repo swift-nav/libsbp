@@ -34,7 +34,6 @@ public class auto_check_sbp_navigation_MsgReferenceFrameParamTest {
         byte[] payload =
                 new byte[] {
                     (byte) 1,
-                    (byte) 2,
                     (byte) 102,
                     (byte) 111,
                     (byte) 111,
@@ -66,10 +65,11 @@ public class auto_check_sbp_navigation_MsgReferenceFrameParamTest {
                     (byte) 0,
                     (byte) 0,
                     (byte) 0,
-                    (byte) 3,
+                    (byte) 0,
                     (byte) 98,
                     (byte) 97,
                     (byte) 114,
+                    (byte) 0,
                     (byte) 0,
                     (byte) 0,
                     (byte) 0,
@@ -287,17 +287,7 @@ public class auto_check_sbp_navigation_MsgReferenceFrameParamTest {
             expected = 4L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        org.junit.Assert.assertEquals(msg.sn, "foo                            ");
-        value = msg.sn_counter_n;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.sn_counter_n + "' != '" + 2 + "'",
-                    value.equals(BigInteger.valueOf(2L)));
-        } else {
-            value = value.longValue();
-            expected = 2L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
+        org.junit.Assert.assertEquals(msg.sn, "foo                             ");
         value = msg.ssr_iod;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -337,17 +327,7 @@ public class auto_check_sbp_navigation_MsgReferenceFrameParamTest {
             expected = 12L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        org.junit.Assert.assertEquals(msg.tn, "bar                            ");
-        value = msg.tn_counter_m;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tn_counter_m + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
-        } else {
-            value = value.longValue();
-            expected = 3L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
+        org.junit.Assert.assertEquals(msg.tn, "bar                             ");
         value = msg.utn;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(

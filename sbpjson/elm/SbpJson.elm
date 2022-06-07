@@ -2311,13 +2311,11 @@ type alias MsgReferenceFrameParam =
     , scale : Int
     , sin : Int
     , sn : String
-    , snCounterN : Int
     , ssrIod : Int
     , theta01 : Int
     , theta02 : Int
     , theta03 : Int
     , tn : String
-    , tnCounterM : Int
     , utn : Int
     }
 
@@ -6167,13 +6165,11 @@ msgReferenceFrameParam =
         |> Jpipe.required "scale" Jdec.int
         |> Jpipe.required "sin" Jdec.int
         |> Jpipe.required "sn" Jdec.string
-        |> Jpipe.required "sn_counter_n" Jdec.int
         |> Jpipe.required "ssr_iod" Jdec.int
         |> Jpipe.required "theta_01" Jdec.int
         |> Jpipe.required "theta_02" Jdec.int
         |> Jpipe.required "theta_03" Jdec.int
         |> Jpipe.required "tn" Jdec.string
-        |> Jpipe.required "tn_counter_m" Jdec.int
         |> Jpipe.required "utn" Jdec.int
 
 encodeMsgReferenceFrameParam : MsgReferenceFrameParam -> Jenc.Value
@@ -6193,13 +6189,11 @@ encodeMsgReferenceFrameParam x =
         , ("scale", Jenc.int x.scale)
         , ("sin", Jenc.int x.sin)
         , ("sn", Jenc.string x.sn)
-        , ("sn_counter_n", Jenc.int x.snCounterN)
         , ("ssr_iod", Jenc.int x.ssrIod)
         , ("theta_01", Jenc.int x.theta01)
         , ("theta_02", Jenc.int x.theta02)
         , ("theta_03", Jenc.int x.theta03)
         , ("tn", Jenc.string x.tn)
-        , ("tn_counter_m", Jenc.int x.tnCounterM)
         , ("utn", Jenc.int x.utn)
         ]
 

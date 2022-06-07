@@ -45,22 +45,12 @@ typedef struct {
   u8 ssr_iod;
 
   /**
-   * Source-Name Counter N.
-   */
-  u8 sn_counter_n;
-
-  /**
-   * Source-Name
+   * Name of source coordinate-system using the EPSG identification code.
    */
   char sn[SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX];
 
   /**
-   * Target-Name Counter M.
-   */
-  u8 tn_counter_m;
-
-  /**
-   * Target-Name
+   * Name of target coordinate-system using the EPSG identification code.
    */
   char tn[SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX];
 

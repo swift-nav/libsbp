@@ -1790,13 +1790,11 @@ export interface MsgReferenceFrameParam {
     scale:        number;
     sin:          number;
     sn:           string;
-    sn_counter_n: number;
     ssr_iod:      number;
     theta_01:     number;
     theta_02:     number;
     theta_03:     number;
     tn:           string;
-    tn_counter_m: number;
     utn:          number;
 }
 
@@ -5433,13 +5431,11 @@ const typeMap: any = {
         { json: "scale", js: "scale", typ: 0 },
         { json: "sin", js: "sin", typ: 0 },
         { json: "sn", js: "sn", typ: "" },
-        { json: "sn_counter_n", js: "sn_counter_n", typ: 0 },
         { json: "ssr_iod", js: "ssr_iod", typ: 0 },
         { json: "theta_01", js: "theta_01", typ: 0 },
         { json: "theta_02", js: "theta_02", typ: 0 },
         { json: "theta_03", js: "theta_03", typ: 0 },
         { json: "tn", js: "tn", typ: "" },
-        { json: "tn_counter_m", js: "tn_counter_m", typ: 0 },
         { json: "utn", js: "utn", typ: 0 },
     ], "any"),
     "MsgReset": o([

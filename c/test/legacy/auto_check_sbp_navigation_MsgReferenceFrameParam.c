@@ -122,14 +122,14 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 68, 2,  66, 0, 124, 1,  2,  102, 111, 111, 0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 3,   98, 97, 114, 0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  4,  5, 0,   6,  0,  7,   0,   0,   0,  8,   0, 0,  0,  9,
-        0,  0,  0,  10, 0, 0,   0,  11, 0,   0,   0,   12, 0,   0, 0,  13, 0,
-        0,  0,  14, 0,  0, 0,   15, 0,  0,   0,   16,  0,  0,   0, 17, 0,  0,
-        0,  18, 0,  0,  0, 19,  0,  0,  0,   20,  0,   66, 126,
+        85, 68, 2,  66, 0, 124, 1,  102, 111, 111, 0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 98,  97, 114, 0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  4,  5, 0,   6,  0,   7,   0,   0,  0,  8,   0, 0,  0,  9,
+        0,  0,  0,  10, 0, 0,   0,  11,  0,   0,   0,  12, 0,   0, 0,  13, 0,
+        0,  0,  14, 0,  0, 0,   15, 0,   0,   0,   16, 0,  0,   0, 17, 0,  0,
+        0,  18, 0,  0,  0, 19,  0,  0,   0,   20,  0,  6,  161,
     };
 
     dummy_reset();
@@ -159,13 +159,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0};
+          (char)0,   (char)0,   (char)0,   (char)0};
       memcpy(test_msg->sn, assign_string, sizeof(assign_string));
       if (sizeof(test_msg->sn) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg->sn_counter_n = 2;
     test_msg->ssr_iod = 1;
     test_msg->theta_01 = 10;
     test_msg->theta_02 = 11;
@@ -176,13 +175,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0};
+          (char)0,  (char)0,  (char)0,   (char)0};
       memcpy(test_msg->tn, assign_string, sizeof(assign_string));
       if (sizeof(test_msg->tn) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg->tn_counter_m = 3;
     test_msg->utn = 5;
     sbp_payload_send(&sbp_state, 580, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
@@ -283,15 +281,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0};
+          (char)0,   (char)0,   (char)0,   (char)0};
       ck_assert_msg(
           memcmp(check_msg->sn, check_string, sizeof(check_string)) == 0,
           "incorrect value for check_msg->sn, expected string '%s', is '%s'",
           check_string, check_msg->sn);
     }
-    ck_assert_msg(check_msg->sn_counter_n == 2,
-                  "incorrect value for sn_counter_n, expected 2, is %d",
-                  check_msg->sn_counter_n);
     ck_assert_msg(check_msg->ssr_iod == 1,
                   "incorrect value for ssr_iod, expected 1, is %d",
                   check_msg->ssr_iod);
@@ -310,15 +305,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0};
+          (char)0,  (char)0,  (char)0,   (char)0};
       ck_assert_msg(
           memcmp(check_msg->tn, check_string, sizeof(check_string)) == 0,
           "incorrect value for check_msg->tn, expected string '%s', is '%s'",
           check_string, check_msg->tn);
     }
-    ck_assert_msg(check_msg->tn_counter_m == 3,
-                  "incorrect value for tn_counter_m, expected 3, is %d",
-                  check_msg->tn_counter_m);
     ck_assert_msg(check_msg->utn == 5,
                   "incorrect value for utn, expected 5, is %d", check_msg->utn);
   }

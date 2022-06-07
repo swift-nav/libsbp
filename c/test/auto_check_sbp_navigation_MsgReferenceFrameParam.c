@@ -94,14 +94,14 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85, 68, 2,  66, 0, 124, 1,  2,  102, 111, 111, 0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 3,   98, 97, 114, 0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  4,  5, 0,   6,  0,  7,   0,   0,   0,  8,   0, 0,  0,  9,
-        0,  0,  0,  10, 0, 0,   0,  11, 0,   0,   0,   12, 0,   0, 0,  13, 0,
-        0,  0,  14, 0,  0, 0,   15, 0,  0,   0,   16,  0,  0,   0, 17, 0,  0,
-        0,  18, 0,  0,  0, 19,  0,  0,  0,   20,  0,   66, 126,
+        85, 68, 2,  66, 0, 124, 1,  102, 111, 111, 0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 98,  97, 114, 0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  4,  5, 0,   6,  0,   7,   0,   0,  0,  8,   0, 0,  0,  9,
+        0,  0,  0,  10, 0, 0,   0,  11,  0,   0,   0,  12, 0,   0, 0,  13, 0,
+        0,  0,  14, 0,  0, 0,   15, 0,   0,   0,   16, 0,  0,   0, 17, 0,  0,
+        0,  18, 0,  0,  0, 19,  0,  0,   0,   20,  0,  6,  161,
     };
 
     dummy_reset();
@@ -141,12 +141,10 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0};
+          (char)0,   (char)0,   (char)0,   (char)0};
       memcpy(test_msg.reference_frame_param.sn, assign_string,
              sizeof(assign_string));
     }
-
-    test_msg.reference_frame_param.sn_counter_n = 2;
 
     test_msg.reference_frame_param.ssr_iod = 1;
 
@@ -162,12 +160,10 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0};
+          (char)0,  (char)0,  (char)0,   (char)0};
       memcpy(test_msg.reference_frame_param.tn, assign_string,
              sizeof(assign_string));
     }
-
-    test_msg.reference_frame_param.tn_counter_m = 3;
 
     test_msg.reference_frame_param.utn = 5;
 
@@ -277,7 +273,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0};
+          (char)0,   (char)0,   (char)0,   (char)0};
       ck_assert_msg(
           memcmp(&last_msg.msg.reference_frame_param.sn, check_string,
                  sizeof(check_string)) == 0,
@@ -285,12 +281,6 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           "string '%s', is '%s'",
           check_string, last_msg.msg.reference_frame_param.sn);
     }
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.sn_counter_n == 2,
-        "incorrect value for last_msg.msg.reference_frame_param.sn_counter_n, "
-        "expected 2, is %d",
-        last_msg.msg.reference_frame_param.sn_counter_n);
 
     ck_assert_msg(
         last_msg.msg.reference_frame_param.ssr_iod == 1,
@@ -322,7 +312,7 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0};
+          (char)0,  (char)0,  (char)0,   (char)0};
       ck_assert_msg(
           memcmp(&last_msg.msg.reference_frame_param.tn, check_string,
                  sizeof(check_string)) == 0,
@@ -330,12 +320,6 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
           "string '%s', is '%s'",
           check_string, last_msg.msg.reference_frame_param.tn);
     }
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.tn_counter_m == 3,
-        "incorrect value for last_msg.msg.reference_frame_param.tn_counter_m, "
-        "expected 3, is %d",
-        last_msg.msg.reference_frame_param.tn_counter_m);
 
     ck_assert_msg(last_msg.msg.reference_frame_param.utn == 5,
                   "incorrect value for last_msg.msg.reference_frame_param.utn, "

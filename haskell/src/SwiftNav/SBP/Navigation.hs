@@ -2369,14 +2369,10 @@ msgReferenceFrameParam = 0x0244
 data MsgReferenceFrameParam = MsgReferenceFrameParam
   { _msgReferenceFrameParam_ssr_iod    :: !Word8
     -- ^ SSR IOD parameter.
-  , _msgReferenceFrameParam_sn_counter_n :: !Word8
-    -- ^ Source-Name Counter N.
   , _msgReferenceFrameParam_sn         :: !Text
-    -- ^ Source-Name
-  , _msgReferenceFrameParam_tn_counter_m :: !Word8
-    -- ^ Target-Name Counter M.
+    -- ^ Name of source coordinate-system using the EPSG identification code.
   , _msgReferenceFrameParam_tn         :: !Text
-    -- ^ Target-Name
+    -- ^ Name of target coordinate-system using the EPSG identification code.
   , _msgReferenceFrameParam_sin        :: !Word8
     -- ^ System Identification Number.
   , _msgReferenceFrameParam_utn        :: !Word16
@@ -2417,10 +2413,8 @@ data MsgReferenceFrameParam = MsgReferenceFrameParam
 instance Binary MsgReferenceFrameParam where
   get = do
     _msgReferenceFrameParam_ssr_iod <- getWord8
-    _msgReferenceFrameParam_sn_counter_n <- getWord8
-    _msgReferenceFrameParam_sn <- decodeUtf8 <$> getByteString 31
-    _msgReferenceFrameParam_tn_counter_m <- getWord8
-    _msgReferenceFrameParam_tn <- decodeUtf8 <$> getByteString 31
+    _msgReferenceFrameParam_sn <- decodeUtf8 <$> getByteString 32
+    _msgReferenceFrameParam_tn <- decodeUtf8 <$> getByteString 32
     _msgReferenceFrameParam_sin <- getWord8
     _msgReferenceFrameParam_utn <- getWord16le
     _msgReferenceFrameParam_re_t0 <- getWord16le
@@ -2442,9 +2436,7 @@ instance Binary MsgReferenceFrameParam where
 
   put MsgReferenceFrameParam {..} = do
     putWord8 _msgReferenceFrameParam_ssr_iod
-    putWord8 _msgReferenceFrameParam_sn_counter_n
     putByteString $ encodeUtf8 _msgReferenceFrameParam_sn
-    putWord8 _msgReferenceFrameParam_tn_counter_m
     putByteString $ encodeUtf8 _msgReferenceFrameParam_tn
     putWord8 _msgReferenceFrameParam_sin
     putWord16le _msgReferenceFrameParam_utn

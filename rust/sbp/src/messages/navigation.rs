@@ -6009,18 +6009,12 @@ pub mod msg_reference_frame_param {
         /// SSR IOD parameter.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
         pub ssr_iod: u8,
-        /// Source-Name Counter N.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sn_counter_n")))]
-        pub sn_counter_n: u8,
-        /// Source-Name
+        /// Name of source coordinate-system using the EPSG identification code.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "sn")))]
-        pub sn: SbpString<[u8; 31], Unterminated>,
-        /// Target-Name Counter M.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tn_counter_m")))]
-        pub tn_counter_m: u8,
-        /// Target-Name
+        pub sn: SbpString<[u8; 32], NullTerminated>,
+        /// Name of target coordinate-system using the EPSG identification code.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "tn")))]
-        pub tn: SbpString<[u8; 31], Unterminated>,
+        pub tn: SbpString<[u8; 32], NullTerminated>,
         /// System Identification Number.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "sin")))]
         pub sin: u8,
@@ -6110,10 +6104,8 @@ pub mod msg_reference_frame_param {
 
     impl WireFormat for MsgReferenceFrameParam {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <SbpString<[u8; 31], Unterminated> as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <SbpString<[u8; 31], Unterminated> as WireFormat>::MIN_LEN
+            + <SbpString<[u8; 32], NullTerminated> as WireFormat>::MIN_LEN
+            + <SbpString<[u8; 32], NullTerminated> as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -6133,9 +6125,7 @@ pub mod msg_reference_frame_param {
             + <i16 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.ssr_iod)
-                + WireFormat::len(&self.sn_counter_n)
                 + WireFormat::len(&self.sn)
-                + WireFormat::len(&self.tn_counter_m)
                 + WireFormat::len(&self.tn)
                 + WireFormat::len(&self.sin)
                 + WireFormat::len(&self.utn)
@@ -6157,9 +6147,7 @@ pub mod msg_reference_frame_param {
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
             WireFormat::write(&self.ssr_iod, buf);
-            WireFormat::write(&self.sn_counter_n, buf);
             WireFormat::write(&self.sn, buf);
-            WireFormat::write(&self.tn_counter_m, buf);
             WireFormat::write(&self.tn, buf);
             WireFormat::write(&self.sin, buf);
             WireFormat::write(&self.utn, buf);
@@ -6183,9 +6171,7 @@ pub mod msg_reference_frame_param {
             MsgReferenceFrameParam {
                 sender_id: None,
                 ssr_iod: WireFormat::parse_unchecked(buf),
-                sn_counter_n: WireFormat::parse_unchecked(buf),
                 sn: WireFormat::parse_unchecked(buf),
-                tn_counter_m: WireFormat::parse_unchecked(buf),
                 tn: WireFormat::parse_unchecked(buf),
                 sin: WireFormat::parse_unchecked(buf),
                 utn: WireFormat::parse_unchecked(buf),

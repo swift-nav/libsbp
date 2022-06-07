@@ -1750,7 +1750,7 @@
  * msg_reference_frame_param_t::sn (legacy API) before the maximum SBP message
  * size is exceeded
  */
-#define SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX 31u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX 32u
 
 /**
  * The maximum number of items that can be stored in
@@ -1758,7 +1758,7 @@
  * msg_reference_frame_param_t::tn (legacy API) before the maximum SBP message
  * size is exceeded
  */
-#define SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX 31u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX 32u
 
 /**
  * Encoded length of sbp_msg_reference_frame_param_t (V4 API) and
