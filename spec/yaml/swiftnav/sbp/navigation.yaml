@@ -2486,20 +2486,16 @@ definitions:
        - ssr_iod:
            type: u8
            desc: SSR IOD parameter.
-       - sn_counter_n:
-           type: u8
-           desc: Source-Name Counter N.
        - sn:
            type: string
-           size: 31
-           desc: Source-Name
-       - tn_counter_m:
-           type: u8
-           desc: Target-Name Counter M.
+           encoding: null-terminated
+           size: 32
+           desc: Name of source coordinate-system using the EPSG identification code.
        - tn:
            type: string
-           size: 31
-           desc: Target-Name
+           encoding: null-terminated
+           size: 32
+           desc: Name of target coordinate-system using the EPSG identification code.
        - sin:
            type: u8
            desc: System Identification Number.
