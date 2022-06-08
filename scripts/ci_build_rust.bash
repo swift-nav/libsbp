@@ -21,11 +21,11 @@ fi
 
 if [ "$RUNNER_OS" == "Linux" ]; then
   cargo build --all --release --target=x86_64-unknown-linux-musl
+  cd target/x86_64-unknown-linux-musl/release
 else
   cargo build --all --release
+  cd target/release
 fi
-
-cd target/x86_64-unknown-linux-musl/release
 
 strip "${EXECUTABLES[@]}"
 
