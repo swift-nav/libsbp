@@ -2,7 +2,7 @@ FROM python:3.7-slim-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN    apt-get update \
-    && apt-get install -y git llvm-7-dev build-essential musl-tools
+    && apt-get install -y git llvm-7-dev build-essential
 
 WORKDIR /work
 ADD . /work

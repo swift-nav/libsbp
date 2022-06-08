@@ -28,7 +28,6 @@ sudo apt-get install -y \
     python3 python3-dev python3-distutils \
     python3.9 python3.9-dev python3.9-distutils \
     python3.10 python3.10-dev python3.10-distutils \
-    musl-tools
     tox dpkg-dev wget
 
 pip3 install wheel setuptools
