@@ -21,6 +21,7 @@ RUN \
    && chmod +x /usr/local/bin/sccache \
    && rustup component add rustfmt \
    && rustup component add clippy \
+   && rustup target add x86_64-unknown-linux-musl \
    && rm -rf /var/lib/apt/lists/* \
    && rm -rf /tmp/sccache /tmp/sccache.tgz
 
