@@ -19,7 +19,11 @@ else
     exit 1
 fi
 
-cargo build --all --release
+if [ "$RUNNER_OS" == "Linux" ]; then
+  cargo build --all --release --target=x86_64-unknown-linux-musl
+else
+  cargo build --all --release
+fi
 
 cd target/release
 
