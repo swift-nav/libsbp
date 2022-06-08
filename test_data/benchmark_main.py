@@ -20,7 +20,7 @@ RATIOS_JSON2SBP = {
 }
 
 RATIOS_JSON2JSON = {
-    "haskell": 1.94,
+    "haskell": 2.60,
 }
 
 FAILED = [False]
