@@ -2623,10 +2623,12 @@ type alias MsgSsrGriddedCorrectionBounds =
     , stecSatList : Array STECSatElementIntegrity
     , tileID : Int
     , tileSetID : Int
-    , tropoBoundMu : Int
-    , tropoBoundSig : Int
     , tropoDelayCorrection : TroposphericDelayCorrection
     , tropoQi : Int
+    , tropoVHydroBoundMu : Int
+    , tropoVHydroBoundSig : Int
+    , tropoVWetBoundMu : Int
+    , tropoVWetBoundSig : Int
     }
 
 {-| STEC polynomial and bounds for the given satellite. -}
@@ -6702,10 +6704,12 @@ msgSsrGriddedCorrectionBounds =
         |> Jpipe.required "stec_sat_list" (Jdec.array stecSatElementIntegrity)
         |> Jpipe.required "tile_id" Jdec.int
         |> Jpipe.required "tile_set_id" Jdec.int
-        |> Jpipe.required "tropo_bound_mu" Jdec.int
-        |> Jpipe.required "tropo_bound_sig" Jdec.int
         |> Jpipe.required "tropo_delay_correction" troposphericDelayCorrection
         |> Jpipe.required "tropo_qi" Jdec.int
+        |> Jpipe.required "tropo_v_hydro_bound_mu" Jdec.int
+        |> Jpipe.required "tropo_v_hydro_bound_sig" Jdec.int
+        |> Jpipe.required "tropo_v_wet_bound_mu" Jdec.int
+        |> Jpipe.required "tropo_v_wet_bound_sig" Jdec.int
 
 encodeMsgSsrGriddedCorrectionBounds : MsgSsrGriddedCorrectionBounds -> Jenc.Value
 encodeMsgSsrGriddedCorrectionBounds x =
@@ -6717,10 +6721,12 @@ encodeMsgSsrGriddedCorrectionBounds x =
         , ("stec_sat_list", makeArrayEncoder encodeSTECSatElementIntegrity x.stecSatList)
         , ("tile_id", Jenc.int x.tileID)
         , ("tile_set_id", Jenc.int x.tileSetID)
-        , ("tropo_bound_mu", Jenc.int x.tropoBoundMu)
-        , ("tropo_bound_sig", Jenc.int x.tropoBoundSig)
         , ("tropo_delay_correction", encodeTroposphericDelayCorrection x.tropoDelayCorrection)
         , ("tropo_qi", Jenc.int x.tropoQi)
+        , ("tropo_v_hydro_bound_mu", Jenc.int x.tropoVHydroBoundMu)
+        , ("tropo_v_hydro_bound_sig", Jenc.int x.tropoVHydroBoundSig)
+        , ("tropo_v_wet_bound_mu", Jenc.int x.tropoVWetBoundMu)
+        , ("tropo_v_wet_bound_sig", Jenc.int x.tropoVWetBoundSig)
         ]
 
 stecSatElementIntegrity : Jdec.Decoder STECSatElementIntegrity

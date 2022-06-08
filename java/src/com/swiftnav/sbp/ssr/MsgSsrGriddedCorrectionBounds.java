@@ -35,10 +35,10 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
     /** Header of a bounds message. */
     public BoundsHeader header;
 
-    /** IOD of the SSR atmospheric correction. */
+    /** IOD of the correction. */
     public int ssr_iod_atmo;
 
-    /** Unique identifier of the set this tile belongs to. */
+    /** Set this tile belongs to. */
     public int tile_set_id;
 
     /** Unique identifier of this tile in the tile set. */
@@ -53,11 +53,17 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
     /** Tropospheric delay at grid point. */
     public TroposphericDelayCorrection tropo_delay_correction;
 
-    /** Troposphere Error Bound Mean. Range: 0-1.275 m */
-    public int tropo_bound_mu;
+    /** Vertical Hydrostatic Error Bound Mean. */
+    public int tropo_v_hydro_bound_mu;
 
-    /** Troposphere Error Bound StDev. Range: 0-1.275 m */
-    public int tropo_bound_sig;
+    /** Vertical Hydrostatic Error Bound StDev. */
+    public int tropo_v_hydro_bound_sig;
+
+    /** Vertical Wet Error Bound Mean. */
+    public int tropo_v_wet_bound_mu;
+
+    /** Vertical Wet Error Bound StDev. */
+    public int tropo_v_wet_bound_sig;
 
     /** Number of satellites. */
     public int n_sats;
@@ -88,8 +94,10 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
         tropo_qi = parser.getU8();
         grid_point_id = parser.getU16();
         tropo_delay_correction = new TroposphericDelayCorrection().parse(parser);
-        tropo_bound_mu = parser.getU8();
-        tropo_bound_sig = parser.getU8();
+        tropo_v_hydro_bound_mu = parser.getU8();
+        tropo_v_hydro_bound_sig = parser.getU8();
+        tropo_v_wet_bound_mu = parser.getU8();
+        tropo_v_wet_bound_sig = parser.getU8();
         n_sats = parser.getU8();
         stec_sat_list = parser.getArray(STECSatElementIntegrity.class);
     }
@@ -103,8 +111,10 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
         builder.putU8(tropo_qi);
         builder.putU16(grid_point_id);
         tropo_delay_correction.build(builder);
-        builder.putU8(tropo_bound_mu);
-        builder.putU8(tropo_bound_sig);
+        builder.putU8(tropo_v_hydro_bound_mu);
+        builder.putU8(tropo_v_hydro_bound_sig);
+        builder.putU8(tropo_v_wet_bound_mu);
+        builder.putU8(tropo_v_wet_bound_sig);
         builder.putU8(n_sats);
         builder.putArray(stec_sat_list);
     }
@@ -119,8 +129,10 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
         obj.put("tropo_qi", tropo_qi);
         obj.put("grid_point_id", grid_point_id);
         obj.put("tropo_delay_correction", tropo_delay_correction.toJSON());
-        obj.put("tropo_bound_mu", tropo_bound_mu);
-        obj.put("tropo_bound_sig", tropo_bound_sig);
+        obj.put("tropo_v_hydro_bound_mu", tropo_v_hydro_bound_mu);
+        obj.put("tropo_v_hydro_bound_sig", tropo_v_hydro_bound_sig);
+        obj.put("tropo_v_wet_bound_mu", tropo_v_wet_bound_mu);
+        obj.put("tropo_v_wet_bound_sig", tropo_v_wet_bound_sig);
         obj.put("n_sats", n_sats);
         obj.put("stec_sat_list", SBPStruct.toJSONArray(stec_sat_list));
         return obj;

@@ -245,10 +245,12 @@ message MsgSsrGriddedCorrectionBounds {
     uint32 tropo_qi = 5;
     uint32 grid_point_id = 6;
     TroposphericDelayCorrection tropo_delay_correction = 7;
-    uint32 tropo_bound_mu = 8;
-    uint32 tropo_bound_sig = 9;
-    uint32 n_sats = 10;
-    repeated STECSatElementIntegrity stec_sat_list = 11;
+    uint32 tropo_v_hydro_bound_mu = 8;
+    uint32 tropo_v_hydro_bound_sig = 9;
+    uint32 tropo_v_wet_bound_mu = 10;
+    uint32 tropo_v_wet_bound_sig = 11;
+    uint32 n_sats = 12;
+    repeated STECSatElementIntegrity stec_sat_list = 13;
 }
 
 /** Definition of a SSR atmospheric correction tile.

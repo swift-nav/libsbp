@@ -94,10 +94,10 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85,  254, 5,   66,  0, 43, 180, 0,  0,  0,   3,   0,   1,
-        1,   10,  0,   15,  1, 0,  10,  0,  39, 232, 3,   244, 1,
-        100, 200, 150, 100, 2, 5,  10,  16, 0,  17,  18,  19,  20,
-        21,  6,   10,  22,  0, 23, 24,  25, 26, 27,  112, 145,
+        85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   1,
+        10,  0,   15,  1,   0,  10, 0,   39, 232, 3,   244, 1,  100, 200,
+        150, 100, 150, 100, 2,  5,  10,  16, 0,   17,  18,  19, 20,  21,
+        6,   10,  22,  0,   23, 24, 25,  26, 27,  119, 82,
     };
 
     dummy_reset();
@@ -171,10 +171,6 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
 
     test_msg.ssr_gridded_correction_bounds.tile_set_id = 1;
 
-    test_msg.ssr_gridded_correction_bounds.tropo_bound_mu = 150;
-
-    test_msg.ssr_gridded_correction_bounds.tropo_bound_sig = 100;
-
     test_msg.ssr_gridded_correction_bounds.tropo_delay_correction.hydro = 500;
 
     test_msg.ssr_gridded_correction_bounds.tropo_delay_correction.stddev = 200;
@@ -182,6 +178,14 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
     test_msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet = 100;
 
     test_msg.ssr_gridded_correction_bounds.tropo_qi = 39;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu = 150;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig = 100;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu = 150;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig = 100;
 
     sbp_message_send(&sbp_state, SbpMsgSsrGriddedCorrectionBounds, 66,
                      &test_msg, &dummy_write);
@@ -407,20 +411,6 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
                   "expected 1, is %d",
                   last_msg.msg.ssr_gridded_correction_bounds.tile_set_id);
 
-    ck_assert_msg(
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_bound_mu == 150,
-        "incorrect value for "
-        "last_msg.msg.ssr_gridded_correction_bounds.tropo_bound_mu, expected "
-        "150, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_bound_mu);
-
-    ck_assert_msg(
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_bound_sig == 100,
-        "incorrect value for "
-        "last_msg.msg.ssr_gridded_correction_bounds.tropo_bound_sig, expected "
-        "100, is %d",
-        last_msg.msg.ssr_gridded_correction_bounds.tropo_bound_sig);
-
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds
                           .tropo_delay_correction.hydro == 500,
                   "incorrect value for "
@@ -450,6 +440,36 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
                   "last_msg.msg.ssr_gridded_correction_bounds.tropo_qi, "
                   "expected 39, is %d",
                   last_msg.msg.ssr_gridded_correction_bounds.tropo_qi);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu ==
+            150,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu, "
+        "expected 150, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig ==
+            100,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig, "
+        "expected 100, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu == 150,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu, "
+        "expected 150, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig == 100,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig, "
+        "expected 100, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig);
   }
 }
 END_TEST

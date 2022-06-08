@@ -681,8 +681,8 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['stec_residuals', 'array', STE
  * @field stec_residual STECResidual STEC residuals (mean, stddev)
  * @field stec_bound_mu number (unsigned 8-bit int, 1 byte) Error Bound Mean. See Note 1.
  * @field stec_bound_sig number (unsigned 8-bit int, 1 byte) Error Bound StDev. See Note 1.
- * @field stec_bound_mu_dot number (unsigned 8-bit int, 1 byte) Error Bound Mean First derivative. Range: 0-0.01275 m/s
- * @field stec_bound_sig_dot number (unsigned 8-bit int, 1 byte) Error Bound StDev First derivative. Range: 0-0.01275 m/s
+ * @field stec_bound_mu_dot number (unsigned 8-bit int, 1 byte) Error Bound Mean First derivative.
+ * @field stec_bound_sig_dot number (unsigned 8-bit int, 1 byte) Error Bound StDev First derivative.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -718,14 +718,16 @@ STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_sig_dot', 'writeUI
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header BoundsHeader Header of a bounds message.
- * @field ssr_iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction.
- * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the set this tile belongs to.
+ * @field ssr_iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the correction.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Set this tile belongs to.
  * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
  * @field tropo_qi number (unsigned 8-bit int, 1 byte) Tropo Quality Indicator. Similar to RTCM DF389.
  * @field grid_point_id number (unsigned 16-bit int, 2 bytes) Index of the Grid Point.
  * @field tropo_delay_correction TroposphericDelayCorrection Tropospheric delay at grid point.
- * @field tropo_bound_mu number (unsigned 8-bit int, 1 byte) Troposphere Error Bound Mean. Range: 0-1.275 m
- * @field tropo_bound_sig number (unsigned 8-bit int, 1 byte) Troposphere Error Bound StDev. Range: 0-1.275 m
+ * @field tropo_v_hydro_bound_mu number (unsigned 8-bit int, 1 byte) Vertical Hydrostatic Error Bound Mean.
+ * @field tropo_v_hydro_bound_sig number (unsigned 8-bit int, 1 byte) Vertical Hydrostatic Error Bound StDev.
+ * @field tropo_v_wet_bound_mu number (unsigned 8-bit int, 1 byte) Vertical Wet Error Bound Mean.
+ * @field tropo_v_wet_bound_sig number (unsigned 8-bit int, 1 byte) Vertical Wet Error Bound StDev.
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites.
  * @field stec_sat_list array Array of STEC polynomial coefficients and its bounds for each space vehicle.
  *
@@ -751,8 +753,10 @@ MsgSsrGriddedCorrectionBounds.prototype.parser = new Parser()
   .uint8('tropo_qi')
   .uint16('grid_point_id')
   .nest('tropo_delay_correction', { type: TroposphericDelayCorrection.prototype.parser })
-  .uint8('tropo_bound_mu')
-  .uint8('tropo_bound_sig')
+  .uint8('tropo_v_hydro_bound_mu')
+  .uint8('tropo_v_hydro_bound_sig')
+  .uint8('tropo_v_wet_bound_mu')
+  .uint8('tropo_v_wet_bound_sig')
   .uint8('n_sats')
   .array('stec_sat_list', { type: STECSatElementIntegrity.prototype.parser, length: 'n_sats' });
 MsgSsrGriddedCorrectionBounds.prototype.fieldSpec = [];
@@ -763,8 +767,10 @@ MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tile_id', 'writeUInt16L
 MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_qi', 'writeUInt8', 1]);
 MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['grid_point_id', 'writeUInt16LE', 2]);
 MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrection.prototype.fieldSpec]);
-MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_bound_mu', 'writeUInt8', 1]);
-MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_bound_sig', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_hydro_bound_mu', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_hydro_bound_sig', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_wet_bound_mu', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_wet_bound_sig', 'writeUInt8', 1]);
 MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElementIntegrity.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats']);
 

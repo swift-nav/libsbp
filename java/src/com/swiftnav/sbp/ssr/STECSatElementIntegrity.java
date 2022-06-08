@@ -31,10 +31,10 @@ public class STECSatElementIntegrity extends SBPStruct {
     /** Error Bound StDev. See Note 1. */
     public int stec_bound_sig;
 
-    /** Error Bound Mean First derivative. Range: 0-0.01275 m/s */
+    /** Error Bound Mean First derivative. */
     public int stec_bound_mu_dot;
 
-    /** Error Bound StDev First derivative. Range: 0-0.01275 m/s */
+    /** Error Bound StDev First derivative. */
     public int stec_bound_sig_dot;
 
     public STECSatElementIntegrity() {}

@@ -17,9 +17,9 @@ use crate::*;
 fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
     {
         let mut payload = Cursor::new(vec![
-            85, 254, 5, 66, 0, 43, 180, 0, 0, 0, 3, 0, 1, 1, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
-            244, 1, 100, 200, 150, 100, 2, 5, 10, 16, 0, 17, 18, 19, 20, 21, 6, 10, 22, 0, 23, 24,
-            25, 26, 27, 112, 145,
+            85, 254, 5, 66, 0, 45, 180, 0, 0, 0, 3, 0, 1, 1, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
+            244, 1, 100, 200, 150, 100, 150, 100, 2, 5, 10, 16, 0, 17, 18, 19, 20, 21, 6, 10, 22,
+            0, 23, 24, 25, 26, 27, 119, 82,
         ]);
 
         // Test the round trip payload parsing
@@ -155,16 +155,6 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.tile_set_id
                 );
                 assert_eq!(
-                    msg.tropo_bound_mu, 150,
-                    "incorrect value for tropo_bound_mu, expected 150, is {}",
-                    msg.tropo_bound_mu
-                );
-                assert_eq!(
-                    msg.tropo_bound_sig, 100,
-                    "incorrect value for tropo_bound_sig, expected 100, is {}",
-                    msg.tropo_bound_sig
-                );
-                assert_eq!(
                     msg.tropo_delay_correction.hydro, 500,
                     "incorrect value for tropo_delay_correction.hydro, expected 500, is {}",
                     msg.tropo_delay_correction.hydro
@@ -183,6 +173,26 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.tropo_qi, 39,
                     "incorrect value for tropo_qi, expected 39, is {}",
                     msg.tropo_qi
+                );
+                assert_eq!(
+                    msg.tropo_v_hydro_bound_mu, 150,
+                    "incorrect value for tropo_v_hydro_bound_mu, expected 150, is {}",
+                    msg.tropo_v_hydro_bound_mu
+                );
+                assert_eq!(
+                    msg.tropo_v_hydro_bound_sig, 100,
+                    "incorrect value for tropo_v_hydro_bound_sig, expected 100, is {}",
+                    msg.tropo_v_hydro_bound_sig
+                );
+                assert_eq!(
+                    msg.tropo_v_wet_bound_mu, 150,
+                    "incorrect value for tropo_v_wet_bound_mu, expected 150, is {}",
+                    msg.tropo_v_wet_bound_mu
+                );
+                assert_eq!(
+                    msg.tropo_v_wet_bound_sig, 100,
+                    "incorrect value for tropo_v_wet_bound_sig, expected 100, is {}",
+                    msg.tropo_v_wet_bound_sig
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrGriddedCorrectionBounds"),

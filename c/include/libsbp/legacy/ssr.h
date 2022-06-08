@@ -321,10 +321,9 @@ typedef struct SBP_ATTR_PACKED {
   stec_residual_t stec_residual; /**< STEC residuals (mean, stddev) */
   u8 stec_bound_mu;              /**< Error Bound Mean. See Note 1. [m] */
   u8 stec_bound_sig;             /**< Error Bound StDev. See Note 1. [m] */
-  u8 stec_bound_mu_dot;          /**< Error Bound Mean First derivative. Range:
-                                      0-0.01275 m/s [0.00005 m/s] */
-  u8 stec_bound_sig_dot;         /**< Error Bound StDev First derivative. Range:
-                                      0-0.01275 m/s [0.00005 m/s] */
+  u8 stec_bound_mu_dot; /**< Error Bound Mean First derivative. [0.00005 m/s] */
+  u8 stec_bound_sig_dot; /**< Error Bound StDev First derivative. [0.00005 m/s]
+                          */
 } stec_sat_element_integrity_t;
 
 /** Gridded troposhere and STEC correction residuals bounds
@@ -335,9 +334,8 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   bounds_header_t header; /**< Header of a bounds message. */
-  u8 ssr_iod_atmo;        /**< IOD of the SSR atmospheric correction. */
-  u16 tile_set_id;        /**< Unique identifier of the set this tile
-                               belongs to. */
+  u8 ssr_iod_atmo;        /**< IOD of the correction. */
+  u16 tile_set_id;        /**< Set this tile belongs to. */
   u16 tile_id;            /**< Unique identifier of this tile in the
                                tile set. */
   u8 tropo_qi;            /**< Tropo Quality Indicator. Similar to RTCM
@@ -346,11 +344,13 @@ typedef struct SBP_ATTR_PACKED {
   tropospheric_delay_correction_t tropo_delay_correction; /**< Tropospheric
                                                                delay at
                                                                grid point. */
-  u8 tropo_bound_mu;  /**< Troposphere Error Bound Mean. Range:
-                           0-1.275 m [0.005 m] */
-  u8 tropo_bound_sig; /**< Troposphere Error Bound StDev. Range:
-                           0-1.275 m [0.005 m] */
-  u8 n_sats;          /**< Number of satellites. */
+  u8 tropo_v_hydro_bound_mu;  /**< Vertical Hydrostatic Error Bound Mean. [0.005
+                                 m] */
+  u8 tropo_v_hydro_bound_sig; /**< Vertical Hydrostatic Error Bound StDev.
+                                 [0.005 m] */
+  u8 tropo_v_wet_bound_mu;    /**< Vertical Wet Error Bound Mean. [0.005 m] */
+  u8 tropo_v_wet_bound_sig;   /**< Vertical Wet Error Bound StDev. [0.005 m] */
+  u8 n_sats;                  /**< Number of satellites. */
   stec_sat_element_integrity_t stec_sat_list[0]; /**< Array of STEC
                                                       polynomial
                                                       coefficients

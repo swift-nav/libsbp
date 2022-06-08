@@ -60,12 +60,12 @@ typedef struct {
   u8 stec_bound_sig;
 
   /**
-   * Error Bound Mean First derivative. Range: 0-0.01275 m/s [0.00005 m/s]
+   * Error Bound Mean First derivative. [0.00005 m/s]
    */
   u8 stec_bound_mu_dot;
 
   /**
-   * Error Bound StDev First derivative. Range: 0-0.01275 m/s [0.00005 m/s]
+   * Error Bound StDev First derivative. [0.00005 m/s]
    */
   u8 stec_bound_sig_dot;
 } sbp_stec_sat_element_integrity_t;

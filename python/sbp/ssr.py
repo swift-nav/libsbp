@@ -514,9 +514,9 @@ class STECSatElementIntegrity(object):
   stec_bound_sig : int
     Error Bound StDev. See Note 1.
   stec_bound_mu_dot : int
-    Error Bound Mean First derivative. Range: 0-0.01275 m/s
+    Error Bound Mean First derivative.
   stec_bound_sig_dot : int
-    Error Bound StDev First derivative. Range: 0-0.01275 m/s
+    Error Bound StDev First derivative.
 
   """
   _parser = construct.Struct(
@@ -1717,9 +1717,9 @@ class MsgSsrGriddedCorrectionBounds(SBP):
   header : BoundsHeader
     Header of a bounds message.
   ssr_iod_atmo : int
-    IOD of the SSR atmospheric correction.
+    IOD of the correction.
   tile_set_id : int
-    Unique identifier of the set this tile belongs to.
+    Set this tile belongs to.
   tile_id : int
     Unique identifier of this tile in the tile set.
   tropo_qi : int
@@ -1728,10 +1728,14 @@ class MsgSsrGriddedCorrectionBounds(SBP):
     Index of the Grid Point.
   tropo_delay_correction : TroposphericDelayCorrection
     Tropospheric delay at grid point.
-  tropo_bound_mu : int
-    Troposphere Error Bound Mean. Range: 0-1.275 m
-  tropo_bound_sig : int
-    Troposphere Error Bound StDev. Range: 0-1.275 m
+  tropo_v_hydro_bound_mu : int
+    Vertical Hydrostatic Error Bound Mean.
+  tropo_v_hydro_bound_sig : int
+    Vertical Hydrostatic Error Bound StDev.
+  tropo_v_wet_bound_mu : int
+    Vertical Wet Error Bound Mean.
+  tropo_v_wet_bound_sig : int
+    Vertical Wet Error Bound StDev.
   n_sats : int
     Number of satellites.
   stec_sat_list : array
@@ -1749,8 +1753,10 @@ class MsgSsrGriddedCorrectionBounds(SBP):
                    'tropo_qi' / construct.Int8ul,
                    'grid_point_id' / construct.Int16ul,
                    'tropo_delay_correction' / TroposphericDelayCorrection._parser,
-                   'tropo_bound_mu' / construct.Int8ul,
-                   'tropo_bound_sig' / construct.Int8ul,
+                   'tropo_v_hydro_bound_mu' / construct.Int8ul,
+                   'tropo_v_hydro_bound_sig' / construct.Int8ul,
+                   'tropo_v_wet_bound_mu' / construct.Int8ul,
+                   'tropo_v_wet_bound_sig' / construct.Int8ul,
                    'n_sats' / construct.Int8ul,
                    'stec_sat_list' / construct.GreedyRange(STECSatElementIntegrity._parser),)
   __slots__ = [
@@ -1761,8 +1767,10 @@ class MsgSsrGriddedCorrectionBounds(SBP):
                'tropo_qi',
                'grid_point_id',
                'tropo_delay_correction',
-               'tropo_bound_mu',
-               'tropo_bound_sig',
+               'tropo_v_hydro_bound_mu',
+               'tropo_v_hydro_bound_sig',
+               'tropo_v_wet_bound_mu',
+               'tropo_v_wet_bound_sig',
                'n_sats',
                'stec_sat_list',
               ]
@@ -1784,8 +1792,10 @@ class MsgSsrGriddedCorrectionBounds(SBP):
       self.tropo_qi = kwargs.pop('tropo_qi')
       self.grid_point_id = kwargs.pop('grid_point_id')
       self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
-      self.tropo_bound_mu = kwargs.pop('tropo_bound_mu')
-      self.tropo_bound_sig = kwargs.pop('tropo_bound_sig')
+      self.tropo_v_hydro_bound_mu = kwargs.pop('tropo_v_hydro_bound_mu')
+      self.tropo_v_hydro_bound_sig = kwargs.pop('tropo_v_hydro_bound_sig')
+      self.tropo_v_wet_bound_mu = kwargs.pop('tropo_v_wet_bound_mu')
+      self.tropo_v_wet_bound_sig = kwargs.pop('tropo_v_wet_bound_sig')
       self.n_sats = kwargs.pop('n_sats')
       self.stec_sat_list = kwargs.pop('stec_sat_list')
 

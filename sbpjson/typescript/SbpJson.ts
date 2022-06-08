@@ -2117,17 +2117,19 @@ export interface GriddedCorrectionHeader {
  * mean=5+0.5(i-230).
  */
 export interface MsgSsrGriddedCorrectionBounds {
-    grid_point_id:          number;
-    header:                 BoundsHeader;
-    n_sats:                 number;
-    ssr_iod_atmo:           number;
-    stec_sat_list:          STECSatElementIntegrity[];
-    tile_id:                number;
-    tile_set_id:            number;
-    tropo_bound_mu:         number;
-    tropo_bound_sig:        number;
-    tropo_delay_correction: TroposphericDelayCorrection;
-    tropo_qi:               number;
+    grid_point_id:           number;
+    header:                  BoundsHeader;
+    n_sats:                  number;
+    ssr_iod_atmo:            number;
+    stec_sat_list:           STECSatElementIntegrity[];
+    tile_id:                 number;
+    tile_set_id:             number;
+    tropo_delay_correction:  TroposphericDelayCorrection;
+    tropo_qi:                number;
+    tropo_v_hydro_bound_mu:  number;
+    tropo_v_hydro_bound_sig: number;
+    tropo_v_wet_bound_mu:    number;
+    tropo_v_wet_bound_sig:   number;
 }
 
 /**
@@ -5621,10 +5623,12 @@ const typeMap: any = {
         { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElementIntegrity")) },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
-        { json: "tropo_bound_mu", js: "tropo_bound_mu", typ: 0 },
-        { json: "tropo_bound_sig", js: "tropo_bound_sig", typ: 0 },
         { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
         { json: "tropo_qi", js: "tropo_qi", typ: 0 },
+        { json: "tropo_v_hydro_bound_mu", js: "tropo_v_hydro_bound_mu", typ: 0 },
+        { json: "tropo_v_hydro_bound_sig", js: "tropo_v_hydro_bound_sig", typ: 0 },
+        { json: "tropo_v_wet_bound_mu", js: "tropo_v_wet_bound_mu", typ: 0 },
+        { json: "tropo_v_wet_bound_sig", js: "tropo_v_wet_bound_sig", typ: 0 },
     ], "any"),
     "STECSatElementIntegrity": o([
         { json: "stec_bound_mu", js: "stec_bound_mu", typ: 0 },
