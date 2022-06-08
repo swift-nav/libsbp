@@ -2481,7 +2481,7 @@ definitions:
 
  - MSG_REFERENCE_FRAME_PARAM:
      id: 0x0244
-     short_desc: Reference Frame Transformation Parameter
+     short_desc: Reference Frame Transformation Parameters
      fields:
        - ssr_iod:
            type: u8
