@@ -1,5 +1,15 @@
 # Changelog
 
+## [v4.3.1](https://github.com/swift-nav/libsbp/tree/v4.3.1) (2022-06-03)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.0...v4.3.1)
+
+**Merged pull requests:**
+
+- python: consolidate converage settings [\#1154](https://github.com/swift-nav/libsbp/pull/1154) ([silverjam](https://github.com/silverjam))
+- docker: add back apt, focal only, tox fixes [\#1153](https://github.com/swift-nav/libsbp/pull/1153) ([silverjam](https://github.com/silverjam))
+- add parallel tox, remove python 2.7 support [\#1152](https://github.com/swift-nav/libsbp/pull/1152) ([silverjam](https://github.com/silverjam))
+
 ## [v4.3.0](https://github.com/swift-nav/libsbp/tree/v4.3.0) (2022-05-25)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.2.0...v4.3.0)
