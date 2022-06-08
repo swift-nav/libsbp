@@ -25,7 +25,7 @@ else
   cargo build --all --release
 fi
 
-cd target/release
+cd target/x86_64-unknown-linux-musl/release
 
 strip "${EXECUTABLES[@]}"
 
