@@ -13,7 +13,7 @@ RUN mkdir -p $SCCACHE_DIR
 
 RUN \
       apt-get update \
-   && apt-get install -y libssl-dev pkg-config curl build-essential make \
+   && apt-get install -y libssl-dev pkg-config curl build-essential make musl-tools \
    && curl -sSL -o /tmp/sccache.tgz "${SCCACHE_URL}" \
    && mkdir /tmp/sccache \
    && tar --strip-components=1 -C /tmp/sccache -xzf /tmp/sccache.tgz \
