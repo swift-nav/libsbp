@@ -53,7 +53,7 @@ docker run \
   --rm \
   --name rust-sbp2json-run \
   rust-sbp2json \
-  cargo build --release
+  cargo build --release --target=x86_64-unknown-linux-musl
 
 sudo chown    "$USER:$USER" "$HOME/.docker-cache"
 sudo chown -R "$USER:$USER" "$HOME/.docker-cache/cargo"
