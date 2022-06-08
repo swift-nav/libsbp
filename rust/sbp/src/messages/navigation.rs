@@ -5999,7 +5999,7 @@ pub mod msg_reference_frame_param {
 
     use super::*;
     use crate::messages::lib::*;
-    /// Reference Frame Transformation Parameter
+    /// Reference Frame Transformation Parameters
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
     pub struct MsgReferenceFrameParam {
