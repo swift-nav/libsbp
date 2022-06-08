@@ -59,7 +59,7 @@ sudo chown    "$USER:$USER" "$HOME/.docker-cache"
 sudo chown -R "$USER:$USER" "$HOME/.docker-cache/cargo"
 sudo chown -R "$USER:$USER" "$PWD"
 
-rust_bins="$HOME/.docker-cache/cargo/work/release"
+rust_bins="$HOME/.docker-cache/cargo/work/x86_64-unknown-linux-musl/release"
 
 mkdir -p bin
 
