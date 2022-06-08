@@ -19,9 +19,13 @@ else
     exit 1
 fi
 
-cargo build --all --release
-
-cd target/release
+if [ "$RUNNER_OS" == "Linux" ]; then
+  cargo build --all --release --target=x86_64-unknown-linux-musl
+  cd target/x86_64-unknown-linux-musl/release
+else
+  cargo build --all --release
+  cd target/release
+fi
 
 strip "${EXECUTABLES[@]}"
 

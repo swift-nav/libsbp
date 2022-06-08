@@ -1,4 +1,4 @@
-FROM rust:1.55-slim-buster
+FROM rust:1.61-slim-buster
 
 ARG DEBIAN_FRONTEND=noninterative
 
@@ -13,7 +13,7 @@ RUN mkdir -p $SCCACHE_DIR
 
 RUN \
       apt-get update \
-   && apt-get install -y libssl-dev pkg-config curl build-essential make \
+   && apt-get install -y libssl-dev pkg-config curl build-essential make musl-tools \
    && curl -sSL -o /tmp/sccache.tgz "${SCCACHE_URL}" \
    && mkdir /tmp/sccache \
    && tar --strip-components=1 -C /tmp/sccache -xzf /tmp/sccache.tgz \
@@ -21,6 +21,7 @@ RUN \
    && chmod +x /usr/local/bin/sccache \
    && rustup component add rustfmt \
    && rustup component add clippy \
+   && rustup target add x86_64-unknown-linux-musl \
    && rm -rf /var/lib/apt/lists/* \
    && rm -rf /tmp/sccache /tmp/sccache.tgz
 
