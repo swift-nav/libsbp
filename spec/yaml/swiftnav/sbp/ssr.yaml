@@ -477,15 +477,11 @@ definitions:
        - stec_bound_mu_dot:
            type: u8
            units: 0.00005 m/s
-           desc: >
-             Error Bound Mean First derivative.
-             Range: 0-0.01275 m/s
+           desc: Error Bound Mean First derivative.
        - stec_bound_sig_dot:
            type: u8
            units: 0.00005 m/s
-           desc: >
-             Error Bound StDev First derivative.
-             Range: 0-0.01275 m/s
+           desc: Error Bound StDev First derivative.
 
  - MSG_SSR_GRIDDED_CORRECTION_BOUNDS:
      id: 0x05FE
@@ -501,10 +497,10 @@ definitions:
            desc: Header of a bounds message.
        - ssr_iod_atmo:
            type: u8
-           desc: IOD of the SSR atmospheric correction.
+           desc: IOD of the correction.
        - tile_set_id:
            type: u16
-           desc: Unique identifier of the set this tile belongs to.
+           desc: Set this tile belongs to.
        - tile_id:
            type: u16
            desc: Unique identifier of this tile in the tile set.
@@ -517,18 +513,22 @@ definitions:
        - tropo_delay_correction:
            type: TroposphericDelayCorrection
            desc: Tropospheric delay at grid point.
-       - tropo_bound_mu:
+       - tropo_v_hydro_bound_mu:
            type: u8
            units: 0.005 m
-           desc: >
-             Troposphere Error Bound Mean.
-             Range: 0-1.275 m
-       - tropo_bound_sig:
+           desc: Vertical Hydrostatic Error Bound Mean.
+       - tropo_v_hydro_bound_sig:
            type: u8
            units: 0.005 m
-           desc: >
-             Troposphere Error Bound StDev.
-             Range: 0-1.275 m
+           desc: Vertical Hydrostatic Error Bound StDev.
+       - tropo_v_wet_bound_mu:
+           type: u8
+           units: 0.005 m
+           desc: Vertical Wet Error Bound Mean.
+       - tropo_v_wet_bound_sig:
+           type: u8
+           units: 0.005 m
+           desc: Vertical Wet Error Bound StDev.
        - n_sats:
            type: u8
            desc: Number of satellites.
