@@ -37,7 +37,7 @@ ARG KITWARE_KEY_URL=https://apt.kitware.com/keys/kitware-archive-latest.asc
 
 RUN \
      apt-get update \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install -y \
       apt-utils \
       gnupg \
       gpg \
@@ -50,7 +50,7 @@ RUN \
   && add-apt-repository "deb https://apt.kitware.com/ubuntu/ ${UBUNTU_RELEASE} main" \
   && cat /etc/apt/sources.list \
   && apt-get update \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install -y \
       git \
       curl \
       libudev-dev \
@@ -87,7 +87,6 @@ RUN \
       dpkg-dev \
       cmake \
   && curl -sSL https://get.haskellstack.org/ | sh \
-  && apt autoremove -y \
   && rm -rf /var/lib/apt/lists/* /tmp/* \
   && curl -s "https://get.sdkman.io" | bash \
   && bash -c "source $SDKMAN_DIR/bin/sdkman-init.sh; \
