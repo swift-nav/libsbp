@@ -77,10 +77,10 @@ class Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0
 
 TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0, Test) {
   uint8_t encoded_frame[] = {
-      85,  254, 5,   66,  0, 43, 180, 0,  0,  0,   3,   0,   1,
-      1,   10,  0,   15,  1, 0,  10,  0,  39, 232, 3,   244, 1,
-      100, 200, 150, 100, 2, 5,  10,  16, 0,  17,  18,  19,  20,
-      21,  6,   10,  22,  0, 23, 24,  25, 26, 27,  112, 145,
+      85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   1,
+      10,  0,   15,  1,   0,  10, 0,   39, 232, 3,   244, 1,  100, 200,
+      150, 100, 150, 100, 2,  5,  10,  16, 0,   17,  18,  19, 20,  21,
+      6,   10,  22,  0,   23, 24, 25,  26, 27,  119, 82,
   };
 
   sbp_msg_ssr_gridded_correction_bounds_t test_msg{};
@@ -113,12 +113,14 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0, Test) {
   test_msg.stec_sat_list[1].stec_residual.sv_id.satId = 6;
   test_msg.tile_id = 10;
   test_msg.tile_set_id = 1;
-  test_msg.tropo_bound_mu = 150;
-  test_msg.tropo_bound_sig = 100;
   test_msg.tropo_delay_correction.hydro = 500;
   test_msg.tropo_delay_correction.stddev = 200;
   test_msg.tropo_delay_correction.wet = 100;
   test_msg.tropo_qi = 39;
+  test_msg.tropo_v_hydro_bound_mu = 150;
+  test_msg.tropo_v_hydro_bound_sig = 100;
+  test_msg.tropo_v_wet_bound_mu = 150;
+  test_msg.tropo_v_wet_bound_sig = 100;
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -232,12 +234,6 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0, Test) {
   EXPECT_EQ(last_msg_.tile_set_id, 1)
       << "incorrect value for last_msg_.tile_set_id, expected 1, is "
       << last_msg_.tile_set_id;
-  EXPECT_EQ(last_msg_.tropo_bound_mu, 150)
-      << "incorrect value for last_msg_.tropo_bound_mu, expected 150, is "
-      << last_msg_.tropo_bound_mu;
-  EXPECT_EQ(last_msg_.tropo_bound_sig, 100)
-      << "incorrect value for last_msg_.tropo_bound_sig, expected 100, is "
-      << last_msg_.tropo_bound_sig;
   EXPECT_EQ(last_msg_.tropo_delay_correction.hydro, 500)
       << "incorrect value for last_msg_.tropo_delay_correction.hydro, expected "
          "500, is "
@@ -253,4 +249,19 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0, Test) {
   EXPECT_EQ(last_msg_.tropo_qi, 39)
       << "incorrect value for last_msg_.tropo_qi, expected 39, is "
       << last_msg_.tropo_qi;
+  EXPECT_EQ(last_msg_.tropo_v_hydro_bound_mu, 150)
+      << "incorrect value for last_msg_.tropo_v_hydro_bound_mu, expected 150, "
+         "is "
+      << last_msg_.tropo_v_hydro_bound_mu;
+  EXPECT_EQ(last_msg_.tropo_v_hydro_bound_sig, 100)
+      << "incorrect value for last_msg_.tropo_v_hydro_bound_sig, expected 100, "
+         "is "
+      << last_msg_.tropo_v_hydro_bound_sig;
+  EXPECT_EQ(last_msg_.tropo_v_wet_bound_mu, 150)
+      << "incorrect value for last_msg_.tropo_v_wet_bound_mu, expected 150, is "
+      << last_msg_.tropo_v_wet_bound_mu;
+  EXPECT_EQ(last_msg_.tropo_v_wet_bound_sig, 100)
+      << "incorrect value for last_msg_.tropo_v_wet_bound_sig, expected 100, "
+         "is "
+      << last_msg_.tropo_v_wet_bound_sig;
 }

@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/tracking.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/tracking.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,17 +18,17 @@
  * Satellite code and carrier-phase tracking messages from the device.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignalDep = require("./gnss").GnssSignalDep;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeDep = require("./gnss").GPSTimeDep;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
-var SvId = require("./gnss").SvId;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
+let CarrierPhase = require("./gnss").CarrierPhase;
+let GnssSignal = require("./gnss").GnssSignal;
+let GnssSignalDep = require("./gnss").GnssSignalDep;
+let GPSTime = require("./gnss").GPSTime;
+let GPSTimeDep = require("./gnss").GPSTimeDep;
+let GPSTimeSec = require("./gnss").GPSTimeSec;
+let SvId = require("./gnss").SvId;
 
 /**
  * SBP class for message MSG_TRACKING_STATE_DETAILED_DEP_A (0x0021).
@@ -66,7 +66,7 @@ var SvId = require("./gnss").SvId;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingStateDetailedDepA = function (sbp, fields) {
+let MsgTrackingStateDetailedDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_STATE_DETAILED_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -158,7 +158,7 @@ MsgTrackingStateDetailedDepA.prototype.fieldSpec.push(['misc_flags', 'writeUInt8
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingStateDetailedDep = function (sbp, fields) {
+let MsgTrackingStateDetailedDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_STATE_DETAILED_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -228,7 +228,7 @@ MsgTrackingStateDetailedDep.prototype.fieldSpec.push(['misc_flags', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelState = function (sbp, fields) {
+let TrackingChannelState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelState";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -260,7 +260,7 @@ TrackingChannelState.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingState = function (sbp, fields) {
+let MsgTrackingState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -291,7 +291,7 @@ MsgTrackingState.prototype.fieldSpec.push(['states', 'array', TrackingChannelSta
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MeasurementState = function (sbp, fields) {
+let MeasurementState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MeasurementState";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -321,7 +321,7 @@ MeasurementState.prototype.fieldSpec.push(['cn0', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgMeasurementState = function (sbp, fields) {
+let MsgMeasurementState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_MEASUREMENT_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -349,7 +349,7 @@ MsgMeasurementState.prototype.fieldSpec.push(['states', 'array', MeasurementStat
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelCorrelation = function (sbp, fields) {
+let TrackingChannelCorrelation = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelCorrelation";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -380,7 +380,7 @@ TrackingChannelCorrelation.prototype.fieldSpec.push(['Q', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingIq = function (sbp, fields) {
+let MsgTrackingIq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_IQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -412,7 +412,7 @@ MsgTrackingIq.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCorrela
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelCorrelationDep = function (sbp, fields) {
+let TrackingChannelCorrelationDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelCorrelationDep";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -443,7 +443,7 @@ TrackingChannelCorrelationDep.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4])
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingIqDepB = function (sbp, fields) {
+let MsgTrackingIqDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_IQ_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -476,7 +476,7 @@ MsgTrackingIqDepB.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCor
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingIqDepA = function (sbp, fields) {
+let MsgTrackingIqDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_IQ_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -509,7 +509,7 @@ MsgTrackingIqDepA.prototype.fieldSpec.push(['corrs', 'array', TrackingChannelCor
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelStateDepA = function (sbp, fields) {
+let TrackingChannelStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelStateDepA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -539,7 +539,7 @@ TrackingChannelStateDepA.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingStateDepA = function (sbp, fields) {
+let MsgTrackingStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_STATE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -568,7 +568,7 @@ MsgTrackingStateDepA.prototype.fieldSpec.push(['states', 'array', TrackingChanne
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TrackingChannelStateDepB = function (sbp, fields) {
+let TrackingChannelStateDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TrackingChannelStateDepB";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -598,7 +598,7 @@ TrackingChannelStateDepB.prototype.fieldSpec.push(['cn0', 'writeFloatLE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgTrackingStateDepB = function (sbp, fields) {
+let MsgTrackingStateDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_TRACKING_STATE_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));

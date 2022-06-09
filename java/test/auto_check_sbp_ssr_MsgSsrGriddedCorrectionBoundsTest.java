@@ -36,10 +36,10 @@ public class auto_check_sbp_ssr_MsgSsrGriddedCorrectionBoundsTest {
                     (byte) 180, (byte) 0, (byte) 0, (byte) 0, (byte) 3, (byte) 0, (byte) 1,
                     (byte) 1, (byte) 10, (byte) 0, (byte) 15, (byte) 1, (byte) 0, (byte) 10,
                     (byte) 0, (byte) 39, (byte) 232, (byte) 3, (byte) 244, (byte) 1, (byte) 100,
-                    (byte) 200, (byte) 150, (byte) 100, (byte) 2, (byte) 5, (byte) 10, (byte) 16,
-                    (byte) 0, (byte) 17, (byte) 18, (byte) 19, (byte) 20, (byte) 21, (byte) 6,
-                    (byte) 10, (byte) 22, (byte) 0, (byte) 23, (byte) 24, (byte) 25, (byte) 26,
-                    (byte) 27,
+                    (byte) 200, (byte) 150, (byte) 100, (byte) 150, (byte) 100, (byte) 2, (byte) 5,
+                    (byte) 10, (byte) 16, (byte) 0, (byte) 17, (byte) 18, (byte) 19, (byte) 20,
+                    (byte) 21, (byte) 6, (byte) 10, (byte) 22, (byte) 0, (byte) 23, (byte) 24,
+                    (byte) 25, (byte) 26, (byte) 27,
                 };
         SBPMessage sbp = new SBPMessage(0x0042, 0x05FE, payload);
         MsgSsrGriddedCorrectionBounds msg = new MsgSsrGriddedCorrectionBounds(sbp);
@@ -322,26 +322,6 @@ public class auto_check_sbp_ssr_MsgSsrGriddedCorrectionBoundsTest {
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.tropo_bound_mu;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tropo_bound_mu + "' != '" + 150 + "'",
-                    value.equals(BigInteger.valueOf(150L)));
-        } else {
-            value = value.longValue();
-            expected = 150L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.tropo_bound_sig;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tropo_bound_sig + "' != '" + 100 + "'",
-                    value.equals(BigInteger.valueOf(100L)));
-        } else {
-            value = value.longValue();
-            expected = 100L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.tropo_delay_correction.hydro;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -380,6 +360,46 @@ public class auto_check_sbp_ssr_MsgSsrGriddedCorrectionBoundsTest {
         } else {
             value = value.longValue();
             expected = 39L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.tropo_v_hydro_bound_mu;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.tropo_v_hydro_bound_mu + "' != '" + 150 + "'",
+                    value.equals(BigInteger.valueOf(150L)));
+        } else {
+            value = value.longValue();
+            expected = 150L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.tropo_v_hydro_bound_sig;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.tropo_v_hydro_bound_sig + "' != '" + 100 + "'",
+                    value.equals(BigInteger.valueOf(100L)));
+        } else {
+            value = value.longValue();
+            expected = 100L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.tropo_v_wet_bound_mu;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.tropo_v_wet_bound_mu + "' != '" + 150 + "'",
+                    value.equals(BigInteger.valueOf(150L)));
+        } else {
+            value = value.longValue();
+            expected = 150L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.tropo_v_wet_bound_sig;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.tropo_v_wet_bound_sig + "' != '" + 100 + "'",
+                    value.equals(BigInteger.valueOf(100L)));
+        } else {
+            value = value.longValue();
+            expected = 100L;
             org.junit.Assert.assertEquals(value, expected);
         }
     }

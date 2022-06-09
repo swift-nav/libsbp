@@ -11,15 +11,13 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgItrf",
-  "title":"MsgItrf",
+  "$id": "#MsgReferenceFrameParam",
+  "title":"MsgReferenceFrameParam",
   "description":"",
   "type": "object",
   "properties": {
     "ssr_iod": {"type": "integer"},
-    "sn_counter_n": {"type": "integer"},
     "sn": {"type": "string"},
-    "tn_counter_m": {"type": "integer"},
     "tn": {"type": "string"},
     "sin": {"type": "integer"},
     "utn": {"type": "integer"},
@@ -41,9 +39,7 @@
   },
   "required": [
     "ssr_iod",
-    "sn_counter_n",
     "sn",
-    "tn_counter_m",
     "tn",
     "sin",
     "utn",

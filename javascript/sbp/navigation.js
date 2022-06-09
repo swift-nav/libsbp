@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/navigation.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/navigation.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -35,10 +35,10 @@
  * else), but not a Time of Measurement.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_GPS_TIME (0x0102).
@@ -61,7 +61,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGpsTime = function (sbp, fields) {
+let MsgGpsTime = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GPS_TIME";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -105,7 +105,7 @@ MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGpsTimeGnss = function (sbp, fields) {
+let MsgGpsTimeGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GPS_TIME_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -147,7 +147,7 @@ MsgGpsTimeGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUtcTime = function (sbp, fields) {
+let MsgUtcTime = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_UTC_TIME";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -199,7 +199,7 @@ MsgUtcTime.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUtcTimeGnss = function (sbp, fields) {
+let MsgUtcTimeGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_UTC_TIME_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -250,7 +250,7 @@ MsgUtcTimeGnss.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgDops = function (sbp, fields) {
+let MsgDops = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_DOPS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -300,7 +300,7 @@ MsgDops.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosEcef = function (sbp, fields) {
+let MsgPosEcef = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_ECEF";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -357,7 +357,7 @@ MsgPosEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosEcefCov = function (sbp, fields) {
+let MsgPosEcefCov = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_ECEF_COV";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -418,7 +418,7 @@ MsgPosEcefCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosLlh = function (sbp, fields) {
+let MsgPosLlh = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_LLH";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -476,7 +476,7 @@ MsgPosLlh.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosLlhCov = function (sbp, fields) {
+let MsgPosLlhCov = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_LLH_COV";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -529,7 +529,7 @@ MsgPosLlhCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var EstimatedHorizontalErrorEllipse = function (sbp, fields) {
+let EstimatedHorizontalErrorEllipse = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "EstimatedHorizontalErrorEllipse";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -585,7 +585,7 @@ EstimatedHorizontalErrorEllipse.prototype.fieldSpec.push(['orientation', 'writeF
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosLlhAcc = function (sbp, fields) {
+let MsgPosLlhAcc = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_LLH_ACC";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -645,7 +645,7 @@ MsgPosLlhAcc.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineEcef = function (sbp, fields) {
+let MsgBaselineEcef = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_ECEF";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -695,7 +695,7 @@ MsgBaselineEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineNed = function (sbp, fields) {
+let MsgBaselineNed = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_NED";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -744,7 +744,7 @@ MsgBaselineNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelEcef = function (sbp, fields) {
+let MsgVelEcef = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_ECEF";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -796,7 +796,7 @@ MsgVelEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelEcefCov = function (sbp, fields) {
+let MsgVelEcefCov = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_ECEF_COV";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -855,7 +855,7 @@ MsgVelEcefCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelNed = function (sbp, fields) {
+let MsgVelNed = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_NED";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -912,7 +912,7 @@ MsgVelNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelNedCov = function (sbp, fields) {
+let MsgVelNedCov = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_NED_COV";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -972,7 +972,7 @@ MsgVelNedCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosEcefGnss = function (sbp, fields) {
+let MsgPosEcefGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_ECEF_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1029,7 +1029,7 @@ MsgPosEcefGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosEcefCovGnss = function (sbp, fields) {
+let MsgPosEcefCovGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_ECEF_COV_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1090,7 +1090,7 @@ MsgPosEcefCovGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosLlhGnss = function (sbp, fields) {
+let MsgPosLlhGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_LLH_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1148,7 +1148,7 @@ MsgPosLlhGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosLlhCovGnss = function (sbp, fields) {
+let MsgPosLlhCovGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_LLH_COV_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1205,7 +1205,7 @@ MsgPosLlhCovGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelEcefGnss = function (sbp, fields) {
+let MsgVelEcefGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_ECEF_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1257,7 +1257,7 @@ MsgVelEcefGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelEcefCovGnss = function (sbp, fields) {
+let MsgVelEcefCovGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_ECEF_COV_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1316,7 +1316,7 @@ MsgVelEcefCovGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelNedGnss = function (sbp, fields) {
+let MsgVelNedGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_NED_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1373,7 +1373,7 @@ MsgVelNedGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelNedCovGnss = function (sbp, fields) {
+let MsgVelNedCovGnss = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_NED_COV_GNSS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1441,7 +1441,7 @@ MsgVelNedCovGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelBody = function (sbp, fields) {
+let MsgVelBody = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_BODY";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1506,7 +1506,7 @@ MsgVelBody.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelCog = function (sbp, fields) {
+let MsgVelCog = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_COG";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1549,7 +1549,7 @@ MsgVelCog.prototype.fieldSpec.push(['flags', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAgeCorrections = function (sbp, fields) {
+let MsgAgeCorrections = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_AGE_CORRECTIONS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1589,7 +1589,7 @@ MsgAgeCorrections.prototype.fieldSpec.push(['age', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGpsTimeDepA = function (sbp, fields) {
+let MsgGpsTimeDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GPS_TIME_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1628,7 +1628,7 @@ MsgGpsTimeDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgDopsDepA = function (sbp, fields) {
+let MsgDopsDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_DOPS_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1676,7 +1676,7 @@ MsgDopsDepA.prototype.fieldSpec.push(['vdop', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosEcefDepA = function (sbp, fields) {
+let MsgPosEcefDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_ECEF_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1727,7 +1727,7 @@ MsgPosEcefDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPosLlhDepA = function (sbp, fields) {
+let MsgPosLlhDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_POS_LLH_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1777,7 +1777,7 @@ MsgPosLlhDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineEcefDepA = function (sbp, fields) {
+let MsgBaselineEcefDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_ECEF_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1827,7 +1827,7 @@ MsgBaselineEcefDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineNedDepA = function (sbp, fields) {
+let MsgBaselineNedDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_NED_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1876,7 +1876,7 @@ MsgBaselineNedDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelEcefDepA = function (sbp, fields) {
+let MsgVelEcefDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_ECEF_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1925,7 +1925,7 @@ MsgVelEcefDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgVelNedDepA = function (sbp, fields) {
+let MsgVelNedDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_VEL_NED_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1971,7 +1971,7 @@ MsgVelNedDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgBaselineHeadingDepA = function (sbp, fields) {
+let MsgBaselineHeadingDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_BASELINE_HEADING_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2012,7 +2012,7 @@ MsgBaselineHeadingDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgProtectionLevelDepA = function (sbp, fields) {
+let MsgProtectionLevelDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_PROTECTION_LEVEL_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2075,7 +2075,7 @@ MsgProtectionLevelDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgProtectionLevel = function (sbp, fields) {
+let MsgProtectionLevel = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_PROTECTION_LEVEL";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -2133,7 +2133,7 @@ MsgProtectionLevel.prototype.fieldSpec.push(['heading', 'writeInt32LE', 4]);
 MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
- * SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+ * SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
  *
  * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift
  * model parameters.
@@ -2152,18 +2152,18 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGpsLeapSecond = function (sbp, fields) {
+let MsgUtcLeapSecond = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_GPS_LEAP_SECOND";
+  this.messageType = "MSG_UTC_LEAP_SECOND";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgGpsLeapSecond.prototype = Object.create(SBP.prototype);
-MsgGpsLeapSecond.prototype.messageType = "MSG_GPS_LEAP_SECOND";
-MsgGpsLeapSecond.prototype.msg_type = 0x023A;
-MsgGpsLeapSecond.prototype.constructor = MsgGpsLeapSecond;
-MsgGpsLeapSecond.prototype.parser = new Parser()
+MsgUtcLeapSecond.prototype = Object.create(SBP.prototype);
+MsgUtcLeapSecond.prototype.messageType = "MSG_UTC_LEAP_SECOND";
+MsgUtcLeapSecond.prototype.msg_type = 0x023A;
+MsgUtcLeapSecond.prototype.constructor = MsgUtcLeapSecond;
+MsgUtcLeapSecond.prototype.parser = new Parser()
   .endianess('little')
   .int16('bias_coeff')
   .int16('drift_coeff')
@@ -2174,27 +2174,25 @@ MsgGpsLeapSecond.prototype.parser = new Parser()
   .uint16('ref_wn')
   .uint8('ref_dn')
   .int8('count_after');
-MsgGpsLeapSecond.prototype.fieldSpec = [];
-MsgGpsLeapSecond.prototype.fieldSpec.push(['bias_coeff', 'writeInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['drift_coeff', 'writeInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['drift_rate_coeff', 'writeInt8', 1]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['count_before', 'writeInt8', 1]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['tow_s', 'writeUInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['ref_wn', 'writeUInt16LE', 2]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['ref_dn', 'writeUInt8', 1]);
-MsgGpsLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec = [];
+MsgUtcLeapSecond.prototype.fieldSpec.push(['bias_coeff', 'writeInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_coeff', 'writeInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_rate_coeff', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['count_before', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['tow_s', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_wn', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_dn', 'writeUInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
 
 /**
- * SBP class for message MSG_ITRF (0x0244).
+ * SBP class for message MSG_REFERENCE_FRAME_PARAM (0x0244).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
  * @field ssr_iod number (unsigned 8-bit int, 1 byte) SSR IOD parameter.
- * @field sn_counter_n number (unsigned 8-bit int, 1 byte) Source-Name Counter N.
- * @field sn string Source-Name
- * @field tn_counter_m number (unsigned 8-bit int, 1 byte) Target-Name Counter M.
- * @field tn string Target-Name
+ * @field sn string Name of source coordinate-system using the EPSG identification code.
+ * @field tn string Name of target coordinate-system using the EPSG identification code.
  * @field sin number (unsigned 8-bit int, 1 byte) System Identification Number.
  * @field utn number (unsigned 16-bit int, 2 bytes) Utilized Transformation Message.
  * @field re_t0 number (unsigned 16-bit int, 2 bytes) Reference Epoch t0 for transformation parameter set given as Modified Julian Day
@@ -2216,24 +2214,22 @@ MsgGpsLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgItrf = function (sbp, fields) {
+let MsgReferenceFrameParam = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_ITRF";
+  this.messageType = "MSG_REFERENCE_FRAME_PARAM";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgItrf.prototype = Object.create(SBP.prototype);
-MsgItrf.prototype.messageType = "MSG_ITRF";
-MsgItrf.prototype.msg_type = 0x0244;
-MsgItrf.prototype.constructor = MsgItrf;
-MsgItrf.prototype.parser = new Parser()
+MsgReferenceFrameParam.prototype = Object.create(SBP.prototype);
+MsgReferenceFrameParam.prototype.messageType = "MSG_REFERENCE_FRAME_PARAM";
+MsgReferenceFrameParam.prototype.msg_type = 0x0244;
+MsgReferenceFrameParam.prototype.constructor = MsgReferenceFrameParam;
+MsgReferenceFrameParam.prototype.parser = new Parser()
   .endianess('little')
   .uint8('ssr_iod')
-  .uint8('sn_counter_n')
-  .string('sn', { length: 31 })
-  .uint8('tn_counter_m')
-  .string('tn', { length: 31 })
+  .string('sn', { length: 32 })
+  .string('tn', { length: 32 })
   .uint8('sin')
   .uint16('utn')
   .uint16('re_t0')
@@ -2251,29 +2247,27 @@ MsgItrf.prototype.parser = new Parser()
   .int32('dot_theta_02')
   .int32('dot_theta_03')
   .int16('dot_scale');
-MsgItrf.prototype.fieldSpec = [];
-MsgItrf.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['sn_counter_n', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['sn', 'string', 31]);
-MsgItrf.prototype.fieldSpec.push(['tn_counter_m', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['tn', 'string', 31]);
-MsgItrf.prototype.fieldSpec.push(['sin', 'writeUInt8', 1]);
-MsgItrf.prototype.fieldSpec.push(['utn', 'writeUInt16LE', 2]);
-MsgItrf.prototype.fieldSpec.push(['re_t0', 'writeUInt16LE', 2]);
-MsgItrf.prototype.fieldSpec.push(['delta_X0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['delta_Y0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['delta_Z0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['theta_01', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['theta_02', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['theta_03', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['scale', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_delta_X0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_delta_Y0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_delta_Z0', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_theta_01', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_theta_02', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_theta_03', 'writeInt32LE', 4]);
-MsgItrf.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]);
+MsgReferenceFrameParam.prototype.fieldSpec = [];
+MsgReferenceFrameParam.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['sn', 'string', 32]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['tn', 'string', 32]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['sin', 'writeUInt8', 1]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['utn', 'writeUInt16LE', 2]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['re_t0', 'writeUInt16LE', 2]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_X0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_Y0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_Z0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_01', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_02', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_03', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['scale', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_X0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_Y0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_Z0', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_01', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_02', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_03', 'writeInt32LE', 4]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]);
 
 module.exports = {
   0x0102: MsgGpsTime,
@@ -2353,8 +2347,8 @@ module.exports = {
   MsgProtectionLevelDepA: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
   MsgProtectionLevel: MsgProtectionLevel,
-  0x023A: MsgGpsLeapSecond,
-  MsgGpsLeapSecond: MsgGpsLeapSecond,
-  0x0244: MsgItrf,
-  MsgItrf: MsgItrf,
+  0x023A: MsgUtcLeapSecond,
+  MsgUtcLeapSecond: MsgUtcLeapSecond,
+  0x0244: MsgReferenceFrameParam,
+  MsgReferenceFrameParam: MsgReferenceFrameParam,
 }

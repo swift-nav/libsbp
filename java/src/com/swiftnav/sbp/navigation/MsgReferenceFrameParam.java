@@ -18,22 +18,16 @@ import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
 
-public class MsgItrf extends SBPMessage {
+public class MsgReferenceFrameParam extends SBPMessage {
     public static final int TYPE = 0x0244;
 
     /** SSR IOD parameter. */
     public int ssr_iod;
 
-    /** Source-Name Counter N. */
-    public int sn_counter_n;
-
-    /** Source-Name */
+    /** Name of source coordinate-system using the EPSG identification code. */
     public String sn;
 
-    /** Target-Name Counter M. */
-    public int tn_counter_m;
-
-    /** Target-Name */
+    /** Name of target coordinate-system using the EPSG identification code. */
     public String tn;
 
     /** System Identification Number. */
@@ -90,15 +84,15 @@ public class MsgItrf extends SBPMessage {
     /** Rate of change of scale correction. */
     public int dot_scale;
 
-    public MsgItrf(int sender) {
+    public MsgReferenceFrameParam(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgItrf() {
+    public MsgReferenceFrameParam() {
         super(TYPE);
     }
 
-    public MsgItrf(SBPMessage msg) throws SBPBinaryException {
+    public MsgReferenceFrameParam(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }
@@ -107,10 +101,8 @@ public class MsgItrf extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         ssr_iod = parser.getU8();
-        sn_counter_n = parser.getU8();
-        sn = parser.getString(31);
-        tn_counter_m = parser.getU8();
-        tn = parser.getString(31);
+        sn = parser.getString(32);
+        tn = parser.getString(32);
         sin = parser.getU8();
         utn = parser.getU16();
         re_t0 = parser.getU16();
@@ -133,10 +125,8 @@ public class MsgItrf extends SBPMessage {
     @Override
     protected void build(Builder builder) {
         builder.putU8(ssr_iod);
-        builder.putU8(sn_counter_n);
-        builder.putString(sn, 31);
-        builder.putU8(tn_counter_m);
-        builder.putString(tn, 31);
+        builder.putString(sn, 32);
+        builder.putString(tn, 32);
         builder.putU8(sin);
         builder.putU16(utn);
         builder.putU16(re_t0);
@@ -160,9 +150,7 @@ public class MsgItrf extends SBPMessage {
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("ssr_iod", ssr_iod);
-        obj.put("sn_counter_n", sn_counter_n);
         obj.put("sn", sn);
-        obj.put("tn_counter_m", tn_counter_m);
         obj.put("tn", tn);
         obj.put("sin", sin);
         obj.put("utn", utn);

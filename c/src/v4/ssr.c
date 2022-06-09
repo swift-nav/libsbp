@@ -1927,10 +1927,16 @@ bool sbp_msg_ssr_gridded_correction_bounds_encode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  if (!sbp_u8_encode(ctx, &msg->tropo_bound_mu)) {
+  if (!sbp_u8_encode(ctx, &msg->tropo_v_hydro_bound_mu)) {
     return false;
   }
-  if (!sbp_u8_encode(ctx, &msg->tropo_bound_sig)) {
+  if (!sbp_u8_encode(ctx, &msg->tropo_v_hydro_bound_sig)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->tropo_v_wet_bound_mu)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->tropo_v_wet_bound_sig)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->n_sats)) {
@@ -1985,10 +1991,16 @@ bool sbp_msg_ssr_gridded_correction_bounds_decode_internal(
           ctx, &msg->tropo_delay_correction)) {
     return false;
   }
-  if (!sbp_u8_decode(ctx, &msg->tropo_bound_mu)) {
+  if (!sbp_u8_decode(ctx, &msg->tropo_v_hydro_bound_mu)) {
     return false;
   }
-  if (!sbp_u8_decode(ctx, &msg->tropo_bound_sig)) {
+  if (!sbp_u8_decode(ctx, &msg->tropo_v_hydro_bound_sig)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->tropo_v_wet_bound_mu)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->tropo_v_wet_bound_sig)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_sats)) {
@@ -2076,12 +2088,22 @@ int sbp_msg_ssr_gridded_correction_bounds_cmp(
     return ret;
   }
 
-  ret = sbp_u8_cmp(&a->tropo_bound_mu, &b->tropo_bound_mu);
+  ret = sbp_u8_cmp(&a->tropo_v_hydro_bound_mu, &b->tropo_v_hydro_bound_mu);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_u8_cmp(&a->tropo_bound_sig, &b->tropo_bound_sig);
+  ret = sbp_u8_cmp(&a->tropo_v_hydro_bound_sig, &b->tropo_v_hydro_bound_sig);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->tropo_v_wet_bound_mu, &b->tropo_v_wet_bound_mu);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->tropo_v_wet_bound_sig, &b->tropo_v_wet_bound_sig);
   if (ret != 0) {
     return ret;
   }

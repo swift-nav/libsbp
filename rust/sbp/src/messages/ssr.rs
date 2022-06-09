@@ -774,10 +774,10 @@ pub mod msg_ssr_gridded_correction_bounds {
         /// Header of a bounds message.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
         pub header: BoundsHeader,
-        /// IOD of the SSR atmospheric correction.
+        /// IOD of the correction.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod_atmo")))]
         pub ssr_iod_atmo: u8,
-        /// Unique identifier of the set this tile belongs to.
+        /// Set this tile belongs to.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
@@ -792,12 +792,21 @@ pub mod msg_ssr_gridded_correction_bounds {
         /// Tropospheric delay at grid point.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_delay_correction")))]
         pub tropo_delay_correction: TroposphericDelayCorrection,
-        /// Troposphere Error Bound Mean. Range: 0-1.275 m
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_bound_mu")))]
-        pub tropo_bound_mu: u8,
-        /// Troposphere Error Bound StDev. Range: 0-1.275 m
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_bound_sig")))]
-        pub tropo_bound_sig: u8,
+        /// Vertical Hydrostatic Error Bound Mean.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_v_hydro_bound_mu")))]
+        pub tropo_v_hydro_bound_mu: u8,
+        /// Vertical Hydrostatic Error Bound StDev.
+        #[cfg_attr(
+            feature = "serde",
+            serde(rename(serialize = "tropo_v_hydro_bound_sig"))
+        )]
+        pub tropo_v_hydro_bound_sig: u8,
+        /// Vertical Wet Error Bound Mean.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_v_wet_bound_mu")))]
+        pub tropo_v_wet_bound_mu: u8,
+        /// Vertical Wet Error Bound StDev.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_v_wet_bound_sig")))]
+        pub tropo_v_wet_bound_sig: u8,
         /// Number of satellites.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
         pub n_sats: u8,
@@ -851,6 +860,8 @@ pub mod msg_ssr_gridded_correction_bounds {
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
             + <Vec<STECSatElementIntegrity> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.header)
@@ -860,8 +871,10 @@ pub mod msg_ssr_gridded_correction_bounds {
                 + WireFormat::len(&self.tropo_qi)
                 + WireFormat::len(&self.grid_point_id)
                 + WireFormat::len(&self.tropo_delay_correction)
-                + WireFormat::len(&self.tropo_bound_mu)
-                + WireFormat::len(&self.tropo_bound_sig)
+                + WireFormat::len(&self.tropo_v_hydro_bound_mu)
+                + WireFormat::len(&self.tropo_v_hydro_bound_sig)
+                + WireFormat::len(&self.tropo_v_wet_bound_mu)
+                + WireFormat::len(&self.tropo_v_wet_bound_sig)
                 + WireFormat::len(&self.n_sats)
                 + WireFormat::len(&self.stec_sat_list)
         }
@@ -873,8 +886,10 @@ pub mod msg_ssr_gridded_correction_bounds {
             WireFormat::write(&self.tropo_qi, buf);
             WireFormat::write(&self.grid_point_id, buf);
             WireFormat::write(&self.tropo_delay_correction, buf);
-            WireFormat::write(&self.tropo_bound_mu, buf);
-            WireFormat::write(&self.tropo_bound_sig, buf);
+            WireFormat::write(&self.tropo_v_hydro_bound_mu, buf);
+            WireFormat::write(&self.tropo_v_hydro_bound_sig, buf);
+            WireFormat::write(&self.tropo_v_wet_bound_mu, buf);
+            WireFormat::write(&self.tropo_v_wet_bound_sig, buf);
             WireFormat::write(&self.n_sats, buf);
             WireFormat::write(&self.stec_sat_list, buf);
         }
@@ -888,8 +903,10 @@ pub mod msg_ssr_gridded_correction_bounds {
                 tropo_qi: WireFormat::parse_unchecked(buf),
                 grid_point_id: WireFormat::parse_unchecked(buf),
                 tropo_delay_correction: WireFormat::parse_unchecked(buf),
-                tropo_bound_mu: WireFormat::parse_unchecked(buf),
-                tropo_bound_sig: WireFormat::parse_unchecked(buf),
+                tropo_v_hydro_bound_mu: WireFormat::parse_unchecked(buf),
+                tropo_v_hydro_bound_sig: WireFormat::parse_unchecked(buf),
+                tropo_v_wet_bound_mu: WireFormat::parse_unchecked(buf),
+                tropo_v_wet_bound_sig: WireFormat::parse_unchecked(buf),
                 n_sats: WireFormat::parse_unchecked(buf),
                 stec_sat_list: WireFormat::parse_unchecked(buf),
             }
@@ -1328,8 +1345,11 @@ pub mod msg_ssr_orbit_clock_bounds {
 
     /// Combined Orbit and Clock Bound
     ///
-    /// Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240,
-    /// mean=5+0.5(i-200); i>240, mean=25+2(i-240).
+    /// Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230,
+    /// mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
+    ///
+    /// Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+    /// i>230, std=5+0.5(i-230).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, Clone)]
@@ -1443,7 +1463,8 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
         #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
         pub const_id: u8,
         /// Satellite Bit Mask. Put 1 for each satellite where the following
-        /// degradation parameters are applicable, 0 otherwise.
+        /// degradation parameters are applicable, 0 otherwise. Encoded following
+        /// RTCM DF394 specification.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_bitmask")))]
         pub sat_bitmask: u64,
         /// Orbit and Clock Bounds Degradation Parameters
@@ -2521,19 +2542,19 @@ pub mod orbit_clock_bound {
         /// Mean Cross-Track. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu")))]
         pub orb_cross_bound_mu: u8,
-        /// Standard Deviation Radial. See Note 1.
+        /// Standard Deviation Radial. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_sig")))]
         pub orb_radial_bound_sig: u8,
-        /// Standard Deviation Along-Track. See Note 1.
+        /// Standard Deviation Along-Track. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_sig")))]
         pub orb_along_bound_sig: u8,
-        /// Standard Deviation Cross-Track. See Note 1.
+        /// Standard Deviation Cross-Track. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_sig")))]
         pub orb_cross_bound_sig: u8,
         /// Clock Bound Mean. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu")))]
         pub clock_bound_mu: u8,
-        /// Clock Bound Standard Deviation. See Note 1.
+        /// Clock Bound Standard Deviation. See Note 2.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig")))]
         pub clock_bound_sig: u8,
     }
@@ -3064,10 +3085,10 @@ pub mod stec_sat_element_integrity {
         /// Error Bound StDev. See Note 1.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_sig")))]
         pub stec_bound_sig: u8,
-        /// Error Bound Mean First derivative. Range: 0-0.01275 m/s
+        /// Error Bound Mean First derivative.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_mu_dot")))]
         pub stec_bound_mu_dot: u8,
-        /// Error Bound StDev First derivative. Range: 0-0.01275 m/s
+        /// Error Bound StDev First derivative.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_sig_dot")))]
         pub stec_bound_sig_dot: u8,
     }

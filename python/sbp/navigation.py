@@ -5105,11 +5105,11 @@ class MsgProtectionLevel(SBP):
     d.update(j)
     return d
     
-SBP_MSG_GPS_LEAP_SECOND = 0x023A
-class MsgGPSLeapSecond(SBP):
-  """SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+SBP_MSG_UTC_LEAP_SECOND = 0x023A
+class MsgUtcLeapSecond(SBP):
+  """SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
 
-  You can have MSG_GPS_LEAP_SECOND inherit its fields directly
+  You can have MSG_UTC_LEAP_SECOND inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -5170,13 +5170,13 @@ class MsgGPSLeapSecond(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgGPSLeapSecond,
+      super( MsgUtcLeapSecond,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgGPSLeapSecond, self).__init__()
-      self.msg_type = SBP_MSG_GPS_LEAP_SECOND
+      super( MsgUtcLeapSecond, self).__init__()
+      self.msg_type = SBP_MSG_UTC_LEAP_SECOND
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.bias_coeff = kwargs.pop('bias_coeff')
       self.drift_coeff = kwargs.pop('drift_coeff')
@@ -5197,12 +5197,12 @@ class MsgGPSLeapSecond(SBP):
 
     """
     d = json.loads(s)
-    return MsgGPSLeapSecond.from_json_dict(d)
+    return MsgUtcLeapSecond.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgGPSLeapSecond(sbp, **d)
+    return MsgUtcLeapSecond(sbp, **d)
 
  
   def from_binary(self, d):
@@ -5210,7 +5210,7 @@ class MsgGPSLeapSecond(SBP):
     the message.
 
     """
-    p = MsgGPSLeapSecond._parser.parse(d)
+    p = MsgUtcLeapSecond._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -5219,7 +5219,7 @@ class MsgGPSLeapSecond(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgGPSLeapSecond._parser.build(c)
+    self.payload = MsgUtcLeapSecond._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -5227,22 +5227,22 @@ class MsgGPSLeapSecond(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgGPSLeapSecond._parser
+    self.parser = MsgUtcLeapSecond._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgGPSLeapSecond, self).to_json_dict()
+    d = super( MsgUtcLeapSecond, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_ITRF = 0x0244
-class MsgItrf(SBP):
-  """SBP class for message MSG_ITRF (0x0244).
+SBP_MSG_REFERENCE_FRAME_PARAM = 0x0244
+class MsgReferenceFrameParam(SBP):
+  """SBP class for message MSG_REFERENCE_FRAME_PARAM (0x0244).
 
-  You can have MSG_ITRF inherit its fields directly
+  You can have MSG_REFERENCE_FRAME_PARAM inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -5254,14 +5254,10 @@ class MsgItrf(SBP):
     SBP parent object to inherit from.
   ssr_iod : int
     SSR IOD parameter.
-  sn_counter_n : int
-    Source-Name Counter N.
   sn : string
-    Source-Name
-  tn_counter_m : int
-    Target-Name Counter M.
+    Name of source coordinate-system using the EPSG identification code.
   tn : string
-    Target-Name
+    Name of target coordinate-system using the EPSG identification code.
   sin : int
     System Identification Number.
   utn : int
@@ -5303,10 +5299,8 @@ class MsgItrf(SBP):
   """
   _parser = construct.Struct(
                    'ssr_iod' / construct.Int8ul,
-                   'sn_counter_n' / construct.Int8ul,
-                   'sn'/ construct.Bytes(31),
-                   'tn_counter_m' / construct.Int8ul,
-                   'tn'/ construct.Bytes(31),
+                   'sn'/ construct.Bytes(32),
+                   'tn'/ construct.Bytes(32),
                    'sin' / construct.Int8ul,
                    'utn' / construct.Int16ul,
                    're_t0' / construct.Int16ul,
@@ -5326,9 +5320,7 @@ class MsgItrf(SBP):
                    'dot_scale' / construct.Int16sl,)
   __slots__ = [
                'ssr_iod',
-               'sn_counter_n',
                'sn',
-               'tn_counter_m',
                'tn',
                'sin',
                'utn',
@@ -5351,18 +5343,16 @@ class MsgItrf(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgItrf,
+      super( MsgReferenceFrameParam,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgItrf, self).__init__()
-      self.msg_type = SBP_MSG_ITRF
+      super( MsgReferenceFrameParam, self).__init__()
+      self.msg_type = SBP_MSG_REFERENCE_FRAME_PARAM
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.ssr_iod = kwargs.pop('ssr_iod')
-      self.sn_counter_n = kwargs.pop('sn_counter_n')
       self.sn = kwargs.pop('sn')
-      self.tn_counter_m = kwargs.pop('tn_counter_m')
       self.tn = kwargs.pop('tn')
       self.sin = kwargs.pop('sin')
       self.utn = kwargs.pop('utn')
@@ -5391,12 +5381,12 @@ class MsgItrf(SBP):
 
     """
     d = json.loads(s)
-    return MsgItrf.from_json_dict(d)
+    return MsgReferenceFrameParam.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgItrf(sbp, **d)
+    return MsgReferenceFrameParam(sbp, **d)
 
  
   def from_binary(self, d):
@@ -5404,7 +5394,7 @@ class MsgItrf(SBP):
     the message.
 
     """
-    p = MsgItrf._parser.parse(d)
+    p = MsgReferenceFrameParam._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -5413,7 +5403,7 @@ class MsgItrf(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgItrf._parser.build(c)
+    self.payload = MsgReferenceFrameParam._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -5421,13 +5411,13 @@ class MsgItrf(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgItrf._parser
+    self.parser = MsgReferenceFrameParam._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgItrf, self).to_json_dict()
+    d = super( MsgReferenceFrameParam, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -5472,6 +5462,6 @@ msg_classes = {
   0x0207: MsgBaselineHeadingDepA,
   0x0216: MsgProtectionLevelDepA,
   0x0217: MsgProtectionLevel,
-  0x023A: MsgGPSLeapSecond,
-  0x0244: MsgItrf,
+  0x023A: MsgUtcLeapSecond,
+  0x0244: MsgReferenceFrameParam,
 }

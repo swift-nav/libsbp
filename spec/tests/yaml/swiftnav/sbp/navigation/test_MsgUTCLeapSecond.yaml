@@ -1,4 +1,4 @@
-description: Unit tests for swiftnav.sbp.navigation MsgGPSLeapSecond
+description: Unit tests for swiftnav.sbp.navigation MsgUTCLeapSecond
 generated_on: 2022-05-11 # manually generated
 package: sbp.navigation
 tests:
@@ -15,7 +15,7 @@ tests:
         ref_dn: 8
         count_after: 9
       module: sbp.navigation
-      name: MsgGPSLeapSecond
+      name: MsgUtcLeapSecond
     msg_type: '570'
     raw_json: '{"bias_coeff": 1, "drift_coeff": 2, "drift_rate_coeff": 3, "count_before": 4, "tow_s": 5, "wn": 6,
       "ref_wn": 7, "ref_dn": 8, "count_after": 9, "preamble": 85, "msg_type": 570, "sender": 66, "length": 14,

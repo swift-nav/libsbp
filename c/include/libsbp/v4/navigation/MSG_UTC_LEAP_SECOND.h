@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_NAVIGATION_MSG_GPS_LEAP_SECOND_H
-#define LIBSBP_V4_NAVIGATION_MSG_GPS_LEAP_SECOND_H
+#ifndef LIBSBP_V4_NAVIGATION_MSG_UTC_LEAP_SECOND_H
+#define LIBSBP_V4_NAVIGATION_MSG_UTC_LEAP_SECOND_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -35,7 +35,7 @@ extern "C" {
 
 /******************************************************************************
  *
- * SBP_MSG_GPS_LEAP_SECOND
+ * SBP_MSG_UTC_LEAP_SECOND
  *
  *****************************************************************************/
 /** Leap second SBP message.
@@ -92,22 +92,22 @@ typedef struct {
    * Leap second count after insertion. [s]
    */
   s8 count_after;
-} sbp_msg_gps_leap_second_t;
+} sbp_msg_utc_leap_second_t;
 
 /**
- * Get encoded size of an instance of sbp_msg_gps_leap_second_t
+ * Get encoded size of an instance of sbp_msg_utc_leap_second_t
  *
- * @param msg sbp_msg_gps_leap_second_t instance
+ * @param msg sbp_msg_utc_leap_second_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_gps_leap_second_encoded_len(
-    const sbp_msg_gps_leap_second_t *msg) {
+static inline size_t sbp_msg_utc_leap_second_encoded_len(
+    const sbp_msg_utc_leap_second_t *msg) {
   (void)msg;
-  return SBP_MSG_GPS_LEAP_SECOND_ENCODED_LEN;
+  return SBP_MSG_UTC_LEAP_SECOND_ENCODED_LEN;
 }
 
 /**
- * Encode an instance of sbp_msg_gps_leap_second_t to wire representation
+ * Encode an instance of sbp_msg_utc_leap_second_t to wire representation
  *
  * This function encodes the given instance in to the user provided buffer. The
  * buffer provided to this function must be large enough to store the encoded
@@ -122,36 +122,36 @@ static inline size_t sbp_msg_gps_leap_second_encoded_len(
  * @param len Length of \p buf
  * @param n_written If not null, on success will be set to the number of bytes
  * written to \p buf
- * @param msg Instance of sbp_msg_gps_leap_second_t to encode
+ * @param msg Instance of sbp_msg_utc_leap_second_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
 SBP_EXPORT s8
-sbp_msg_gps_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                               const sbp_msg_gps_leap_second_t *msg);
+sbp_msg_utc_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                               const sbp_msg_utc_leap_second_t *msg);
 
 /**
- * Decode an instance of sbp_msg_gps_leap_second_t from wire representation
+ * Decode an instance of sbp_msg_utc_leap_second_t from wire representation
  *
- * This function decodes the wire representation of a sbp_msg_gps_leap_second_t
+ * This function decodes the wire representation of a sbp_msg_utc_leap_second_t
  * message to the given instance. The caller must specify the length of the
  * buffer in the \p len parameter. If non-null the number of bytes read from the
  * buffer will be returned in \p n_read.
  *
- * @param buf Wire representation of the sbp_msg_gps_leap_second_t instance
+ * @param buf Wire representation of the sbp_msg_utc_leap_second_t instance
  * @param len Length of \p buf
  * @param n_read If not null, on success will be set to the number of bytes read
  * from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_gps_leap_second_decode(const uint8_t *buf, uint8_t len,
+SBP_EXPORT s8 sbp_msg_utc_leap_second_decode(const uint8_t *buf, uint8_t len,
                                              uint8_t *n_read,
-                                             sbp_msg_gps_leap_second_t *msg);
+                                             sbp_msg_utc_leap_second_t *msg);
 /**
- * Send an instance of sbp_msg_gps_leap_second_t with the given write function
+ * Send an instance of sbp_msg_utc_leap_second_t with the given write function
  *
  * An equivalent of #sbp_message_send which operates specifically on
- * sbp_msg_gps_leap_second_t
+ * sbp_msg_utc_leap_second_t
  *
  * The given message will be encoded to wire representation and passed in to the
  * given write function callback. The write callback will be called several
@@ -163,12 +163,12 @@ SBP_EXPORT s8 sbp_msg_gps_leap_second_decode(const uint8_t *buf, uint8_t len,
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_gps_leap_second_send(sbp_state_t *s, u16 sender_id,
-                                           const sbp_msg_gps_leap_second_t *msg,
+SBP_EXPORT s8 sbp_msg_utc_leap_second_send(sbp_state_t *s, u16 sender_id,
+                                           const sbp_msg_utc_leap_second_t *msg,
                                            sbp_write_fn_t write);
 
 /**
- * Compare two instances of sbp_msg_gps_leap_second_t
+ * Compare two instances of sbp_msg_utc_leap_second_t
  *
  * The two instances will be compared and a value returned consistent with the
  * return codes of comparison functions from the C standard library
@@ -178,46 +178,46 @@ SBP_EXPORT s8 sbp_msg_gps_leap_second_send(sbp_state_t *s, u16 sender_id,
  * b A value greater than 0 will be returned if \p b is considered to be greater
  * than \p b
  *
- * @param a sbp_msg_gps_leap_second_t instance
- * @param b sbp_msg_gps_leap_second_t instance
+ * @param a sbp_msg_utc_leap_second_t instance
+ * @param b sbp_msg_utc_leap_second_t instance
  * @return 0, <0, >0
  */
-SBP_EXPORT int sbp_msg_gps_leap_second_cmp(const sbp_msg_gps_leap_second_t *a,
-                                           const sbp_msg_gps_leap_second_t *b);
+SBP_EXPORT int sbp_msg_utc_leap_second_cmp(const sbp_msg_utc_leap_second_t *a,
+                                           const sbp_msg_utc_leap_second_t *b);
 
 #ifdef __cplusplus
 }
 
-static inline bool operator==(const sbp_msg_gps_leap_second_t &lhs,
-                              const sbp_msg_gps_leap_second_t &rhs) {
-  return sbp_msg_gps_leap_second_cmp(&lhs, &rhs) == 0;
+static inline bool operator==(const sbp_msg_utc_leap_second_t &lhs,
+                              const sbp_msg_utc_leap_second_t &rhs) {
+  return sbp_msg_utc_leap_second_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_gps_leap_second_t &lhs,
-                              const sbp_msg_gps_leap_second_t &rhs) {
-  return sbp_msg_gps_leap_second_cmp(&lhs, &rhs) != 0;
+static inline bool operator!=(const sbp_msg_utc_leap_second_t &lhs,
+                              const sbp_msg_utc_leap_second_t &rhs) {
+  return sbp_msg_utc_leap_second_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_gps_leap_second_t &lhs,
-                             const sbp_msg_gps_leap_second_t &rhs) {
-  return sbp_msg_gps_leap_second_cmp(&lhs, &rhs) < 0;
+static inline bool operator<(const sbp_msg_utc_leap_second_t &lhs,
+                             const sbp_msg_utc_leap_second_t &rhs) {
+  return sbp_msg_utc_leap_second_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_gps_leap_second_t &lhs,
-                              const sbp_msg_gps_leap_second_t &rhs) {
-  return sbp_msg_gps_leap_second_cmp(&lhs, &rhs) <= 0;
+static inline bool operator<=(const sbp_msg_utc_leap_second_t &lhs,
+                              const sbp_msg_utc_leap_second_t &rhs) {
+  return sbp_msg_utc_leap_second_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_gps_leap_second_t &lhs,
-                             const sbp_msg_gps_leap_second_t &rhs) {
-  return sbp_msg_gps_leap_second_cmp(&lhs, &rhs) > 0;
+static inline bool operator>(const sbp_msg_utc_leap_second_t &lhs,
+                             const sbp_msg_utc_leap_second_t &rhs) {
+  return sbp_msg_utc_leap_second_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_gps_leap_second_t &lhs,
-                              const sbp_msg_gps_leap_second_t &rhs) {
-  return sbp_msg_gps_leap_second_cmp(&lhs, &rhs) >= 0;
+static inline bool operator>=(const sbp_msg_utc_leap_second_t &lhs,
+                              const sbp_msg_utc_leap_second_t &rhs) {
+  return sbp_msg_utc_leap_second_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_NAVIGATION_MSG_GPS_LEAP_SECOND_H */
+#endif /* LIBSBP_V4_NAVIGATION_MSG_UTC_LEAP_SECOND_H */

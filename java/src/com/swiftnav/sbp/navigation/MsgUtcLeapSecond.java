@@ -19,15 +19,15 @@ import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONObject;
 
 /**
- * SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
+ * SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
  *
- * <p>You can have MSG_GPS_LEAP_SECOND inherent its fields directly from an inherited SBP object, or
+ * <p>You can have MSG_UTC_LEAP_SECOND inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
  * <p>Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
  * parameters.
  */
-public class MsgGPSLeapSecond extends SBPMessage {
+public class MsgUtcLeapSecond extends SBPMessage {
     public static final int TYPE = 0x023A;
 
     /** Reserved. Bias coefficient of GPS time scale with respect to UTC drift model. */
@@ -60,15 +60,15 @@ public class MsgGPSLeapSecond extends SBPMessage {
     /** Leap second count after insertion. */
     public int count_after;
 
-    public MsgGPSLeapSecond(int sender) {
+    public MsgUtcLeapSecond(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgGPSLeapSecond() {
+    public MsgUtcLeapSecond() {
         super(TYPE);
     }
 
-    public MsgGPSLeapSecond(SBPMessage msg) throws SBPBinaryException {
+    public MsgUtcLeapSecond(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

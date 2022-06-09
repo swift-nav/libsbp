@@ -5972,8 +5972,8 @@ int sbp_msg_protection_level_cmp(const sbp_msg_protection_level_t *a,
   return ret;
 }
 
-bool sbp_msg_gps_leap_second_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_gps_leap_second_t *msg) {
+bool sbp_msg_utc_leap_second_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_utc_leap_second_t *msg) {
   if (!sbp_s16_encode(ctx, &msg->bias_coeff)) {
     return false;
   }
@@ -6004,13 +6004,13 @@ bool sbp_msg_gps_leap_second_encode_internal(
   return true;
 }
 
-s8 sbp_msg_gps_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                  const sbp_msg_gps_leap_second_t *msg) {
+s8 sbp_msg_utc_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                                  const sbp_msg_utc_leap_second_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_gps_leap_second_encode_internal(&ctx, msg)) {
+  if (!sbp_msg_utc_leap_second_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -6019,8 +6019,8 @@ s8 sbp_msg_gps_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_gps_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
-                                             sbp_msg_gps_leap_second_t *msg) {
+bool sbp_msg_utc_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_utc_leap_second_t *msg) {
   if (!sbp_s16_decode(ctx, &msg->bias_coeff)) {
     return false;
   }
@@ -6051,14 +6051,14 @@ bool sbp_msg_gps_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_msg_gps_leap_second_decode(const uint8_t *buf, uint8_t len,
+s8 sbp_msg_utc_leap_second_decode(const uint8_t *buf, uint8_t len,
                                   uint8_t *n_read,
-                                  sbp_msg_gps_leap_second_t *msg) {
+                                  sbp_msg_utc_leap_second_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_gps_leap_second_decode_internal(&ctx, msg)) {
+  if (!sbp_msg_utc_leap_second_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -6067,22 +6067,22 @@ s8 sbp_msg_gps_leap_second_decode(const uint8_t *buf, uint8_t len,
   return SBP_OK;
 }
 
-s8 sbp_msg_gps_leap_second_send(sbp_state_t *s, u16 sender_id,
-                                const sbp_msg_gps_leap_second_t *msg,
+s8 sbp_msg_utc_leap_second_send(sbp_state_t *s, u16 sender_id,
+                                const sbp_msg_utc_leap_second_t *msg,
                                 sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_msg_gps_leap_second_encode(payload, sizeof(payload),
+  s8 ret = sbp_msg_utc_leap_second_encode(payload, sizeof(payload),
                                           &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_GPS_LEAP_SECOND, sender_id, payload_len,
+  return sbp_payload_send(s, SBP_MSG_UTC_LEAP_SECOND, sender_id, payload_len,
                           payload, write);
 }
 
-int sbp_msg_gps_leap_second_cmp(const sbp_msg_gps_leap_second_t *a,
-                                const sbp_msg_gps_leap_second_t *b) {
+int sbp_msg_utc_leap_second_cmp(const sbp_msg_utc_leap_second_t *a,
+                                const sbp_msg_utc_leap_second_t *b) {
   int ret = 0;
 
   ret = sbp_s16_cmp(&a->bias_coeff, &b->bias_coeff);
@@ -6132,23 +6132,17 @@ int sbp_msg_gps_leap_second_cmp(const sbp_msg_gps_leap_second_t *a,
   return ret;
 }
 
-bool sbp_msg_itrf_encode_internal(sbp_encode_ctx_t *ctx,
-                                  const sbp_msg_itrf_t *msg) {
+bool sbp_msg_reference_frame_param_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_reference_frame_param_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->ssr_iod)) {
     return false;
   }
-  if (!sbp_u8_encode(ctx, &msg->sn_counter_n)) {
-    return false;
-  }
-  for (size_t i = 0; i < SBP_MSG_ITRF_SN_MAX; i++) {
+  for (size_t i = 0; i < SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX; i++) {
     if (!sbp_char_encode(ctx, &msg->sn[i])) {
       return false;
     }
   }
-  if (!sbp_u8_encode(ctx, &msg->tn_counter_m)) {
-    return false;
-  }
-  for (size_t i = 0; i < SBP_MSG_ITRF_TN_MAX; i++) {
+  for (size_t i = 0; i < SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX; i++) {
     if (!sbp_char_encode(ctx, &msg->tn[i])) {
       return false;
     }
@@ -6207,13 +6201,14 @@ bool sbp_msg_itrf_encode_internal(sbp_encode_ctx_t *ctx,
   return true;
 }
 
-s8 sbp_msg_itrf_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                       const sbp_msg_itrf_t *msg) {
+s8 sbp_msg_reference_frame_param_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_reference_frame_param_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_itrf_encode_internal(&ctx, msg)) {
+  if (!sbp_msg_reference_frame_param_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -6222,22 +6217,17 @@ s8 sbp_msg_itrf_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
   return SBP_OK;
 }
 
-bool sbp_msg_itrf_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_itrf_t *msg) {
+bool sbp_msg_reference_frame_param_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_reference_frame_param_t *msg) {
   if (!sbp_u8_decode(ctx, &msg->ssr_iod)) {
     return false;
   }
-  if (!sbp_u8_decode(ctx, &msg->sn_counter_n)) {
-    return false;
-  }
-  for (uint8_t i = 0; i < SBP_MSG_ITRF_SN_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX; i++) {
     if (!sbp_char_decode(ctx, &msg->sn[i])) {
       return false;
     }
   }
-  if (!sbp_u8_decode(ctx, &msg->tn_counter_m)) {
-    return false;
-  }
-  for (uint8_t i = 0; i < SBP_MSG_ITRF_TN_MAX; i++) {
+  for (uint8_t i = 0; i < SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX; i++) {
     if (!sbp_char_decode(ctx, &msg->tn[i])) {
       return false;
     }
@@ -6296,13 +6286,14 @@ bool sbp_msg_itrf_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_itrf_t *msg) {
   return true;
 }
 
-s8 sbp_msg_itrf_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
-                       sbp_msg_itrf_t *msg) {
+s8 sbp_msg_reference_frame_param_decode(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_reference_frame_param_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_itrf_decode_internal(&ctx, msg)) {
+  if (!sbp_msg_reference_frame_param_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -6311,19 +6302,23 @@ s8 sbp_msg_itrf_decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
   return SBP_OK;
 }
 
-s8 sbp_msg_itrf_send(sbp_state_t *s, u16 sender_id, const sbp_msg_itrf_t *msg,
-                     sbp_write_fn_t write) {
+s8 sbp_msg_reference_frame_param_send(
+    sbp_state_t *s, u16 sender_id, const sbp_msg_reference_frame_param_t *msg,
+    sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_msg_itrf_encode(payload, sizeof(payload), &payload_len, msg);
+  s8 ret = sbp_msg_reference_frame_param_encode(payload, sizeof(payload),
+                                                &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_ITRF, sender_id, payload_len, payload,
-                          write);
+  return sbp_payload_send(s, SBP_MSG_REFERENCE_FRAME_PARAM, sender_id,
+                          payload_len, payload, write);
 }
 
-int sbp_msg_itrf_cmp(const sbp_msg_itrf_t *a, const sbp_msg_itrf_t *b) {
+int sbp_msg_reference_frame_param_cmp(
+    const sbp_msg_reference_frame_param_t *a,
+    const sbp_msg_reference_frame_param_t *b) {
   int ret = 0;
 
   ret = sbp_u8_cmp(&a->ssr_iod, &b->ssr_iod);
@@ -6331,24 +6326,16 @@ int sbp_msg_itrf_cmp(const sbp_msg_itrf_t *a, const sbp_msg_itrf_t *b) {
     return ret;
   }
 
-  ret = sbp_u8_cmp(&a->sn_counter_n, &b->sn_counter_n);
-  if (ret != 0) {
-    return ret;
-  }
-
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_ITRF_SN_MAX; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX;
+       i++) {
     ret = sbp_char_cmp(&a->sn[i], &b->sn[i]);
   }
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_u8_cmp(&a->tn_counter_m, &b->tn_counter_m);
-  if (ret != 0) {
-    return ret;
-  }
-
-  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_ITRF_TN_MAX; i++) {
+  for (uint8_t i = 0; ret == 0 && i < SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX;
+       i++) {
     ret = sbp_char_cmp(&a->tn[i], &b->tn[i]);
   }
   if (ret != 0) {

@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/system.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/system.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,10 +18,10 @@
  * Standardized system messages from Swift Navigation devices.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_STARTUP (0xFF00).
@@ -37,7 +37,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStartup = function (sbp, fields) {
+let MsgStartup = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STARTUP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -72,7 +72,7 @@ MsgStartup.prototype.fieldSpec.push(['reserved', 'writeUInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgDgnssStatus = function (sbp, fields) {
+let MsgDgnssStatus = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_DGNSS_STATUS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -111,7 +111,7 @@ MsgDgnssStatus.prototype.fieldSpec.push(['source', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgHeartbeat = function (sbp, fields) {
+let MsgHeartbeat = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_HEARTBEAT";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -141,7 +141,7 @@ MsgHeartbeat.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var SubSystemReport = function (sbp, fields) {
+let SubSystemReport = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "SubSystemReport";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -181,7 +181,7 @@ SubSystemReport.prototype.fieldSpec.push(['specific', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStatusReport = function (sbp, fields) {
+let MsgStatusReport = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STATUS_REPORT";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -219,7 +219,7 @@ MsgStatusReport.prototype.fieldSpec.push(['status', 'array', SubSystemReport.pro
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var StatusJournalItem = function (sbp, fields) {
+let StatusJournalItem = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "StatusJournalItem";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -253,7 +253,7 @@ StatusJournalItem.prototype.fieldSpec.push(['report', SubSystemReport.prototype.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStatusJournal = function (sbp, fields) {
+let MsgStatusJournal = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STATUS_JOURNAL";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -289,7 +289,7 @@ MsgStatusJournal.prototype.fieldSpec.push(['journal', 'array', StatusJournalItem
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgInsStatus = function (sbp, fields) {
+let MsgInsStatus = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_INS_STATUS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -319,7 +319,7 @@ MsgInsStatus.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCsacTelemetry = function (sbp, fields) {
+let MsgCsacTelemetry = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_CSAC_TELEMETRY";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -351,7 +351,7 @@ MsgCsacTelemetry.prototype.fieldSpec.push(['telemetry', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCsacTelemetryLabels = function (sbp, fields) {
+let MsgCsacTelemetryLabels = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_CSAC_TELEMETRY_LABELS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -388,7 +388,7 @@ MsgCsacTelemetryLabels.prototype.fieldSpec.push(['telemetry_labels', 'string', n
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgInsUpdates = function (sbp, fields) {
+let MsgInsUpdates = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_INS_UPDATES";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -432,7 +432,7 @@ MsgInsUpdates.prototype.fieldSpec.push(['zerovel', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGnssTimeOffset = function (sbp, fields) {
+let MsgGnssTimeOffset = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GNSS_TIME_OFFSET";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -474,7 +474,7 @@ MsgGnssTimeOffset.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgPpsTime = function (sbp, fields) {
+let MsgPpsTime = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_PPS_TIME";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -513,7 +513,7 @@ MsgPpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSensorAidEvent = function (sbp, fields) {
+let MsgSensorAidEvent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SENSOR_AID_EVENT";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -560,7 +560,7 @@ MsgSensorAidEvent.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgGroupMeta = function (sbp, fields) {
+let MsgGroupMeta = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_GROUP_META";
   this.fields = (fields || this.parser.parse(sbp.payload));

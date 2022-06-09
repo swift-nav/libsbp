@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/file_io.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/file_io.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -23,10 +23,10 @@
  * request and the device response.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_FILEIO_READ_REQ (0x00A8).
@@ -47,7 +47,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadReq = function (sbp, fields) {
+let MsgFileioReadReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -84,7 +84,7 @@ MsgFileioReadReq.prototype.fieldSpec.push(['filename', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadResp = function (sbp, fields) {
+let MsgFileioReadResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -122,7 +122,7 @@ MsgFileioReadResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8', f
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadDirReq = function (sbp, fields) {
+let MsgFileioReadDirReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_DIR_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -158,7 +158,7 @@ MsgFileioReadDirReq.prototype.fieldSpec.push(['dirname', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioReadDirResp = function (sbp, fields) {
+let MsgFileioReadDirResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_READ_DIR_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -190,7 +190,7 @@ MsgFileioReadDirResp.prototype.fieldSpec.push(['contents', 'array', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioRemove = function (sbp, fields) {
+let MsgFileioRemove = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_REMOVE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -225,7 +225,7 @@ MsgFileioRemove.prototype.fieldSpec.push(['filename', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioWriteReq = function (sbp, fields) {
+let MsgFileioWriteReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_WRITE_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -261,7 +261,7 @@ MsgFileioWriteReq.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', funct
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioWriteResp = function (sbp, fields) {
+let MsgFileioWriteResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_WRITE_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -290,7 +290,7 @@ MsgFileioWriteResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioConfigReq = function (sbp, fields) {
+let MsgFileioConfigReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_CONFIG_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -322,7 +322,7 @@ MsgFileioConfigReq.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFileioConfigResp = function (sbp, fields) {
+let MsgFileioConfigResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FILEIO_CONFIG_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));

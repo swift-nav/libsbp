@@ -65,17 +65,17 @@ typedef struct {
   u8 orb_cross_bound_mu;
 
   /**
-   * Standard Deviation Radial. See Note 1. [m]
+   * Standard Deviation Radial. See Note 2. [m]
    */
   u8 orb_radial_bound_sig;
 
   /**
-   * Standard Deviation Along-Track. See Note 1. [m]
+   * Standard Deviation Along-Track. See Note 2. [m]
    */
   u8 orb_along_bound_sig;
 
   /**
-   * Standard Deviation Cross-Track. See Note 1. [m]
+   * Standard Deviation Cross-Track. See Note 2. [m]
    */
   u8 orb_cross_bound_sig;
 
@@ -85,7 +85,7 @@ typedef struct {
   u8 clock_bound_mu;
 
   /**
-   * Clock Bound Standard Deviation. See Note 1. [m]
+   * Clock Bound Standard Deviation. See Note 2. [m]
    */
   u8 clock_bound_sig;
 } sbp_orbit_clock_bound_t;

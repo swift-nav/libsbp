@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/solution_meta.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/solution_meta.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,10 +18,10 @@
  * Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message fragment SolutionInputType
@@ -39,7 +39,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var SolutionInputType = function (sbp, fields) {
+let SolutionInputType = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "SolutionInputType";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -84,7 +84,7 @@ SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSolnMetaDepA = function (sbp, fields) {
+let MsgSolnMetaDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SOLN_META_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -147,7 +147,7 @@ MsgSolnMetaDepA.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.p
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSolnMeta = function (sbp, fields) {
+let MsgSolnMeta = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SOLN_META";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -187,7 +187,7 @@ MsgSolnMeta.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.proto
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GNSSInputType = function (sbp, fields) {
+let GNSSInputType = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "GNSSInputType";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -214,7 +214,7 @@ GNSSInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var IMUInputType = function (sbp, fields) {
+let IMUInputType = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "IMUInputType";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -241,7 +241,7 @@ IMUInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var OdoInputType = function (sbp, fields) {
+let OdoInputType = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "OdoInputType";
   this.fields = (fields || this.parser.parse(sbp.payload));

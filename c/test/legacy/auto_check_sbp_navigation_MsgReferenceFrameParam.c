@@ -11,8 +11,8 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgItrf.yaml by generate.py. Do
-// not modify by hand!
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgReferenceFrameParam.yaml by
+// generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <libsbp/legacy/navigation.h>
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
+START_TEST(test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -122,14 +122,14 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 68, 2,  66, 0, 124, 1,  2,  102, 111, 111, 0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 3,   98, 97, 114, 0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
-        0,  0,  0,  4,  5, 0,   6,  0,  7,   0,   0,   0,  8,   0, 0,  0,  9,
-        0,  0,  0,  10, 0, 0,   0,  11, 0,   0,   0,   12, 0,   0, 0,  13, 0,
-        0,  0,  14, 0,  0, 0,   15, 0,  0,   0,   16,  0,  0,   0, 17, 0,  0,
-        0,  18, 0,  0,  0, 19,  0,  0,  0,   20,  0,   66, 126,
+        85, 68, 2,  66, 0, 124, 1,  102, 111, 111, 0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 98,  97, 114, 0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
+        0,  0,  0,  4,  5, 0,   6,  0,   7,   0,   0,  0,  8,   0, 0,  0,  9,
+        0,  0,  0,  10, 0, 0,   0,  11,  0,   0,   0,  12, 0,   0, 0,  13, 0,
+        0,  0,  14, 0,  0, 0,   15, 0,   0,   0,   16, 0,  0,   0, 17, 0,  0,
+        0,  18, 0,  0,  0, 19,  0,  0,   0,   20,  0,  6,  161,
     };
 
     dummy_reset();
@@ -137,7 +137,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_itrf_t *test_msg = (msg_itrf_t *)test_msg_storage;
+    msg_reference_frame_param_t *test_msg =
+        (msg_reference_frame_param_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->delta_X0 = 7;
     test_msg->delta_Y0 = 8;
@@ -158,13 +159,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0};
+          (char)0,   (char)0,   (char)0,   (char)0};
       memcpy(test_msg->sn, assign_string, sizeof(assign_string));
       if (sizeof(test_msg->sn) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg->sn_counter_n = 2;
     test_msg->ssr_iod = 1;
     test_msg->theta_01 = 10;
     test_msg->theta_02 = 11;
@@ -175,13 +175,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0};
+          (char)0,  (char)0,  (char)0,   (char)0};
       memcpy(test_msg->tn, assign_string, sizeof(assign_string));
       if (sizeof(test_msg->tn) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg->tn_counter_m = 3;
     test_msg->utn = 5;
     sbp_payload_send(&sbp_state, 580, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
@@ -234,7 +233,8 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_itrf_t *check_msg = (msg_itrf_t *)((void *)last_msg.msg);
+    msg_reference_frame_param_t *check_msg =
+        (msg_reference_frame_param_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->delta_X0 == 7,
@@ -281,15 +281,12 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0};
+          (char)0,   (char)0,   (char)0,   (char)0};
       ck_assert_msg(
           memcmp(check_msg->sn, check_string, sizeof(check_string)) == 0,
           "incorrect value for check_msg->sn, expected string '%s', is '%s'",
           check_string, check_msg->sn);
     }
-    ck_assert_msg(check_msg->sn_counter_n == 2,
-                  "incorrect value for sn_counter_n, expected 2, is %d",
-                  check_msg->sn_counter_n);
     ck_assert_msg(check_msg->ssr_iod == 1,
                   "incorrect value for ssr_iod, expected 1, is %d",
                   check_msg->ssr_iod);
@@ -308,27 +305,27 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgItrf) {
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
           (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0};
+          (char)0,  (char)0,  (char)0,   (char)0};
       ck_assert_msg(
           memcmp(check_msg->tn, check_string, sizeof(check_string)) == 0,
           "incorrect value for check_msg->tn, expected string '%s', is '%s'",
           check_string, check_msg->tn);
     }
-    ck_assert_msg(check_msg->tn_counter_m == 3,
-                  "incorrect value for tn_counter_m, expected 3, is %d",
-                  check_msg->tn_counter_m);
     ck_assert_msg(check_msg->utn == 5,
                   "incorrect value for utn, expected 5, is %d", check_msg->utn);
   }
 }
 END_TEST
 
-Suite *legacy_auto_check_sbp_navigation_MsgItrf_suite(void) {
+Suite *legacy_auto_check_sbp_navigation_MsgReferenceFrameParam_suite(void) {
   Suite *s = suite_create(
-      "SBP generated test suite: legacy_auto_check_sbp_navigation_MsgItrf");
-  TCase *tc_acq =
-      tcase_create("Automated_Suite_legacy_auto_check_sbp_navigation_MsgItrf");
-  tcase_add_test(tc_acq, test_legacy_auto_check_sbp_navigation_MsgItrf);
+      "SBP generated test suite: "
+      "legacy_auto_check_sbp_navigation_MsgReferenceFrameParam");
+  TCase *tc_acq = tcase_create(
+      "Automated_Suite_legacy_auto_check_sbp_navigation_"
+      "MsgReferenceFrameParam");
+  tcase_add_test(tc_acq,
+                 test_legacy_auto_check_sbp_navigation_MsgReferenceFrameParam);
   suite_add_tcase(s, tc_acq);
   return s;
 }

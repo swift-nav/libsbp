@@ -321,10 +321,9 @@ typedef struct SBP_ATTR_PACKED {
   stec_residual_t stec_residual; /**< STEC residuals (mean, stddev) */
   u8 stec_bound_mu;              /**< Error Bound Mean. See Note 1. [m] */
   u8 stec_bound_sig;             /**< Error Bound StDev. See Note 1. [m] */
-  u8 stec_bound_mu_dot;          /**< Error Bound Mean First derivative. Range:
-                                      0-0.01275 m/s [0.00005 m/s] */
-  u8 stec_bound_sig_dot;         /**< Error Bound StDev First derivative. Range:
-                                      0-0.01275 m/s [0.00005 m/s] */
+  u8 stec_bound_mu_dot; /**< Error Bound Mean First derivative. [0.00005 m/s] */
+  u8 stec_bound_sig_dot; /**< Error Bound StDev First derivative. [0.00005 m/s]
+                          */
 } stec_sat_element_integrity_t;
 
 /** Gridded troposhere and STEC correction residuals bounds
@@ -335,9 +334,8 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   bounds_header_t header; /**< Header of a bounds message. */
-  u8 ssr_iod_atmo;        /**< IOD of the SSR atmospheric correction. */
-  u16 tile_set_id;        /**< Unique identifier of the set this tile
-                               belongs to. */
+  u8 ssr_iod_atmo;        /**< IOD of the correction. */
+  u16 tile_set_id;        /**< Set this tile belongs to. */
   u16 tile_id;            /**< Unique identifier of this tile in the
                                tile set. */
   u8 tropo_qi;            /**< Tropo Quality Indicator. Similar to RTCM
@@ -346,11 +344,13 @@ typedef struct SBP_ATTR_PACKED {
   tropospheric_delay_correction_t tropo_delay_correction; /**< Tropospheric
                                                                delay at
                                                                grid point. */
-  u8 tropo_bound_mu;  /**< Troposphere Error Bound Mean. Range:
-                           0-1.275 m [0.005 m] */
-  u8 tropo_bound_sig; /**< Troposphere Error Bound StDev. Range:
-                           0-1.275 m [0.005 m] */
-  u8 n_sats;          /**< Number of satellites. */
+  u8 tropo_v_hydro_bound_mu;  /**< Vertical Hydrostatic Error Bound Mean. [0.005
+                                 m] */
+  u8 tropo_v_hydro_bound_sig; /**< Vertical Hydrostatic Error Bound StDev.
+                                 [0.005 m] */
+  u8 tropo_v_wet_bound_mu;    /**< Vertical Wet Error Bound Mean. [0.005 m] */
+  u8 tropo_v_wet_bound_sig;   /**< Vertical Wet Error Bound StDev. [0.005 m] */
+  u8 n_sats;                  /**< Number of satellites. */
   stec_sat_element_integrity_t stec_sat_list[0]; /**< Array of STEC
                                                       polynomial
                                                       coefficients
@@ -675,19 +675,22 @@ typedef struct SBP_ATTR_PACKED {
   u8 orb_radial_bound_mu;  /**< Mean Radial. See Note 1. [m] */
   u8 orb_along_bound_mu;   /**< Mean Along-Track. See Note 1. [m] */
   u8 orb_cross_bound_mu;   /**< Mean Cross-Track. See Note 1. [m] */
-  u8 orb_radial_bound_sig; /**< Standard Deviation Radial. See Note 1. [m] */
-  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track. See Note 1. [m]
+  u8 orb_radial_bound_sig; /**< Standard Deviation Radial. See Note 2. [m] */
+  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track. See Note 2. [m]
                             */
-  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track. See Note 1. [m]
+  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track. See Note 2. [m]
                             */
   u8 clock_bound_mu;       /**< Clock Bound Mean. See Note 1. [m] */
-  u8 clock_bound_sig; /**< Clock Bound Standard Deviation. See Note 1. [m] */
+  u8 clock_bound_sig; /**< Clock Bound Standard Deviation. See Note 2. [m] */
 } orbit_clock_bound_t;
 
 /** Combined Orbit and Clock Bound
  *
- * Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
- * i>240, mean=25+2(i-240).
+ * Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).
+ *
+ * Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+ * i>230, std=5+0.5(i-230).
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -763,7 +766,9 @@ typedef struct SBP_ATTR_PACKED {
   u64 sat_bitmask;        /**< Satellite Bit Mask. Put 1 for
                                each satellite where the
                                following degradation parameters
-                               are applicable, 0 otherwise. */
+                               are applicable, 0 otherwise.
+                               Encoded following RTCM DF394
+                               specification. */
   orbit_clock_bound_degradation_t
       orbit_clock_bounds_degradation; /**< Orbit
                                            and

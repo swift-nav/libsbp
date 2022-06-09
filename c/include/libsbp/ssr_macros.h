@@ -238,7 +238,7 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_ENCODED_OVERHEAD 25u
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_ENCODED_OVERHEAD 27u
 
 #define SBP_MSG_SSR_TILE_DEFINITION_DEP 0x05F6
 /**

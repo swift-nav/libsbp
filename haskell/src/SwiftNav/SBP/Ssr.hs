@@ -662,9 +662,9 @@ data STECSatElementIntegrity = STECSatElementIntegrity
   , _sTECSatElementIntegrity_stec_bound_sig   :: !Word8
     -- ^ Error Bound StDev. See Note 1.
   , _sTECSatElementIntegrity_stec_bound_mu_dot :: !Word8
-    -- ^ Error Bound Mean First derivative. Range: 0-0.01275 m/s
+    -- ^ Error Bound Mean First derivative.
   , _sTECSatElementIntegrity_stec_bound_sig_dot :: !Word8
-    -- ^ Error Bound StDev First derivative. Range: 0-0.01275 m/s
+    -- ^ Error Bound StDev First derivative.
   } deriving ( Show, Read, Eq )
 
 instance Binary STECSatElementIntegrity where
@@ -694,27 +694,31 @@ msgSsrGriddedCorrectionBounds = 0x05FE
 -- Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
 -- mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
 data MsgSsrGriddedCorrectionBounds = MsgSsrGriddedCorrectionBounds
-  { _msgSsrGriddedCorrectionBounds_header               :: !BoundsHeader
+  { _msgSsrGriddedCorrectionBounds_header                :: !BoundsHeader
     -- ^ Header of a bounds message.
-  , _msgSsrGriddedCorrectionBounds_ssr_iod_atmo         :: !Word8
-    -- ^ IOD of the SSR atmospheric correction.
-  , _msgSsrGriddedCorrectionBounds_tile_set_id          :: !Word16
-    -- ^ Unique identifier of the set this tile belongs to.
-  , _msgSsrGriddedCorrectionBounds_tile_id              :: !Word16
+  , _msgSsrGriddedCorrectionBounds_ssr_iod_atmo          :: !Word8
+    -- ^ IOD of the correction.
+  , _msgSsrGriddedCorrectionBounds_tile_set_id           :: !Word16
+    -- ^ Set this tile belongs to.
+  , _msgSsrGriddedCorrectionBounds_tile_id               :: !Word16
     -- ^ Unique identifier of this tile in the tile set.
-  , _msgSsrGriddedCorrectionBounds_tropo_qi             :: !Word8
+  , _msgSsrGriddedCorrectionBounds_tropo_qi              :: !Word8
     -- ^ Tropo Quality Indicator. Similar to RTCM DF389.
-  , _msgSsrGriddedCorrectionBounds_grid_point_id        :: !Word16
+  , _msgSsrGriddedCorrectionBounds_grid_point_id         :: !Word16
     -- ^ Index of the Grid Point.
   , _msgSsrGriddedCorrectionBounds_tropo_delay_correction :: !TroposphericDelayCorrection
     -- ^ Tropospheric delay at grid point.
-  , _msgSsrGriddedCorrectionBounds_tropo_bound_mu       :: !Word8
-    -- ^ Troposphere Error Bound Mean. Range: 0-1.275 m
-  , _msgSsrGriddedCorrectionBounds_tropo_bound_sig      :: !Word8
-    -- ^ Troposphere Error Bound StDev. Range: 0-1.275 m
-  , _msgSsrGriddedCorrectionBounds_n_sats               :: !Word8
+  , _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_mu :: !Word8
+    -- ^ Vertical Hydrostatic Error Bound Mean.
+  , _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_sig :: !Word8
+    -- ^ Vertical Hydrostatic Error Bound StDev.
+  , _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_mu  :: !Word8
+    -- ^ Vertical Wet Error Bound Mean.
+  , _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_sig :: !Word8
+    -- ^ Vertical Wet Error Bound StDev.
+  , _msgSsrGriddedCorrectionBounds_n_sats                :: !Word8
     -- ^ Number of satellites.
-  , _msgSsrGriddedCorrectionBounds_stec_sat_list        :: ![STECSatElementIntegrity]
+  , _msgSsrGriddedCorrectionBounds_stec_sat_list         :: ![STECSatElementIntegrity]
     -- ^ Array of STEC polynomial coefficients and its bounds for each space
     -- vehicle.
   } deriving ( Show, Read, Eq )
@@ -728,8 +732,10 @@ instance Binary MsgSsrGriddedCorrectionBounds where
     _msgSsrGriddedCorrectionBounds_tropo_qi <- getWord8
     _msgSsrGriddedCorrectionBounds_grid_point_id <- getWord16le
     _msgSsrGriddedCorrectionBounds_tropo_delay_correction <- get
-    _msgSsrGriddedCorrectionBounds_tropo_bound_mu <- getWord8
-    _msgSsrGriddedCorrectionBounds_tropo_bound_sig <- getWord8
+    _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_mu <- getWord8
+    _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_sig <- getWord8
+    _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_mu <- getWord8
+    _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_sig <- getWord8
     _msgSsrGriddedCorrectionBounds_n_sats <- getWord8
     _msgSsrGriddedCorrectionBounds_stec_sat_list <- whileM (not <$> isEmpty) get
     pure MsgSsrGriddedCorrectionBounds {..}
@@ -742,8 +748,10 @@ instance Binary MsgSsrGriddedCorrectionBounds where
     putWord8 _msgSsrGriddedCorrectionBounds_tropo_qi
     putWord16le _msgSsrGriddedCorrectionBounds_grid_point_id
     put _msgSsrGriddedCorrectionBounds_tropo_delay_correction
-    putWord8 _msgSsrGriddedCorrectionBounds_tropo_bound_mu
-    putWord8 _msgSsrGriddedCorrectionBounds_tropo_bound_sig
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_mu
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_sig
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_mu
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_sig
     putWord8 _msgSsrGriddedCorrectionBounds_n_sats
     mapM_ put _msgSsrGriddedCorrectionBounds_stec_sat_list
 
@@ -1335,15 +1343,15 @@ data OrbitClockBound = OrbitClockBound
   , _orbitClockBound_orb_cross_bound_mu :: !Word8
     -- ^ Mean Cross-Track. See Note 1.
   , _orbitClockBound_orb_radial_bound_sig :: !Word8
-    -- ^ Standard Deviation Radial. See Note 1.
+    -- ^ Standard Deviation Radial. See Note 2.
   , _orbitClockBound_orb_along_bound_sig :: !Word8
-    -- ^ Standard Deviation Along-Track. See Note 1.
+    -- ^ Standard Deviation Along-Track. See Note 2.
   , _orbitClockBound_orb_cross_bound_sig :: !Word8
-    -- ^ Standard Deviation Cross-Track. See Note 1.
+    -- ^ Standard Deviation Cross-Track. See Note 2.
   , _orbitClockBound_clock_bound_mu     :: !Word8
     -- ^ Clock Bound Mean. See Note 1.
   , _orbitClockBound_clock_bound_sig    :: !Word8
-    -- ^ Clock Bound Standard Deviation. See Note 1.
+    -- ^ Clock Bound Standard Deviation. See Note 2.
   } deriving ( Show, Read, Eq )
 
 instance Binary OrbitClockBound where
@@ -1378,8 +1386,11 @@ msgSsrOrbitClockBounds = 0x05DE
 
 -- | SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
 --
--- Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200);
--- i>240, mean=25+2(i-240).
+-- Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+-- i>230, mean=5+0.5(i-230).
+--
+-- Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+-- i>230, std=5+0.5(i-230).
 data MsgSsrOrbitClockBounds = MsgSsrOrbitClockBounds
   { _msgSsrOrbitClockBounds_header           :: !BoundsHeader
     -- ^ Header of a bounds message.
@@ -1549,7 +1560,8 @@ data MsgSsrOrbitClockBoundsDegradation = MsgSsrOrbitClockBoundsDegradation
     -- ^ Constellation ID to which the SVs belong.
   , _msgSsrOrbitClockBoundsDegradation_sat_bitmask                  :: !Word64
     -- ^ Satellite Bit Mask. Put 1 for each satellite where the following
-    -- degradation parameters are applicable, 0 otherwise.
+    -- degradation parameters are applicable, 0 otherwise. Encoded following
+    -- RTCM DF394 specification.
   , _msgSsrOrbitClockBoundsDegradation_orbit_clock_bounds_degradation :: !OrbitClockBoundDegradation
     -- ^ Orbit and Clock Bounds Degradation Parameters
   } deriving ( Show, Read, Eq )

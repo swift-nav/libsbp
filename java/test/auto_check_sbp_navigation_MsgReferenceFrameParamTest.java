@@ -10,28 +10,30 @@
  */
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgItrf.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgReferenceFrameParam.yaml by generate.py. Do not
+// modify by hand!
 
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.navigation.MsgItrf;
+import com.swiftnav.sbp.navigation.MsgReferenceFrameParam;
 import java.math.BigInteger;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class auto_check_sbp_navigation_MsgItrfTest {
+public class auto_check_sbp_navigation_MsgReferenceFrameParamTest {
 
     public static boolean debug = false;
     private static final double DELTA = 1e-15;
 
     @Test
     public void test1() throws Throwable {
-        if (debug) System.out.format("%n%s%n", "auto_check_sbp_navigation_MsgItrfTest.test1");
+        if (debug)
+            System.out.format(
+                    "%n%s%n", "auto_check_sbp_navigation_MsgReferenceFrameParamTest.test1");
         byte[] payload =
                 new byte[] {
                     (byte) 1,
-                    (byte) 2,
                     (byte) 102,
                     (byte) 111,
                     (byte) 111,
@@ -63,10 +65,11 @@ public class auto_check_sbp_navigation_MsgItrfTest {
                     (byte) 0,
                     (byte) 0,
                     (byte) 0,
-                    (byte) 3,
+                    (byte) 0,
                     (byte) 98,
                     (byte) 97,
                     (byte) 114,
+                    (byte) 0,
                     (byte) 0,
                     (byte) 0,
                     (byte) 0,
@@ -156,7 +159,7 @@ public class auto_check_sbp_navigation_MsgItrfTest {
                     (byte) 0,
                 };
         SBPMessage sbp = new SBPMessage(0x0042, 0x0244, payload);
-        MsgItrf msg = new MsgItrf(sbp);
+        MsgReferenceFrameParam msg = new MsgReferenceFrameParam(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
@@ -284,17 +287,7 @@ public class auto_check_sbp_navigation_MsgItrfTest {
             expected = 4L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        org.junit.Assert.assertEquals(msg.sn, "foo                            ");
-        value = msg.sn_counter_n;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.sn_counter_n + "' != '" + 2 + "'",
-                    value.equals(BigInteger.valueOf(2L)));
-        } else {
-            value = value.longValue();
-            expected = 2L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
+        org.junit.Assert.assertEquals(msg.sn, "foo                             ");
         value = msg.ssr_iod;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -334,17 +327,7 @@ public class auto_check_sbp_navigation_MsgItrfTest {
             expected = 12L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        org.junit.Assert.assertEquals(msg.tn, "bar                            ");
-        value = msg.tn_counter_m;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.tn_counter_m + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
-        } else {
-            value = value.longValue();
-            expected = 3L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
+        org.junit.Assert.assertEquals(msg.tn, "bar                             ");
         value = msg.utn;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(

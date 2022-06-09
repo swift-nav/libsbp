@@ -53,12 +53,12 @@ typedef struct {
   sbp_bounds_header_t header;
 
   /**
-   * IOD of the SSR atmospheric correction.
+   * IOD of the correction.
    */
   u8 ssr_iod_atmo;
 
   /**
-   * Unique identifier of the set this tile belongs to.
+   * Set this tile belongs to.
    */
   u16 tile_set_id;
 
@@ -83,14 +83,24 @@ typedef struct {
   sbp_tropospheric_delay_correction_t tropo_delay_correction;
 
   /**
-   * Troposphere Error Bound Mean. Range: 0-1.275 m [0.005 m]
+   * Vertical Hydrostatic Error Bound Mean. [0.005 m]
    */
-  u8 tropo_bound_mu;
+  u8 tropo_v_hydro_bound_mu;
 
   /**
-   * Troposphere Error Bound StDev. Range: 0-1.275 m [0.005 m]
+   * Vertical Hydrostatic Error Bound StDev. [0.005 m]
    */
-  u8 tropo_bound_sig;
+  u8 tropo_v_hydro_bound_sig;
+
+  /**
+   * Vertical Wet Error Bound Mean. [0.005 m]
+   */
+  u8 tropo_v_wet_bound_mu;
+
+  /**
+   * Vertical Wet Error Bound StDev. [0.005 m]
+   */
+  u8 tropo_v_wet_bound_sig;
 
   /**
    * Number of satellites.
