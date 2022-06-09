@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/linux.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/linux.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,10 +18,10 @@
  * Linux state monitoring.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
@@ -38,7 +38,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxCpuStateDepA = function (sbp, fields) {
+let MsgLinuxCpuStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_CPU_STATE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -78,7 +78,7 @@ MsgLinuxCpuStateDepA.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxMemStateDepA = function (sbp, fields) {
+let MsgLinuxMemStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_MEM_STATE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -118,7 +118,7 @@ MsgLinuxMemStateDepA.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxSysStateDepA = function (sbp, fields) {
+let MsgLinuxSysStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_SYS_STATE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -164,7 +164,7 @@ MsgLinuxSysStateDepA.prototype.fieldSpec.push(['pid_count', 'writeUInt16LE', 2])
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxProcessSocketCounts = function (sbp, fields) {
+let MsgLinuxProcessSocketCounts = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_PROCESS_SOCKET_COUNTS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -213,7 +213,7 @@ MsgLinuxProcessSocketCounts.prototype.fieldSpec.push(['cmdline', 'string', null]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxProcessSocketQueues = function (sbp, fields) {
+let MsgLinuxProcessSocketQueues = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_PROCESS_SOCKET_QUEUES";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -259,7 +259,7 @@ MsgLinuxProcessSocketQueues.prototype.fieldSpec.push(['cmdline', 'string', null]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxSocketUsage = function (sbp, fields) {
+let MsgLinuxSocketUsage = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_SOCKET_USAGE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -295,7 +295,7 @@ MsgLinuxSocketUsage.prototype.fieldSpec.push(['socket_type_counts', 'array', 'wr
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxProcessFdCount = function (sbp, fields) {
+let MsgLinuxProcessFdCount = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_PROCESS_FD_COUNT";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -332,7 +332,7 @@ MsgLinuxProcessFdCount.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxProcessFdSummary = function (sbp, fields) {
+let MsgLinuxProcessFdSummary = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_PROCESS_FD_SUMMARY";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -368,7 +368,7 @@ MsgLinuxProcessFdSummary.prototype.fieldSpec.push(['most_opened', 'string', null
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxCpuState = function (sbp, fields) {
+let MsgLinuxCpuState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_CPU_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -414,7 +414,7 @@ MsgLinuxCpuState.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxMemState = function (sbp, fields) {
+let MsgLinuxMemState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_MEM_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -460,7 +460,7 @@ MsgLinuxMemState.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxSysState = function (sbp, fields) {
+let MsgLinuxSysState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_LINUX_SYS_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));

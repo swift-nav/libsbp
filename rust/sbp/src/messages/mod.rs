@@ -96,11 +96,9 @@ use self::navigation::msg_baseline_ned::MsgBaselineNed;
 use self::navigation::msg_baseline_ned_dep_a::MsgBaselineNedDepA;
 use self::navigation::msg_dops::MsgDops;
 use self::navigation::msg_dops_dep_a::MsgDopsDepA;
-use self::navigation::msg_gps_leap_second::MsgGpsLeapSecond;
 use self::navigation::msg_gps_time::MsgGpsTime;
 use self::navigation::msg_gps_time_dep_a::MsgGpsTimeDepA;
 use self::navigation::msg_gps_time_gnss::MsgGpsTimeGnss;
-use self::navigation::msg_itrf::MsgItrf;
 use self::navigation::msg_pos_ecef::MsgPosEcef;
 use self::navigation::msg_pos_ecef_cov::MsgPosEcefCov;
 use self::navigation::msg_pos_ecef_cov_gnss::MsgPosEcefCovGnss;
@@ -114,6 +112,8 @@ use self::navigation::msg_pos_llh_dep_a::MsgPosLlhDepA;
 use self::navigation::msg_pos_llh_gnss::MsgPosLlhGnss;
 use self::navigation::msg_protection_level::MsgProtectionLevel;
 use self::navigation::msg_protection_level_dep_a::MsgProtectionLevelDepA;
+use self::navigation::msg_reference_frame_param::MsgReferenceFrameParam;
+use self::navigation::msg_utc_leap_second::MsgUtcLeapSecond;
 use self::navigation::msg_utc_time::MsgUtcTime;
 use self::navigation::msg_utc_time_gnss::MsgUtcTimeGnss;
 use self::navigation::msg_vel_body::MsgVelBody;
@@ -652,9 +652,9 @@ pub enum Sbp {
     /// GNSS-only Velocity in ECEF
     MsgVelEcefCovGnss(MsgVelEcefCovGnss),
     /// Leap second SBP message.
-    MsgGpsLeapSecond(MsgGpsLeapSecond),
+    MsgUtcLeapSecond(MsgUtcLeapSecond),
     /// Reference Frame Transformation Parameter
-    MsgItrf(MsgItrf),
+    MsgReferenceFrameParam(MsgReferenceFrameParam),
     /// Navigation DataBase Event
     MsgNdbEvent(MsgNdbEvent),
     /// Plaintext logging messages with levels
@@ -1583,15 +1583,15 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgVelEcefCovGnss(msg))
             }
-            MsgGpsLeapSecond::MESSAGE_TYPE => {
-                let mut msg = MsgGpsLeapSecond::parse(&mut frame.payload)?;
+            MsgUtcLeapSecond::MESSAGE_TYPE => {
+                let mut msg = MsgUtcLeapSecond::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
-                Ok(Sbp::MsgGpsLeapSecond(msg))
+                Ok(Sbp::MsgUtcLeapSecond(msg))
             }
-            MsgItrf::MESSAGE_TYPE => {
-                let mut msg = MsgItrf::parse(&mut frame.payload)?;
+            MsgReferenceFrameParam::MESSAGE_TYPE => {
+                let mut msg = MsgReferenceFrameParam::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
-                Ok(Sbp::MsgItrf(msg))
+                Ok(Sbp::MsgReferenceFrameParam(msg))
             }
             MsgNdbEvent::MESSAGE_TYPE => {
                 let mut msg = MsgNdbEvent::parse(&mut frame.payload)?;
@@ -2074,8 +2074,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.message_name(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.message_name(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.message_name(),
-            Sbp::MsgGpsLeapSecond(msg) => msg.message_name(),
-            Sbp::MsgItrf(msg) => msg.message_name(),
+            Sbp::MsgUtcLeapSecond(msg) => msg.message_name(),
+            Sbp::MsgReferenceFrameParam(msg) => msg.message_name(),
             Sbp::MsgNdbEvent(msg) => msg.message_name(),
             Sbp::MsgLog(msg) => msg.message_name(),
             Sbp::MsgFwd(msg) => msg.message_name(),
@@ -2299,8 +2299,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.message_type(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.message_type(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.message_type(),
-            Sbp::MsgGpsLeapSecond(msg) => msg.message_type(),
-            Sbp::MsgItrf(msg) => msg.message_type(),
+            Sbp::MsgUtcLeapSecond(msg) => msg.message_type(),
+            Sbp::MsgReferenceFrameParam(msg) => msg.message_type(),
             Sbp::MsgNdbEvent(msg) => msg.message_type(),
             Sbp::MsgLog(msg) => msg.message_type(),
             Sbp::MsgFwd(msg) => msg.message_type(),
@@ -2524,8 +2524,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.sender_id(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.sender_id(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.sender_id(),
-            Sbp::MsgGpsLeapSecond(msg) => msg.sender_id(),
-            Sbp::MsgItrf(msg) => msg.sender_id(),
+            Sbp::MsgUtcLeapSecond(msg) => msg.sender_id(),
+            Sbp::MsgReferenceFrameParam(msg) => msg.sender_id(),
             Sbp::MsgNdbEvent(msg) => msg.sender_id(),
             Sbp::MsgLog(msg) => msg.sender_id(),
             Sbp::MsgFwd(msg) => msg.sender_id(),
@@ -2749,8 +2749,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPosEcefCovGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgVelEcefCovGnss(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgGpsLeapSecond(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgItrf(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgUtcLeapSecond(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgReferenceFrameParam(msg) => msg.set_sender_id(new_id),
             Sbp::MsgNdbEvent(msg) => msg.set_sender_id(new_id),
             Sbp::MsgLog(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFwd(msg) => msg.set_sender_id(new_id),
@@ -2974,8 +2974,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.encoded_len(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.encoded_len(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.encoded_len(),
-            Sbp::MsgGpsLeapSecond(msg) => msg.encoded_len(),
-            Sbp::MsgItrf(msg) => msg.encoded_len(),
+            Sbp::MsgUtcLeapSecond(msg) => msg.encoded_len(),
+            Sbp::MsgReferenceFrameParam(msg) => msg.encoded_len(),
             Sbp::MsgNdbEvent(msg) => msg.encoded_len(),
             Sbp::MsgLog(msg) => msg.encoded_len(),
             Sbp::MsgFwd(msg) => msg.encoded_len(),
@@ -3202,8 +3202,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => msg.gps_time(),
             Sbp::MsgPosEcefCovGnss(msg) => msg.gps_time(),
             Sbp::MsgVelEcefCovGnss(msg) => msg.gps_time(),
-            Sbp::MsgGpsLeapSecond(msg) => msg.gps_time(),
-            Sbp::MsgItrf(msg) => msg.gps_time(),
+            Sbp::MsgUtcLeapSecond(msg) => msg.gps_time(),
+            Sbp::MsgReferenceFrameParam(msg) => msg.gps_time(),
             Sbp::MsgNdbEvent(msg) => msg.gps_time(),
             Sbp::MsgLog(msg) => msg.gps_time(),
             Sbp::MsgFwd(msg) => msg.gps_time(),
@@ -3435,8 +3435,8 @@ impl WireFormat for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPosEcefCovGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgVelEcefCovGnss(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgGpsLeapSecond(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgItrf(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgUtcLeapSecond(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgReferenceFrameParam(msg) => WireFormat::write(msg, buf),
             Sbp::MsgNdbEvent(msg) => WireFormat::write(msg, buf),
             Sbp::MsgLog(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFwd(msg) => WireFormat::write(msg, buf),
@@ -3660,8 +3660,8 @@ impl WireFormat for Sbp {
             Sbp::MsgVelNedCovGnss(msg) => WireFormat::len(msg),
             Sbp::MsgPosEcefCovGnss(msg) => WireFormat::len(msg),
             Sbp::MsgVelEcefCovGnss(msg) => WireFormat::len(msg),
-            Sbp::MsgGpsLeapSecond(msg) => WireFormat::len(msg),
-            Sbp::MsgItrf(msg) => WireFormat::len(msg),
+            Sbp::MsgUtcLeapSecond(msg) => WireFormat::len(msg),
+            Sbp::MsgReferenceFrameParam(msg) => WireFormat::len(msg),
             Sbp::MsgNdbEvent(msg) => WireFormat::len(msg),
             Sbp::MsgLog(msg) => WireFormat::len(msg),
             Sbp::MsgFwd(msg) => WireFormat::len(msg),
@@ -4654,15 +4654,15 @@ impl From<MsgVelEcefCovGnss> for Sbp {
     }
 }
 
-impl From<MsgGpsLeapSecond> for Sbp {
-    fn from(msg: MsgGpsLeapSecond) -> Self {
-        Sbp::MsgGpsLeapSecond(msg)
+impl From<MsgUtcLeapSecond> for Sbp {
+    fn from(msg: MsgUtcLeapSecond) -> Self {
+        Sbp::MsgUtcLeapSecond(msg)
     }
 }
 
-impl From<MsgItrf> for Sbp {
-    fn from(msg: MsgItrf) -> Self {
-        Sbp::MsgItrf(msg)
+impl From<MsgReferenceFrameParam> for Sbp {
+    fn from(msg: MsgReferenceFrameParam) -> Self {
+        Sbp::MsgReferenceFrameParam(msg)
     }
 }
 

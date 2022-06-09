@@ -11,9 +11,9 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgGPSLeapSecond",
-  "title":"MsgGPSLeapSecond",
-  "description":"Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model parameters.\n",
+  "$id": "#MsgReferenceFrameParam",
+  "title":"MsgReferenceFrameParam",
+  "description":"",
   "type": "object",
   "properties": {
     "stub": {"type": "array", "items": {"type": "integer"}}

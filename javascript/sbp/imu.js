@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/imu.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/imu.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,10 +18,10 @@
  * Inertial Measurement Unit (IMU) messages.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_IMU_RAW (0x0900).
@@ -48,7 +48,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgImuRaw = function (sbp, fields) {
+let MsgImuRaw = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_IMU_RAW";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -93,7 +93,7 @@ MsgImuRaw.prototype.fieldSpec.push(['gyr_z', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgImuAux = function (sbp, fields) {
+let MsgImuAux = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_IMU_AUX";
   this.fields = (fields || this.parser.parse(sbp.payload));

@@ -9,12 +9,12 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgItrf.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgReferenceFrameParam.yaml by generate.py. Do not modify by hand!
 
 use crate::*;
 
 #[test]
-fn test_auto_check_sbp_navigation_msg_itrf() {
+fn test_auto_check_sbp_navigation_msg_reference_frame_param() {
     {
         let mut payload = Cursor::new(vec![
             85, 68, 2, 66, 0, 124, 1, 2, 102, 111, 111, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -32,7 +32,7 @@ fn test_auto_check_sbp_navigation_msg_itrf() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgItrf(msg) => {
+            sbp::messages::Sbp::MsgReferenceFrameParam(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     580,
@@ -666,7 +666,7 @@ fn test_auto_check_sbp_navigation_msg_itrf() {
                     msg.stub[123]
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgItrf"),
+            _ => panic!("Invalid message type! Expected a MsgReferenceFrameParam"),
         };
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());

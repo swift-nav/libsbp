@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/(((filepath))) with generate.py.
+ * Automatically generated from spec/yaml/(((filepath))) with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,17 +18,17 @@
  * (((description | comment_links | starWordWrap)))
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 ((*- for (file, ident) in include *))
 ((*- if ident is list *))
 ((*- for ident2 in ident *))
-var (((ident2))) = require("./(((file)))").(((ident2)));
+let (((ident2))) = require("./(((file)))").(((ident2)));
 ((*- endfor *))
 ((*- else *))
-var (((ident))) = require("./(((file)))").(((ident)));
+let (((ident))) = require("./(((file)))").(((ident)));
 ((*- endif *))
 ((*- endfor *))
 
@@ -46,7 +46,7 @@ var (((ident))) = require("./(((file)))").(((ident)));
  *((*- endif *))
  * @param sbp An SBP object with a payload to be decoded.
  */
-var ((( m.identifier | js_classnameify ))) = function (sbp, fields) {
+let ((( m.identifier | js_classnameify ))) = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "(((m.identifier)))";
   this.fields = (fields || this.parser.parse(sbp.payload));

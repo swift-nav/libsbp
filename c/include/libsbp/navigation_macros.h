@@ -1736,50 +1736,51 @@
  */
 #define SBP_MSG_PROTECTION_LEVEL_ENCODED_LEN 76u
 
-#define SBP_MSG_GPS_LEAP_SECOND 0x023A
+#define SBP_MSG_UTC_LEAP_SECOND 0x023A
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_gps_leap_second_t::stub (V4 API) or msg_gps_leap_second_t::stub
+ * sbp_msg_utc_leap_second_t::stub (V4 API) or msg_utc_leap_second_t::stub
  * (legacy API) before the maximum SBP message size is exceeded
  */
-#define SBP_MSG_GPS_LEAP_SECOND_STUB_MAX 255u
+#define SBP_MSG_UTC_LEAP_SECOND_STUB_MAX 255u
 
 /**
- * Encoded length of sbp_msg_gps_leap_second_t (V4 API) and
- * msg_gps_leap_second_t (legacy API)
+ * Encoded length of sbp_msg_utc_leap_second_t (V4 API) and
+ * msg_utc_leap_second_t (legacy API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
- * #sbp_msg_gps_leap_second_encoded_len to determine the actual size of an
+ * #sbp_msg_utc_leap_second_encoded_len to determine the actual size of an
  * instance of this message. Users of the legacy API are required to track the
  * encoded message length when interacting with the legacy type.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_GPS_LEAP_SECOND_ENCODED_OVERHEAD 0u
+#define SBP_MSG_UTC_LEAP_SECOND_ENCODED_OVERHEAD 0u
 
-#define SBP_MSG_ITRF 0x0244
+#define SBP_MSG_REFERENCE_FRAME_PARAM 0x0244
 /**
- * The maximum number of items that can be stored in sbp_msg_itrf_t::stub (V4
- * API) or msg_itrf_t::stub (legacy API) before the maximum SBP message size is
- * exceeded
+ * The maximum number of items that can be stored in
+ * sbp_msg_reference_frame_param_t::stub (V4 API) or
+ * msg_reference_frame_param_t::stub (legacy API) before the maximum SBP message
+ * size is exceeded
  */
-#define SBP_MSG_ITRF_STUB_MAX 255u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_STUB_MAX 255u
 
 /**
- * Encoded length of sbp_msg_itrf_t (V4 API) and
- * msg_itrf_t (legacy API)
+ * Encoded length of sbp_msg_reference_frame_param_t (V4 API) and
+ * msg_reference_frame_param_t (legacy API)
  *
  * This type is not fixed size and an instance of this message may be longer
  * than the value indicated by this symbol. Users of the V4 API should call
- * #sbp_msg_itrf_encoded_len to determine the actual size of an instance
- * of this message. Users of the legacy API are required to track the encoded
- * message length when interacting with the legacy type.
+ * #sbp_msg_reference_frame_param_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
  *
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_ITRF_ENCODED_OVERHEAD 0u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_OVERHEAD 0u
 
 #endif /* LIBSBP_NAVIGATION_MACROS_H */

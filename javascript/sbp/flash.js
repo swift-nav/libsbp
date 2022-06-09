@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/flash.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/flash.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -21,10 +21,10 @@
  * 2.3.1.  This module does not apply to Piksi Multi.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_FLASH_PROGRAM (0x00E6).
@@ -43,7 +43,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFlashProgram = function (sbp, fields) {
+let MsgFlashProgram = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FLASH_PROGRAM";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -78,7 +78,7 @@ MsgFlashProgram.prototype.fieldSpec.push(['data', 'array', 'writeUInt8', functio
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFlashDone = function (sbp, fields) {
+let MsgFlashDone = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FLASH_DONE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -111,7 +111,7 @@ MsgFlashDone.prototype.fieldSpec.push(['response', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFlashReadReq = function (sbp, fields) {
+let MsgFlashReadReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FLASH_READ_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -148,7 +148,7 @@ MsgFlashReadReq.prototype.fieldSpec.push(['addr_len', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFlashReadResp = function (sbp, fields) {
+let MsgFlashReadResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FLASH_READ_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -183,7 +183,7 @@ MsgFlashReadResp.prototype.fieldSpec.push(['addr_len', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFlashErase = function (sbp, fields) {
+let MsgFlashErase = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FLASH_ERASE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -213,7 +213,7 @@ MsgFlashErase.prototype.fieldSpec.push(['sector_num', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStmFlashLockSector = function (sbp, fields) {
+let MsgStmFlashLockSector = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STM_FLASH_LOCK_SECTOR";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -241,7 +241,7 @@ MsgStmFlashLockSector.prototype.fieldSpec.push(['sector', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStmFlashUnlockSector = function (sbp, fields) {
+let MsgStmFlashUnlockSector = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STM_FLASH_UNLOCK_SECTOR";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -267,7 +267,7 @@ MsgStmFlashUnlockSector.prototype.fieldSpec.push(['sector', 'writeUInt32LE', 4])
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStmUniqueIdReq = function (sbp, fields) {
+let MsgStmUniqueIdReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STM_UNIQUE_ID_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -294,7 +294,7 @@ MsgStmUniqueIdReq.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgStmUniqueIdResp = function (sbp, fields) {
+let MsgStmUniqueIdResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_STM_UNIQUE_ID_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -322,7 +322,7 @@ MsgStmUniqueIdResp.prototype.fieldSpec.push(['stm_id', 'array', 'writeUInt8', fu
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgM25FlashWriteStatus = function (sbp, fields) {
+let MsgM25FlashWriteStatus = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_M25_FLASH_WRITE_STATUS";
   this.fields = (fields || this.parser.parse(sbp.payload));

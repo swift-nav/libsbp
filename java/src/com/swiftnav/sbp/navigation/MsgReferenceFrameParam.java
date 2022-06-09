@@ -19,29 +19,20 @@ import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * SBP class for message MSG_GPS_LEAP_SECOND (0x023A).
- *
- * <p>You can have MSG_GPS_LEAP_SECOND inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
- *
- * <p>Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
- * parameters.
- */
-public class MsgGPSLeapSecond extends SBPMessage {
-    public static final int TYPE = 0x023A;
+public class MsgReferenceFrameParam extends SBPMessage {
+    public static final int TYPE = 0x0244;
 
     public int[] stub;
 
-    public MsgGPSLeapSecond(int sender) {
+    public MsgReferenceFrameParam(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgGPSLeapSecond() {
+    public MsgReferenceFrameParam() {
         super(TYPE);
     }
 
-    public MsgGPSLeapSecond(SBPMessage msg) throws SBPBinaryException {
+    public MsgReferenceFrameParam(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }
