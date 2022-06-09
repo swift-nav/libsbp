@@ -86,6 +86,8 @@ definitions:
                   values:
                       - 0: Bosch BMI160
                       - 1: ST Microelectronics ASM330LLH
+                      - 2: Reserved
+                      - 3: TDK ICM-42670 (16bit temperature)
         - temp:
             type: s16
             desc: Raw IMU temperature
