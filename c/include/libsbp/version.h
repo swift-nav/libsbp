@@ -28,7 +28,7 @@
 #define SBP_PATCH_VERSION 3
 
 /** Full SBP version string. */
-#define SBP_VERSION "4.3.3"
+#define SBP_VERSION "4.3.4-alpha"
 
 /** Is this a staging branch? */
 #define SBP_STAGING 0

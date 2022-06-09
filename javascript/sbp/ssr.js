@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/ssr.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/ssr.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,17 +18,17 @@
  * Precise State Space Representation (SSR) corrections format
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignalDep = require("./gnss").GnssSignalDep;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeDep = require("./gnss").GPSTimeDep;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
-var SvId = require("./gnss").SvId;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
+let CarrierPhase = require("./gnss").CarrierPhase;
+let GnssSignal = require("./gnss").GnssSignal;
+let GnssSignalDep = require("./gnss").GnssSignalDep;
+let GPSTime = require("./gnss").GPSTime;
+let GPSTimeDep = require("./gnss").GPSTimeDep;
+let GPSTimeSec = require("./gnss").GPSTimeSec;
+let SvId = require("./gnss").SvId;
 
 /**
  * SBP class for message fragment CodeBiasesContent
@@ -42,7 +42,7 @@ var SvId = require("./gnss").SvId;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var CodeBiasesContent = function (sbp, fields) {
+let CodeBiasesContent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "CodeBiasesContent";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -74,7 +74,7 @@ CodeBiasesContent.prototype.fieldSpec.push(['value', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var PhaseBiasesContent = function (sbp, fields) {
+let PhaseBiasesContent = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "PhaseBiasesContent";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -117,7 +117,7 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var STECHeader = function (sbp, fields) {
+let STECHeader = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "STECHeader";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -165,7 +165,7 @@ STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GriddedCorrectionHeader = function (sbp, fields) {
+let GriddedCorrectionHeader = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "GriddedCorrectionHeader";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -208,7 +208,7 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'wr
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var STECSatElement = function (sbp, fields) {
+let STECSatElement = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "STECSatElement";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -239,7 +239,7 @@ STECSatElement.prototype.fieldSpec.push(['stec_coeff', 'array', 'writeInt16LE', 
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TroposphericDelayCorrectionNoStd = function (sbp, fields) {
+let TroposphericDelayCorrectionNoStd = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TroposphericDelayCorrectionNoStd";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -269,7 +269,7 @@ TroposphericDelayCorrectionNoStd.prototype.fieldSpec.push(['wet', 'writeInt8', 1
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var TroposphericDelayCorrection = function (sbp, fields) {
+let TroposphericDelayCorrection = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "TroposphericDelayCorrection";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -300,7 +300,7 @@ TroposphericDelayCorrection.prototype.fieldSpec.push(['stddev', 'writeUInt8', 1]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var STECResidualNoStd = function (sbp, fields) {
+let STECResidualNoStd = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "STECResidualNoStd";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -331,7 +331,7 @@ STECResidualNoStd.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var STECResidual = function (sbp, fields) {
+let STECResidual = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "STECResidual";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -378,7 +378,7 @@ STECResidual.prototype.fieldSpec.push(['stddev', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrOrbitClock = function (sbp, fields) {
+let MsgSsrOrbitClock = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_ORBIT_CLOCK";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -439,7 +439,7 @@ MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrCodeBiases = function (sbp, fields) {
+let MsgSsrCodeBiases = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_CODE_BIASES";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -487,7 +487,7 @@ MsgSsrCodeBiases.prototype.fieldSpec.push(['biases', 'array', CodeBiasesContent.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrPhaseBiases = function (sbp, fields) {
+let MsgSsrPhaseBiases = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_PHASE_BIASES";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -535,7 +535,7 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesConten
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrStecCorrectionDep = function (sbp, fields) {
+let MsgSsrStecCorrectionDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_STEC_CORRECTION_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -563,7 +563,7 @@ MsgSsrStecCorrectionDep.prototype.fieldSpec.push(['stec_sat_list', 'array', STEC
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrStecCorrection = function (sbp, fields) {
+let MsgSsrStecCorrection = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_STEC_CORRECTION";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -594,7 +594,7 @@ MsgSsrStecCorrection.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', fu
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrGriddedCorrection = function (sbp, fields) {
+let MsgSsrGriddedCorrection = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_GRIDDED_CORRECTION";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -626,7 +626,7 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['stec_residuals', 'array', STE
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrGriddedCorrectionBounds = function (sbp, fields) {
+let MsgSsrGriddedCorrectionBounds = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_GRIDDED_CORRECTION_BOUNDS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -683,7 +683,7 @@ MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['stub', 'array', 'writeU
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrTileDefinitionDep = function (sbp, fields) {
+let MsgSsrTileDefinitionDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_TILE_DEFINITION_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -730,7 +730,7 @@ MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrTileDefinition = function (sbp, fields) {
+let MsgSsrTileDefinition = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_TILE_DEFINITION";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -765,7 +765,7 @@ MsgSsrTileDefinition.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', fu
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var SatelliteAPC = function (sbp, fields) {
+let SatelliteAPC = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "SatelliteAPC";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -798,7 +798,7 @@ SatelliteAPC.prototype.fieldSpec.push(['pcv', 'array', 'writeInt8', function () 
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrSatelliteApc = function (sbp, fields) {
+let MsgSsrSatelliteApc = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_SATELLITE_APC";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -839,7 +839,7 @@ MsgSsrSatelliteApc.prototype.fieldSpec.push(['apc', 'array', SatelliteAPC.protot
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrOrbitClockDepA = function (sbp, fields) {
+let MsgSsrOrbitClockDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_ORBIT_CLOCK_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -899,7 +899,7 @@ MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var STECHeaderDepA = function (sbp, fields) {
+let STECHeaderDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "STECHeaderDepA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -941,7 +941,7 @@ STECHeaderDepA.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GriddedCorrectionHeaderDepA = function (sbp, fields) {
+let GriddedCorrectionHeaderDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "GriddedCorrectionHeaderDepA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -984,7 +984,7 @@ GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['tropo_quality_indicator',
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var GridDefinitionHeaderDepA = function (sbp, fields) {
+let GridDefinitionHeaderDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "GridDefinitionHeaderDepA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1020,7 +1020,7 @@ GridDefinitionHeaderDepA.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrStecCorrectionDepA = function (sbp, fields) {
+let MsgSsrStecCorrectionDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_STEC_CORRECTION_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1051,7 +1051,7 @@ MsgSsrStecCorrectionDepA.prototype.fieldSpec.push(['stec_sat_list', 'array', STE
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrGriddedCorrectionNoStdDepA = function (sbp, fields) {
+let MsgSsrGriddedCorrectionNoStdDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1086,7 +1086,7 @@ MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['stec_residuals', 'ar
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrGriddedCorrectionDepA = function (sbp, fields) {
+let MsgSsrGriddedCorrectionDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1122,7 +1122,7 @@ MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['stec_residuals', 'array',
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrGridDefinitionDepA = function (sbp, fields) {
+let MsgSsrGridDefinitionDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_GRID_DEFINITION_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1150,7 +1150,7 @@ MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['rle_list', 'array', 'writeUI
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrOrbitClockBounds = function (sbp, fields) {
+let MsgSsrOrbitClockBounds = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1176,7 +1176,7 @@ MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', 
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrCodePhaseBiasesBounds = function (sbp, fields) {
+let MsgSsrCodePhaseBiasesBounds = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -1202,7 +1202,7 @@ MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['stub', 'array', 'writeUIn
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrOrbitClockBoundsDegradation = function (sbp, fields) {
+let MsgSsrOrbitClockBoundsDegradation = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION";
   this.fields = (fields || this.parser.parse(sbp.payload));

@@ -19,20 +19,29 @@ import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class MsgItrf extends SBPMessage {
-    public static final int TYPE = 0x0244;
+/**
+ * SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
+ *
+ * <p>You can have MSG_UTC_LEAP_SECOND inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
+ *
+ * <p>Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
+ * parameters.
+ */
+public class MsgUtcLeapSecond extends SBPMessage {
+    public static final int TYPE = 0x023A;
 
     public int[] stub;
 
-    public MsgItrf(int sender) {
+    public MsgUtcLeapSecond(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgItrf() {
+    public MsgUtcLeapSecond() {
         super(TYPE);
     }
 
-    public MsgItrf(SBPMessage msg) throws SBPBinaryException {
+    public MsgUtcLeapSecond(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }

@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/mag.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/mag.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,10 +18,10 @@
  * Magnetometer (mag) messages.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
 
 /**
  * SBP class for message MSG_MAG_RAW (0x0902).
@@ -38,7 +38,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgMagRaw = function (sbp, fields) {
+let MsgMagRaw = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_MAG_RAW";
   this.fields = (fields || this.parser.parse(sbp.payload));

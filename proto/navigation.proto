@@ -655,7 +655,7 @@ message MsgProtectionLevel {
  * Emulates the GPS CNAV message, reserving bytes for future broadcast of the
  * drift model parameters.
  */
-message MsgGpsLeapSecond {
+message MsgUtcLeapSecond {
     repeated uint32 stub = 1;
 }
 
@@ -663,6 +663,6 @@ message MsgGpsLeapSecond {
  *
 None
  */
-message MsgItrf {
+message MsgReferenceFrameParam {
     repeated uint32 stub = 1;
 }

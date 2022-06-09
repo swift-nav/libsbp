@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/acquisition.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -18,17 +18,17 @@
  * Satellite acquisition messages from the device.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignalDep = require("./gnss").GnssSignalDep;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeDep = require("./gnss").GPSTimeDep;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
-var SvId = require("./gnss").SvId;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
+let CarrierPhase = require("./gnss").CarrierPhase;
+let GnssSignal = require("./gnss").GnssSignal;
+let GnssSignalDep = require("./gnss").GnssSignalDep;
+let GPSTime = require("./gnss").GPSTime;
+let GPSTimeDep = require("./gnss").GPSTimeDep;
+let GPSTimeSec = require("./gnss").GPSTimeSec;
+let SvId = require("./gnss").SvId;
 
 /**
  * SBP class for message MSG_ACQ_RESULT (0x002F).
@@ -46,7 +46,7 @@ var SvId = require("./gnss").SvId;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqResult = function (sbp, fields) {
+let MsgAcqResult = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_RESULT";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -82,7 +82,7 @@ MsgAcqResult.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqResultDepC = function (sbp, fields) {
+let MsgAcqResultDepC = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_RESULT_DEP_C";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -119,7 +119,7 @@ MsgAcqResultDepC.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldS
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqResultDepB = function (sbp, fields) {
+let MsgAcqResultDepB = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_RESULT_DEP_B";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -156,7 +156,7 @@ MsgAcqResultDepB.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fieldS
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqResultDepA = function (sbp, fields) {
+let MsgAcqResultDepA = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_RESULT_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -202,7 +202,7 @@ MsgAcqResultDepA.prototype.fieldSpec.push(['prn', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var AcqSvProfile = function (sbp, fields) {
+let AcqSvProfile = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "AcqSvProfile";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -261,7 +261,7 @@ AcqSvProfile.prototype.fieldSpec.push(['cp', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var AcqSvProfileDep = function (sbp, fields) {
+let AcqSvProfileDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "AcqSvProfileDep";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -310,7 +310,7 @@ AcqSvProfileDep.prototype.fieldSpec.push(['cp', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqSvProfile = function (sbp, fields) {
+let MsgAcqSvProfile = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_SV_PROFILE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -337,7 +337,7 @@ MsgAcqSvProfile.prototype.fieldSpec.push(['acq_sv_profile', 'array', AcqSvProfil
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAcqSvProfileDep = function (sbp, fields) {
+let MsgAcqSvProfileDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ACQ_SV_PROFILE_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
