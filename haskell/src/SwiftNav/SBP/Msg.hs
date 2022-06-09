@@ -132,7 +132,6 @@ data SBPMsg =
    | SBPMsgGloBiases MsgGloBiases Msg
    | SBPMsgGnssCapb MsgGnssCapb Msg
    | SBPMsgGnssTimeOffset MsgGnssTimeOffset Msg
-   | SBPMsgGpsLeapSecond MsgGpsLeapSecond Msg
    | SBPMsgGpsTime MsgGpsTime Msg
    | SBPMsgGpsTimeDepA MsgGpsTimeDepA Msg
    | SBPMsgGpsTimeGnss MsgGpsTimeGnss Msg
@@ -148,7 +147,6 @@ data SBPMsg =
    | SBPMsgInsStatus MsgInsStatus Msg
    | SBPMsgInsUpdates MsgInsUpdates Msg
    | SBPMsgIono MsgIono Msg
-   | SBPMsgItrf MsgItrf Msg
    | SBPMsgLinuxCpuState MsgLinuxCpuState Msg
    | SBPMsgLinuxCpuStateDepA MsgLinuxCpuStateDepA Msg
    | SBPMsgLinuxMemState MsgLinuxMemState Msg
@@ -366,7 +364,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGloBiases = SBPMsgGloBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssCapb = SBPMsgGnssCapb (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGnssTimeOffset = SBPMsgGnssTimeOffset (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgGpsLeapSecond = SBPMsgGpsLeapSecond (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeGnss = SBPMsgGpsTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -382,7 +379,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInsUpdates = SBPMsgInsUpdates (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgItrf = SBPMsgItrf (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuState = SBPMsgLinuxCpuState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxMemState = SBPMsgLinuxMemState (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -592,7 +588,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgGloBiases _ m) = put m
       encoder (SBPMsgGnssCapb _ m) = put m
       encoder (SBPMsgGnssTimeOffset _ m) = put m
-      encoder (SBPMsgGpsLeapSecond _ m) = put m
       encoder (SBPMsgGpsTime _ m) = put m
       encoder (SBPMsgGpsTimeDepA _ m) = put m
       encoder (SBPMsgGpsTimeGnss _ m) = put m
@@ -608,7 +603,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgInsStatus _ m) = put m
       encoder (SBPMsgInsUpdates _ m) = put m
       encoder (SBPMsgIono _ m) = put m
-      encoder (SBPMsgItrf _ m) = put m
       encoder (SBPMsgLinuxCpuState _ m) = put m
       encoder (SBPMsgLinuxCpuStateDepA _ m) = put m
       encoder (SBPMsgLinuxMemState _ m) = put m
@@ -822,7 +816,6 @@ instance FromJSON SBPMsg where
         | msgType == msgGloBiases = SBPMsgGloBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssCapb = SBPMsgGnssCapb <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGnssTimeOffset = SBPMsgGnssTimeOffset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgGpsLeapSecond = SBPMsgGpsLeapSecond <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeGnss = SBPMsgGpsTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -838,7 +831,6 @@ instance FromJSON SBPMsg where
         | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInsUpdates = SBPMsgInsUpdates <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgItrf = SBPMsgItrf <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuState = SBPMsgLinuxCpuState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxMemState = SBPMsgLinuxMemState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1053,7 +1045,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGloBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssCapb n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGnssTimeOffset n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgGpsLeapSecond n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeGnss n m) = toJSON n <<>> toJSON m
@@ -1069,7 +1060,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgInsUpdates n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgItrf n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxMemState n m) = toJSON n <<>> toJSON m
@@ -1278,7 +1268,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGloBiases n m) = SBPMsgGloBiases n <$> f m
   msg f (SBPMsgGnssCapb n m) = SBPMsgGnssCapb n <$> f m
   msg f (SBPMsgGnssTimeOffset n m) = SBPMsgGnssTimeOffset n <$> f m
-  msg f (SBPMsgGpsLeapSecond n m) = SBPMsgGpsLeapSecond n <$> f m
   msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
   msg f (SBPMsgGpsTimeDepA n m) = SBPMsgGpsTimeDepA n <$> f m
   msg f (SBPMsgGpsTimeGnss n m) = SBPMsgGpsTimeGnss n <$> f m
@@ -1294,7 +1283,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m
   msg f (SBPMsgInsUpdates n m) = SBPMsgInsUpdates n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
-  msg f (SBPMsgItrf n m) = SBPMsgItrf n <$> f m
   msg f (SBPMsgLinuxCpuState n m) = SBPMsgLinuxCpuState n <$> f m
   msg f (SBPMsgLinuxCpuStateDepA n m) = SBPMsgLinuxCpuStateDepA n <$> f m
   msg f (SBPMsgLinuxMemState n m) = SBPMsgLinuxMemState n <$> f m

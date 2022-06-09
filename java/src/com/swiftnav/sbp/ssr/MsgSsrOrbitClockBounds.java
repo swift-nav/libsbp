@@ -26,8 +26,11 @@ import org.json.JSONObject;
  * <p>You can have MSG_SSR_ORBIT_CLOCK_BOUNDS inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200); i>240,
- * mean=25+2(i-240).
+ * <p>Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200); i>230,
+ * mean=5+0.5(i-230).
+ *
+ * <p>Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200) i>230,
+ * std=5+0.5(i-230).
  */
 public class MsgSsrOrbitClockBounds extends SBPMessage {
     public static final int TYPE = 0x05DE;
