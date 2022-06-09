@@ -8,7 +8,11 @@ if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
     BUILD_TRIPLET="$(cc -dumpmachine)"
     ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
     EXECUTABLES=("sbp2json" "json2sbp" "json2json")
-    PACKAGE_CMD="zip ../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
+    if [ "$RUNNER_OS" == "Linux" ]; then
+      PACKAGE_CMD="zip ../../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
+    else
+      PACKAGE_CMD="zip ../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
+    fi
 elif [ "$RUNNER_OS" == "Windows" ]; then
     BUILD_TRIPLET="$(clang -dumpmachine)"
     ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
