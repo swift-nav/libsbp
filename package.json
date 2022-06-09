@@ -1,6 +1,6 @@
 {
   "name": "sbp",
-  "version": "4.3.1-alpha",
+  "version": "4.3.3",
   "description": "libsbp bindings for JavaScript. More information here: http://swift-nav.github.io/libsbp/",
   "files": [
     "javascript/*",
