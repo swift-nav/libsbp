@@ -4,11 +4,16 @@ set -ex
 
 VERSION="$(git describe --always --tags --dirty)"
 
-if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
+if [ "$RUNNER_OS" == "macOS" ]; then
     BUILD_TRIPLET="$(cc -dumpmachine)"
     ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
     EXECUTABLES=("sbp2json" "json2sbp" "json2json")
     PACKAGE_CMD="zip ../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
+elif [ "$RUNNER_OS" == "Linux" ]; then
+    BUILD_TRIPLET="x86_64-linux-musl"
+    ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
+    EXECUTABLES=("sbp2json" "json2sbp" "json2json")
+    PACKAGE_CMD="zip ../../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
 elif [ "$RUNNER_OS" == "Windows" ]; then
     BUILD_TRIPLET="$(clang -dumpmachine)"
     ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
