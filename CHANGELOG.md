@@ -1,5 +1,17 @@
 # Changelog
 
+## [v4.3.3](https://github.com/swift-nav/libsbp/tree/v4.3.3) (2022-06-09)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.2...v4.3.3)
+
+**Merged pull requests:**
+
+- Update CHANGELOG.md [\#1165](https://github.com/swift-nav/libsbp/pull/1165) ([adrian-kong](https://github.com/adrian-kong))
+- Locked stdin and out for rust sbp2json [\#1161](https://github.com/swift-nav/libsbp/pull/1161) ([adrian-kong](https://github.com/adrian-kong))
+- build\(deps\): bump generic-array from 0.12.3 to 0.12.4 in /rust/sbp2json [\#1159](https://github.com/swift-nav/libsbp/pull/1159) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Added version params, --version, -V to rust sbp2json [\#1158](https://github.com/swift-nav/libsbp/pull/1158) ([adrian-kong](https://github.com/adrian-kong))
+- Python 3.10 update \[DEVINFRA-769\] [\#1157](https://github.com/swift-nav/libsbp/pull/1157) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.3.1](https://github.com/swift-nav/libsbp/tree/v4.3.1) (2022-06-03)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.0...v4.3.1)
