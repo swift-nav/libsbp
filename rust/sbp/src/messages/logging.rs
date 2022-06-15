@@ -35,7 +35,7 @@ pub mod msg_fwd {
     /// are implementation defined.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFwd {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -122,7 +122,7 @@ pub mod msg_log {
     /// DEBUG, INFO logging levels.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLog {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -275,7 +275,7 @@ pub mod msg_print_dep {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPrintDep {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]

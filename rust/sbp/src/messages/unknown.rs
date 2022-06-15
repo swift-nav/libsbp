@@ -6,7 +6,7 @@ use crate::{wire_format::WireFormat, SbpMessage};
 
 /// The message returned by the parser when the message type does not correspond to a known message.
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Unknown {
     /// The message id of the message.
     pub msg_id: u16,

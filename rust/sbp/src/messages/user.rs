@@ -27,7 +27,7 @@ pub mod msg_user_data {
     /// maximum length of 255 bytes per message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUserData {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]

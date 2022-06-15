@@ -107,7 +107,7 @@ impl std::error::Error for TryFromSbpError {}
 
 /// Represents any SBP message.
 #[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 #[non_exhaustive]
 pub enum Sbp {
     ((*- for m in msgs *))

@@ -35,7 +35,7 @@ pub mod msg_odometry {
     /// shall roll over to zero after one week.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOdometry {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -300,7 +300,7 @@ pub mod msg_wheeltick {
     /// with GNSS. Local CPU time shall roll over to zero after one week.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgWheeltick {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
