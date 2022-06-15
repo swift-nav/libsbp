@@ -436,6 +436,11 @@ To publish, you'll run `make dist-java` (which will run `gradle sign` and
 Manager](https://s01.oss.sonatype.org/). Select the deployed version, close the
 staging repository and release to finish it off.
 
+Follow the instructions here for how to "close" and then "release" and staging
+repository on SonaType's repository manager:
+
+- <https://central.sonatype.org/publish/release>
+
 # Contributions
 
 This library is developed internally by Swift Navigation. We welcome

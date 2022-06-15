@@ -1,5 +1,16 @@
 # Changelog
 
+## [v4.4.0](https://github.com/swift-nav/libsbp/tree/v4.4.0) (2022-06-15)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.3...v4.4.0)
+
+**Merged pull requests:**
+
+- rust: add partialeq [\#1169](https://github.com/swift-nav/libsbp/pull/1169) ([silverjam](https://github.com/silverjam))
+- fixing rust build script [\#1167](https://github.com/swift-nav/libsbp/pull/1167) ([adrian-kong](https://github.com/adrian-kong))
+- docker and doc fix-ups [\#1166](https://github.com/swift-nav/libsbp/pull/1166) ([silverjam](https://github.com/silverjam))
+- Update navigation stubbed msgs names \[OTA-161\] [\#1156](https://github.com/swift-nav/libsbp/pull/1156) ([fpezzinosn](https://github.com/fpezzinosn))
+
 ## [v4.3.3](https://github.com/swift-nav/libsbp/tree/v4.3.3) (2022-06-09)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.2...v4.3.3)

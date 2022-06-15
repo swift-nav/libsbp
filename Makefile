@@ -348,7 +348,7 @@ test-c:
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
-	$(MAKE); \
+	$(MAKE) -j4; \
 	$(MAKE) do-all-tests
 	$(call announce-end,"Finished running C tests")
 
@@ -357,7 +357,7 @@ test-c-v4:
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
-	$(MAKE); \
+	$(MAKE) -j4; \
 	$(MAKE) do-test-libsbp-v4 do-test-libsbp-cpp-v4
 	$(call announce-end,"Finished running C tests")
 
