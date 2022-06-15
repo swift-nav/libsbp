@@ -85,7 +85,7 @@ pub mod estimated_horizontal_error_ellipse {
     use crate::messages::lib::*;
     /// Horizontal estimated error ellipse
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct EstimatedHorizontalErrorEllipse {
         /// The semi major axis of the estimated horizontal error ellipse at the
         /// user-configured confidence level; zero implies invalid.
@@ -137,7 +137,7 @@ pub mod msg_age_corrections {
     /// Differential solution.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAgeCorrections {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -225,7 +225,7 @@ pub mod msg_baseline_ecef {
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcef {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -406,7 +406,7 @@ pub mod msg_baseline_ecef_dep_a {
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcefDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -670,7 +670,7 @@ pub mod msg_baseline_heading_dep_a {
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineHeadingDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -916,7 +916,7 @@ pub mod msg_baseline_ned {
     /// week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNed {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -1106,7 +1106,7 @@ pub mod msg_baseline_ned_dep_a {
     /// week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNedDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -1378,7 +1378,7 @@ pub mod msg_dops {
     /// or SPP solution.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDops {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -1582,7 +1582,7 @@ pub mod msg_dops_dep_a {
     /// navigation satellite geometry on positional measurement precision.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDopsDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -1707,7 +1707,7 @@ pub mod msg_gps_time {
     /// these messages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTime {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -1875,7 +1875,7 @@ pub mod msg_gps_time_dep_a {
     /// these messages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -1992,7 +1992,7 @@ pub mod msg_gps_time_gnss {
     /// these messages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -2156,7 +2156,7 @@ pub mod msg_pos_ecef {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcef {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -2447,7 +2447,7 @@ pub mod msg_pos_ecef_cov {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCov {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -2773,7 +2773,7 @@ pub mod msg_pos_ecef_cov_gnss {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCovGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -3002,7 +3002,7 @@ pub mod msg_pos_ecef_dep_a {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -3275,7 +3275,7 @@ pub mod msg_pos_ecef_gnss {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -3469,7 +3469,7 @@ pub mod msg_pos_llh {
     /// matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlh {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -3769,7 +3769,7 @@ pub mod msg_pos_llh_acc {
     /// The user-configured percentile is encoded in the percentile field.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhAcc {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -4215,7 +4215,7 @@ pub mod msg_pos_llh_cov {
     /// with the sign convention.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCov {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -4541,7 +4541,7 @@ pub mod msg_pos_llh_cov_gnss {
     /// should be taken with the sign convention.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCovGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -4775,7 +4775,7 @@ pub mod msg_pos_llh_dep_a {
     /// matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -5101,7 +5101,7 @@ pub mod msg_pos_llh_gnss {
     /// matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -5298,7 +5298,7 @@ pub mod msg_protection_level {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevel {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -5816,7 +5816,7 @@ pub mod msg_protection_level_dep_a {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevelDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -6001,7 +6001,7 @@ pub mod msg_reference_frame_param {
     use crate::messages::lib::*;
     /// Reference Frame Transformation Parameter
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReferenceFrameParam {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -6073,7 +6073,7 @@ pub mod msg_utc_leap_second {
     /// drift model parameters.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcLeapSecond {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -6145,7 +6145,7 @@ pub mod msg_utc_time {
     /// fix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTime {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -6383,7 +6383,7 @@ pub mod msg_utc_time_gnss {
     /// fix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTimeGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -6627,7 +6627,7 @@ pub mod msg_vel_body {
     /// products and is not available from Piksi Multi or Duro.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelBody {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -6894,7 +6894,7 @@ pub mod msg_vel_cog {
     /// but not necessarily the device heading.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelCog {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -7350,7 +7350,7 @@ pub mod msg_vel_ecef {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcef {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -7618,7 +7618,7 @@ pub mod msg_vel_ecef_cov {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCov {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -7921,7 +7921,7 @@ pub mod msg_vel_ecef_cov_gnss {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCovGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -8131,7 +8131,7 @@ pub mod msg_vel_ecef_dep_a {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -8255,7 +8255,7 @@ pub mod msg_vel_ecef_gnss {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -8431,7 +8431,7 @@ pub mod msg_vel_ned {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNed {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -8709,7 +8709,7 @@ pub mod msg_vel_ned_cov {
     /// triangular portion of the 3x3 covariance matrix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCov {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -9015,7 +9015,7 @@ pub mod msg_vel_ned_cov_gnss {
     /// triangular portion of the 3x3 covariance matrix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCovGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -9226,7 +9226,7 @@ pub mod msg_vel_ned_dep_a {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -9358,7 +9358,7 @@ pub mod msg_vel_ned_gnss {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedGnss {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
