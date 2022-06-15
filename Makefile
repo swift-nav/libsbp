@@ -427,19 +427,19 @@ dist-haskell:
 	$(call announce-end,"Finished deploying Haskell package")
 
 dist-rust:
-	$(call announce-begin,"Deploying Rust `sbp` package")
+	$(call announce-begin,"Deploying Rust 'sbp' package")
 	cargo release -v --package sbp --execute $(SBP_VERSION_UNPREFIXED)
-	$(call announce-end,"Finished deploying Rust `sbp` package")
-	$(call announce-begin,"Deploying Rust `sbp2json` package")
+	$(call announce-end,"Finished deploying Rust 'sbp' package")
+	$(call announce-begin,"Deploying Rust 'sbp2json' package")
 	cargo release -v --package sbp2json --execute $(SBP_VERSION_UNPREFIXED)
-	$(call announce-end,"Finished deploying Rust `sbp2json` package")
-	$(call announce-begin,"Reverting commit made by `sbp2json` deployment")
+	$(call announce-end,"Finished deploying Rust 'sbp2json' package")
+	$(call announce-begin,"Reverting commit made by 'sbp2json' deployment")
 	git reset --hard $(SBP_VERSION)
-	$(call announce-end,"Finished reverting commit made by `sbp2json` deployment")
+	$(call announce-end,"Finished reverting commit made by 'sbp2json' deployment")
 
 dist-java:
 	$(call announce-begin,"Deploying Java to maven central")
-	cd java && VERSION=$(SBP_VERSION_UNPREFIXED) gradle publish
+	cd java && VERSION=$(SBP_VERSION_UNPREFIXED) gradle publish --info
 	$(call announce-end,"Finished deploying Java to maven central")
 
 dist: dist-python dist-javascript dist-haskell dist-rust dist-java

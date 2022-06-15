@@ -122,7 +122,14 @@ Some thoughts to consider when adding a new message:
 It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
-    docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14
+    docker run -e SBP_TOX_PARALLEL=auto -v $PWD:/mnt/workspace \
+      -i -t swiftnav/libsbp-build:2022-06-14
+
+You can invoke individual stages like so:
+
+    docker run -e SBP_TOX_PARALLEL=auto -v $PWD:/mnt/workspace \
+      -i -t swiftnav/libsbp-build:2022-06-14 \
+      /bin/bash -c "make python"
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
@@ -370,17 +377,32 @@ To distribute java, ensure you have the correct credentials and prerequisites
 - Sonatype deployer account
 - Your own GPG key
 
-Add in `gradle.properties` located in `.gradle` or wherever the working
-directory is setup (probably located/have to create it in
-`$HOME/.gradle/gradle.properties`).  It's recommended to create
-`.gradle/gradle.properties` in the `libsbp` checkout directory so you can
-invoke docker like this in order to run the `dist-java` task:
+## Generating GPG key for Java
+
+SonaType open source repo requires a GPG key for signatures.  Generate GPG key via:
 
 ```shell
-docker run -v $PWD/.gradle:/home/dockerdev/.gradle -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14 /bin/bash
+gpg --gen-key
+gpg --export-secret-keys >keys.gpg
+gpg --keyserver keyserver.ubuntu.com --send-keys <KEY_ID>
 ```
 
-Then, create `gradle.properties` as follows:
+To locate the value for `signing.keyId` (needed below) run:
+
+```shell
+❯ gpg --list-keys --keyid-format short                                                                                                                              (base)
+/home/ubuntu/.gnupg/pubring.kbx
+-------------------------------
+pub   rsa3072/AB7D02BF 2022-05-03 [SC] [expires: 2024-05-02]
+      573C656383B86BBD618F4ABCFEB6DDB1AB7D02BF
+uid         [ultimate] Jason Anthony Mobarak <jason@swift-nav.com>
+sub   rsa3072/BB59B113 2022-05-03 [E] [expires: 2024-05-02]
+```
+
+The `signing.keyId` value to use from above is `BB59B113`. The `/keys` folder
+to should map to location where your gpg key will be stored. Then, create
+`gradle.properties` in the `java` directory as follows:
+
 
 ```shell
 # last 8 digit of gpg key
@@ -388,7 +410,7 @@ signing.keyId=xxx
 # password for gpg key
 signing.password=xxx
 # path to exported secret gpg keys
-signing.secretKeyRingFile=path_to_secret.gpg
+signing.secretKeyRingFile=/keys/keys.gpg
 
 # sonatype logins
 ossrhUsername=xxx
@@ -398,21 +420,21 @@ ossrhPassword=xxx
 Modify `ossrhUsername` and `ossrhPassword` with the sonatype deployer account
 (or an individual one with deployer role).  See [SonaType getting started
 guide](https://central.sonatype.org/publish/publish-guide/) for more details.
-Internal Swift developers should have access to shared credentials.
+Internal Swift developers should have access to shared credentials via
+LastPass.
 
-Generate GPG key with
+For more info see: <https://docs.gradle.org/current/userguide/signing_plugin.html>
+
+Now, invoke docker like this in order to run the `dist-java` task:
+
 ```shell
-gpg --gen-key
-gpg --export-secret-keys <key> > keys.gpg
-gpg --keyserver keyserver.ubuntu.com --send-keys <key>
+docker run -v $HOME/Documents:/keys -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14
 ```
 
-To publish, run `gradle publish` (via `make dist-java`) - (might have some
-conflicts with the version, so should use Makefile to actually publish with
-the correct version, so run `make dist-java` in docker)
-
-After publishing, go to Nexus Repository Manager. Select the deployed version,
-close the staging repository and release to finish it off.
+To publish, you'll run `make dist-java` (which will run `gradle sign` and
+`gradle publish`). After publishing, go to [Nexus Repository
+Manager](https://s01.oss.sonatype.org/). Select the deployed version, close the
+staging repository and release to finish it off.
 
 # Contributions
 
