@@ -33,7 +33,7 @@ pub mod gnss_input_type {
     /// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct GnssInputType {
         /// flags that store all relevant info specific to this sensor type.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
@@ -125,7 +125,7 @@ pub mod imu_input_type {
     /// through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct ImuInputType {
         /// Instrument time, grade, and architecture for a sensor.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
@@ -325,7 +325,7 @@ pub mod msg_soln_meta {
     /// valid GNSS solution and its tow is not a TOM.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMeta {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -529,7 +529,7 @@ pub mod msg_soln_meta_dep_a {
     /// GNSS metadata.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMetaDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -737,7 +737,7 @@ pub mod odo_input_type {
     /// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct OdoInputType {
         /// Instrument ODO rate, grade, and quality.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
@@ -928,7 +928,7 @@ pub mod solution_input_type {
     /// this section.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct SolutionInputType {
         /// The type of sensor
         #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_type")))]

@@ -6,7 +6,7 @@ use bytes::{Buf, BufMut};
 use crate::wire_format::WireFormat;
 
 /// Fixed or variable length string and its encoding.
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct SbpString<T, E = Unterminated> {
     data: T,
     encoding: PhantomData<E>,
@@ -118,7 +118,7 @@ macro_rules! forward_payload_vec {
 /// For example, the string "text" would be represented on the wire as
 ///
 /// text
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Unterminated;
 
 forward_payload_vec!(Unterminated, 0);
@@ -132,7 +132,7 @@ forward_payload_vec!(Unterminated, 0);
 /// For example the string "text" would be represented on the wire as
 ///
 /// text\0
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct NullTerminated;
 
 forward_payload_vec!(NullTerminated, 1);
@@ -151,7 +151,7 @@ forward_payload_vec!(NullTerminated, 1);
 ///
 /// A multipart string might contain no sections in which case on the wire it
 /// would consist of just a single NULL character.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Multipart;
 
 forward_payload_vec!(Multipart, 0);
@@ -174,7 +174,7 @@ forward_payload_vec!(Multipart, 0);
 /// A double NULL terminated string might contain no sections in which case on
 /// the wire it would consists of just two NULL terminators with no printable
 /// text.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct DoubleNullTerminated;
 
 forward_payload_vec!(DoubleNullTerminated, 2);

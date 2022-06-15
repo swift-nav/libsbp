@@ -28,7 +28,7 @@ pub mod msg_ext_event {
     /// pin it was and whether it was rising or falling.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgExtEvent {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]

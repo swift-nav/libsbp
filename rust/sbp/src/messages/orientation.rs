@@ -37,7 +37,7 @@ pub mod msg_angular_rate {
     /// of Swift Products and is not produced by Piksi Multi or Duro.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAngularRate {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -195,7 +195,7 @@ pub mod msg_baseline_heading {
     /// moving.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineHeading {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -357,7 +357,7 @@ pub mod msg_orient_euler {
     /// Multi or Duro.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOrientEuler {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
@@ -537,7 +537,7 @@ pub mod msg_orient_quat {
     /// Multi or Duro.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOrientQuat {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
