@@ -122,7 +122,7 @@ Some thoughts to consider when adding a new message:
 It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
-    docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-05-26
+    docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
@@ -377,7 +377,7 @@ directory is setup (probably located/have to create it in
 invoke docker like this in order to run the `dist-java` task:
 
 ```shell
-docker run -v $PWD/.gradle:/home/dockerdev/.gradle -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-05-26 /bin/bash
+docker run -v $PWD/.gradle:/home/dockerdev/.gradle -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14 /bin/bash
 ```
 
 Then, create `gradle.properties` as follows:

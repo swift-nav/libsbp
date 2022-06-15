@@ -117,7 +117,7 @@ Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness) by running the following on your command line:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-05-26 /bin/bash
+    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14 /bin/bash
 
 This will mount your local copy of the libsbp repository onto the image.
 
@@ -154,12 +154,12 @@ This could take several hours to run.  Alternately, the docker image will run
 the `make all` command by default, so you can kick off the `make all` process
 by simply running the following command:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2022-05-26
+    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2022-06-14
 
 To speed up this process you can attempt to run Python environment tests in
 paralell with:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t -e SBP_TOX_PARALLEL=auto libsbp-build:2022-05-26
+    docker run --rm -v $PWD:/mnt/workspace -i -t -e SBP_TOX_PARALLEL=auto libsbp-build:2022-06-14
 
 When you are finished, quit Docker so that it would not unnecessarily use up
 resources on your machine.
