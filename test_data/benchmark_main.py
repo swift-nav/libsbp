@@ -11,8 +11,8 @@ SLUSH_PERCENTAGE = 0.25
 
 # How much faster Rust should be than other implementations
 RATIOS_SBP2JSON = {
-    "haskell": 2.08,
-    "python": 17.48,
+    "haskell": 2.17,
+    "python": 21.93,
 }
 
 RATIOS_JSON2SBP = {
@@ -20,7 +20,7 @@ RATIOS_JSON2SBP = {
 }
 
 RATIOS_JSON2JSON = {
-    "haskell": 2.60,
+    "haskell": 2.56,
 }
 
 FAILED = [False]
@@ -64,8 +64,8 @@ def main():
 
     if not os.environ.get("BENCHMARK_SKIP_SBP2JSON"):
         subprocess.run(
-            ['hyperfine', '--warmup', '3', '--show-output',
-             '--export-json', 'benchmark_sbp2json.json',
+            ['hyperfine', '--warmup', '5', '--min-runs', '20',
+             '--show-output', '--export-json', 'benchmark_sbp2json.json',
              '-L', 'lang', 'rust,python,haskell',
              './test_data/benchmark/sbp2json_{lang}.py'],
             check=True)

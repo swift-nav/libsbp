@@ -10,7 +10,7 @@
  */
 
 /**********************
- * Automatically generated from piksi/yaml/swiftnav/sbp/piksi.yaml with generate.py.
+ * Automatically generated from spec/yaml/swiftnav/sbp/piksi.yaml with generate.py.
  * Don't edit this by hand!
  **********************
  * Package description:
@@ -19,17 +19,17 @@
  * receiver, including a variety of legacy messages that may no longer be used.
 ***********************/
 
-var SBP = require('./sbp');
-var Parser = require('./parser');
-var Int64 = require('node-int64');
-var UInt64 = require('cuint').UINT64;
-var CarrierPhase = require("./gnss").CarrierPhase;
-var GnssSignal = require("./gnss").GnssSignal;
-var GnssSignalDep = require("./gnss").GnssSignalDep;
-var GPSTime = require("./gnss").GPSTime;
-var GPSTimeDep = require("./gnss").GPSTimeDep;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
-var SvId = require("./gnss").SvId;
+let SBP = require('./sbp');
+let Parser = require('./parser');
+let Int64 = require('node-int64');
+let UInt64 = require('cuint').UINT64;
+let CarrierPhase = require("./gnss").CarrierPhase;
+let GnssSignal = require("./gnss").GnssSignal;
+let GnssSignalDep = require("./gnss").GnssSignalDep;
+let GPSTime = require("./gnss").GPSTime;
+let GPSTimeDep = require("./gnss").GPSTimeDep;
+let GPSTimeSec = require("./gnss").GPSTimeSec;
+let SvId = require("./gnss").SvId;
 
 /**
  * SBP class for message MSG_ALMANAC (0x0069).
@@ -39,7 +39,7 @@ var SvId = require("./gnss").SvId;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgAlmanac = function (sbp, fields) {
+let MsgAlmanac = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_ALMANAC";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -62,7 +62,7 @@ MsgAlmanac.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSetTime = function (sbp, fields) {
+let MsgSetTime = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SET_TIME";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -87,7 +87,7 @@ MsgSetTime.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgReset = function (sbp, fields) {
+let MsgReset = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_RESET";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -111,7 +111,7 @@ MsgReset.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgResetDep = function (sbp, fields) {
+let MsgResetDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_RESET_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -134,7 +134,7 @@ MsgResetDep.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCwResults = function (sbp, fields) {
+let MsgCwResults = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_CW_RESULTS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -157,7 +157,7 @@ MsgCwResults.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCwStart = function (sbp, fields) {
+let MsgCwStart = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_CW_START";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -183,7 +183,7 @@ MsgCwStart.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgResetFilters = function (sbp, fields) {
+let MsgResetFilters = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_RESET_FILTERS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -207,7 +207,7 @@ MsgResetFilters.prototype.fieldSpec.push(['filter', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgInitBaseDep = function (sbp, fields) {
+let MsgInitBaseDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_INIT_BASE_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -237,7 +237,7 @@ MsgInitBaseDep.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgThreadState = function (sbp, fields) {
+let MsgThreadState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_THREAD_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -274,7 +274,7 @@ MsgThreadState.prototype.fieldSpec.push(['stack_free', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var UARTChannel = function (sbp, fields) {
+let UARTChannel = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "UARTChannel";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -317,7 +317,7 @@ UARTChannel.prototype.fieldSpec.push(['rx_buffer_level', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var Period = function (sbp, fields) {
+let Period = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "Period";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -355,7 +355,7 @@ Period.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var Latency = function (sbp, fields) {
+let Latency = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "Latency";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -397,7 +397,7 @@ Latency.prototype.fieldSpec.push(['current', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUartState = function (sbp, fields) {
+let MsgUartState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_UART_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -435,7 +435,7 @@ MsgUartState.prototype.fieldSpec.push(['obs_period', Period.prototype.fieldSpec]
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgUartStateDepa = function (sbp, fields) {
+let MsgUartStateDepa = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_UART_STATE_DEPA";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -470,7 +470,7 @@ MsgUartStateDepa.prototype.fieldSpec.push(['latency', Latency.prototype.fieldSpe
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgIarState = function (sbp, fields) {
+let MsgIarState = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_IAR_STATE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -499,7 +499,7 @@ MsgIarState.prototype.fieldSpec.push(['num_hyps', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgMaskSatellite = function (sbp, fields) {
+let MsgMaskSatellite = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_MASK_SATELLITE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -529,7 +529,7 @@ MsgMaskSatellite.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgMaskSatelliteDep = function (sbp, fields) {
+let MsgMaskSatelliteDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_MASK_SATELLITE_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -563,7 +563,7 @@ MsgMaskSatelliteDep.prototype.fieldSpec.push(['sid', GnssSignalDep.prototype.fie
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgDeviceMonitor = function (sbp, fields) {
+let MsgDeviceMonitor = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_DEVICE_MONITOR";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -600,7 +600,7 @@ MsgDeviceMonitor.prototype.fieldSpec.push(['fe_temperature', 'writeInt16LE', 2])
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCommandReq = function (sbp, fields) {
+let MsgCommandReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_COMMAND_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -631,7 +631,7 @@ MsgCommandReq.prototype.fieldSpec.push(['command', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCommandResp = function (sbp, fields) {
+let MsgCommandResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_COMMAND_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -663,7 +663,7 @@ MsgCommandResp.prototype.fieldSpec.push(['code', 'writeInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCommandOutput = function (sbp, fields) {
+let MsgCommandOutput = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_COMMAND_OUTPUT";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -690,7 +690,7 @@ MsgCommandOutput.prototype.fieldSpec.push(['line', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgNetworkStateReq = function (sbp, fields) {
+let MsgNetworkStateReq = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_NETWORK_STATE_REQ";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -723,7 +723,7 @@ MsgNetworkStateReq.prototype.fieldSpec = [];
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgNetworkStateResp = function (sbp, fields) {
+let MsgNetworkStateResp = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_NETWORK_STATE_RESP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -772,7 +772,7 @@ MsgNetworkStateResp.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var NetworkUsage = function (sbp, fields) {
+let NetworkUsage = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "NetworkUsage";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -806,7 +806,7 @@ NetworkUsage.prototype.fieldSpec.push(['interface_name', 'string', 16]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgNetworkBandwidthUsage = function (sbp, fields) {
+let MsgNetworkBandwidthUsage = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_NETWORK_BANDWIDTH_USAGE";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -837,7 +837,7 @@ MsgNetworkBandwidthUsage.prototype.fieldSpec.push(['interfaces', 'array', Networ
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgCellModemStatus = function (sbp, fields) {
+let MsgCellModemStatus = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_CELL_MODEM_STATUS";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -874,7 +874,7 @@ MsgCellModemStatus.prototype.fieldSpec.push(['reserved', 'array', 'writeUInt8', 
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSpecanDep = function (sbp, fields) {
+let MsgSpecanDep = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SPECAN_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -919,7 +919,7 @@ MsgSpecanDep.prototype.fieldSpec.push(['amplitude_value', 'array', 'writeUInt8',
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSpecan = function (sbp, fields) {
+let MsgSpecan = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_SPECAN";
   this.fields = (fields || this.parser.parse(sbp.payload));
@@ -965,7 +965,7 @@ MsgSpecan.prototype.fieldSpec.push(['amplitude_value', 'array', 'writeUInt8', fu
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgFrontEndGain = function (sbp, fields) {
+let MsgFrontEndGain = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_FRONT_END_GAIN";
   this.fields = (fields || this.parser.parse(sbp.payload));

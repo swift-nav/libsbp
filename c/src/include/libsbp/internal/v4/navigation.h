@@ -813,8 +813,8 @@ bool sbp_msg_protection_level_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_gps_leap_second_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_gps_leap_second_t *msg);
+bool sbp_msg_utc_leap_second_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_utc_leap_second_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -823,8 +823,8 @@ bool sbp_msg_gps_leap_second_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_gps_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
-                                             sbp_msg_gps_leap_second_t *msg);
+bool sbp_msg_utc_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
+                                             sbp_msg_utc_leap_second_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -833,8 +833,8 @@ bool sbp_msg_gps_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_itrf_encode_internal(sbp_encode_ctx_t *ctx,
-                                  const sbp_msg_itrf_t *msg);
+bool sbp_msg_reference_frame_param_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_reference_frame_param_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -843,7 +843,8 @@ bool sbp_msg_itrf_encode_internal(sbp_encode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_itrf_decode_internal(sbp_decode_ctx_t *ctx, sbp_msg_itrf_t *msg);
+bool sbp_msg_reference_frame_param_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_reference_frame_param_t *msg);
 
 #ifdef __cplusplus
 }

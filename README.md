@@ -156,6 +156,11 @@ by simply running the following command:
 
     docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2022-05-26
 
+To speed up this process you can attempt to run Python environment tests in
+paralell with:
+
+    docker run --rm -v $PWD:/mnt/workspace -i -t -e SBP_TOX_PARALLEL=auto libsbp-build:2022-05-26
+
 When you are finished, quit Docker so that it would not unnecessarily use up
 resources on your machine.
 

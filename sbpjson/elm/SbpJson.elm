@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSLeapSecond, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgItrf, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -76,7 +76,6 @@
 --     decodeString msgFlashReadResp myJsonString
 --     decodeString msgFrontEndGain myJsonString
 --     decodeString msgFwd myJsonString
---     decodeString msgGPSLeapSecond myJsonString
 --     decodeString msgGPSTime myJsonString
 --     decodeString msgGPSTimeGnss myJsonString
 --     decodeString msgGloBiases myJsonString
@@ -91,7 +90,6 @@
 --     decodeString msgInsStatus myJsonString
 --     decodeString msgInsUpdates myJsonString
 --     decodeString msgIono myJsonString
---     decodeString msgItrf myJsonString
 --     decodeString msgLinuxCPUState myJsonString
 --     decodeString msgLinuxMemState myJsonString
 --     decodeString msgLinuxProcessFdCount myJsonString
@@ -127,6 +125,7 @@
 --     decodeString msgPosLLHGnss myJsonString
 --     decodeString msgPpsTime myJsonString
 --     decodeString msgProtectionLevel myJsonString
+--     decodeString msgReferenceFrameParam myJsonString
 --     decodeString msgReset myJsonString
 --     decodeString msgResetFilters myJsonString
 --     decodeString msgSbasRaw myJsonString
@@ -174,6 +173,7 @@
 --     decodeString msgTrackingState myJsonString
 --     decodeString msgUARTState myJsonString
 --     decodeString msgUserData myJsonString
+--     decodeString msgUTCLeapSecond myJsonString
 --     decodeString msgUTCTime myJsonString
 --     decodeString msgUTCTimeGnss myJsonString
 --     decodeString msgVelBody myJsonString
@@ -412,9 +412,6 @@ module SbpJson exposing
     , MsgFwd
     , msgFwdToString
     , msgFwd
-    , MsgGPSLeapSecond
-    , msgGPSLeapSecondToString
-    , msgGPSLeapSecond
     , MsgGPSTime
     , msgGPSTimeToString
     , msgGPSTime
@@ -457,9 +454,6 @@ module SbpJson exposing
     , MsgIono
     , msgIonoToString
     , msgIono
-    , MsgItrf
-    , msgItrfToString
-    , msgItrf
     , MsgLinuxCPUState
     , msgLinuxCPUStateToString
     , msgLinuxCPUState
@@ -565,6 +559,9 @@ module SbpJson exposing
     , MsgProtectionLevel
     , msgProtectionLevelToString
     , msgProtectionLevel
+    , MsgReferenceFrameParam
+    , msgReferenceFrameParamToString
+    , msgReferenceFrameParam
     , MsgReset
     , msgResetToString
     , msgReset
@@ -706,6 +703,9 @@ module SbpJson exposing
     , MsgUserData
     , msgUserDataToString
     , msgUserData
+    , MsgUTCLeapSecond
+    , msgUTCLeapSecondToString
+    , msgUTCLeapSecond
     , MsgUTCTime
     , msgUTCTimeToString
     , msgUTCTime
@@ -1529,13 +1529,6 @@ type alias MsgFwd =
     , source : Int
     }
 
-{-| Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
-parameters.
--}
-type alias MsgGPSLeapSecond =
-    { stub : Array Int
-    }
-
 {-| This message reports the GPS time, representing the time since the GPS epoch began on
 midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The
 weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the
@@ -1724,10 +1717,6 @@ type alias MsgIono =
     , b2 : Float
     , b3 : Float
     , tNmct : GpsTimeSEC
-    }
-
-type alias MsgItrf =
-    { stub : Array Int
     }
 
 {-| This message indicates the process state of the top 10 heaviest consumers of CPU on the
@@ -2283,6 +2272,10 @@ type alias MsgProtectionLevel =
     , wn : Int
     }
 
+type alias MsgReferenceFrameParam =
+    { stub : Array Int
+    }
+
 {-| This message from the host resets the Piksi back into the bootloader. -}
 type alias MsgReset =
     { flags : Int
@@ -2791,6 +2784,13 @@ type alias MsgUserData =
     { contents : Array Int
     }
 
+{-| Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
+parameters.
+-}
+type alias MsgUTCLeapSecond =
+    { stub : Array Int
+    }
+
 {-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
 the source of the UTC offset value and source of the time fix.
 -}
@@ -3262,9 +3262,6 @@ msgFrontEndGainToString r = Jenc.encode 0 (encodeMsgFrontEndGain r)
 msgFwdToString : MsgFwd -> String
 msgFwdToString r = Jenc.encode 0 (encodeMsgFwd r)
 
-msgGPSLeapSecondToString : MsgGPSLeapSecond -> String
-msgGPSLeapSecondToString r = Jenc.encode 0 (encodeMsgGPSLeapSecond r)
-
 msgGPSTimeToString : MsgGPSTime -> String
 msgGPSTimeToString r = Jenc.encode 0 (encodeMsgGPSTime r)
 
@@ -3306,9 +3303,6 @@ msgInsUpdatesToString r = Jenc.encode 0 (encodeMsgInsUpdates r)
 
 msgIonoToString : MsgIono -> String
 msgIonoToString r = Jenc.encode 0 (encodeMsgIono r)
-
-msgItrfToString : MsgItrf -> String
-msgItrfToString r = Jenc.encode 0 (encodeMsgItrf r)
 
 msgLinuxCPUStateToString : MsgLinuxCPUState -> String
 msgLinuxCPUStateToString r = Jenc.encode 0 (encodeMsgLinuxCPUState r)
@@ -3420,6 +3414,9 @@ msgPpsTimeToString r = Jenc.encode 0 (encodeMsgPpsTime r)
 
 msgProtectionLevelToString : MsgProtectionLevel -> String
 msgProtectionLevelToString r = Jenc.encode 0 (encodeMsgProtectionLevel r)
+
+msgReferenceFrameParamToString : MsgReferenceFrameParam -> String
+msgReferenceFrameParamToString r = Jenc.encode 0 (encodeMsgReferenceFrameParam r)
 
 msgResetToString : MsgReset -> String
 msgResetToString r = Jenc.encode 0 (encodeMsgReset r)
@@ -3573,6 +3570,9 @@ msgUARTStateToString r = Jenc.encode 0 (encodeMsgUARTState r)
 
 msgUserDataToString : MsgUserData -> String
 msgUserDataToString r = Jenc.encode 0 (encodeMsgUserData r)
+
+msgUTCLeapSecondToString : MsgUTCLeapSecond -> String
+msgUTCLeapSecondToString r = Jenc.encode 0 (encodeMsgUTCLeapSecond r)
 
 msgUTCTimeToString : MsgUTCTime -> String
 msgUTCTimeToString r = Jenc.encode 0 (encodeMsgUTCTime r)
@@ -4788,17 +4788,6 @@ encodeMsgFwd x =
         , ("source", Jenc.int x.source)
         ]
 
-msgGPSLeapSecond : Jdec.Decoder MsgGPSLeapSecond
-msgGPSLeapSecond =
-    Jpipe.decode MsgGPSLeapSecond
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
-
-encodeMsgGPSLeapSecond : MsgGPSLeapSecond -> Jenc.Value
-encodeMsgGPSLeapSecond x =
-    Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
-        ]
-
 msgGPSTime : Jdec.Decoder MsgGPSTime
 msgGPSTime =
     Jpipe.decode MsgGPSTime
@@ -5080,17 +5069,6 @@ encodeMsgIono x =
         , ("b2", Jenc.float x.b2)
         , ("b3", Jenc.float x.b3)
         , ("t_nmct", encodeGpsTimeSEC x.tNmct)
-        ]
-
-msgItrf : Jdec.Decoder MsgItrf
-msgItrf =
-    Jpipe.decode MsgItrf
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
-
-encodeMsgItrf : MsgItrf -> Jenc.Value
-encodeMsgItrf x =
-    Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgLinuxCPUState : Jdec.Decoder MsgLinuxCPUState
@@ -5967,6 +5945,17 @@ encodeMsgProtectionLevel x =
         , ("wn", Jenc.int x.wn)
         ]
 
+msgReferenceFrameParam : Jdec.Decoder MsgReferenceFrameParam
+msgReferenceFrameParam =
+    Jpipe.decode MsgReferenceFrameParam
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgReferenceFrameParam : MsgReferenceFrameParam -> Jenc.Value
+encodeMsgReferenceFrameParam x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        ]
+
 msgReset : Jdec.Decoder MsgReset
 msgReset =
     Jpipe.decode MsgReset
@@ -6793,6 +6782,17 @@ encodeMsgUserData : MsgUserData -> Jenc.Value
 encodeMsgUserData x =
     Jenc.object
         [ ("contents", makeArrayEncoder Jenc.int x.contents)
+        ]
+
+msgUTCLeapSecond : Jdec.Decoder MsgUTCLeapSecond
+msgUTCLeapSecond =
+    Jpipe.decode MsgUTCLeapSecond
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+
+encodeMsgUTCLeapSecond : MsgUTCLeapSecond -> Jenc.Value
+encodeMsgUTCLeapSecond x =
+    Jenc.object
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgUTCTime : Jdec.Decoder MsgUTCTime

@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSLeapSecond, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgItrf, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -69,7 +69,6 @@
 //   const msgFlashReadResp = Convert.toMsgFlashReadResp(json);
 //   const msgFrontEndGain = Convert.toMsgFrontEndGain(json);
 //   const msgFwd = Convert.toMsgFwd(json);
-//   const msgGPSLeapSecond = Convert.toMsgGPSLeapSecond(json);
 //   const msgGPSTime = Convert.toMsgGPSTime(json);
 //   const msgGPSTimeGnss = Convert.toMsgGPSTimeGnss(json);
 //   const msgGloBiases = Convert.toMsgGloBiases(json);
@@ -84,7 +83,6 @@
 //   const msgInsStatus = Convert.toMsgInsStatus(json);
 //   const msgInsUpdates = Convert.toMsgInsUpdates(json);
 //   const msgIono = Convert.toMsgIono(json);
-//   const msgItrf = Convert.toMsgItrf(json);
 //   const msgLinuxCPUState = Convert.toMsgLinuxCPUState(json);
 //   const msgLinuxMemState = Convert.toMsgLinuxMemState(json);
 //   const msgLinuxProcessFdCount = Convert.toMsgLinuxProcessFdCount(json);
@@ -120,6 +118,7 @@
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
 //   const msgPpsTime = Convert.toMsgPpsTime(json);
 //   const msgProtectionLevel = Convert.toMsgProtectionLevel(json);
+//   const msgReferenceFrameParam = Convert.toMsgReferenceFrameParam(json);
 //   const msgReset = Convert.toMsgReset(json);
 //   const msgResetFilters = Convert.toMsgResetFilters(json);
 //   const msgSbasRaw = Convert.toMsgSbasRaw(json);
@@ -167,6 +166,7 @@
 //   const msgTrackingState = Convert.toMsgTrackingState(json);
 //   const msgUARTState = Convert.toMsgUARTState(json);
 //   const msgUserData = Convert.toMsgUserData(json);
+//   const msgUTCLeapSecond = Convert.toMsgUTCLeapSecond(json);
 //   const msgUTCTime = Convert.toMsgUTCTime(json);
 //   const msgUTCTimeGnss = Convert.toMsgUTCTimeGnss(json);
 //   const msgVelBody = Convert.toMsgVelBody(json);
@@ -961,14 +961,6 @@ export interface MsgFwd {
 }
 
 /**
- * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
- * parameters.
- */
-export interface MsgGPSLeapSecond {
-    stub: number[];
-}
-
-/**
  * This message reports the GPS time, representing the time since the GPS epoch began on
  * midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of the week. The
  * weeks begin at the Saturday/Sunday transition. GPS week 0 began at the beginning of the
@@ -1170,10 +1162,6 @@ export interface MsgIono {
     b2:     number;
     b3:     number;
     t_nmct: GpsTimeSEC;
-}
-
-export interface MsgItrf {
-    stub: number[];
 }
 
 /**
@@ -1781,6 +1769,10 @@ export interface MsgProtectionLevel {
     wn:      number;
 }
 
+export interface MsgReferenceFrameParam {
+    stub: number[];
+}
+
 /**
  * This message from the host resets the Piksi back into the bootloader.
  */
@@ -2338,6 +2330,14 @@ export interface UARTChannel {
  */
 export interface MsgUserData {
     contents: number[];
+}
+
+/**
+ * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
+ * parameters.
+ */
+export interface MsgUTCLeapSecond {
+    stub: number[];
 }
 
 /**
@@ -3152,14 +3152,6 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgFwd")), null, 2);
     }
 
-    public static toMsgGPSLeapSecond(json: string): MsgGPSLeapSecond {
-        return cast(JSON.parse(json), r("MsgGPSLeapSecond"));
-    }
-
-    public static msgGPSLeapSecondToJson(value: MsgGPSLeapSecond): string {
-        return JSON.stringify(uncast(value, r("MsgGPSLeapSecond")), null, 2);
-    }
-
     public static toMsgGPSTime(json: string): MsgGPSTime {
         return cast(JSON.parse(json), r("MsgGPSTime"));
     }
@@ -3270,14 +3262,6 @@ export class Convert {
 
     public static msgIonoToJson(value: MsgIono): string {
         return JSON.stringify(uncast(value, r("MsgIono")), null, 2);
-    }
-
-    public static toMsgItrf(json: string): MsgItrf {
-        return cast(JSON.parse(json), r("MsgItrf"));
-    }
-
-    public static msgItrfToJson(value: MsgItrf): string {
-        return JSON.stringify(uncast(value, r("MsgItrf")), null, 2);
     }
 
     public static toMsgLinuxCPUState(json: string): MsgLinuxCPUState {
@@ -3558,6 +3542,14 @@ export class Convert {
 
     public static msgProtectionLevelToJson(value: MsgProtectionLevel): string {
         return JSON.stringify(uncast(value, r("MsgProtectionLevel")), null, 2);
+    }
+
+    public static toMsgReferenceFrameParam(json: string): MsgReferenceFrameParam {
+        return cast(JSON.parse(json), r("MsgReferenceFrameParam"));
+    }
+
+    public static msgReferenceFrameParamToJson(value: MsgReferenceFrameParam): string {
+        return JSON.stringify(uncast(value, r("MsgReferenceFrameParam")), null, 2);
     }
 
     public static toMsgReset(json: string): MsgReset {
@@ -3934,6 +3926,14 @@ export class Convert {
 
     public static msgUserDataToJson(value: MsgUserData): string {
         return JSON.stringify(uncast(value, r("MsgUserData")), null, 2);
+    }
+
+    public static toMsgUTCLeapSecond(json: string): MsgUTCLeapSecond {
+        return cast(JSON.parse(json), r("MsgUTCLeapSecond"));
+    }
+
+    public static msgUTCLeapSecondToJson(value: MsgUTCLeapSecond): string {
+        return JSON.stringify(uncast(value, r("MsgUTCLeapSecond")), null, 2);
     }
 
     public static toMsgUTCTime(json: string): MsgUTCTime {
@@ -4757,9 +4757,6 @@ const typeMap: any = {
         { json: "protocol", js: "protocol", typ: 0 },
         { json: "source", js: "source", typ: 0 },
     ], "any"),
-    "MsgGPSLeapSecond": o([
-        { json: "stub", js: "stub", typ: a(0) },
-    ], "any"),
     "MsgGPSTime": o([
         { json: "flags", js: "flags", typ: 0 },
         { json: "ns_residual", js: "ns_residual", typ: 0 },
@@ -4863,9 +4860,6 @@ const typeMap: any = {
         { json: "b2", js: "b2", typ: 3.14 },
         { json: "b3", js: "b3", typ: 3.14 },
         { json: "t_nmct", js: "t_nmct", typ: r("GpsTimeSEC") },
-    ], "any"),
-    "MsgItrf": o([
-        { json: "stub", js: "stub", typ: a(0) },
     ], "any"),
     "MsgLinuxCPUState": o([
         { json: "cmdline", js: "cmdline", typ: "" },
@@ -5199,6 +5193,9 @@ const typeMap: any = {
         { json: "vvpl", js: "vvpl", typ: 0 },
         { json: "wn", js: "wn", typ: 0 },
     ], "any"),
+    "MsgReferenceFrameParam": o([
+        { json: "stub", js: "stub", typ: a(0) },
+    ], "any"),
     "MsgReset": o([
         { json: "flags", js: "flags", typ: 0 },
     ], "any"),
@@ -5472,6 +5469,9 @@ const typeMap: any = {
     ], "any"),
     "MsgUserData": o([
         { json: "contents", js: "contents", typ: a(0) },
+    ], "any"),
+    "MsgUTCLeapSecond": o([
+        { json: "stub", js: "stub", typ: a(0) },
     ], "any"),
     "MsgUTCTime": o([
         { json: "day", js: "day", typ: 0 },

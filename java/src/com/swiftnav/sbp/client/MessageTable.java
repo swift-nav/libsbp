@@ -76,11 +76,9 @@ import com.swiftnav.sbp.navigation.MsgBaselineNED;
 import com.swiftnav.sbp.navigation.MsgBaselineNEDDepA;
 import com.swiftnav.sbp.navigation.MsgDops;
 import com.swiftnav.sbp.navigation.MsgDopsDepA;
-import com.swiftnav.sbp.navigation.MsgGPSLeapSecond;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
 import com.swiftnav.sbp.navigation.MsgGPSTimeDepA;
 import com.swiftnav.sbp.navigation.MsgGPSTimeGnss;
-import com.swiftnav.sbp.navigation.MsgItrf;
 import com.swiftnav.sbp.navigation.MsgPosECEF;
 import com.swiftnav.sbp.navigation.MsgPosECEFCov;
 import com.swiftnav.sbp.navigation.MsgPosECEFCovGnss;
@@ -94,6 +92,8 @@ import com.swiftnav.sbp.navigation.MsgPosLLHDepA;
 import com.swiftnav.sbp.navigation.MsgPosLLHGnss;
 import com.swiftnav.sbp.navigation.MsgProtectionLevel;
 import com.swiftnav.sbp.navigation.MsgProtectionLevelDepA;
+import com.swiftnav.sbp.navigation.MsgReferenceFrameParam;
+import com.swiftnav.sbp.navigation.MsgUtcLeapSecond;
 import com.swiftnav.sbp.navigation.MsgUtcTime;
 import com.swiftnav.sbp.navigation.MsgUtcTimeGnss;
 import com.swiftnav.sbp.navigation.MsgVelBody;
@@ -422,10 +422,10 @@ final class MessageTable {
                 return new MsgProtectionLevelDepA(msg);
             case MsgProtectionLevel.TYPE:
                 return new MsgProtectionLevel(msg);
-            case MsgGPSLeapSecond.TYPE:
-                return new MsgGPSLeapSecond(msg);
-            case MsgItrf.TYPE:
-                return new MsgItrf(msg);
+            case MsgUtcLeapSecond.TYPE:
+                return new MsgUtcLeapSecond(msg);
+            case MsgReferenceFrameParam.TYPE:
+                return new MsgReferenceFrameParam(msg);
             case MsgNdbEvent.TYPE:
                 return new MsgNdbEvent(msg);
             case MsgObs.TYPE:

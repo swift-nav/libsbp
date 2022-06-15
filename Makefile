@@ -11,6 +11,8 @@ SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
 GENENV ?= py  # the system's default python version
 SBP_GEN_BIN := tox -e $(GENENV) --
 
+SBP_TOX_PARALLEL ?= 0
+
 SBP_VERSION := $(shell git describe --match 'v*' --always --tags)
 SBP_VERSION_UNPREFIXED := $(shell echo $(SBP_VERSION) | sed 's/^v//')
 SBP_STAGING := $(shell git describe --match 'libsbp-staging*' --always --tags | grep -q '^libsbp-staging' && echo 1 || echo 0)
@@ -361,7 +363,7 @@ test-c-v4:
 
 test-python:
 	$(call announce-begin,"Running Python tests")
-	cd $(SWIFTNAV_ROOT)/python/ && tox --parallel auto --skip-missing-interpreters
+	cd $(SWIFTNAV_ROOT)/python/ && tox --parallel $(SBP_TOX_PARALLEL) --skip-missing-interpreters
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:

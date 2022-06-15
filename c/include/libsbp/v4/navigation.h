@@ -26,11 +26,9 @@
 #include <libsbp/v4/navigation/MSG_BASELINE_NED_DEP_A.h>
 #include <libsbp/v4/navigation/MSG_DOPS.h>
 #include <libsbp/v4/navigation/MSG_DOPS_DEP_A.h>
-#include <libsbp/v4/navigation/MSG_GPS_LEAP_SECOND.h>
 #include <libsbp/v4/navigation/MSG_GPS_TIME.h>
 #include <libsbp/v4/navigation/MSG_GPS_TIME_DEP_A.h>
 #include <libsbp/v4/navigation/MSG_GPS_TIME_GNSS.h>
-#include <libsbp/v4/navigation/MSG_ITRF.h>
 #include <libsbp/v4/navigation/MSG_POS_ECEF.h>
 #include <libsbp/v4/navigation/MSG_POS_ECEF_COV.h>
 #include <libsbp/v4/navigation/MSG_POS_ECEF_COV_GNSS.h>
@@ -44,6 +42,8 @@
 #include <libsbp/v4/navigation/MSG_POS_LLH_GNSS.h>
 #include <libsbp/v4/navigation/MSG_PROTECTION_LEVEL.h>
 #include <libsbp/v4/navigation/MSG_PROTECTION_LEVEL_DEP_A.h>
+#include <libsbp/v4/navigation/MSG_REFERENCE_FRAME_PARAM.h>
+#include <libsbp/v4/navigation/MSG_UTC_LEAP_SECOND.h>
 #include <libsbp/v4/navigation/MSG_UTC_TIME.h>
 #include <libsbp/v4/navigation/MSG_UTC_TIME_GNSS.h>
 #include <libsbp/v4/navigation/MSG_VEL_BODY.h>

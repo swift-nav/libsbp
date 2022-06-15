@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSLeapSecond.yaml by
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgUTCLeapSecond.yaml by
 // generate.py. Do not modify by hand!
 
 #include <check.h>
@@ -68,7 +68,7 @@ static void msg_callback(u16 sender_id, sbp_msg_type_t msg_type,
   last_msg.context = context;
 }
 
-START_TEST(test_auto_check_sbp_navigation_MsgGPSLeapSecond) {
+START_TEST(test_auto_check_sbp_navigation_MsgUTCLeapSecond) {
   static sbp_msg_callbacks_node_t n;
 
   // State of the SBP message parser.
@@ -102,37 +102,37 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSLeapSecond) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.gps_leap_second.n_stub = 14;
+    test_msg.utc_leap_second.n_stub = 14;
 
-    test_msg.gps_leap_second.stub[0] = 1;
+    test_msg.utc_leap_second.stub[0] = 1;
 
-    test_msg.gps_leap_second.stub[1] = 0;
+    test_msg.utc_leap_second.stub[1] = 0;
 
-    test_msg.gps_leap_second.stub[2] = 2;
+    test_msg.utc_leap_second.stub[2] = 2;
 
-    test_msg.gps_leap_second.stub[3] = 0;
+    test_msg.utc_leap_second.stub[3] = 0;
 
-    test_msg.gps_leap_second.stub[4] = 3;
+    test_msg.utc_leap_second.stub[4] = 3;
 
-    test_msg.gps_leap_second.stub[5] = 4;
+    test_msg.utc_leap_second.stub[5] = 4;
 
-    test_msg.gps_leap_second.stub[6] = 5;
+    test_msg.utc_leap_second.stub[6] = 5;
 
-    test_msg.gps_leap_second.stub[7] = 0;
+    test_msg.utc_leap_second.stub[7] = 0;
 
-    test_msg.gps_leap_second.stub[8] = 6;
+    test_msg.utc_leap_second.stub[8] = 6;
 
-    test_msg.gps_leap_second.stub[9] = 0;
+    test_msg.utc_leap_second.stub[9] = 0;
 
-    test_msg.gps_leap_second.stub[10] = 7;
+    test_msg.utc_leap_second.stub[10] = 7;
 
-    test_msg.gps_leap_second.stub[11] = 0;
+    test_msg.utc_leap_second.stub[11] = 0;
 
-    test_msg.gps_leap_second.stub[12] = 8;
+    test_msg.utc_leap_second.stub[12] = 8;
 
-    test_msg.gps_leap_second.stub[13] = 9;
+    test_msg.utc_leap_second.stub[13] = 9;
 
-    sbp_message_send(&sbp_state, SbpMsgGpsLeapSecond, 66, &test_msg,
+    sbp_message_send(&sbp_state, SbpMsgUtcLeapSecond, 66, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -153,80 +153,80 @@ START_TEST(test_auto_check_sbp_navigation_MsgGPSLeapSecond) {
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(
-        sbp_message_cmp(SbpMsgGpsLeapSecond, &last_msg.msg, &test_msg) == 0,
+        sbp_message_cmp(SbpMsgUtcLeapSecond, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.n_stub == 14,
-                  "incorrect value for last_msg.msg.gps_leap_second.n_stub, "
+    ck_assert_msg(last_msg.msg.utc_leap_second.n_stub == 14,
+                  "incorrect value for last_msg.msg.utc_leap_second.n_stub, "
                   "expected 14, is %d",
-                  last_msg.msg.gps_leap_second.n_stub);
+                  last_msg.msg.utc_leap_second.n_stub);
 
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[0] == 1,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[0], "
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[0] == 1,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[0], "
                   "expected 1, is %d",
-                  last_msg.msg.gps_leap_second.stub[0]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[1] == 0,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[1], "
+                  last_msg.msg.utc_leap_second.stub[0]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[1] == 0,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[1], "
                   "expected 0, is %d",
-                  last_msg.msg.gps_leap_second.stub[1]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[2] == 2,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[2], "
+                  last_msg.msg.utc_leap_second.stub[1]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[2] == 2,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[2], "
                   "expected 2, is %d",
-                  last_msg.msg.gps_leap_second.stub[2]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[3] == 0,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[3], "
+                  last_msg.msg.utc_leap_second.stub[2]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[3] == 0,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[3], "
                   "expected 0, is %d",
-                  last_msg.msg.gps_leap_second.stub[3]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[4] == 3,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[4], "
+                  last_msg.msg.utc_leap_second.stub[3]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[4] == 3,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[4], "
                   "expected 3, is %d",
-                  last_msg.msg.gps_leap_second.stub[4]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[5] == 4,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[5], "
+                  last_msg.msg.utc_leap_second.stub[4]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[5] == 4,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[5], "
                   "expected 4, is %d",
-                  last_msg.msg.gps_leap_second.stub[5]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[6] == 5,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[6], "
+                  last_msg.msg.utc_leap_second.stub[5]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[6] == 5,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[6], "
                   "expected 5, is %d",
-                  last_msg.msg.gps_leap_second.stub[6]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[7] == 0,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[7], "
+                  last_msg.msg.utc_leap_second.stub[6]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[7] == 0,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[7], "
                   "expected 0, is %d",
-                  last_msg.msg.gps_leap_second.stub[7]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[8] == 6,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[8], "
+                  last_msg.msg.utc_leap_second.stub[7]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[8] == 6,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[8], "
                   "expected 6, is %d",
-                  last_msg.msg.gps_leap_second.stub[8]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[9] == 0,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[9], "
+                  last_msg.msg.utc_leap_second.stub[8]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[9] == 0,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[9], "
                   "expected 0, is %d",
-                  last_msg.msg.gps_leap_second.stub[9]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[10] == 7,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[10], "
+                  last_msg.msg.utc_leap_second.stub[9]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[10] == 7,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[10], "
                   "expected 7, is %d",
-                  last_msg.msg.gps_leap_second.stub[10]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[11] == 0,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[11], "
+                  last_msg.msg.utc_leap_second.stub[10]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[11] == 0,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[11], "
                   "expected 0, is %d",
-                  last_msg.msg.gps_leap_second.stub[11]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[12] == 8,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[12], "
+                  last_msg.msg.utc_leap_second.stub[11]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[12] == 8,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[12], "
                   "expected 8, is %d",
-                  last_msg.msg.gps_leap_second.stub[12]);
-    ck_assert_msg(last_msg.msg.gps_leap_second.stub[13] == 9,
-                  "incorrect value for last_msg.msg.gps_leap_second.stub[13], "
+                  last_msg.msg.utc_leap_second.stub[12]);
+    ck_assert_msg(last_msg.msg.utc_leap_second.stub[13] == 9,
+                  "incorrect value for last_msg.msg.utc_leap_second.stub[13], "
                   "expected 9, is %d",
-                  last_msg.msg.gps_leap_second.stub[13]);
+                  last_msg.msg.utc_leap_second.stub[13]);
   }
 }
 END_TEST
 
-Suite *auto_check_sbp_navigation_MsgGPSLeapSecond_suite(void) {
+Suite *auto_check_sbp_navigation_MsgUTCLeapSecond_suite(void) {
   Suite *s = suite_create(
-      "SBP generated test suite: auto_check_sbp_navigation_MsgGPSLeapSecond");
+      "SBP generated test suite: auto_check_sbp_navigation_MsgUTCLeapSecond");
   TCase *tc_acq = tcase_create(
-      "Automated_Suite_auto_check_sbp_navigation_MsgGPSLeapSecond");
-  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgGPSLeapSecond);
+      "Automated_Suite_auto_check_sbp_navigation_MsgUTCLeapSecond");
+  tcase_add_test(tc_acq, test_auto_check_sbp_navigation_MsgUTCLeapSecond);
   suite_add_tcase(s, tc_acq);
   return s;
 }
