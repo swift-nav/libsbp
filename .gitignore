@@ -86,3 +86,4 @@ current-spec/
 
 .vscode/
 .gradle/
+gradle.properties

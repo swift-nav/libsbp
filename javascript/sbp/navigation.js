@@ -2139,16 +2139,7 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  * model parameters.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field bias_coeff number (signed 16-bit int, 2 bytes) Reserved. Bias coefficient of GPS time scale with respect to UTC drift model.
- * @field drift_coeff number (signed 16-bit int, 2 bytes) Reserved. Drift coefficient of GPS time scale with respect to UTC drift model.
- * @field drift_rate_coeff number (signed 8-bit int, 1 byte) Reserved. Drift rate correction coefficient of GPS time scale with respect to
- *   UTC drift model.
- * @field count_before number (signed 8-bit int, 1 byte) Leap second count before insertion.
- * @field tow_s number (unsigned 16-bit int, 2 bytes) Reserved. Drift model reference week second.
- * @field wn number (unsigned 16-bit int, 2 bytes) Reserved. Drift model reference week number.
- * @field ref_wn number (unsigned 16-bit int, 2 bytes) Leap second reference week number.
- * @field ref_dn number (unsigned 8-bit int, 1 byte) Leap second reference day number.
- * @field count_after number (signed 8-bit int, 1 byte) Leap second count after insertion.
+ * @field stub array
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -2165,52 +2156,16 @@ MsgUtcLeapSecond.prototype.msg_type = 0x023A;
 MsgUtcLeapSecond.prototype.constructor = MsgUtcLeapSecond;
 MsgUtcLeapSecond.prototype.parser = new Parser()
   .endianess('little')
-  .int16('bias_coeff')
-  .int16('drift_coeff')
-  .int8('drift_rate_coeff')
-  .int8('count_before')
-  .uint16('tow_s')
-  .uint16('wn')
-  .uint16('ref_wn')
-  .uint8('ref_dn')
-  .int8('count_after');
+  .array('stub', { type: 'uint8', readUntil: 'eof' });
 MsgUtcLeapSecond.prototype.fieldSpec = [];
-MsgUtcLeapSecond.prototype.fieldSpec.push(['bias_coeff', 'writeInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_coeff', 'writeInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_rate_coeff', 'writeInt8', 1]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['count_before', 'writeInt8', 1]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['tow_s', 'writeUInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_wn', 'writeUInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_dn', 'writeUInt8', 1]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
  * SBP class for message MSG_REFERENCE_FRAME_PARAM (0x0244).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field ssr_iod number (unsigned 8-bit int, 1 byte) SSR IOD parameter.
- * @field sn string Name of source coordinate-system using the EPSG identification code.
- * @field tn string Name of target coordinate-system using the EPSG identification code.
- * @field sin number (unsigned 8-bit int, 1 byte) System Identification Number.
- * @field utn number (unsigned 16-bit int, 2 bytes) Utilized Transformation Message.
- * @field re_t0 number (unsigned 16-bit int, 2 bytes) Reference Epoch t0 for transformation parameter set given as Modified Julian Day
- *   (MDJ) Number minus 44244 days.
- * @field delta_X0 number (signed 32-bit int, 4 bytes) Translation in X for Reference Epoch t0.
- * @field delta_Y0 number (signed 32-bit int, 4 bytes) Translation in Y for Reference Epoch t0.
- * @field delta_Z0 number (signed 32-bit int, 4 bytes) Translation in Z for Reference Epoch t0.
- * @field theta_01 number (signed 32-bit int, 4 bytes) Rotation around the X-axis for Reference Epoch t0.
- * @field theta_02 number (signed 32-bit int, 4 bytes) Rotation around the Y-axis for Reference Epoch t0.
- * @field theta_03 number (signed 32-bit int, 4 bytes) Rotation around the Z-axis for Reference Epoch t0.
- * @field scale number (signed 32-bit int, 4 bytes) Scale correction for Reference Epoch t0.
- * @field dot_delta_X0 number (signed 32-bit int, 4 bytes) Rate of change of translation in X.
- * @field dot_delta_Y0 number (signed 32-bit int, 4 bytes) Rate of change of translation in Y.
- * @field dot_delta_Z0 number (signed 32-bit int, 4 bytes) Rate of change of translation in Z.
- * @field dot_theta_01 number (signed 32-bit int, 4 bytes) Rate of change of rotation around the X-axis.
- * @field dot_theta_02 number (signed 32-bit int, 4 bytes) Rate of change of rotation around the Y-axis.
- * @field dot_theta_03 number (signed 32-bit int, 4 bytes) Rate of change of rotation around the Z-axis.
- * @field dot_scale number (signed 16-bit int, 2 bytes) Rate of change of scale correction.
+ * @field stub array
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -2227,47 +2182,9 @@ MsgReferenceFrameParam.prototype.msg_type = 0x0244;
 MsgReferenceFrameParam.prototype.constructor = MsgReferenceFrameParam;
 MsgReferenceFrameParam.prototype.parser = new Parser()
   .endianess('little')
-  .uint8('ssr_iod')
-  .string('sn', { length: 32 })
-  .string('tn', { length: 32 })
-  .uint8('sin')
-  .uint16('utn')
-  .uint16('re_t0')
-  .int32('delta_X0')
-  .int32('delta_Y0')
-  .int32('delta_Z0')
-  .int32('theta_01')
-  .int32('theta_02')
-  .int32('theta_03')
-  .int32('scale')
-  .int32('dot_delta_X0')
-  .int32('dot_delta_Y0')
-  .int32('dot_delta_Z0')
-  .int32('dot_theta_01')
-  .int32('dot_theta_02')
-  .int32('dot_theta_03')
-  .int16('dot_scale');
+  .array('stub', { type: 'uint8', readUntil: 'eof' });
 MsgReferenceFrameParam.prototype.fieldSpec = [];
-MsgReferenceFrameParam.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['sn', 'string', 32]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['tn', 'string', 32]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['sin', 'writeUInt8', 1]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['utn', 'writeUInt16LE', 2]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['re_t0', 'writeUInt16LE', 2]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_X0', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_Y0', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['delta_Z0', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_01', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_02', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['theta_03', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['scale', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_X0', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_Y0', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_delta_Z0', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_01', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_02', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_03', 'writeInt32LE', 4]);
-MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]);
+MsgReferenceFrameParam.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
   0x0102: MsgGpsTime,

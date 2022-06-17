@@ -16,7 +16,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 ///     cat sbp.json | json2sbp
 #[derive(Debug, Parser)]
-#[clap(name = "json2sbp", verbatim_doc_comment)]
+#[clap(name = "json2sbp", verbatim_doc_comment, version)]
 struct Options {
     /// Path to input file
     input: Option<PathBuf>,
@@ -48,12 +48,12 @@ fn main() -> Result<()> {
 
     let stdin: Box<dyn Read> = match options.input {
         Some(path) => Box::new(File::open(path)?),
-        _ => Box::new(io::stdin()),
+        _ => Box::new(io::stdin().lock()),
     };
 
     let stdout: Box<dyn Write> = match options.output {
         Some(path) => Box::new(File::create(path)?),
-        _ => Box::new(io::stdout()),
+        _ => Box::new(io::stdout().lock()),
     };
 
     json2sbp(stdin, stdout, options.buffered, options.fatal_errors)

@@ -11,6 +11,8 @@ SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
 GENENV ?= py  # the system's default python version
 SBP_GEN_BIN := tox -e $(GENENV) --
 
+SBP_TOX_PARALLEL ?= 0
+
 SBP_VERSION := $(shell git describe --match 'v*' --always --tags)
 SBP_VERSION_UNPREFIXED := $(shell echo $(SBP_VERSION) | sed 's/^v//')
 SBP_STAGING := $(shell git describe --match 'libsbp-staging*' --always --tags | grep -q '^libsbp-staging' && echo 1 || echo 0)
@@ -346,7 +348,7 @@ test-c:
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
-	$(MAKE); \
+	$(MAKE) -j4; \
 	$(MAKE) do-all-tests
 	$(call announce-end,"Finished running C tests")
 
@@ -355,13 +357,13 @@ test-c-v4:
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
-	$(MAKE); \
+	$(MAKE) -j4; \
 	$(MAKE) do-test-libsbp-v4 do-test-libsbp-cpp-v4
 	$(call announce-end,"Finished running C tests")
 
 test-python:
 	$(call announce-begin,"Running Python tests")
-	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters
+	cd $(SWIFTNAV_ROOT)/python/ && tox --parallel $(SBP_TOX_PARALLEL) --skip-missing-interpreters
 	$(call announce-end,"Finished running Python tests")
 
 test-javascript:
@@ -425,19 +427,19 @@ dist-haskell:
 	$(call announce-end,"Finished deploying Haskell package")
 
 dist-rust:
-	$(call announce-begin,"Deploying Rust `sbp` package")
+	$(call announce-begin,"Deploying Rust 'sbp' package")
 	cargo release -v --package sbp --execute $(SBP_VERSION_UNPREFIXED)
-	$(call announce-end,"Finished deploying Rust `sbp` package")
-	$(call announce-begin,"Deploying Rust `sbp2json` package")
+	$(call announce-end,"Finished deploying Rust 'sbp' package")
+	$(call announce-begin,"Deploying Rust 'sbp2json' package")
 	cargo release -v --package sbp2json --execute $(SBP_VERSION_UNPREFIXED)
-	$(call announce-end,"Finished deploying Rust `sbp2json` package")
-	$(call announce-begin,"Reverting commit made by `sbp2json` deployment")
+	$(call announce-end,"Finished deploying Rust 'sbp2json' package")
+	$(call announce-begin,"Reverting commit made by 'sbp2json' deployment")
 	git reset --hard $(SBP_VERSION)
-	$(call announce-end,"Finished reverting commit made by `sbp2json` deployment")
+	$(call announce-end,"Finished reverting commit made by 'sbp2json' deployment")
 
 dist-java:
 	$(call announce-begin,"Deploying Java to maven central")
-	cd java && VERSION=$(SBP_VERSION_UNPREFIXED) gradle publish
+	cd java && VERSION=$(SBP_VERSION_UNPREFIXED) gradle publish --info
 	$(call announce-end,"Finished deploying Java to maven central")
 
 dist: dist-python dist-javascript dist-haskell dist-rust dist-java

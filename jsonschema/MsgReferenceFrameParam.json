@@ -11,6 +11,7 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
+<<<<<<< HEAD
   "$id": "#MsgReferenceFrameParam",
   "title":"MsgReferenceFrameParam",
   "description":"",
@@ -58,5 +59,29 @@
     "dot_theta_02",
     "dot_theta_03",
     "dot_scale"
+=======
+<<<<<<< HEAD:jsonschema/BoundsHeader.json
+  "$id": "#BoundsHeader",
+  "title":"BoundsHeader",
+=======
+  "$id": "#MsgReferenceFrameParam",
+  "title":"MsgReferenceFrameParam",
+>>>>>>> origin/master:jsonschema/MsgReferenceFrameParam.json
+  "description":"",
+  "type": "object",
+  "properties": {
+    "time": {"$ref": "GpsTimeSec.json"},
+    "num_msgs": {"type": "integer"},
+    "seq_num": {"type": "integer"},
+    "update_interval": {"type": "integer"},
+    "sol_id": {"type": "integer"}
+  },
+  "required": [
+    "time",
+    "num_msgs",
+    "seq_num",
+    "update_interval",
+    "sol_id"
+>>>>>>> origin/master
   ]
 }

@@ -21,7 +21,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 ///
 ///     socat tcp:192.168.1.222:55555 - | sbp2json
 #[derive(Debug, Parser)]
-#[structopt(name = "sbp2json", verbatim_doc_comment)]
+#[structopt(name = "sbp2json", verbatim_doc_comment, version)]
 pub struct Options {
     /// Path to input file
     input: Option<PathBuf>,
@@ -57,12 +57,12 @@ fn main() -> Result<()> {
 
     let stdin: Box<dyn Read> = match options.input {
         Some(path) => Box::new(File::open(path)?),
-        _ => Box::new(io::stdin()),
+        _ => Box::new(io::stdin().lock()),
     };
 
     let stdout: Box<dyn Write> = match options.output {
         Some(path) => Box::new(File::create(path)?),
-        _ => Box::new(io::stdout()),
+        _ => Box::new(io::stdout().lock()),
     };
 
     if options.float_compat {

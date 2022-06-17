@@ -28,7 +28,7 @@ pub mod msg_ndb_event {
     /// message could also be sent out when fetching an object from NDB.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNdbEvent {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]

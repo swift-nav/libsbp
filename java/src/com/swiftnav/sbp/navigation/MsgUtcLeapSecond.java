@@ -16,6 +16,7 @@ package com.swiftnav.sbp.navigation;
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -30,35 +31,7 @@ import org.json.JSONObject;
 public class MsgUtcLeapSecond extends SBPMessage {
     public static final int TYPE = 0x023A;
 
-    /** Reserved. Bias coefficient of GPS time scale with respect to UTC drift model. */
-    public int bias_coeff;
-
-    /** Reserved. Drift coefficient of GPS time scale with respect to UTC drift model. */
-    public int drift_coeff;
-
-    /**
-     * Reserved. Drift rate correction coefficient of GPS time scale with respect to UTC drift
-     * model.
-     */
-    public int drift_rate_coeff;
-
-    /** Leap second count before insertion. */
-    public int count_before;
-
-    /** Reserved. Drift model reference week second. */
-    public int tow_s;
-
-    /** Reserved. Drift model reference week number. */
-    public int wn;
-
-    /** Leap second reference week number. */
-    public int ref_wn;
-
-    /** Leap second reference day number. */
-    public int ref_dn;
-
-    /** Leap second count after insertion. */
-    public int count_after;
+    public int[] stub;
 
     public MsgUtcLeapSecond(int sender) {
         super(sender, TYPE);
@@ -76,42 +49,18 @@ public class MsgUtcLeapSecond extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        bias_coeff = parser.getS16();
-        drift_coeff = parser.getS16();
-        drift_rate_coeff = parser.getS8();
-        count_before = parser.getS8();
-        tow_s = parser.getU16();
-        wn = parser.getU16();
-        ref_wn = parser.getU16();
-        ref_dn = parser.getU8();
-        count_after = parser.getS8();
+        stub = parser.getArrayofU8();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putS16(bias_coeff);
-        builder.putS16(drift_coeff);
-        builder.putS8(drift_rate_coeff);
-        builder.putS8(count_before);
-        builder.putU16(tow_s);
-        builder.putU16(wn);
-        builder.putU16(ref_wn);
-        builder.putU8(ref_dn);
-        builder.putS8(count_after);
+        builder.putArrayofU8(stub);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("bias_coeff", bias_coeff);
-        obj.put("drift_coeff", drift_coeff);
-        obj.put("drift_rate_coeff", drift_rate_coeff);
-        obj.put("count_before", count_before);
-        obj.put("tow_s", tow_s);
-        obj.put("wn", wn);
-        obj.put("ref_wn", ref_wn);
-        obj.put("ref_dn", ref_dn);
-        obj.put("count_after", count_after);
+        obj.put("stub", new JSONArray(stub));
         return obj;
     }
 }

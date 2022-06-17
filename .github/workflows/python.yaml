@@ -18,7 +18,7 @@ on:
 jobs:
   coverage:
     name: Test
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
 
@@ -27,3 +27,5 @@ jobs:
 
       - name: Run tests
         run: make test-python
+        env:
+          TOX_PARALLEL_NO_SPINNER: 1

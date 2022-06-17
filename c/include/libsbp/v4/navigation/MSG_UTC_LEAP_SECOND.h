@@ -45,53 +45,18 @@ extern "C" {
 drift model parameters.
  */
 typedef struct {
+  u8 stub[SBP_MSG_UTC_LEAP_SECOND_STUB_MAX];
   /**
-   * Reserved. Bias coefficient of GPS time scale with respect to UTC drift
-   * model. [2^-35 s]
+   * Number of elements in stub
+   *
+   * When sending a message fill in this field with the number elements set in
+   * stub before calling an appropriate libsbp send function
+   *
+   * When receiving a message query this field for the number of elements in
+   * stub. The value of any elements beyond the index specified in this field is
+   * undefined
    */
-  s16 bias_coeff;
-
-  /**
-   * Reserved. Drift coefficient of GPS time scale with respect to UTC drift
-   * model. [2^-51 s/s]
-   */
-  s16 drift_coeff;
-
-  /**
-   * Reserved. Drift rate correction coefficient of GPS time scale with respect
-   * to UTC drift model. [2^-68 s/s^2]
-   */
-  s8 drift_rate_coeff;
-
-  /**
-   * Leap second count before insertion. [s]
-   */
-  s8 count_before;
-
-  /**
-   * Reserved. Drift model reference week second. [s]
-   */
-  u16 tow_s;
-
-  /**
-   * Reserved. Drift model reference week number. [weeks]
-   */
-  u16 wn;
-
-  /**
-   * Leap second reference week number. [weeks]
-   */
-  u16 ref_wn;
-
-  /**
-   * Leap second reference day number. [days]
-   */
-  u8 ref_dn;
-
-  /**
-   * Leap second count after insertion. [s]
-   */
-  s8 count_after;
+  u8 n_stub;
 } sbp_msg_utc_leap_second_t;
 
 /**
@@ -102,8 +67,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_utc_leap_second_encoded_len(
     const sbp_msg_utc_leap_second_t *msg) {
-  (void)msg;
-  return SBP_MSG_UTC_LEAP_SECOND_ENCODED_LEN;
+  return SBP_MSG_UTC_LEAP_SECOND_ENCODED_OVERHEAD +
+         (msg->n_stub * SBP_ENCODED_LEN_U8);
 }
 
 /**

@@ -4,7 +4,6 @@ docutils==0.17.*
 flake8~=4.0
 Jinja2~=3.0
 mccabe~=0.6
-numpy~=1.21
 pybase64~=1.2
 python-rapidjson~=1.5
 pep8~=1.7

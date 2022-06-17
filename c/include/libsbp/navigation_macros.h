@@ -1738,32 +1738,49 @@
 
 #define SBP_MSG_UTC_LEAP_SECOND 0x023A
 /**
+ * The maximum number of items that can be stored in
+ * sbp_msg_utc_leap_second_t::stub (V4 API) or msg_utc_leap_second_t::stub
+ * (legacy API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_UTC_LEAP_SECOND_STUB_MAX 255u
+
+/**
  * Encoded length of sbp_msg_utc_leap_second_t (V4 API) and
  * msg_utc_leap_second_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_utc_leap_second_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
  */
-#define SBP_MSG_UTC_LEAP_SECOND_ENCODED_LEN 14u
+#define SBP_MSG_UTC_LEAP_SECOND_ENCODED_OVERHEAD 0u
 
 #define SBP_MSG_REFERENCE_FRAME_PARAM 0x0244
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_reference_frame_param_t::sn (V4 API) or
- * msg_reference_frame_param_t::sn (legacy API) before the maximum SBP message
+ * sbp_msg_reference_frame_param_t::stub (V4 API) or
+ * msg_reference_frame_param_t::stub (legacy API) before the maximum SBP message
  * size is exceeded
  */
-#define SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX 32u
-
-/**
- * The maximum number of items that can be stored in
- * sbp_msg_reference_frame_param_t::tn (V4 API) or
- * msg_reference_frame_param_t::tn (legacy API) before the maximum SBP message
- * size is exceeded
- */
-#define SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX 32u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_STUB_MAX 255u
 
 /**
  * Encoded length of sbp_msg_reference_frame_param_t (V4 API) and
  * msg_reference_frame_param_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_reference_frame_param_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
  */
-#define SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_LEN 124u
+#define SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_OVERHEAD 0u
 
 #endif /* LIBSBP_NAVIGATION_MACROS_H */

@@ -28,7 +28,7 @@ pub mod msg_sbas_raw {
     /// parity of the data block and sends only blocks that pass the check.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSbasRaw {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]

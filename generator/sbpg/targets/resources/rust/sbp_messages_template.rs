@@ -42,7 +42,7 @@ use crate::messages::(((i)))::*;
 /// (((m.short_desc)))
 ((*- endif *))
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct (((m.msg_name))) {
     ((*- if m.is_real_message *))
     /// The message sender_id

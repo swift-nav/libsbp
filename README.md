@@ -117,7 +117,7 @@ Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness) by running the following on your command line:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021-10-13 /bin/bash
+    docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14 /bin/bash
 
 This will mount your local copy of the libsbp repository onto the image.
 
@@ -154,7 +154,12 @@ This could take several hours to run.  Alternately, the docker image will run
 the `make all` command by default, so you can kick off the `make all` process
 by simply running the following command:
 
-    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2021-10-13
+    docker run --rm -v $PWD:/mnt/workspace -i -t libsbp-build:2022-06-14
+
+To speed up this process you can attempt to run Python environment tests in
+paralell with:
+
+    docker run --rm -v $PWD:/mnt/workspace -i -t -e SBP_TOX_PARALLEL=auto libsbp-build:2022-06-14
 
 When you are finished, quit Docker so that it would not unnecessarily use up
 resources on your machine.
@@ -215,43 +220,41 @@ make all
 are both valid. To see a list of all valid targets, run `make help`.
 
 **Python version notes:**
-1. by default the Python targets `make python` and `make test-python`
-   (as well as `make all`) run tests on all Python versions officially supported
-   by *the libsbp Python bindings*, currently **2.7, 3.5, and 3.7**, skipping
-   any versions not installed. To run tests on just specific Python version(s),
-   specify the `TOXENV` environment variable, e.g.,
-   `TOXENV=py27,py35 make python`. Travis runs Python tests on all supported
-   versions.
-2. by default *the code generators* are run on the system's (or virtual env's)
+1. By default the Python targets `make python` and `make test-python` (as well
+   as `make all`) run tests on all Python versions officially supported by *the
+   libsbp Python bindings*, currently **3.6-3.9**, skipping any versions not
+   installed. To run tests on just specific Python version(s), specify the
+   `TOXENV` environment variable, e.g., `TOXENV=py36 make python`. Travis runs
+   Python tests on all supported versions.
+2. By default *the code generators* are run on the system's (or virtual env's)
    default Python interpreter. Currently Python versions **2.7, 3.5, and 3.7**
    are officially supported, other versions may or may not work. The generated
    libsbp bindings should be the same on all supported Python versions. To use
    a different version than your default Python interpreter, specify the
-   `GENENV` environment variable, e.g., `GENENV=py27 make all`
-   (you must have that version of Python installed beforehand).
-3. to run both the generator and the Python tests on specific Python versions,
-   specify both envs, e.g., `GENENV=py37 TOXENV=py27,py37 make python`
+   `GENENV` environment variable, e.g., `GENENV=py27 make all` (you must have
+   that version of Python installed beforehand).
+3. To run both the generator and the Python tests on specific Python versions,
+   specify both envs, e.g., `GENENV=py37 TOXENV=py37 make python`
 
 ## SBP Development Procedures
 
-See the [HOW-TO](HOWTO.md) page for instructions on adding new messages, 
-updating the [documentation](docs/sbp.pdf), and releasing new versions of this library.
+See the ["how to"](HOWTO.md) page for instructions on adding new messages,
+updating the [documentation](docs/sbp.pdf), and releasing new versions of this
+library.
 
 ## SBP Protocol Specification
 
-SBP consists of two pieces: (i) an over-the-wire message framing
-format and (ii) structured payload definitions. As of Version 1.0, the
-packet consists of a 6-byte binary header section, a variable-sized
-payload field, and a 16-bit CRC value. SBP uses the CCITT CRC16
-(XMODEM implementation) for error detection.
+SBP consists of two pieces: (i) an over-the-wire message framing format and
+(ii) structured payload definitions. As of Version 1.0, the packet consists of
+a 6-byte binary header section, a variable-sized payload field, and a 16-bit
+CRC value. SBP uses the CCITT CRC16 (XMODEM implementation) for error
+detection.
 
-Please see
-[the docs](https://github.com/swift-nav/libsbp/raw/master/docs/sbp.pdf)
-for a full description of the packet structure and the message
-types. Developer documentation for the language-specific sbp
-libraries is [here](http://swift-nav.github.io/libsbp/).
-Please refer to [the changelog](https://github.com/swift-nav/libsbp/blob/master/CHANGELOG.md)
-for more information about the evolution of the library and its messages.
+Please see [the docs](docs/sbp.pdf) for a full description of the packet
+structure and the message types. Developer documentation for the
+language-specific sbp libraries is [here](http://swift-nav.github.io/libsbp/).
+Please refer to [the changelog](CHANGELOG.md) for more information about the
+evolution of the library and its messages.
 
 ## JSON Schema Definitions
 
@@ -262,6 +265,6 @@ HOWTO for instructions on updating these schemas.
 
 ## LICENSE
 
-Copyright © 2021 Swift Navigation
+Copyright © 2015-2022 Swift Navigation
 
-Distributed under MIT.
+Distributed under the [MIT open source license](LICENSE).

@@ -927,52 +927,11 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  s16 bias_coeff;      /**< Reserved. Bias coefficient of GPS time scale
-                            with respect to UTC drift model. [2^-35 s] */
-  s16 drift_coeff;     /**< Reserved. Drift coefficient of GPS time scale
-                            with respect to UTC drift model. [2^-51 s/s] */
-  s8 drift_rate_coeff; /**< Reserved. Drift rate correction coefficient of
-                            GPS time scale with respect to UTC drift model.
-                          [2^-68 s/s^2] */
-  s8 count_before;     /**< Leap second count before insertion. [s] */
-  u16 tow_s;           /**< Reserved. Drift model reference week second. [s] */
-  u16 wn;         /**< Reserved. Drift model reference week number. [weeks] */
-  u16 ref_wn;     /**< Leap second reference week number. [weeks] */
-  u8 ref_dn;      /**< Leap second reference day number. [days] */
-  s8 count_after; /**< Leap second count after insertion. [s] */
+  u8 stub[0];
 } msg_utc_leap_second_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 ssr_iod;   /**< SSR IOD parameter. */
-  char sn[32];  /**< Name of source coordinate-system using the EPSG
-                     identification code. */
-  char tn[32];  /**< Name of target coordinate-system using the EPSG
-                     identification code. */
-  u8 sin;       /**< System Identification Number. */
-  u16 utn;      /**< Utilized Transformation Message. */
-  u16 re_t0;    /**< Reference Epoch t0 for transformation parameter
-                     set given as Modified Julian Day (MDJ) Number
-                     minus 44244 days. [1 day] */
-  s32 delta_X0; /**< Translation in X for Reference Epoch t0. [0.001 m] */
-  s32 delta_Y0; /**< Translation in Y for Reference Epoch t0. [0.001 m] */
-  s32 delta_Z0; /**< Translation in Z for Reference Epoch t0. [0.001 m] */
-  s32 theta_01; /**< Rotation around the X-axis for Reference Epoch t0. [0.00002
-                   "] */
-  s32 theta_02; /**< Rotation around the Y-axis for Reference Epoch t0. [0.00002
-                   "] */
-  s32 theta_03; /**< Rotation around the Z-axis for Reference Epoch t0. [0.00002
-                   "] */
-  s32 scale;    /**< Scale correction for Reference Epoch t0. [0.00001 ppm] */
-  s32 dot_delta_X0; /**< Rate of change of translation in X. [0.00002 m/yr] */
-  s32 dot_delta_Y0; /**< Rate of change of translation in Y. [0.00002 m/yr] */
-  s32 dot_delta_Z0; /**< Rate of change of translation in Z. [0.00002 m/yr] */
-  s32 dot_theta_01; /**< Rate of change of rotation around the X-axis.
-                       [0.0000004 "/yr] */
-  s32 dot_theta_02; /**< Rate of change of rotation around the Y-axis.
-                       [0.0000004 "/yr] */
-  s32 dot_theta_03; /**< Rate of change of rotation around the Z-axis.
-                       [0.0000004 "/yr] */
-  s16 dot_scale; /**< Rate of change of scale correction. [0.0000002 ppm/yr] */
+  u8 stub[0];
 } msg_reference_frame_param_t;
 
 /** \} */

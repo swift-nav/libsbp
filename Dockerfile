@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2021 Swift Navigation Inc.
+# Copyright (C) 2020-2022 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -37,7 +37,7 @@ ARG KITWARE_KEY_URL=https://apt.kitware.com/keys/kitware-archive-latest.asc
 
 RUN \
      apt-get update \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install -y \
       apt-utils \
       gnupg \
       gpg \
@@ -45,14 +45,12 @@ RUN \
       software-properties-common \
       sudo \
       wget \
-  && ((test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal \
-      && add-apt-repository ppa:deadsnakes/ppa \
-      && wget -O - ${KITWARE_KEY_URL} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
-     && add-apt-repository "deb https://apt.kitware.com/ubuntu/ ${UBUNTU_RELEASE} main" \
-      ) || true) \
+  && add-apt-repository ppa:deadsnakes/ppa \
+  && wget -O - ${KITWARE_KEY_URL} 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+  && add-apt-repository "deb https://apt.kitware.com/ubuntu/ ${UBUNTU_RELEASE} main" \
   && cat /etc/apt/sources.list \
   && apt-get update \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install -y \
       git \
       curl \
       libudev-dev \
@@ -65,7 +63,7 @@ RUN \
       $CC $CXX \
       libpython2.7-stdlib \
       libpython3.8-stdlib \
-      $(test $UBUNTU_RELEASE = focal && echo python-is-python3) \
+      python-is-python3 \
       python3-pip \
       python3-setuptools \
       llvm \
@@ -80,39 +78,15 @@ RUN \
       graphviz \
       imagemagick \
       enchant \
-      clang-format$(test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal && echo -6.0) \
-      # from deadsnakes
-      $(test $UBUNTU_RELEASE = bionic -o $UBUNTU_RELEASE = focal && echo \
-        python3.5 \
-        python3.6 \
-        python3.7\
-        python3.9 \
-      ) \
-      $(test $UBUNTU_RELEASE = bionic && echo python3.9-dist) \
-      # from kitware or ubuntu groovy+
-      cmake \
-  && ((test $UBUNTU_RELEASE = bionic && sudo ln -s /usr/bin/pip3 /usr/bin/pip) || true) \
-  && curl -sSL https://get.haskellstack.org/ | sh \
-  && apt remove -y \
-      gnupg \
-      gpg \
-      netbase \
-      packagekit \
-      software-properties-common \
-      wget \
-  && apt autoremove -y \
-  && apt remove -y --allow-remove-essential \
-      apt \
-  && sudo dpkg -r --force-depends \
+      clang-format-6.0 \
+      python3.6 python3.6-dev python3.6-distutils \
+      python3.7 python3.7-dev python3.7-distutils \
+      python3 python3-dev python3-distutils \
+      python3.9 python3.9-dev python3.9-distutils \
+      python3.10 python3.10-dev python3.10-distutils \
       dpkg-dev \
-      git-man \
-      fontconfig-config \
-      libcommons-logging-java \
-      libcommons-parent-java \
-      libdpkg-perl \
-      libfontbox-java \
-      libpdfbox-java \
-      libthai-data \
+      cmake \
+  && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/* /tmp/* \
   && curl -s "https://get.sdkman.io" | bash \
   && bash -c "source $SDKMAN_DIR/bin/sdkman-init.sh; \

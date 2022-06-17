@@ -1,5 +1,58 @@
 # Changelog
 
+## [v4.4.0](https://github.com/swift-nav/libsbp/tree/v4.4.0) (2022-06-15)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.3...v4.4.0)
+
+**Merged pull requests:**
+
+- rust: add partialeq [\#1169](https://github.com/swift-nav/libsbp/pull/1169) ([silverjam](https://github.com/silverjam))
+- fixing rust build script [\#1167](https://github.com/swift-nav/libsbp/pull/1167) ([adrian-kong](https://github.com/adrian-kong))
+- docker and doc fix-ups [\#1166](https://github.com/swift-nav/libsbp/pull/1166) ([silverjam](https://github.com/silverjam))
+- Update navigation stubbed msgs names \[OTA-161\] [\#1156](https://github.com/swift-nav/libsbp/pull/1156) ([fpezzinosn](https://github.com/fpezzinosn))
+
+## [v4.3.3](https://github.com/swift-nav/libsbp/tree/v4.3.3) (2022-06-09)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.2...v4.3.3)
+
+**Merged pull requests:**
+
+- Update CHANGELOG.md [\#1165](https://github.com/swift-nav/libsbp/pull/1165) ([adrian-kong](https://github.com/adrian-kong))
+- Locked stdin and out for rust sbp2json [\#1161](https://github.com/swift-nav/libsbp/pull/1161) ([adrian-kong](https://github.com/adrian-kong))
+- build\(deps\): bump generic-array from 0.12.3 to 0.12.4 in /rust/sbp2json [\#1159](https://github.com/swift-nav/libsbp/pull/1159) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Added version params, --version, -V to rust sbp2json [\#1158](https://github.com/swift-nav/libsbp/pull/1158) ([adrian-kong](https://github.com/adrian-kong))
+- Python 3.10 update \[DEVINFRA-769\] [\#1157](https://github.com/swift-nav/libsbp/pull/1157) ([adrian-kong](https://github.com/adrian-kong))
+
+## [v4.3.1](https://github.com/swift-nav/libsbp/tree/v4.3.1) (2022-06-03)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.0...v4.3.1)
+
+**Merged pull requests:**
+
+- python: consolidate converage settings [\#1154](https://github.com/swift-nav/libsbp/pull/1154) ([silverjam](https://github.com/silverjam))
+- docker: add back apt, focal only, tox fixes [\#1153](https://github.com/swift-nav/libsbp/pull/1153) ([silverjam](https://github.com/silverjam))
+- add parallel tox, remove python 2.7 support [\#1152](https://github.com/swift-nav/libsbp/pull/1152) ([silverjam](https://github.com/silverjam))
+
+## [v4.3.0](https://github.com/swift-nav/libsbp/tree/v4.3.0) (2022-05-25)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.2.0...v4.3.0)
+
+**Merged pull requests:**
+
+- validator: skip stubbed messages \[OTA-150\] [\#1151](https://github.com/swift-nav/libsbp/pull/1151) ([silverjam](https://github.com/silverjam))
+- hide stubbed messages from sbp.pdf [\#1148](https://github.com/swift-nav/libsbp/pull/1148) ([fpezzinosn](https://github.com/fpezzinosn))
+- make: add commands to detect staging [\#1146](https://github.com/swift-nav/libsbp/pull/1146) ([silverjam](https://github.com/silverjam))
+- sbp2json small usage comment fix [\#1143](https://github.com/swift-nav/libsbp/pull/1143) ([adrian-kong](https://github.com/adrian-kong))
+- Added input and output parameters to rust sbp2json [\#1142](https://github.com/swift-nav/libsbp/pull/1142) ([adrian-kong](https://github.com/adrian-kong))
+- ci: enable on staging branch [\#1135](https://github.com/swift-nav/libsbp/pull/1135) ([silverjam](https://github.com/silverjam))
+- validator: allow message deprecation [\#1134](https://github.com/swift-nav/libsbp/pull/1134) ([silverjam](https://github.com/silverjam))
+- Converted structopt into clap [\#1133](https://github.com/swift-nav/libsbp/pull/1133) ([adrian-kong](https://github.com/adrian-kong))
+- Add stubbed version of new Integrity Bounds/Flags \[OTA-134\] [\#1130](https://github.com/swift-nav/libsbp/pull/1130) ([fpezzinosn](https://github.com/fpezzinosn))
+- Fixing unconsumed 4096 error sbp2json [\#1128](https://github.com/swift-nav/libsbp/pull/1128) ([adrian-kong](https://github.com/adrian-kong))
+- Generate missing tests via JSON [\#1125](https://github.com/swift-nav/libsbp/pull/1125) ([adrian-kong](https://github.com/adrian-kong))
+- Update sbp Docs to Include L5 Signals [\#1124](https://github.com/swift-nav/libsbp/pull/1124) ([isaactorz](https://github.com/isaactorz))
+- Runnable sbp java example [\#1122](https://github.com/swift-nav/libsbp/pull/1122) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.2.0](https://github.com/swift-nav/libsbp/tree/v4.2.0) (2022-05-03)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.1.6...v4.2.0)

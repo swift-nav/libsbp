@@ -340,7 +340,7 @@ impl std::error::Error for TryFromSbpError {}
 
 /// Represents any SBP message.
 #[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 #[non_exhaustive]
 pub enum Sbp {
     /// Deprecated
@@ -653,7 +653,7 @@ pub enum Sbp {
     MsgVelEcefCovGnss(MsgVelEcefCovGnss),
     /// Leap second SBP message.
     MsgUtcLeapSecond(MsgUtcLeapSecond),
-    /// Reference Frame Transformation Parameters
+    /// Reference Frame Transformation Parameter
     MsgReferenceFrameParam(MsgReferenceFrameParam),
     /// Navigation DataBase Event
     MsgNdbEvent(MsgNdbEvent),
@@ -665,7 +665,7 @@ pub enum Sbp {
     MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),
     /// Precise orbit and clock correction
     MsgSsrOrbitClock(MsgSsrOrbitClock),
-    /// Combined Orbit and Clock Bound
+    /// Stubbed version of Combined Orbit and Clock Bound
     MsgSsrOrbitClockBounds(MsgSsrOrbitClockBounds),
     /// Combined Orbit and Clock Bound Degradation Parameter
     MsgSsrOrbitClockBoundsDegradation(MsgSsrOrbitClockBoundsDegradation),
@@ -675,7 +675,7 @@ pub enum Sbp {
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
     /// Deprecated
     MsgSsrStecCorrectionDepA(MsgSsrStecCorrectionDepA),
-    /// Combined Code and Phase Biases Bounds
+    /// Stubbed version of Combined Code and Phase Biases Bounds
     MsgSsrCodePhaseBiasesBounds(MsgSsrCodePhaseBiasesBounds),
     /// Deprecated
     MsgSsrGriddedCorrectionNoStdDepA(MsgSsrGriddedCorrectionNoStdDepA),

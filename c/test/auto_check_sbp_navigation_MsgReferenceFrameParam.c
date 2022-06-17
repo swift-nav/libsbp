@@ -94,14 +94,14 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85, 68, 2,  66, 0, 124, 1,  102, 111, 111, 0,  0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 98,  97, 114, 0,   0,   0,  0,  0,   0, 0,  0,  0,
-        0,  0,  0,  0,  0, 0,   0,  0,   0,   0,   0,  0,  0,   0, 0,  0,  0,
-        0,  0,  0,  4,  5, 0,   6,  0,   7,   0,   0,  0,  8,   0, 0,  0,  9,
-        0,  0,  0,  10, 0, 0,   0,  11,  0,   0,   0,  12, 0,   0, 0,  13, 0,
-        0,  0,  14, 0,  0, 0,   15, 0,   0,   0,   16, 0,  0,   0, 17, 0,  0,
-        0,  18, 0,  0,  0, 19,  0,  0,   0,   20,  0,  6,  161,
+        85, 68, 2,  66, 0, 124, 1,  2,  102, 111, 111, 0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 3,   98, 97, 114, 0,   0,   0,  0,   0, 0,  0,  0,
+        0,  0,  0,  0,  0, 0,   0,  0,  0,   0,   0,   0,  0,   0, 0,  0,  0,
+        0,  0,  0,  4,  5, 0,   6,  0,  7,   0,   0,   0,  8,   0, 0,  0,  9,
+        0,  0,  0,  10, 0, 0,   0,  11, 0,   0,   0,   12, 0,   0, 0,  13, 0,
+        0,  0,  14, 0,  0, 0,   15, 0,  0,   0,   16,  0,  0,   0, 17, 0,  0,
+        0,  18, 0,  0,  0, 19,  0,  0,  0,   20,  0,   66, 126,
     };
 
     dummy_reset();
@@ -109,63 +109,255 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.reference_frame_param.delta_X0 = 7;
+    test_msg.reference_frame_param.n_stub = 124;
 
-    test_msg.reference_frame_param.delta_Y0 = 8;
+    test_msg.reference_frame_param.stub[0] = 1;
 
-    test_msg.reference_frame_param.delta_Z0 = 9;
+    test_msg.reference_frame_param.stub[1] = 2;
 
-    test_msg.reference_frame_param.dot_delta_X0 = 14;
+    test_msg.reference_frame_param.stub[2] = 102;
 
-    test_msg.reference_frame_param.dot_delta_Y0 = 15;
+    test_msg.reference_frame_param.stub[3] = 111;
 
-    test_msg.reference_frame_param.dot_delta_Z0 = 16;
+    test_msg.reference_frame_param.stub[4] = 111;
 
-    test_msg.reference_frame_param.dot_scale = 20;
+    test_msg.reference_frame_param.stub[5] = 0;
 
-    test_msg.reference_frame_param.dot_theta_01 = 17;
+    test_msg.reference_frame_param.stub[6] = 0;
 
-    test_msg.reference_frame_param.dot_theta_02 = 18;
+    test_msg.reference_frame_param.stub[7] = 0;
 
-    test_msg.reference_frame_param.dot_theta_03 = 19;
+    test_msg.reference_frame_param.stub[8] = 0;
 
-    test_msg.reference_frame_param.re_t0 = 6;
+    test_msg.reference_frame_param.stub[9] = 0;
 
-    test_msg.reference_frame_param.scale = 13;
+    test_msg.reference_frame_param.stub[10] = 0;
 
-    test_msg.reference_frame_param.sin = 4;
+    test_msg.reference_frame_param.stub[11] = 0;
 
-    {
-      const char assign_string[] = {
-          (char)102, (char)111, (char)111, (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0};
-      memcpy(test_msg.reference_frame_param.sn, assign_string,
-             sizeof(assign_string));
-    }
+    test_msg.reference_frame_param.stub[12] = 0;
 
-    test_msg.reference_frame_param.ssr_iod = 1;
+    test_msg.reference_frame_param.stub[13] = 0;
 
-    test_msg.reference_frame_param.theta_01 = 10;
+    test_msg.reference_frame_param.stub[14] = 0;
 
-    test_msg.reference_frame_param.theta_02 = 11;
+    test_msg.reference_frame_param.stub[15] = 0;
 
-    test_msg.reference_frame_param.theta_03 = 12;
+    test_msg.reference_frame_param.stub[16] = 0;
 
-    {
-      const char assign_string[] = {
-          (char)98, (char)97, (char)114, (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0};
-      memcpy(test_msg.reference_frame_param.tn, assign_string,
-             sizeof(assign_string));
-    }
+    test_msg.reference_frame_param.stub[17] = 0;
 
-    test_msg.reference_frame_param.utn = 5;
+    test_msg.reference_frame_param.stub[18] = 0;
+
+    test_msg.reference_frame_param.stub[19] = 0;
+
+    test_msg.reference_frame_param.stub[20] = 0;
+
+    test_msg.reference_frame_param.stub[21] = 0;
+
+    test_msg.reference_frame_param.stub[22] = 0;
+
+    test_msg.reference_frame_param.stub[23] = 0;
+
+    test_msg.reference_frame_param.stub[24] = 0;
+
+    test_msg.reference_frame_param.stub[25] = 0;
+
+    test_msg.reference_frame_param.stub[26] = 0;
+
+    test_msg.reference_frame_param.stub[27] = 0;
+
+    test_msg.reference_frame_param.stub[28] = 0;
+
+    test_msg.reference_frame_param.stub[29] = 0;
+
+    test_msg.reference_frame_param.stub[30] = 0;
+
+    test_msg.reference_frame_param.stub[31] = 0;
+
+    test_msg.reference_frame_param.stub[32] = 0;
+
+    test_msg.reference_frame_param.stub[33] = 3;
+
+    test_msg.reference_frame_param.stub[34] = 98;
+
+    test_msg.reference_frame_param.stub[35] = 97;
+
+    test_msg.reference_frame_param.stub[36] = 114;
+
+    test_msg.reference_frame_param.stub[37] = 0;
+
+    test_msg.reference_frame_param.stub[38] = 0;
+
+    test_msg.reference_frame_param.stub[39] = 0;
+
+    test_msg.reference_frame_param.stub[40] = 0;
+
+    test_msg.reference_frame_param.stub[41] = 0;
+
+    test_msg.reference_frame_param.stub[42] = 0;
+
+    test_msg.reference_frame_param.stub[43] = 0;
+
+    test_msg.reference_frame_param.stub[44] = 0;
+
+    test_msg.reference_frame_param.stub[45] = 0;
+
+    test_msg.reference_frame_param.stub[46] = 0;
+
+    test_msg.reference_frame_param.stub[47] = 0;
+
+    test_msg.reference_frame_param.stub[48] = 0;
+
+    test_msg.reference_frame_param.stub[49] = 0;
+
+    test_msg.reference_frame_param.stub[50] = 0;
+
+    test_msg.reference_frame_param.stub[51] = 0;
+
+    test_msg.reference_frame_param.stub[52] = 0;
+
+    test_msg.reference_frame_param.stub[53] = 0;
+
+    test_msg.reference_frame_param.stub[54] = 0;
+
+    test_msg.reference_frame_param.stub[55] = 0;
+
+    test_msg.reference_frame_param.stub[56] = 0;
+
+    test_msg.reference_frame_param.stub[57] = 0;
+
+    test_msg.reference_frame_param.stub[58] = 0;
+
+    test_msg.reference_frame_param.stub[59] = 0;
+
+    test_msg.reference_frame_param.stub[60] = 0;
+
+    test_msg.reference_frame_param.stub[61] = 0;
+
+    test_msg.reference_frame_param.stub[62] = 0;
+
+    test_msg.reference_frame_param.stub[63] = 0;
+
+    test_msg.reference_frame_param.stub[64] = 0;
+
+    test_msg.reference_frame_param.stub[65] = 4;
+
+    test_msg.reference_frame_param.stub[66] = 5;
+
+    test_msg.reference_frame_param.stub[67] = 0;
+
+    test_msg.reference_frame_param.stub[68] = 6;
+
+    test_msg.reference_frame_param.stub[69] = 0;
+
+    test_msg.reference_frame_param.stub[70] = 7;
+
+    test_msg.reference_frame_param.stub[71] = 0;
+
+    test_msg.reference_frame_param.stub[72] = 0;
+
+    test_msg.reference_frame_param.stub[73] = 0;
+
+    test_msg.reference_frame_param.stub[74] = 8;
+
+    test_msg.reference_frame_param.stub[75] = 0;
+
+    test_msg.reference_frame_param.stub[76] = 0;
+
+    test_msg.reference_frame_param.stub[77] = 0;
+
+    test_msg.reference_frame_param.stub[78] = 9;
+
+    test_msg.reference_frame_param.stub[79] = 0;
+
+    test_msg.reference_frame_param.stub[80] = 0;
+
+    test_msg.reference_frame_param.stub[81] = 0;
+
+    test_msg.reference_frame_param.stub[82] = 10;
+
+    test_msg.reference_frame_param.stub[83] = 0;
+
+    test_msg.reference_frame_param.stub[84] = 0;
+
+    test_msg.reference_frame_param.stub[85] = 0;
+
+    test_msg.reference_frame_param.stub[86] = 11;
+
+    test_msg.reference_frame_param.stub[87] = 0;
+
+    test_msg.reference_frame_param.stub[88] = 0;
+
+    test_msg.reference_frame_param.stub[89] = 0;
+
+    test_msg.reference_frame_param.stub[90] = 12;
+
+    test_msg.reference_frame_param.stub[91] = 0;
+
+    test_msg.reference_frame_param.stub[92] = 0;
+
+    test_msg.reference_frame_param.stub[93] = 0;
+
+    test_msg.reference_frame_param.stub[94] = 13;
+
+    test_msg.reference_frame_param.stub[95] = 0;
+
+    test_msg.reference_frame_param.stub[96] = 0;
+
+    test_msg.reference_frame_param.stub[97] = 0;
+
+    test_msg.reference_frame_param.stub[98] = 14;
+
+    test_msg.reference_frame_param.stub[99] = 0;
+
+    test_msg.reference_frame_param.stub[100] = 0;
+
+    test_msg.reference_frame_param.stub[101] = 0;
+
+    test_msg.reference_frame_param.stub[102] = 15;
+
+    test_msg.reference_frame_param.stub[103] = 0;
+
+    test_msg.reference_frame_param.stub[104] = 0;
+
+    test_msg.reference_frame_param.stub[105] = 0;
+
+    test_msg.reference_frame_param.stub[106] = 16;
+
+    test_msg.reference_frame_param.stub[107] = 0;
+
+    test_msg.reference_frame_param.stub[108] = 0;
+
+    test_msg.reference_frame_param.stub[109] = 0;
+
+    test_msg.reference_frame_param.stub[110] = 17;
+
+    test_msg.reference_frame_param.stub[111] = 0;
+
+    test_msg.reference_frame_param.stub[112] = 0;
+
+    test_msg.reference_frame_param.stub[113] = 0;
+
+    test_msg.reference_frame_param.stub[114] = 18;
+
+    test_msg.reference_frame_param.stub[115] = 0;
+
+    test_msg.reference_frame_param.stub[116] = 0;
+
+    test_msg.reference_frame_param.stub[117] = 0;
+
+    test_msg.reference_frame_param.stub[118] = 19;
+
+    test_msg.reference_frame_param.stub[119] = 0;
+
+    test_msg.reference_frame_param.stub[120] = 0;
+
+    test_msg.reference_frame_param.stub[121] = 0;
+
+    test_msg.reference_frame_param.stub[122] = 20;
+
+    test_msg.reference_frame_param.stub[123] = 0;
 
     sbp_message_send(&sbp_state, SbpMsgReferenceFrameParam, 66, &test_msg,
                      &dummy_write);
@@ -192,139 +384,631 @@ START_TEST(test_auto_check_sbp_navigation_MsgReferenceFrameParam) {
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
-        last_msg.msg.reference_frame_param.delta_X0 == 7,
-        "incorrect value for last_msg.msg.reference_frame_param.delta_X0, "
-        "expected 7, is %d",
-        last_msg.msg.reference_frame_param.delta_X0);
+        last_msg.msg.reference_frame_param.n_stub == 124,
+        "incorrect value for last_msg.msg.reference_frame_param.n_stub, "
+        "expected 124, is %d",
+        last_msg.msg.reference_frame_param.n_stub);
 
     ck_assert_msg(
-        last_msg.msg.reference_frame_param.delta_Y0 == 8,
-        "incorrect value for last_msg.msg.reference_frame_param.delta_Y0, "
-        "expected 8, is %d",
-        last_msg.msg.reference_frame_param.delta_Y0);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.delta_Z0 == 9,
-        "incorrect value for last_msg.msg.reference_frame_param.delta_Z0, "
-        "expected 9, is %d",
-        last_msg.msg.reference_frame_param.delta_Z0);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.dot_delta_X0 == 14,
-        "incorrect value for last_msg.msg.reference_frame_param.dot_delta_X0, "
-        "expected 14, is %d",
-        last_msg.msg.reference_frame_param.dot_delta_X0);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.dot_delta_Y0 == 15,
-        "incorrect value for last_msg.msg.reference_frame_param.dot_delta_Y0, "
-        "expected 15, is %d",
-        last_msg.msg.reference_frame_param.dot_delta_Y0);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.dot_delta_Z0 == 16,
-        "incorrect value for last_msg.msg.reference_frame_param.dot_delta_Z0, "
-        "expected 16, is %d",
-        last_msg.msg.reference_frame_param.dot_delta_Z0);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.dot_scale == 20,
-        "incorrect value for last_msg.msg.reference_frame_param.dot_scale, "
-        "expected 20, is %d",
-        last_msg.msg.reference_frame_param.dot_scale);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.dot_theta_01 == 17,
-        "incorrect value for last_msg.msg.reference_frame_param.dot_theta_01, "
-        "expected 17, is %d",
-        last_msg.msg.reference_frame_param.dot_theta_01);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.dot_theta_02 == 18,
-        "incorrect value for last_msg.msg.reference_frame_param.dot_theta_02, "
-        "expected 18, is %d",
-        last_msg.msg.reference_frame_param.dot_theta_02);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.dot_theta_03 == 19,
-        "incorrect value for last_msg.msg.reference_frame_param.dot_theta_03, "
-        "expected 19, is %d",
-        last_msg.msg.reference_frame_param.dot_theta_03);
-
-    ck_assert_msg(last_msg.msg.reference_frame_param.re_t0 == 6,
-                  "incorrect value for "
-                  "last_msg.msg.reference_frame_param.re_t0, expected 6, is %d",
-                  last_msg.msg.reference_frame_param.re_t0);
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.scale == 13,
-        "incorrect value for last_msg.msg.reference_frame_param.scale, "
-        "expected 13, is %d",
-        last_msg.msg.reference_frame_param.scale);
-
-    ck_assert_msg(last_msg.msg.reference_frame_param.sin == 4,
-                  "incorrect value for last_msg.msg.reference_frame_param.sin, "
-                  "expected 4, is %d",
-                  last_msg.msg.reference_frame_param.sin);
-
-    {
-      const char check_string[] = {
-          (char)102, (char)111, (char)111, (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,   (char)0,   (char)0,   (char)0};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.reference_frame_param.sn, check_string,
-                 sizeof(check_string)) == 0,
-          "incorrect value for last_msg.msg.reference_frame_param.sn, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.reference_frame_param.sn);
-    }
-
-    ck_assert_msg(
-        last_msg.msg.reference_frame_param.ssr_iod == 1,
-        "incorrect value for last_msg.msg.reference_frame_param.ssr_iod, "
+        last_msg.msg.reference_frame_param.stub[0] == 1,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[0], "
         "expected 1, is %d",
-        last_msg.msg.reference_frame_param.ssr_iod);
-
+        last_msg.msg.reference_frame_param.stub[0]);
     ck_assert_msg(
-        last_msg.msg.reference_frame_param.theta_01 == 10,
-        "incorrect value for last_msg.msg.reference_frame_param.theta_01, "
+        last_msg.msg.reference_frame_param.stub[1] == 2,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[1], "
+        "expected 2, is %d",
+        last_msg.msg.reference_frame_param.stub[1]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[2] == 102,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[2], "
+        "expected 102, is %d",
+        last_msg.msg.reference_frame_param.stub[2]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[3] == 111,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[3], "
+        "expected 111, is %d",
+        last_msg.msg.reference_frame_param.stub[3]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[4] == 111,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[4], "
+        "expected 111, is %d",
+        last_msg.msg.reference_frame_param.stub[4]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[5] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[5], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[5]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[6] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[6], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[6]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[7] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[7], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[7]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[8] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[8], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[8]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[9] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[9], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[9]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[10] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[10], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[10]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[11] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[11], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[11]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[12] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[12], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[12]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[13] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[13], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[13]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[14] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[14], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[14]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[15] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[15], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[15]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[16] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[16], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[16]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[17] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[17], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[17]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[18] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[18], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[18]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[19] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[19], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[19]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[20] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[20], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[20]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[21] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[21], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[21]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[22] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[22], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[22]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[23] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[23], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[23]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[24] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[24], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[24]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[25] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[25], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[25]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[26] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[26], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[26]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[27] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[27], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[27]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[28] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[28], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[28]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[29] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[29], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[29]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[30] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[30], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[30]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[31] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[31], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[31]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[32] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[32], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[32]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[33] == 3,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[33], "
+        "expected 3, is %d",
+        last_msg.msg.reference_frame_param.stub[33]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[34] == 98,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[34], "
+        "expected 98, is %d",
+        last_msg.msg.reference_frame_param.stub[34]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[35] == 97,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[35], "
+        "expected 97, is %d",
+        last_msg.msg.reference_frame_param.stub[35]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[36] == 114,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[36], "
+        "expected 114, is %d",
+        last_msg.msg.reference_frame_param.stub[36]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[37] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[37], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[37]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[38] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[38], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[38]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[39] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[39], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[39]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[40] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[40], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[40]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[41] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[41], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[41]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[42] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[42], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[42]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[43] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[43], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[43]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[44] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[44], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[44]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[45] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[45], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[45]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[46] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[46], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[46]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[47] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[47], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[47]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[48] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[48], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[48]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[49] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[49], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[49]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[50] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[50], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[50]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[51] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[51], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[51]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[52] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[52], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[52]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[53] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[53], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[53]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[54] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[54], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[54]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[55] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[55], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[55]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[56] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[56], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[56]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[57] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[57], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[57]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[58] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[58], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[58]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[59] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[59], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[59]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[60] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[60], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[60]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[61] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[61], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[61]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[62] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[62], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[62]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[63] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[63], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[63]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[64] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[64], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[64]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[65] == 4,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[65], "
+        "expected 4, is %d",
+        last_msg.msg.reference_frame_param.stub[65]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[66] == 5,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[66], "
+        "expected 5, is %d",
+        last_msg.msg.reference_frame_param.stub[66]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[67] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[67], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[67]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[68] == 6,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[68], "
+        "expected 6, is %d",
+        last_msg.msg.reference_frame_param.stub[68]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[69] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[69], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[69]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[70] == 7,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[70], "
+        "expected 7, is %d",
+        last_msg.msg.reference_frame_param.stub[70]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[71] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[71], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[71]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[72] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[72], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[72]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[73] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[73], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[73]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[74] == 8,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[74], "
+        "expected 8, is %d",
+        last_msg.msg.reference_frame_param.stub[74]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[75] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[75], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[75]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[76] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[76], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[76]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[77] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[77], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[77]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[78] == 9,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[78], "
+        "expected 9, is %d",
+        last_msg.msg.reference_frame_param.stub[78]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[79] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[79], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[79]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[80] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[80], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[80]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[81] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[81], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[81]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[82] == 10,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[82], "
         "expected 10, is %d",
-        last_msg.msg.reference_frame_param.theta_01);
-
+        last_msg.msg.reference_frame_param.stub[82]);
     ck_assert_msg(
-        last_msg.msg.reference_frame_param.theta_02 == 11,
-        "incorrect value for last_msg.msg.reference_frame_param.theta_02, "
+        last_msg.msg.reference_frame_param.stub[83] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[83], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[83]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[84] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[84], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[84]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[85] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[85], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[85]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[86] == 11,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[86], "
         "expected 11, is %d",
-        last_msg.msg.reference_frame_param.theta_02);
-
+        last_msg.msg.reference_frame_param.stub[86]);
     ck_assert_msg(
-        last_msg.msg.reference_frame_param.theta_03 == 12,
-        "incorrect value for last_msg.msg.reference_frame_param.theta_03, "
+        last_msg.msg.reference_frame_param.stub[87] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[87], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[87]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[88] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[88], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[88]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[89] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[89], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[89]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[90] == 12,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[90], "
         "expected 12, is %d",
-        last_msg.msg.reference_frame_param.theta_03);
-
-    {
-      const char check_string[] = {
-          (char)98, (char)97, (char)114, (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0, (char)0, (char)0, (char)0,
-          (char)0,  (char)0,  (char)0,   (char)0};
-      ck_assert_msg(
-          memcmp(&last_msg.msg.reference_frame_param.tn, check_string,
-                 sizeof(check_string)) == 0,
-          "incorrect value for last_msg.msg.reference_frame_param.tn, expected "
-          "string '%s', is '%s'",
-          check_string, last_msg.msg.reference_frame_param.tn);
-    }
-
-    ck_assert_msg(last_msg.msg.reference_frame_param.utn == 5,
-                  "incorrect value for last_msg.msg.reference_frame_param.utn, "
-                  "expected 5, is %d",
-                  last_msg.msg.reference_frame_param.utn);
+        last_msg.msg.reference_frame_param.stub[90]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[91] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[91], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[91]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[92] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[92], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[92]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[93] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[93], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[93]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[94] == 13,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[94], "
+        "expected 13, is %d",
+        last_msg.msg.reference_frame_param.stub[94]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[95] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[95], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[95]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[96] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[96], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[96]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[97] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[97], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[97]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[98] == 14,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[98], "
+        "expected 14, is %d",
+        last_msg.msg.reference_frame_param.stub[98]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[99] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[99], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[99]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[100] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[100], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[100]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[101] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[101], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[101]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[102] == 15,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[102], "
+        "expected 15, is %d",
+        last_msg.msg.reference_frame_param.stub[102]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[103] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[103], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[103]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[104] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[104], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[104]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[105] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[105], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[105]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[106] == 16,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[106], "
+        "expected 16, is %d",
+        last_msg.msg.reference_frame_param.stub[106]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[107] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[107], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[107]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[108] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[108], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[108]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[109] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[109], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[109]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[110] == 17,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[110], "
+        "expected 17, is %d",
+        last_msg.msg.reference_frame_param.stub[110]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[111] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[111], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[111]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[112] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[112], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[112]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[113] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[113], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[113]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[114] == 18,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[114], "
+        "expected 18, is %d",
+        last_msg.msg.reference_frame_param.stub[114]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[115] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[115], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[115]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[116] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[116], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[116]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[117] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[117], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[117]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[118] == 19,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[118], "
+        "expected 19, is %d",
+        last_msg.msg.reference_frame_param.stub[118]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[119] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[119], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[119]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[120] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[120], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[120]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[121] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[121], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[121]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[122] == 20,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[122], "
+        "expected 20, is %d",
+        last_msg.msg.reference_frame_param.stub[122]);
+    ck_assert_msg(
+        last_msg.msg.reference_frame_param.stub[123] == 0,
+        "incorrect value for last_msg.msg.reference_frame_param.stub[123], "
+        "expected 0, is %d",
+        last_msg.msg.reference_frame_param.stub[123]);
   }
 }
 END_TEST
