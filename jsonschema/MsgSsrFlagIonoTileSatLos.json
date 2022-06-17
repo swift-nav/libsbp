@@ -16,9 +16,13 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "header": {"$ref": "IntegritySSRHeader.json"},
+    "n_faulty_los": {"type": "integer"},
+    "faulty_los": {"type": "array", "items": {"$ref": "SvId.json"}}
   },
   "required": [
-    "stub"
+    "header",
+    "n_faulty_los",
+    "faulty_los"
   ]
 }

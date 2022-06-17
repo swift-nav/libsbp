@@ -204,7 +204,8 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'wr
  * @field sv_id SvId Unique space vehicle identifier
  * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specification but in
  *   units of TECU instead of m.
- * @field stec_coeff array Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+ * @field stec_coeff array Coefficients of the STEC polynomial in the order of C00, C01, C10, C11. C00 =
+ *   0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -263,9 +264,10 @@ TroposphericDelayCorrectionNoStd.prototype.fieldSpec.push(['wet', 'writeInt8', 1
  * Troposphere vertical delays (mean and standard deviation) at the grid point.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay
- * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay
- * @field stddev number (unsigned 8-bit int, 1 byte) stddev
+ * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay. Add 2.3 m to get actual value.
+ * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay. Add 0.252 m to get actual value.
+ * @field stddev number (unsigned 8-bit int, 1 byte) Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+ *   (3^class * (1 + value/16) - 1) mm
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -327,7 +329,8 @@ STECResidualNoStd.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
  * @field residual number (signed 16-bit int, 2 bytes) STEC residual
- * @field stddev number (unsigned 8-bit int, 1 byte) stddev
+ * @field stddev number (unsigned 8-bit int, 1 byte) Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+ *   (3^class * (1 + value/16) - 1) * 10 TECU
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -555,11 +558,53 @@ MsgSsrStecCorrectionDep.prototype.fieldSpec.push(['header', STECHeader.prototype
 MsgSsrStecCorrectionDep.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
+ * SBP class for message fragment BoundsHeader
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the bound
+ * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
+ * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive bounds. Similar to RTCM DF391.
+ * @field sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let BoundsHeader = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "BoundsHeader";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+BoundsHeader.prototype = Object.create(SBP.prototype);
+BoundsHeader.prototype.messageType = "BoundsHeader";
+BoundsHeader.prototype.constructor = BoundsHeader;
+BoundsHeader.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .uint8('num_msgs')
+  .uint8('seq_num')
+  .uint8('update_interval')
+  .uint8('sol_id');
+BoundsHeader.prototype.fieldSpec = [];
+BoundsHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+BoundsHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
+BoundsHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
+BoundsHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+BoundsHeader.prototype.fieldSpec.push(['sol_id', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_SSR_STEC_CORRECTION (0x05FD).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field header BoundsHeader Header of a STEC correction with bounds message.
+ * @field ssr_iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Tile set ID
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Tile ID
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites.
+ * @field stec_sat_list array Array of STEC polynomial coefficients for each space vehicle.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -576,9 +621,19 @@ MsgSsrStecCorrection.prototype.msg_type = 0x05FD;
 MsgSsrStecCorrection.prototype.constructor = MsgSsrStecCorrection;
 MsgSsrStecCorrection.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod_atmo')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .uint8('n_sats')
+  .array('stec_sat_list', { type: STECSatElement.prototype.parser, length: 'n_sats' });
 MsgSsrStecCorrection.prototype.fieldSpec = [];
-MsgSsrStecCorrection.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['ssr_iod_atmo', 'writeUInt8', 1]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats']);
 
 /**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
@@ -618,11 +673,63 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['tropo_delay_correction', Trop
 MsgSsrGriddedCorrection.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
+ * SBP class for message fragment STECSatElementIntegrity
+ *
+ * STEC polynomial and bounds for the given satellite.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field stec_residual STECResidual STEC residuals (mean, stddev)
+ * @field stec_bound_mu number (unsigned 8-bit int, 1 byte) Error Bound Mean. See Note 1.
+ * @field stec_bound_sig number (unsigned 8-bit int, 1 byte) Error Bound StDev. See Note 1.
+ * @field stec_bound_mu_dot number (unsigned 8-bit int, 1 byte) Error Bound Mean First derivative.
+ * @field stec_bound_sig_dot number (unsigned 8-bit int, 1 byte) Error Bound StDev First derivative.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let STECSatElementIntegrity = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "STECSatElementIntegrity";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+STECSatElementIntegrity.prototype = Object.create(SBP.prototype);
+STECSatElementIntegrity.prototype.messageType = "STECSatElementIntegrity";
+STECSatElementIntegrity.prototype.constructor = STECSatElementIntegrity;
+STECSatElementIntegrity.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('stec_residual', { type: STECResidual.prototype.parser })
+  .uint8('stec_bound_mu')
+  .uint8('stec_bound_sig')
+  .uint8('stec_bound_mu_dot')
+  .uint8('stec_bound_sig_dot');
+STECSatElementIntegrity.prototype.fieldSpec = [];
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_residual', STECResidual.prototype.fieldSpec]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_mu', 'writeUInt8', 1]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_sig', 'writeUInt8', 1]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_mu_dot', 'writeUInt8', 1]);
+STECSatElementIntegrity.prototype.fieldSpec.push(['stec_bound_sig_dot', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
  *
- 
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).
+ *
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field header BoundsHeader Header of a bounds message.
+ * @field ssr_iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the correction.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
+ * @field tropo_qi number (unsigned 8-bit int, 1 byte) Tropo Quality Indicator. Similar to RTCM DF389.
+ * @field grid_point_id number (unsigned 16-bit int, 2 bytes) Index of the Grid Point.
+ * @field tropo_delay_correction TroposphericDelayCorrection Tropospheric delay at grid point.
+ * @field tropo_v_hydro_bound_mu number (unsigned 8-bit int, 1 byte) Vertical Hydrostatic Error Bound Mean.
+ * @field tropo_v_hydro_bound_sig number (unsigned 8-bit int, 1 byte) Vertical Hydrostatic Error Bound StDev.
+ * @field tropo_v_wet_bound_mu number (unsigned 8-bit int, 1 byte) Vertical Wet Error Bound Mean.
+ * @field tropo_v_wet_bound_sig number (unsigned 8-bit int, 1 byte) Vertical Wet Error Bound StDev.
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites.
+ * @field stec_sat_list array Array of STEC polynomial coefficients and its bounds for each space vehicle.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -639,9 +746,33 @@ MsgSsrGriddedCorrectionBounds.prototype.msg_type = 0x05FE;
 MsgSsrGriddedCorrectionBounds.prototype.constructor = MsgSsrGriddedCorrectionBounds;
 MsgSsrGriddedCorrectionBounds.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod_atmo')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .uint8('tropo_qi')
+  .uint16('grid_point_id')
+  .nest('tropo_delay_correction', { type: TroposphericDelayCorrection.prototype.parser })
+  .uint8('tropo_v_hydro_bound_mu')
+  .uint8('tropo_v_hydro_bound_sig')
+  .uint8('tropo_v_wet_bound_mu')
+  .uint8('tropo_v_wet_bound_sig')
+  .uint8('n_sats')
+  .array('stec_sat_list', { type: STECSatElementIntegrity.prototype.parser, length: 'n_sats' });
 MsgSsrGriddedCorrectionBounds.prototype.fieldSpec = [];
-MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['ssr_iod_atmo', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_qi', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['grid_point_id', 'writeUInt16LE', 2]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrection.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_hydro_bound_mu', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_hydro_bound_sig', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_wet_bound_mu', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['tropo_v_wet_bound_sig', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElementIntegrity.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats']);
 
 /**
  * SBP class for message MSG_SSR_TILE_DEFINITION_DEP (0x05F6).
@@ -726,7 +857,34 @@ MsgSsrTileDefinitionDep.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]
  * lists of points.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set. See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field correctionPointSetID.
+ * @field corner_nw_lat number (signed 16-bit int, 2 bytes) North-West corner correction point latitude.  The relation between the latitude
+ *   X in the range [-90, 90] and the coded number N is:  N = floor((X / 90) * 2^14)
+ *   See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+ * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longitude.  The relation between the
+ *   longitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
+ *   180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
+ *   referencePointLongitude.
+ * @field spacing_lat number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the latitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field stepOfLatitude.
+ * @field spacing_lon number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field stepOfLongitude.
+ * @field rows number (unsigned 16-bit int, 2 bytes) Number of steps in the latitude direction.  See GNSS-SSR-ArrayOfCorrectionPoints
+ *   field numberOfStepsLatitude.
+ * @field cols number (unsigned 16-bit int, 2 bytes) Number of steps in the longitude direction.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field numberOfStepsLongitude.
+ * @field bitmask number (unsigned 64-bit int, 8 bytes) Specifies the availability of correction data at the correction points in the
+ *   array.  If a specific bit is enabled (set to 1), the correction is not
+ *   available. Only the first rows * cols bits are used, the remainder are set to 0.
+ *   If there are more then 64 correction points the remaining corrections are always
+ *   available.  Starting with the northwest corner of the array (top left on a north
+ *   oriented map) the correction points are enumerated with row precedence - first
+ *   row west to east, second row west to east, until last row west to east - ending
+ *   with the southeast corner of the array.  See GNSS-SSR-ArrayOfCorrectionPoints
+ *   field bitmaskOfGrids but note the definition of the bits is inverted.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -743,9 +901,27 @@ MsgSsrTileDefinition.prototype.msg_type = 0x05F7;
 MsgSsrTileDefinition.prototype.constructor = MsgSsrTileDefinition;
 MsgSsrTileDefinition.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .uint8('ssr_sol_id')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
+  .int16('corner_nw_lat')
+  .int16('corner_nw_lon')
+  .uint16('spacing_lat')
+  .uint16('spacing_lon')
+  .uint16('rows')
+  .uint16('cols')
+  .uint64('bitmask');
 MsgSsrTileDefinition.prototype.fieldSpec = [];
-MsgSsrTileDefinition.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['ssr_sol_id', 'writeUInt8', 1]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lat', 'writeInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lon', 'writeInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['spacing_lat', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['spacing_lon', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['rows', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['cols', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]);
 
 /**
  * SBP class for message fragment SatelliteAPC
@@ -1142,11 +1318,69 @@ MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['header', GridDefinitionHeade
 MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['rle_list', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
+ * SBP class for message fragment OrbitClockBound
+ *
+ * Orbit and clock bound.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sat_id number (unsigned 8-bit int, 1 byte) Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or DF488
+ *   (BDS) depending on the constellation.
+ * @field orb_radial_bound_mu number (unsigned 8-bit int, 1 byte) Mean Radial. See Note 1.
+ * @field orb_along_bound_mu number (unsigned 8-bit int, 1 byte) Mean Along-Track. See Note 1.
+ * @field orb_cross_bound_mu number (unsigned 8-bit int, 1 byte) Mean Cross-Track. See Note 1.
+ * @field orb_radial_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Radial. See Note 2.
+ * @field orb_along_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Along-Track. See Note 2.
+ * @field orb_cross_bound_sig number (unsigned 8-bit int, 1 byte) Standard Deviation Cross-Track. See Note 2.
+ * @field clock_bound_mu number (unsigned 8-bit int, 1 byte) Clock Bound Mean. See Note 1.
+ * @field clock_bound_sig number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation. See Note 2.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let OrbitClockBound = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "OrbitClockBound";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+OrbitClockBound.prototype = Object.create(SBP.prototype);
+OrbitClockBound.prototype.messageType = "OrbitClockBound";
+OrbitClockBound.prototype.constructor = OrbitClockBound;
+OrbitClockBound.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('sat_id')
+  .uint8('orb_radial_bound_mu')
+  .uint8('orb_along_bound_mu')
+  .uint8('orb_cross_bound_mu')
+  .uint8('orb_radial_bound_sig')
+  .uint8('orb_along_bound_sig')
+  .uint8('orb_cross_bound_sig')
+  .uint8('clock_bound_mu')
+  .uint8('clock_bound_sig');
+OrbitClockBound.prototype.fieldSpec = [];
+OrbitClockBound.prototype.fieldSpec.push(['sat_id', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_radial_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_along_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_cross_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_radial_bound_sig', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_along_bound_sig', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['orb_cross_bound_sig', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['clock_bound_mu', 'writeUInt8', 1]);
+OrbitClockBound.prototype.fieldSpec.push(['clock_bound_sig', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
  *
- 
+ * Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).  Note 2: Range: 0-17.5 m. i<=200, std=0.01i;
+ * 200<i<=230, std=2+0.1(i-200) i>230, std=5+0.5(i-230).
+ *
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field header BoundsHeader Header of a bounds message.
+ * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound.
+ * @field const_id number (unsigned 8-bit int, 1 byte) Constellation ID to which the SVs belong.
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites.
+ * @field orbit_clock_bounds array Orbit and Clock Bounds per Satellite
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1163,16 +1397,70 @@ MsgSsrOrbitClockBounds.prototype.msg_type = 0x05DE;
 MsgSsrOrbitClockBounds.prototype.constructor = MsgSsrOrbitClockBounds;
 MsgSsrOrbitClockBounds.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod')
+  .uint8('const_id')
+  .uint8('n_sats')
+  .array('orbit_clock_bounds', { type: OrbitClockBound.prototype.parser, length: 'n_sats' });
 MsgSsrOrbitClockBounds.prototype.fieldSpec = [];
-MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['const_id', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['orbit_clock_bounds', 'array', OrbitClockBound.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats']);
+
+/**
+ * SBP class for message fragment CodePhaseBiasesSatSig
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sat_id number (unsigned 8-bit int, 1 byte) Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or DF488
+ *   (BDS) depending on the constellation.
+ * @field signal_id number (unsigned 8-bit int, 1 byte) Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS), DF382
+ *   (Galileo) or DF467 (BDS) depending on the constellation.
+ * @field code_bias_bound_mu number (unsigned 8-bit int, 1 byte) Code Bias Mean. Range: 0-1.275 m
+ * @field code_bias_bound_sig number (unsigned 8-bit int, 1 byte) Code Bias Standard Deviation.  Range: 0-1.275 m
+ * @field phase_bias_bound_mu number (unsigned 8-bit int, 1 byte) Phase Bias Mean. Range: 0-1.275 m
+ * @field phase_bias_bound_sig number (unsigned 8-bit int, 1 byte) Phase Bias Standard Deviation.  Range: 0-1.275 m
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let CodePhaseBiasesSatSig = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "CodePhaseBiasesSatSig";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+CodePhaseBiasesSatSig.prototype = Object.create(SBP.prototype);
+CodePhaseBiasesSatSig.prototype.messageType = "CodePhaseBiasesSatSig";
+CodePhaseBiasesSatSig.prototype.constructor = CodePhaseBiasesSatSig;
+CodePhaseBiasesSatSig.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('sat_id')
+  .uint8('signal_id')
+  .uint8('code_bias_bound_mu')
+  .uint8('code_bias_bound_sig')
+  .uint8('phase_bias_bound_mu')
+  .uint8('phase_bias_bound_sig');
+CodePhaseBiasesSatSig.prototype.fieldSpec = [];
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['sat_id', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['signal_id', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['code_bias_bound_mu', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['code_bias_bound_sig', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['phase_bias_bound_mu', 'writeUInt8', 1]);
+CodePhaseBiasesSatSig.prototype.fieldSpec.push(['phase_bias_bound_sig', 'writeUInt8', 1]);
 
 /**
  * SBP class for message MSG_SSR_CODE_PHASE_BIASES_BOUNDS (0x05EC).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field header BoundsHeader Header of a bounds message.
+ * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound.
+ * @field const_id number (unsigned 8-bit int, 1 byte) Constellation ID to which the SVs belong.
+ * @field n_sats_signals number (unsigned 8-bit int, 1 byte) Number of satellite-signal couples.
+ * @field satellites_signals array Code and Phase Biases Bounds per Satellite-Signal couple.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1189,16 +1477,77 @@ MsgSsrCodePhaseBiasesBounds.prototype.msg_type = 0x05EC;
 MsgSsrCodePhaseBiasesBounds.prototype.constructor = MsgSsrCodePhaseBiasesBounds;
 MsgSsrCodePhaseBiasesBounds.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod')
+  .uint8('const_id')
+  .uint8('n_sats_signals')
+  .array('satellites_signals', { type: CodePhaseBiasesSatSig.prototype.parser, length: 'n_sats_signals' });
 MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec = [];
-MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['const_id', 'writeUInt8', 1]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['n_sats_signals', 'writeUInt8', 1]);
+MsgSsrCodePhaseBiasesBounds.prototype.fieldSpec.push(['satellites_signals', 'array', CodePhaseBiasesSatSig.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_sats_signals']);
+
+/**
+ * SBP class for message fragment OrbitClockBoundDegradation
+ *
+ * Orbit and clock bound degradation.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field orb_radial_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
+ * @field orb_along_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
+ * @field orb_cross_bound_mu_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
+ * @field orb_radial_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255 m/s
+ * @field orb_along_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Along-Track First derivative. Range: 0-0.255 m/s
+ * @field orb_cross_bound_sig_dot number (unsigned 8-bit int, 1 byte) Orbit Bound Standard Deviation Cross-Track First derivative. Range: 0-0.255 m/s
+ * @field clock_bound_mu_dot number (unsigned 8-bit int, 1 byte) Clock Bound Mean First derivative. Range: 0-0.255 m/s
+ * @field clock_bound_sig_dot number (unsigned 8-bit int, 1 byte) Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let OrbitClockBoundDegradation = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "OrbitClockBoundDegradation";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+OrbitClockBoundDegradation.prototype = Object.create(SBP.prototype);
+OrbitClockBoundDegradation.prototype.messageType = "OrbitClockBoundDegradation";
+OrbitClockBoundDegradation.prototype.constructor = OrbitClockBoundDegradation;
+OrbitClockBoundDegradation.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('orb_radial_bound_mu_dot')
+  .uint8('orb_along_bound_mu_dot')
+  .uint8('orb_cross_bound_mu_dot')
+  .uint8('orb_radial_bound_sig_dot')
+  .uint8('orb_along_bound_sig_dot')
+  .uint8('orb_cross_bound_sig_dot')
+  .uint8('clock_bound_mu_dot')
+  .uint8('clock_bound_sig_dot');
+OrbitClockBoundDegradation.prototype.fieldSpec = [];
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_radial_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_along_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_cross_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_radial_bound_sig_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_along_bound_sig_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['orb_cross_bound_sig_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['clock_bound_mu_dot', 'writeUInt8', 1]);
+OrbitClockBoundDegradation.prototype.fieldSpec.push(['clock_bound_sig_dot', 'writeUInt8', 1]);
 
 /**
  * SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION (0x05DF).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field header BoundsHeader Header of a bounds message.
+ * @field ssr_iod number (unsigned 8-bit int, 1 byte) IOD of the SSR bound degradation parameter.
+ * @field const_id number (unsigned 8-bit int, 1 byte) Constellation ID to which the SVs belong.
+ * @field sat_bitmask number (unsigned 64-bit int, 8 bytes) Satellite Bit Mask. Put 1 for each satellite where the following degradation
+ *   parameters are applicable, 0 otherwise. Encoded following RTCM DF394
+ *   specification.
+ * @field orbit_clock_bounds_degradation OrbitClockBoundDegradation Orbit and Clock Bounds Degradation Parameters
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1215,9 +1564,17 @@ MsgSsrOrbitClockBoundsDegradation.prototype.msg_type = 0x05DF;
 MsgSsrOrbitClockBoundsDegradation.prototype.constructor = MsgSsrOrbitClockBoundsDegradation;
 MsgSsrOrbitClockBoundsDegradation.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .nest('header', { type: BoundsHeader.prototype.parser })
+  .uint8('ssr_iod')
+  .uint8('const_id')
+  .uint64('sat_bitmask')
+  .nest('orbit_clock_bounds_degradation', { type: OrbitClockBoundDegradation.prototype.parser });
 MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec = [];
-MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['header', BoundsHeader.prototype.fieldSpec]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['ssr_iod', 'writeUInt8', 1]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['const_id', 'writeUInt8', 1]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['sat_bitmask', 'writeUInt64LE', 8]);
+MsgSsrOrbitClockBoundsDegradation.prototype.fieldSpec.push(['orbit_clock_bounds_degradation', OrbitClockBoundDegradation.prototype.fieldSpec]);
 
 module.exports = {
   CodeBiasesContent: CodeBiasesContent,
@@ -1237,10 +1594,12 @@ module.exports = {
   MsgSsrPhaseBiases: MsgSsrPhaseBiases,
   0x05FB: MsgSsrStecCorrectionDep,
   MsgSsrStecCorrectionDep: MsgSsrStecCorrectionDep,
+  BoundsHeader: BoundsHeader,
   0x05FD: MsgSsrStecCorrection,
   MsgSsrStecCorrection: MsgSsrStecCorrection,
   0x05FC: MsgSsrGriddedCorrection,
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
+  STECSatElementIntegrity: STECSatElementIntegrity,
   0x05FE: MsgSsrGriddedCorrectionBounds,
   MsgSsrGriddedCorrectionBounds: MsgSsrGriddedCorrectionBounds,
   0x05F6: MsgSsrTileDefinitionDep,
@@ -1263,10 +1622,13 @@ module.exports = {
   MsgSsrGriddedCorrectionDepA: MsgSsrGriddedCorrectionDepA,
   0x05F5: MsgSsrGridDefinitionDepA,
   MsgSsrGridDefinitionDepA: MsgSsrGridDefinitionDepA,
+  OrbitClockBound: OrbitClockBound,
   0x05DE: MsgSsrOrbitClockBounds,
   MsgSsrOrbitClockBounds: MsgSsrOrbitClockBounds,
+  CodePhaseBiasesSatSig: CodePhaseBiasesSatSig,
   0x05EC: MsgSsrCodePhaseBiasesBounds,
   MsgSsrCodePhaseBiasesBounds: MsgSsrCodePhaseBiasesBounds,
+  OrbitClockBoundDegradation: OrbitClockBoundDegradation,
   0x05DF: MsgSsrOrbitClockBoundsDegradation,
   MsgSsrOrbitClockBoundsDegradation: MsgSsrOrbitClockBoundsDegradation,
 }

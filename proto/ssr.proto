@@ -182,12 +182,29 @@ message MsgSsrPhaseBiases {
     repeated PhaseBiasesContent biases = 9;
 }
 
+/** Header for the Bounds messages
+ *
+None
+ */
+message BoundsHeader {
+    gnss.GpsTimeSec time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 update_interval = 4;
+    uint32 sol_id = 5;
+}
+
 /** STEC correction polynomial coefficients
  *
 None
  */
 message MsgSsrStecCorrection {
-    repeated uint32 stub = 1;
+    BoundsHeader header = 1;
+    uint32 ssr_iod_atmo = 2;
+    uint32 tile_set_id = 3;
+    uint32 tile_id = 4;
+    uint32 n_sats = 5;
+    repeated STECSatElement stec_sat_list = 6;
 }
 
 /** Gridded troposphere and STEC correction residuals
@@ -203,12 +220,37 @@ message MsgSsrGriddedCorrection {
     repeated STECResidual stec_residuals = 4;
 }
 
+/** None
+ *
+ * STEC polynomial and bounds for the given satellite.
+ */
+message STECSatElementIntegrity {
+    STECResidual stec_residual = 1;
+    uint32 stec_bound_mu = 2;
+    uint32 stec_bound_sig = 3;
+    uint32 stec_bound_mu_dot = 4;
+    uint32 stec_bound_sig_dot = 5;
+}
+
 /** Gridded troposhere and STEC correction residuals bounds
  *
-None
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+ * mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
  */
 message MsgSsrGriddedCorrectionBounds {
-    repeated uint32 stub = 1;
+    BoundsHeader header = 1;
+    uint32 ssr_iod_atmo = 2;
+    uint32 tile_set_id = 3;
+    uint32 tile_id = 4;
+    uint32 tropo_qi = 5;
+    uint32 grid_point_id = 6;
+    TroposphericDelayCorrection tropo_delay_correction = 7;
+    uint32 tropo_v_hydro_bound_mu = 8;
+    uint32 tropo_v_hydro_bound_sig = 9;
+    uint32 tropo_v_wet_bound_mu = 10;
+    uint32 tropo_v_wet_bound_sig = 11;
+    uint32 n_sats = 12;
+    repeated STECSatElementIntegrity stec_sat_list = 13;
 }
 
 /** Definition of a SSR atmospheric correction tile.
@@ -223,7 +265,16 @@ message MsgSsrGriddedCorrectionBounds {
  * correction points, not lists of points.
  */
 message MsgSsrTileDefinition {
-    repeated uint32 stub = 1;
+    uint32 ssr_sol_id = 1;
+    uint32 tile_set_id = 2;
+    uint32 tile_id = 3;
+    sint32 corner_nw_lat = 4;
+    sint32 corner_nw_lon = 5;
+    uint32 spacing_lat = 6;
+    uint32 spacing_lon = 7;
+    uint32 rows = 8;
+    uint32 cols = 9;
+    uint64 bitmask = 10;
 }
 
 /** Antenna phase center correction
@@ -247,20 +298,76 @@ message MsgSsrSatelliteApc {
     repeated SatelliteAPC apc = 1;
 }
 
-/** Stubbed version of Combined Orbit and Clock Bound
+/** None
+ *
+ * Orbit and clock bound.
+ */
+message OrbitClockBound {
+    uint32 sat_id = 1;
+    uint32 orb_radial_bound_mu = 2;
+    uint32 orb_along_bound_mu = 3;
+    uint32 orb_cross_bound_mu = 4;
+    uint32 orb_radial_bound_sig = 5;
+    uint32 orb_along_bound_sig = 6;
+    uint32 orb_cross_bound_sig = 7;
+    uint32 clock_bound_mu = 8;
+    uint32 clock_bound_sig = 9;
+}
+
+/** Combined Orbit and Clock Bound
+ *
+ * Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).
+ *
+ * Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+ * i>230, std=5+0.5(i-230).
+ */
+message MsgSsrOrbitClockBounds {
+    BoundsHeader header = 1;
+    uint32 ssr_iod = 2;
+    uint32 const_id = 3;
+    uint32 n_sats = 4;
+    repeated OrbitClockBound orbit_clock_bounds = 5;
+}
+
+/** Code and Phase Biases Bounds per Satellite-Signal couple
  *
 None
  */
-message MsgSsrOrbitClockBounds {
-    repeated uint32 stub = 1;
+message CodePhaseBiasesSatSig {
+    uint32 sat_id = 1;
+    uint32 signal_id = 2;
+    uint32 code_bias_bound_mu = 3;
+    uint32 code_bias_bound_sig = 4;
+    uint32 phase_bias_bound_mu = 5;
+    uint32 phase_bias_bound_sig = 6;
 }
 
-/** Stubbed version of Combined Code and Phase Biases Bounds
+/** Combined Code and Phase Biases Bounds
  *
 None
  */
 message MsgSsrCodePhaseBiasesBounds {
-    repeated uint32 stub = 1;
+    BoundsHeader header = 1;
+    uint32 ssr_iod = 2;
+    uint32 const_id = 3;
+    uint32 n_sats_signals = 4;
+    repeated CodePhaseBiasesSatSig satellites_signals = 5;
+}
+
+/** None
+ *
+ * Orbit and clock bound degradation.
+ */
+message OrbitClockBoundDegradation {
+    uint32 orb_radial_bound_mu_dot = 1;
+    uint32 orb_along_bound_mu_dot = 2;
+    uint32 orb_cross_bound_mu_dot = 3;
+    uint32 orb_radial_bound_sig_dot = 4;
+    uint32 orb_along_bound_sig_dot = 5;
+    uint32 orb_cross_bound_sig_dot = 6;
+    uint32 clock_bound_mu_dot = 7;
+    uint32 clock_bound_sig_dot = 8;
 }
 
 /** Combined Orbit and Clock Bound Degradation Parameter
@@ -268,5 +375,9 @@ message MsgSsrCodePhaseBiasesBounds {
 None
  */
 message MsgSsrOrbitClockBoundsDegradation {
-    repeated uint32 stub = 1;
+    BoundsHeader header = 1;
+    uint32 ssr_iod = 2;
+    uint32 const_id = 3;
+    uint64 sat_bitmask = 4;
+    OrbitClockBoundDegradation orbit_clock_bounds_degradation = 5;
 }

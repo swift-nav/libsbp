@@ -135,161 +135,41 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds) {
     msg_ssr_orbit_clock_bounds_t *test_msg =
         (msg_ssr_orbit_clock_bounds_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    if (sizeof(test_msg->stub) == 0) {
+    test_msg->const_id = 1;
+    test_msg->header.num_msgs = 1;
+    test_msg->header.seq_num = 2;
+    test_msg->header.sol_id = 48;
+    test_msg->header.time.tow = 180;
+    test_msg->header.time.wn = 3;
+    test_msg->header.update_interval = 3;
+    test_msg->n_sats = 2;
+    if (sizeof(test_msg->orbit_clock_bounds) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
+      test_msg_len += sizeof(test_msg->orbit_clock_bounds[0]);
     }
-    test_msg->stub[0] = 180;
-    if (sizeof(test_msg->stub) == 0) {
+    test_msg->orbit_clock_bounds[0].clock_bound_mu = 39;
+    test_msg->orbit_clock_bounds[0].clock_bound_sig = 1;
+    test_msg->orbit_clock_bounds[0].orb_along_bound_mu = 38;
+    test_msg->orbit_clock_bounds[0].orb_along_bound_sig = 2;
+    test_msg->orbit_clock_bounds[0].orb_cross_bound_mu = 37;
+    test_msg->orbit_clock_bounds[0].orb_cross_bound_sig = 3;
+    test_msg->orbit_clock_bounds[0].orb_radial_bound_mu = 39;
+    test_msg->orbit_clock_bounds[0].orb_radial_bound_sig = 1;
+    test_msg->orbit_clock_bounds[0].sat_id = 24;
+    if (sizeof(test_msg->orbit_clock_bounds) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
+      test_msg_len += sizeof(test_msg->orbit_clock_bounds[0]);
     }
-    test_msg->stub[1] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[2] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[3] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[4] = 3;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[5] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[6] = 1;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[7] = 2;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[8] = 3;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[9] = 48;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[10] = 15;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[11] = 1;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[12] = 2;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[13] = 24;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[14] = 39;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[15] = 38;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[16] = 37;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[17] = 1;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[18] = 2;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[19] = 3;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[20] = 39;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[21] = 1;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[22] = 3;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[23] = 39;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[24] = 38;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[25] = 37;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[26] = 1;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[27] = 2;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[28] = 3;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[29] = 39;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[30] = 1;
+    test_msg->orbit_clock_bounds[1].clock_bound_mu = 39;
+    test_msg->orbit_clock_bounds[1].clock_bound_sig = 1;
+    test_msg->orbit_clock_bounds[1].orb_along_bound_mu = 38;
+    test_msg->orbit_clock_bounds[1].orb_along_bound_sig = 2;
+    test_msg->orbit_clock_bounds[1].orb_cross_bound_mu = 37;
+    test_msg->orbit_clock_bounds[1].orb_cross_bound_sig = 3;
+    test_msg->orbit_clock_bounds[1].orb_radial_bound_mu = 39;
+    test_msg->orbit_clock_bounds[1].orb_radial_bound_sig = 1;
+    test_msg->orbit_clock_bounds[1].sat_id = 3;
+    test_msg->ssr_iod = 15;
     sbp_payload_send(&sbp_state, 1502, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -345,99 +225,118 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds) {
         (msg_ssr_orbit_clock_bounds_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->stub[0] == 180,
-                  "incorrect value for stub[0], expected 180, is %d",
-                  check_msg->stub[0]);
-    ck_assert_msg(check_msg->stub[1] == 0,
-                  "incorrect value for stub[1], expected 0, is %d",
-                  check_msg->stub[1]);
-    ck_assert_msg(check_msg->stub[2] == 0,
-                  "incorrect value for stub[2], expected 0, is %d",
-                  check_msg->stub[2]);
-    ck_assert_msg(check_msg->stub[3] == 0,
-                  "incorrect value for stub[3], expected 0, is %d",
-                  check_msg->stub[3]);
-    ck_assert_msg(check_msg->stub[4] == 3,
-                  "incorrect value for stub[4], expected 3, is %d",
-                  check_msg->stub[4]);
-    ck_assert_msg(check_msg->stub[5] == 0,
-                  "incorrect value for stub[5], expected 0, is %d",
-                  check_msg->stub[5]);
-    ck_assert_msg(check_msg->stub[6] == 1,
-                  "incorrect value for stub[6], expected 1, is %d",
-                  check_msg->stub[6]);
-    ck_assert_msg(check_msg->stub[7] == 2,
-                  "incorrect value for stub[7], expected 2, is %d",
-                  check_msg->stub[7]);
-    ck_assert_msg(check_msg->stub[8] == 3,
-                  "incorrect value for stub[8], expected 3, is %d",
-                  check_msg->stub[8]);
-    ck_assert_msg(check_msg->stub[9] == 48,
-                  "incorrect value for stub[9], expected 48, is %d",
-                  check_msg->stub[9]);
-    ck_assert_msg(check_msg->stub[10] == 15,
-                  "incorrect value for stub[10], expected 15, is %d",
-                  check_msg->stub[10]);
-    ck_assert_msg(check_msg->stub[11] == 1,
-                  "incorrect value for stub[11], expected 1, is %d",
-                  check_msg->stub[11]);
-    ck_assert_msg(check_msg->stub[12] == 2,
-                  "incorrect value for stub[12], expected 2, is %d",
-                  check_msg->stub[12]);
-    ck_assert_msg(check_msg->stub[13] == 24,
-                  "incorrect value for stub[13], expected 24, is %d",
-                  check_msg->stub[13]);
-    ck_assert_msg(check_msg->stub[14] == 39,
-                  "incorrect value for stub[14], expected 39, is %d",
-                  check_msg->stub[14]);
-    ck_assert_msg(check_msg->stub[15] == 38,
-                  "incorrect value for stub[15], expected 38, is %d",
-                  check_msg->stub[15]);
-    ck_assert_msg(check_msg->stub[16] == 37,
-                  "incorrect value for stub[16], expected 37, is %d",
-                  check_msg->stub[16]);
-    ck_assert_msg(check_msg->stub[17] == 1,
-                  "incorrect value for stub[17], expected 1, is %d",
-                  check_msg->stub[17]);
-    ck_assert_msg(check_msg->stub[18] == 2,
-                  "incorrect value for stub[18], expected 2, is %d",
-                  check_msg->stub[18]);
-    ck_assert_msg(check_msg->stub[19] == 3,
-                  "incorrect value for stub[19], expected 3, is %d",
-                  check_msg->stub[19]);
-    ck_assert_msg(check_msg->stub[20] == 39,
-                  "incorrect value for stub[20], expected 39, is %d",
-                  check_msg->stub[20]);
-    ck_assert_msg(check_msg->stub[21] == 1,
-                  "incorrect value for stub[21], expected 1, is %d",
-                  check_msg->stub[21]);
-    ck_assert_msg(check_msg->stub[22] == 3,
-                  "incorrect value for stub[22], expected 3, is %d",
-                  check_msg->stub[22]);
-    ck_assert_msg(check_msg->stub[23] == 39,
-                  "incorrect value for stub[23], expected 39, is %d",
-                  check_msg->stub[23]);
-    ck_assert_msg(check_msg->stub[24] == 38,
-                  "incorrect value for stub[24], expected 38, is %d",
-                  check_msg->stub[24]);
-    ck_assert_msg(check_msg->stub[25] == 37,
-                  "incorrect value for stub[25], expected 37, is %d",
-                  check_msg->stub[25]);
-    ck_assert_msg(check_msg->stub[26] == 1,
-                  "incorrect value for stub[26], expected 1, is %d",
-                  check_msg->stub[26]);
-    ck_assert_msg(check_msg->stub[27] == 2,
-                  "incorrect value for stub[27], expected 2, is %d",
-                  check_msg->stub[27]);
-    ck_assert_msg(check_msg->stub[28] == 3,
-                  "incorrect value for stub[28], expected 3, is %d",
-                  check_msg->stub[28]);
-    ck_assert_msg(check_msg->stub[29] == 39,
-                  "incorrect value for stub[29], expected 39, is %d",
-                  check_msg->stub[29]);
-    ck_assert_msg(check_msg->stub[30] == 1,
-                  "incorrect value for stub[30], expected 1, is %d",
-                  check_msg->stub[30]);
+    ck_assert_msg(check_msg->const_id == 1,
+                  "incorrect value for const_id, expected 1, is %d",
+                  check_msg->const_id);
+    ck_assert_msg(check_msg->header.num_msgs == 1,
+                  "incorrect value for header.num_msgs, expected 1, is %d",
+                  check_msg->header.num_msgs);
+    ck_assert_msg(check_msg->header.seq_num == 2,
+                  "incorrect value for header.seq_num, expected 2, is %d",
+                  check_msg->header.seq_num);
+    ck_assert_msg(check_msg->header.sol_id == 48,
+                  "incorrect value for header.sol_id, expected 48, is %d",
+                  check_msg->header.sol_id);
+    ck_assert_msg(check_msg->header.time.tow == 180,
+                  "incorrect value for header.time.tow, expected 180, is %d",
+                  check_msg->header.time.tow);
+    ck_assert_msg(check_msg->header.time.wn == 3,
+                  "incorrect value for header.time.wn, expected 3, is %d",
+                  check_msg->header.time.wn);
+    ck_assert_msg(
+        check_msg->header.update_interval == 3,
+        "incorrect value for header.update_interval, expected 3, is %d",
+        check_msg->header.update_interval);
+    ck_assert_msg(check_msg->n_sats == 2,
+                  "incorrect value for n_sats, expected 2, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(check_msg->orbit_clock_bounds[0].clock_bound_mu == 39,
+                  "incorrect value for orbit_clock_bounds[0].clock_bound_mu, "
+                  "expected 39, is %d",
+                  check_msg->orbit_clock_bounds[0].clock_bound_mu);
+    ck_assert_msg(check_msg->orbit_clock_bounds[0].clock_bound_sig == 1,
+                  "incorrect value for orbit_clock_bounds[0].clock_bound_sig, "
+                  "expected 1, is %d",
+                  check_msg->orbit_clock_bounds[0].clock_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[0].orb_along_bound_mu == 38,
+        "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, "
+        "expected 38, is %d",
+        check_msg->orbit_clock_bounds[0].orb_along_bound_mu);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[0].orb_along_bound_sig == 2,
+        "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, "
+        "expected 2, is %d",
+        check_msg->orbit_clock_bounds[0].orb_along_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[0].orb_cross_bound_mu == 37,
+        "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, "
+        "expected 37, is %d",
+        check_msg->orbit_clock_bounds[0].orb_cross_bound_mu);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[0].orb_cross_bound_sig == 3,
+        "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, "
+        "expected 3, is %d",
+        check_msg->orbit_clock_bounds[0].orb_cross_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[0].orb_radial_bound_mu == 39,
+        "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, "
+        "expected 39, is %d",
+        check_msg->orbit_clock_bounds[0].orb_radial_bound_mu);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[0].orb_radial_bound_sig == 1,
+        "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, "
+        "expected 1, is %d",
+        check_msg->orbit_clock_bounds[0].orb_radial_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[0].sat_id == 24,
+        "incorrect value for orbit_clock_bounds[0].sat_id, expected 24, is %d",
+        check_msg->orbit_clock_bounds[0].sat_id);
+    ck_assert_msg(check_msg->orbit_clock_bounds[1].clock_bound_mu == 39,
+                  "incorrect value for orbit_clock_bounds[1].clock_bound_mu, "
+                  "expected 39, is %d",
+                  check_msg->orbit_clock_bounds[1].clock_bound_mu);
+    ck_assert_msg(check_msg->orbit_clock_bounds[1].clock_bound_sig == 1,
+                  "incorrect value for orbit_clock_bounds[1].clock_bound_sig, "
+                  "expected 1, is %d",
+                  check_msg->orbit_clock_bounds[1].clock_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[1].orb_along_bound_mu == 38,
+        "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, "
+        "expected 38, is %d",
+        check_msg->orbit_clock_bounds[1].orb_along_bound_mu);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[1].orb_along_bound_sig == 2,
+        "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, "
+        "expected 2, is %d",
+        check_msg->orbit_clock_bounds[1].orb_along_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[1].orb_cross_bound_mu == 37,
+        "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, "
+        "expected 37, is %d",
+        check_msg->orbit_clock_bounds[1].orb_cross_bound_mu);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[1].orb_cross_bound_sig == 3,
+        "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, "
+        "expected 3, is %d",
+        check_msg->orbit_clock_bounds[1].orb_cross_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[1].orb_radial_bound_mu == 39,
+        "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, "
+        "expected 39, is %d",
+        check_msg->orbit_clock_bounds[1].orb_radial_bound_mu);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[1].orb_radial_bound_sig == 1,
+        "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, "
+        "expected 1, is %d",
+        check_msg->orbit_clock_bounds[1].orb_radial_bound_sig);
+    ck_assert_msg(
+        check_msg->orbit_clock_bounds[1].sat_id == 3,
+        "incorrect value for orbit_clock_bounds[1].sat_id, expected 3, is %d",
+        check_msg->orbit_clock_bounds[1].sat_id);
+    ck_assert_msg(check_msg->ssr_iod == 15,
+                  "incorrect value for ssr_iod, expected 15, is %d",
+                  check_msg->ssr_iod);
   }
 }
 END_TEST

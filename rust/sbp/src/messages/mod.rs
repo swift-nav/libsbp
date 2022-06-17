@@ -653,7 +653,7 @@ pub enum Sbp {
     MsgVelEcefCovGnss(MsgVelEcefCovGnss),
     /// Leap second SBP message.
     MsgUtcLeapSecond(MsgUtcLeapSecond),
-    /// Reference Frame Transformation Parameter
+    /// Reference Frame Transformation Parameters
     MsgReferenceFrameParam(MsgReferenceFrameParam),
     /// Navigation DataBase Event
     MsgNdbEvent(MsgNdbEvent),
@@ -665,7 +665,7 @@ pub enum Sbp {
     MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),
     /// Precise orbit and clock correction
     MsgSsrOrbitClock(MsgSsrOrbitClock),
-    /// Stubbed version of Combined Orbit and Clock Bound
+    /// Combined Orbit and Clock Bound
     MsgSsrOrbitClockBounds(MsgSsrOrbitClockBounds),
     /// Combined Orbit and Clock Bound Degradation Parameter
     MsgSsrOrbitClockBoundsDegradation(MsgSsrOrbitClockBoundsDegradation),
@@ -675,7 +675,7 @@ pub enum Sbp {
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
     /// Deprecated
     MsgSsrStecCorrectionDepA(MsgSsrStecCorrectionDepA),
-    /// Stubbed version of Combined Code and Phase Biases Bounds
+    /// Combined Code and Phase Biases Bounds
     MsgSsrCodePhaseBiasesBounds(MsgSsrCodePhaseBiasesBounds),
     /// Deprecated
     MsgSsrGriddedCorrectionNoStdDepA(MsgSsrGriddedCorrectionNoStdDepA),

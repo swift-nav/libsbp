@@ -6,14 +6,34 @@ tests:
 
   - msg:
       fields:
-        stub: [180,0,0,0,3,0,1,2,3,48,15,1,10,0,0,0,0,0,0,0,200,199,198,197,196,195,194,193]
-      c_decoded_fields:
-        n_stub: 28
+        header:
+          time:
+            tow: 180
+            wn: 3
+          num_msgs: 1
+          seq_num: 2
+          update_interval: 3
+          sol_id: 48
+        ssr_iod: 15
+        const_id: 1
+        sat_bitmask: 10
+        orbit_clock_bounds_degradation:
+          orb_radial_bound_mu_dot: 200
+          orb_along_bound_mu_dot: 199
+          orb_cross_bound_mu_dot: 198
+          orb_radial_bound_sig_dot: 197
+          orb_along_bound_sig_dot: 196
+          orb_cross_bound_sig_dot: 195
+          clock_bound_mu_dot: 194
+          clock_bound_sig_dot: 193
       module: sbp.ssr
       name: MsgSsrOrbitClockBoundsDegradation
     msg_type: '1503'
-    raw_json: '{"stub": [180,0,0,0,3,0,1,2,3,48,15,1,10,0,0,0,0,0,0,0,200,199,198,197,196,195,194,193],
-    "preamble": 85, "msg_type": 1503, "sender": 66, "length": 28,
+    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 3, "sol_id": 48},
+    "ssr_iod": 15, "const_id": 1, "sat_bitmask": 10, "orbit_clock_bounds_degradation": {"orb_radial_bound_mu_dot": 200,
+    "orb_along_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 198,
+    "orb_radial_bound_sig_dot": 197, "orb_along_bound_sig_dot": 196, "orb_cross_bound_sig_dot": 195,
+    "clock_bound_mu_dot": 194, "clock_bound_sig_dot": 193}, "preamble": 85, "msg_type": 1503, "sender": 66, "length": 28,
     "payload": "tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ==", "crc": 30152}'
     raw_packet: Vd8FQgActAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwch1
     sbp:

@@ -16,9 +16,33 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "obs_time": {"$ref": "GpsTimeSec.json"},
+    "corr_time": {"$ref": "GpsTimeSec.json"},
+    "ssr_sol_id": {"type": "integer"},
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"},
+    "chain_id": {"type": "integer"},
+    "use_gps_sat": {"type": "integer"},
+    "use_gal_sat": {"type": "integer"},
+    "use_bds_sat": {"type": "integer"},
+    "use_tropo_grid_points": {"type": "integer"},
+    "use_iono_grid_points": {"type": "integer"},
+    "use_iono_tile_sat_los": {"type": "integer"},
+    "use_iono_grid_point_sat_los": {"type": "integer"}
   },
   "required": [
-    "stub"
+    "obs_time",
+    "corr_time",
+    "ssr_sol_id",
+    "tile_set_id",
+    "tile_id",
+    "chain_id",
+    "use_gps_sat",
+    "use_gal_sat",
+    "use_bds_sat",
+    "use_tropo_grid_points",
+    "use_iono_grid_points",
+    "use_iono_tile_sat_los",
+    "use_iono_grid_point_sat_los"
   ]
 }

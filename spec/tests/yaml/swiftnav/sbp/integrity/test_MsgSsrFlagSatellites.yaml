@@ -3,21 +3,29 @@ generated_on: 2022-04-22 # manually generated
 package: sbp.integrity
 tests:
 
-  - msg:
-      fields:
-        stub: [180,0,0,0,3,0,1,2,3,4,5,3,10,11,12]
-      c_decoded_fields:
-        n_stub: 15
-      module: sbp.integrity
-      name: MsgSsrFlagSatellites
-    msg_type: '3005'
-    raw_json: '{"stub": [180,0,0,0,3,0,1,2,3,4,5,3,10,11,12], "preamble": 85, "msg_type": 3005, "sender": 66, "length": 15,
+- msg:
+    fields:
+      obs_time:
+        tow: 180
+        wn: 3
+      num_msgs: 1
+      seq_num: 2
+      ssr_sol_id: 3
+      chain_id: 4
+      const_id: 5
+      n_faulty_sats: 3
+      faulty_sats: [10,11,12]
+    module: sbp.integrity
+    name: MsgSsrFlagSatellites
+  msg_type: '3005'
+  raw_json: '{"obs_time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "ssr_sol_id": 3, "chain_id": 4, "const_id": 5,
+    "n_faulty_sats": 3, "faulty_sats": [10, 11, 12], "preamble": 85, "msg_type": 3005, "sender": 66, "length": 15,
     "payload": "tAAAAAMAAQIDBAUDCgsM", "crc": 42350}'
-    raw_packet: Vb0LQgAPtAAAAAMAAQIDBAUDCgsMbqU=
-    sbp:
-      preamble: '0x55'
-      msg_type: '0x0BBD'
-      sender: '0x0042'
-      length: 15
-      payload: tAAAAAMAAQIDBAUDCgsM
-      crc: '0xA56E'
+  raw_packet: Vb0LQgAPtAAAAAMAAQIDBAUDCgsMbqU=
+  sbp:
+    preamble: '0x55'
+    msg_type: '0x0BBD'
+    sender: '0x0042'
+    length: 15
+    payload: tAAAAAMAAQIDBAUDCgsM
+    crc: '0xA56E'

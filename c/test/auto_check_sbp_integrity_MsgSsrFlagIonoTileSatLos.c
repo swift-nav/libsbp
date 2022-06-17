@@ -103,45 +103,31 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_flag_iono_tile_sat_los.n_stub = 19;
+    test_msg.ssr_flag_iono_tile_sat_los.faulty_los[0].constellation = 11;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[0] = 180;
+    test_msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId = 10;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[1] = 0;
+    test_msg.ssr_flag_iono_tile_sat_los.faulty_los[1].constellation = 14;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[2] = 0;
+    test_msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId = 15;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[3] = 0;
+    test_msg.ssr_flag_iono_tile_sat_los.header.chain_id = 6;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[4] = 3;
+    test_msg.ssr_flag_iono_tile_sat_los.header.num_msgs = 1;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[5] = 0;
+    test_msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow = 180;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[6] = 1;
+    test_msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn = 3;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[7] = 2;
+    test_msg.ssr_flag_iono_tile_sat_los.header.seq_num = 2;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[8] = 3;
+    test_msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id = 3;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[9] = 4;
+    test_msg.ssr_flag_iono_tile_sat_los.header.tile_id = 5;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[10] = 0;
+    test_msg.ssr_flag_iono_tile_sat_los.header.tile_set_id = 4;
 
-    test_msg.ssr_flag_iono_tile_sat_los.stub[11] = 5;
-
-    test_msg.ssr_flag_iono_tile_sat_los.stub[12] = 0;
-
-    test_msg.ssr_flag_iono_tile_sat_los.stub[13] = 6;
-
-    test_msg.ssr_flag_iono_tile_sat_los.stub[14] = 2;
-
-    test_msg.ssr_flag_iono_tile_sat_los.stub[15] = 10;
-
-    test_msg.ssr_flag_iono_tile_sat_los.stub[16] = 11;
-
-    test_msg.ssr_flag_iono_tile_sat_los.stub[17] = 15;
-
-    test_msg.ssr_flag_iono_tile_sat_los.stub[18] = 14;
+    test_msg.ssr_flag_iono_tile_sat_los.n_faulty_los = 2;
 
     sbp_message_send(&sbp_state, SbpMsgSsrFlagIonoTileSatLos, 66, &test_msg,
                      &dummy_write);
@@ -168,106 +154,92 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagIonoTileSatLos) {
                   "Sent and received messages did not compare equal");
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.n_stub == 19,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.n_stub, "
-        "expected 19, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.n_stub);
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].constellation ==
+            11,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].constellation, "
+        "expected 11, is %d",
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].constellation);
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[0] == 180,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[0], "
-        "expected 180, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[0]);
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId == 10,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId, expected "
+        "10, is %d",
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[0].satId);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[1] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[1], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[1]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[2] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[2], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[2]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[3] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[3], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[3]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[4] == 3,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[4], "
-        "expected 3, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[4]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[5] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[5], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[5]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[6] == 1,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[6], "
-        "expected 1, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[6]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[7] == 2,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[7], "
-        "expected 2, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[7]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[8] == 3,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[8], "
-        "expected 3, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[8]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[9] == 4,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[9], "
-        "expected 4, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[9]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[10] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[10], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[10]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[11] == 5,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[11], "
-        "expected 5, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[11]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[12] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[12], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[12]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[13] == 6,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[13], "
-        "expected 6, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[13]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[14] == 2,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[14], "
-        "expected 2, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[14]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[15] == 10,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[15], "
-        "expected 10, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[15]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[16] == 11,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[16], "
-        "expected 11, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[16]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[17] == 15,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[17], "
-        "expected 15, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[17]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[18] == 14,
-        "incorrect value for last_msg.msg.ssr_flag_iono_tile_sat_los.stub[18], "
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].constellation ==
+            14,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].constellation, "
         "expected 14, is %d",
-        last_msg.msg.ssr_flag_iono_tile_sat_los.stub[18]);
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].constellation);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId == 15,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId, expected "
+        "15, is %d",
+        last_msg.msg.ssr_flag_iono_tile_sat_los.faulty_los[1].satId);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id == 6,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id, "
+                  "expected 6, is %d",
+                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.chain_id);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs == 1,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs, "
+                  "expected 1, is %d",
+                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.num_msgs);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow == 180,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow, expected "
+        "180, is %d",
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.tow);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn, expected "
+        "3, is %d",
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.obs_time.wn);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num == 2,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num, "
+                  "expected 2, is %d",
+                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.seq_num);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id, expected "
+        "3, is %d",
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.ssr_sol_id);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id == 5,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id, "
+                  "expected 5, is %d",
+                  last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_id);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_set_id == 4,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_set_id, expected "
+        "4, is %d",
+        last_msg.msg.ssr_flag_iono_tile_sat_los.header.tile_set_id);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los == 2,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los, "
+                  "expected 2, is %d",
+                  last_msg.msg.ssr_flag_iono_tile_sat_los.n_faulty_los);
   }
 }
 END_TEST

@@ -17,13 +17,29 @@ package com.swiftnav.sbp.ssr;
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
+import java.math.BigInteger;
 import org.json.JSONObject;
 
 public class MsgSsrOrbitClockBoundsDegradation extends SBPMessage {
     public static final int TYPE = 0x05DF;
 
-    public int[] stub;
+    /** Header of a bounds message. */
+    public BoundsHeader header;
+
+    /** IOD of the SSR bound degradation parameter. */
+    public int ssr_iod;
+
+    /** Constellation ID to which the SVs belong. */
+    public int const_id;
+
+    /**
+     * Satellite Bit Mask. Put 1 for each satellite where the following degradation parameters are
+     * applicable, 0 otherwise. Encoded following RTCM DF394 specification.
+     */
+    public BigInteger sat_bitmask;
+
+    /** Orbit and Clock Bounds Degradation Parameters */
+    public OrbitClockBoundDegradation orbit_clock_bounds_degradation;
 
     public MsgSsrOrbitClockBoundsDegradation(int sender) {
         super(sender, TYPE);
@@ -41,18 +57,30 @@ public class MsgSsrOrbitClockBoundsDegradation extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stub = parser.getArrayofU8();
+        header = new BoundsHeader().parse(parser);
+        ssr_iod = parser.getU8();
+        const_id = parser.getU8();
+        sat_bitmask = parser.getU64();
+        orbit_clock_bounds_degradation = new OrbitClockBoundDegradation().parse(parser);
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(stub);
+        header.build(builder);
+        builder.putU8(ssr_iod);
+        builder.putU8(const_id);
+        builder.putU64(sat_bitmask);
+        orbit_clock_bounds_degradation.build(builder);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stub", new JSONArray(stub));
+        obj.put("header", header.toJSON());
+        obj.put("ssr_iod", ssr_iod);
+        obj.put("const_id", const_id);
+        obj.put("sat_bitmask", sat_bitmask);
+        obj.put("orbit_clock_bounds_degradation", orbit_clock_bounds_degradation.toJSON());
         return obj;
     }
 }

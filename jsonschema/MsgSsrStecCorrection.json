@@ -16,9 +16,19 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "header": {"$ref": "BoundsHeader.json"},
+    "ssr_iod_atmo": {"type": "integer"},
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"},
+    "n_sats": {"type": "integer"},
+    "stec_sat_list": {"type": "array", "items": {"$ref": "STECSatElement.json"}}
   },
   "required": [
-    "stub"
+    "header",
+    "ssr_iod_atmo",
+    "tile_set_id",
+    "tile_id",
+    "n_sats",
+    "stec_sat_list"
   ]
 }

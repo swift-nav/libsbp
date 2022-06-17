@@ -16,14 +16,27 @@ package com.swiftnav.sbp.ssr;
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MsgSsrCodePhaseBiasesBounds extends SBPMessage {
     public static final int TYPE = 0x05EC;
 
-    public int[] stub;
+    /** Header of a bounds message. */
+    public BoundsHeader header;
+
+    /** IOD of the SSR bound. */
+    public int ssr_iod;
+
+    /** Constellation ID to which the SVs belong. */
+    public int const_id;
+
+    /** Number of satellite-signal couples. */
+    public int n_sats_signals;
+
+    /** Code and Phase Biases Bounds per Satellite-Signal couple. */
+    public CodePhaseBiasesSatSig[] satellites_signals;
 
     public MsgSsrCodePhaseBiasesBounds(int sender) {
         super(sender, TYPE);
@@ -41,18 +54,30 @@ public class MsgSsrCodePhaseBiasesBounds extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stub = parser.getArrayofU8();
+        header = new BoundsHeader().parse(parser);
+        ssr_iod = parser.getU8();
+        const_id = parser.getU8();
+        n_sats_signals = parser.getU8();
+        satellites_signals = parser.getArray(CodePhaseBiasesSatSig.class);
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(stub);
+        header.build(builder);
+        builder.putU8(ssr_iod);
+        builder.putU8(const_id);
+        builder.putU8(n_sats_signals);
+        builder.putArray(satellites_signals);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stub", new JSONArray(stub));
+        obj.put("header", header.toJSON());
+        obj.put("ssr_iod", ssr_iod);
+        obj.put("const_id", const_id);
+        obj.put("n_sats_signals", n_sats_signals);
+        obj.put("satellites_signals", SBPStruct.toJSONArray(satellites_signals));
         return obj;
     }
 }

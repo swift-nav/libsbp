@@ -23,7 +23,14 @@ import org.json.JSONObject;
 public class MsgSsrFlagTropoGridPoints extends SBPMessage {
     public static final int TYPE = 0x0BC3;
 
-    public int[] stub;
+    /** Header of an integrity message. */
+    public IntegritySSRHeader header;
+
+    /** Number of faulty grid points. */
+    public int n_faulty_points;
+
+    /** List of faulty grid points. */
+    public int[] faulty_points;
 
     public MsgSsrFlagTropoGridPoints(int sender) {
         super(sender, TYPE);
@@ -41,18 +48,24 @@ public class MsgSsrFlagTropoGridPoints extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stub = parser.getArrayofU8();
+        header = new IntegritySSRHeader().parse(parser);
+        n_faulty_points = parser.getU8();
+        faulty_points = parser.getArrayofU16();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(stub);
+        header.build(builder);
+        builder.putU8(n_faulty_points);
+        builder.putArrayofU16(faulty_points);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stub", new JSONArray(stub));
+        obj.put("header", header.toJSON());
+        obj.put("n_faulty_points", n_faulty_points);
+        obj.put("faulty_points", new JSONArray(faulty_points));
         return obj;
     }
 }

@@ -1,11 +1,13 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
+//   const boundsHeader = Convert.toBoundsHeader(json);
 //   const carrierPhase = Convert.toCarrierPhase(json);
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
+//   const codePhaseBiasesSatSig = Convert.toCodePhaseBiasesSatSig(json);
 //   const doppler = Convert.toDoppler(json);
 //   const ephemerisCommonContent = Convert.toEphemerisCommonContent(json);
 //   const estimatedHorizontalErrorEllipse = Convert.toEstimatedHorizontalErrorEllipse(json);
@@ -18,6 +20,7 @@
 //   const gridElementNoStd = Convert.toGridElementNoStd(json);
 //   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
 //   const iMUInputType = Convert.toIMUInputType(json);
+//   const integritySSRHeader = Convert.toIntegritySSRHeader(json);
 //   const latency = Convert.toLatency(json);
 //   const measurementState = Convert.toMeasurementState(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
@@ -183,6 +186,8 @@
 //   const networkUsage = Convert.toNetworkUsage(json);
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const odoInputType = Convert.toOdoInputType(json);
+//   const orbitClockBound = Convert.toOrbitClockBound(json);
+//   const orbitClockBoundDegradation = Convert.toOrbitClockBoundDegradation(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
@@ -191,6 +196,7 @@
 //   const sTECResidual = Convert.toSTECResidual(json);
 //   const sTECResidualNoStd = Convert.toSTECResidualNoStd(json);
 //   const sTECSatElement = Convert.toSTECSatElement(json);
+//   const sTECSatElementIntegrity = Convert.toSTECSatElementIntegrity(json);
 //   const satelliteAPC = Convert.toSatelliteAPC(json);
 //   const solutionInputType = Convert.toSolutionInputType(json);
 //   const statusJournalItem = Convert.toStatusJournalItem(json);
@@ -1770,7 +1776,26 @@ export interface MsgProtectionLevel {
 }
 
 export interface MsgReferenceFrameParam {
-    stub: number[];
+    delta_X0:     number;
+    delta_Y0:     number;
+    delta_Z0:     number;
+    dot_delta_X0: number;
+    dot_delta_Y0: number;
+    dot_delta_Z0: number;
+    dot_scale:    number;
+    dot_theta_01: number;
+    dot_theta_02: number;
+    dot_theta_03: number;
+    re_t0:        number;
+    scale:        number;
+    sin:          number;
+    sn:           string;
+    ssr_iod:      number;
+    theta_01:     number;
+    theta_02:     number;
+    theta_03:     number;
+    tn:           string;
+    utn:          number;
 }
 
 /**
@@ -1974,31 +1999,90 @@ export interface CodeBiasesContent {
 }
 
 export interface MsgSsrCodePhaseBiasesBounds {
-    stub: number[];
+    const_id:           number;
+    header:             BoundsHeader;
+    n_sats_signals:     number;
+    satellites_signals: CodePhaseBiasesSatSig[];
+    ssr_iod:            number;
+}
+
+export interface BoundsHeader {
+    num_msgs:        number;
+    seq_num:         number;
+    sol_id:          number;
+    time:            GpsTimeSEC;
+    update_interval: number;
+}
+
+export interface CodePhaseBiasesSatSig {
+    code_bias_bound_mu:   number;
+    code_bias_bound_sig:  number;
+    phase_bias_bound_mu:  number;
+    phase_bias_bound_sig: number;
+    sat_id:               number;
+    signal_id:            number;
 }
 
 export interface MsgSsrFlagHighLevel {
-    stub: number[];
+    chain_id:                    number;
+    corr_time:                   GpsTimeSEC;
+    obs_time:                    GpsTimeSEC;
+    ssr_sol_id:                  number;
+    tile_id:                     number;
+    tile_set_id:                 number;
+    use_bds_sat:                 number;
+    use_gal_sat:                 number;
+    use_gps_sat:                 number;
+    use_iono_grid_point_sat_los: number;
+    use_iono_grid_points:        number;
+    use_iono_tile_sat_los:       number;
+    use_tropo_grid_points:       number;
 }
 
 export interface MsgSsrFlagIonoGridPointSatLos {
-    stub: number[];
+    faulty_los:    SvID[];
+    grid_point_id: number;
+    header:        IntegritySSRHeader;
+    n_faulty_los:  number;
+}
+
+export interface IntegritySSRHeader {
+    chain_id:    number;
+    num_msgs:    number;
+    obs_time:    GpsTimeSEC;
+    seq_num:     number;
+    ssr_sol_id:  number;
+    tile_id:     number;
+    tile_set_id: number;
 }
 
 export interface MsgSsrFlagIonoGridPoints {
-    stub: number[];
+    faulty_points:   number[];
+    header:          IntegritySSRHeader;
+    n_faulty_points: number;
 }
 
 export interface MsgSsrFlagIonoTileSatLos {
-    stub: number[];
+    faulty_los:   SvID[];
+    header:       IntegritySSRHeader;
+    n_faulty_los: number;
 }
 
 export interface MsgSsrFlagSatellites {
-    stub: number[];
+    chain_id:      number;
+    const_id:      number;
+    faulty_sats:   number[];
+    n_faulty_sats: number;
+    num_msgs:      number;
+    obs_time:      GpsTimeSEC;
+    seq_num:       number;
+    ssr_sol_id:    number;
 }
 
 export interface MsgSsrFlagTropoGridPoints {
-    stub: number[];
+    faulty_points:   number[];
+    header:          IntegritySSRHeader;
+    n_faulty_points: number;
 }
 
 /**
@@ -2028,8 +2112,35 @@ export interface GriddedCorrectionHeader {
     update_interval:         number;
 }
 
+/**
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230, mean=2+0.1(i-200); i>230,
+ * mean=5+0.5(i-230).
+ */
 export interface MsgSsrGriddedCorrectionBounds {
-    stub: number[];
+    grid_point_id:           number;
+    header:                  BoundsHeader;
+    n_sats:                  number;
+    ssr_iod_atmo:            number;
+    stec_sat_list:           STECSatElementIntegrity[];
+    tile_id:                 number;
+    tile_set_id:             number;
+    tropo_delay_correction:  TroposphericDelayCorrection;
+    tropo_qi:                number;
+    tropo_v_hydro_bound_mu:  number;
+    tropo_v_hydro_bound_sig: number;
+    tropo_v_wet_bound_mu:    number;
+    tropo_v_wet_bound_sig:   number;
+}
+
+/**
+ * STEC polynomial and bounds for the given satellite.
+ */
+export interface STECSatElementIntegrity {
+    stec_bound_mu:      number;
+    stec_bound_mu_dot:  number;
+    stec_bound_sig:     number;
+    stec_bound_sig_dot: number;
+    stec_residual:      STECResidual;
 }
 
 /**
@@ -2053,12 +2164,56 @@ export interface MsgSsrOrbitClock {
     update_interval: number;
 }
 
+/**
+ * Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200); i>230,
+ * mean=5+0.5(i-230).,
+ * ,
+ * Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200) i>230,
+ * std=5+0.5(i-230).
+ */
 export interface MsgSsrOrbitClockBounds {
-    stub: number[];
+    const_id:           number;
+    header:             BoundsHeader;
+    n_sats:             number;
+    orbit_clock_bounds: OrbitClockBound[];
+    ssr_iod:            number;
+}
+
+/**
+ * Orbit and clock bound.
+ */
+export interface OrbitClockBound {
+    clock_bound_mu:       number;
+    clock_bound_sig:      number;
+    orb_along_bound_mu:   number;
+    orb_along_bound_sig:  number;
+    orb_cross_bound_mu:   number;
+    orb_cross_bound_sig:  number;
+    orb_radial_bound_mu:  number;
+    orb_radial_bound_sig: number;
+    sat_id:               number;
 }
 
 export interface MsgSsrOrbitClockBoundsDegradation {
-    stub: number[];
+    const_id:                       number;
+    header:                         BoundsHeader;
+    orbit_clock_bounds_degradation: OrbitClockBoundDegradation;
+    sat_bitmask:                    number;
+    ssr_iod:                        number;
+}
+
+/**
+ * Orbit and clock bound degradation.
+ */
+export interface OrbitClockBoundDegradation {
+    clock_bound_mu_dot:       number;
+    clock_bound_sig_dot:      number;
+    orb_along_bound_mu_dot:   number;
+    orb_along_bound_sig_dot:  number;
+    orb_cross_bound_mu_dot:   number;
+    orb_cross_bound_sig_dot:  number;
+    orb_radial_bound_mu_dot:  number;
+    orb_radial_bound_sig_dot: number;
 }
 
 /**
@@ -2107,7 +2262,21 @@ export interface SatelliteAPC {
 }
 
 export interface MsgSsrStecCorrection {
-    stub: number[];
+    header:        BoundsHeader;
+    n_sats:        number;
+    ssr_iod_atmo:  number;
+    stec_sat_list: STECSatElement[];
+    tile_id:       number;
+    tile_set_id:   number;
+}
+
+/**
+ * STEC polynomial for the given satellite.
+ */
+export interface STECSatElement {
+    stec_coeff:             number[];
+    stec_quality_indicator: number;
+    sv_id:                  SvID;
 }
 
 /**
@@ -2119,7 +2288,16 @@ export interface MsgSsrStecCorrection {
  * lists of points.
  */
 export interface MsgSsrTileDefinition {
-    stub: number[];
+    bitmask:       number;
+    cols:          number;
+    corner_nw_lat: number;
+    corner_nw_lon: number;
+    rows:          number;
+    spacing_lat:   number;
+    spacing_lon:   number;
+    ssr_sol_id:    number;
+    tile_id:       number;
+    tile_set_id:   number;
 }
 
 /**
@@ -2337,7 +2515,15 @@ export interface MsgUserData {
  * parameters.
  */
 export interface MsgUTCLeapSecond {
-    stub: number[];
+    bias_coeff:       number;
+    count_after:      number;
+    count_before:     number;
+    drift_coeff:      number;
+    drift_rate_coeff: number;
+    ref_dn:           number;
+    ref_wn:           number;
+    tow_s:            number;
+    wn:               number;
 }
 
 /**
@@ -2604,15 +2790,6 @@ export interface STECHeader {
     update_interval: number;
 }
 
-/**
- * STEC polynomial for the given satellite.
- */
-export interface STECSatElement {
-    stec_coeff:             number[];
-    stec_quality_indicator: number;
-    sv_id:                  SvID;
-}
-
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
@@ -2632,6 +2809,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("AlmanacCommonContent")), null, 2);
     }
 
+    public static toBoundsHeader(json: string): BoundsHeader {
+        return cast(JSON.parse(json), r("BoundsHeader"));
+    }
+
+    public static boundsHeaderToJson(value: BoundsHeader): string {
+        return JSON.stringify(uncast(value, r("BoundsHeader")), null, 2);
+    }
+
     public static toCarrierPhase(json: string): CarrierPhase {
         return cast(JSON.parse(json), r("CarrierPhase"));
     }
@@ -2646,6 +2831,14 @@ export class Convert {
 
     public static codeBiasesContentToJson(value: CodeBiasesContent): string {
         return JSON.stringify(uncast(value, r("CodeBiasesContent")), null, 2);
+    }
+
+    public static toCodePhaseBiasesSatSig(json: string): CodePhaseBiasesSatSig {
+        return cast(JSON.parse(json), r("CodePhaseBiasesSatSig"));
+    }
+
+    public static codePhaseBiasesSatSigToJson(value: CodePhaseBiasesSatSig): string {
+        return JSON.stringify(uncast(value, r("CodePhaseBiasesSatSig")), null, 2);
     }
 
     public static toDoppler(json: string): Doppler {
@@ -2742,6 +2935,14 @@ export class Convert {
 
     public static iMUInputTypeToJson(value: IMUInputType): string {
         return JSON.stringify(uncast(value, r("IMUInputType")), null, 2);
+    }
+
+    public static toIntegritySSRHeader(json: string): IntegritySSRHeader {
+        return cast(JSON.parse(json), r("IntegritySSRHeader"));
+    }
+
+    public static integritySSRHeaderToJson(value: IntegritySSRHeader): string {
+        return JSON.stringify(uncast(value, r("IntegritySSRHeader")), null, 2);
     }
 
     public static toLatency(json: string): Latency {
@@ -4064,6 +4265,22 @@ export class Convert {
         return JSON.stringify(uncast(value, r("OdoInputType")), null, 2);
     }
 
+    public static toOrbitClockBound(json: string): OrbitClockBound {
+        return cast(JSON.parse(json), r("OrbitClockBound"));
+    }
+
+    public static orbitClockBoundToJson(value: OrbitClockBound): string {
+        return JSON.stringify(uncast(value, r("OrbitClockBound")), null, 2);
+    }
+
+    public static toOrbitClockBoundDegradation(json: string): OrbitClockBoundDegradation {
+        return cast(JSON.parse(json), r("OrbitClockBoundDegradation"));
+    }
+
+    public static orbitClockBoundDegradationToJson(value: OrbitClockBoundDegradation): string {
+        return JSON.stringify(uncast(value, r("OrbitClockBoundDegradation")), null, 2);
+    }
+
     public static toPackedObsContent(json: string): PackedObsContent {
         return cast(JSON.parse(json), r("PackedObsContent"));
     }
@@ -4126,6 +4343,14 @@ export class Convert {
 
     public static sTECSatElementToJson(value: STECSatElement): string {
         return JSON.stringify(uncast(value, r("STECSatElement")), null, 2);
+    }
+
+    public static toSTECSatElementIntegrity(json: string): STECSatElementIntegrity {
+        return cast(JSON.parse(json), r("STECSatElementIntegrity"));
+    }
+
+    public static sTECSatElementIntegrityToJson(value: STECSatElementIntegrity): string {
+        return JSON.stringify(uncast(value, r("STECSatElementIntegrity")), null, 2);
     }
 
     public static toSatelliteAPC(json: string): SatelliteAPC {
@@ -5194,7 +5419,26 @@ const typeMap: any = {
         { json: "wn", js: "wn", typ: 0 },
     ], "any"),
     "MsgReferenceFrameParam": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "delta_X0", js: "delta_X0", typ: 0 },
+        { json: "delta_Y0", js: "delta_Y0", typ: 0 },
+        { json: "delta_Z0", js: "delta_Z0", typ: 0 },
+        { json: "dot_delta_X0", js: "dot_delta_X0", typ: 0 },
+        { json: "dot_delta_Y0", js: "dot_delta_Y0", typ: 0 },
+        { json: "dot_delta_Z0", js: "dot_delta_Z0", typ: 0 },
+        { json: "dot_scale", js: "dot_scale", typ: 0 },
+        { json: "dot_theta_01", js: "dot_theta_01", typ: 0 },
+        { json: "dot_theta_02", js: "dot_theta_02", typ: 0 },
+        { json: "dot_theta_03", js: "dot_theta_03", typ: 0 },
+        { json: "re_t0", js: "re_t0", typ: 0 },
+        { json: "scale", js: "scale", typ: 0 },
+        { json: "sin", js: "sin", typ: 0 },
+        { json: "sn", js: "sn", typ: "" },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+        { json: "theta_01", js: "theta_01", typ: 0 },
+        { json: "theta_02", js: "theta_02", typ: 0 },
+        { json: "theta_03", js: "theta_03", typ: 0 },
+        { json: "tn", js: "tn", typ: "" },
+        { json: "utn", js: "utn", typ: 0 },
     ], "any"),
     "MsgReset": o([
         { json: "flags", js: "flags", typ: 0 },
@@ -5279,25 +5523,81 @@ const typeMap: any = {
         { json: "value", js: "value", typ: 0 },
     ], "any"),
     "MsgSsrCodePhaseBiasesBounds": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats_signals", js: "n_sats_signals", typ: 0 },
+        { json: "satellites_signals", js: "satellites_signals", typ: a(r("CodePhaseBiasesSatSig")) },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "BoundsHeader": o([
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "CodePhaseBiasesSatSig": o([
+        { json: "code_bias_bound_mu", js: "code_bias_bound_mu", typ: 0 },
+        { json: "code_bias_bound_sig", js: "code_bias_bound_sig", typ: 0 },
+        { json: "phase_bias_bound_mu", js: "phase_bias_bound_mu", typ: 0 },
+        { json: "phase_bias_bound_sig", js: "phase_bias_bound_sig", typ: 0 },
+        { json: "sat_id", js: "sat_id", typ: 0 },
+        { json: "signal_id", js: "signal_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagHighLevel": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "corr_time", js: "corr_time", typ: r("GpsTimeSEC") },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "use_bds_sat", js: "use_bds_sat", typ: 0 },
+        { json: "use_gal_sat", js: "use_gal_sat", typ: 0 },
+        { json: "use_gps_sat", js: "use_gps_sat", typ: 0 },
+        { json: "use_iono_grid_point_sat_los", js: "use_iono_grid_point_sat_los", typ: 0 },
+        { json: "use_iono_grid_points", js: "use_iono_grid_points", typ: 0 },
+        { json: "use_iono_tile_sat_los", js: "use_iono_tile_sat_los", typ: 0 },
+        { json: "use_tropo_grid_points", js: "use_tropo_grid_points", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPointSatLos": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
+    ], "any"),
+    "IntegritySSRHeader": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPoints": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoTileSatLos": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
     ], "any"),
     "MsgSsrFlagSatellites": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "faulty_sats", js: "faulty_sats", typ: a(0) },
+        { json: "n_faulty_sats", js: "n_faulty_sats", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagTropoGridPoints": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
     ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
@@ -5316,7 +5616,26 @@ const typeMap: any = {
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgSsrGriddedCorrectionBounds": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "ssr_iod_atmo", js: "ssr_iod_atmo", typ: 0 },
+        { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElementIntegrity")) },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
+        { json: "tropo_qi", js: "tropo_qi", typ: 0 },
+        { json: "tropo_v_hydro_bound_mu", js: "tropo_v_hydro_bound_mu", typ: 0 },
+        { json: "tropo_v_hydro_bound_sig", js: "tropo_v_hydro_bound_sig", typ: 0 },
+        { json: "tropo_v_wet_bound_mu", js: "tropo_v_wet_bound_mu", typ: 0 },
+        { json: "tropo_v_wet_bound_sig", js: "tropo_v_wet_bound_sig", typ: 0 },
+    ], "any"),
+    "STECSatElementIntegrity": o([
+        { json: "stec_bound_mu", js: "stec_bound_mu", typ: 0 },
+        { json: "stec_bound_mu_dot", js: "stec_bound_mu_dot", typ: 0 },
+        { json: "stec_bound_sig", js: "stec_bound_sig", typ: 0 },
+        { json: "stec_bound_sig_dot", js: "stec_bound_sig_dot", typ: 0 },
+        { json: "stec_residual", js: "stec_residual", typ: r("STECResidual") },
     ], "any"),
     "MsgSsrOrbitClock": o([
         { json: "along", js: "along", typ: 0 },
@@ -5335,10 +5654,39 @@ const typeMap: any = {
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgSsrOrbitClockBounds": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "orbit_clock_bounds", js: "orbit_clock_bounds", typ: a(r("OrbitClockBound")) },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "OrbitClockBound": o([
+        { json: "clock_bound_mu", js: "clock_bound_mu", typ: 0 },
+        { json: "clock_bound_sig", js: "clock_bound_sig", typ: 0 },
+        { json: "orb_along_bound_mu", js: "orb_along_bound_mu", typ: 0 },
+        { json: "orb_along_bound_sig", js: "orb_along_bound_sig", typ: 0 },
+        { json: "orb_cross_bound_mu", js: "orb_cross_bound_mu", typ: 0 },
+        { json: "orb_cross_bound_sig", js: "orb_cross_bound_sig", typ: 0 },
+        { json: "orb_radial_bound_mu", js: "orb_radial_bound_mu", typ: 0 },
+        { json: "orb_radial_bound_sig", js: "orb_radial_bound_sig", typ: 0 },
+        { json: "sat_id", js: "sat_id", typ: 0 },
     ], "any"),
     "MsgSsrOrbitClockBoundsDegradation": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "orbit_clock_bounds_degradation", js: "orbit_clock_bounds_degradation", typ: r("OrbitClockBoundDegradation") },
+        { json: "sat_bitmask", js: "sat_bitmask", typ: 0 },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "OrbitClockBoundDegradation": o([
+        { json: "clock_bound_mu_dot", js: "clock_bound_mu_dot", typ: 0 },
+        { json: "clock_bound_sig_dot", js: "clock_bound_sig_dot", typ: 0 },
+        { json: "orb_along_bound_mu_dot", js: "orb_along_bound_mu_dot", typ: 0 },
+        { json: "orb_along_bound_sig_dot", js: "orb_along_bound_sig_dot", typ: 0 },
+        { json: "orb_cross_bound_mu_dot", js: "orb_cross_bound_mu_dot", typ: 0 },
+        { json: "orb_cross_bound_sig_dot", js: "orb_cross_bound_sig_dot", typ: 0 },
+        { json: "orb_radial_bound_mu_dot", js: "orb_radial_bound_mu_dot", typ: 0 },
+        { json: "orb_radial_bound_sig_dot", js: "orb_radial_bound_sig_dot", typ: 0 },
     ], "any"),
     "MsgSsrPhaseBiases": o([
         { json: "biases", js: "biases", typ: a(r("PhaseBiasesContent")) },
@@ -5369,10 +5717,29 @@ const typeMap: any = {
         { json: "svn", js: "svn", typ: 0 },
     ], "any"),
     "MsgSsrStecCorrection": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "ssr_iod_atmo", js: "ssr_iod_atmo", typ: 0 },
+        { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElement")) },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+    ], "any"),
+    "STECSatElement": o([
+        { json: "stec_coeff", js: "stec_coeff", typ: a(0) },
+        { json: "stec_quality_indicator", js: "stec_quality_indicator", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
     ], "any"),
     "MsgSsrTileDefinition": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "bitmask", js: "bitmask", typ: 0 },
+        { json: "cols", js: "cols", typ: 0 },
+        { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
+        { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
+        { json: "rows", js: "rows", typ: 0 },
+        { json: "spacing_lat", js: "spacing_lat", typ: 0 },
+        { json: "spacing_lon", js: "spacing_lon", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },
@@ -5471,7 +5838,15 @@ const typeMap: any = {
         { json: "contents", js: "contents", typ: a(0) },
     ], "any"),
     "MsgUTCLeapSecond": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "bias_coeff", js: "bias_coeff", typ: 0 },
+        { json: "count_after", js: "count_after", typ: 0 },
+        { json: "count_before", js: "count_before", typ: 0 },
+        { json: "drift_coeff", js: "drift_coeff", typ: 0 },
+        { json: "drift_rate_coeff", js: "drift_rate_coeff", typ: 0 },
+        { json: "ref_dn", js: "ref_dn", typ: 0 },
+        { json: "ref_wn", js: "ref_wn", typ: 0 },
+        { json: "tow_s", js: "tow_s", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
     ], "any"),
     "MsgUTCTime": o([
         { json: "day", js: "day", typ: 0 },
@@ -5630,10 +6005,5 @@ const typeMap: any = {
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
-    ], "any"),
-    "STECSatElement": o([
-        { json: "stec_coeff", js: "stec_coeff", typ: a(0) },
-        { json: "stec_quality_indicator", js: "stec_quality_indicator", typ: 0 },
-        { json: "sv_id", js: "sv_id", typ: r("SvID") },
     ], "any"),
 };

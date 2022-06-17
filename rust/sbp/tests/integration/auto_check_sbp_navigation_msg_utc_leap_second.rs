@@ -42,74 +42,49 @@ fn test_auto_check_sbp_navigation_msg_utc_leap_second() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.stub[0], 1,
-                    "incorrect value for stub[0], expected 1, is {}",
-                    msg.stub[0]
+                    msg.bias_coeff, 1,
+                    "incorrect value for bias_coeff, expected 1, is {}",
+                    msg.bias_coeff
                 );
                 assert_eq!(
-                    msg.stub[1], 0,
-                    "incorrect value for stub[1], expected 0, is {}",
-                    msg.stub[1]
+                    msg.count_after, 9,
+                    "incorrect value for count_after, expected 9, is {}",
+                    msg.count_after
                 );
                 assert_eq!(
-                    msg.stub[2], 2,
-                    "incorrect value for stub[2], expected 2, is {}",
-                    msg.stub[2]
+                    msg.count_before, 4,
+                    "incorrect value for count_before, expected 4, is {}",
+                    msg.count_before
                 );
                 assert_eq!(
-                    msg.stub[3], 0,
-                    "incorrect value for stub[3], expected 0, is {}",
-                    msg.stub[3]
+                    msg.drift_coeff, 2,
+                    "incorrect value for drift_coeff, expected 2, is {}",
+                    msg.drift_coeff
                 );
                 assert_eq!(
-                    msg.stub[4], 3,
-                    "incorrect value for stub[4], expected 3, is {}",
-                    msg.stub[4]
+                    msg.drift_rate_coeff, 3,
+                    "incorrect value for drift_rate_coeff, expected 3, is {}",
+                    msg.drift_rate_coeff
                 );
                 assert_eq!(
-                    msg.stub[5], 4,
-                    "incorrect value for stub[5], expected 4, is {}",
-                    msg.stub[5]
+                    msg.ref_dn, 8,
+                    "incorrect value for ref_dn, expected 8, is {}",
+                    msg.ref_dn
                 );
                 assert_eq!(
-                    msg.stub[6], 5,
-                    "incorrect value for stub[6], expected 5, is {}",
-                    msg.stub[6]
+                    msg.ref_wn, 7,
+                    "incorrect value for ref_wn, expected 7, is {}",
+                    msg.ref_wn
                 );
                 assert_eq!(
-                    msg.stub[7], 0,
-                    "incorrect value for stub[7], expected 0, is {}",
-                    msg.stub[7]
+                    msg.tow_s, 5,
+                    "incorrect value for tow_s, expected 5, is {}",
+                    msg.tow_s
                 );
                 assert_eq!(
-                    msg.stub[8], 6,
-                    "incorrect value for stub[8], expected 6, is {}",
-                    msg.stub[8]
-                );
-                assert_eq!(
-                    msg.stub[9], 0,
-                    "incorrect value for stub[9], expected 0, is {}",
-                    msg.stub[9]
-                );
-                assert_eq!(
-                    msg.stub[10], 7,
-                    "incorrect value for stub[10], expected 7, is {}",
-                    msg.stub[10]
-                );
-                assert_eq!(
-                    msg.stub[11], 0,
-                    "incorrect value for stub[11], expected 0, is {}",
-                    msg.stub[11]
-                );
-                assert_eq!(
-                    msg.stub[12], 8,
-                    "incorrect value for stub[12], expected 8, is {}",
-                    msg.stub[12]
-                );
-                assert_eq!(
-                    msg.stub[13], 9,
-                    "incorrect value for stub[13], expected 9, is {}",
-                    msg.stub[13]
+                    msg.wn, 6,
+                    "incorrect value for wn, expected 6, is {}",
+                    msg.wn
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgUtcLeapSecond"),

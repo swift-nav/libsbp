@@ -115,8 +115,9 @@ typedef struct SBP_ATTR_PACKED {
                                   following RTCM DF389 specification but in
                                   units of TECU instead of m. */
   s16 stec_coeff[4];         /**< Coefficients of the STEC polynomial in
-                                  the order of C00, C01, C10, C11 [C00 = 0.05 TECU,
-                                C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2] */
+                                  the order of C00, C01, C10, C11. C00 =
+                                  0.05 TECU, C01/C10 = 0.02 TECU/deg, C11
+                                  0.02 TECU/deg^2 */
 } stec_sat_element_t;
 
 /** None
@@ -138,13 +139,11 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  s16 hydro; /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual
-                vertical hydro delay)] */
-  s8 wet; /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet
-             delay)] */
-  u8 stddev; /**< stddev [modified DF389 scale; class is upper 3 bits, value is
-lower 5 stddev <= (3^class * (1 + value/16) - 1) mm
-] */
+  s16 hydro; /**< Hydrostatic vertical delay. Add 2.3 m to get actual
+                  value. [4 mm] */
+  s8 wet;    /**< Wet vertical delay. Add 0.252 m to get actual value. [4 mm] */
+  u8 stddev; /**< Modified DF389 scale. Class is upper 3 bits, value is
+                  lower 5. stddev <= (3^class * (1 + value/16) - 1) mm [mm] */
 } tropospheric_delay_correction_t;
 
 /** None
@@ -166,9 +165,9 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id; /**< space vehicle identifier */
   s16 residual;  /**< STEC residual [0.04 TECU] */
-  u8 stddev; /**< stddev [modified DF389 scale; class is upper 3 bits, value is
-lower 5 stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
-] */
+  u8 stddev;     /**< Modified DF389 scale. Class is upper 3 bits, value is
+                      lower 5. stddev <= (3^class * (1 + value/16) - 1) * 10
+                      TECU */
 } stec_residual_t;
 
 /** Precise orbit and clock correction
@@ -270,7 +269,24 @@ typedef struct SBP_ATTR_PACKED {
 } msg_ssr_stec_correction_dep_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  gps_time_sec_t time; /**< GNSS reference time of the bound */
+  u8 num_msgs;         /**< Number of messages in the dataset */
+  u8 seq_num;          /**< Position of this message in the dataset */
+  u8 update_interval;  /**< Update interval between consecutive bounds.
+                            Similar to RTCM DF391. */
+  u8 sol_id;           /**< SSR Solution ID. */
+} bounds_header_t;
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a STEC correction with
+                               bounds message. */
+  u8 ssr_iod_atmo;        /**< IOD of the SSR atmospheric correction */
+  u16 tile_set_id;        /**< Tile set ID */
+  u16 tile_id;            /**< Tile ID */
+  u8 n_sats;              /**< Number of satellites. */
+  stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial
+                                            coefficients for each space
+                                            vehicle. */
 } msg_ssr_stec_correction_t;
 
 /** Gridded troposphere and STEC correction residuals
@@ -296,8 +312,51 @@ typedef struct SBP_ATTR_PACKED {
                                           satellite (mean, stddev). */
 } msg_ssr_gridded_correction_t;
 
+/** None
+ *
+ * STEC polynomial and bounds for the given satellite.
+ */
+
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  stec_residual_t stec_residual; /**< STEC residuals (mean, stddev) */
+  u8 stec_bound_mu;              /**< Error Bound Mean. See Note 1. [m] */
+  u8 stec_bound_sig;             /**< Error Bound StDev. See Note 1. [m] */
+  u8 stec_bound_mu_dot; /**< Error Bound Mean First derivative. [0.00005 m/s] */
+  u8 stec_bound_sig_dot; /**< Error Bound StDev First derivative. [0.00005 m/s]
+                          */
+} stec_sat_element_integrity_t;
+
+/** Gridded troposhere and STEC correction residuals bounds
+ *
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+ * mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a bounds message. */
+  u8 ssr_iod_atmo;        /**< IOD of the correction. */
+  u16 tile_set_id;        /**< Set this tile belongs to. */
+  u16 tile_id;            /**< Unique identifier of this tile in the
+                               tile set. */
+  u8 tropo_qi;            /**< Tropo Quality Indicator. Similar to RTCM
+                               DF389. */
+  u16 grid_point_id;      /**< Index of the Grid Point. */
+  tropospheric_delay_correction_t tropo_delay_correction; /**< Tropospheric
+                                                               delay at
+                                                               grid point. */
+  u8 tropo_v_hydro_bound_mu;  /**< Vertical Hydrostatic Error Bound Mean. [0.005
+                                 m] */
+  u8 tropo_v_hydro_bound_sig; /**< Vertical Hydrostatic Error Bound StDev.
+                                 [0.005 m] */
+  u8 tropo_v_wet_bound_mu;    /**< Vertical Wet Error Bound Mean. [0.005 m] */
+  u8 tropo_v_wet_bound_sig;   /**< Vertical Wet Error Bound StDev. [0.005 m] */
+  u8 n_sats;                  /**< Number of satellites. */
+  stec_sat_element_integrity_t stec_sat_list[0]; /**< Array of STEC
+                                                      polynomial
+                                                      coefficients
+                                                      and its bounds
+                                                      for each space
+                                                      vehicle. */
 } msg_ssr_gridded_correction_bounds_t;
 
 /** Definition of a SSR atmospheric correction tile.
@@ -388,7 +447,67 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  u8 ssr_sol_id;     /**< SSR Solution ID. */
+  u16 tile_set_id;   /**< Unique identifier of the tile set this tile
+                          belongs to. */
+  u16 tile_id;       /**< Unique identifier of this tile in the tile set.
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          correctionPointSetID. */
+  s16 corner_nw_lat; /**< North-West corner correction point latitude.
+
+                          The relation between the latitude X in the range
+                          [-90, 90] and the coded number N is:
+
+                          N = floor((X / 90) * 2^14)
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          referencePointLatitude. [encoded degrees] */
+  s16 corner_nw_lon; /**< North-West corner correction point longitude.
+
+                          The relation between the longitude X in the range
+                          [-180, 180] and the coded number N is:
+
+                          N = floor((X / 180) * 2^15)
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          referencePointLongitude. [encoded degrees] */
+  u16 spacing_lat;   /**< Spacing of the correction points in the latitude
+                          direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          stepOfLatitude. [0.01 degrees] */
+  u16 spacing_lon;   /**< Spacing of the correction points in the longitude
+                          direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          stepOfLongitude. [0.01 degrees] */
+  u16 rows;          /**< Number of steps in the latitude direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          numberOfStepsLatitude. */
+  u16 cols;          /**< Number of steps in the longitude direction.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          numberOfStepsLongitude. */
+  u64 bitmask;       /**< Specifies the availability of correction data at
+                          the correction points in the array.
+
+                          If a specific bit is enabled (set to 1), the
+                          correction is not available. Only the first rows
+                          * cols bits are used, the remainder are set to 0.
+                          If there are more then 64 correction points the
+                          remaining corrections are always available.
+
+                          Starting with the northwest corner of the array
+                          (top left on a north oriented map) the correction
+                          points are enumerated with row precedence - first
+                          row west to east, second row west to east, until
+                          last row west to east - ending with the southeast
+                          corner of the array.
+
+                          See GNSS-SSR-ArrayOfCorrectionPoints field
+                          bitmaskOfGrids but note the definition of the
+                          bits is inverted. */
 } msg_ssr_tile_definition_t;
 
 /** Antenna phase center correction
@@ -544,16 +663,119 @@ typedef struct SBP_ATTR_PACKED {
                        are encoded as u8 integers. */
 } msg_ssr_grid_definition_dep_a_t;
 
+/** None
+ *
+ * Orbit and clock bound.
+ */
+
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  u8 sat_id;               /**< Satellite ID. Similar to either RTCM DF068
+                                (GPS), DF252 (Galileo), or DF488 (BDS)
+                                depending on the constellation. */
+  u8 orb_radial_bound_mu;  /**< Mean Radial. See Note 1. [m] */
+  u8 orb_along_bound_mu;   /**< Mean Along-Track. See Note 1. [m] */
+  u8 orb_cross_bound_mu;   /**< Mean Cross-Track. See Note 1. [m] */
+  u8 orb_radial_bound_sig; /**< Standard Deviation Radial. See Note 2. [m] */
+  u8 orb_along_bound_sig;  /**< Standard Deviation Along-Track. See Note 2. [m]
+                            */
+  u8 orb_cross_bound_sig;  /**< Standard Deviation Cross-Track. See Note 2. [m]
+                            */
+  u8 clock_bound_mu;       /**< Clock Bound Mean. See Note 1. [m] */
+  u8 clock_bound_sig; /**< Clock Bound Standard Deviation. See Note 2. [m] */
+} orbit_clock_bound_t;
+
+/** Combined Orbit and Clock Bound
+ *
+ * Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+ * i>230, mean=5+0.5(i-230).
+ *
+ * Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+ * i>230, std=5+0.5(i-230).
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a bounds message. */
+  u8 ssr_iod;             /**< IOD of the SSR bound. */
+  u8 const_id;            /**< Constellation ID to which the SVs belong. */
+  u8 n_sats;              /**< Number of satellites. */
+  orbit_clock_bound_t orbit_clock_bounds[0]; /**< Orbit and Clock Bounds per
+                                                  Satellite */
 } msg_ssr_orbit_clock_bounds_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
-} msg_ssr_code_phase_biases_bounds_t;
+  u8 sat_id;               /**< Satellite ID. Similar to either RTCM DF068
+                                (GPS), DF252 (Galileo), or DF488 (BDS)
+                                depending on the constellation. */
+  u8 signal_id;            /**< Signal and Tracking Mode Identifier.
+                                Similar to either RTCM DF380 (GPS), DF382
+                                (Galileo) or DF467 (BDS) depending on the
+                                constellation. */
+  u8 code_bias_bound_mu;   /**< Code Bias Mean. Range: 0-1.275 m [0.005 m] */
+  u8 code_bias_bound_sig;  /**< Code Bias Standard Deviation.  Range:
+                                0-1.275 m [0.005 m] */
+  u8 phase_bias_bound_mu;  /**< Phase Bias Mean. Range: 0-1.275 m [0.005 m] */
+  u8 phase_bias_bound_sig; /**< Phase Bias Standard Deviation.  Range:
+                                0-1.275 m [0.005 m] */
+} code_phase_biases_sat_sig_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  bounds_header_t header; /**< Header of a bounds message. */
+  u8 ssr_iod;             /**< IOD of the SSR bound. */
+  u8 const_id;            /**< Constellation ID to which the SVs belong. */
+  u8 n_sats_signals;      /**< Number of satellite-signal couples. */
+  code_phase_biases_sat_sig_t satellites_signals[0]; /**< Code and Phase
+                                                          Biases Bounds per
+                                                          Satellite-Signal
+                                                          couple. */
+} msg_ssr_code_phase_biases_bounds_t;
+
+/** None
+ *
+ * Orbit and clock bound degradation.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 orb_radial_bound_mu_dot;  /**< Orbit Bound Mean Radial First
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
+  u8 orb_along_bound_mu_dot;   /**< Orbit Bound Mean Along-Track First
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
+  u8 orb_cross_bound_mu_dot;   /**< Orbit Bound Mean Cross-Track First
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
+  u8 orb_radial_bound_sig_dot; /**< Orbit Bound Standard Deviation Radial
+                                    First derivative. Range: 0-0.255 m/s [0.001
+                                  m/s] */
+  u8 orb_along_bound_sig_dot;  /**< Orbit Bound Standard Deviation Along-
+                                    Track First derivative. Range: 0-0.255
+                                    m/s [0.001 m/s] */
+  u8 orb_cross_bound_sig_dot;  /**< Orbit Bound Standard Deviation Cross-
+                                    Track First derivative. Range: 0-0.255
+                                    m/s [0.001 m/s] */
+  u8 clock_bound_mu_dot;       /**< Clock Bound Mean First derivative.
+                                    Range: 0-0.255 m/s [0.001 m/s] */
+  u8 clock_bound_sig_dot;      /**< Clock Bound Standard Deviation First
+                                    derivative. Range: 0-0.255 m/s [0.001 m/s] */
+} orbit_clock_bound_degradation_t;
+
+typedef struct SBP_ATTR_PACKED {
+  bounds_header_t header; /**< Header of a bounds
+                               message. */
+  u8 ssr_iod;             /**< IOD of the SSR bound degradation
+                               parameter. */
+  u8 const_id;            /**< Constellation ID to which the SVs
+                               belong. */
+  u64 sat_bitmask;        /**< Satellite Bit Mask. Put 1 for
+                               each satellite where the
+                               following degradation parameters
+                               are applicable, 0 otherwise.
+                               Encoded following RTCM DF394
+                               specification. */
+  orbit_clock_bound_degradation_t
+      orbit_clock_bounds_degradation; /**< Orbit
+                                           and
+                                           Clock
+                                           Bounds
+                                           Degradation
+                                           Parameters */
 } msg_ssr_orbit_clock_bounds_degradation_t;
 
 /** \} */

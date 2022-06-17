@@ -16,9 +16,17 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "header": {"$ref": "BoundsHeader.json"},
+    "ssr_iod": {"type": "integer"},
+    "const_id": {"type": "integer"},
+    "n_sats_signals": {"type": "integer"},
+    "satellites_signals": {"type": "array", "items": {"$ref": "CodePhaseBiasesSatSig.json"}}
   },
   "required": [
-    "stub"
+    "header",
+    "ssr_iod",
+    "const_id",
+    "n_sats_signals",
+    "satellites_signals"
   ]
 }

@@ -88,131 +88,16 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   msg_ssr_tile_definition_t *test_msg =
       (msg_ssr_tile_definition_t *)test_msg_storage;
   test_msg_len = (uint8_t)sizeof(*test_msg);
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[0] = 31;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[1] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[2] = 1;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[3] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[4] = 2;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[5] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[6] = 4;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[7] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[8] = 8;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[9] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[10] = 16;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[11] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[12] = 32;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[13] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[14] = 64;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[15] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[16] = 128;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[17] = 210;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[18] = 2;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[19] = 150;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[20] = 73;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[21] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[22] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[23] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[24] = 0;
+  test_msg->bitmask = 1234567890;
+  test_msg->cols = 32768;
+  test_msg->corner_nw_lat = 1024;
+  test_msg->corner_nw_lon = 2048;
+  test_msg->rows = 16384;
+  test_msg->spacing_lat = 4096;
+  test_msg->spacing_lon = 8192;
+  test_msg->ssr_sol_id = 31;
+  test_msg->tile_id = 512;
+  test_msg->tile_set_id = 256;
 
   EXPECT_EQ(send_message(1527, 66, test_msg_len, test_msg_storage), SBP_OK);
 
@@ -226,61 +111,31 @@ TEST_F(Test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->stub[0], 31)
-      << "incorrect value for stub[0], expected 31, is " << last_msg_->stub[0];
-  EXPECT_EQ(last_msg_->stub[1], 0)
-      << "incorrect value for stub[1], expected 0, is " << last_msg_->stub[1];
-  EXPECT_EQ(last_msg_->stub[2], 1)
-      << "incorrect value for stub[2], expected 1, is " << last_msg_->stub[2];
-  EXPECT_EQ(last_msg_->stub[3], 0)
-      << "incorrect value for stub[3], expected 0, is " << last_msg_->stub[3];
-  EXPECT_EQ(last_msg_->stub[4], 2)
-      << "incorrect value for stub[4], expected 2, is " << last_msg_->stub[4];
-  EXPECT_EQ(last_msg_->stub[5], 0)
-      << "incorrect value for stub[5], expected 0, is " << last_msg_->stub[5];
-  EXPECT_EQ(last_msg_->stub[6], 4)
-      << "incorrect value for stub[6], expected 4, is " << last_msg_->stub[6];
-  EXPECT_EQ(last_msg_->stub[7], 0)
-      << "incorrect value for stub[7], expected 0, is " << last_msg_->stub[7];
-  EXPECT_EQ(last_msg_->stub[8], 8)
-      << "incorrect value for stub[8], expected 8, is " << last_msg_->stub[8];
-  EXPECT_EQ(last_msg_->stub[9], 0)
-      << "incorrect value for stub[9], expected 0, is " << last_msg_->stub[9];
-  EXPECT_EQ(last_msg_->stub[10], 16)
-      << "incorrect value for stub[10], expected 16, is "
-      << last_msg_->stub[10];
-  EXPECT_EQ(last_msg_->stub[11], 0)
-      << "incorrect value for stub[11], expected 0, is " << last_msg_->stub[11];
-  EXPECT_EQ(last_msg_->stub[12], 32)
-      << "incorrect value for stub[12], expected 32, is "
-      << last_msg_->stub[12];
-  EXPECT_EQ(last_msg_->stub[13], 0)
-      << "incorrect value for stub[13], expected 0, is " << last_msg_->stub[13];
-  EXPECT_EQ(last_msg_->stub[14], 64)
-      << "incorrect value for stub[14], expected 64, is "
-      << last_msg_->stub[14];
-  EXPECT_EQ(last_msg_->stub[15], 0)
-      << "incorrect value for stub[15], expected 0, is " << last_msg_->stub[15];
-  EXPECT_EQ(last_msg_->stub[16], 128)
-      << "incorrect value for stub[16], expected 128, is "
-      << last_msg_->stub[16];
-  EXPECT_EQ(last_msg_->stub[17], 210)
-      << "incorrect value for stub[17], expected 210, is "
-      << last_msg_->stub[17];
-  EXPECT_EQ(last_msg_->stub[18], 2)
-      << "incorrect value for stub[18], expected 2, is " << last_msg_->stub[18];
-  EXPECT_EQ(last_msg_->stub[19], 150)
-      << "incorrect value for stub[19], expected 150, is "
-      << last_msg_->stub[19];
-  EXPECT_EQ(last_msg_->stub[20], 73)
-      << "incorrect value for stub[20], expected 73, is "
-      << last_msg_->stub[20];
-  EXPECT_EQ(last_msg_->stub[21], 0)
-      << "incorrect value for stub[21], expected 0, is " << last_msg_->stub[21];
-  EXPECT_EQ(last_msg_->stub[22], 0)
-      << "incorrect value for stub[22], expected 0, is " << last_msg_->stub[22];
-  EXPECT_EQ(last_msg_->stub[23], 0)
-      << "incorrect value for stub[23], expected 0, is " << last_msg_->stub[23];
-  EXPECT_EQ(last_msg_->stub[24], 0)
-      << "incorrect value for stub[24], expected 0, is " << last_msg_->stub[24];
+  EXPECT_EQ(last_msg_->bitmask, 1234567890)
+      << "incorrect value for bitmask, expected 1234567890, is "
+      << last_msg_->bitmask;
+  EXPECT_EQ(last_msg_->cols, 32768)
+      << "incorrect value for cols, expected 32768, is " << last_msg_->cols;
+  EXPECT_EQ(last_msg_->corner_nw_lat, 1024)
+      << "incorrect value for corner_nw_lat, expected 1024, is "
+      << last_msg_->corner_nw_lat;
+  EXPECT_EQ(last_msg_->corner_nw_lon, 2048)
+      << "incorrect value for corner_nw_lon, expected 2048, is "
+      << last_msg_->corner_nw_lon;
+  EXPECT_EQ(last_msg_->rows, 16384)
+      << "incorrect value for rows, expected 16384, is " << last_msg_->rows;
+  EXPECT_EQ(last_msg_->spacing_lat, 4096)
+      << "incorrect value for spacing_lat, expected 4096, is "
+      << last_msg_->spacing_lat;
+  EXPECT_EQ(last_msg_->spacing_lon, 8192)
+      << "incorrect value for spacing_lon, expected 8192, is "
+      << last_msg_->spacing_lon;
+  EXPECT_EQ(last_msg_->ssr_sol_id, 31)
+      << "incorrect value for ssr_sol_id, expected 31, is "
+      << last_msg_->ssr_sol_id;
+  EXPECT_EQ(last_msg_->tile_id, 512)
+      << "incorrect value for tile_id, expected 512, is " << last_msg_->tile_id;
+  EXPECT_EQ(last_msg_->tile_set_id, 256)
+      << "incorrect value for tile_set_id, expected 256, is "
+      << last_msg_->tile_set_id;
 }

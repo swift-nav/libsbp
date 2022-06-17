@@ -16,14 +16,24 @@ package com.swiftnav.sbp.integrity;
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
     public static final int TYPE = 0x0BD1;
 
-    public int[] stub;
+    /** Header of an integrity message. */
+    public IntegritySSRHeader header;
+
+    /** Index of the grid point. */
+    public int grid_point_id;
+
+    /** Number of faulty LOS. */
+    public int n_faulty_los;
+
+    /** List of faulty LOS */
+    public SvId[] faulty_los;
 
     public MsgSsrFlagIonoGridPointSatLos(int sender) {
         super(sender, TYPE);
@@ -41,18 +51,27 @@ public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stub = parser.getArrayofU8();
+        header = new IntegritySSRHeader().parse(parser);
+        grid_point_id = parser.getU16();
+        n_faulty_los = parser.getU8();
+        faulty_los = parser.getArray(SvId.class);
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(stub);
+        header.build(builder);
+        builder.putU16(grid_point_id);
+        builder.putU8(n_faulty_los);
+        builder.putArray(faulty_los);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stub", new JSONArray(stub));
+        obj.put("header", header.toJSON());
+        obj.put("grid_point_id", grid_point_id);
+        obj.put("n_faulty_los", n_faulty_los);
+        obj.put("faulty_los", SBPStruct.toJSONArray(faulty_los));
         return obj;
     }
 }

@@ -656,13 +656,40 @@ message MsgProtectionLevel {
  * drift model parameters.
  */
 message MsgUtcLeapSecond {
-    repeated uint32 stub = 1;
+    sint32 bias_coeff = 1;
+    sint32 drift_coeff = 2;
+    sint32 drift_rate_coeff = 3;
+    sint32 count_before = 4;
+    uint32 tow_s = 5;
+    uint32 wn = 6;
+    uint32 ref_wn = 7;
+    uint32 ref_dn = 8;
+    sint32 count_after = 9;
 }
 
-/** Reference Frame Transformation Parameter
+/** Reference Frame Transformation Parameters
  *
 None
  */
 message MsgReferenceFrameParam {
-    repeated uint32 stub = 1;
+    uint32 ssr_iod = 1;
+    string sn = 2;
+    string tn = 3;
+    uint32 sin = 4;
+    uint32 utn = 5;
+    uint32 re_t0 = 6;
+    sint32 delta_X0 = 7;
+    sint32 delta_Y0 = 8;
+    sint32 delta_Z0 = 9;
+    sint32 theta_01 = 10;
+    sint32 theta_02 = 11;
+    sint32 theta_03 = 12;
+    sint32 scale = 13;
+    sint32 dot_delta_X0 = 14;
+    sint32 dot_delta_Y0 = 15;
+    sint32 dot_delta_Z0 = 16;
+    sint32 dot_theta_01 = 17;
+    sint32 dot_theta_02 = 18;
+    sint32 dot_theta_03 = 19;
+    sint32 dot_scale = 20;
 }

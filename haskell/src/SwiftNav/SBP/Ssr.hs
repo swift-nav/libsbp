@@ -204,7 +204,8 @@ data STECSatElement = STECSatElement
     -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification
     -- but in units of TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
-    -- ^ Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+    -- ^ Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
+    -- C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
   } deriving ( Show, Read, Eq )
 
 instance Binary STECSatElement where
@@ -251,11 +252,12 @@ $(makeLenses ''TroposphericDelayCorrectionNoStd)
 -- point.
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
-    -- ^ Hydrostatic vertical delay
+    -- ^ Hydrostatic vertical delay. Add 2.3 m to get actual value.
   , _troposphericDelayCorrection_wet  :: !Int8
-    -- ^ Wet vertical delay
+    -- ^ Wet vertical delay. Add 0.252 m to get actual value.
   , _troposphericDelayCorrection_stddev :: !Word8
-    -- ^ stddev
+    -- ^ Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev
+    -- <= (3^class * (1 + value/16) - 1) mm
   } deriving ( Show, Read, Eq )
 
 instance Binary TroposphericDelayCorrection where
@@ -306,7 +308,8 @@ data STECResidual = STECResidual
   , _sTECResidual_residual :: !Int16
     -- ^ STEC residual
   , _sTECResidual_stddev :: !Word8
-    -- ^ stddev
+    -- ^ Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev
+    -- <= (3^class * (1 + value/16) - 1) * 10 TECU
   } deriving ( Show, Read, Eq )
 
 instance Binary STECResidual where
@@ -539,20 +542,73 @@ $(makeSBP 'msgSsrStecCorrectionDep ''MsgSsrStecCorrectionDep)
 $(makeJSON "_msgSsrStecCorrectionDep_" ''MsgSsrStecCorrectionDep)
 $(makeLenses ''MsgSsrStecCorrectionDep)
 
+data BoundsHeader = BoundsHeader
+  { _boundsHeader_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the bound
+  , _boundsHeader_num_msgs      :: !Word8
+    -- ^ Number of messages in the dataset
+  , _boundsHeader_seq_num       :: !Word8
+    -- ^ Position of this message in the dataset
+  , _boundsHeader_update_interval :: !Word8
+    -- ^ Update interval between consecutive bounds. Similar to RTCM DF391.
+  , _boundsHeader_sol_id        :: !Word8
+    -- ^ SSR Solution ID.
+  } deriving ( Show, Read, Eq )
+
+instance Binary BoundsHeader where
+  get = do
+    _boundsHeader_time <- get
+    _boundsHeader_num_msgs <- getWord8
+    _boundsHeader_seq_num <- getWord8
+    _boundsHeader_update_interval <- getWord8
+    _boundsHeader_sol_id <- getWord8
+    pure BoundsHeader {..}
+
+  put BoundsHeader {..} = do
+    put _boundsHeader_time
+    putWord8 _boundsHeader_num_msgs
+    putWord8 _boundsHeader_seq_num
+    putWord8 _boundsHeader_update_interval
+    putWord8 _boundsHeader_sol_id
+
+$(makeJSON "_boundsHeader_" ''BoundsHeader)
+$(makeLenses ''BoundsHeader)
+
 msgSsrStecCorrection :: Word16
 msgSsrStecCorrection = 0x05FD
 
 data MsgSsrStecCorrection = MsgSsrStecCorrection
-  { _msgSsrStecCorrection_stub :: ![Word8]
+  { _msgSsrStecCorrection_header      :: !BoundsHeader
+    -- ^ Header of a STEC correction with bounds message.
+  , _msgSsrStecCorrection_ssr_iod_atmo :: !Word8
+    -- ^ IOD of the SSR atmospheric correction
+  , _msgSsrStecCorrection_tile_set_id :: !Word16
+    -- ^ Tile set ID
+  , _msgSsrStecCorrection_tile_id     :: !Word16
+    -- ^ Tile ID
+  , _msgSsrStecCorrection_n_sats      :: !Word8
+    -- ^ Number of satellites.
+  , _msgSsrStecCorrection_stec_sat_list :: ![STECSatElement]
+    -- ^ Array of STEC polynomial coefficients for each space vehicle.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrStecCorrection where
   get = do
-    _msgSsrStecCorrection_stub <- whileM (not <$> isEmpty) getWord8
+    _msgSsrStecCorrection_header <- get
+    _msgSsrStecCorrection_ssr_iod_atmo <- getWord8
+    _msgSsrStecCorrection_tile_set_id <- getWord16le
+    _msgSsrStecCorrection_tile_id <- getWord16le
+    _msgSsrStecCorrection_n_sats <- getWord8
+    _msgSsrStecCorrection_stec_sat_list <- whileM (not <$> isEmpty) get
     pure MsgSsrStecCorrection {..}
 
   put MsgSsrStecCorrection {..} = do
-    mapM_ putWord8 _msgSsrStecCorrection_stub
+    put _msgSsrStecCorrection_header
+    putWord8 _msgSsrStecCorrection_ssr_iod_atmo
+    putWord16le _msgSsrStecCorrection_tile_set_id
+    putWord16le _msgSsrStecCorrection_tile_id
+    putWord8 _msgSsrStecCorrection_n_sats
+    mapM_ put _msgSsrStecCorrection_stec_sat_list
 
 $(makeSBP 'msgSsrStecCorrection ''MsgSsrStecCorrection)
 $(makeJSON "_msgSsrStecCorrection_" ''MsgSsrStecCorrection)
@@ -595,20 +651,109 @@ $(makeSBP 'msgSsrGriddedCorrection ''MsgSsrGriddedCorrection)
 $(makeJSON "_msgSsrGriddedCorrection_" ''MsgSsrGriddedCorrection)
 $(makeLenses ''MsgSsrGriddedCorrection)
 
+-- | STECSatElementIntegrity.
+--
+-- STEC polynomial and bounds for the given satellite.
+data STECSatElementIntegrity = STECSatElementIntegrity
+  { _sTECSatElementIntegrity_stec_residual    :: !STECResidual
+    -- ^ STEC residuals (mean, stddev)
+  , _sTECSatElementIntegrity_stec_bound_mu    :: !Word8
+    -- ^ Error Bound Mean. See Note 1.
+  , _sTECSatElementIntegrity_stec_bound_sig   :: !Word8
+    -- ^ Error Bound StDev. See Note 1.
+  , _sTECSatElementIntegrity_stec_bound_mu_dot :: !Word8
+    -- ^ Error Bound Mean First derivative.
+  , _sTECSatElementIntegrity_stec_bound_sig_dot :: !Word8
+    -- ^ Error Bound StDev First derivative.
+  } deriving ( Show, Read, Eq )
+
+instance Binary STECSatElementIntegrity where
+  get = do
+    _sTECSatElementIntegrity_stec_residual <- get
+    _sTECSatElementIntegrity_stec_bound_mu <- getWord8
+    _sTECSatElementIntegrity_stec_bound_sig <- getWord8
+    _sTECSatElementIntegrity_stec_bound_mu_dot <- getWord8
+    _sTECSatElementIntegrity_stec_bound_sig_dot <- getWord8
+    pure STECSatElementIntegrity {..}
+
+  put STECSatElementIntegrity {..} = do
+    put _sTECSatElementIntegrity_stec_residual
+    putWord8 _sTECSatElementIntegrity_stec_bound_mu
+    putWord8 _sTECSatElementIntegrity_stec_bound_sig
+    putWord8 _sTECSatElementIntegrity_stec_bound_mu_dot
+    putWord8 _sTECSatElementIntegrity_stec_bound_sig_dot
+
+$(makeJSON "_sTECSatElementIntegrity_" ''STECSatElementIntegrity)
+$(makeLenses ''STECSatElementIntegrity)
+
 msgSsrGriddedCorrectionBounds :: Word16
 msgSsrGriddedCorrectionBounds = 0x05FE
 
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_BOUNDS (0x05FE).
+--
+-- Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+-- mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
 data MsgSsrGriddedCorrectionBounds = MsgSsrGriddedCorrectionBounds
-  { _msgSsrGriddedCorrectionBounds_stub :: ![Word8]
+  { _msgSsrGriddedCorrectionBounds_header                :: !BoundsHeader
+    -- ^ Header of a bounds message.
+  , _msgSsrGriddedCorrectionBounds_ssr_iod_atmo          :: !Word8
+    -- ^ IOD of the correction.
+  , _msgSsrGriddedCorrectionBounds_tile_set_id           :: !Word16
+    -- ^ Set this tile belongs to.
+  , _msgSsrGriddedCorrectionBounds_tile_id               :: !Word16
+    -- ^ Unique identifier of this tile in the tile set.
+  , _msgSsrGriddedCorrectionBounds_tropo_qi              :: !Word8
+    -- ^ Tropo Quality Indicator. Similar to RTCM DF389.
+  , _msgSsrGriddedCorrectionBounds_grid_point_id         :: !Word16
+    -- ^ Index of the Grid Point.
+  , _msgSsrGriddedCorrectionBounds_tropo_delay_correction :: !TroposphericDelayCorrection
+    -- ^ Tropospheric delay at grid point.
+  , _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_mu :: !Word8
+    -- ^ Vertical Hydrostatic Error Bound Mean.
+  , _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_sig :: !Word8
+    -- ^ Vertical Hydrostatic Error Bound StDev.
+  , _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_mu  :: !Word8
+    -- ^ Vertical Wet Error Bound Mean.
+  , _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_sig :: !Word8
+    -- ^ Vertical Wet Error Bound StDev.
+  , _msgSsrGriddedCorrectionBounds_n_sats                :: !Word8
+    -- ^ Number of satellites.
+  , _msgSsrGriddedCorrectionBounds_stec_sat_list         :: ![STECSatElementIntegrity]
+    -- ^ Array of STEC polynomial coefficients and its bounds for each space
+    -- vehicle.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrGriddedCorrectionBounds where
   get = do
-    _msgSsrGriddedCorrectionBounds_stub <- whileM (not <$> isEmpty) getWord8
+    _msgSsrGriddedCorrectionBounds_header <- get
+    _msgSsrGriddedCorrectionBounds_ssr_iod_atmo <- getWord8
+    _msgSsrGriddedCorrectionBounds_tile_set_id <- getWord16le
+    _msgSsrGriddedCorrectionBounds_tile_id <- getWord16le
+    _msgSsrGriddedCorrectionBounds_tropo_qi <- getWord8
+    _msgSsrGriddedCorrectionBounds_grid_point_id <- getWord16le
+    _msgSsrGriddedCorrectionBounds_tropo_delay_correction <- get
+    _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_mu <- getWord8
+    _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_sig <- getWord8
+    _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_mu <- getWord8
+    _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_sig <- getWord8
+    _msgSsrGriddedCorrectionBounds_n_sats <- getWord8
+    _msgSsrGriddedCorrectionBounds_stec_sat_list <- whileM (not <$> isEmpty) get
     pure MsgSsrGriddedCorrectionBounds {..}
 
   put MsgSsrGriddedCorrectionBounds {..} = do
-    mapM_ putWord8 _msgSsrGriddedCorrectionBounds_stub
+    put _msgSsrGriddedCorrectionBounds_header
+    putWord8 _msgSsrGriddedCorrectionBounds_ssr_iod_atmo
+    putWord16le _msgSsrGriddedCorrectionBounds_tile_set_id
+    putWord16le _msgSsrGriddedCorrectionBounds_tile_id
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_qi
+    putWord16le _msgSsrGriddedCorrectionBounds_grid_point_id
+    put _msgSsrGriddedCorrectionBounds_tropo_delay_correction
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_mu
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_hydro_bound_sig
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_mu
+    putWord8 _msgSsrGriddedCorrectionBounds_tropo_v_wet_bound_sig
+    putWord8 _msgSsrGriddedCorrectionBounds_n_sats
+    mapM_ put _msgSsrGriddedCorrectionBounds_stec_sat_list
 
 $(makeSBP 'msgSsrGriddedCorrectionBounds ''MsgSsrGriddedCorrectionBounds)
 $(makeJSON "_msgSsrGriddedCorrectionBounds_" ''MsgSsrGriddedCorrectionBounds)
@@ -725,16 +870,90 @@ msgSsrTileDefinition = 0x05F7
 -- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
 -- correction points, not lists of points.
 data MsgSsrTileDefinition = MsgSsrTileDefinition
-  { _msgSsrTileDefinition_stub :: ![Word8]
+  { _msgSsrTileDefinition_ssr_sol_id  :: !Word8
+    -- ^ SSR Solution ID.
+  , _msgSsrTileDefinition_tile_set_id :: !Word16
+    -- ^ Unique identifier of the tile set this tile belongs to.
+  , _msgSsrTileDefinition_tile_id     :: !Word16
+    -- ^ Unique identifier of this tile in the tile set.
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+  , _msgSsrTileDefinition_corner_nw_lat :: !Int16
+    -- ^ North-West corner correction point latitude.
+    --
+    -- The relation between the latitude X in the range [-90, 90] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 90) * 2^14)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+  , _msgSsrTileDefinition_corner_nw_lon :: !Int16
+    -- ^ North-West corner correction point longitude.
+    --
+    -- The relation between the longitude X in the range [-180, 180] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 180) * 2^15)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+  , _msgSsrTileDefinition_spacing_lat :: !Word16
+    -- ^ Spacing of the correction points in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+  , _msgSsrTileDefinition_spacing_lon :: !Word16
+    -- ^ Spacing of the correction points in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
+  , _msgSsrTileDefinition_rows        :: !Word16
+    -- ^ Number of steps in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+  , _msgSsrTileDefinition_cols        :: !Word16
+    -- ^ Number of steps in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
+  , _msgSsrTileDefinition_bitmask     :: !Word64
+    -- ^ Specifies the availability of correction data at the correction points
+    -- in the array.
+    --
+    -- If a specific bit is enabled (set to 1), the correction is not
+    -- available. Only the first rows * cols bits are used, the remainder are
+    -- set to 0. If there are more then 64 correction points the remaining
+    -- corrections are always available.
+    --
+    -- Starting with the northwest corner of the array (top left on a north
+    -- oriented map) the correction points are enumerated with row precedence
+    -- - first row west to east, second row west to east, until last row west
+    -- to east - ending with the southeast corner of the array.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    -- definition of the bits is inverted.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrTileDefinition where
   get = do
-    _msgSsrTileDefinition_stub <- whileM (not <$> isEmpty) getWord8
+    _msgSsrTileDefinition_ssr_sol_id <- getWord8
+    _msgSsrTileDefinition_tile_set_id <- getWord16le
+    _msgSsrTileDefinition_tile_id <- getWord16le
+    _msgSsrTileDefinition_corner_nw_lat <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinition_corner_nw_lon <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinition_spacing_lat <- getWord16le
+    _msgSsrTileDefinition_spacing_lon <- getWord16le
+    _msgSsrTileDefinition_rows <- getWord16le
+    _msgSsrTileDefinition_cols <- getWord16le
+    _msgSsrTileDefinition_bitmask <- getWord64le
     pure MsgSsrTileDefinition {..}
 
   put MsgSsrTileDefinition {..} = do
-    mapM_ putWord8 _msgSsrTileDefinition_stub
+    putWord8 _msgSsrTileDefinition_ssr_sol_id
+    putWord16le _msgSsrTileDefinition_tile_set_id
+    putWord16le _msgSsrTileDefinition_tile_id
+    (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lat
+    (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lon
+    putWord16le _msgSsrTileDefinition_spacing_lat
+    putWord16le _msgSsrTileDefinition_spacing_lon
+    putWord16le _msgSsrTileDefinition_rows
+    putWord16le _msgSsrTileDefinition_cols
+    putWord64le _msgSsrTileDefinition_bitmask
 
 $(makeSBP 'msgSsrTileDefinition ''MsgSsrTileDefinition)
 $(makeJSON "_msgSsrTileDefinition_" ''MsgSsrTileDefinition)
@@ -1110,58 +1329,258 @@ $(makeSBP 'msgSsrGridDefinitionDepA ''MsgSsrGridDefinitionDepA)
 $(makeJSON "_msgSsrGridDefinitionDepA_" ''MsgSsrGridDefinitionDepA)
 $(makeLenses ''MsgSsrGridDefinitionDepA)
 
+-- | OrbitClockBound.
+--
+-- Orbit and clock bound.
+data OrbitClockBound = OrbitClockBound
+  { _orbitClockBound_sat_id             :: !Word8
+    -- ^ Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    -- DF488 (BDS) depending on the constellation.
+  , _orbitClockBound_orb_radial_bound_mu :: !Word8
+    -- ^ Mean Radial. See Note 1.
+  , _orbitClockBound_orb_along_bound_mu :: !Word8
+    -- ^ Mean Along-Track. See Note 1.
+  , _orbitClockBound_orb_cross_bound_mu :: !Word8
+    -- ^ Mean Cross-Track. See Note 1.
+  , _orbitClockBound_orb_radial_bound_sig :: !Word8
+    -- ^ Standard Deviation Radial. See Note 2.
+  , _orbitClockBound_orb_along_bound_sig :: !Word8
+    -- ^ Standard Deviation Along-Track. See Note 2.
+  , _orbitClockBound_orb_cross_bound_sig :: !Word8
+    -- ^ Standard Deviation Cross-Track. See Note 2.
+  , _orbitClockBound_clock_bound_mu     :: !Word8
+    -- ^ Clock Bound Mean. See Note 1.
+  , _orbitClockBound_clock_bound_sig    :: !Word8
+    -- ^ Clock Bound Standard Deviation. See Note 2.
+  } deriving ( Show, Read, Eq )
+
+instance Binary OrbitClockBound where
+  get = do
+    _orbitClockBound_sat_id <- getWord8
+    _orbitClockBound_orb_radial_bound_mu <- getWord8
+    _orbitClockBound_orb_along_bound_mu <- getWord8
+    _orbitClockBound_orb_cross_bound_mu <- getWord8
+    _orbitClockBound_orb_radial_bound_sig <- getWord8
+    _orbitClockBound_orb_along_bound_sig <- getWord8
+    _orbitClockBound_orb_cross_bound_sig <- getWord8
+    _orbitClockBound_clock_bound_mu <- getWord8
+    _orbitClockBound_clock_bound_sig <- getWord8
+    pure OrbitClockBound {..}
+
+  put OrbitClockBound {..} = do
+    putWord8 _orbitClockBound_sat_id
+    putWord8 _orbitClockBound_orb_radial_bound_mu
+    putWord8 _orbitClockBound_orb_along_bound_mu
+    putWord8 _orbitClockBound_orb_cross_bound_mu
+    putWord8 _orbitClockBound_orb_radial_bound_sig
+    putWord8 _orbitClockBound_orb_along_bound_sig
+    putWord8 _orbitClockBound_orb_cross_bound_sig
+    putWord8 _orbitClockBound_clock_bound_mu
+    putWord8 _orbitClockBound_clock_bound_sig
+
+$(makeJSON "_orbitClockBound_" ''OrbitClockBound)
+$(makeLenses ''OrbitClockBound)
+
 msgSsrOrbitClockBounds :: Word16
 msgSsrOrbitClockBounds = 0x05DE
 
+-- | SBP class for message MSG_SSR_ORBIT_CLOCK_BOUNDS (0x05DE).
+--
+-- Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+-- i>230, mean=5+0.5(i-230).
+--
+-- Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+-- i>230, std=5+0.5(i-230).
 data MsgSsrOrbitClockBounds = MsgSsrOrbitClockBounds
-  { _msgSsrOrbitClockBounds_stub :: ![Word8]
+  { _msgSsrOrbitClockBounds_header           :: !BoundsHeader
+    -- ^ Header of a bounds message.
+  , _msgSsrOrbitClockBounds_ssr_iod          :: !Word8
+    -- ^ IOD of the SSR bound.
+  , _msgSsrOrbitClockBounds_const_id         :: !Word8
+    -- ^ Constellation ID to which the SVs belong.
+  , _msgSsrOrbitClockBounds_n_sats           :: !Word8
+    -- ^ Number of satellites.
+  , _msgSsrOrbitClockBounds_orbit_clock_bounds :: ![OrbitClockBound]
+    -- ^ Orbit and Clock Bounds per Satellite
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrOrbitClockBounds where
   get = do
-    _msgSsrOrbitClockBounds_stub <- whileM (not <$> isEmpty) getWord8
+    _msgSsrOrbitClockBounds_header <- get
+    _msgSsrOrbitClockBounds_ssr_iod <- getWord8
+    _msgSsrOrbitClockBounds_const_id <- getWord8
+    _msgSsrOrbitClockBounds_n_sats <- getWord8
+    _msgSsrOrbitClockBounds_orbit_clock_bounds <- whileM (not <$> isEmpty) get
     pure MsgSsrOrbitClockBounds {..}
 
   put MsgSsrOrbitClockBounds {..} = do
-    mapM_ putWord8 _msgSsrOrbitClockBounds_stub
+    put _msgSsrOrbitClockBounds_header
+    putWord8 _msgSsrOrbitClockBounds_ssr_iod
+    putWord8 _msgSsrOrbitClockBounds_const_id
+    putWord8 _msgSsrOrbitClockBounds_n_sats
+    mapM_ put _msgSsrOrbitClockBounds_orbit_clock_bounds
 
 $(makeSBP 'msgSsrOrbitClockBounds ''MsgSsrOrbitClockBounds)
 $(makeJSON "_msgSsrOrbitClockBounds_" ''MsgSsrOrbitClockBounds)
 $(makeLenses ''MsgSsrOrbitClockBounds)
 
+data CodePhaseBiasesSatSig = CodePhaseBiasesSatSig
+  { _codePhaseBiasesSatSig_sat_id             :: !Word8
+    -- ^ Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    -- DF488 (BDS) depending on the constellation.
+  , _codePhaseBiasesSatSig_signal_id          :: !Word8
+    -- ^ Signal and Tracking Mode Identifier. Similar to either RTCM DF380
+    -- (GPS), DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+  , _codePhaseBiasesSatSig_code_bias_bound_mu :: !Word8
+    -- ^ Code Bias Mean. Range: 0-1.275 m
+  , _codePhaseBiasesSatSig_code_bias_bound_sig :: !Word8
+    -- ^ Code Bias Standard Deviation.  Range: 0-1.275 m
+  , _codePhaseBiasesSatSig_phase_bias_bound_mu :: !Word8
+    -- ^ Phase Bias Mean. Range: 0-1.275 m
+  , _codePhaseBiasesSatSig_phase_bias_bound_sig :: !Word8
+    -- ^ Phase Bias Standard Deviation.  Range: 0-1.275 m
+  } deriving ( Show, Read, Eq )
+
+instance Binary CodePhaseBiasesSatSig where
+  get = do
+    _codePhaseBiasesSatSig_sat_id <- getWord8
+    _codePhaseBiasesSatSig_signal_id <- getWord8
+    _codePhaseBiasesSatSig_code_bias_bound_mu <- getWord8
+    _codePhaseBiasesSatSig_code_bias_bound_sig <- getWord8
+    _codePhaseBiasesSatSig_phase_bias_bound_mu <- getWord8
+    _codePhaseBiasesSatSig_phase_bias_bound_sig <- getWord8
+    pure CodePhaseBiasesSatSig {..}
+
+  put CodePhaseBiasesSatSig {..} = do
+    putWord8 _codePhaseBiasesSatSig_sat_id
+    putWord8 _codePhaseBiasesSatSig_signal_id
+    putWord8 _codePhaseBiasesSatSig_code_bias_bound_mu
+    putWord8 _codePhaseBiasesSatSig_code_bias_bound_sig
+    putWord8 _codePhaseBiasesSatSig_phase_bias_bound_mu
+    putWord8 _codePhaseBiasesSatSig_phase_bias_bound_sig
+
+$(makeJSON "_codePhaseBiasesSatSig_" ''CodePhaseBiasesSatSig)
+$(makeLenses ''CodePhaseBiasesSatSig)
+
 msgSsrCodePhaseBiasesBounds :: Word16
 msgSsrCodePhaseBiasesBounds = 0x05EC
 
 data MsgSsrCodePhaseBiasesBounds = MsgSsrCodePhaseBiasesBounds
-  { _msgSsrCodePhaseBiasesBounds_stub :: ![Word8]
+  { _msgSsrCodePhaseBiasesBounds_header           :: !BoundsHeader
+    -- ^ Header of a bounds message.
+  , _msgSsrCodePhaseBiasesBounds_ssr_iod          :: !Word8
+    -- ^ IOD of the SSR bound.
+  , _msgSsrCodePhaseBiasesBounds_const_id         :: !Word8
+    -- ^ Constellation ID to which the SVs belong.
+  , _msgSsrCodePhaseBiasesBounds_n_sats_signals   :: !Word8
+    -- ^ Number of satellite-signal couples.
+  , _msgSsrCodePhaseBiasesBounds_satellites_signals :: ![CodePhaseBiasesSatSig]
+    -- ^ Code and Phase Biases Bounds per Satellite-Signal couple.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrCodePhaseBiasesBounds where
   get = do
-    _msgSsrCodePhaseBiasesBounds_stub <- whileM (not <$> isEmpty) getWord8
+    _msgSsrCodePhaseBiasesBounds_header <- get
+    _msgSsrCodePhaseBiasesBounds_ssr_iod <- getWord8
+    _msgSsrCodePhaseBiasesBounds_const_id <- getWord8
+    _msgSsrCodePhaseBiasesBounds_n_sats_signals <- getWord8
+    _msgSsrCodePhaseBiasesBounds_satellites_signals <- whileM (not <$> isEmpty) get
     pure MsgSsrCodePhaseBiasesBounds {..}
 
   put MsgSsrCodePhaseBiasesBounds {..} = do
-    mapM_ putWord8 _msgSsrCodePhaseBiasesBounds_stub
+    put _msgSsrCodePhaseBiasesBounds_header
+    putWord8 _msgSsrCodePhaseBiasesBounds_ssr_iod
+    putWord8 _msgSsrCodePhaseBiasesBounds_const_id
+    putWord8 _msgSsrCodePhaseBiasesBounds_n_sats_signals
+    mapM_ put _msgSsrCodePhaseBiasesBounds_satellites_signals
 
 $(makeSBP 'msgSsrCodePhaseBiasesBounds ''MsgSsrCodePhaseBiasesBounds)
 $(makeJSON "_msgSsrCodePhaseBiasesBounds_" ''MsgSsrCodePhaseBiasesBounds)
 $(makeLenses ''MsgSsrCodePhaseBiasesBounds)
 
+-- | OrbitClockBoundDegradation.
+--
+-- Orbit and clock bound degradation.
+data OrbitClockBoundDegradation = OrbitClockBoundDegradation
+  { _orbitClockBoundDegradation_orb_radial_bound_mu_dot :: !Word8
+    -- ^ Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
+  , _orbitClockBoundDegradation_orb_along_bound_mu_dot :: !Word8
+    -- ^ Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
+  , _orbitClockBoundDegradation_orb_cross_bound_mu_dot :: !Word8
+    -- ^ Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
+  , _orbitClockBoundDegradation_orb_radial_bound_sig_dot :: !Word8
+    -- ^ Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255
+    -- m/s
+  , _orbitClockBoundDegradation_orb_along_bound_sig_dot :: !Word8
+    -- ^ Orbit Bound Standard Deviation Along-Track First derivative. Range:
+    -- 0-0.255 m/s
+  , _orbitClockBoundDegradation_orb_cross_bound_sig_dot :: !Word8
+    -- ^ Orbit Bound Standard Deviation Cross-Track First derivative. Range:
+    -- 0-0.255 m/s
+  , _orbitClockBoundDegradation_clock_bound_mu_dot     :: !Word8
+    -- ^ Clock Bound Mean First derivative. Range: 0-0.255 m/s
+  , _orbitClockBoundDegradation_clock_bound_sig_dot    :: !Word8
+    -- ^ Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
+  } deriving ( Show, Read, Eq )
+
+instance Binary OrbitClockBoundDegradation where
+  get = do
+    _orbitClockBoundDegradation_orb_radial_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_orb_along_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_orb_cross_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_orb_radial_bound_sig_dot <- getWord8
+    _orbitClockBoundDegradation_orb_along_bound_sig_dot <- getWord8
+    _orbitClockBoundDegradation_orb_cross_bound_sig_dot <- getWord8
+    _orbitClockBoundDegradation_clock_bound_mu_dot <- getWord8
+    _orbitClockBoundDegradation_clock_bound_sig_dot <- getWord8
+    pure OrbitClockBoundDegradation {..}
+
+  put OrbitClockBoundDegradation {..} = do
+    putWord8 _orbitClockBoundDegradation_orb_radial_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_orb_along_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_orb_cross_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_orb_radial_bound_sig_dot
+    putWord8 _orbitClockBoundDegradation_orb_along_bound_sig_dot
+    putWord8 _orbitClockBoundDegradation_orb_cross_bound_sig_dot
+    putWord8 _orbitClockBoundDegradation_clock_bound_mu_dot
+    putWord8 _orbitClockBoundDegradation_clock_bound_sig_dot
+
+$(makeJSON "_orbitClockBoundDegradation_" ''OrbitClockBoundDegradation)
+$(makeLenses ''OrbitClockBoundDegradation)
+
 msgSsrOrbitClockBoundsDegradation :: Word16
 msgSsrOrbitClockBoundsDegradation = 0x05DF
 
 data MsgSsrOrbitClockBoundsDegradation = MsgSsrOrbitClockBoundsDegradation
-  { _msgSsrOrbitClockBoundsDegradation_stub :: ![Word8]
+  { _msgSsrOrbitClockBoundsDegradation_header                       :: !BoundsHeader
+    -- ^ Header of a bounds message.
+  , _msgSsrOrbitClockBoundsDegradation_ssr_iod                      :: !Word8
+    -- ^ IOD of the SSR bound degradation parameter.
+  , _msgSsrOrbitClockBoundsDegradation_const_id                     :: !Word8
+    -- ^ Constellation ID to which the SVs belong.
+  , _msgSsrOrbitClockBoundsDegradation_sat_bitmask                  :: !Word64
+    -- ^ Satellite Bit Mask. Put 1 for each satellite where the following
+    -- degradation parameters are applicable, 0 otherwise. Encoded following
+    -- RTCM DF394 specification.
+  , _msgSsrOrbitClockBoundsDegradation_orbit_clock_bounds_degradation :: !OrbitClockBoundDegradation
+    -- ^ Orbit and Clock Bounds Degradation Parameters
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrOrbitClockBoundsDegradation where
   get = do
-    _msgSsrOrbitClockBoundsDegradation_stub <- whileM (not <$> isEmpty) getWord8
+    _msgSsrOrbitClockBoundsDegradation_header <- get
+    _msgSsrOrbitClockBoundsDegradation_ssr_iod <- getWord8
+    _msgSsrOrbitClockBoundsDegradation_const_id <- getWord8
+    _msgSsrOrbitClockBoundsDegradation_sat_bitmask <- getWord64le
+    _msgSsrOrbitClockBoundsDegradation_orbit_clock_bounds_degradation <- get
     pure MsgSsrOrbitClockBoundsDegradation {..}
 
   put MsgSsrOrbitClockBoundsDegradation {..} = do
-    mapM_ putWord8 _msgSsrOrbitClockBoundsDegradation_stub
+    put _msgSsrOrbitClockBoundsDegradation_header
+    putWord8 _msgSsrOrbitClockBoundsDegradation_ssr_iod
+    putWord8 _msgSsrOrbitClockBoundsDegradation_const_id
+    putWord64le _msgSsrOrbitClockBoundsDegradation_sat_bitmask
+    put _msgSsrOrbitClockBoundsDegradation_orbit_clock_bounds_degradation
 
 $(makeSBP 'msgSsrOrbitClockBoundsDegradation ''MsgSsrOrbitClockBoundsDegradation)
 $(makeJSON "_msgSsrOrbitClockBoundsDegradation_" ''MsgSsrOrbitClockBoundsDegradation)

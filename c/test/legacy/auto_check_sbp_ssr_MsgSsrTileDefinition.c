@@ -134,131 +134,16 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
     msg_ssr_tile_definition_t *test_msg =
         (msg_ssr_tile_definition_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[0] = 31;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[1] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[2] = 1;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[3] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[4] = 2;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[5] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[6] = 4;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[7] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[8] = 8;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[9] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[10] = 16;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[11] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[12] = 32;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[13] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[14] = 64;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[15] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[16] = 128;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[17] = 210;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[18] = 2;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[19] = 150;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[20] = 73;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[21] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[22] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[23] = 0;
-    if (sizeof(test_msg->stub) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->stub[0]);
-    }
-    test_msg->stub[24] = 0;
+    test_msg->bitmask = 1234567890;
+    test_msg->cols = 32768;
+    test_msg->corner_nw_lat = 1024;
+    test_msg->corner_nw_lon = 2048;
+    test_msg->rows = 16384;
+    test_msg->spacing_lat = 4096;
+    test_msg->spacing_lon = 8192;
+    test_msg->ssr_sol_id = 31;
+    test_msg->tile_id = 512;
+    test_msg->tile_set_id = 256;
     sbp_payload_send(&sbp_state, 1527, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -314,81 +199,36 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
         (msg_ssr_tile_definition_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->stub[0] == 31,
-                  "incorrect value for stub[0], expected 31, is %d",
-                  check_msg->stub[0]);
-    ck_assert_msg(check_msg->stub[1] == 0,
-                  "incorrect value for stub[1], expected 0, is %d",
-                  check_msg->stub[1]);
-    ck_assert_msg(check_msg->stub[2] == 1,
-                  "incorrect value for stub[2], expected 1, is %d",
-                  check_msg->stub[2]);
-    ck_assert_msg(check_msg->stub[3] == 0,
-                  "incorrect value for stub[3], expected 0, is %d",
-                  check_msg->stub[3]);
-    ck_assert_msg(check_msg->stub[4] == 2,
-                  "incorrect value for stub[4], expected 2, is %d",
-                  check_msg->stub[4]);
-    ck_assert_msg(check_msg->stub[5] == 0,
-                  "incorrect value for stub[5], expected 0, is %d",
-                  check_msg->stub[5]);
-    ck_assert_msg(check_msg->stub[6] == 4,
-                  "incorrect value for stub[6], expected 4, is %d",
-                  check_msg->stub[6]);
-    ck_assert_msg(check_msg->stub[7] == 0,
-                  "incorrect value for stub[7], expected 0, is %d",
-                  check_msg->stub[7]);
-    ck_assert_msg(check_msg->stub[8] == 8,
-                  "incorrect value for stub[8], expected 8, is %d",
-                  check_msg->stub[8]);
-    ck_assert_msg(check_msg->stub[9] == 0,
-                  "incorrect value for stub[9], expected 0, is %d",
-                  check_msg->stub[9]);
-    ck_assert_msg(check_msg->stub[10] == 16,
-                  "incorrect value for stub[10], expected 16, is %d",
-                  check_msg->stub[10]);
-    ck_assert_msg(check_msg->stub[11] == 0,
-                  "incorrect value for stub[11], expected 0, is %d",
-                  check_msg->stub[11]);
-    ck_assert_msg(check_msg->stub[12] == 32,
-                  "incorrect value for stub[12], expected 32, is %d",
-                  check_msg->stub[12]);
-    ck_assert_msg(check_msg->stub[13] == 0,
-                  "incorrect value for stub[13], expected 0, is %d",
-                  check_msg->stub[13]);
-    ck_assert_msg(check_msg->stub[14] == 64,
-                  "incorrect value for stub[14], expected 64, is %d",
-                  check_msg->stub[14]);
-    ck_assert_msg(check_msg->stub[15] == 0,
-                  "incorrect value for stub[15], expected 0, is %d",
-                  check_msg->stub[15]);
-    ck_assert_msg(check_msg->stub[16] == 128,
-                  "incorrect value for stub[16], expected 128, is %d",
-                  check_msg->stub[16]);
-    ck_assert_msg(check_msg->stub[17] == 210,
-                  "incorrect value for stub[17], expected 210, is %d",
-                  check_msg->stub[17]);
-    ck_assert_msg(check_msg->stub[18] == 2,
-                  "incorrect value for stub[18], expected 2, is %d",
-                  check_msg->stub[18]);
-    ck_assert_msg(check_msg->stub[19] == 150,
-                  "incorrect value for stub[19], expected 150, is %d",
-                  check_msg->stub[19]);
-    ck_assert_msg(check_msg->stub[20] == 73,
-                  "incorrect value for stub[20], expected 73, is %d",
-                  check_msg->stub[20]);
-    ck_assert_msg(check_msg->stub[21] == 0,
-                  "incorrect value for stub[21], expected 0, is %d",
-                  check_msg->stub[21]);
-    ck_assert_msg(check_msg->stub[22] == 0,
-                  "incorrect value for stub[22], expected 0, is %d",
-                  check_msg->stub[22]);
-    ck_assert_msg(check_msg->stub[23] == 0,
-                  "incorrect value for stub[23], expected 0, is %d",
-                  check_msg->stub[23]);
-    ck_assert_msg(check_msg->stub[24] == 0,
-                  "incorrect value for stub[24], expected 0, is %d",
-                  check_msg->stub[24]);
+    ck_assert_msg(check_msg->bitmask == 1234567890,
+                  "incorrect value for bitmask, expected 1234567890, is %d",
+                  check_msg->bitmask);
+    ck_assert_msg(check_msg->cols == 32768,
+                  "incorrect value for cols, expected 32768, is %d",
+                  check_msg->cols);
+    ck_assert_msg(check_msg->corner_nw_lat == 1024,
+                  "incorrect value for corner_nw_lat, expected 1024, is %d",
+                  check_msg->corner_nw_lat);
+    ck_assert_msg(check_msg->corner_nw_lon == 2048,
+                  "incorrect value for corner_nw_lon, expected 2048, is %d",
+                  check_msg->corner_nw_lon);
+    ck_assert_msg(check_msg->rows == 16384,
+                  "incorrect value for rows, expected 16384, is %d",
+                  check_msg->rows);
+    ck_assert_msg(check_msg->spacing_lat == 4096,
+                  "incorrect value for spacing_lat, expected 4096, is %d",
+                  check_msg->spacing_lat);
+    ck_assert_msg(check_msg->spacing_lon == 8192,
+                  "incorrect value for spacing_lon, expected 8192, is %d",
+                  check_msg->spacing_lon);
+    ck_assert_msg(check_msg->ssr_sol_id == 31,
+                  "incorrect value for ssr_sol_id, expected 31, is %d",
+                  check_msg->ssr_sol_id);
+    ck_assert_msg(check_msg->tile_id == 512,
+                  "incorrect value for tile_id, expected 512, is %d",
+                  check_msg->tile_id);
+    ck_assert_msg(check_msg->tile_set_id == 256,
+                  "incorrect value for tile_set_id, expected 256, is %d",
+                  check_msg->tile_set_id);
   }
 }
 END_TEST

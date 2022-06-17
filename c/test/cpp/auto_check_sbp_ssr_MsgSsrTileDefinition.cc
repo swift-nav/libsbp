@@ -81,57 +81,16 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   };
 
   sbp_msg_ssr_tile_definition_t test_msg{};
-  test_msg.n_stub = 25;
-
-  test_msg.stub[0] = 31;
-
-  test_msg.stub[1] = 0;
-
-  test_msg.stub[2] = 1;
-
-  test_msg.stub[3] = 0;
-
-  test_msg.stub[4] = 2;
-
-  test_msg.stub[5] = 0;
-
-  test_msg.stub[6] = 4;
-
-  test_msg.stub[7] = 0;
-
-  test_msg.stub[8] = 8;
-
-  test_msg.stub[9] = 0;
-
-  test_msg.stub[10] = 16;
-
-  test_msg.stub[11] = 0;
-
-  test_msg.stub[12] = 32;
-
-  test_msg.stub[13] = 0;
-
-  test_msg.stub[14] = 64;
-
-  test_msg.stub[15] = 0;
-
-  test_msg.stub[16] = 128;
-
-  test_msg.stub[17] = 210;
-
-  test_msg.stub[18] = 2;
-
-  test_msg.stub[19] = 150;
-
-  test_msg.stub[20] = 73;
-
-  test_msg.stub[21] = 0;
-
-  test_msg.stub[22] = 0;
-
-  test_msg.stub[23] = 0;
-
-  test_msg.stub[24] = 0;
+  test_msg.bitmask = 1234567890;
+  test_msg.cols = 32768;
+  test_msg.corner_nw_lat = 1024;
+  test_msg.corner_nw_lon = 2048;
+  test_msg.rows = 16384;
+  test_msg.spacing_lat = 4096;
+  test_msg.spacing_lon = 8192;
+  test_msg.ssr_sol_id = 31;
+  test_msg.tile_id = 512;
+  test_msg.tile_set_id = 256;
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -145,82 +104,34 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.n_stub, 25)
-      << "incorrect value for last_msg_.n_stub, expected 25, is "
-      << last_msg_.n_stub;
-  EXPECT_EQ(last_msg_.stub[0], 31)
-      << "incorrect value for last_msg_.stub[0], expected 31, is "
-      << last_msg_.stub[0];
-  EXPECT_EQ(last_msg_.stub[1], 0)
-      << "incorrect value for last_msg_.stub[1], expected 0, is "
-      << last_msg_.stub[1];
-  EXPECT_EQ(last_msg_.stub[2], 1)
-      << "incorrect value for last_msg_.stub[2], expected 1, is "
-      << last_msg_.stub[2];
-  EXPECT_EQ(last_msg_.stub[3], 0)
-      << "incorrect value for last_msg_.stub[3], expected 0, is "
-      << last_msg_.stub[3];
-  EXPECT_EQ(last_msg_.stub[4], 2)
-      << "incorrect value for last_msg_.stub[4], expected 2, is "
-      << last_msg_.stub[4];
-  EXPECT_EQ(last_msg_.stub[5], 0)
-      << "incorrect value for last_msg_.stub[5], expected 0, is "
-      << last_msg_.stub[5];
-  EXPECT_EQ(last_msg_.stub[6], 4)
-      << "incorrect value for last_msg_.stub[6], expected 4, is "
-      << last_msg_.stub[6];
-  EXPECT_EQ(last_msg_.stub[7], 0)
-      << "incorrect value for last_msg_.stub[7], expected 0, is "
-      << last_msg_.stub[7];
-  EXPECT_EQ(last_msg_.stub[8], 8)
-      << "incorrect value for last_msg_.stub[8], expected 8, is "
-      << last_msg_.stub[8];
-  EXPECT_EQ(last_msg_.stub[9], 0)
-      << "incorrect value for last_msg_.stub[9], expected 0, is "
-      << last_msg_.stub[9];
-  EXPECT_EQ(last_msg_.stub[10], 16)
-      << "incorrect value for last_msg_.stub[10], expected 16, is "
-      << last_msg_.stub[10];
-  EXPECT_EQ(last_msg_.stub[11], 0)
-      << "incorrect value for last_msg_.stub[11], expected 0, is "
-      << last_msg_.stub[11];
-  EXPECT_EQ(last_msg_.stub[12], 32)
-      << "incorrect value for last_msg_.stub[12], expected 32, is "
-      << last_msg_.stub[12];
-  EXPECT_EQ(last_msg_.stub[13], 0)
-      << "incorrect value for last_msg_.stub[13], expected 0, is "
-      << last_msg_.stub[13];
-  EXPECT_EQ(last_msg_.stub[14], 64)
-      << "incorrect value for last_msg_.stub[14], expected 64, is "
-      << last_msg_.stub[14];
-  EXPECT_EQ(last_msg_.stub[15], 0)
-      << "incorrect value for last_msg_.stub[15], expected 0, is "
-      << last_msg_.stub[15];
-  EXPECT_EQ(last_msg_.stub[16], 128)
-      << "incorrect value for last_msg_.stub[16], expected 128, is "
-      << last_msg_.stub[16];
-  EXPECT_EQ(last_msg_.stub[17], 210)
-      << "incorrect value for last_msg_.stub[17], expected 210, is "
-      << last_msg_.stub[17];
-  EXPECT_EQ(last_msg_.stub[18], 2)
-      << "incorrect value for last_msg_.stub[18], expected 2, is "
-      << last_msg_.stub[18];
-  EXPECT_EQ(last_msg_.stub[19], 150)
-      << "incorrect value for last_msg_.stub[19], expected 150, is "
-      << last_msg_.stub[19];
-  EXPECT_EQ(last_msg_.stub[20], 73)
-      << "incorrect value for last_msg_.stub[20], expected 73, is "
-      << last_msg_.stub[20];
-  EXPECT_EQ(last_msg_.stub[21], 0)
-      << "incorrect value for last_msg_.stub[21], expected 0, is "
-      << last_msg_.stub[21];
-  EXPECT_EQ(last_msg_.stub[22], 0)
-      << "incorrect value for last_msg_.stub[22], expected 0, is "
-      << last_msg_.stub[22];
-  EXPECT_EQ(last_msg_.stub[23], 0)
-      << "incorrect value for last_msg_.stub[23], expected 0, is "
-      << last_msg_.stub[23];
-  EXPECT_EQ(last_msg_.stub[24], 0)
-      << "incorrect value for last_msg_.stub[24], expected 0, is "
-      << last_msg_.stub[24];
+  EXPECT_EQ(last_msg_.bitmask, 1234567890)
+      << "incorrect value for last_msg_.bitmask, expected 1234567890, is "
+      << last_msg_.bitmask;
+  EXPECT_EQ(last_msg_.cols, 32768)
+      << "incorrect value for last_msg_.cols, expected 32768, is "
+      << last_msg_.cols;
+  EXPECT_EQ(last_msg_.corner_nw_lat, 1024)
+      << "incorrect value for last_msg_.corner_nw_lat, expected 1024, is "
+      << last_msg_.corner_nw_lat;
+  EXPECT_EQ(last_msg_.corner_nw_lon, 2048)
+      << "incorrect value for last_msg_.corner_nw_lon, expected 2048, is "
+      << last_msg_.corner_nw_lon;
+  EXPECT_EQ(last_msg_.rows, 16384)
+      << "incorrect value for last_msg_.rows, expected 16384, is "
+      << last_msg_.rows;
+  EXPECT_EQ(last_msg_.spacing_lat, 4096)
+      << "incorrect value for last_msg_.spacing_lat, expected 4096, is "
+      << last_msg_.spacing_lat;
+  EXPECT_EQ(last_msg_.spacing_lon, 8192)
+      << "incorrect value for last_msg_.spacing_lon, expected 8192, is "
+      << last_msg_.spacing_lon;
+  EXPECT_EQ(last_msg_.ssr_sol_id, 31)
+      << "incorrect value for last_msg_.ssr_sol_id, expected 31, is "
+      << last_msg_.ssr_sol_id;
+  EXPECT_EQ(last_msg_.tile_id, 512)
+      << "incorrect value for last_msg_.tile_id, expected 512, is "
+      << last_msg_.tile_id;
+  EXPECT_EQ(last_msg_.tile_set_id, 256)
+      << "incorrect value for last_msg_.tile_set_id, expected 256, is "
+      << last_msg_.tile_set_id;
 }

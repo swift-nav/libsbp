@@ -43,159 +43,91 @@ fn test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.stub[0], 180,
-                    "incorrect value for stub[0], expected 180, is {}",
-                    msg.stub[0]
+                    msg.const_id, 1,
+                    "incorrect value for const_id, expected 1, is {}",
+                    msg.const_id
                 );
                 assert_eq!(
-                    msg.stub[1], 0,
-                    "incorrect value for stub[1], expected 0, is {}",
-                    msg.stub[1]
+                    msg.header.num_msgs, 1,
+                    "incorrect value for header.num_msgs, expected 1, is {}",
+                    msg.header.num_msgs
                 );
                 assert_eq!(
-                    msg.stub[2], 0,
-                    "incorrect value for stub[2], expected 0, is {}",
-                    msg.stub[2]
+                    msg.header.seq_num, 2,
+                    "incorrect value for header.seq_num, expected 2, is {}",
+                    msg.header.seq_num
                 );
                 assert_eq!(
-                    msg.stub[3], 0,
-                    "incorrect value for stub[3], expected 0, is {}",
-                    msg.stub[3]
+                    msg.header.sol_id, 48,
+                    "incorrect value for header.sol_id, expected 48, is {}",
+                    msg.header.sol_id
                 );
                 assert_eq!(
-                    msg.stub[4], 3,
-                    "incorrect value for stub[4], expected 3, is {}",
-                    msg.stub[4]
+                    msg.header.time.tow, 180,
+                    "incorrect value for header.time.tow, expected 180, is {}",
+                    msg.header.time.tow
                 );
                 assert_eq!(
-                    msg.stub[5], 0,
-                    "incorrect value for stub[5], expected 0, is {}",
-                    msg.stub[5]
+                    msg.header.time.wn, 3,
+                    "incorrect value for header.time.wn, expected 3, is {}",
+                    msg.header.time.wn
                 );
                 assert_eq!(
-                    msg.stub[6], 1,
-                    "incorrect value for stub[6], expected 1, is {}",
-                    msg.stub[6]
+                    msg.header.update_interval, 3,
+                    "incorrect value for header.update_interval, expected 3, is {}",
+                    msg.header.update_interval
                 );
                 assert_eq!(
-                    msg.stub[7], 2,
-                    "incorrect value for stub[7], expected 2, is {}",
-                    msg.stub[7]
+                    msg.n_sats, 2,
+                    "incorrect value for n_sats, expected 2, is {}",
+                    msg.n_sats
                 );
                 assert_eq!(
-                    msg.stub[8], 3,
-                    "incorrect value for stub[8], expected 3, is {}",
-                    msg.stub[8]
+                    msg.orbit_clock_bounds[0].clock_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[0].clock_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[0].clock_bound_mu
                 );
                 assert_eq!(
-                    msg.stub[9], 48,
-                    "incorrect value for stub[9], expected 48, is {}",
-                    msg.stub[9]
+                    msg.orbit_clock_bounds[0].clock_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[0].clock_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[0].clock_bound_sig
+                );
+                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[0].orb_along_bound_mu);
+                assert_eq!(msg.orbit_clock_bounds[0].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[0].orb_along_bound_sig);
+                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_mu);
+                assert_eq!(msg.orbit_clock_bounds[0].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[0].orb_cross_bound_sig);
+                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_mu);
+                assert_eq!(msg.orbit_clock_bounds[0].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[0].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[0].sat_id, 24,
+                    "incorrect value for orbit_clock_bounds[0].sat_id, expected 24, is {}",
+                    msg.orbit_clock_bounds[0].sat_id
                 );
                 assert_eq!(
-                    msg.stub[10], 15,
-                    "incorrect value for stub[10], expected 15, is {}",
-                    msg.stub[10]
+                    msg.orbit_clock_bounds[1].clock_bound_mu, 39,
+                    "incorrect value for orbit_clock_bounds[1].clock_bound_mu, expected 39, is {}",
+                    msg.orbit_clock_bounds[1].clock_bound_mu
                 );
                 assert_eq!(
-                    msg.stub[11], 1,
-                    "incorrect value for stub[11], expected 1, is {}",
-                    msg.stub[11]
+                    msg.orbit_clock_bounds[1].clock_bound_sig, 1,
+                    "incorrect value for orbit_clock_bounds[1].clock_bound_sig, expected 1, is {}",
+                    msg.orbit_clock_bounds[1].clock_bound_sig
+                );
+                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_mu, 38, "incorrect value for orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is {}", msg.orbit_clock_bounds[1].orb_along_bound_mu);
+                assert_eq!(msg.orbit_clock_bounds[1].orb_along_bound_sig, 2, "incorrect value for orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is {}", msg.orbit_clock_bounds[1].orb_along_bound_sig);
+                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_mu, 37, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_mu);
+                assert_eq!(msg.orbit_clock_bounds[1].orb_cross_bound_sig, 3, "incorrect value for orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is {}", msg.orbit_clock_bounds[1].orb_cross_bound_sig);
+                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_mu, 39, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_mu);
+                assert_eq!(msg.orbit_clock_bounds[1].orb_radial_bound_sig, 1, "incorrect value for orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is {}", msg.orbit_clock_bounds[1].orb_radial_bound_sig);
+                assert_eq!(
+                    msg.orbit_clock_bounds[1].sat_id, 3,
+                    "incorrect value for orbit_clock_bounds[1].sat_id, expected 3, is {}",
+                    msg.orbit_clock_bounds[1].sat_id
                 );
                 assert_eq!(
-                    msg.stub[12], 2,
-                    "incorrect value for stub[12], expected 2, is {}",
-                    msg.stub[12]
-                );
-                assert_eq!(
-                    msg.stub[13], 24,
-                    "incorrect value for stub[13], expected 24, is {}",
-                    msg.stub[13]
-                );
-                assert_eq!(
-                    msg.stub[14], 39,
-                    "incorrect value for stub[14], expected 39, is {}",
-                    msg.stub[14]
-                );
-                assert_eq!(
-                    msg.stub[15], 38,
-                    "incorrect value for stub[15], expected 38, is {}",
-                    msg.stub[15]
-                );
-                assert_eq!(
-                    msg.stub[16], 37,
-                    "incorrect value for stub[16], expected 37, is {}",
-                    msg.stub[16]
-                );
-                assert_eq!(
-                    msg.stub[17], 1,
-                    "incorrect value for stub[17], expected 1, is {}",
-                    msg.stub[17]
-                );
-                assert_eq!(
-                    msg.stub[18], 2,
-                    "incorrect value for stub[18], expected 2, is {}",
-                    msg.stub[18]
-                );
-                assert_eq!(
-                    msg.stub[19], 3,
-                    "incorrect value for stub[19], expected 3, is {}",
-                    msg.stub[19]
-                );
-                assert_eq!(
-                    msg.stub[20], 39,
-                    "incorrect value for stub[20], expected 39, is {}",
-                    msg.stub[20]
-                );
-                assert_eq!(
-                    msg.stub[21], 1,
-                    "incorrect value for stub[21], expected 1, is {}",
-                    msg.stub[21]
-                );
-                assert_eq!(
-                    msg.stub[22], 3,
-                    "incorrect value for stub[22], expected 3, is {}",
-                    msg.stub[22]
-                );
-                assert_eq!(
-                    msg.stub[23], 39,
-                    "incorrect value for stub[23], expected 39, is {}",
-                    msg.stub[23]
-                );
-                assert_eq!(
-                    msg.stub[24], 38,
-                    "incorrect value for stub[24], expected 38, is {}",
-                    msg.stub[24]
-                );
-                assert_eq!(
-                    msg.stub[25], 37,
-                    "incorrect value for stub[25], expected 37, is {}",
-                    msg.stub[25]
-                );
-                assert_eq!(
-                    msg.stub[26], 1,
-                    "incorrect value for stub[26], expected 1, is {}",
-                    msg.stub[26]
-                );
-                assert_eq!(
-                    msg.stub[27], 2,
-                    "incorrect value for stub[27], expected 2, is {}",
-                    msg.stub[27]
-                );
-                assert_eq!(
-                    msg.stub[28], 3,
-                    "incorrect value for stub[28], expected 3, is {}",
-                    msg.stub[28]
-                );
-                assert_eq!(
-                    msg.stub[29], 39,
-                    "incorrect value for stub[29], expected 39, is {}",
-                    msg.stub[29]
-                );
-                assert_eq!(
-                    msg.stub[30], 1,
-                    "incorrect value for stub[30], expected 1, is {}",
-                    msg.stub[30]
+                    msg.ssr_iod, 15,
+                    "incorrect value for ssr_iod, expected 15, is {}",
+                    msg.ssr_iod
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrOrbitClockBounds"),

@@ -103,57 +103,25 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinition) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_tile_definition.n_stub = 25;
+    test_msg.ssr_tile_definition.bitmask = 1234567890;
 
-    test_msg.ssr_tile_definition.stub[0] = 31;
+    test_msg.ssr_tile_definition.cols = 32768;
 
-    test_msg.ssr_tile_definition.stub[1] = 0;
+    test_msg.ssr_tile_definition.corner_nw_lat = 1024;
 
-    test_msg.ssr_tile_definition.stub[2] = 1;
+    test_msg.ssr_tile_definition.corner_nw_lon = 2048;
 
-    test_msg.ssr_tile_definition.stub[3] = 0;
+    test_msg.ssr_tile_definition.rows = 16384;
 
-    test_msg.ssr_tile_definition.stub[4] = 2;
+    test_msg.ssr_tile_definition.spacing_lat = 4096;
 
-    test_msg.ssr_tile_definition.stub[5] = 0;
+    test_msg.ssr_tile_definition.spacing_lon = 8192;
 
-    test_msg.ssr_tile_definition.stub[6] = 4;
+    test_msg.ssr_tile_definition.ssr_sol_id = 31;
 
-    test_msg.ssr_tile_definition.stub[7] = 0;
+    test_msg.ssr_tile_definition.tile_id = 512;
 
-    test_msg.ssr_tile_definition.stub[8] = 8;
-
-    test_msg.ssr_tile_definition.stub[9] = 0;
-
-    test_msg.ssr_tile_definition.stub[10] = 16;
-
-    test_msg.ssr_tile_definition.stub[11] = 0;
-
-    test_msg.ssr_tile_definition.stub[12] = 32;
-
-    test_msg.ssr_tile_definition.stub[13] = 0;
-
-    test_msg.ssr_tile_definition.stub[14] = 64;
-
-    test_msg.ssr_tile_definition.stub[15] = 0;
-
-    test_msg.ssr_tile_definition.stub[16] = 128;
-
-    test_msg.ssr_tile_definition.stub[17] = 210;
-
-    test_msg.ssr_tile_definition.stub[18] = 2;
-
-    test_msg.ssr_tile_definition.stub[19] = 150;
-
-    test_msg.ssr_tile_definition.stub[20] = 73;
-
-    test_msg.ssr_tile_definition.stub[21] = 0;
-
-    test_msg.ssr_tile_definition.stub[22] = 0;
-
-    test_msg.ssr_tile_definition.stub[23] = 0;
-
-    test_msg.ssr_tile_definition.stub[24] = 0;
+    test_msg.ssr_tile_definition.tile_set_id = 256;
 
     sbp_message_send(&sbp_state, SbpMsgSsrTileDefinition, 66, &test_msg,
                      &dummy_write);
@@ -179,127 +147,63 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinition) {
         sbp_message_cmp(SbpMsgSsrTileDefinition, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.n_stub == 25,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.n_stub, expected 25, is %d",
-                  last_msg.msg.ssr_tile_definition.n_stub);
+    ck_assert_msg(
+        last_msg.msg.ssr_tile_definition.bitmask == 1234567890,
+        "incorrect value for last_msg.msg.ssr_tile_definition.bitmask, "
+        "expected 1234567890, is %d",
+        last_msg.msg.ssr_tile_definition.bitmask);
+
+    ck_assert_msg(last_msg.msg.ssr_tile_definition.cols == 32768,
+                  "incorrect value for last_msg.msg.ssr_tile_definition.cols, "
+                  "expected 32768, is %d",
+                  last_msg.msg.ssr_tile_definition.cols);
 
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[0] == 31,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[0], "
+        last_msg.msg.ssr_tile_definition.corner_nw_lat == 1024,
+        "incorrect value for last_msg.msg.ssr_tile_definition.corner_nw_lat, "
+        "expected 1024, is %d",
+        last_msg.msg.ssr_tile_definition.corner_nw_lat);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_tile_definition.corner_nw_lon == 2048,
+        "incorrect value for last_msg.msg.ssr_tile_definition.corner_nw_lon, "
+        "expected 2048, is %d",
+        last_msg.msg.ssr_tile_definition.corner_nw_lon);
+
+    ck_assert_msg(last_msg.msg.ssr_tile_definition.rows == 16384,
+                  "incorrect value for last_msg.msg.ssr_tile_definition.rows, "
+                  "expected 16384, is %d",
+                  last_msg.msg.ssr_tile_definition.rows);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_tile_definition.spacing_lat == 4096,
+        "incorrect value for last_msg.msg.ssr_tile_definition.spacing_lat, "
+        "expected 4096, is %d",
+        last_msg.msg.ssr_tile_definition.spacing_lat);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_tile_definition.spacing_lon == 8192,
+        "incorrect value for last_msg.msg.ssr_tile_definition.spacing_lon, "
+        "expected 8192, is %d",
+        last_msg.msg.ssr_tile_definition.spacing_lon);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_tile_definition.ssr_sol_id == 31,
+        "incorrect value for last_msg.msg.ssr_tile_definition.ssr_sol_id, "
         "expected 31, is %d",
-        last_msg.msg.ssr_tile_definition.stub[0]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[1] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[1], expected 0, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[1]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[2] == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[2], expected 1, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[2]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[3] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[3], expected 0, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[3]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[4] == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[4], expected 2, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[4]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[5] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[5], expected 0, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[5]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[6] == 4,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[6], expected 4, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[6]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[7] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[7], expected 0, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[7]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[8] == 8,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[8], expected 8, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[8]);
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.stub[9] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.stub[9], expected 0, is %d",
-                  last_msg.msg.ssr_tile_definition.stub[9]);
+        last_msg.msg.ssr_tile_definition.ssr_sol_id);
+
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[10] == 16,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[10], "
-        "expected 16, is %d",
-        last_msg.msg.ssr_tile_definition.stub[10]);
+        last_msg.msg.ssr_tile_definition.tile_id == 512,
+        "incorrect value for last_msg.msg.ssr_tile_definition.tile_id, "
+        "expected 512, is %d",
+        last_msg.msg.ssr_tile_definition.tile_id);
+
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[11] == 0,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[11], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_tile_definition.stub[11]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[12] == 32,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[12], "
-        "expected 32, is %d",
-        last_msg.msg.ssr_tile_definition.stub[12]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[13] == 0,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[13], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_tile_definition.stub[13]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[14] == 64,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[14], "
-        "expected 64, is %d",
-        last_msg.msg.ssr_tile_definition.stub[14]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[15] == 0,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[15], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_tile_definition.stub[15]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[16] == 128,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[16], "
-        "expected 128, is %d",
-        last_msg.msg.ssr_tile_definition.stub[16]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[17] == 210,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[17], "
-        "expected 210, is %d",
-        last_msg.msg.ssr_tile_definition.stub[17]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[18] == 2,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[18], "
-        "expected 2, is %d",
-        last_msg.msg.ssr_tile_definition.stub[18]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[19] == 150,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[19], "
-        "expected 150, is %d",
-        last_msg.msg.ssr_tile_definition.stub[19]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[20] == 73,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[20], "
-        "expected 73, is %d",
-        last_msg.msg.ssr_tile_definition.stub[20]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[21] == 0,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[21], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_tile_definition.stub[21]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[22] == 0,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[22], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_tile_definition.stub[22]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[23] == 0,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[23], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_tile_definition.stub[23]);
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.stub[24] == 0,
-        "incorrect value for last_msg.msg.ssr_tile_definition.stub[24], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_tile_definition.stub[24]);
+        last_msg.msg.ssr_tile_definition.tile_set_id == 256,
+        "incorrect value for last_msg.msg.ssr_tile_definition.tile_set_id, "
+        "expected 256, is %d",
+        last_msg.msg.ssr_tile_definition.tile_set_id);
   }
 }
 END_TEST

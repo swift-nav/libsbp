@@ -46,18 +46,94 @@ extern "C" {
  *
  */
 typedef struct {
-  u8 stub[SBP_MSG_SSR_TILE_DEFINITION_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * SSR Solution ID.
    */
-  u8 n_stub;
+  u8 ssr_sol_id;
+
+  /**
+   * Unique identifier of the tile set this tile belongs to.
+   */
+  u16 tile_set_id;
+
+  /**
+   * Unique identifier of this tile in the tile set.
+   * See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+   */
+  u16 tile_id;
+
+  /**
+   * North-West corner correction point latitude.
+   *
+   * The relation between the latitude X in the range [-90, 90] and the coded
+   * number N is:
+   *
+   * N = floor((X / 90) * 2^14)
+   *
+   * See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude. [encoded
+   * degrees]
+   */
+  s16 corner_nw_lat;
+
+  /**
+   * North-West corner correction point longitude.
+   *
+   * The relation between the longitude X in the range [-180, 180] and the coded
+   * number N is:
+   *
+   * N = floor((X / 180) * 2^15)
+   *
+   * See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+   * [encoded degrees]
+   */
+  s16 corner_nw_lon;
+
+  /**
+   * Spacing of the correction points in the latitude direction.
+   *
+   * See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude. [0.01 degrees]
+   */
+  u16 spacing_lat;
+
+  /**
+   * Spacing of the correction points in the longitude direction.
+   *
+   * See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude. [0.01 degrees]
+   */
+  u16 spacing_lon;
+
+  /**
+   * Number of steps in the latitude direction.
+   *
+   * See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+   */
+  u16 rows;
+
+  /**
+   * Number of steps in the longitude direction.
+   *
+   * See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
+   */
+  u16 cols;
+
+  /**
+   * Specifies the availability of correction data at the correction points in
+   * the array.
+   *
+   * If a specific bit is enabled (set to 1), the correction is not available.
+   * Only the first rows * cols bits are used, the remainder are set to 0. If
+   * there are more then 64 correction points the remaining corrections are
+   * always available.
+   *
+   * Starting with the northwest corner of the array (top left on a north
+   * oriented map) the correction points are enumerated with row precedence -
+   * first row west to east, second row west to east, until last row west to
+   * east - ending with the southeast corner of the array.
+   *
+   * See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+   * definition of the bits is inverted.
+   */
+  u64 bitmask;
 } sbp_msg_ssr_tile_definition_t;
 
 /**
@@ -68,8 +144,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_ssr_tile_definition_encoded_len(
     const sbp_msg_ssr_tile_definition_t *msg) {
-  return SBP_MSG_SSR_TILE_DEFINITION_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+  (void)msg;
+  return SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN;
 }
 
 /**

@@ -142,9 +142,11 @@ definitions:
         type: array
         size: 4
         fill: s16
-        units: C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
         desc: >
-          Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+          Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
+          C00 = 0.05 TECU,
+          C01/C10 = 0.02 TECU/deg,
+          C11 0.02 TECU/deg^2
 
  - TroposphericDelayCorrectionNoStd:
     desc: >
@@ -166,18 +168,23 @@ definitions:
     fields:
     - hydro:
         type: s16
-        units: 4 mm (add 2.3 m to get actual vertical hydro delay)
-        desc: Hydrostatic vertical delay
+        units: 4 mm
+        desc: >
+          Hydrostatic vertical delay.
+          Add 2.3 m to get actual value.
     - wet:
         type: s8
-        units: 4 mm (add 0.252 m to get actual vertical wet delay)
-        desc: Wet vertical delay
+        units: 4 mm
+        desc: >
+          Wet vertical delay.
+          Add 0.252 m to get actual value.
     - stddev:
         type: u8
-        units: >
-          modified DF389 scale; class is upper 3 bits, value is lower 5
+        units: mm
+        desc: >
+          Modified DF389 scale.
+          Class is upper 3 bits, value is lower 5.
           stddev <= (3^class * (1 + value/16) - 1) mm
-        desc: stddev
 
  - STECResidualNoStd:
     desc: STEC residual for the given satellite at the grid point.
@@ -204,10 +211,9 @@ definitions:
         desc: STEC residual
     - stddev:
         type: u8
-        units: >
-          modified DF389 scale; class is upper 3 bits, value is lower 5
+        desc: >
+          Modified DF389 scale. Class is upper 3 bits, value is lower 5.
           stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
-        desc: stddev
 
  - MSG_SSR_ORBIT_CLOCK:
     id: 0x05DD
@@ -381,14 +387,51 @@ definitions:
             fill: STECSatElement
             desc: Array of STEC polynomial coefficients for each space vehicle.
 
+ - BoundsHeader:
+     short_desc: Header for the Bounds messages
+     fields:
+       - time:
+           type: GPSTimeSec
+           desc: GNSS reference time of the bound
+       - num_msgs:
+           type: u8
+           desc: Number of messages in the dataset
+       - seq_num:
+           type: u8
+           desc: Position of this message in the dataset
+       - update_interval:
+           type: u8
+           desc: >
+             Update interval between consecutive bounds. Similar to
+             RTCM DF391.
+       - sol_id:
+           type: u8
+           desc: SSR Solution ID.
+
  - MSG_SSR_STEC_CORRECTION:
      id: 0x05FD
      short_desc: STEC correction polynomial coefficients
-     public: False
      fields:
-       - stub:
+       - header:
+           type: BoundsHeader
+           desc: Header of a STEC correction with bounds message.
+       - ssr_iod_atmo:
+           type: u8
+           desc: IOD of the SSR atmospheric correction
+       - tile_set_id:
+           type: u16
+           desc: Tile set ID
+       - tile_id:
+           type: u16
+           desc: Tile ID
+       - n_sats:
+           type: u8
+           desc: Number of satellites.
+       - stec_sat_list:
            type: array
-           fill: u8
+           fill: STECSatElement
+           size_fn: n_sats
+           desc: Array of STEC polynomial coefficients for each space vehicle.
 
  - MSG_SSR_GRIDDED_CORRECTION:
     id: 0x05FC
@@ -413,14 +456,87 @@ definitions:
             fill: STECResidual
             desc: STEC residuals for each satellite (mean, stddev).
 
+ - STECSatElementIntegrity:
+     desc: STEC polynomial and bounds for the given satellite.
+     fields:
+       - stec_residual:
+           type: STECResidual
+           desc: STEC residuals (mean, stddev)
+       - stec_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Error Bound Mean.
+             See Note 1.
+       - stec_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Error Bound StDev.
+             See Note 1.
+       - stec_bound_mu_dot:
+           type: u8
+           units: 0.00005 m/s
+           desc: Error Bound Mean First derivative.
+       - stec_bound_sig_dot:
+           type: u8
+           units: 0.00005 m/s
+           desc: Error Bound StDev First derivative.
+
  - MSG_SSR_GRIDDED_CORRECTION_BOUNDS:
      id: 0x05FE
      short_desc: Gridded troposhere and STEC correction residuals bounds
-     public: False
+     desc: >
+       Note 1: Range: 0-17.5 m.
+       i<= 200, mean = 0.01i;
+       200<i<=230, mean=2+0.1(i-200);
+       i>230, mean=5+0.5(i-230).
      fields:
-       - stub:
+       - header:
+           type: BoundsHeader
+           desc: Header of a bounds message.
+       - ssr_iod_atmo:
+           type: u8
+           desc: IOD of the correction.
+       - tile_set_id:
+           type: u16
+           desc: Set this tile belongs to.
+       - tile_id:
+           type: u16
+           desc: Unique identifier of this tile in the tile set.
+       - tropo_qi:
+           type: u8
+           desc: Tropo Quality Indicator. Similar to RTCM DF389.
+       - grid_point_id:
+           type: u16
+           desc: Index of the Grid Point.
+       - tropo_delay_correction:
+           type: TroposphericDelayCorrection
+           desc: Tropospheric delay at grid point.
+       - tropo_v_hydro_bound_mu:
+           type: u8
+           units: 0.005 m
+           desc: Vertical Hydrostatic Error Bound Mean.
+       - tropo_v_hydro_bound_sig:
+           type: u8
+           units: 0.005 m
+           desc: Vertical Hydrostatic Error Bound StDev.
+       - tropo_v_wet_bound_mu:
+           type: u8
+           units: 0.005 m
+           desc: Vertical Wet Error Bound Mean.
+       - tropo_v_wet_bound_sig:
+           type: u8
+           units: 0.005 m
+           desc: Vertical Wet Error Bound StDev.
+       - n_sats:
+           type: u8
+           desc: Number of satellites.
+       - stec_sat_list:
            type: array
-           fill: u8
+           fill: STECSatElementIntegrity
+           size_fn: n_sats
+           desc: Array of STEC polynomial coefficients and its bounds for each space vehicle.
 
  - MSG_SSR_TILE_DEFINITION_DEP:
     id: 0x05F6
@@ -543,11 +659,101 @@ definitions:
        Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
        element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
        correction points, not lists of points.
-     public: False
      fields:
-       - stub:
-           type: array
-           fill: u8
+       - ssr_sol_id:
+           type: u8
+           desc: SSR Solution ID.
+       - tile_set_id:
+           type: u16
+           desc: Unique identifier of the tile set this tile belongs to.
+       - tile_id:
+           type: u16
+           desc: >
+             Unique identifier of this tile in the tile set.
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+       - corner_nw_lat:
+           type: s16
+           units: encoded degrees
+           desc: >
+             North-West corner correction point latitude.
+             
+             
+             The relation between the latitude X in the range [-90, 90] and
+             the coded number N is:
+             
+             
+             N = floor((X / 90) * 2^14)
+             
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+       - corner_nw_lon:
+           type: s16
+           units: encoded degrees
+           desc: >
+             North-West corner correction point longitude.
+             
+             
+             The relation between the longitude X in the range [-180, 180]
+             and the coded number N is:
+             
+             
+             N = floor((X / 180) * 2^15)
+             
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+       - spacing_lat:
+           type: u16
+           units: 0.01 degrees
+           desc: >
+             Spacing of the correction points in the latitude direction.
+             
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+       - spacing_lon:
+           type: u16
+           units: 0.01 degrees
+           desc: >
+             Spacing of the correction points in the longitude direction.
+             
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
+       - rows:
+           type: u16
+           desc: >
+             Number of steps in the latitude direction.
+             
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+       - cols:
+           type: u16
+           desc: >
+             Number of steps in the longitude direction.
+             
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
+       - bitmask:
+           type: u64
+           desc: >
+             Specifies the availability of correction data at the
+             correction points in the array.
+             
+             
+             If a specific bit is enabled (set to 1), the correction is not
+             available. Only the first rows * cols bits are used, the remainder
+             are set to 0. If there are more then 64 correction points the
+             remaining corrections are always available.
+             
+             
+             Starting with the northwest corner of the array (top left on a
+             north oriented map) the correction points are enumerated with row
+             precedence - first row west to east, second row west to east,
+             until last row west to east - ending with the southeast corner of
+             the array.
+             
+             
+             See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
+             note the definition of the bits is inverted.
 
  - SatelliteAPC:
      short_desc: Antenna phase center correction
@@ -844,29 +1050,229 @@ definitions:
               essentially the index of the quadrants that contain transitions between
               valid and invalid (and vice versa) are encoded as u8 integers.
 
+ - OrbitClockBound:
+     desc: Orbit and clock bound.
+     fields:
+       - sat_id:
+           type: u8
+           desc: >
+             Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo),
+             or DF488 (BDS) depending on the constellation.
+       - orb_radial_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Mean Radial.
+             See Note 1.
+       - orb_along_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Mean Along-Track.
+             See Note 1.
+       - orb_cross_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Mean Cross-Track.
+             See Note 1.
+       - orb_radial_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Standard Deviation Radial.
+             See Note 2.
+       - orb_along_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Standard Deviation Along-Track.
+             See Note 2.
+       - orb_cross_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Standard Deviation Cross-Track.
+             See Note 2.
+       - clock_bound_mu:
+           type: u8
+           units: m
+           desc: >
+             Clock Bound Mean.
+             See Note 1.
+       - clock_bound_sig:
+           type: u8
+           units: m
+           desc: >
+             Clock Bound Standard Deviation.
+             See Note 2.
+
  - MSG_SSR_ORBIT_CLOCK_BOUNDS:
      id: 0x05DE
-     short_desc: Stubbed version of Combined Orbit and Clock Bound
-     public: False
+     short_desc: Combined Orbit and Clock Bound
+     desc: >
+       Note 1: Range: 0-17.5 m.
+       i<=200, mean=0.01i;
+       200<i<=230, mean=2+0.1(i-200);
+       i>230, mean=5+0.5(i-230).
+       
+       
+       Note 2: Range: 0-17.5 m.
+       i<=200, std=0.01i;
+       200<i<=230, std=2+0.1(i-200)
+       i>230, std=5+0.5(i-230).
      fields:
-       - stub:
+       - header:
+           type: BoundsHeader
+           desc: Header of a bounds message.
+       - ssr_iod:
+           type: u8
+           desc: IOD of the SSR bound.
+       - const_id:
+           type: u8
+           desc: Constellation ID to which the SVs belong.
+       - n_sats:
+           type: u8
+           desc: Number of satellites.
+       - orbit_clock_bounds:
            type: array
-           fill: u8
+           fill: OrbitClockBound
+           size_fn: n_sats
+           map_by: sat_id
+           desc: Orbit and Clock Bounds per Satellite
+
+ - CodePhaseBiasesSatSig:
+     short_desc: Code and Phase Biases Bounds per Satellite-Signal couple
+     fields:
+       - sat_id:
+           type: u8
+           desc: >
+             Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo),
+             or DF488 (BDS) depending on the constellation.
+       - signal_id:
+           type: u8
+           desc: >
+             Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
+             DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+       - code_bias_bound_mu:
+           type: u8
+           units: 0.005 m
+           desc: >
+             Code Bias Mean.
+             Range: 0-1.275 m
+       - code_bias_bound_sig:
+           type: u8
+           units: 0.005 m
+           desc: >
+             Code Bias Standard Deviation. 
+             Range: 0-1.275 m
+       - phase_bias_bound_mu:
+           type: u8
+           units: 0.005 m
+           desc: >
+             Phase Bias Mean.
+             Range: 0-1.275 m
+       - phase_bias_bound_sig:
+           type: u8
+           units: 0.005 m
+           desc: >
+             Phase Bias Standard Deviation. 
+             Range: 0-1.275 m
 
  - MSG_SSR_CODE_PHASE_BIASES_BOUNDS:
      id: 0x05EC
-     short_desc: Stubbed version of Combined Code and Phase Biases Bounds
-     public: False
+     short_desc: Combined Code and Phase Biases Bounds
      fields:
-       - stub:
+       - header:
+           type: BoundsHeader
+           desc: Header of a bounds message.
+       - ssr_iod:
+           type: u8
+           desc: IOD of the SSR bound.
+       - const_id:
+           type: u8
+           desc: Constellation ID to which the SVs belong.
+       - n_sats_signals:
+           type: u8
+           desc: Number of satellite-signal couples.
+       - satellites_signals:
            type: array
-           fill: u8
+           fill: CodePhaseBiasesSatSig
+           size_fn: n_sats_signals
+           map_by: sat_id
+           desc: Code and Phase Biases Bounds per Satellite-Signal couple.
+
+ - OrbitClockBoundDegradation:
+     desc: Orbit and clock bound degradation.
+     fields:
+       - orb_radial_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Mean Radial First derivative.
+             Range: 0-0.255 m/s
+       - orb_along_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Mean Along-Track First derivative.
+             Range: 0-0.255 m/s
+       - orb_cross_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Mean Cross-Track First derivative.
+             Range: 0-0.255 m/s
+       - orb_radial_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Standard Deviation Radial First derivative.
+             Range: 0-0.255 m/s
+       - orb_along_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Standard Deviation Along-Track First derivative.
+             Range: 0-0.255 m/s
+       - orb_cross_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Orbit Bound Standard Deviation Cross-Track First derivative.
+             Range: 0-0.255 m/s
+       - clock_bound_mu_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Clock Bound Mean First derivative.
+             Range: 0-0.255 m/s
+       - clock_bound_sig_dot:
+           type: u8
+           units: 0.001 m/s
+           desc: >
+             Clock Bound Standard Deviation First derivative.
+             Range: 0-0.255 m/s
 
  - MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION:
      id: 0x05DF
      short_desc: Combined Orbit and Clock Bound Degradation Parameter
-     public: False
      fields:
-       - stub:
-           type: array
-           fill: u8
+       - header:
+           type: BoundsHeader
+           desc: Header of a bounds message.
+       - ssr_iod:
+           type: u8
+           desc: IOD of the SSR bound degradation parameter.
+       - const_id:
+           type: u8
+           desc: Constellation ID to which the SVs belong.
+       - sat_bitmask:
+           type: u64
+           desc: >
+             Satellite Bit Mask. Put 1 for each satellite where the following
+             degradation parameters are applicable, 0 otherwise. Encoded
+             following RTCM DF394 specification.
+       - orbit_clock_bounds_degradation:
+           type: OrbitClockBoundDegradation
+           desc: Orbit and Clock Bounds Degradation Parameters

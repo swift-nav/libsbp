@@ -5,14 +5,20 @@ tests:
 
   - msg:
       fields:
-        stub: [1, 0, 2, 0, 3, 4, 5, 0, 6, 0, 7, 0, 8, 9]
-      c_decoded_fields:
-        n_stub: 14
+        bias_coeff: 1
+        drift_coeff: 2
+        drift_rate_coeff: 3
+        count_before: 4
+        tow_s: 5
+        wn: 6
+        ref_wn: 7
+        ref_dn: 8
+        count_after: 9
       module: sbp.navigation
       name: MsgUtcLeapSecond
     msg_type: '570'
-    raw_json: '{"stub": [1, 0, 2, 0, 3, 4, 5, 0, 6, 0, 7, 0, 8, 9],
-      "preamble": 85, "msg_type": 570, "sender": 66, "length": 14,
+    raw_json: '{"bias_coeff": 1, "drift_coeff": 2, "drift_rate_coeff": 3, "count_before": 4, "tow_s": 5, "wn": 6,
+      "ref_wn": 7, "ref_dn": 8, "count_after": 9, "preamble": 85, "msg_type": 570, "sender": 66, "length": 14,
       "payload": "AQACAAMEBQAGAAcACAk=", "crc": 59442}'
     raw_packet: VToCQgAOAQACAAMEBQAGAAcACAky6A==
     sbp:

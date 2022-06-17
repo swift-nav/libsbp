@@ -16,9 +16,15 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "header": {"$ref": "IntegritySSRHeader.json"},
+    "grid_point_id": {"type": "integer"},
+    "n_faulty_los": {"type": "integer"},
+    "faulty_los": {"type": "array", "items": {"$ref": "SvId.json"}}
   },
   "required": [
-    "stub"
+    "header",
+    "grid_point_id",
+    "n_faulty_los",
+    "faulty_los"
   ]
 }

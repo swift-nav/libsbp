@@ -263,7 +263,8 @@ class STECSatElement(object):
     Quality of the STEC data. Encoded following RTCM DF389 specification but
     in units of TECU instead of m.
   stec_coeff : array
-    Coefficients of the STEC polynomial in the order of C00, C01, C10, C11
+    Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
+    C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
 
   """
   _parser = construct.Struct(
@@ -336,11 +337,12 @@ class TroposphericDelayCorrection(object):
   Parameters
   ----------
   hydro : int
-    Hydrostatic vertical delay
+    Hydrostatic vertical delay. Add 2.3 m to get actual value.
   wet : int
-    Wet vertical delay
+    Wet vertical delay. Add 0.252 m to get actual value.
   stddev : int
-    stddev
+    Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+    (3^class * (1 + value/16) - 1) mm
 
   """
   _parser = construct.Struct(
@@ -418,7 +420,8 @@ class STECResidual(object):
   residual : int
     STEC residual
   stddev : int
-    stddev
+    Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
+    (3^class * (1 + value/16) - 1) * 10 TECU
 
   """
   _parser = construct.Struct(
@@ -444,6 +447,107 @@ class STECResidual(object):
   
   def from_binary(self, d):
     p = STECResidual._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class BoundsHeader(object):
+  """BoundsHeader.
+  
+  
+  Parameters
+  ----------
+  time : GPSTimeSec
+    GNSS reference time of the bound
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  update_interval : int
+    Update interval between consecutive bounds. Similar to RTCM DF391.
+  sol_id : int
+    SSR Solution ID.
+
+  """
+  _parser = construct.Struct(
+                     'time' / GPSTimeSec._parser,
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,
+                     'update_interval' / construct.Int8ul,
+                     'sol_id' / construct.Int8ul,)
+  __slots__ = [
+               'time',
+               'num_msgs',
+               'seq_num',
+               'update_interval',
+               'sol_id',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.time = kwargs.pop('time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.update_interval = kwargs.pop('update_interval')
+      self.sol_id = kwargs.pop('sol_id')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = BoundsHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class STECSatElementIntegrity(object):
+  """STECSatElementIntegrity.
+  
+  STEC polynomial and bounds for the given satellite.
+  
+  Parameters
+  ----------
+  stec_residual : STECResidual
+    STEC residuals (mean, stddev)
+  stec_bound_mu : int
+    Error Bound Mean. See Note 1.
+  stec_bound_sig : int
+    Error Bound StDev. See Note 1.
+  stec_bound_mu_dot : int
+    Error Bound Mean First derivative.
+  stec_bound_sig_dot : int
+    Error Bound StDev First derivative.
+
+  """
+  _parser = construct.Struct(
+                     'stec_residual' / STECResidual._parser,
+                     'stec_bound_mu' / construct.Int8ul,
+                     'stec_bound_sig' / construct.Int8ul,
+                     'stec_bound_mu_dot' / construct.Int8ul,
+                     'stec_bound_sig_dot' / construct.Int8ul,)
+  __slots__ = [
+               'stec_residual',
+               'stec_bound_mu',
+               'stec_bound_sig',
+               'stec_bound_mu_dot',
+               'stec_bound_sig_dot',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.stec_residual = kwargs.pop('stec_residual')
+      self.stec_bound_mu = kwargs.pop('stec_bound_mu')
+      self.stec_bound_sig = kwargs.pop('stec_bound_sig')
+      self.stec_bound_mu_dot = kwargs.pop('stec_bound_mu_dot')
+      self.stec_bound_sig_dot = kwargs.pop('stec_bound_sig_dot')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = STECSatElementIntegrity._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
@@ -670,6 +774,203 @@ class GridDefinitionHeaderDepA(object):
   
   def from_binary(self, d):
     p = GridDefinitionHeaderDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class OrbitClockBound(object):
+  """OrbitClockBound.
+  
+  Orbit and clock bound.
+  
+  Parameters
+  ----------
+  sat_id : int
+    Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    DF488 (BDS) depending on the constellation.
+  orb_radial_bound_mu : int
+    Mean Radial. See Note 1.
+  orb_along_bound_mu : int
+    Mean Along-Track. See Note 1.
+  orb_cross_bound_mu : int
+    Mean Cross-Track. See Note 1.
+  orb_radial_bound_sig : int
+    Standard Deviation Radial. See Note 2.
+  orb_along_bound_sig : int
+    Standard Deviation Along-Track. See Note 2.
+  orb_cross_bound_sig : int
+    Standard Deviation Cross-Track. See Note 2.
+  clock_bound_mu : int
+    Clock Bound Mean. See Note 1.
+  clock_bound_sig : int
+    Clock Bound Standard Deviation. See Note 2.
+
+  """
+  _parser = construct.Struct(
+                     'sat_id' / construct.Int8ul,
+                     'orb_radial_bound_mu' / construct.Int8ul,
+                     'orb_along_bound_mu' / construct.Int8ul,
+                     'orb_cross_bound_mu' / construct.Int8ul,
+                     'orb_radial_bound_sig' / construct.Int8ul,
+                     'orb_along_bound_sig' / construct.Int8ul,
+                     'orb_cross_bound_sig' / construct.Int8ul,
+                     'clock_bound_mu' / construct.Int8ul,
+                     'clock_bound_sig' / construct.Int8ul,)
+  __slots__ = [
+               'sat_id',
+               'orb_radial_bound_mu',
+               'orb_along_bound_mu',
+               'orb_cross_bound_mu',
+               'orb_radial_bound_sig',
+               'orb_along_bound_sig',
+               'orb_cross_bound_sig',
+               'clock_bound_mu',
+               'clock_bound_sig',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sat_id = kwargs.pop('sat_id')
+      self.orb_radial_bound_mu = kwargs.pop('orb_radial_bound_mu')
+      self.orb_along_bound_mu = kwargs.pop('orb_along_bound_mu')
+      self.orb_cross_bound_mu = kwargs.pop('orb_cross_bound_mu')
+      self.orb_radial_bound_sig = kwargs.pop('orb_radial_bound_sig')
+      self.orb_along_bound_sig = kwargs.pop('orb_along_bound_sig')
+      self.orb_cross_bound_sig = kwargs.pop('orb_cross_bound_sig')
+      self.clock_bound_mu = kwargs.pop('clock_bound_mu')
+      self.clock_bound_sig = kwargs.pop('clock_bound_sig')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = OrbitClockBound._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class CodePhaseBiasesSatSig(object):
+  """CodePhaseBiasesSatSig.
+  
+  
+  Parameters
+  ----------
+  sat_id : int
+    Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
+    DF488 (BDS) depending on the constellation.
+  signal_id : int
+    Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
+    DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+  code_bias_bound_mu : int
+    Code Bias Mean. Range: 0-1.275 m
+  code_bias_bound_sig : int
+    Code Bias Standard Deviation.  Range: 0-1.275 m
+  phase_bias_bound_mu : int
+    Phase Bias Mean. Range: 0-1.275 m
+  phase_bias_bound_sig : int
+    Phase Bias Standard Deviation.  Range: 0-1.275 m
+
+  """
+  _parser = construct.Struct(
+                     'sat_id' / construct.Int8ul,
+                     'signal_id' / construct.Int8ul,
+                     'code_bias_bound_mu' / construct.Int8ul,
+                     'code_bias_bound_sig' / construct.Int8ul,
+                     'phase_bias_bound_mu' / construct.Int8ul,
+                     'phase_bias_bound_sig' / construct.Int8ul,)
+  __slots__ = [
+               'sat_id',
+               'signal_id',
+               'code_bias_bound_mu',
+               'code_bias_bound_sig',
+               'phase_bias_bound_mu',
+               'phase_bias_bound_sig',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sat_id = kwargs.pop('sat_id')
+      self.signal_id = kwargs.pop('signal_id')
+      self.code_bias_bound_mu = kwargs.pop('code_bias_bound_mu')
+      self.code_bias_bound_sig = kwargs.pop('code_bias_bound_sig')
+      self.phase_bias_bound_mu = kwargs.pop('phase_bias_bound_mu')
+      self.phase_bias_bound_sig = kwargs.pop('phase_bias_bound_sig')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = CodePhaseBiasesSatSig._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+class OrbitClockBoundDegradation(object):
+  """OrbitClockBoundDegradation.
+  
+  Orbit and clock bound degradation.
+  
+  Parameters
+  ----------
+  orb_radial_bound_mu_dot : int
+    Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
+  orb_along_bound_mu_dot : int
+    Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
+  orb_cross_bound_mu_dot : int
+    Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
+  orb_radial_bound_sig_dot : int
+    Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255 m/s
+  orb_along_bound_sig_dot : int
+    Orbit Bound Standard Deviation Along-Track First derivative. Range:
+    0-0.255 m/s
+  orb_cross_bound_sig_dot : int
+    Orbit Bound Standard Deviation Cross-Track First derivative. Range:
+    0-0.255 m/s
+  clock_bound_mu_dot : int
+    Clock Bound Mean First derivative. Range: 0-0.255 m/s
+  clock_bound_sig_dot : int
+    Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
+
+  """
+  _parser = construct.Struct(
+                     'orb_radial_bound_mu_dot' / construct.Int8ul,
+                     'orb_along_bound_mu_dot' / construct.Int8ul,
+                     'orb_cross_bound_mu_dot' / construct.Int8ul,
+                     'orb_radial_bound_sig_dot' / construct.Int8ul,
+                     'orb_along_bound_sig_dot' / construct.Int8ul,
+                     'orb_cross_bound_sig_dot' / construct.Int8ul,
+                     'clock_bound_mu_dot' / construct.Int8ul,
+                     'clock_bound_sig_dot' / construct.Int8ul,)
+  __slots__ = [
+               'orb_radial_bound_mu_dot',
+               'orb_along_bound_mu_dot',
+               'orb_cross_bound_mu_dot',
+               'orb_radial_bound_sig_dot',
+               'orb_along_bound_sig_dot',
+               'orb_cross_bound_sig_dot',
+               'clock_bound_mu_dot',
+               'clock_bound_sig_dot',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.orb_radial_bound_mu_dot = kwargs.pop('orb_radial_bound_mu_dot')
+      self.orb_along_bound_mu_dot = kwargs.pop('orb_along_bound_mu_dot')
+      self.orb_cross_bound_mu_dot = kwargs.pop('orb_cross_bound_mu_dot')
+      self.orb_radial_bound_sig_dot = kwargs.pop('orb_radial_bound_sig_dot')
+      self.orb_along_bound_sig_dot = kwargs.pop('orb_along_bound_sig_dot')
+      self.orb_cross_bound_sig_dot = kwargs.pop('orb_cross_bound_sig_dot')
+      self.clock_bound_mu_dot = kwargs.pop('clock_bound_mu_dot')
+      self.clock_bound_sig_dot = kwargs.pop('clock_bound_sig_dot')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = OrbitClockBoundDegradation._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
     
@@ -1192,15 +1493,36 @@ class MsgSsrStecCorrection(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  header : BoundsHeader
+    Header of a STEC correction with bounds message.
+  ssr_iod_atmo : int
+    IOD of the SSR atmospheric correction
+  tile_set_id : int
+    Tile set ID
+  tile_id : int
+    Tile ID
+  n_sats : int
+    Number of satellites.
+  stec_sat_list : array
+    Array of STEC polynomial coefficients for each space vehicle.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod_atmo' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElement._parser),)
   __slots__ = [
-               'stub',
+               'header',
+               'ssr_iod_atmo',
+               'tile_set_id',
+               'tile_id',
+               'n_sats',
+               'stec_sat_list',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -1213,7 +1535,12 @@ class MsgSsrStecCorrection(SBP):
       super( MsgSsrStecCorrection, self).__init__()
       self.msg_type = SBP_MSG_SSR_STEC_CORRECTION
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.header = kwargs.pop('header')
+      self.ssr_iod_atmo = kwargs.pop('ssr_iod_atmo')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.n_sats = kwargs.pop('n_sats')
+      self.stec_sat_list = kwargs.pop('stec_sat_list')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1380,20 +1707,72 @@ class MsgSsrGriddedCorrectionBounds(SBP):
   of its fields.
 
   
+  Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+  mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod_atmo : int
+    IOD of the correction.
+  tile_set_id : int
+    Set this tile belongs to.
+  tile_id : int
+    Unique identifier of this tile in the tile set.
+  tropo_qi : int
+    Tropo Quality Indicator. Similar to RTCM DF389.
+  grid_point_id : int
+    Index of the Grid Point.
+  tropo_delay_correction : TroposphericDelayCorrection
+    Tropospheric delay at grid point.
+  tropo_v_hydro_bound_mu : int
+    Vertical Hydrostatic Error Bound Mean.
+  tropo_v_hydro_bound_sig : int
+    Vertical Hydrostatic Error Bound StDev.
+  tropo_v_wet_bound_mu : int
+    Vertical Wet Error Bound Mean.
+  tropo_v_wet_bound_sig : int
+    Vertical Wet Error Bound StDev.
+  n_sats : int
+    Number of satellites.
+  stec_sat_list : array
+    Array of STEC polynomial coefficients and its bounds for each space
+    vehicle.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod_atmo' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
+                   'tropo_qi' / construct.Int8ul,
+                   'grid_point_id' / construct.Int16ul,
+                   'tropo_delay_correction' / TroposphericDelayCorrection._parser,
+                   'tropo_v_hydro_bound_mu' / construct.Int8ul,
+                   'tropo_v_hydro_bound_sig' / construct.Int8ul,
+                   'tropo_v_wet_bound_mu' / construct.Int8ul,
+                   'tropo_v_wet_bound_sig' / construct.Int8ul,
+                   'n_sats' / construct.Int8ul,
+                   'stec_sat_list' / construct.GreedyRange(STECSatElementIntegrity._parser),)
   __slots__ = [
-               'stub',
+               'header',
+               'ssr_iod_atmo',
+               'tile_set_id',
+               'tile_id',
+               'tropo_qi',
+               'grid_point_id',
+               'tropo_delay_correction',
+               'tropo_v_hydro_bound_mu',
+               'tropo_v_hydro_bound_sig',
+               'tropo_v_wet_bound_mu',
+               'tropo_v_wet_bound_sig',
+               'n_sats',
+               'stec_sat_list',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -1406,7 +1785,19 @@ class MsgSsrGriddedCorrectionBounds(SBP):
       super( MsgSsrGriddedCorrectionBounds, self).__init__()
       self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.header = kwargs.pop('header')
+      self.ssr_iod_atmo = kwargs.pop('ssr_iod_atmo')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.tropo_qi = kwargs.pop('tropo_qi')
+      self.grid_point_id = kwargs.pop('grid_point_id')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.tropo_v_hydro_bound_mu = kwargs.pop('tropo_v_hydro_bound_mu')
+      self.tropo_v_hydro_bound_sig = kwargs.pop('tropo_v_hydro_bound_sig')
+      self.tropo_v_wet_bound_mu = kwargs.pop('tropo_v_wet_bound_mu')
+      self.tropo_v_wet_bound_sig = kwargs.pop('tropo_v_wet_bound_sig')
+      self.n_sats = kwargs.pop('n_sats')
+      self.stec_sat_list = kwargs.pop('stec_sat_list')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1651,15 +2042,89 @@ class MsgSsrTileDefinition(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  ssr_sol_id : int
+    SSR Solution ID.
+  tile_set_id : int
+    Unique identifier of the tile set this tile belongs to.
+  tile_id : int
+    Unique identifier of this tile in the tile set.
+    See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+  corner_nw_lat : int
+    North-West corner correction point latitude.
+
+    The relation between the latitude X in the range [-90, 90] and the coded
+    number N is:
+
+    N = floor((X / 90) * 2^14)
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+  corner_nw_lon : int
+    North-West corner correction point longitude.
+
+    The relation between the longitude X in the range [-180, 180] and the
+    coded number N is:
+
+    N = floor((X / 180) * 2^15)
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+  spacing_lat : int
+    Spacing of the correction points in the latitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+  spacing_lon : int
+    Spacing of the correction points in the longitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
+  rows : int
+    Number of steps in the latitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+  cols : int
+    Number of steps in the longitude direction.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
+  bitmask : int
+    Specifies the availability of correction data at the correction points in
+    the array.
+
+    If a specific bit is enabled (set to 1), the correction is not available.
+    Only the first rows * cols bits are used, the remainder are set to 0. If
+    there are more then 64 correction points the remaining corrections are
+    always available.
+
+    Starting with the northwest corner of the array (top left on a north
+    oriented map) the correction points are enumerated with row precedence -
+    first row west to east, second row west to east, until last row west to
+    east - ending with the southeast corner of the array.
+
+    See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    definition of the bits is inverted.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'ssr_sol_id' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
+                   'corner_nw_lat' / construct.Int16sl,
+                   'corner_nw_lon' / construct.Int16sl,
+                   'spacing_lat' / construct.Int16ul,
+                   'spacing_lon' / construct.Int16ul,
+                   'rows' / construct.Int16ul,
+                   'cols' / construct.Int16ul,
+                   'bitmask' / construct.Int64ul,)
   __slots__ = [
-               'stub',
+               'ssr_sol_id',
+               'tile_set_id',
+               'tile_id',
+               'corner_nw_lat',
+               'corner_nw_lon',
+               'spacing_lat',
+               'spacing_lon',
+               'rows',
+               'cols',
+               'bitmask',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -1672,7 +2137,16 @@ class MsgSsrTileDefinition(SBP):
       super( MsgSsrTileDefinition, self).__init__()
       self.msg_type = SBP_MSG_SSR_TILE_DEFINITION
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.ssr_sol_id = kwargs.pop('ssr_sol_id')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+      self.corner_nw_lat = kwargs.pop('corner_nw_lat')
+      self.corner_nw_lon = kwargs.pop('corner_nw_lon')
+      self.spacing_lat = kwargs.pop('spacing_lat')
+      self.spacing_lon = kwargs.pop('spacing_lon')
+      self.rows = kwargs.pop('rows')
+      self.cols = kwargs.pop('cols')
+      self.bitmask = kwargs.pop('bitmask')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2371,20 +2845,42 @@ class MsgSsrOrbitClockBounds(SBP):
   of its fields.
 
   
+  Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200);
+  i>230, mean=5+0.5(i-230).
+
+  Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
+  i>230, std=5+0.5(i-230).
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod : int
+    IOD of the SSR bound.
+  const_id : int
+    Constellation ID to which the SVs belong.
+  n_sats : int
+    Number of satellites.
+  orbit_clock_bounds : array
+    Orbit and Clock Bounds per Satellite
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod' / construct.Int8ul,
+                   'const_id' / construct.Int8ul,
+                   'n_sats' / construct.Int8ul,
+                   'orbit_clock_bounds' / construct.GreedyRange(OrbitClockBound._parser),)
   __slots__ = [
-               'stub',
+               'header',
+               'ssr_iod',
+               'const_id',
+               'n_sats',
+               'orbit_clock_bounds',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -2397,7 +2893,11 @@ class MsgSsrOrbitClockBounds(SBP):
       super( MsgSsrOrbitClockBounds, self).__init__()
       self.msg_type = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.header = kwargs.pop('header')
+      self.ssr_iod = kwargs.pop('ssr_iod')
+      self.const_id = kwargs.pop('const_id')
+      self.n_sats = kwargs.pop('n_sats')
+      self.orbit_clock_bounds = kwargs.pop('orbit_clock_bounds')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2463,15 +2963,32 @@ class MsgSsrCodePhaseBiasesBounds(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod : int
+    IOD of the SSR bound.
+  const_id : int
+    Constellation ID to which the SVs belong.
+  n_sats_signals : int
+    Number of satellite-signal couples.
+  satellites_signals : array
+    Code and Phase Biases Bounds per Satellite-Signal couple.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod' / construct.Int8ul,
+                   'const_id' / construct.Int8ul,
+                   'n_sats_signals' / construct.Int8ul,
+                   'satellites_signals' / construct.GreedyRange(CodePhaseBiasesSatSig._parser),)
   __slots__ = [
-               'stub',
+               'header',
+               'ssr_iod',
+               'const_id',
+               'n_sats_signals',
+               'satellites_signals',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -2484,7 +3001,11 @@ class MsgSsrCodePhaseBiasesBounds(SBP):
       super( MsgSsrCodePhaseBiasesBounds, self).__init__()
       self.msg_type = SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.header = kwargs.pop('header')
+      self.ssr_iod = kwargs.pop('ssr_iod')
+      self.const_id = kwargs.pop('const_id')
+      self.n_sats_signals = kwargs.pop('n_sats_signals')
+      self.satellites_signals = kwargs.pop('satellites_signals')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -2550,15 +3071,34 @@ class MsgSsrOrbitClockBoundsDegradation(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  header : BoundsHeader
+    Header of a bounds message.
+  ssr_iod : int
+    IOD of the SSR bound degradation parameter.
+  const_id : int
+    Constellation ID to which the SVs belong.
+  sat_bitmask : int
+    Satellite Bit Mask. Put 1 for each satellite where the following
+    degradation parameters are applicable, 0 otherwise. Encoded following RTCM
+    DF394 specification.
+  orbit_clock_bounds_degradation : OrbitClockBoundDegradation
+    Orbit and Clock Bounds Degradation Parameters
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'header' / BoundsHeader._parser,
+                   'ssr_iod' / construct.Int8ul,
+                   'const_id' / construct.Int8ul,
+                   'sat_bitmask' / construct.Int64ul,
+                   'orbit_clock_bounds_degradation' / OrbitClockBoundDegradation._parser,)
   __slots__ = [
-               'stub',
+               'header',
+               'ssr_iod',
+               'const_id',
+               'sat_bitmask',
+               'orbit_clock_bounds_degradation',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -2571,7 +3111,11 @@ class MsgSsrOrbitClockBoundsDegradation(SBP):
       super( MsgSsrOrbitClockBoundsDegradation, self).__init__()
       self.msg_type = SBP_MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.header = kwargs.pop('header')
+      self.ssr_iod = kwargs.pop('ssr_iod')
+      self.const_id = kwargs.pop('const_id')
+      self.sat_bitmask = kwargs.pop('sat_bitmask')
+      self.orbit_clock_bounds_degradation = kwargs.pop('orbit_clock_bounds_degradation')
 
   def __repr__(self):
     return fmt_repr(self)

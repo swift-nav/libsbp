@@ -5,13 +5,35 @@ tests:
 
   - msg:
       fields:
-        stub: [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,2,1,1,1,63,0,62,0,61,0,60,0,31,15,5,63,0,64,0,65,0,66,0]
-      c_decoded_fields:
-        n_stub: 38
+        header:
+          time:
+            tow: 180
+            wn: 3
+          num_msgs: 1
+          seq_num: 1
+          update_interval: 10
+          sol_id: 0
+        ssr_iod_atmo: 15
+        tile_set_id: 1
+        tile_id: 10
+        n_sats: 2
+        stec_sat_list:
+        - sv_id:
+            satId: 1
+            constellation: 1
+          stec_quality_indicator: 1
+          stec_coeff: [63,62,61,60]
+        - sv_id:
+            satId: 31
+            constellation: 15
+          stec_quality_indicator: 5
+          stec_coeff: [63,64,65,66]
       module: sbp.ssr
       name: MsgSsrStecCorrection
     msg_type: '1533'
-    raw_json: '{"stub": [180,0,0,0,3,0,1,1,10,0,15,1,0,10,0,2,1,1,1,63,0,62,0,61,0,60,0,31,15,5,63,0,64,0,65,0,66,0],
+    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0},
+    "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "n_sats": 2, "stec_sat_list": [{"sv_id": {"satId": 1, "constellation": 1},
+    "stec_quality_indicator": 1, "stec_coeff": [63, 62, 61, 60]}, {"sv_id": {"satId": 31, "constellation": 15}, "stec_quality_indicator": 5, "stec_coeff": [63, 64, 65, 66]}],
     "preamble": 85, "msg_type": 1533, "sender": 66, "length": 38, "payload": "tAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgA=", "crc": 12919}'
     raw_packet: Vf0FQgAmtAAAAAMAAQEKAA8BAAoAAgEBAT8APgA9ADwAHw8FPwBAAEEAQgB3Mg==
     sbp:
