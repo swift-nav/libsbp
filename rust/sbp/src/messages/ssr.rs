@@ -58,7 +58,7 @@ pub mod bounds_header {
     use crate::messages::lib::*;
     /// Header for the Bounds messages
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct BoundsHeader {
         /// GNSS reference time of the bound
         #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
@@ -159,7 +159,7 @@ pub mod code_phase_biases_sat_sig {
     use crate::messages::lib::*;
     /// Code and Phase Biases Bounds per Satellite-Signal couple
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct CodePhaseBiasesSatSig {
         /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
         /// DF488 (BDS) depending on the constellation.
@@ -2527,7 +2527,7 @@ pub mod orbit_clock_bound {
     /// Orbit and clock bound.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct OrbitClockBound {
         /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
         /// DF488 (BDS) depending on the constellation.
@@ -2619,7 +2619,7 @@ pub mod orbit_clock_bound_degradation {
     /// Orbit and clock bound degradation.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct OrbitClockBoundDegradation {
         /// Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
         #[cfg_attr(
@@ -3074,7 +3074,7 @@ pub mod stec_sat_element_integrity {
     /// STEC polynomial and bounds for the given satellite.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct STECSatElementIntegrity {
         /// STEC residuals (mean, stddev)
         #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_residual")))]

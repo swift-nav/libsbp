@@ -4,8 +4,10 @@
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
+//   const boundsHeader = Convert.toBoundsHeader(json);
 //   const carrierPhase = Convert.toCarrierPhase(json);
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
+//   const codePhaseBiasesSatSig = Convert.toCodePhaseBiasesSatSig(json);
 //   const doppler = Convert.toDoppler(json);
 //   const ephemerisCommonContent = Convert.toEphemerisCommonContent(json);
 //   const estimatedHorizontalErrorEllipse = Convert.toEstimatedHorizontalErrorEllipse(json);
@@ -18,6 +20,7 @@
 //   const gridElementNoStd = Convert.toGridElementNoStd(json);
 //   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
 //   const iMUInputType = Convert.toIMUInputType(json);
+//   const integritySSRHeader = Convert.toIntegritySSRHeader(json);
 //   const latency = Convert.toLatency(json);
 //   const measurementState = Convert.toMeasurementState(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
@@ -183,6 +186,8 @@
 //   const networkUsage = Convert.toNetworkUsage(json);
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const odoInputType = Convert.toOdoInputType(json);
+//   const orbitClockBound = Convert.toOrbitClockBound(json);
+//   const orbitClockBoundDegradation = Convert.toOrbitClockBoundDegradation(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
 //   const packedOsrContent = Convert.toPackedOsrContent(json);
 //   const period = Convert.toPeriod(json);
@@ -191,6 +196,7 @@
 //   const sTECResidual = Convert.toSTECResidual(json);
 //   const sTECResidualNoStd = Convert.toSTECResidualNoStd(json);
 //   const sTECSatElement = Convert.toSTECSatElement(json);
+//   const sTECSatElementIntegrity = Convert.toSTECSatElementIntegrity(json);
 //   const satelliteAPC = Convert.toSatelliteAPC(json);
 //   const solutionInputType = Convert.toSolutionInputType(json);
 //   const statusJournalItem = Convert.toStatusJournalItem(json);
@@ -224,6 +230,14 @@ function almanacCommonContentToJson(value) {
     return JSON.stringify(uncast(value, r("AlmanacCommonContent")), null, 2);
 }
 
+function toBoundsHeader(json) {
+    return cast(JSON.parse(json), r("BoundsHeader"));
+}
+
+function boundsHeaderToJson(value) {
+    return JSON.stringify(uncast(value, r("BoundsHeader")), null, 2);
+}
+
 function toCarrierPhase(json) {
     return cast(JSON.parse(json), r("CarrierPhase"));
 }
@@ -238,6 +252,14 @@ function toCodeBiasesContent(json) {
 
 function codeBiasesContentToJson(value) {
     return JSON.stringify(uncast(value, r("CodeBiasesContent")), null, 2);
+}
+
+function toCodePhaseBiasesSatSig(json) {
+    return cast(JSON.parse(json), r("CodePhaseBiasesSatSig"));
+}
+
+function codePhaseBiasesSatSigToJson(value) {
+    return JSON.stringify(uncast(value, r("CodePhaseBiasesSatSig")), null, 2);
 }
 
 function toDoppler(json) {
@@ -334,6 +356,14 @@ function toIMUInputType(json) {
 
 function iMUInputTypeToJson(value) {
     return JSON.stringify(uncast(value, r("IMUInputType")), null, 2);
+}
+
+function toIntegritySSRHeader(json) {
+    return cast(JSON.parse(json), r("IntegritySSRHeader"));
+}
+
+function integritySSRHeaderToJson(value) {
+    return JSON.stringify(uncast(value, r("IntegritySSRHeader")), null, 2);
 }
 
 function toLatency(json) {
@@ -1656,6 +1686,22 @@ function odoInputTypeToJson(value) {
     return JSON.stringify(uncast(value, r("OdoInputType")), null, 2);
 }
 
+function toOrbitClockBound(json) {
+    return cast(JSON.parse(json), r("OrbitClockBound"));
+}
+
+function orbitClockBoundToJson(value) {
+    return JSON.stringify(uncast(value, r("OrbitClockBound")), null, 2);
+}
+
+function toOrbitClockBoundDegradation(json) {
+    return cast(JSON.parse(json), r("OrbitClockBoundDegradation"));
+}
+
+function orbitClockBoundDegradationToJson(value) {
+    return JSON.stringify(uncast(value, r("OrbitClockBoundDegradation")), null, 2);
+}
+
 function toPackedObsContent(json) {
     return cast(JSON.parse(json), r("PackedObsContent"));
 }
@@ -1718,6 +1764,14 @@ function toSTECSatElement(json) {
 
 function sTECSatElementToJson(value) {
     return JSON.stringify(uncast(value, r("STECSatElement")), null, 2);
+}
+
+function toSTECSatElementIntegrity(json) {
+    return cast(JSON.parse(json), r("STECSatElementIntegrity"));
+}
+
+function sTECSatElementIntegrityToJson(value) {
+    return JSON.stringify(uncast(value, r("STECSatElementIntegrity")), null, 2);
 }
 
 function toSatelliteAPC(json) {
@@ -2870,25 +2924,81 @@ const typeMap = {
         { json: "value", js: "value", typ: 0 },
     ], "any"),
     "MsgSsrCodePhaseBiasesBounds": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats_signals", js: "n_sats_signals", typ: 0 },
+        { json: "satellites_signals", js: "satellites_signals", typ: a(r("CodePhaseBiasesSatSig")) },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "BoundsHeader": o([
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "CodePhaseBiasesSatSig": o([
+        { json: "code_bias_bound_mu", js: "code_bias_bound_mu", typ: 0 },
+        { json: "code_bias_bound_sig", js: "code_bias_bound_sig", typ: 0 },
+        { json: "phase_bias_bound_mu", js: "phase_bias_bound_mu", typ: 0 },
+        { json: "phase_bias_bound_sig", js: "phase_bias_bound_sig", typ: 0 },
+        { json: "sat_id", js: "sat_id", typ: 0 },
+        { json: "signal_id", js: "signal_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagHighLevel": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "corr_time", js: "corr_time", typ: r("GpsTimeSEC") },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "use_bds_sat", js: "use_bds_sat", typ: 0 },
+        { json: "use_gal_sat", js: "use_gal_sat", typ: 0 },
+        { json: "use_gps_sat", js: "use_gps_sat", typ: 0 },
+        { json: "use_iono_grid_point_sat_los", js: "use_iono_grid_point_sat_los", typ: 0 },
+        { json: "use_iono_grid_points", js: "use_iono_grid_points", typ: 0 },
+        { json: "use_iono_tile_sat_los", js: "use_iono_tile_sat_los", typ: 0 },
+        { json: "use_tropo_grid_points", js: "use_tropo_grid_points", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPointSatLos": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
+    ], "any"),
+    "IntegritySSRHeader": o([
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoGridPoints": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
     ], "any"),
     "MsgSsrFlagIonoTileSatLos": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_los", js: "faulty_los", typ: a(r("SvID")) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_los", js: "n_faulty_los", typ: 0 },
     ], "any"),
     "MsgSsrFlagSatellites": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "chain_id", js: "chain_id", typ: 0 },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "faulty_sats", js: "faulty_sats", typ: a(0) },
+        { json: "n_faulty_sats", js: "n_faulty_sats", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "obs_time", js: "obs_time", typ: r("GpsTimeSEC") },
+        { json: "seq_num", js: "seq_num", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
     ], "any"),
     "MsgSsrFlagTropoGridPoints": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "faulty_points", js: "faulty_points", typ: a(0) },
+        { json: "header", js: "header", typ: r("IntegritySSRHeader") },
+        { json: "n_faulty_points", js: "n_faulty_points", typ: 0 },
     ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
@@ -2907,7 +3017,26 @@ const typeMap = {
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgSsrGriddedCorrectionBounds": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "grid_point_id", js: "grid_point_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "ssr_iod_atmo", js: "ssr_iod_atmo", typ: 0 },
+        { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElementIntegrity")) },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrection") },
+        { json: "tropo_qi", js: "tropo_qi", typ: 0 },
+        { json: "tropo_v_hydro_bound_mu", js: "tropo_v_hydro_bound_mu", typ: 0 },
+        { json: "tropo_v_hydro_bound_sig", js: "tropo_v_hydro_bound_sig", typ: 0 },
+        { json: "tropo_v_wet_bound_mu", js: "tropo_v_wet_bound_mu", typ: 0 },
+        { json: "tropo_v_wet_bound_sig", js: "tropo_v_wet_bound_sig", typ: 0 },
+    ], "any"),
+    "STECSatElementIntegrity": o([
+        { json: "stec_bound_mu", js: "stec_bound_mu", typ: 0 },
+        { json: "stec_bound_mu_dot", js: "stec_bound_mu_dot", typ: 0 },
+        { json: "stec_bound_sig", js: "stec_bound_sig", typ: 0 },
+        { json: "stec_bound_sig_dot", js: "stec_bound_sig_dot", typ: 0 },
+        { json: "stec_residual", js: "stec_residual", typ: r("STECResidual") },
     ], "any"),
     "MsgSsrOrbitClock": o([
         { json: "along", js: "along", typ: 0 },
@@ -2926,10 +3055,39 @@ const typeMap = {
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgSsrOrbitClockBounds": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "orbit_clock_bounds", js: "orbit_clock_bounds", typ: a(r("OrbitClockBound")) },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "OrbitClockBound": o([
+        { json: "clock_bound_mu", js: "clock_bound_mu", typ: 0 },
+        { json: "clock_bound_sig", js: "clock_bound_sig", typ: 0 },
+        { json: "orb_along_bound_mu", js: "orb_along_bound_mu", typ: 0 },
+        { json: "orb_along_bound_sig", js: "orb_along_bound_sig", typ: 0 },
+        { json: "orb_cross_bound_mu", js: "orb_cross_bound_mu", typ: 0 },
+        { json: "orb_cross_bound_sig", js: "orb_cross_bound_sig", typ: 0 },
+        { json: "orb_radial_bound_mu", js: "orb_radial_bound_mu", typ: 0 },
+        { json: "orb_radial_bound_sig", js: "orb_radial_bound_sig", typ: 0 },
+        { json: "sat_id", js: "sat_id", typ: 0 },
     ], "any"),
     "MsgSsrOrbitClockBoundsDegradation": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "const_id", js: "const_id", typ: 0 },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "orbit_clock_bounds_degradation", js: "orbit_clock_bounds_degradation", typ: r("OrbitClockBoundDegradation") },
+        { json: "sat_bitmask", js: "sat_bitmask", typ: 0 },
+        { json: "ssr_iod", js: "ssr_iod", typ: 0 },
+    ], "any"),
+    "OrbitClockBoundDegradation": o([
+        { json: "clock_bound_mu_dot", js: "clock_bound_mu_dot", typ: 0 },
+        { json: "clock_bound_sig_dot", js: "clock_bound_sig_dot", typ: 0 },
+        { json: "orb_along_bound_mu_dot", js: "orb_along_bound_mu_dot", typ: 0 },
+        { json: "orb_along_bound_sig_dot", js: "orb_along_bound_sig_dot", typ: 0 },
+        { json: "orb_cross_bound_mu_dot", js: "orb_cross_bound_mu_dot", typ: 0 },
+        { json: "orb_cross_bound_sig_dot", js: "orb_cross_bound_sig_dot", typ: 0 },
+        { json: "orb_radial_bound_mu_dot", js: "orb_radial_bound_mu_dot", typ: 0 },
+        { json: "orb_radial_bound_sig_dot", js: "orb_radial_bound_sig_dot", typ: 0 },
     ], "any"),
     "MsgSsrPhaseBiases": o([
         { json: "biases", js: "biases", typ: a(r("PhaseBiasesContent")) },
@@ -2960,10 +3118,29 @@ const typeMap = {
         { json: "svn", js: "svn", typ: 0 },
     ], "any"),
     "MsgSsrStecCorrection": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "header", js: "header", typ: r("BoundsHeader") },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "ssr_iod_atmo", js: "ssr_iod_atmo", typ: 0 },
+        { json: "stec_sat_list", js: "stec_sat_list", typ: a(r("STECSatElement")) },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+    ], "any"),
+    "STECSatElement": o([
+        { json: "stec_coeff", js: "stec_coeff", typ: a(0) },
+        { json: "stec_quality_indicator", js: "stec_quality_indicator", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
     ], "any"),
     "MsgSsrTileDefinition": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "bitmask", js: "bitmask", typ: 0 },
+        { json: "cols", js: "cols", typ: 0 },
+        { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
+        { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
+        { json: "rows", js: "rows", typ: 0 },
+        { json: "spacing_lat", js: "spacing_lat", typ: 0 },
+        { json: "spacing_lon", js: "spacing_lon", typ: 0 },
+        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
+        { json: "tile_id", js: "tile_id", typ: 0 },
+        { json: "tile_set_id", js: "tile_set_id", typ: 0 },
     ], "any"),
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },
@@ -3222,11 +3399,6 @@ const typeMap = {
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
-    "STECSatElement": o([
-        { json: "stec_coeff", js: "stec_coeff", typ: a(0) },
-        { json: "stec_quality_indicator", js: "stec_quality_indicator", typ: 0 },
-        { json: "sv_id", js: "sv_id", typ: r("SvID") },
-    ], "any"),
 };
 
 module.exports = {
@@ -3234,10 +3406,14 @@ module.exports = {
     "toAcqSvProfile": toAcqSvProfile,
     "almanacCommonContentToJson": almanacCommonContentToJson,
     "toAlmanacCommonContent": toAlmanacCommonContent,
+    "boundsHeaderToJson": boundsHeaderToJson,
+    "toBoundsHeader": toBoundsHeader,
     "carrierPhaseToJson": carrierPhaseToJson,
     "toCarrierPhase": toCarrierPhase,
     "codeBiasesContentToJson": codeBiasesContentToJson,
     "toCodeBiasesContent": toCodeBiasesContent,
+    "codePhaseBiasesSatSigToJson": codePhaseBiasesSatSigToJson,
+    "toCodePhaseBiasesSatSig": toCodePhaseBiasesSatSig,
     "dopplerToJson": dopplerToJson,
     "toDoppler": toDoppler,
     "ephemerisCommonContentToJson": ephemerisCommonContentToJson,
@@ -3262,6 +3438,8 @@ module.exports = {
     "toGriddedCorrectionHeader": toGriddedCorrectionHeader,
     "iMUInputTypeToJson": iMUInputTypeToJson,
     "toIMUInputType": toIMUInputType,
+    "integritySSRHeaderToJson": integritySSRHeaderToJson,
+    "toIntegritySSRHeader": toIntegritySSRHeader,
     "latencyToJson": latencyToJson,
     "toLatency": toLatency,
     "measurementStateToJson": measurementStateToJson,
@@ -3592,6 +3770,10 @@ module.exports = {
     "toObservationHeader": toObservationHeader,
     "odoInputTypeToJson": odoInputTypeToJson,
     "toOdoInputType": toOdoInputType,
+    "orbitClockBoundToJson": orbitClockBoundToJson,
+    "toOrbitClockBound": toOrbitClockBound,
+    "orbitClockBoundDegradationToJson": orbitClockBoundDegradationToJson,
+    "toOrbitClockBoundDegradation": toOrbitClockBoundDegradation,
     "packedObsContentToJson": packedObsContentToJson,
     "toPackedObsContent": toPackedObsContent,
     "packedOsrContentToJson": packedOsrContentToJson,
@@ -3608,6 +3790,8 @@ module.exports = {
     "toSTECResidualNoStd": toSTECResidualNoStd,
     "sTECSatElementToJson": sTECSatElementToJson,
     "toSTECSatElement": toSTECSatElement,
+    "sTECSatElementIntegrityToJson": sTECSatElementIntegrityToJson,
+    "toSTECSatElementIntegrity": toSTECSatElementIntegrity,
     "satelliteAPCToJson": satelliteAPCToJson,
     "toSatelliteAPC": toSatelliteAPC,
     "solutionInputTypeToJson": solutionInputTypeToJson,

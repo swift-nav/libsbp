@@ -16,25 +16,9 @@
   "description":"Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model parameters.\n",
   "type": "object",
   "properties": {
-    "bias_coeff": {"type": "integer"},
-    "drift_coeff": {"type": "integer"},
-    "drift_rate_coeff": {"type": "integer"},
-    "count_before": {"type": "integer"},
-    "tow_s": {"type": "integer"},
-    "wn": {"type": "integer"},
-    "ref_wn": {"type": "integer"},
-    "ref_dn": {"type": "integer"},
-    "count_after": {"type": "integer"}
+    "stub": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "bias_coeff",
-    "drift_coeff",
-    "drift_rate_coeff",
-    "count_before",
-    "tow_s",
-    "wn",
-    "ref_wn",
-    "ref_dn",
-    "count_after"
+    "stub"
   ]
 }

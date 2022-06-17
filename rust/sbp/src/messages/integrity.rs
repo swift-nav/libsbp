@@ -29,7 +29,7 @@ pub mod integrity_ssr_header {
     use crate::messages::lib::*;
     /// Common fields for SSR integrity messages
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, PartialEq, Clone)]
     pub struct IntegritySSRHeader {
         /// GNSS reference time of the observation used to generate the flag.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "obs_time")))]

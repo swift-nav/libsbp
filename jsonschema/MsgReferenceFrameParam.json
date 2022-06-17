@@ -11,77 +11,14 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-<<<<<<< HEAD
   "$id": "#MsgReferenceFrameParam",
   "title":"MsgReferenceFrameParam",
   "description":"",
   "type": "object",
   "properties": {
-    "ssr_iod": {"type": "integer"},
-    "sn": {"type": "string"},
-    "tn": {"type": "string"},
-    "sin": {"type": "integer"},
-    "utn": {"type": "integer"},
-    "re_t0": {"type": "integer"},
-    "delta_X0": {"type": "integer"},
-    "delta_Y0": {"type": "integer"},
-    "delta_Z0": {"type": "integer"},
-    "theta_01": {"type": "integer"},
-    "theta_02": {"type": "integer"},
-    "theta_03": {"type": "integer"},
-    "scale": {"type": "integer"},
-    "dot_delta_X0": {"type": "integer"},
-    "dot_delta_Y0": {"type": "integer"},
-    "dot_delta_Z0": {"type": "integer"},
-    "dot_theta_01": {"type": "integer"},
-    "dot_theta_02": {"type": "integer"},
-    "dot_theta_03": {"type": "integer"},
-    "dot_scale": {"type": "integer"}
+    "stub": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "ssr_iod",
-    "sn",
-    "tn",
-    "sin",
-    "utn",
-    "re_t0",
-    "delta_X0",
-    "delta_Y0",
-    "delta_Z0",
-    "theta_01",
-    "theta_02",
-    "theta_03",
-    "scale",
-    "dot_delta_X0",
-    "dot_delta_Y0",
-    "dot_delta_Z0",
-    "dot_theta_01",
-    "dot_theta_02",
-    "dot_theta_03",
-    "dot_scale"
-=======
-<<<<<<< HEAD:jsonschema/BoundsHeader.json
-  "$id": "#BoundsHeader",
-  "title":"BoundsHeader",
-=======
-  "$id": "#MsgReferenceFrameParam",
-  "title":"MsgReferenceFrameParam",
->>>>>>> origin/master:jsonschema/MsgReferenceFrameParam.json
-  "description":"",
-  "type": "object",
-  "properties": {
-    "time": {"$ref": "GpsTimeSec.json"},
-    "num_msgs": {"type": "integer"},
-    "seq_num": {"type": "integer"},
-    "update_interval": {"type": "integer"},
-    "sol_id": {"type": "integer"}
-  },
-  "required": [
-    "time",
-    "num_msgs",
-    "seq_num",
-    "update_interval",
-    "sol_id"
->>>>>>> origin/master
+    "stub"
   ]
 }

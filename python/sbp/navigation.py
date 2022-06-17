@@ -5121,51 +5121,15 @@ class MsgUtcLeapSecond(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  bias_coeff : int
-    Reserved. Bias coefficient of GPS time scale with respect to UTC drift
-    model.
-  drift_coeff : int
-    Reserved. Drift coefficient of GPS time scale with respect to UTC drift
-    model.
-  drift_rate_coeff : int
-    Reserved. Drift rate correction coefficient of GPS time scale with respect
-    to UTC drift model.
-  count_before : int
-    Leap second count before insertion.
-  tow_s : int
-    Reserved. Drift model reference week second.
-  wn : int
-    Reserved. Drift model reference week number.
-  ref_wn : int
-    Leap second reference week number.
-  ref_dn : int
-    Leap second reference day number.
-  count_after : int
-    Leap second count after insertion.
+  stub : array
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'bias_coeff' / construct.Int16sl,
-                   'drift_coeff' / construct.Int16sl,
-                   'drift_rate_coeff' / construct.Int8sl,
-                   'count_before' / construct.Int8sl,
-                   'tow_s' / construct.Int16ul,
-                   'wn' / construct.Int16ul,
-                   'ref_wn' / construct.Int16ul,
-                   'ref_dn' / construct.Int8ul,
-                   'count_after' / construct.Int8sl,)
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
-               'bias_coeff',
-               'drift_coeff',
-               'drift_rate_coeff',
-               'count_before',
-               'tow_s',
-               'wn',
-               'ref_wn',
-               'ref_dn',
-               'count_after',
+               'stub',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -5178,15 +5142,7 @@ class MsgUtcLeapSecond(SBP):
       super( MsgUtcLeapSecond, self).__init__()
       self.msg_type = SBP_MSG_UTC_LEAP_SECOND
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.bias_coeff = kwargs.pop('bias_coeff')
-      self.drift_coeff = kwargs.pop('drift_coeff')
-      self.drift_rate_coeff = kwargs.pop('drift_rate_coeff')
-      self.count_before = kwargs.pop('count_before')
-      self.tow_s = kwargs.pop('tow_s')
-      self.wn = kwargs.pop('wn')
-      self.ref_wn = kwargs.pop('ref_wn')
-      self.ref_dn = kwargs.pop('ref_dn')
-      self.count_after = kwargs.pop('count_after')
+      self.stub = kwargs.pop('stub')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -5252,93 +5208,15 @@ class MsgReferenceFrameParam(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  ssr_iod : int
-    SSR IOD parameter.
-  sn : string
-    Name of source coordinate-system using the EPSG identification code.
-  tn : string
-    Name of target coordinate-system using the EPSG identification code.
-  sin : int
-    System Identification Number.
-  utn : int
-    Utilized Transformation Message.
-  re_t0 : int
-    Reference Epoch t0 for transformation parameter set given as Modified
-    Julian Day (MDJ) Number minus 44244 days.
-  delta_X0 : int
-    Translation in X for Reference Epoch t0.
-  delta_Y0 : int
-    Translation in Y for Reference Epoch t0.
-  delta_Z0 : int
-    Translation in Z for Reference Epoch t0.
-  theta_01 : int
-    Rotation around the X-axis for Reference Epoch t0.
-  theta_02 : int
-    Rotation around the Y-axis for Reference Epoch t0.
-  theta_03 : int
-    Rotation around the Z-axis for Reference Epoch t0.
-  scale : int
-    Scale correction for Reference Epoch t0.
-  dot_delta_X0 : int
-    Rate of change of translation in X.
-  dot_delta_Y0 : int
-    Rate of change of translation in Y.
-  dot_delta_Z0 : int
-    Rate of change of translation in Z.
-  dot_theta_01 : int
-    Rate of change of rotation around the X-axis.
-  dot_theta_02 : int
-    Rate of change of rotation around the Y-axis.
-  dot_theta_03 : int
-    Rate of change of rotation around the Z-axis.
-  dot_scale : int
-    Rate of change of scale correction.
+  stub : array
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'ssr_iod' / construct.Int8ul,
-                   'sn'/ construct.Bytes(32),
-                   'tn'/ construct.Bytes(32),
-                   'sin' / construct.Int8ul,
-                   'utn' / construct.Int16ul,
-                   're_t0' / construct.Int16ul,
-                   'delta_X0' / construct.Int32sl,
-                   'delta_Y0' / construct.Int32sl,
-                   'delta_Z0' / construct.Int32sl,
-                   'theta_01' / construct.Int32sl,
-                   'theta_02' / construct.Int32sl,
-                   'theta_03' / construct.Int32sl,
-                   'scale' / construct.Int32sl,
-                   'dot_delta_X0' / construct.Int32sl,
-                   'dot_delta_Y0' / construct.Int32sl,
-                   'dot_delta_Z0' / construct.Int32sl,
-                   'dot_theta_01' / construct.Int32sl,
-                   'dot_theta_02' / construct.Int32sl,
-                   'dot_theta_03' / construct.Int32sl,
-                   'dot_scale' / construct.Int16sl,)
+                   'stub' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
-               'ssr_iod',
-               'sn',
-               'tn',
-               'sin',
-               'utn',
-               're_t0',
-               'delta_X0',
-               'delta_Y0',
-               'delta_Z0',
-               'theta_01',
-               'theta_02',
-               'theta_03',
-               'scale',
-               'dot_delta_X0',
-               'dot_delta_Y0',
-               'dot_delta_Z0',
-               'dot_theta_01',
-               'dot_theta_02',
-               'dot_theta_03',
-               'dot_scale',
+               'stub',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -5351,26 +5229,7 @@ class MsgReferenceFrameParam(SBP):
       super( MsgReferenceFrameParam, self).__init__()
       self.msg_type = SBP_MSG_REFERENCE_FRAME_PARAM
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.ssr_iod = kwargs.pop('ssr_iod')
-      self.sn = kwargs.pop('sn')
-      self.tn = kwargs.pop('tn')
-      self.sin = kwargs.pop('sin')
-      self.utn = kwargs.pop('utn')
-      self.re_t0 = kwargs.pop('re_t0')
-      self.delta_X0 = kwargs.pop('delta_X0')
-      self.delta_Y0 = kwargs.pop('delta_Y0')
-      self.delta_Z0 = kwargs.pop('delta_Z0')
-      self.theta_01 = kwargs.pop('theta_01')
-      self.theta_02 = kwargs.pop('theta_02')
-      self.theta_03 = kwargs.pop('theta_03')
-      self.scale = kwargs.pop('scale')
-      self.dot_delta_X0 = kwargs.pop('dot_delta_X0')
-      self.dot_delta_Y0 = kwargs.pop('dot_delta_Y0')
-      self.dot_delta_Z0 = kwargs.pop('dot_delta_Z0')
-      self.dot_theta_01 = kwargs.pop('dot_theta_01')
-      self.dot_theta_02 = kwargs.pop('dot_theta_02')
-      self.dot_theta_03 = kwargs.pop('dot_theta_03')
-      self.dot_scale = kwargs.pop('dot_scale')
+      self.stub = kwargs.pop('stub')
 
   def __repr__(self):
     return fmt_repr(self)
