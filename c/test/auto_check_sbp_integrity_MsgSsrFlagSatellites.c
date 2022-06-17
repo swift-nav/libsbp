@@ -103,37 +103,27 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagSatellites) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_flag_satellites.n_stub = 15;
+    test_msg.ssr_flag_satellites.chain_id = 4;
 
-    test_msg.ssr_flag_satellites.stub[0] = 180;
+    test_msg.ssr_flag_satellites.const_id = 5;
 
-    test_msg.ssr_flag_satellites.stub[1] = 0;
+    test_msg.ssr_flag_satellites.faulty_sats[0] = 10;
 
-    test_msg.ssr_flag_satellites.stub[2] = 0;
+    test_msg.ssr_flag_satellites.faulty_sats[1] = 11;
 
-    test_msg.ssr_flag_satellites.stub[3] = 0;
+    test_msg.ssr_flag_satellites.faulty_sats[2] = 12;
 
-    test_msg.ssr_flag_satellites.stub[4] = 3;
+    test_msg.ssr_flag_satellites.n_faulty_sats = 3;
 
-    test_msg.ssr_flag_satellites.stub[5] = 0;
+    test_msg.ssr_flag_satellites.num_msgs = 1;
 
-    test_msg.ssr_flag_satellites.stub[6] = 1;
+    test_msg.ssr_flag_satellites.obs_time.tow = 180;
 
-    test_msg.ssr_flag_satellites.stub[7] = 2;
+    test_msg.ssr_flag_satellites.obs_time.wn = 3;
 
-    test_msg.ssr_flag_satellites.stub[8] = 3;
+    test_msg.ssr_flag_satellites.seq_num = 2;
 
-    test_msg.ssr_flag_satellites.stub[9] = 4;
-
-    test_msg.ssr_flag_satellites.stub[10] = 5;
-
-    test_msg.ssr_flag_satellites.stub[11] = 3;
-
-    test_msg.ssr_flag_satellites.stub[12] = 10;
-
-    test_msg.ssr_flag_satellites.stub[13] = 11;
-
-    test_msg.ssr_flag_satellites.stub[14] = 12;
+    test_msg.ssr_flag_satellites.ssr_sol_id = 3;
 
     sbp_message_send(&sbp_state, SbpMsgSsrFlagSatellites, 66, &test_msg,
                      &dummy_write);
@@ -159,77 +149,68 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagSatellites) {
         sbp_message_cmp(SbpMsgSsrFlagSatellites, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.n_stub == 15,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.n_stub, expected 15, is %d",
-                  last_msg.msg.ssr_flag_satellites.n_stub);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_satellites.chain_id == 4,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.chain_id, "
+        "expected 4, is %d",
+        last_msg.msg.ssr_flag_satellites.chain_id);
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_satellites.stub[0] == 180,
-        "incorrect value for last_msg.msg.ssr_flag_satellites.stub[0], "
-        "expected 180, is %d",
-        last_msg.msg.ssr_flag_satellites.stub[0]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[1] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[1], expected 0, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[1]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[2] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[2], expected 0, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[2]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[3] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[3], expected 0, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[3]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[4] == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[4], expected 3, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[4]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[5] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[5], expected 0, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[5]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[6] == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[6], expected 1, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[6]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[7] == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[7], expected 2, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[7]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[8] == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[8], expected 3, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[8]);
-    ck_assert_msg(last_msg.msg.ssr_flag_satellites.stub[9] == 4,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_satellites.stub[9], expected 4, is %d",
-                  last_msg.msg.ssr_flag_satellites.stub[9]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_satellites.stub[10] == 5,
-        "incorrect value for last_msg.msg.ssr_flag_satellites.stub[10], "
+        last_msg.msg.ssr_flag_satellites.const_id == 5,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.const_id, "
         "expected 5, is %d",
-        last_msg.msg.ssr_flag_satellites.stub[10]);
+        last_msg.msg.ssr_flag_satellites.const_id);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_satellites.stub[11] == 3,
-        "incorrect value for last_msg.msg.ssr_flag_satellites.stub[11], "
-        "expected 3, is %d",
-        last_msg.msg.ssr_flag_satellites.stub[11]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_satellites.stub[12] == 10,
-        "incorrect value for last_msg.msg.ssr_flag_satellites.stub[12], "
+        last_msg.msg.ssr_flag_satellites.faulty_sats[0] == 10,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.faulty_sats[0], "
         "expected 10, is %d",
-        last_msg.msg.ssr_flag_satellites.stub[12]);
+        last_msg.msg.ssr_flag_satellites.faulty_sats[0]);
     ck_assert_msg(
-        last_msg.msg.ssr_flag_satellites.stub[13] == 11,
-        "incorrect value for last_msg.msg.ssr_flag_satellites.stub[13], "
+        last_msg.msg.ssr_flag_satellites.faulty_sats[1] == 11,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.faulty_sats[1], "
         "expected 11, is %d",
-        last_msg.msg.ssr_flag_satellites.stub[13]);
+        last_msg.msg.ssr_flag_satellites.faulty_sats[1]);
     ck_assert_msg(
-        last_msg.msg.ssr_flag_satellites.stub[14] == 12,
-        "incorrect value for last_msg.msg.ssr_flag_satellites.stub[14], "
+        last_msg.msg.ssr_flag_satellites.faulty_sats[2] == 12,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.faulty_sats[2], "
         "expected 12, is %d",
-        last_msg.msg.ssr_flag_satellites.stub[14]);
+        last_msg.msg.ssr_flag_satellites.faulty_sats[2]);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_satellites.n_faulty_sats == 3,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.n_faulty_sats, "
+        "expected 3, is %d",
+        last_msg.msg.ssr_flag_satellites.n_faulty_sats);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_satellites.num_msgs == 1,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.num_msgs, "
+        "expected 1, is %d",
+        last_msg.msg.ssr_flag_satellites.num_msgs);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_satellites.obs_time.tow == 180,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.obs_time.tow, "
+        "expected 180, is %d",
+        last_msg.msg.ssr_flag_satellites.obs_time.tow);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_satellites.obs_time.wn == 3,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.obs_time.wn, "
+        "expected 3, is %d",
+        last_msg.msg.ssr_flag_satellites.obs_time.wn);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_satellites.seq_num == 2,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_satellites.seq_num, expected 2, is %d",
+                  last_msg.msg.ssr_flag_satellites.seq_num);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_satellites.ssr_sol_id == 3,
+        "incorrect value for last_msg.msg.ssr_flag_satellites.ssr_sol_id, "
+        "expected 3, is %d",
+        last_msg.msg.ssr_flag_satellites.ssr_sol_id);
   }
 }
 END_TEST

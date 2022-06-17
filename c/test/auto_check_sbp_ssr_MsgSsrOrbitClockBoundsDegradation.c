@@ -104,63 +104,47 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrOrbitClockBoundsDegradation) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_orbit_clock_bounds_degradation.n_stub = 28;
+    test_msg.ssr_orbit_clock_bounds_degradation.const_id = 1;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[0] = 180;
+    test_msg.ssr_orbit_clock_bounds_degradation.header.num_msgs = 1;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[1] = 0;
+    test_msg.ssr_orbit_clock_bounds_degradation.header.seq_num = 2;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[2] = 0;
+    test_msg.ssr_orbit_clock_bounds_degradation.header.sol_id = 48;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[3] = 0;
+    test_msg.ssr_orbit_clock_bounds_degradation.header.time.tow = 180;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[4] = 3;
+    test_msg.ssr_orbit_clock_bounds_degradation.header.time.wn = 3;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[5] = 0;
+    test_msg.ssr_orbit_clock_bounds_degradation.header.update_interval = 3;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[6] = 1;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .clock_bound_mu_dot = 194;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[7] = 2;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .clock_bound_sig_dot = 193;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[8] = 3;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .orb_along_bound_mu_dot = 199;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[9] = 48;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .orb_along_bound_sig_dot = 196;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[10] = 15;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .orb_cross_bound_mu_dot = 198;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[11] = 1;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .orb_cross_bound_sig_dot = 195;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[12] = 10;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .orb_radial_bound_mu_dot = 200;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[13] = 0;
+    test_msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_degradation
+        .orb_radial_bound_sig_dot = 197;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[14] = 0;
+    test_msg.ssr_orbit_clock_bounds_degradation.sat_bitmask = 10;
 
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[15] = 0;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[16] = 0;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[17] = 0;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[18] = 0;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[19] = 0;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[20] = 200;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[21] = 199;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[22] = 198;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[23] = 197;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[24] = 196;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[25] = 195;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[26] = 194;
-
-    test_msg.ssr_orbit_clock_bounds_degradation.stub[27] = 193;
+    test_msg.ssr_orbit_clock_bounds_degradation.ssr_iod = 15;
 
     sbp_message_send(&sbp_state, SbpMsgSsrOrbitClockBoundsDegradation, 66,
                      &test_msg, &dummy_write);
@@ -186,163 +170,139 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrOrbitClockBoundsDegradation) {
                                   &last_msg.msg, &test_msg) == 0,
                   "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.n_stub == 28,
+    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.const_id == 1,
                   "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.n_stub, "
-                  "expected 28, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.n_stub);
+                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.const_id, "
+                  "expected 1, is %d",
+                  last_msg.msg.ssr_orbit_clock_bounds_degradation.const_id);
 
     ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[0] == 180,
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.num_msgs == 1,
         "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[0], expected "
-        "180, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[0]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[1] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[1], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[1]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[2] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[2], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[2]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[3] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[3], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[3]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[4] == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[4], "
-                  "expected 3, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[4]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[5] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[5], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[5]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[6] == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[6], "
-                  "expected 1, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[6]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[7] == 2,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[7], "
-                  "expected 2, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[7]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[8] == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[8], "
-                  "expected 3, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[8]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[9] == 48,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[9], "
-                  "expected 48, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[9]);
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.header.num_msgs, "
+        "expected 1, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.num_msgs);
+
     ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[10] == 15,
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.seq_num == 2,
         "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[10], expected "
-        "15, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[10]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[11] == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[11], "
-                  "expected 1, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[11]);
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.header.seq_num, "
+        "expected 2, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.seq_num);
+
     ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[12] == 10,
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.sol_id == 48,
         "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[12], expected "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.header.sol_id, "
+        "expected 48, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.sol_id);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.time.tow == 180,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.header.time.tow, "
+        "expected 180, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.time.tow);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.time.wn == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.header.time.wn, "
+        "expected 3, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.time.wn);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header
+                .update_interval == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.header.update_"
+        "interval, expected 3, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.header.update_interval);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.clock_bound_mu_dot == 194,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.clock_bound_mu_dot, expected 194, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.clock_bound_mu_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.clock_bound_sig_dot == 193,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.clock_bound_sig_dot, expected 193, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.clock_bound_sig_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.orb_along_bound_mu_dot == 199,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.orb_along_bound_mu_dot, expected 199, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.orb_along_bound_mu_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.orb_along_bound_sig_dot == 196,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.orb_along_bound_sig_dot, expected 196, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.orb_along_bound_sig_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.orb_cross_bound_mu_dot == 198,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.orb_cross_bound_mu_dot, expected 198, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.orb_cross_bound_mu_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.orb_cross_bound_sig_dot == 195,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.orb_cross_bound_sig_dot, expected 195, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.orb_cross_bound_sig_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.orb_radial_bound_mu_dot == 200,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.orb_radial_bound_mu_dot, expected 200, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.orb_radial_bound_mu_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+                .orbit_clock_bounds_degradation.orb_radial_bound_sig_dot == 197,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.orbit_clock_bounds_"
+        "degradation.orb_radial_bound_sig_dot, expected 197, is %d",
+        last_msg.msg.ssr_orbit_clock_bounds_degradation
+            .orbit_clock_bounds_degradation.orb_radial_bound_sig_dot);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.sat_bitmask == 10,
+        "incorrect value for "
+        "last_msg.msg.ssr_orbit_clock_bounds_degradation.sat_bitmask, expected "
         "10, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[12]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[13] == 0,
+        last_msg.msg.ssr_orbit_clock_bounds_degradation.sat_bitmask);
+
+    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.ssr_iod == 15,
                   "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[13], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[13]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[14] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[14], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[14]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[15] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[15], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[15]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[16] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[16], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[16]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[17] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[17], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[17]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[18] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[18], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[18]);
-    ck_assert_msg(last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[19] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[19], "
-                  "expected 0, is %d",
-                  last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[19]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[20] == 200,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[20], expected "
-        "200, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[20]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[21] == 199,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[21], expected "
-        "199, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[21]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[22] == 198,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[22], expected "
-        "198, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[22]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[23] == 197,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[23], expected "
-        "197, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[23]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[24] == 196,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[24], expected "
-        "196, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[24]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[25] == 195,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[25], expected "
-        "195, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[25]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[26] == 194,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[26], expected "
-        "194, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[26]);
-    ck_assert_msg(
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[27] == 193,
-        "incorrect value for "
-        "last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[27], expected "
-        "193, is %d",
-        last_msg.msg.ssr_orbit_clock_bounds_degradation.stub[27]);
+                  "last_msg.msg.ssr_orbit_clock_bounds_degradation.ssr_iod, "
+                  "expected 15, is %d",
+                  last_msg.msg.ssr_orbit_clock_bounds_degradation.ssr_iod);
   }
 }
 END_TEST

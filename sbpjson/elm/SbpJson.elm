@@ -5,14 +5,16 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
 --     decodeString acqSvProfile myJsonString
 --     decodeString almanacCommonContent myJsonString
+--     decodeString boundsHeader myJsonString
 --     decodeString carrierPhase myJsonString
 --     decodeString codeBiasesContent myJsonString
+--     decodeString codePhaseBiasesSatSig myJsonString
 --     decodeString doppler myJsonString
 --     decodeString ephemerisCommonContent myJsonString
 --     decodeString estimatedHorizontalErrorEllipse myJsonString
@@ -25,6 +27,7 @@
 --     decodeString gridElementNoStd myJsonString
 --     decodeString griddedCorrectionHeader myJsonString
 --     decodeString imuInputType myJsonString
+--     decodeString integritySSRHeader myJsonString
 --     decodeString latency myJsonString
 --     decodeString measurementState myJsonString
 --     decodeString msgAcqResult myJsonString
@@ -190,6 +193,8 @@
 --     decodeString networkUsage myJsonString
 --     decodeString observationHeader myJsonString
 --     decodeString odoInputType myJsonString
+--     decodeString orbitClockBound myJsonString
+--     decodeString orbitClockBoundDegradation myJsonString
 --     decodeString packedObsContent myJsonString
 --     decodeString packedOsrContent myJsonString
 --     decodeString period myJsonString
@@ -198,6 +203,7 @@
 --     decodeString stecResidual myJsonString
 --     decodeString stecResidualNoStd myJsonString
 --     decodeString stecSatElement myJsonString
+--     decodeString stecSatElementIntegrity myJsonString
 --     decodeString satelliteAPC myJsonString
 --     decodeString solutionInputType myJsonString
 --     decodeString statusJournalItem myJsonString
@@ -217,12 +223,18 @@ module SbpJson exposing
     , AlmanacCommonContent
     , almanacCommonContentToString
     , almanacCommonContent
+    , BoundsHeader
+    , boundsHeaderToString
+    , boundsHeader
     , CarrierPhase
     , carrierPhaseToString
     , carrierPhase
     , CodeBiasesContent
     , codeBiasesContentToString
     , codeBiasesContent
+    , CodePhaseBiasesSatSig
+    , codePhaseBiasesSatSigToString
+    , codePhaseBiasesSatSig
     , Doppler
     , dopplerToString
     , doppler
@@ -259,6 +271,9 @@ module SbpJson exposing
     , IMUInputType
     , imuInputTypeToString
     , imuInputType
+    , IntegritySSRHeader
+    , integritySSRHeaderToString
+    , integritySSRHeader
     , Latency
     , latencyToString
     , latency
@@ -754,6 +769,12 @@ module SbpJson exposing
     , OdoInputType
     , odoInputTypeToString
     , odoInputType
+    , OrbitClockBound
+    , orbitClockBoundToString
+    , orbitClockBound
+    , OrbitClockBoundDegradation
+    , orbitClockBoundDegradationToString
+    , orbitClockBoundDegradation
     , PackedObsContent
     , packedObsContentToString
     , packedObsContent
@@ -778,6 +799,9 @@ module SbpJson exposing
     , STECSatElement
     , stecSatElementToString
     , stecSatElement
+    , STECSatElementIntegrity
+    , stecSatElementIntegrityToString
+    , stecSatElementIntegrity
     , SatelliteAPC
     , satelliteAPCToString
     , satelliteAPC
@@ -2273,7 +2297,26 @@ type alias MsgProtectionLevel =
     }
 
 type alias MsgReferenceFrameParam =
-    { stub : Array Int
+    { deltaX0 : Int
+    , deltaY0 : Int
+    , deltaZ0 : Int
+    , dotDeltaX0 : Int
+    , dotDeltaY0 : Int
+    , dotDeltaZ0 : Int
+    , dotScale : Int
+    , dotTheta01 : Int
+    , dotTheta02 : Int
+    , dotTheta03 : Int
+    , reT0 : Int
+    , scale : Int
+    , sin : Int
+    , sn : String
+    , ssrIod : Int
+    , theta01 : Int
+    , theta02 : Int
+    , theta03 : Int
+    , tn : String
+    , utn : Int
     }
 
 {-| This message from the host resets the Piksi back into the bootloader. -}
@@ -2458,31 +2501,90 @@ type alias CodeBiasesContent =
     }
 
 type alias MsgSsrCodePhaseBiasesBounds =
-    { stub : Array Int
+    { constID : Int
+    , header : BoundsHeader
+    , nSatsSignals : Int
+    , satellitesSignals : Array CodePhaseBiasesSatSig
+    , ssrIod : Int
+    }
+
+type alias BoundsHeader =
+    { numMsgs : Int
+    , seqNum : Int
+    , solID : Int
+    , time : GpsTimeSEC
+    , updateInterval : Int
+    }
+
+type alias CodePhaseBiasesSatSig =
+    { codeBiasBoundMu : Int
+    , codeBiasBoundSig : Int
+    , phaseBiasBoundMu : Int
+    , phaseBiasBoundSig : Int
+    , satID : Int
+    , signalID : Int
     }
 
 type alias MsgSsrFlagHighLevel =
-    { stub : Array Int
+    { chainID : Int
+    , corrTime : GpsTimeSEC
+    , obsTime : GpsTimeSEC
+    , ssrSolID : Int
+    , tileID : Int
+    , tileSetID : Int
+    , useBdsSat : Int
+    , useGalSat : Int
+    , useGpsSat : Int
+    , useIonoGridPointSatLos : Int
+    , useIonoGridPoints : Int
+    , useIonoTileSatLos : Int
+    , useTropoGridPoints : Int
     }
 
 type alias MsgSsrFlagIonoGridPointSatLos =
-    { stub : Array Int
+    { faultyLos : Array SvID
+    , gridPointID : Int
+    , header : IntegritySSRHeader
+    , nFaultyLos : Int
+    }
+
+type alias IntegritySSRHeader =
+    { chainID : Int
+    , numMsgs : Int
+    , obsTime : GpsTimeSEC
+    , seqNum : Int
+    , ssrSolID : Int
+    , tileID : Int
+    , tileSetID : Int
     }
 
 type alias MsgSsrFlagIonoGridPoints =
-    { stub : Array Int
+    { faultyPoints : Array Int
+    , header : IntegritySSRHeader
+    , nFaultyPoints : Int
     }
 
 type alias MsgSsrFlagIonoTileSatLos =
-    { stub : Array Int
+    { faultyLos : Array SvID
+    , header : IntegritySSRHeader
+    , nFaultyLos : Int
     }
 
 type alias MsgSsrFlagSatellites =
-    { stub : Array Int
+    { chainID : Int
+    , constID : Int
+    , faultySats : Array Int
+    , nFaultySats : Int
+    , numMsgs : Int
+    , obsTime : GpsTimeSEC
+    , seqNum : Int
+    , ssrSolID : Int
     }
 
 type alias MsgSsrFlagTropoGridPoints =
-    { stub : Array Int
+    { faultyPoints : Array Int
+    , header : IntegritySSRHeader
+    , nFaultyPoints : Int
     }
 
 {-| STEC residuals are per space vehicle, troposphere is not.,
@@ -2514,7 +2616,28 @@ type alias GriddedCorrectionHeader =
 mean=5+0.5(i-230).
 -}
 type alias MsgSsrGriddedCorrectionBounds =
-    { stub : Array Int
+    { gridPointID : Int
+    , header : BoundsHeader
+    , nSats : Int
+    , ssrIodAtmo : Int
+    , stecSatList : Array STECSatElementIntegrity
+    , tileID : Int
+    , tileSetID : Int
+    , tropoDelayCorrection : TroposphericDelayCorrection
+    , tropoQi : Int
+    , tropoVHydroBoundMu : Int
+    , tropoVHydroBoundSig : Int
+    , tropoVWetBoundMu : Int
+    , tropoVWetBoundSig : Int
+    }
+
+{-| STEC polynomial and bounds for the given satellite. -}
+type alias STECSatElementIntegrity =
+    { stecBoundMu : Int
+    , stecBoundMuDot : Int
+    , stecBoundSig : Int
+    , stecBoundSigDot : Int
+    , stecResidual : STECResidual
     }
 
 {-| The precise orbit and clock correction message is to be applied as a delta correction to
@@ -2537,15 +2660,51 @@ type alias MsgSsrOrbitClock =
     , updateInterval : Int
     }
 
-{-| Note 1: Range: 0-55 m. i<=200, mean=0.0251i; 200<i<=240, mean=5+0.5(i-200); i>240,
-mean=25+2(i-240).
+{-| Note 1: Range: 0-17.5 m. i<=200, mean=0.01i; 200<i<=230, mean=2+0.1(i-200); i>230,
+mean=5+0.5(i-230).,
+,
+Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200) i>230,
+std=5+0.5(i-230).
 -}
 type alias MsgSsrOrbitClockBounds =
-    { stub : Array Int
+    { constID : Int
+    , header : BoundsHeader
+    , nSats : Int
+    , orbitClockBounds : Array OrbitClockBound
+    , ssrIod : Int
+    }
+
+{-| Orbit and clock bound. -}
+type alias OrbitClockBound =
+    { clockBoundMu : Int
+    , clockBoundSig : Int
+    , orbAlongBoundMu : Int
+    , orbAlongBoundSig : Int
+    , orbCrossBoundMu : Int
+    , orbCrossBoundSig : Int
+    , orbRadialBoundMu : Int
+    , orbRadialBoundSig : Int
+    , satID : Int
     }
 
 type alias MsgSsrOrbitClockBoundsDegradation =
-    { stub : Array Int
+    { constID : Int
+    , header : BoundsHeader
+    , orbitClockBoundsDegradation : OrbitClockBoundDegradation
+    , satBitmask : Int
+    , ssrIod : Int
+    }
+
+{-| Orbit and clock bound degradation. -}
+type alias OrbitClockBoundDegradation =
+    { clockBoundMuDot : Int
+    , clockBoundSigDot : Int
+    , orbAlongBoundMuDot : Int
+    , orbAlongBoundSigDot : Int
+    , orbCrossBoundMuDot : Int
+    , orbCrossBoundSigDot : Int
+    , orbRadialBoundMuDot : Int
+    , orbRadialBoundSigDot : Int
     }
 
 {-| The precise phase biases message contains the biases to be added to the carrier phase of
@@ -2590,7 +2749,19 @@ type alias SatelliteAPC =
     }
 
 type alias MsgSsrStecCorrection =
-    { stub : Array Int
+    { header : BoundsHeader
+    , nSats : Int
+    , ssrIodAtmo : Int
+    , stecSatList : Array STECSatElement
+    , tileID : Int
+    , tileSetID : Int
+    }
+
+{-| STEC polynomial for the given satellite. -}
+type alias STECSatElement =
+    { stecCoeff : Array Int
+    , stecQualityIndicator : Int
+    , svID : SvID
     }
 
 {-| Provides the correction point coordinates for the atmospheric correction values in the
@@ -2601,7 +2772,16 @@ GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction points
 lists of points.
 -}
 type alias MsgSsrTileDefinition =
-    { stub : Array Int
+    { bitmask : Int
+    , cols : Int
+    , cornerNwLat : Int
+    , cornerNwLon : Int
+    , rows : Int
+    , spacingLat : Int
+    , spacingLon : Int
+    , ssrSolID : Int
+    , tileID : Int
+    , tileSetID : Int
     }
 
 {-| The system start-up message is sent once on system start-up. It notifies the host or
@@ -2794,7 +2974,15 @@ type alias MsgUserData =
 parameters.
 -}
 type alias MsgUTCLeapSecond =
-    { stub : Array Int
+    { biasCoeff : Int
+    , countAfter : Int
+    , countBefore : Int
+    , driftCoeff : Int
+    , driftRateCoeff : Int
+    , refDN : Int
+    , refWn : Int
+    , towS : Int
+    , wn : Int
     }
 
 {-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
@@ -3046,13 +3234,6 @@ type alias STECHeader =
     , updateInterval : Int
     }
 
-{-| STEC polynomial for the given satellite. -}
-type alias STECSatElement =
-    { stecCoeff : Array Int
-    , stecQualityIndicator : Int
-    , svID : SvID
-    }
-
 -- decoders and encoders
 
 acqSvProfileToString : AcqSvProfile -> String
@@ -3061,11 +3242,17 @@ acqSvProfileToString r = Jenc.encode 0 (encodeAcqSvProfile r)
 almanacCommonContentToString : AlmanacCommonContent -> String
 almanacCommonContentToString r = Jenc.encode 0 (encodeAlmanacCommonContent r)
 
+boundsHeaderToString : BoundsHeader -> String
+boundsHeaderToString r = Jenc.encode 0 (encodeBoundsHeader r)
+
 carrierPhaseToString : CarrierPhase -> String
 carrierPhaseToString r = Jenc.encode 0 (encodeCarrierPhase r)
 
 codeBiasesContentToString : CodeBiasesContent -> String
 codeBiasesContentToString r = Jenc.encode 0 (encodeCodeBiasesContent r)
+
+codePhaseBiasesSatSigToString : CodePhaseBiasesSatSig -> String
+codePhaseBiasesSatSigToString r = Jenc.encode 0 (encodeCodePhaseBiasesSatSig r)
 
 dopplerToString : Doppler -> String
 dopplerToString r = Jenc.encode 0 (encodeDoppler r)
@@ -3102,6 +3289,9 @@ griddedCorrectionHeaderToString r = Jenc.encode 0 (encodeGriddedCorrectionHeader
 
 imuInputTypeToString : IMUInputType -> String
 imuInputTypeToString r = Jenc.encode 0 (encodeIMUInputType r)
+
+integritySSRHeaderToString : IntegritySSRHeader -> String
+integritySSRHeaderToString r = Jenc.encode 0 (encodeIntegritySSRHeader r)
 
 latencyToString : Latency -> String
 latencyToString r = Jenc.encode 0 (encodeLatency r)
@@ -3628,6 +3818,12 @@ observationHeaderToString r = Jenc.encode 0 (encodeObservationHeader r)
 odoInputTypeToString : OdoInputType -> String
 odoInputTypeToString r = Jenc.encode 0 (encodeOdoInputType r)
 
+orbitClockBoundToString : OrbitClockBound -> String
+orbitClockBoundToString r = Jenc.encode 0 (encodeOrbitClockBound r)
+
+orbitClockBoundDegradationToString : OrbitClockBoundDegradation -> String
+orbitClockBoundDegradationToString r = Jenc.encode 0 (encodeOrbitClockBoundDegradation r)
+
 packedObsContentToString : PackedObsContent -> String
 packedObsContentToString r = Jenc.encode 0 (encodePackedObsContent r)
 
@@ -3651,6 +3847,9 @@ stecResidualNoStdToString r = Jenc.encode 0 (encodeSTECResidualNoStd r)
 
 stecSatElementToString : STECSatElement -> String
 stecSatElementToString r = Jenc.encode 0 (encodeSTECSatElement r)
+
+stecSatElementIntegrityToString : STECSatElementIntegrity -> String
+stecSatElementIntegrityToString r = Jenc.encode 0 (encodeSTECSatElementIntegrity r)
 
 satelliteAPCToString : SatelliteAPC -> String
 satelliteAPCToString r = Jenc.encode 0 (encodeSatelliteAPC r)
@@ -5954,12 +6153,50 @@ encodeMsgProtectionLevel x =
 msgReferenceFrameParam : Jdec.Decoder MsgReferenceFrameParam
 msgReferenceFrameParam =
     Jpipe.decode MsgReferenceFrameParam
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "delta_X0" Jdec.int
+        |> Jpipe.required "delta_Y0" Jdec.int
+        |> Jpipe.required "delta_Z0" Jdec.int
+        |> Jpipe.required "dot_delta_X0" Jdec.int
+        |> Jpipe.required "dot_delta_Y0" Jdec.int
+        |> Jpipe.required "dot_delta_Z0" Jdec.int
+        |> Jpipe.required "dot_scale" Jdec.int
+        |> Jpipe.required "dot_theta_01" Jdec.int
+        |> Jpipe.required "dot_theta_02" Jdec.int
+        |> Jpipe.required "dot_theta_03" Jdec.int
+        |> Jpipe.required "re_t0" Jdec.int
+        |> Jpipe.required "scale" Jdec.int
+        |> Jpipe.required "sin" Jdec.int
+        |> Jpipe.required "sn" Jdec.string
+        |> Jpipe.required "ssr_iod" Jdec.int
+        |> Jpipe.required "theta_01" Jdec.int
+        |> Jpipe.required "theta_02" Jdec.int
+        |> Jpipe.required "theta_03" Jdec.int
+        |> Jpipe.required "tn" Jdec.string
+        |> Jpipe.required "utn" Jdec.int
 
 encodeMsgReferenceFrameParam : MsgReferenceFrameParam -> Jenc.Value
 encodeMsgReferenceFrameParam x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("delta_X0", Jenc.int x.deltaX0)
+        , ("delta_Y0", Jenc.int x.deltaY0)
+        , ("delta_Z0", Jenc.int x.deltaZ0)
+        , ("dot_delta_X0", Jenc.int x.dotDeltaX0)
+        , ("dot_delta_Y0", Jenc.int x.dotDeltaY0)
+        , ("dot_delta_Z0", Jenc.int x.dotDeltaZ0)
+        , ("dot_scale", Jenc.int x.dotScale)
+        , ("dot_theta_01", Jenc.int x.dotTheta01)
+        , ("dot_theta_02", Jenc.int x.dotTheta02)
+        , ("dot_theta_03", Jenc.int x.dotTheta03)
+        , ("re_t0", Jenc.int x.reT0)
+        , ("scale", Jenc.int x.scale)
+        , ("sin", Jenc.int x.sin)
+        , ("sn", Jenc.string x.sn)
+        , ("ssr_iod", Jenc.int x.ssrIod)
+        , ("theta_01", Jenc.int x.theta01)
+        , ("theta_02", Jenc.int x.theta02)
+        , ("theta_03", Jenc.int x.theta03)
+        , ("tn", Jenc.string x.tn)
+        , ("utn", Jenc.int x.utn)
         ]
 
 msgReset : Jdec.Decoder MsgReset
@@ -6214,78 +6451,205 @@ encodeCodeBiasesContent x =
 msgSsrCodePhaseBiasesBounds : Jdec.Decoder MsgSsrCodePhaseBiasesBounds
 msgSsrCodePhaseBiasesBounds =
     Jpipe.decode MsgSsrCodePhaseBiasesBounds
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "const_id" Jdec.int
+        |> Jpipe.required "header" boundsHeader
+        |> Jpipe.required "n_sats_signals" Jdec.int
+        |> Jpipe.required "satellites_signals" (Jdec.array codePhaseBiasesSatSig)
+        |> Jpipe.required "ssr_iod" Jdec.int
 
 encodeMsgSsrCodePhaseBiasesBounds : MsgSsrCodePhaseBiasesBounds -> Jenc.Value
 encodeMsgSsrCodePhaseBiasesBounds x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("const_id", Jenc.int x.constID)
+        , ("header", encodeBoundsHeader x.header)
+        , ("n_sats_signals", Jenc.int x.nSatsSignals)
+        , ("satellites_signals", makeArrayEncoder encodeCodePhaseBiasesSatSig x.satellitesSignals)
+        , ("ssr_iod", Jenc.int x.ssrIod)
+        ]
+
+boundsHeader : Jdec.Decoder BoundsHeader
+boundsHeader =
+    Jpipe.decode BoundsHeader
+        |> Jpipe.required "num_msgs" Jdec.int
+        |> Jpipe.required "seq_num" Jdec.int
+        |> Jpipe.required "sol_id" Jdec.int
+        |> Jpipe.required "time" gpsTimeSEC
+        |> Jpipe.required "update_interval" Jdec.int
+
+encodeBoundsHeader : BoundsHeader -> Jenc.Value
+encodeBoundsHeader x =
+    Jenc.object
+        [ ("num_msgs", Jenc.int x.numMsgs)
+        , ("seq_num", Jenc.int x.seqNum)
+        , ("sol_id", Jenc.int x.solID)
+        , ("time", encodeGpsTimeSEC x.time)
+        , ("update_interval", Jenc.int x.updateInterval)
+        ]
+
+codePhaseBiasesSatSig : Jdec.Decoder CodePhaseBiasesSatSig
+codePhaseBiasesSatSig =
+    Jpipe.decode CodePhaseBiasesSatSig
+        |> Jpipe.required "code_bias_bound_mu" Jdec.int
+        |> Jpipe.required "code_bias_bound_sig" Jdec.int
+        |> Jpipe.required "phase_bias_bound_mu" Jdec.int
+        |> Jpipe.required "phase_bias_bound_sig" Jdec.int
+        |> Jpipe.required "sat_id" Jdec.int
+        |> Jpipe.required "signal_id" Jdec.int
+
+encodeCodePhaseBiasesSatSig : CodePhaseBiasesSatSig -> Jenc.Value
+encodeCodePhaseBiasesSatSig x =
+    Jenc.object
+        [ ("code_bias_bound_mu", Jenc.int x.codeBiasBoundMu)
+        , ("code_bias_bound_sig", Jenc.int x.codeBiasBoundSig)
+        , ("phase_bias_bound_mu", Jenc.int x.phaseBiasBoundMu)
+        , ("phase_bias_bound_sig", Jenc.int x.phaseBiasBoundSig)
+        , ("sat_id", Jenc.int x.satID)
+        , ("signal_id", Jenc.int x.signalID)
         ]
 
 msgSsrFlagHighLevel : Jdec.Decoder MsgSsrFlagHighLevel
 msgSsrFlagHighLevel =
     Jpipe.decode MsgSsrFlagHighLevel
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "chain_id" Jdec.int
+        |> Jpipe.required "corr_time" gpsTimeSEC
+        |> Jpipe.required "obs_time" gpsTimeSEC
+        |> Jpipe.required "ssr_sol_id" Jdec.int
+        |> Jpipe.required "tile_id" Jdec.int
+        |> Jpipe.required "tile_set_id" Jdec.int
+        |> Jpipe.required "use_bds_sat" Jdec.int
+        |> Jpipe.required "use_gal_sat" Jdec.int
+        |> Jpipe.required "use_gps_sat" Jdec.int
+        |> Jpipe.required "use_iono_grid_point_sat_los" Jdec.int
+        |> Jpipe.required "use_iono_grid_points" Jdec.int
+        |> Jpipe.required "use_iono_tile_sat_los" Jdec.int
+        |> Jpipe.required "use_tropo_grid_points" Jdec.int
 
 encodeMsgSsrFlagHighLevel : MsgSsrFlagHighLevel -> Jenc.Value
 encodeMsgSsrFlagHighLevel x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("chain_id", Jenc.int x.chainID)
+        , ("corr_time", encodeGpsTimeSEC x.corrTime)
+        , ("obs_time", encodeGpsTimeSEC x.obsTime)
+        , ("ssr_sol_id", Jenc.int x.ssrSolID)
+        , ("tile_id", Jenc.int x.tileID)
+        , ("tile_set_id", Jenc.int x.tileSetID)
+        , ("use_bds_sat", Jenc.int x.useBdsSat)
+        , ("use_gal_sat", Jenc.int x.useGalSat)
+        , ("use_gps_sat", Jenc.int x.useGpsSat)
+        , ("use_iono_grid_point_sat_los", Jenc.int x.useIonoGridPointSatLos)
+        , ("use_iono_grid_points", Jenc.int x.useIonoGridPoints)
+        , ("use_iono_tile_sat_los", Jenc.int x.useIonoTileSatLos)
+        , ("use_tropo_grid_points", Jenc.int x.useTropoGridPoints)
         ]
 
 msgSsrFlagIonoGridPointSatLos : Jdec.Decoder MsgSsrFlagIonoGridPointSatLos
 msgSsrFlagIonoGridPointSatLos =
     Jpipe.decode MsgSsrFlagIonoGridPointSatLos
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "faulty_los" (Jdec.array svID)
+        |> Jpipe.required "grid_point_id" Jdec.int
+        |> Jpipe.required "header" integritySSRHeader
+        |> Jpipe.required "n_faulty_los" Jdec.int
 
 encodeMsgSsrFlagIonoGridPointSatLos : MsgSsrFlagIonoGridPointSatLos -> Jenc.Value
 encodeMsgSsrFlagIonoGridPointSatLos x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("faulty_los", makeArrayEncoder encodeSvID x.faultyLos)
+        , ("grid_point_id", Jenc.int x.gridPointID)
+        , ("header", encodeIntegritySSRHeader x.header)
+        , ("n_faulty_los", Jenc.int x.nFaultyLos)
+        ]
+
+integritySSRHeader : Jdec.Decoder IntegritySSRHeader
+integritySSRHeader =
+    Jpipe.decode IntegritySSRHeader
+        |> Jpipe.required "chain_id" Jdec.int
+        |> Jpipe.required "num_msgs" Jdec.int
+        |> Jpipe.required "obs_time" gpsTimeSEC
+        |> Jpipe.required "seq_num" Jdec.int
+        |> Jpipe.required "ssr_sol_id" Jdec.int
+        |> Jpipe.required "tile_id" Jdec.int
+        |> Jpipe.required "tile_set_id" Jdec.int
+
+encodeIntegritySSRHeader : IntegritySSRHeader -> Jenc.Value
+encodeIntegritySSRHeader x =
+    Jenc.object
+        [ ("chain_id", Jenc.int x.chainID)
+        , ("num_msgs", Jenc.int x.numMsgs)
+        , ("obs_time", encodeGpsTimeSEC x.obsTime)
+        , ("seq_num", Jenc.int x.seqNum)
+        , ("ssr_sol_id", Jenc.int x.ssrSolID)
+        , ("tile_id", Jenc.int x.tileID)
+        , ("tile_set_id", Jenc.int x.tileSetID)
         ]
 
 msgSsrFlagIonoGridPoints : Jdec.Decoder MsgSsrFlagIonoGridPoints
 msgSsrFlagIonoGridPoints =
     Jpipe.decode MsgSsrFlagIonoGridPoints
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "faulty_points" (Jdec.array Jdec.int)
+        |> Jpipe.required "header" integritySSRHeader
+        |> Jpipe.required "n_faulty_points" Jdec.int
 
 encodeMsgSsrFlagIonoGridPoints : MsgSsrFlagIonoGridPoints -> Jenc.Value
 encodeMsgSsrFlagIonoGridPoints x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("faulty_points", makeArrayEncoder Jenc.int x.faultyPoints)
+        , ("header", encodeIntegritySSRHeader x.header)
+        , ("n_faulty_points", Jenc.int x.nFaultyPoints)
         ]
 
 msgSsrFlagIonoTileSatLos : Jdec.Decoder MsgSsrFlagIonoTileSatLos
 msgSsrFlagIonoTileSatLos =
     Jpipe.decode MsgSsrFlagIonoTileSatLos
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "faulty_los" (Jdec.array svID)
+        |> Jpipe.required "header" integritySSRHeader
+        |> Jpipe.required "n_faulty_los" Jdec.int
 
 encodeMsgSsrFlagIonoTileSatLos : MsgSsrFlagIonoTileSatLos -> Jenc.Value
 encodeMsgSsrFlagIonoTileSatLos x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("faulty_los", makeArrayEncoder encodeSvID x.faultyLos)
+        , ("header", encodeIntegritySSRHeader x.header)
+        , ("n_faulty_los", Jenc.int x.nFaultyLos)
         ]
 
 msgSsrFlagSatellites : Jdec.Decoder MsgSsrFlagSatellites
 msgSsrFlagSatellites =
     Jpipe.decode MsgSsrFlagSatellites
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "chain_id" Jdec.int
+        |> Jpipe.required "const_id" Jdec.int
+        |> Jpipe.required "faulty_sats" (Jdec.array Jdec.int)
+        |> Jpipe.required "n_faulty_sats" Jdec.int
+        |> Jpipe.required "num_msgs" Jdec.int
+        |> Jpipe.required "obs_time" gpsTimeSEC
+        |> Jpipe.required "seq_num" Jdec.int
+        |> Jpipe.required "ssr_sol_id" Jdec.int
 
 encodeMsgSsrFlagSatellites : MsgSsrFlagSatellites -> Jenc.Value
 encodeMsgSsrFlagSatellites x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("chain_id", Jenc.int x.chainID)
+        , ("const_id", Jenc.int x.constID)
+        , ("faulty_sats", makeArrayEncoder Jenc.int x.faultySats)
+        , ("n_faulty_sats", Jenc.int x.nFaultySats)
+        , ("num_msgs", Jenc.int x.numMsgs)
+        , ("obs_time", encodeGpsTimeSEC x.obsTime)
+        , ("seq_num", Jenc.int x.seqNum)
+        , ("ssr_sol_id", Jenc.int x.ssrSolID)
         ]
 
 msgSsrFlagTropoGridPoints : Jdec.Decoder MsgSsrFlagTropoGridPoints
 msgSsrFlagTropoGridPoints =
     Jpipe.decode MsgSsrFlagTropoGridPoints
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "faulty_points" (Jdec.array Jdec.int)
+        |> Jpipe.required "header" integritySSRHeader
+        |> Jpipe.required "n_faulty_points" Jdec.int
 
 encodeMsgSsrFlagTropoGridPoints : MsgSsrFlagTropoGridPoints -> Jenc.Value
 encodeMsgSsrFlagTropoGridPoints x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("faulty_points", makeArrayEncoder Jenc.int x.faultyPoints)
+        , ("header", encodeIntegritySSRHeader x.header)
+        , ("n_faulty_points", Jenc.int x.nFaultyPoints)
         ]
 
 msgSsrGriddedCorrection : Jdec.Decoder MsgSsrGriddedCorrection
@@ -6333,12 +6697,55 @@ encodeGriddedCorrectionHeader x =
 msgSsrGriddedCorrectionBounds : Jdec.Decoder MsgSsrGriddedCorrectionBounds
 msgSsrGriddedCorrectionBounds =
     Jpipe.decode MsgSsrGriddedCorrectionBounds
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "grid_point_id" Jdec.int
+        |> Jpipe.required "header" boundsHeader
+        |> Jpipe.required "n_sats" Jdec.int
+        |> Jpipe.required "ssr_iod_atmo" Jdec.int
+        |> Jpipe.required "stec_sat_list" (Jdec.array stecSatElementIntegrity)
+        |> Jpipe.required "tile_id" Jdec.int
+        |> Jpipe.required "tile_set_id" Jdec.int
+        |> Jpipe.required "tropo_delay_correction" troposphericDelayCorrection
+        |> Jpipe.required "tropo_qi" Jdec.int
+        |> Jpipe.required "tropo_v_hydro_bound_mu" Jdec.int
+        |> Jpipe.required "tropo_v_hydro_bound_sig" Jdec.int
+        |> Jpipe.required "tropo_v_wet_bound_mu" Jdec.int
+        |> Jpipe.required "tropo_v_wet_bound_sig" Jdec.int
 
 encodeMsgSsrGriddedCorrectionBounds : MsgSsrGriddedCorrectionBounds -> Jenc.Value
 encodeMsgSsrGriddedCorrectionBounds x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("grid_point_id", Jenc.int x.gridPointID)
+        , ("header", encodeBoundsHeader x.header)
+        , ("n_sats", Jenc.int x.nSats)
+        , ("ssr_iod_atmo", Jenc.int x.ssrIodAtmo)
+        , ("stec_sat_list", makeArrayEncoder encodeSTECSatElementIntegrity x.stecSatList)
+        , ("tile_id", Jenc.int x.tileID)
+        , ("tile_set_id", Jenc.int x.tileSetID)
+        , ("tropo_delay_correction", encodeTroposphericDelayCorrection x.tropoDelayCorrection)
+        , ("tropo_qi", Jenc.int x.tropoQi)
+        , ("tropo_v_hydro_bound_mu", Jenc.int x.tropoVHydroBoundMu)
+        , ("tropo_v_hydro_bound_sig", Jenc.int x.tropoVHydroBoundSig)
+        , ("tropo_v_wet_bound_mu", Jenc.int x.tropoVWetBoundMu)
+        , ("tropo_v_wet_bound_sig", Jenc.int x.tropoVWetBoundSig)
+        ]
+
+stecSatElementIntegrity : Jdec.Decoder STECSatElementIntegrity
+stecSatElementIntegrity =
+    Jpipe.decode STECSatElementIntegrity
+        |> Jpipe.required "stec_bound_mu" Jdec.int
+        |> Jpipe.required "stec_bound_mu_dot" Jdec.int
+        |> Jpipe.required "stec_bound_sig" Jdec.int
+        |> Jpipe.required "stec_bound_sig_dot" Jdec.int
+        |> Jpipe.required "stec_residual" stecResidual
+
+encodeSTECSatElementIntegrity : STECSatElementIntegrity -> Jenc.Value
+encodeSTECSatElementIntegrity x =
+    Jenc.object
+        [ ("stec_bound_mu", Jenc.int x.stecBoundMu)
+        , ("stec_bound_mu_dot", Jenc.int x.stecBoundMuDot)
+        , ("stec_bound_sig", Jenc.int x.stecBoundSig)
+        , ("stec_bound_sig_dot", Jenc.int x.stecBoundSigDot)
+        , ("stec_residual", encodeSTECResidual x.stecResidual)
         ]
 
 msgSsrOrbitClock : Jdec.Decoder MsgSsrOrbitClock
@@ -6381,23 +6788,91 @@ encodeMsgSsrOrbitClock x =
 msgSsrOrbitClockBounds : Jdec.Decoder MsgSsrOrbitClockBounds
 msgSsrOrbitClockBounds =
     Jpipe.decode MsgSsrOrbitClockBounds
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "const_id" Jdec.int
+        |> Jpipe.required "header" boundsHeader
+        |> Jpipe.required "n_sats" Jdec.int
+        |> Jpipe.required "orbit_clock_bounds" (Jdec.array orbitClockBound)
+        |> Jpipe.required "ssr_iod" Jdec.int
 
 encodeMsgSsrOrbitClockBounds : MsgSsrOrbitClockBounds -> Jenc.Value
 encodeMsgSsrOrbitClockBounds x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("const_id", Jenc.int x.constID)
+        , ("header", encodeBoundsHeader x.header)
+        , ("n_sats", Jenc.int x.nSats)
+        , ("orbit_clock_bounds", makeArrayEncoder encodeOrbitClockBound x.orbitClockBounds)
+        , ("ssr_iod", Jenc.int x.ssrIod)
+        ]
+
+orbitClockBound : Jdec.Decoder OrbitClockBound
+orbitClockBound =
+    Jpipe.decode OrbitClockBound
+        |> Jpipe.required "clock_bound_mu" Jdec.int
+        |> Jpipe.required "clock_bound_sig" Jdec.int
+        |> Jpipe.required "orb_along_bound_mu" Jdec.int
+        |> Jpipe.required "orb_along_bound_sig" Jdec.int
+        |> Jpipe.required "orb_cross_bound_mu" Jdec.int
+        |> Jpipe.required "orb_cross_bound_sig" Jdec.int
+        |> Jpipe.required "orb_radial_bound_mu" Jdec.int
+        |> Jpipe.required "orb_radial_bound_sig" Jdec.int
+        |> Jpipe.required "sat_id" Jdec.int
+
+encodeOrbitClockBound : OrbitClockBound -> Jenc.Value
+encodeOrbitClockBound x =
+    Jenc.object
+        [ ("clock_bound_mu", Jenc.int x.clockBoundMu)
+        , ("clock_bound_sig", Jenc.int x.clockBoundSig)
+        , ("orb_along_bound_mu", Jenc.int x.orbAlongBoundMu)
+        , ("orb_along_bound_sig", Jenc.int x.orbAlongBoundSig)
+        , ("orb_cross_bound_mu", Jenc.int x.orbCrossBoundMu)
+        , ("orb_cross_bound_sig", Jenc.int x.orbCrossBoundSig)
+        , ("orb_radial_bound_mu", Jenc.int x.orbRadialBoundMu)
+        , ("orb_radial_bound_sig", Jenc.int x.orbRadialBoundSig)
+        , ("sat_id", Jenc.int x.satID)
         ]
 
 msgSsrOrbitClockBoundsDegradation : Jdec.Decoder MsgSsrOrbitClockBoundsDegradation
 msgSsrOrbitClockBoundsDegradation =
     Jpipe.decode MsgSsrOrbitClockBoundsDegradation
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "const_id" Jdec.int
+        |> Jpipe.required "header" boundsHeader
+        |> Jpipe.required "orbit_clock_bounds_degradation" orbitClockBoundDegradation
+        |> Jpipe.required "sat_bitmask" Jdec.int
+        |> Jpipe.required "ssr_iod" Jdec.int
 
 encodeMsgSsrOrbitClockBoundsDegradation : MsgSsrOrbitClockBoundsDegradation -> Jenc.Value
 encodeMsgSsrOrbitClockBoundsDegradation x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("const_id", Jenc.int x.constID)
+        , ("header", encodeBoundsHeader x.header)
+        , ("orbit_clock_bounds_degradation", encodeOrbitClockBoundDegradation x.orbitClockBoundsDegradation)
+        , ("sat_bitmask", Jenc.int x.satBitmask)
+        , ("ssr_iod", Jenc.int x.ssrIod)
+        ]
+
+orbitClockBoundDegradation : Jdec.Decoder OrbitClockBoundDegradation
+orbitClockBoundDegradation =
+    Jpipe.decode OrbitClockBoundDegradation
+        |> Jpipe.required "clock_bound_mu_dot" Jdec.int
+        |> Jpipe.required "clock_bound_sig_dot" Jdec.int
+        |> Jpipe.required "orb_along_bound_mu_dot" Jdec.int
+        |> Jpipe.required "orb_along_bound_sig_dot" Jdec.int
+        |> Jpipe.required "orb_cross_bound_mu_dot" Jdec.int
+        |> Jpipe.required "orb_cross_bound_sig_dot" Jdec.int
+        |> Jpipe.required "orb_radial_bound_mu_dot" Jdec.int
+        |> Jpipe.required "orb_radial_bound_sig_dot" Jdec.int
+
+encodeOrbitClockBoundDegradation : OrbitClockBoundDegradation -> Jenc.Value
+encodeOrbitClockBoundDegradation x =
+    Jenc.object
+        [ ("clock_bound_mu_dot", Jenc.int x.clockBoundMuDot)
+        , ("clock_bound_sig_dot", Jenc.int x.clockBoundSigDot)
+        , ("orb_along_bound_mu_dot", Jenc.int x.orbAlongBoundMuDot)
+        , ("orb_along_bound_sig_dot", Jenc.int x.orbAlongBoundSigDot)
+        , ("orb_cross_bound_mu_dot", Jenc.int x.orbCrossBoundMuDot)
+        , ("orb_cross_bound_sig_dot", Jenc.int x.orbCrossBoundSigDot)
+        , ("orb_radial_bound_mu_dot", Jenc.int x.orbRadialBoundMuDot)
+        , ("orb_radial_bound_sig_dot", Jenc.int x.orbRadialBoundSigDot)
         ]
 
 msgSsrPhaseBiases : Jdec.Decoder MsgSsrPhaseBiases
@@ -6479,23 +6954,66 @@ encodeSatelliteAPC x =
 msgSsrStecCorrection : Jdec.Decoder MsgSsrStecCorrection
 msgSsrStecCorrection =
     Jpipe.decode MsgSsrStecCorrection
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "header" boundsHeader
+        |> Jpipe.required "n_sats" Jdec.int
+        |> Jpipe.required "ssr_iod_atmo" Jdec.int
+        |> Jpipe.required "stec_sat_list" (Jdec.array stecSatElement)
+        |> Jpipe.required "tile_id" Jdec.int
+        |> Jpipe.required "tile_set_id" Jdec.int
 
 encodeMsgSsrStecCorrection : MsgSsrStecCorrection -> Jenc.Value
 encodeMsgSsrStecCorrection x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("header", encodeBoundsHeader x.header)
+        , ("n_sats", Jenc.int x.nSats)
+        , ("ssr_iod_atmo", Jenc.int x.ssrIodAtmo)
+        , ("stec_sat_list", makeArrayEncoder encodeSTECSatElement x.stecSatList)
+        , ("tile_id", Jenc.int x.tileID)
+        , ("tile_set_id", Jenc.int x.tileSetID)
+        ]
+
+stecSatElement : Jdec.Decoder STECSatElement
+stecSatElement =
+    Jpipe.decode STECSatElement
+        |> Jpipe.required "stec_coeff" (Jdec.array Jdec.int)
+        |> Jpipe.required "stec_quality_indicator" Jdec.int
+        |> Jpipe.required "sv_id" svID
+
+encodeSTECSatElement : STECSatElement -> Jenc.Value
+encodeSTECSatElement x =
+    Jenc.object
+        [ ("stec_coeff", makeArrayEncoder Jenc.int x.stecCoeff)
+        , ("stec_quality_indicator", Jenc.int x.stecQualityIndicator)
+        , ("sv_id", encodeSvID x.svID)
         ]
 
 msgSsrTileDefinition : Jdec.Decoder MsgSsrTileDefinition
 msgSsrTileDefinition =
     Jpipe.decode MsgSsrTileDefinition
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "bitmask" Jdec.int
+        |> Jpipe.required "cols" Jdec.int
+        |> Jpipe.required "corner_nw_lat" Jdec.int
+        |> Jpipe.required "corner_nw_lon" Jdec.int
+        |> Jpipe.required "rows" Jdec.int
+        |> Jpipe.required "spacing_lat" Jdec.int
+        |> Jpipe.required "spacing_lon" Jdec.int
+        |> Jpipe.required "ssr_sol_id" Jdec.int
+        |> Jpipe.required "tile_id" Jdec.int
+        |> Jpipe.required "tile_set_id" Jdec.int
 
 encodeMsgSsrTileDefinition : MsgSsrTileDefinition -> Jenc.Value
 encodeMsgSsrTileDefinition x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("bitmask", Jenc.int x.bitmask)
+        , ("cols", Jenc.int x.cols)
+        , ("corner_nw_lat", Jenc.int x.cornerNwLat)
+        , ("corner_nw_lon", Jenc.int x.cornerNwLon)
+        , ("rows", Jenc.int x.rows)
+        , ("spacing_lat", Jenc.int x.spacingLat)
+        , ("spacing_lon", Jenc.int x.spacingLon)
+        , ("ssr_sol_id", Jenc.int x.ssrSolID)
+        , ("tile_id", Jenc.int x.tileID)
+        , ("tile_set_id", Jenc.int x.tileSetID)
         ]
 
 msgStartup : Jdec.Decoder MsgStartup
@@ -6793,12 +7311,28 @@ encodeMsgUserData x =
 msgUTCLeapSecond : Jdec.Decoder MsgUTCLeapSecond
 msgUTCLeapSecond =
     Jpipe.decode MsgUTCLeapSecond
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "bias_coeff" Jdec.int
+        |> Jpipe.required "count_after" Jdec.int
+        |> Jpipe.required "count_before" Jdec.int
+        |> Jpipe.required "drift_coeff" Jdec.int
+        |> Jpipe.required "drift_rate_coeff" Jdec.int
+        |> Jpipe.required "ref_dn" Jdec.int
+        |> Jpipe.required "ref_wn" Jdec.int
+        |> Jpipe.required "tow_s" Jdec.int
+        |> Jpipe.required "wn" Jdec.int
 
 encodeMsgUTCLeapSecond : MsgUTCLeapSecond -> Jenc.Value
 encodeMsgUTCLeapSecond x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("bias_coeff", Jenc.int x.biasCoeff)
+        , ("count_after", Jenc.int x.countAfter)
+        , ("count_before", Jenc.int x.countBefore)
+        , ("drift_coeff", Jenc.int x.driftCoeff)
+        , ("drift_rate_coeff", Jenc.int x.driftRateCoeff)
+        , ("ref_dn", Jenc.int x.refDN)
+        , ("ref_wn", Jenc.int x.refWn)
+        , ("tow_s", Jenc.int x.towS)
+        , ("wn", Jenc.int x.wn)
         ]
 
 msgUTCTime : Jdec.Decoder MsgUTCTime
@@ -7190,21 +7724,6 @@ encodeSTECHeader x =
         , ("tile_set_id", Jenc.int x.tileSetID)
         , ("time", encodeGpsTimeSEC x.time)
         , ("update_interval", Jenc.int x.updateInterval)
-        ]
-
-stecSatElement : Jdec.Decoder STECSatElement
-stecSatElement =
-    Jpipe.decode STECSatElement
-        |> Jpipe.required "stec_coeff" (Jdec.array Jdec.int)
-        |> Jpipe.required "stec_quality_indicator" Jdec.int
-        |> Jpipe.required "sv_id" svID
-
-encodeSTECSatElement : STECSatElement -> Jenc.Value
-encodeSTECSatElement x =
-    Jenc.object
-        [ ("stec_coeff", makeArrayEncoder Jenc.int x.stecCoeff)
-        , ("stec_quality_indicator", Jenc.int x.stecQualityIndicator)
-        , ("sv_id", encodeSvID x.svID)
         ]
 
 --- encoder helpers

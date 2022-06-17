@@ -27,6 +27,8 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
+#include <libsbp/v4/ssr/BoundsHeader.h>
+#include <libsbp/v4/ssr/CodePhaseBiasesSatSig.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -39,18 +41,31 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
-  u8 stub[SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * Header of a bounds message.
    */
-  u8 n_stub;
+  sbp_bounds_header_t header;
+
+  /**
+   * IOD of the SSR bound.
+   */
+  u8 ssr_iod;
+
+  /**
+   * Constellation ID to which the SVs belong.
+   */
+  u8 const_id;
+
+  /**
+   * Number of satellite-signal couples.
+   */
+  u8 n_sats_signals;
+
+  /**
+   * Code and Phase Biases Bounds per Satellite-Signal couple.
+   */
+  sbp_code_phase_biases_sat_sig_t satellites_signals
+      [SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_SATELLITES_SIGNALS_MAX];
 } sbp_msg_ssr_code_phase_biases_bounds_t;
 
 /**
@@ -62,7 +77,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_code_phase_biases_bounds_encoded_len(
     const sbp_msg_ssr_code_phase_biases_bounds_t *msg) {
   return SBP_MSG_SSR_CODE_PHASE_BIASES_BOUNDS_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+         (msg->n_sats_signals * SBP_CODE_PHASE_BIASES_SAT_SIG_ENCODED_LEN);
 }
 
 /**

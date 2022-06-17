@@ -104,69 +104,47 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_flag_high_level.n_stub = 31;
+    test_msg.ssr_flag_high_level.chain_id = 40;
 
-    test_msg.ssr_flag_high_level.stub[0] = 180;
+    test_msg.ssr_flag_high_level.corr_time.tow = 360;
 
-    test_msg.ssr_flag_high_level.stub[1] = 0;
+    test_msg.ssr_flag_high_level.corr_time.wn = 6;
 
-    test_msg.ssr_flag_high_level.stub[2] = 0;
+    test_msg.ssr_flag_high_level.obs_time.tow = 180;
 
-    test_msg.ssr_flag_high_level.stub[3] = 0;
+    test_msg.ssr_flag_high_level.obs_time.wn = 3;
 
-    test_msg.ssr_flag_high_level.stub[4] = 3;
+    test_msg.ssr_flag_high_level.reserved[0] = 0;
 
-    test_msg.ssr_flag_high_level.stub[5] = 0;
+    test_msg.ssr_flag_high_level.reserved[1] = 0;
 
-    test_msg.ssr_flag_high_level.stub[6] = 104;
+    test_msg.ssr_flag_high_level.reserved[2] = 0;
 
-    test_msg.ssr_flag_high_level.stub[7] = 1;
+    test_msg.ssr_flag_high_level.reserved[3] = 0;
 
-    test_msg.ssr_flag_high_level.stub[8] = 0;
+    test_msg.ssr_flag_high_level.reserved[4] = 0;
 
-    test_msg.ssr_flag_high_level.stub[9] = 0;
+    test_msg.ssr_flag_high_level.reserved[5] = 0;
 
-    test_msg.ssr_flag_high_level.stub[10] = 6;
+    test_msg.ssr_flag_high_level.ssr_sol_id = 10;
 
-    test_msg.ssr_flag_high_level.stub[11] = 0;
+    test_msg.ssr_flag_high_level.tile_id = 30;
 
-    test_msg.ssr_flag_high_level.stub[12] = 10;
+    test_msg.ssr_flag_high_level.tile_set_id = 20;
 
-    test_msg.ssr_flag_high_level.stub[13] = 20;
+    test_msg.ssr_flag_high_level.use_bds_sat = 3;
 
-    test_msg.ssr_flag_high_level.stub[14] = 0;
+    test_msg.ssr_flag_high_level.use_gal_sat = 2;
 
-    test_msg.ssr_flag_high_level.stub[15] = 30;
+    test_msg.ssr_flag_high_level.use_gps_sat = 1;
 
-    test_msg.ssr_flag_high_level.stub[16] = 0;
+    test_msg.ssr_flag_high_level.use_iono_grid_point_sat_los = 7;
 
-    test_msg.ssr_flag_high_level.stub[17] = 40;
+    test_msg.ssr_flag_high_level.use_iono_grid_points = 5;
 
-    test_msg.ssr_flag_high_level.stub[18] = 1;
+    test_msg.ssr_flag_high_level.use_iono_tile_sat_los = 6;
 
-    test_msg.ssr_flag_high_level.stub[19] = 2;
-
-    test_msg.ssr_flag_high_level.stub[20] = 3;
-
-    test_msg.ssr_flag_high_level.stub[21] = 0;
-
-    test_msg.ssr_flag_high_level.stub[22] = 0;
-
-    test_msg.ssr_flag_high_level.stub[23] = 0;
-
-    test_msg.ssr_flag_high_level.stub[24] = 0;
-
-    test_msg.ssr_flag_high_level.stub[25] = 0;
-
-    test_msg.ssr_flag_high_level.stub[26] = 0;
-
-    test_msg.ssr_flag_high_level.stub[27] = 4;
-
-    test_msg.ssr_flag_high_level.stub[28] = 5;
-
-    test_msg.ssr_flag_high_level.stub[29] = 6;
-
-    test_msg.ssr_flag_high_level.stub[30] = 7;
+    test_msg.ssr_flag_high_level.use_tropo_grid_points = 4;
 
     sbp_message_send(&sbp_state, SbpMsgSsrFlagHighLevel, 66, &test_msg,
                      &dummy_write);
@@ -192,158 +170,127 @@ START_TEST(test_auto_check_sbp_integrity_MsgSsrFlagHighLevel) {
         sbp_message_cmp(SbpMsgSsrFlagHighLevel, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.n_stub == 31,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.n_stub, expected 31, is %d",
-                  last_msg.msg.ssr_flag_high_level.n_stub);
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_high_level.chain_id == 40,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.chain_id, "
+        "expected 40, is %d",
+        last_msg.msg.ssr_flag_high_level.chain_id);
 
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[0] == 180,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[0], "
+        last_msg.msg.ssr_flag_high_level.corr_time.tow == 360,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.corr_time.tow, "
+        "expected 360, is %d",
+        last_msg.msg.ssr_flag_high_level.corr_time.tow);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_high_level.corr_time.wn == 6,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.corr_time.wn, "
+        "expected 6, is %d",
+        last_msg.msg.ssr_flag_high_level.corr_time.wn);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_high_level.obs_time.tow == 180,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.obs_time.tow, "
         "expected 180, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[0]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[1] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[1], expected 0, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[1]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[2] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[2], expected 0, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[2]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[3] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[3], expected 0, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[3]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[4] == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[4], expected 3, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[4]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[5] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[5], expected 0, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[5]);
+        last_msg.msg.ssr_flag_high_level.obs_time.tow);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[6] == 104,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[6], "
-        "expected 104, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[6]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[7] == 1,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[7], expected 1, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[7]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[8] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[8], expected 0, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[8]);
-    ck_assert_msg(last_msg.msg.ssr_flag_high_level.stub[9] == 0,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_flag_high_level.stub[9], expected 0, is %d",
-                  last_msg.msg.ssr_flag_high_level.stub[9]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[10] == 6,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[10], "
-        "expected 6, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[10]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[11] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[11], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[11]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[12] == 10,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[12], "
-        "expected 10, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[12]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[13] == 20,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[13], "
-        "expected 20, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[13]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[14] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[14], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[14]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[15] == 30,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[15], "
-        "expected 30, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[15]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[16] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[16], "
-        "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[16]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[17] == 40,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[17], "
-        "expected 40, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[17]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[18] == 1,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[18], "
-        "expected 1, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[18]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[19] == 2,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[19], "
-        "expected 2, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[19]);
-    ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[20] == 3,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[20], "
+        last_msg.msg.ssr_flag_high_level.obs_time.wn == 3,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.obs_time.wn, "
         "expected 3, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[20]);
+        last_msg.msg.ssr_flag_high_level.obs_time.wn);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[21] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[21], "
+        last_msg.msg.ssr_flag_high_level.reserved[0] == 0,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[0], "
         "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[21]);
+        last_msg.msg.ssr_flag_high_level.reserved[0]);
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[22] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[22], "
+        last_msg.msg.ssr_flag_high_level.reserved[1] == 0,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[1], "
         "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[22]);
+        last_msg.msg.ssr_flag_high_level.reserved[1]);
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[23] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[23], "
+        last_msg.msg.ssr_flag_high_level.reserved[2] == 0,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[2], "
         "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[23]);
+        last_msg.msg.ssr_flag_high_level.reserved[2]);
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[24] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[24], "
+        last_msg.msg.ssr_flag_high_level.reserved[3] == 0,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[3], "
         "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[24]);
+        last_msg.msg.ssr_flag_high_level.reserved[3]);
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[25] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[25], "
+        last_msg.msg.ssr_flag_high_level.reserved[4] == 0,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[4], "
         "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[25]);
+        last_msg.msg.ssr_flag_high_level.reserved[4]);
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[26] == 0,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[26], "
+        last_msg.msg.ssr_flag_high_level.reserved[5] == 0,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.reserved[5], "
         "expected 0, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[26]);
+        last_msg.msg.ssr_flag_high_level.reserved[5]);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[27] == 4,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[27], "
-        "expected 4, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[27]);
+        last_msg.msg.ssr_flag_high_level.ssr_sol_id == 10,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.ssr_sol_id, "
+        "expected 10, is %d",
+        last_msg.msg.ssr_flag_high_level.ssr_sol_id);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[28] == 5,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[28], "
-        "expected 5, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[28]);
+        last_msg.msg.ssr_flag_high_level.tile_id == 30,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.tile_id, "
+        "expected 30, is %d",
+        last_msg.msg.ssr_flag_high_level.tile_id);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[29] == 6,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[29], "
-        "expected 6, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[29]);
+        last_msg.msg.ssr_flag_high_level.tile_set_id == 20,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.tile_set_id, "
+        "expected 20, is %d",
+        last_msg.msg.ssr_flag_high_level.tile_set_id);
+
     ck_assert_msg(
-        last_msg.msg.ssr_flag_high_level.stub[30] == 7,
-        "incorrect value for last_msg.msg.ssr_flag_high_level.stub[30], "
+        last_msg.msg.ssr_flag_high_level.use_bds_sat == 3,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.use_bds_sat, "
+        "expected 3, is %d",
+        last_msg.msg.ssr_flag_high_level.use_bds_sat);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_high_level.use_gal_sat == 2,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.use_gal_sat, "
+        "expected 2, is %d",
+        last_msg.msg.ssr_flag_high_level.use_gal_sat);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_high_level.use_gps_sat == 1,
+        "incorrect value for last_msg.msg.ssr_flag_high_level.use_gps_sat, "
+        "expected 1, is %d",
+        last_msg.msg.ssr_flag_high_level.use_gps_sat);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_flag_high_level.use_iono_grid_point_sat_los == 7,
+        "incorrect value for "
+        "last_msg.msg.ssr_flag_high_level.use_iono_grid_point_sat_los, "
         "expected 7, is %d",
-        last_msg.msg.ssr_flag_high_level.stub[30]);
+        last_msg.msg.ssr_flag_high_level.use_iono_grid_point_sat_los);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.use_iono_grid_points == 5,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_high_level.use_iono_grid_points, "
+                  "expected 5, is %d",
+                  last_msg.msg.ssr_flag_high_level.use_iono_grid_points);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los == 6,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los, "
+                  "expected 6, is %d",
+                  last_msg.msg.ssr_flag_high_level.use_iono_tile_sat_los);
+
+    ck_assert_msg(last_msg.msg.ssr_flag_high_level.use_tropo_grid_points == 4,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_flag_high_level.use_tropo_grid_points, "
+                  "expected 4, is %d",
+                  last_msg.msg.ssr_flag_high_level.use_tropo_grid_points);
   }
 }
 END_TEST

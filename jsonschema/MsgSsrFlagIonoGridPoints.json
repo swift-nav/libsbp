@@ -16,9 +16,13 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "header": {"$ref": "IntegritySSRHeader.json"},
+    "n_faulty_points": {"type": "integer"},
+    "faulty_points": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "stub"
+    "header",
+    "n_faulty_points",
+    "faulty_points"
   ]
 }

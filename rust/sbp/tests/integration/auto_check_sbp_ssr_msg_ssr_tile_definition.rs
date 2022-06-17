@@ -43,129 +43,54 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.stub[0], 31,
-                    "incorrect value for stub[0], expected 31, is {}",
-                    msg.stub[0]
+                    msg.bitmask, 1234567890,
+                    "incorrect value for bitmask, expected 1234567890, is {}",
+                    msg.bitmask
                 );
                 assert_eq!(
-                    msg.stub[1], 0,
-                    "incorrect value for stub[1], expected 0, is {}",
-                    msg.stub[1]
+                    msg.cols, 32768,
+                    "incorrect value for cols, expected 32768, is {}",
+                    msg.cols
                 );
                 assert_eq!(
-                    msg.stub[2], 1,
-                    "incorrect value for stub[2], expected 1, is {}",
-                    msg.stub[2]
+                    msg.corner_nw_lat, 1024,
+                    "incorrect value for corner_nw_lat, expected 1024, is {}",
+                    msg.corner_nw_lat
                 );
                 assert_eq!(
-                    msg.stub[3], 0,
-                    "incorrect value for stub[3], expected 0, is {}",
-                    msg.stub[3]
+                    msg.corner_nw_lon, 2048,
+                    "incorrect value for corner_nw_lon, expected 2048, is {}",
+                    msg.corner_nw_lon
                 );
                 assert_eq!(
-                    msg.stub[4], 2,
-                    "incorrect value for stub[4], expected 2, is {}",
-                    msg.stub[4]
+                    msg.rows, 16384,
+                    "incorrect value for rows, expected 16384, is {}",
+                    msg.rows
                 );
                 assert_eq!(
-                    msg.stub[5], 0,
-                    "incorrect value for stub[5], expected 0, is {}",
-                    msg.stub[5]
+                    msg.spacing_lat, 4096,
+                    "incorrect value for spacing_lat, expected 4096, is {}",
+                    msg.spacing_lat
                 );
                 assert_eq!(
-                    msg.stub[6], 4,
-                    "incorrect value for stub[6], expected 4, is {}",
-                    msg.stub[6]
+                    msg.spacing_lon, 8192,
+                    "incorrect value for spacing_lon, expected 8192, is {}",
+                    msg.spacing_lon
                 );
                 assert_eq!(
-                    msg.stub[7], 0,
-                    "incorrect value for stub[7], expected 0, is {}",
-                    msg.stub[7]
+                    msg.ssr_sol_id, 31,
+                    "incorrect value for ssr_sol_id, expected 31, is {}",
+                    msg.ssr_sol_id
                 );
                 assert_eq!(
-                    msg.stub[8], 8,
-                    "incorrect value for stub[8], expected 8, is {}",
-                    msg.stub[8]
+                    msg.tile_id, 512,
+                    "incorrect value for tile_id, expected 512, is {}",
+                    msg.tile_id
                 );
                 assert_eq!(
-                    msg.stub[9], 0,
-                    "incorrect value for stub[9], expected 0, is {}",
-                    msg.stub[9]
-                );
-                assert_eq!(
-                    msg.stub[10], 16,
-                    "incorrect value for stub[10], expected 16, is {}",
-                    msg.stub[10]
-                );
-                assert_eq!(
-                    msg.stub[11], 0,
-                    "incorrect value for stub[11], expected 0, is {}",
-                    msg.stub[11]
-                );
-                assert_eq!(
-                    msg.stub[12], 32,
-                    "incorrect value for stub[12], expected 32, is {}",
-                    msg.stub[12]
-                );
-                assert_eq!(
-                    msg.stub[13], 0,
-                    "incorrect value for stub[13], expected 0, is {}",
-                    msg.stub[13]
-                );
-                assert_eq!(
-                    msg.stub[14], 64,
-                    "incorrect value for stub[14], expected 64, is {}",
-                    msg.stub[14]
-                );
-                assert_eq!(
-                    msg.stub[15], 0,
-                    "incorrect value for stub[15], expected 0, is {}",
-                    msg.stub[15]
-                );
-                assert_eq!(
-                    msg.stub[16], 128,
-                    "incorrect value for stub[16], expected 128, is {}",
-                    msg.stub[16]
-                );
-                assert_eq!(
-                    msg.stub[17], 210,
-                    "incorrect value for stub[17], expected 210, is {}",
-                    msg.stub[17]
-                );
-                assert_eq!(
-                    msg.stub[18], 2,
-                    "incorrect value for stub[18], expected 2, is {}",
-                    msg.stub[18]
-                );
-                assert_eq!(
-                    msg.stub[19], 150,
-                    "incorrect value for stub[19], expected 150, is {}",
-                    msg.stub[19]
-                );
-                assert_eq!(
-                    msg.stub[20], 73,
-                    "incorrect value for stub[20], expected 73, is {}",
-                    msg.stub[20]
-                );
-                assert_eq!(
-                    msg.stub[21], 0,
-                    "incorrect value for stub[21], expected 0, is {}",
-                    msg.stub[21]
-                );
-                assert_eq!(
-                    msg.stub[22], 0,
-                    "incorrect value for stub[22], expected 0, is {}",
-                    msg.stub[22]
-                );
-                assert_eq!(
-                    msg.stub[23], 0,
-                    "incorrect value for stub[23], expected 0, is {}",
-                    msg.stub[23]
-                );
-                assert_eq!(
-                    msg.stub[24], 0,
-                    "incorrect value for stub[24], expected 0, is {}",
-                    msg.stub[24]
+                    msg.tile_set_id, 256,
+                    "incorrect value for tile_set_id, expected 256, is {}",
+                    msg.tile_set_id
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrTileDefinition"),

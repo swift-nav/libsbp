@@ -27,6 +27,8 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
+#include <libsbp/v4/ssr/BoundsHeader.h>
+#include <libsbp/v4/ssr/STECSatElement.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -39,18 +41,36 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
-  u8 stub[SBP_MSG_SSR_STEC_CORRECTION_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * Header of a STEC correction with bounds message.
    */
-  u8 n_stub;
+  sbp_bounds_header_t header;
+
+  /**
+   * IOD of the SSR atmospheric correction
+   */
+  u8 ssr_iod_atmo;
+
+  /**
+   * Tile set ID
+   */
+  u16 tile_set_id;
+
+  /**
+   * Tile ID
+   */
+  u16 tile_id;
+
+  /**
+   * Number of satellites.
+   */
+  u8 n_sats;
+
+  /**
+   * Array of STEC polynomial coefficients for each space vehicle.
+   */
+  sbp_stec_sat_element_t
+      stec_sat_list[SBP_MSG_SSR_STEC_CORRECTION_STEC_SAT_LIST_MAX];
 } sbp_msg_ssr_stec_correction_t;
 
 /**
@@ -62,7 +82,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_stec_correction_encoded_len(
     const sbp_msg_ssr_stec_correction_t *msg) {
   return SBP_MSG_SSR_STEC_CORRECTION_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+         (msg->n_sats * SBP_STEC_SAT_ELEMENT_ENCODED_LEN);
 }
 
 /**

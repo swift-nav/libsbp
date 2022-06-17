@@ -82,69 +82,35 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrOrbitClockBounds0, Test) {
   };
 
   sbp_msg_ssr_orbit_clock_bounds_t test_msg{};
-  test_msg.n_stub = 31;
+  test_msg.const_id = 1;
+  test_msg.header.num_msgs = 1;
+  test_msg.header.seq_num = 2;
+  test_msg.header.sol_id = 48;
+  test_msg.header.time.tow = 180;
+  test_msg.header.time.wn = 3;
+  test_msg.header.update_interval = 3;
+  test_msg.n_sats = 2;
 
-  test_msg.stub[0] = 180;
+  test_msg.orbit_clock_bounds[0].clock_bound_mu = 39;
+  test_msg.orbit_clock_bounds[0].clock_bound_sig = 1;
+  test_msg.orbit_clock_bounds[0].orb_along_bound_mu = 38;
+  test_msg.orbit_clock_bounds[0].orb_along_bound_sig = 2;
+  test_msg.orbit_clock_bounds[0].orb_cross_bound_mu = 37;
+  test_msg.orbit_clock_bounds[0].orb_cross_bound_sig = 3;
+  test_msg.orbit_clock_bounds[0].orb_radial_bound_mu = 39;
+  test_msg.orbit_clock_bounds[0].orb_radial_bound_sig = 1;
+  test_msg.orbit_clock_bounds[0].sat_id = 24;
 
-  test_msg.stub[1] = 0;
-
-  test_msg.stub[2] = 0;
-
-  test_msg.stub[3] = 0;
-
-  test_msg.stub[4] = 3;
-
-  test_msg.stub[5] = 0;
-
-  test_msg.stub[6] = 1;
-
-  test_msg.stub[7] = 2;
-
-  test_msg.stub[8] = 3;
-
-  test_msg.stub[9] = 48;
-
-  test_msg.stub[10] = 15;
-
-  test_msg.stub[11] = 1;
-
-  test_msg.stub[12] = 2;
-
-  test_msg.stub[13] = 24;
-
-  test_msg.stub[14] = 39;
-
-  test_msg.stub[15] = 38;
-
-  test_msg.stub[16] = 37;
-
-  test_msg.stub[17] = 1;
-
-  test_msg.stub[18] = 2;
-
-  test_msg.stub[19] = 3;
-
-  test_msg.stub[20] = 39;
-
-  test_msg.stub[21] = 1;
-
-  test_msg.stub[22] = 3;
-
-  test_msg.stub[23] = 39;
-
-  test_msg.stub[24] = 38;
-
-  test_msg.stub[25] = 37;
-
-  test_msg.stub[26] = 1;
-
-  test_msg.stub[27] = 2;
-
-  test_msg.stub[28] = 3;
-
-  test_msg.stub[29] = 39;
-
-  test_msg.stub[30] = 1;
+  test_msg.orbit_clock_bounds[1].clock_bound_mu = 39;
+  test_msg.orbit_clock_bounds[1].clock_bound_sig = 1;
+  test_msg.orbit_clock_bounds[1].orb_along_bound_mu = 38;
+  test_msg.orbit_clock_bounds[1].orb_along_bound_sig = 2;
+  test_msg.orbit_clock_bounds[1].orb_cross_bound_mu = 37;
+  test_msg.orbit_clock_bounds[1].orb_cross_bound_sig = 3;
+  test_msg.orbit_clock_bounds[1].orb_radial_bound_mu = 39;
+  test_msg.orbit_clock_bounds[1].orb_radial_bound_sig = 1;
+  test_msg.orbit_clock_bounds[1].sat_id = 3;
+  test_msg.ssr_iod = 15;
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -158,100 +124,103 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrOrbitClockBounds0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.n_stub, 31)
-      << "incorrect value for last_msg_.n_stub, expected 31, is "
-      << last_msg_.n_stub;
-  EXPECT_EQ(last_msg_.stub[0], 180)
-      << "incorrect value for last_msg_.stub[0], expected 180, is "
-      << last_msg_.stub[0];
-  EXPECT_EQ(last_msg_.stub[1], 0)
-      << "incorrect value for last_msg_.stub[1], expected 0, is "
-      << last_msg_.stub[1];
-  EXPECT_EQ(last_msg_.stub[2], 0)
-      << "incorrect value for last_msg_.stub[2], expected 0, is "
-      << last_msg_.stub[2];
-  EXPECT_EQ(last_msg_.stub[3], 0)
-      << "incorrect value for last_msg_.stub[3], expected 0, is "
-      << last_msg_.stub[3];
-  EXPECT_EQ(last_msg_.stub[4], 3)
-      << "incorrect value for last_msg_.stub[4], expected 3, is "
-      << last_msg_.stub[4];
-  EXPECT_EQ(last_msg_.stub[5], 0)
-      << "incorrect value for last_msg_.stub[5], expected 0, is "
-      << last_msg_.stub[5];
-  EXPECT_EQ(last_msg_.stub[6], 1)
-      << "incorrect value for last_msg_.stub[6], expected 1, is "
-      << last_msg_.stub[6];
-  EXPECT_EQ(last_msg_.stub[7], 2)
-      << "incorrect value for last_msg_.stub[7], expected 2, is "
-      << last_msg_.stub[7];
-  EXPECT_EQ(last_msg_.stub[8], 3)
-      << "incorrect value for last_msg_.stub[8], expected 3, is "
-      << last_msg_.stub[8];
-  EXPECT_EQ(last_msg_.stub[9], 48)
-      << "incorrect value for last_msg_.stub[9], expected 48, is "
-      << last_msg_.stub[9];
-  EXPECT_EQ(last_msg_.stub[10], 15)
-      << "incorrect value for last_msg_.stub[10], expected 15, is "
-      << last_msg_.stub[10];
-  EXPECT_EQ(last_msg_.stub[11], 1)
-      << "incorrect value for last_msg_.stub[11], expected 1, is "
-      << last_msg_.stub[11];
-  EXPECT_EQ(last_msg_.stub[12], 2)
-      << "incorrect value for last_msg_.stub[12], expected 2, is "
-      << last_msg_.stub[12];
-  EXPECT_EQ(last_msg_.stub[13], 24)
-      << "incorrect value for last_msg_.stub[13], expected 24, is "
-      << last_msg_.stub[13];
-  EXPECT_EQ(last_msg_.stub[14], 39)
-      << "incorrect value for last_msg_.stub[14], expected 39, is "
-      << last_msg_.stub[14];
-  EXPECT_EQ(last_msg_.stub[15], 38)
-      << "incorrect value for last_msg_.stub[15], expected 38, is "
-      << last_msg_.stub[15];
-  EXPECT_EQ(last_msg_.stub[16], 37)
-      << "incorrect value for last_msg_.stub[16], expected 37, is "
-      << last_msg_.stub[16];
-  EXPECT_EQ(last_msg_.stub[17], 1)
-      << "incorrect value for last_msg_.stub[17], expected 1, is "
-      << last_msg_.stub[17];
-  EXPECT_EQ(last_msg_.stub[18], 2)
-      << "incorrect value for last_msg_.stub[18], expected 2, is "
-      << last_msg_.stub[18];
-  EXPECT_EQ(last_msg_.stub[19], 3)
-      << "incorrect value for last_msg_.stub[19], expected 3, is "
-      << last_msg_.stub[19];
-  EXPECT_EQ(last_msg_.stub[20], 39)
-      << "incorrect value for last_msg_.stub[20], expected 39, is "
-      << last_msg_.stub[20];
-  EXPECT_EQ(last_msg_.stub[21], 1)
-      << "incorrect value for last_msg_.stub[21], expected 1, is "
-      << last_msg_.stub[21];
-  EXPECT_EQ(last_msg_.stub[22], 3)
-      << "incorrect value for last_msg_.stub[22], expected 3, is "
-      << last_msg_.stub[22];
-  EXPECT_EQ(last_msg_.stub[23], 39)
-      << "incorrect value for last_msg_.stub[23], expected 39, is "
-      << last_msg_.stub[23];
-  EXPECT_EQ(last_msg_.stub[24], 38)
-      << "incorrect value for last_msg_.stub[24], expected 38, is "
-      << last_msg_.stub[24];
-  EXPECT_EQ(last_msg_.stub[25], 37)
-      << "incorrect value for last_msg_.stub[25], expected 37, is "
-      << last_msg_.stub[25];
-  EXPECT_EQ(last_msg_.stub[26], 1)
-      << "incorrect value for last_msg_.stub[26], expected 1, is "
-      << last_msg_.stub[26];
-  EXPECT_EQ(last_msg_.stub[27], 2)
-      << "incorrect value for last_msg_.stub[27], expected 2, is "
-      << last_msg_.stub[27];
-  EXPECT_EQ(last_msg_.stub[28], 3)
-      << "incorrect value for last_msg_.stub[28], expected 3, is "
-      << last_msg_.stub[28];
-  EXPECT_EQ(last_msg_.stub[29], 39)
-      << "incorrect value for last_msg_.stub[29], expected 39, is "
-      << last_msg_.stub[29];
-  EXPECT_EQ(last_msg_.stub[30], 1)
-      << "incorrect value for last_msg_.stub[30], expected 1, is "
-      << last_msg_.stub[30];
+  EXPECT_EQ(last_msg_.const_id, 1)
+      << "incorrect value for last_msg_.const_id, expected 1, is "
+      << last_msg_.const_id;
+  EXPECT_EQ(last_msg_.header.num_msgs, 1)
+      << "incorrect value for last_msg_.header.num_msgs, expected 1, is "
+      << last_msg_.header.num_msgs;
+  EXPECT_EQ(last_msg_.header.seq_num, 2)
+      << "incorrect value for last_msg_.header.seq_num, expected 2, is "
+      << last_msg_.header.seq_num;
+  EXPECT_EQ(last_msg_.header.sol_id, 48)
+      << "incorrect value for last_msg_.header.sol_id, expected 48, is "
+      << last_msg_.header.sol_id;
+  EXPECT_EQ(last_msg_.header.time.tow, 180)
+      << "incorrect value for last_msg_.header.time.tow, expected 180, is "
+      << last_msg_.header.time.tow;
+  EXPECT_EQ(last_msg_.header.time.wn, 3)
+      << "incorrect value for last_msg_.header.time.wn, expected 3, is "
+      << last_msg_.header.time.wn;
+  EXPECT_EQ(last_msg_.header.update_interval, 3)
+      << "incorrect value for last_msg_.header.update_interval, expected 3, is "
+      << last_msg_.header.update_interval;
+  EXPECT_EQ(last_msg_.n_sats, 2)
+      << "incorrect value for last_msg_.n_sats, expected 2, is "
+      << last_msg_.n_sats;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].clock_bound_mu, 39)
+      << "incorrect value for last_msg_.orbit_clock_bounds[0].clock_bound_mu, "
+         "expected 39, is "
+      << last_msg_.orbit_clock_bounds[0].clock_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].clock_bound_sig, 1)
+      << "incorrect value for last_msg_.orbit_clock_bounds[0].clock_bound_sig, "
+         "expected 1, is "
+      << last_msg_.orbit_clock_bounds[0].clock_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].orb_along_bound_mu, 38)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[0].orb_along_bound_mu, expected 38, is "
+      << last_msg_.orbit_clock_bounds[0].orb_along_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].orb_along_bound_sig, 2)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[0].orb_along_bound_sig, expected 2, is "
+      << last_msg_.orbit_clock_bounds[0].orb_along_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].orb_cross_bound_mu, 37)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[0].orb_cross_bound_mu, expected 37, is "
+      << last_msg_.orbit_clock_bounds[0].orb_cross_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].orb_cross_bound_sig, 3)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[0].orb_cross_bound_sig, expected 3, is "
+      << last_msg_.orbit_clock_bounds[0].orb_cross_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].orb_radial_bound_mu, 39)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[0].orb_radial_bound_mu, expected 39, is "
+      << last_msg_.orbit_clock_bounds[0].orb_radial_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].orb_radial_bound_sig, 1)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[0].orb_radial_bound_sig, expected 1, is "
+      << last_msg_.orbit_clock_bounds[0].orb_radial_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[0].sat_id, 24)
+      << "incorrect value for last_msg_.orbit_clock_bounds[0].sat_id, expected "
+         "24, is "
+      << last_msg_.orbit_clock_bounds[0].sat_id;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].clock_bound_mu, 39)
+      << "incorrect value for last_msg_.orbit_clock_bounds[1].clock_bound_mu, "
+         "expected 39, is "
+      << last_msg_.orbit_clock_bounds[1].clock_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].clock_bound_sig, 1)
+      << "incorrect value for last_msg_.orbit_clock_bounds[1].clock_bound_sig, "
+         "expected 1, is "
+      << last_msg_.orbit_clock_bounds[1].clock_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].orb_along_bound_mu, 38)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[1].orb_along_bound_mu, expected 38, is "
+      << last_msg_.orbit_clock_bounds[1].orb_along_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].orb_along_bound_sig, 2)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[1].orb_along_bound_sig, expected 2, is "
+      << last_msg_.orbit_clock_bounds[1].orb_along_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].orb_cross_bound_mu, 37)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[1].orb_cross_bound_mu, expected 37, is "
+      << last_msg_.orbit_clock_bounds[1].orb_cross_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].orb_cross_bound_sig, 3)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[1].orb_cross_bound_sig, expected 3, is "
+      << last_msg_.orbit_clock_bounds[1].orb_cross_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].orb_radial_bound_mu, 39)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[1].orb_radial_bound_mu, expected 39, is "
+      << last_msg_.orbit_clock_bounds[1].orb_radial_bound_mu;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].orb_radial_bound_sig, 1)
+      << "incorrect value for "
+         "last_msg_.orbit_clock_bounds[1].orb_radial_bound_sig, expected 1, is "
+      << last_msg_.orbit_clock_bounds[1].orb_radial_bound_sig;
+  EXPECT_EQ(last_msg_.orbit_clock_bounds[1].sat_id, 3)
+      << "incorrect value for last_msg_.orbit_clock_bounds[1].sat_id, expected "
+         "3, is "
+      << last_msg_.orbit_clock_bounds[1].sat_id;
+  EXPECT_EQ(last_msg_.ssr_iod, 15)
+      << "incorrect value for last_msg_.ssr_iod, expected 15, is "
+      << last_msg_.ssr_iod;
 }

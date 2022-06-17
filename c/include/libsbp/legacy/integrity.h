@@ -31,27 +31,77 @@
 SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  gps_time_sec_t obs_time; /**< GNSS reference time of the observation
+                                used to generate the flag. */
+  u8 num_msgs;             /**< Number of messages in the dataset */
+  u8 seq_num;              /**< Position of this message in the dataset */
+  u8 ssr_sol_id;           /**< SSR Solution ID. */
+  u16 tile_set_id; /**< Unique identifier of the set this tile belongs to. */
+  u16 tile_id;     /**< Unique identifier of this tile in the tile set. */
+  u8 chain_id;     /**< Chain and type of flag. */
+} integrity_ssr_header_t;
+
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t obs_time;        /**< GNSS reference time of
+                                       the observation used to
+                                       generate the flag. */
+  gps_time_sec_t corr_time;       /**< GNSS reference time of
+                                       the correction
+                                       associated to the flag. */
+  u8 ssr_sol_id;                  /**< SSR Solution ID. */
+  u16 tile_set_id;                /**< Unique identifier of the set this
+                                       tile belongs to. */
+  u16 tile_id;                    /**< Unique identifier of this tile in
+                                       the tile set. */
+  u8 chain_id;                    /**< Chain and type of flag. */
+  u8 use_gps_sat;                 /**< Use GPS satellites. */
+  u8 use_gal_sat;                 /**< Use GAL satellites. */
+  u8 use_bds_sat;                 /**< Use BDS satellites. */
+  u8 reserved[6];                 /**< Reserved */
+  u8 use_tropo_grid_points;       /**< Use tropo grid points. */
+  u8 use_iono_grid_points;        /**< Use iono grid points. */
+  u8 use_iono_tile_sat_los;       /**< Use iono tile satellite LoS. */
+  u8 use_iono_grid_point_sat_los; /**< Use iono grid point satellite LoS. */
 } msg_ssr_flag_high_level_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  gps_time_sec_t obs_time; /**< GNSS reference time of the observation
+                                used to generate the flag. */
+  u8 num_msgs;             /**< Number of messages in the dataset */
+  u8 seq_num;              /**< Position of this message in the dataset */
+  u8 ssr_sol_id;           /**< SSR Solution ID. */
+  u8 chain_id;             /**< Chain and type of flag. */
+  u8 const_id;             /**< Constellation ID. */
+  u8 n_faulty_sats;        /**< Number of faulty satellites. */
+  u8 faulty_sats[0];       /**< List of faulty satellites. */
 } msg_ssr_flag_satellites_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  integrity_ssr_header_t header; /**< Header of an integrity
+                                      message. */
+  u8 n_faulty_points;            /**< Number of faulty grid points. */
+  u16 faulty_points[0];          /**< List of faulty grid points. */
 } msg_ssr_flag_tropo_grid_points_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  integrity_ssr_header_t header; /**< Header of an integrity
+                                      message. */
+  u8 n_faulty_points;            /**< Number of faulty grid points. */
+  u16 faulty_points[0];          /**< List of faulty grid points. */
 } msg_ssr_flag_iono_grid_points_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  integrity_ssr_header_t header; /**< Header of an integrity message. */
+  u8 n_faulty_los;               /**< Number of faulty LOS. */
+  sv_id_t faulty_los[0];         /**< List of faulty LOS */
 } msg_ssr_flag_iono_tile_sat_los_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 stub[0];
+  integrity_ssr_header_t header; /**< Header of an integrity
+                                      message. */
+  u16 grid_point_id;             /**< Index of the grid point. */
+  u8 n_faulty_los;               /**< Number of faulty LOS. */
+  sv_id_t faulty_los[0];         /**< List of faulty LOS */
 } msg_ssr_flag_iono_grid_point_sat_los_t;
 
 /** \} */

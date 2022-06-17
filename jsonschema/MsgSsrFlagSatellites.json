@@ -16,9 +16,23 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "obs_time": {"$ref": "GpsTimeSec.json"},
+    "num_msgs": {"type": "integer"},
+    "seq_num": {"type": "integer"},
+    "ssr_sol_id": {"type": "integer"},
+    "chain_id": {"type": "integer"},
+    "const_id": {"type": "integer"},
+    "n_faulty_sats": {"type": "integer"},
+    "faulty_sats": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "stub"
+    "obs_time",
+    "num_msgs",
+    "seq_num",
+    "ssr_sol_id",
+    "chain_id",
+    "const_id",
+    "n_faulty_sats",
+    "faulty_sats"
   ]
 }

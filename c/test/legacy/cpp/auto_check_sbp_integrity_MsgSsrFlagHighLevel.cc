@@ -88,161 +88,51 @@ TEST_F(Test_legacy_auto_check_sbp_integrity_MsgSsrFlagHighLevel0, Test) {
   msg_ssr_flag_high_level_t *test_msg =
       (msg_ssr_flag_high_level_t *)test_msg_storage;
   test_msg_len = (uint8_t)sizeof(*test_msg);
-  if (sizeof(test_msg->stub) == 0) {
+  test_msg->chain_id = 40;
+  test_msg->corr_time.tow = 360;
+  test_msg->corr_time.wn = 6;
+  test_msg->obs_time.tow = 180;
+  test_msg->obs_time.wn = 3;
+  if (sizeof(test_msg->reserved) == 0) {
     // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
+    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->reserved[0]));
   }
-  test_msg->stub[0] = 180;
-  if (sizeof(test_msg->stub) == 0) {
+  test_msg->reserved[0] = 0;
+  if (sizeof(test_msg->reserved) == 0) {
     // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
+    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->reserved[0]));
   }
-  test_msg->stub[1] = 0;
-  if (sizeof(test_msg->stub) == 0) {
+  test_msg->reserved[1] = 0;
+  if (sizeof(test_msg->reserved) == 0) {
     // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
+    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->reserved[0]));
   }
-  test_msg->stub[2] = 0;
-  if (sizeof(test_msg->stub) == 0) {
+  test_msg->reserved[2] = 0;
+  if (sizeof(test_msg->reserved) == 0) {
     // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
+    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->reserved[0]));
   }
-  test_msg->stub[3] = 0;
-  if (sizeof(test_msg->stub) == 0) {
+  test_msg->reserved[3] = 0;
+  if (sizeof(test_msg->reserved) == 0) {
     // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
+    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->reserved[0]));
   }
-  test_msg->stub[4] = 3;
-  if (sizeof(test_msg->stub) == 0) {
+  test_msg->reserved[4] = 0;
+  if (sizeof(test_msg->reserved) == 0) {
     // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
+    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->reserved[0]));
   }
-  test_msg->stub[5] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[6] = 104;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[7] = 1;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[8] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[9] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[10] = 6;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[11] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[12] = 10;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[13] = 20;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[14] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[15] = 30;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[16] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[17] = 40;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[18] = 1;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[19] = 2;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[20] = 3;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[21] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[22] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[23] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[24] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[25] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[26] = 0;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[27] = 4;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[28] = 5;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[29] = 6;
-  if (sizeof(test_msg->stub) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->stub[0]));
-  }
-  test_msg->stub[30] = 7;
+  test_msg->reserved[5] = 0;
+  test_msg->ssr_sol_id = 10;
+  test_msg->tile_id = 30;
+  test_msg->tile_set_id = 20;
+  test_msg->use_bds_sat = 3;
+  test_msg->use_gal_sat = 2;
+  test_msg->use_gps_sat = 1;
+  test_msg->use_iono_grid_point_sat_los = 7;
+  test_msg->use_iono_grid_points = 5;
+  test_msg->use_iono_tile_sat_los = 6;
+  test_msg->use_tropo_grid_points = 4;
 
   EXPECT_EQ(send_message(3001, 66, test_msg_len, test_msg_storage), SBP_OK);
 
@@ -256,70 +146,66 @@ TEST_F(Test_legacy_auto_check_sbp_integrity_MsgSsrFlagHighLevel0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
-  EXPECT_EQ(last_msg_->stub[0], 180)
-      << "incorrect value for stub[0], expected 180, is " << last_msg_->stub[0];
-  EXPECT_EQ(last_msg_->stub[1], 0)
-      << "incorrect value for stub[1], expected 0, is " << last_msg_->stub[1];
-  EXPECT_EQ(last_msg_->stub[2], 0)
-      << "incorrect value for stub[2], expected 0, is " << last_msg_->stub[2];
-  EXPECT_EQ(last_msg_->stub[3], 0)
-      << "incorrect value for stub[3], expected 0, is " << last_msg_->stub[3];
-  EXPECT_EQ(last_msg_->stub[4], 3)
-      << "incorrect value for stub[4], expected 3, is " << last_msg_->stub[4];
-  EXPECT_EQ(last_msg_->stub[5], 0)
-      << "incorrect value for stub[5], expected 0, is " << last_msg_->stub[5];
-  EXPECT_EQ(last_msg_->stub[6], 104)
-      << "incorrect value for stub[6], expected 104, is " << last_msg_->stub[6];
-  EXPECT_EQ(last_msg_->stub[7], 1)
-      << "incorrect value for stub[7], expected 1, is " << last_msg_->stub[7];
-  EXPECT_EQ(last_msg_->stub[8], 0)
-      << "incorrect value for stub[8], expected 0, is " << last_msg_->stub[8];
-  EXPECT_EQ(last_msg_->stub[9], 0)
-      << "incorrect value for stub[9], expected 0, is " << last_msg_->stub[9];
-  EXPECT_EQ(last_msg_->stub[10], 6)
-      << "incorrect value for stub[10], expected 6, is " << last_msg_->stub[10];
-  EXPECT_EQ(last_msg_->stub[11], 0)
-      << "incorrect value for stub[11], expected 0, is " << last_msg_->stub[11];
-  EXPECT_EQ(last_msg_->stub[12], 10)
-      << "incorrect value for stub[12], expected 10, is "
-      << last_msg_->stub[12];
-  EXPECT_EQ(last_msg_->stub[13], 20)
-      << "incorrect value for stub[13], expected 20, is "
-      << last_msg_->stub[13];
-  EXPECT_EQ(last_msg_->stub[14], 0)
-      << "incorrect value for stub[14], expected 0, is " << last_msg_->stub[14];
-  EXPECT_EQ(last_msg_->stub[15], 30)
-      << "incorrect value for stub[15], expected 30, is "
-      << last_msg_->stub[15];
-  EXPECT_EQ(last_msg_->stub[16], 0)
-      << "incorrect value for stub[16], expected 0, is " << last_msg_->stub[16];
-  EXPECT_EQ(last_msg_->stub[17], 40)
-      << "incorrect value for stub[17], expected 40, is "
-      << last_msg_->stub[17];
-  EXPECT_EQ(last_msg_->stub[18], 1)
-      << "incorrect value for stub[18], expected 1, is " << last_msg_->stub[18];
-  EXPECT_EQ(last_msg_->stub[19], 2)
-      << "incorrect value for stub[19], expected 2, is " << last_msg_->stub[19];
-  EXPECT_EQ(last_msg_->stub[20], 3)
-      << "incorrect value for stub[20], expected 3, is " << last_msg_->stub[20];
-  EXPECT_EQ(last_msg_->stub[21], 0)
-      << "incorrect value for stub[21], expected 0, is " << last_msg_->stub[21];
-  EXPECT_EQ(last_msg_->stub[22], 0)
-      << "incorrect value for stub[22], expected 0, is " << last_msg_->stub[22];
-  EXPECT_EQ(last_msg_->stub[23], 0)
-      << "incorrect value for stub[23], expected 0, is " << last_msg_->stub[23];
-  EXPECT_EQ(last_msg_->stub[24], 0)
-      << "incorrect value for stub[24], expected 0, is " << last_msg_->stub[24];
-  EXPECT_EQ(last_msg_->stub[25], 0)
-      << "incorrect value for stub[25], expected 0, is " << last_msg_->stub[25];
-  EXPECT_EQ(last_msg_->stub[26], 0)
-      << "incorrect value for stub[26], expected 0, is " << last_msg_->stub[26];
-  EXPECT_EQ(last_msg_->stub[27], 4)
-      << "incorrect value for stub[27], expected 4, is " << last_msg_->stub[27];
-  EXPECT_EQ(last_msg_->stub[28], 5)
-      << "incorrect value for stub[28], expected 5, is " << last_msg_->stub[28];
-  EXPECT_EQ(last_msg_->stub[29], 6)
-      << "incorrect value for stub[29], expected 6, is " << last_msg_->stub[29];
-  EXPECT_EQ(last_msg_->stub[30], 7)
-      << "incorrect value for stub[30], expected 7, is " << last_msg_->stub[30];
+  EXPECT_EQ(last_msg_->chain_id, 40)
+      << "incorrect value for chain_id, expected 40, is "
+      << last_msg_->chain_id;
+  EXPECT_EQ(last_msg_->corr_time.tow, 360)
+      << "incorrect value for corr_time.tow, expected 360, is "
+      << last_msg_->corr_time.tow;
+  EXPECT_EQ(last_msg_->corr_time.wn, 6)
+      << "incorrect value for corr_time.wn, expected 6, is "
+      << last_msg_->corr_time.wn;
+  EXPECT_EQ(last_msg_->obs_time.tow, 180)
+      << "incorrect value for obs_time.tow, expected 180, is "
+      << last_msg_->obs_time.tow;
+  EXPECT_EQ(last_msg_->obs_time.wn, 3)
+      << "incorrect value for obs_time.wn, expected 3, is "
+      << last_msg_->obs_time.wn;
+  EXPECT_EQ(last_msg_->reserved[0], 0)
+      << "incorrect value for reserved[0], expected 0, is "
+      << last_msg_->reserved[0];
+  EXPECT_EQ(last_msg_->reserved[1], 0)
+      << "incorrect value for reserved[1], expected 0, is "
+      << last_msg_->reserved[1];
+  EXPECT_EQ(last_msg_->reserved[2], 0)
+      << "incorrect value for reserved[2], expected 0, is "
+      << last_msg_->reserved[2];
+  EXPECT_EQ(last_msg_->reserved[3], 0)
+      << "incorrect value for reserved[3], expected 0, is "
+      << last_msg_->reserved[3];
+  EXPECT_EQ(last_msg_->reserved[4], 0)
+      << "incorrect value for reserved[4], expected 0, is "
+      << last_msg_->reserved[4];
+  EXPECT_EQ(last_msg_->reserved[5], 0)
+      << "incorrect value for reserved[5], expected 0, is "
+      << last_msg_->reserved[5];
+  EXPECT_EQ(last_msg_->ssr_sol_id, 10)
+      << "incorrect value for ssr_sol_id, expected 10, is "
+      << last_msg_->ssr_sol_id;
+  EXPECT_EQ(last_msg_->tile_id, 30)
+      << "incorrect value for tile_id, expected 30, is " << last_msg_->tile_id;
+  EXPECT_EQ(last_msg_->tile_set_id, 20)
+      << "incorrect value for tile_set_id, expected 20, is "
+      << last_msg_->tile_set_id;
+  EXPECT_EQ(last_msg_->use_bds_sat, 3)
+      << "incorrect value for use_bds_sat, expected 3, is "
+      << last_msg_->use_bds_sat;
+  EXPECT_EQ(last_msg_->use_gal_sat, 2)
+      << "incorrect value for use_gal_sat, expected 2, is "
+      << last_msg_->use_gal_sat;
+  EXPECT_EQ(last_msg_->use_gps_sat, 1)
+      << "incorrect value for use_gps_sat, expected 1, is "
+      << last_msg_->use_gps_sat;
+  EXPECT_EQ(last_msg_->use_iono_grid_point_sat_los, 7)
+      << "incorrect value for use_iono_grid_point_sat_los, expected 7, is "
+      << last_msg_->use_iono_grid_point_sat_los;
+  EXPECT_EQ(last_msg_->use_iono_grid_points, 5)
+      << "incorrect value for use_iono_grid_points, expected 5, is "
+      << last_msg_->use_iono_grid_points;
+  EXPECT_EQ(last_msg_->use_iono_tile_sat_los, 6)
+      << "incorrect value for use_iono_tile_sat_los, expected 6, is "
+      << last_msg_->use_iono_tile_sat_los;
+  EXPECT_EQ(last_msg_->use_tropo_grid_points, 4)
+      << "incorrect value for use_tropo_grid_points, expected 4, is "
+      << last_msg_->use_tropo_grid_points;
 }

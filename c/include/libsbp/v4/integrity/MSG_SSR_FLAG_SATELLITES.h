@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/integrity_macros.h>
+#include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -39,18 +40,45 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
-  u8 stub[SBP_MSG_SSR_FLAG_SATELLITES_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * GNSS reference time of the observation used to generate the flag.
    */
-  u8 n_stub;
+  sbp_gps_time_sec_t obs_time;
+
+  /**
+   * Number of messages in the dataset
+   */
+  u8 num_msgs;
+
+  /**
+   * Position of this message in the dataset
+   */
+  u8 seq_num;
+
+  /**
+   * SSR Solution ID.
+   */
+  u8 ssr_sol_id;
+
+  /**
+   * Chain and type of flag.
+   */
+  u8 chain_id;
+
+  /**
+   * Constellation ID.
+   */
+  u8 const_id;
+
+  /**
+   * Number of faulty satellites.
+   */
+  u8 n_faulty_sats;
+
+  /**
+   * List of faulty satellites.
+   */
+  u8 faulty_sats[SBP_MSG_SSR_FLAG_SATELLITES_FAULTY_SATS_MAX];
 } sbp_msg_ssr_flag_satellites_t;
 
 /**
@@ -62,7 +90,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_flag_satellites_encoded_len(
     const sbp_msg_ssr_flag_satellites_t *msg) {
   return SBP_MSG_SSR_FLAG_SATELLITES_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+         (msg->n_faulty_sats * SBP_ENCODED_LEN_U8);
 }
 
 /**

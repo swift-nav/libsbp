@@ -43,159 +43,109 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.stub[0], 180,
-                    "incorrect value for stub[0], expected 180, is {}",
-                    msg.stub[0]
+                    msg.chain_id, 40,
+                    "incorrect value for chain_id, expected 40, is {}",
+                    msg.chain_id
                 );
                 assert_eq!(
-                    msg.stub[1], 0,
-                    "incorrect value for stub[1], expected 0, is {}",
-                    msg.stub[1]
+                    msg.corr_time.tow, 360,
+                    "incorrect value for corr_time.tow, expected 360, is {}",
+                    msg.corr_time.tow
                 );
                 assert_eq!(
-                    msg.stub[2], 0,
-                    "incorrect value for stub[2], expected 0, is {}",
-                    msg.stub[2]
+                    msg.corr_time.wn, 6,
+                    "incorrect value for corr_time.wn, expected 6, is {}",
+                    msg.corr_time.wn
                 );
                 assert_eq!(
-                    msg.stub[3], 0,
-                    "incorrect value for stub[3], expected 0, is {}",
-                    msg.stub[3]
+                    msg.obs_time.tow, 180,
+                    "incorrect value for obs_time.tow, expected 180, is {}",
+                    msg.obs_time.tow
                 );
                 assert_eq!(
-                    msg.stub[4], 3,
-                    "incorrect value for stub[4], expected 3, is {}",
-                    msg.stub[4]
+                    msg.obs_time.wn, 3,
+                    "incorrect value for obs_time.wn, expected 3, is {}",
+                    msg.obs_time.wn
                 );
                 assert_eq!(
-                    msg.stub[5], 0,
-                    "incorrect value for stub[5], expected 0, is {}",
-                    msg.stub[5]
+                    msg.reserved[0], 0,
+                    "incorrect value for reserved[0], expected 0, is {}",
+                    msg.reserved[0]
                 );
                 assert_eq!(
-                    msg.stub[6], 104,
-                    "incorrect value for stub[6], expected 104, is {}",
-                    msg.stub[6]
+                    msg.reserved[1], 0,
+                    "incorrect value for reserved[1], expected 0, is {}",
+                    msg.reserved[1]
                 );
                 assert_eq!(
-                    msg.stub[7], 1,
-                    "incorrect value for stub[7], expected 1, is {}",
-                    msg.stub[7]
+                    msg.reserved[2], 0,
+                    "incorrect value for reserved[2], expected 0, is {}",
+                    msg.reserved[2]
                 );
                 assert_eq!(
-                    msg.stub[8], 0,
-                    "incorrect value for stub[8], expected 0, is {}",
-                    msg.stub[8]
+                    msg.reserved[3], 0,
+                    "incorrect value for reserved[3], expected 0, is {}",
+                    msg.reserved[3]
                 );
                 assert_eq!(
-                    msg.stub[9], 0,
-                    "incorrect value for stub[9], expected 0, is {}",
-                    msg.stub[9]
+                    msg.reserved[4], 0,
+                    "incorrect value for reserved[4], expected 0, is {}",
+                    msg.reserved[4]
                 );
                 assert_eq!(
-                    msg.stub[10], 6,
-                    "incorrect value for stub[10], expected 6, is {}",
-                    msg.stub[10]
+                    msg.reserved[5], 0,
+                    "incorrect value for reserved[5], expected 0, is {}",
+                    msg.reserved[5]
                 );
                 assert_eq!(
-                    msg.stub[11], 0,
-                    "incorrect value for stub[11], expected 0, is {}",
-                    msg.stub[11]
+                    msg.ssr_sol_id, 10,
+                    "incorrect value for ssr_sol_id, expected 10, is {}",
+                    msg.ssr_sol_id
                 );
                 assert_eq!(
-                    msg.stub[12], 10,
-                    "incorrect value for stub[12], expected 10, is {}",
-                    msg.stub[12]
+                    msg.tile_id, 30,
+                    "incorrect value for tile_id, expected 30, is {}",
+                    msg.tile_id
                 );
                 assert_eq!(
-                    msg.stub[13], 20,
-                    "incorrect value for stub[13], expected 20, is {}",
-                    msg.stub[13]
+                    msg.tile_set_id, 20,
+                    "incorrect value for tile_set_id, expected 20, is {}",
+                    msg.tile_set_id
                 );
                 assert_eq!(
-                    msg.stub[14], 0,
-                    "incorrect value for stub[14], expected 0, is {}",
-                    msg.stub[14]
+                    msg.use_bds_sat, 3,
+                    "incorrect value for use_bds_sat, expected 3, is {}",
+                    msg.use_bds_sat
                 );
                 assert_eq!(
-                    msg.stub[15], 30,
-                    "incorrect value for stub[15], expected 30, is {}",
-                    msg.stub[15]
+                    msg.use_gal_sat, 2,
+                    "incorrect value for use_gal_sat, expected 2, is {}",
+                    msg.use_gal_sat
                 );
                 assert_eq!(
-                    msg.stub[16], 0,
-                    "incorrect value for stub[16], expected 0, is {}",
-                    msg.stub[16]
+                    msg.use_gps_sat, 1,
+                    "incorrect value for use_gps_sat, expected 1, is {}",
+                    msg.use_gps_sat
                 );
                 assert_eq!(
-                    msg.stub[17], 40,
-                    "incorrect value for stub[17], expected 40, is {}",
-                    msg.stub[17]
+                    msg.use_iono_grid_point_sat_los, 7,
+                    "incorrect value for use_iono_grid_point_sat_los, expected 7, is {}",
+                    msg.use_iono_grid_point_sat_los
                 );
                 assert_eq!(
-                    msg.stub[18], 1,
-                    "incorrect value for stub[18], expected 1, is {}",
-                    msg.stub[18]
+                    msg.use_iono_grid_points, 5,
+                    "incorrect value for use_iono_grid_points, expected 5, is {}",
+                    msg.use_iono_grid_points
                 );
                 assert_eq!(
-                    msg.stub[19], 2,
-                    "incorrect value for stub[19], expected 2, is {}",
-                    msg.stub[19]
+                    msg.use_iono_tile_sat_los, 6,
+                    "incorrect value for use_iono_tile_sat_los, expected 6, is {}",
+                    msg.use_iono_tile_sat_los
                 );
                 assert_eq!(
-                    msg.stub[20], 3,
-                    "incorrect value for stub[20], expected 3, is {}",
-                    msg.stub[20]
-                );
-                assert_eq!(
-                    msg.stub[21], 0,
-                    "incorrect value for stub[21], expected 0, is {}",
-                    msg.stub[21]
-                );
-                assert_eq!(
-                    msg.stub[22], 0,
-                    "incorrect value for stub[22], expected 0, is {}",
-                    msg.stub[22]
-                );
-                assert_eq!(
-                    msg.stub[23], 0,
-                    "incorrect value for stub[23], expected 0, is {}",
-                    msg.stub[23]
-                );
-                assert_eq!(
-                    msg.stub[24], 0,
-                    "incorrect value for stub[24], expected 0, is {}",
-                    msg.stub[24]
-                );
-                assert_eq!(
-                    msg.stub[25], 0,
-                    "incorrect value for stub[25], expected 0, is {}",
-                    msg.stub[25]
-                );
-                assert_eq!(
-                    msg.stub[26], 0,
-                    "incorrect value for stub[26], expected 0, is {}",
-                    msg.stub[26]
-                );
-                assert_eq!(
-                    msg.stub[27], 4,
-                    "incorrect value for stub[27], expected 4, is {}",
-                    msg.stub[27]
-                );
-                assert_eq!(
-                    msg.stub[28], 5,
-                    "incorrect value for stub[28], expected 5, is {}",
-                    msg.stub[28]
-                );
-                assert_eq!(
-                    msg.stub[29], 6,
-                    "incorrect value for stub[29], expected 6, is {}",
-                    msg.stub[29]
-                );
-                assert_eq!(
-                    msg.stub[30], 7,
-                    "incorrect value for stub[30], expected 7, is {}",
-                    msg.stub[30]
+                    msg.use_tropo_grid_points, 4,
+                    "incorrect value for use_tropo_grid_points, expected 4, is {}",
+                    msg.use_tropo_grid_points
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrFlagHighLevel"),

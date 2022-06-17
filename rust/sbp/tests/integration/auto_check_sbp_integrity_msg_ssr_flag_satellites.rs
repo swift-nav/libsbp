@@ -42,79 +42,59 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_satellites() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.stub[0], 180,
-                    "incorrect value for stub[0], expected 180, is {}",
-                    msg.stub[0]
+                    msg.chain_id, 4,
+                    "incorrect value for chain_id, expected 4, is {}",
+                    msg.chain_id
                 );
                 assert_eq!(
-                    msg.stub[1], 0,
-                    "incorrect value for stub[1], expected 0, is {}",
-                    msg.stub[1]
+                    msg.const_id, 5,
+                    "incorrect value for const_id, expected 5, is {}",
+                    msg.const_id
                 );
                 assert_eq!(
-                    msg.stub[2], 0,
-                    "incorrect value for stub[2], expected 0, is {}",
-                    msg.stub[2]
+                    msg.faulty_sats[0], 10,
+                    "incorrect value for faulty_sats[0], expected 10, is {}",
+                    msg.faulty_sats[0]
                 );
                 assert_eq!(
-                    msg.stub[3], 0,
-                    "incorrect value for stub[3], expected 0, is {}",
-                    msg.stub[3]
+                    msg.faulty_sats[1], 11,
+                    "incorrect value for faulty_sats[1], expected 11, is {}",
+                    msg.faulty_sats[1]
                 );
                 assert_eq!(
-                    msg.stub[4], 3,
-                    "incorrect value for stub[4], expected 3, is {}",
-                    msg.stub[4]
+                    msg.faulty_sats[2], 12,
+                    "incorrect value for faulty_sats[2], expected 12, is {}",
+                    msg.faulty_sats[2]
                 );
                 assert_eq!(
-                    msg.stub[5], 0,
-                    "incorrect value for stub[5], expected 0, is {}",
-                    msg.stub[5]
+                    msg.n_faulty_sats, 3,
+                    "incorrect value for n_faulty_sats, expected 3, is {}",
+                    msg.n_faulty_sats
                 );
                 assert_eq!(
-                    msg.stub[6], 1,
-                    "incorrect value for stub[6], expected 1, is {}",
-                    msg.stub[6]
+                    msg.num_msgs, 1,
+                    "incorrect value for num_msgs, expected 1, is {}",
+                    msg.num_msgs
                 );
                 assert_eq!(
-                    msg.stub[7], 2,
-                    "incorrect value for stub[7], expected 2, is {}",
-                    msg.stub[7]
+                    msg.obs_time.tow, 180,
+                    "incorrect value for obs_time.tow, expected 180, is {}",
+                    msg.obs_time.tow
                 );
                 assert_eq!(
-                    msg.stub[8], 3,
-                    "incorrect value for stub[8], expected 3, is {}",
-                    msg.stub[8]
+                    msg.obs_time.wn, 3,
+                    "incorrect value for obs_time.wn, expected 3, is {}",
+                    msg.obs_time.wn
                 );
                 assert_eq!(
-                    msg.stub[9], 4,
-                    "incorrect value for stub[9], expected 4, is {}",
-                    msg.stub[9]
+                    msg.seq_num, 2,
+                    "incorrect value for seq_num, expected 2, is {}",
+                    msg.seq_num
                 );
                 assert_eq!(
-                    msg.stub[10], 5,
-                    "incorrect value for stub[10], expected 5, is {}",
-                    msg.stub[10]
-                );
-                assert_eq!(
-                    msg.stub[11], 3,
-                    "incorrect value for stub[11], expected 3, is {}",
-                    msg.stub[11]
-                );
-                assert_eq!(
-                    msg.stub[12], 10,
-                    "incorrect value for stub[12], expected 10, is {}",
-                    msg.stub[12]
-                );
-                assert_eq!(
-                    msg.stub[13], 11,
-                    "incorrect value for stub[13], expected 11, is {}",
-                    msg.stub[13]
-                );
-                assert_eq!(
-                    msg.stub[14], 12,
-                    "incorrect value for stub[14], expected 12, is {}",
-                    msg.stub[14]
+                    msg.ssr_sol_id, 3,
+                    "incorrect value for ssr_sol_id, expected 3, is {}",
+                    msg.ssr_sol_id
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrFlagSatellites"),

@@ -16,14 +16,21 @@ package com.swiftnav.sbp.integrity;
 
 import com.swiftnav.sbp.SBPBinaryException;
 import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MsgSsrFlagIonoTileSatLos extends SBPMessage {
     public static final int TYPE = 0x0BCD;
 
-    public int[] stub;
+    /** Header of an integrity message. */
+    public IntegritySSRHeader header;
+
+    /** Number of faulty LOS. */
+    public int n_faulty_los;
+
+    /** List of faulty LOS */
+    public SvId[] faulty_los;
 
     public MsgSsrFlagIonoTileSatLos(int sender) {
         super(sender, TYPE);
@@ -41,18 +48,24 @@ public class MsgSsrFlagIonoTileSatLos extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stub = parser.getArrayofU8();
+        header = new IntegritySSRHeader().parse(parser);
+        n_faulty_los = parser.getU8();
+        faulty_los = parser.getArray(SvId.class);
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(stub);
+        header.build(builder);
+        builder.putU8(n_faulty_los);
+        builder.putArray(faulty_los);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stub", new JSONArray(stub));
+        obj.put("header", header.toJSON());
+        obj.put("n_faulty_los", n_faulty_los);
+        obj.put("faulty_los", SBPStruct.toJSONArray(faulty_los));
         return obj;
     }
 }

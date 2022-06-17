@@ -27,6 +27,8 @@
 
 #include <libsbp/common.h>
 #include <libsbp/integrity_macros.h>
+#include <libsbp/v4/gnss/SvId.h>
+#include <libsbp/v4/integrity/IntegritySSRHeader.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -39,18 +41,20 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
-  u8 stub[SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * Header of an integrity message.
    */
-  u8 n_stub;
+  sbp_integrity_ssr_header_t header;
+
+  /**
+   * Number of faulty LOS.
+   */
+  u8 n_faulty_los;
+
+  /**
+   * List of faulty LOS
+   */
+  sbp_sv_id_t faulty_los[SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS_FAULTY_LOS_MAX];
 } sbp_msg_ssr_flag_iono_tile_sat_los_t;
 
 /**
@@ -62,7 +66,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_flag_iono_tile_sat_los_encoded_len(
     const sbp_msg_ssr_flag_iono_tile_sat_los_t *msg) {
   return SBP_MSG_SSR_FLAG_IONO_TILE_SAT_LOS_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+         (msg->n_faulty_los * SBP_SV_ID_ENCODED_LEN);
 }
 
 /**

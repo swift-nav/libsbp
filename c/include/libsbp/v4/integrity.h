@@ -17,6 +17,7 @@
 
 #ifndef LIBSBP_V4_INTEGRITY_MESSAGES_H
 #define LIBSBP_V4_INTEGRITY_MESSAGES_H
+#include <libsbp/v4/integrity/IntegritySSRHeader.h>
 #include <libsbp/v4/integrity/MSG_SSR_FLAG_HIGH_LEVEL.h>
 #include <libsbp/v4/integrity/MSG_SSR_FLAG_IONO_GRID_POINTS.h>
 #include <libsbp/v4/integrity/MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS.h>

@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/integrity_macros.h>
+#include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -39,18 +40,75 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
-  u8 stub[SBP_MSG_SSR_FLAG_HIGH_LEVEL_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * GNSS reference time of the observation used to generate the flag.
    */
-  u8 n_stub;
+  sbp_gps_time_sec_t obs_time;
+
+  /**
+   * GNSS reference time of the correction associated to the flag.
+   */
+  sbp_gps_time_sec_t corr_time;
+
+  /**
+   * SSR Solution ID.
+   */
+  u8 ssr_sol_id;
+
+  /**
+   * Unique identifier of the set this tile belongs to.
+   */
+  u16 tile_set_id;
+
+  /**
+   * Unique identifier of this tile in the tile set.
+   */
+  u16 tile_id;
+
+  /**
+   * Chain and type of flag.
+   */
+  u8 chain_id;
+
+  /**
+   * Use GPS satellites.
+   */
+  u8 use_gps_sat;
+
+  /**
+   * Use GAL satellites.
+   */
+  u8 use_gal_sat;
+
+  /**
+   * Use BDS satellites.
+   */
+  u8 use_bds_sat;
+
+  /**
+   * Reserved
+   */
+  u8 reserved[SBP_MSG_SSR_FLAG_HIGH_LEVEL_RESERVED_MAX];
+
+  /**
+   * Use tropo grid points.
+   */
+  u8 use_tropo_grid_points;
+
+  /**
+   * Use iono grid points.
+   */
+  u8 use_iono_grid_points;
+
+  /**
+   * Use iono tile satellite LoS.
+   */
+  u8 use_iono_tile_sat_los;
+
+  /**
+   * Use iono grid point satellite LoS.
+   */
+  u8 use_iono_grid_point_sat_los;
 } sbp_msg_ssr_flag_high_level_t;
 
 /**
@@ -61,8 +119,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_ssr_flag_high_level_encoded_len(
     const sbp_msg_ssr_flag_high_level_t *msg) {
-  return SBP_MSG_SSR_FLAG_HIGH_LEVEL_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+  (void)msg;
+  return SBP_MSG_SSR_FLAG_HIGH_LEVEL_ENCODED_LEN;
 }
 
 /**

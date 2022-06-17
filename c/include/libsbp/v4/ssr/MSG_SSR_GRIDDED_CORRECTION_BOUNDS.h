@@ -27,6 +27,9 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
+#include <libsbp/v4/ssr/BoundsHeader.h>
+#include <libsbp/v4/ssr/STECSatElementIntegrity.h>
+#include <libsbp/v4/ssr/TroposphericDelayCorrection.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -38,19 +41,78 @@ extern "C" {
  * SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS
  *
  *****************************************************************************/
+/** Gridded troposhere and STEC correction residuals bounds
+ *
+ * Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
+ * mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
+ */
 typedef struct {
-  u8 stub[SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * Header of a bounds message.
    */
-  u8 n_stub;
+  sbp_bounds_header_t header;
+
+  /**
+   * IOD of the correction.
+   */
+  u8 ssr_iod_atmo;
+
+  /**
+   * Set this tile belongs to.
+   */
+  u16 tile_set_id;
+
+  /**
+   * Unique identifier of this tile in the tile set.
+   */
+  u16 tile_id;
+
+  /**
+   * Tropo Quality Indicator. Similar to RTCM DF389.
+   */
+  u8 tropo_qi;
+
+  /**
+   * Index of the Grid Point.
+   */
+  u16 grid_point_id;
+
+  /**
+   * Tropospheric delay at grid point.
+   */
+  sbp_tropospheric_delay_correction_t tropo_delay_correction;
+
+  /**
+   * Vertical Hydrostatic Error Bound Mean. [0.005 m]
+   */
+  u8 tropo_v_hydro_bound_mu;
+
+  /**
+   * Vertical Hydrostatic Error Bound StDev. [0.005 m]
+   */
+  u8 tropo_v_hydro_bound_sig;
+
+  /**
+   * Vertical Wet Error Bound Mean. [0.005 m]
+   */
+  u8 tropo_v_wet_bound_mu;
+
+  /**
+   * Vertical Wet Error Bound StDev. [0.005 m]
+   */
+  u8 tropo_v_wet_bound_sig;
+
+  /**
+   * Number of satellites.
+   */
+  u8 n_sats;
+
+  /**
+   * Array of STEC polynomial coefficients and its bounds for each space
+   * vehicle.
+   */
+  sbp_stec_sat_element_integrity_t
+      stec_sat_list[SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_STEC_SAT_LIST_MAX];
 } sbp_msg_ssr_gridded_correction_bounds_t;
 
 /**
@@ -62,7 +124,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_gridded_correction_bounds_encoded_len(
     const sbp_msg_ssr_gridded_correction_bounds_t *msg) {
   return SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+         (msg->n_sats * SBP_STEC_SAT_ELEMENT_INTEGRITY_ENCODED_LEN);
 }
 
 /**

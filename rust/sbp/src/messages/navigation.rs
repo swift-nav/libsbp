@@ -45,11 +45,9 @@ pub use msg_baseline_ned::MsgBaselineNed;
 pub use msg_baseline_ned_dep_a::MsgBaselineNedDepA;
 pub use msg_dops::MsgDops;
 pub use msg_dops_dep_a::MsgDopsDepA;
-pub use msg_gps_leap_second::MsgGpsLeapSecond;
 pub use msg_gps_time::MsgGpsTime;
 pub use msg_gps_time_dep_a::MsgGpsTimeDepA;
 pub use msg_gps_time_gnss::MsgGpsTimeGnss;
-pub use msg_itrf::MsgItrf;
 pub use msg_pos_ecef::MsgPosEcef;
 pub use msg_pos_ecef_cov::MsgPosEcefCov;
 pub use msg_pos_ecef_cov_gnss::MsgPosEcefCovGnss;
@@ -1688,138 +1686,6 @@ pub mod msg_dops_dep_a {
     }
 }
 
-pub mod msg_gps_leap_second {
-    #![allow(unused_imports)]
-
-    use super::*;
-    use crate::messages::lib::*;
-
-    /// Leap second SBP message.
-
-    ///
-    /// Emulates the GPS CNAV message, reserving bytes for future broadcast of the
-    /// drift model parameters.
-    ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
-    pub struct MsgGpsLeapSecond {
-        /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
-        pub sender_id: Option<u16>,
-        /// Reserved. Bias coefficient of GPS time scale with respect to UTC drift
-        /// model.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bias_coeff")))]
-        pub bias_coeff: i16,
-        /// Reserved. Drift coefficient of GPS time scale with respect to UTC drift
-        /// model.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_coeff")))]
-        pub drift_coeff: i16,
-        /// Reserved. Drift rate correction coefficient of GPS time scale with
-        /// respect to UTC drift model.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_rate_coeff")))]
-        pub drift_rate_coeff: i8,
-        /// Leap second count before insertion.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_before")))]
-        pub count_before: i8,
-        /// Reserved. Drift model reference week second.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_s")))]
-        pub tow_s: u16,
-        /// Reserved. Drift model reference week number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
-        pub wn: u16,
-        /// Leap second reference week number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_wn")))]
-        pub ref_wn: u16,
-        /// Leap second reference day number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_dn")))]
-        pub ref_dn: u8,
-        /// Leap second count after insertion.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_after")))]
-        pub count_after: i8,
-    }
-
-    impl ConcreteMessage for MsgGpsLeapSecond {
-        const MESSAGE_TYPE: u16 = 570;
-        const MESSAGE_NAME: &'static str = "MSG_GPS_LEAP_SECOND";
-    }
-
-    impl SbpMessage for MsgGpsLeapSecond {
-        fn message_name(&self) -> &'static str {
-            <Self as ConcreteMessage>::MESSAGE_NAME
-        }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
-        }
-        fn sender_id(&self) -> Option<u16> {
-            self.sender_id
-        }
-        fn set_sender_id(&mut self, new_id: u16) {
-            self.sender_id = Some(new_id);
-        }
-        fn encoded_len(&self) -> usize {
-            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
-        }
-    }
-
-    impl TryFrom<Sbp> for MsgGpsLeapSecond {
-        type Error = TryFromSbpError;
-        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
-            match msg {
-                Sbp::MsgGpsLeapSecond(m) => Ok(m),
-                _ => Err(TryFromSbpError),
-            }
-        }
-    }
-
-    impl WireFormat for MsgGpsLeapSecond {
-        const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN
-            + <i16 as WireFormat>::MIN_LEN
-            + <i8 as WireFormat>::MIN_LEN
-            + <i8 as WireFormat>::MIN_LEN
-            + <u16 as WireFormat>::MIN_LEN
-            + <u16 as WireFormat>::MIN_LEN
-            + <u16 as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <i8 as WireFormat>::MIN_LEN;
-        fn len(&self) -> usize {
-            WireFormat::len(&self.bias_coeff)
-                + WireFormat::len(&self.drift_coeff)
-                + WireFormat::len(&self.drift_rate_coeff)
-                + WireFormat::len(&self.count_before)
-                + WireFormat::len(&self.tow_s)
-                + WireFormat::len(&self.wn)
-                + WireFormat::len(&self.ref_wn)
-                + WireFormat::len(&self.ref_dn)
-                + WireFormat::len(&self.count_after)
-        }
-        fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.bias_coeff, buf);
-            WireFormat::write(&self.drift_coeff, buf);
-            WireFormat::write(&self.drift_rate_coeff, buf);
-            WireFormat::write(&self.count_before, buf);
-            WireFormat::write(&self.tow_s, buf);
-            WireFormat::write(&self.wn, buf);
-            WireFormat::write(&self.ref_wn, buf);
-            WireFormat::write(&self.ref_dn, buf);
-            WireFormat::write(&self.count_after, buf);
-        }
-        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgGpsLeapSecond {
-                sender_id: None,
-                bias_coeff: WireFormat::parse_unchecked(buf),
-                drift_coeff: WireFormat::parse_unchecked(buf),
-                drift_rate_coeff: WireFormat::parse_unchecked(buf),
-                count_before: WireFormat::parse_unchecked(buf),
-                tow_s: WireFormat::parse_unchecked(buf),
-                wn: WireFormat::parse_unchecked(buf),
-                ref_wn: WireFormat::parse_unchecked(buf),
-                ref_dn: WireFormat::parse_unchecked(buf),
-                count_after: WireFormat::parse_unchecked(buf),
-            }
-        }
-    }
-}
-
 pub mod msg_gps_time {
     #![allow(unused_imports)]
 
@@ -2268,221 +2134,6 @@ pub mod msg_gps_time_gnss {
                 1 => Ok(TimeSource::GnssSolution),
                 2 => Ok(TimeSource::Propagated),
                 i => Err(i),
-            }
-        }
-    }
-}
-
-pub mod msg_itrf {
-    #![allow(unused_imports)]
-
-    use super::*;
-    use crate::messages::lib::*;
-    /// Reference Frame Transformation Parameter
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-    #[derive(Debug, Clone)]
-    pub struct MsgItrf {
-        /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
-        pub sender_id: Option<u16>,
-        /// SSR IOD parameter.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
-        pub ssr_iod: u8,
-        /// Source-Name Counter N.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sn_counter_n")))]
-        pub sn_counter_n: u8,
-        /// Source-Name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sn")))]
-        pub sn: SbpString<[u8; 31], Unterminated>,
-        /// Target-Name Counter M.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tn_counter_m")))]
-        pub tn_counter_m: u8,
-        /// Target-Name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tn")))]
-        pub tn: SbpString<[u8; 31], Unterminated>,
-        /// System Identification Number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sin")))]
-        pub sin: u8,
-        /// Utilized Transformation Message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "utn")))]
-        pub utn: u16,
-        /// Reference Epoch t0 for transformation parameter set given as Modified
-        /// Julian Day (MDJ) Number minus 44244 days.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "re_t0")))]
-        pub re_t0: u16,
-        /// Translation in X for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_X0")))]
-        pub delta_x0: i32,
-        /// Translation in Y for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_Y0")))]
-        pub delta_y0: i32,
-        /// Translation in Z for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_Z0")))]
-        pub delta_z0: i32,
-        /// Rotation around the X-axis for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_01")))]
-        pub theta_01: i32,
-        /// Rotation around the Y-axis for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_02")))]
-        pub theta_02: i32,
-        /// Rotation around the Z-axis for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_03")))]
-        pub theta_03: i32,
-        /// Scale correction for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "scale")))]
-        pub scale: i32,
-        /// Rate of change of translation in X.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_X0")))]
-        pub dot_delta_x0: i32,
-        /// Rate of change of translation in Y.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_Y0")))]
-        pub dot_delta_y0: i32,
-        /// Rate of change of translation in Z.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_Z0")))]
-        pub dot_delta_z0: i32,
-        /// Rate of change of rotation around the X-axis.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_01")))]
-        pub dot_theta_01: i32,
-        /// Rate of change of rotation around the Y-axis.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_02")))]
-        pub dot_theta_02: i32,
-        /// Rate of change of rotation around the Z-axis.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_03")))]
-        pub dot_theta_03: i32,
-        /// Rate of change of scale correction.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_scale")))]
-        pub dot_scale: i16,
-    }
-
-    impl ConcreteMessage for MsgItrf {
-        const MESSAGE_TYPE: u16 = 580;
-        const MESSAGE_NAME: &'static str = "MSG_ITRF";
-    }
-
-    impl SbpMessage for MsgItrf {
-        fn message_name(&self) -> &'static str {
-            <Self as ConcreteMessage>::MESSAGE_NAME
-        }
-        fn message_type(&self) -> u16 {
-            <Self as ConcreteMessage>::MESSAGE_TYPE
-        }
-        fn sender_id(&self) -> Option<u16> {
-            self.sender_id
-        }
-        fn set_sender_id(&mut self, new_id: u16) {
-            self.sender_id = Some(new_id);
-        }
-        fn encoded_len(&self) -> usize {
-            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
-        }
-    }
-
-    impl TryFrom<Sbp> for MsgItrf {
-        type Error = TryFromSbpError;
-        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
-            match msg {
-                Sbp::MsgItrf(m) => Ok(m),
-                _ => Err(TryFromSbpError),
-            }
-        }
-    }
-
-    impl WireFormat for MsgItrf {
-        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <SbpString<[u8; 31], Unterminated> as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <SbpString<[u8; 31], Unterminated> as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <u16 as WireFormat>::MIN_LEN
-            + <u16 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i32 as WireFormat>::MIN_LEN
-            + <i16 as WireFormat>::MIN_LEN;
-        fn len(&self) -> usize {
-            WireFormat::len(&self.ssr_iod)
-                + WireFormat::len(&self.sn_counter_n)
-                + WireFormat::len(&self.sn)
-                + WireFormat::len(&self.tn_counter_m)
-                + WireFormat::len(&self.tn)
-                + WireFormat::len(&self.sin)
-                + WireFormat::len(&self.utn)
-                + WireFormat::len(&self.re_t0)
-                + WireFormat::len(&self.delta_x0)
-                + WireFormat::len(&self.delta_y0)
-                + WireFormat::len(&self.delta_z0)
-                + WireFormat::len(&self.theta_01)
-                + WireFormat::len(&self.theta_02)
-                + WireFormat::len(&self.theta_03)
-                + WireFormat::len(&self.scale)
-                + WireFormat::len(&self.dot_delta_x0)
-                + WireFormat::len(&self.dot_delta_y0)
-                + WireFormat::len(&self.dot_delta_z0)
-                + WireFormat::len(&self.dot_theta_01)
-                + WireFormat::len(&self.dot_theta_02)
-                + WireFormat::len(&self.dot_theta_03)
-                + WireFormat::len(&self.dot_scale)
-        }
-        fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.ssr_iod, buf);
-            WireFormat::write(&self.sn_counter_n, buf);
-            WireFormat::write(&self.sn, buf);
-            WireFormat::write(&self.tn_counter_m, buf);
-            WireFormat::write(&self.tn, buf);
-            WireFormat::write(&self.sin, buf);
-            WireFormat::write(&self.utn, buf);
-            WireFormat::write(&self.re_t0, buf);
-            WireFormat::write(&self.delta_x0, buf);
-            WireFormat::write(&self.delta_y0, buf);
-            WireFormat::write(&self.delta_z0, buf);
-            WireFormat::write(&self.theta_01, buf);
-            WireFormat::write(&self.theta_02, buf);
-            WireFormat::write(&self.theta_03, buf);
-            WireFormat::write(&self.scale, buf);
-            WireFormat::write(&self.dot_delta_x0, buf);
-            WireFormat::write(&self.dot_delta_y0, buf);
-            WireFormat::write(&self.dot_delta_z0, buf);
-            WireFormat::write(&self.dot_theta_01, buf);
-            WireFormat::write(&self.dot_theta_02, buf);
-            WireFormat::write(&self.dot_theta_03, buf);
-            WireFormat::write(&self.dot_scale, buf);
-        }
-        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgItrf {
-                sender_id: None,
-                ssr_iod: WireFormat::parse_unchecked(buf),
-                sn_counter_n: WireFormat::parse_unchecked(buf),
-                sn: WireFormat::parse_unchecked(buf),
-                tn_counter_m: WireFormat::parse_unchecked(buf),
-                tn: WireFormat::parse_unchecked(buf),
-                sin: WireFormat::parse_unchecked(buf),
-                utn: WireFormat::parse_unchecked(buf),
-                re_t0: WireFormat::parse_unchecked(buf),
-                delta_x0: WireFormat::parse_unchecked(buf),
-                delta_y0: WireFormat::parse_unchecked(buf),
-                delta_z0: WireFormat::parse_unchecked(buf),
-                theta_01: WireFormat::parse_unchecked(buf),
-                theta_02: WireFormat::parse_unchecked(buf),
-                theta_03: WireFormat::parse_unchecked(buf),
-                scale: WireFormat::parse_unchecked(buf),
-                dot_delta_x0: WireFormat::parse_unchecked(buf),
-                dot_delta_y0: WireFormat::parse_unchecked(buf),
-                dot_delta_z0: WireFormat::parse_unchecked(buf),
-                dot_theta_01: WireFormat::parse_unchecked(buf),
-                dot_theta_02: WireFormat::parse_unchecked(buf),
-                dot_theta_03: WireFormat::parse_unchecked(buf),
-                dot_scale: WireFormat::parse_unchecked(buf),
             }
         }
     }
@@ -6348,15 +5999,74 @@ pub mod msg_reference_frame_param {
 
     use super::*;
     use crate::messages::lib::*;
-    /// Reference Frame Transformation Parameter
+    /// Reference Frame Transformation Parameters
     #[cfg_attr(feature = "serde", derive(serde::Serialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReferenceFrameParam {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
         pub sender_id: Option<u16>,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
-        pub stub: Vec<u8>,
+        /// SSR IOD parameter.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        pub ssr_iod: u8,
+        /// Name of source coordinate-system using the EPSG identification code.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sn")))]
+        pub sn: SbpString<[u8; 32], NullTerminated>,
+        /// Name of target coordinate-system using the EPSG identification code.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "tn")))]
+        pub tn: SbpString<[u8; 32], NullTerminated>,
+        /// System Identification Number.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "sin")))]
+        pub sin: u8,
+        /// Utilized Transformation Message.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "utn")))]
+        pub utn: u16,
+        /// Reference Epoch t0 for transformation parameter set given as Modified
+        /// Julian Day (MDJ) Number minus 44244 days.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "re_t0")))]
+        pub re_t0: u16,
+        /// Translation in X for Reference Epoch t0.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_X0")))]
+        pub delta_x0: i32,
+        /// Translation in Y for Reference Epoch t0.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_Y0")))]
+        pub delta_y0: i32,
+        /// Translation in Z for Reference Epoch t0.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_Z0")))]
+        pub delta_z0: i32,
+        /// Rotation around the X-axis for Reference Epoch t0.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_01")))]
+        pub theta_01: i32,
+        /// Rotation around the Y-axis for Reference Epoch t0.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_02")))]
+        pub theta_02: i32,
+        /// Rotation around the Z-axis for Reference Epoch t0.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_03")))]
+        pub theta_03: i32,
+        /// Scale correction for Reference Epoch t0.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "scale")))]
+        pub scale: i32,
+        /// Rate of change of translation in X.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_X0")))]
+        pub dot_delta_x0: i32,
+        /// Rate of change of translation in Y.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_Y0")))]
+        pub dot_delta_y0: i32,
+        /// Rate of change of translation in Z.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_Z0")))]
+        pub dot_delta_z0: i32,
+        /// Rate of change of rotation around the X-axis.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_01")))]
+        pub dot_theta_01: i32,
+        /// Rate of change of rotation around the Y-axis.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_02")))]
+        pub dot_theta_02: i32,
+        /// Rate of change of rotation around the Z-axis.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_03")))]
+        pub dot_theta_03: i32,
+        /// Rate of change of scale correction.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_scale")))]
+        pub dot_scale: i16,
     }
 
     impl ConcreteMessage for MsgReferenceFrameParam {
@@ -6393,17 +6103,93 @@ pub mod msg_reference_frame_param {
     }
 
     impl WireFormat for MsgReferenceFrameParam {
-        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <SbpString<[u8; 32], NullTerminated> as WireFormat>::MIN_LEN
+            + <SbpString<[u8; 32], NullTerminated> as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i16 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.stub)
+            WireFormat::len(&self.ssr_iod)
+                + WireFormat::len(&self.sn)
+                + WireFormat::len(&self.tn)
+                + WireFormat::len(&self.sin)
+                + WireFormat::len(&self.utn)
+                + WireFormat::len(&self.re_t0)
+                + WireFormat::len(&self.delta_x0)
+                + WireFormat::len(&self.delta_y0)
+                + WireFormat::len(&self.delta_z0)
+                + WireFormat::len(&self.theta_01)
+                + WireFormat::len(&self.theta_02)
+                + WireFormat::len(&self.theta_03)
+                + WireFormat::len(&self.scale)
+                + WireFormat::len(&self.dot_delta_x0)
+                + WireFormat::len(&self.dot_delta_y0)
+                + WireFormat::len(&self.dot_delta_z0)
+                + WireFormat::len(&self.dot_theta_01)
+                + WireFormat::len(&self.dot_theta_02)
+                + WireFormat::len(&self.dot_theta_03)
+                + WireFormat::len(&self.dot_scale)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.stub, buf);
+            WireFormat::write(&self.ssr_iod, buf);
+            WireFormat::write(&self.sn, buf);
+            WireFormat::write(&self.tn, buf);
+            WireFormat::write(&self.sin, buf);
+            WireFormat::write(&self.utn, buf);
+            WireFormat::write(&self.re_t0, buf);
+            WireFormat::write(&self.delta_x0, buf);
+            WireFormat::write(&self.delta_y0, buf);
+            WireFormat::write(&self.delta_z0, buf);
+            WireFormat::write(&self.theta_01, buf);
+            WireFormat::write(&self.theta_02, buf);
+            WireFormat::write(&self.theta_03, buf);
+            WireFormat::write(&self.scale, buf);
+            WireFormat::write(&self.dot_delta_x0, buf);
+            WireFormat::write(&self.dot_delta_y0, buf);
+            WireFormat::write(&self.dot_delta_z0, buf);
+            WireFormat::write(&self.dot_theta_01, buf);
+            WireFormat::write(&self.dot_theta_02, buf);
+            WireFormat::write(&self.dot_theta_03, buf);
+            WireFormat::write(&self.dot_scale, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgReferenceFrameParam {
                 sender_id: None,
-                stub: WireFormat::parse_unchecked(buf),
+                ssr_iod: WireFormat::parse_unchecked(buf),
+                sn: WireFormat::parse_unchecked(buf),
+                tn: WireFormat::parse_unchecked(buf),
+                sin: WireFormat::parse_unchecked(buf),
+                utn: WireFormat::parse_unchecked(buf),
+                re_t0: WireFormat::parse_unchecked(buf),
+                delta_x0: WireFormat::parse_unchecked(buf),
+                delta_y0: WireFormat::parse_unchecked(buf),
+                delta_z0: WireFormat::parse_unchecked(buf),
+                theta_01: WireFormat::parse_unchecked(buf),
+                theta_02: WireFormat::parse_unchecked(buf),
+                theta_03: WireFormat::parse_unchecked(buf),
+                scale: WireFormat::parse_unchecked(buf),
+                dot_delta_x0: WireFormat::parse_unchecked(buf),
+                dot_delta_y0: WireFormat::parse_unchecked(buf),
+                dot_delta_z0: WireFormat::parse_unchecked(buf),
+                dot_theta_01: WireFormat::parse_unchecked(buf),
+                dot_theta_02: WireFormat::parse_unchecked(buf),
+                dot_theta_03: WireFormat::parse_unchecked(buf),
+                dot_scale: WireFormat::parse_unchecked(buf),
             }
         }
     }
@@ -6427,8 +6213,36 @@ pub mod msg_utc_leap_second {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
         pub sender_id: Option<u16>,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
-        pub stub: Vec<u8>,
+        /// Reserved. Bias coefficient of GPS time scale with respect to UTC drift
+        /// model.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "bias_coeff")))]
+        pub bias_coeff: i16,
+        /// Reserved. Drift coefficient of GPS time scale with respect to UTC drift
+        /// model.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_coeff")))]
+        pub drift_coeff: i16,
+        /// Reserved. Drift rate correction coefficient of GPS time scale with
+        /// respect to UTC drift model.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_rate_coeff")))]
+        pub drift_rate_coeff: i8,
+        /// Leap second count before insertion.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_before")))]
+        pub count_before: i8,
+        /// Reserved. Drift model reference week second.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_s")))]
+        pub tow_s: u16,
+        /// Reserved. Drift model reference week number.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        pub wn: u16,
+        /// Leap second reference week number.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_wn")))]
+        pub ref_wn: u16,
+        /// Leap second reference day number.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_dn")))]
+        pub ref_dn: u8,
+        /// Leap second count after insertion.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_after")))]
+        pub count_after: i8,
     }
 
     impl ConcreteMessage for MsgUtcLeapSecond {
@@ -6465,17 +6279,49 @@ pub mod msg_utc_leap_second {
     }
 
     impl WireFormat for MsgUtcLeapSecond {
-        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN
+            + <i16 as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <i8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.stub)
+            WireFormat::len(&self.bias_coeff)
+                + WireFormat::len(&self.drift_coeff)
+                + WireFormat::len(&self.drift_rate_coeff)
+                + WireFormat::len(&self.count_before)
+                + WireFormat::len(&self.tow_s)
+                + WireFormat::len(&self.wn)
+                + WireFormat::len(&self.ref_wn)
+                + WireFormat::len(&self.ref_dn)
+                + WireFormat::len(&self.count_after)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.stub, buf);
+            WireFormat::write(&self.bias_coeff, buf);
+            WireFormat::write(&self.drift_coeff, buf);
+            WireFormat::write(&self.drift_rate_coeff, buf);
+            WireFormat::write(&self.count_before, buf);
+            WireFormat::write(&self.tow_s, buf);
+            WireFormat::write(&self.wn, buf);
+            WireFormat::write(&self.ref_wn, buf);
+            WireFormat::write(&self.ref_dn, buf);
+            WireFormat::write(&self.count_after, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgUtcLeapSecond {
                 sender_id: None,
-                stub: WireFormat::parse_unchecked(buf),
+                bias_coeff: WireFormat::parse_unchecked(buf),
+                drift_coeff: WireFormat::parse_unchecked(buf),
+                drift_rate_coeff: WireFormat::parse_unchecked(buf),
+                count_before: WireFormat::parse_unchecked(buf),
+                tow_s: WireFormat::parse_unchecked(buf),
+                wn: WireFormat::parse_unchecked(buf),
+                ref_wn: WireFormat::parse_unchecked(buf),
+                ref_dn: WireFormat::parse_unchecked(buf),
+                count_after: WireFormat::parse_unchecked(buf),
             }
         }
     }

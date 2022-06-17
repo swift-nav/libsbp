@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/integrity_macros.h>
+#include <libsbp/v4/integrity/IntegritySSRHeader.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -39,18 +40,20 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
-  u8 stub[SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * Header of an integrity message.
    */
-  u8 n_stub;
+  sbp_integrity_ssr_header_t header;
+
+  /**
+   * Number of faulty grid points.
+   */
+  u8 n_faulty_points;
+
+  /**
+   * List of faulty grid points.
+   */
+  u16 faulty_points[SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS_FAULTY_POINTS_MAX];
 } sbp_msg_ssr_flag_tropo_grid_points_t;
 
 /**
@@ -62,7 +65,7 @@ typedef struct {
 static inline size_t sbp_msg_ssr_flag_tropo_grid_points_encoded_len(
     const sbp_msg_ssr_flag_tropo_grid_points_t *msg) {
   return SBP_MSG_SSR_FLAG_TROPO_GRID_POINTS_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+         (msg->n_faulty_points * SBP_ENCODED_LEN_U16);
 }
 
 /**

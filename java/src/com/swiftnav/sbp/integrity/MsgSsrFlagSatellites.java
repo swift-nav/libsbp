@@ -23,7 +23,29 @@ import org.json.JSONObject;
 public class MsgSsrFlagSatellites extends SBPMessage {
     public static final int TYPE = 0x0BBD;
 
-    public int[] stub;
+    /** GNSS reference time of the observation used to generate the flag. */
+    public GPSTimeSec obs_time;
+
+    /** Number of messages in the dataset */
+    public int num_msgs;
+
+    /** Position of this message in the dataset */
+    public int seq_num;
+
+    /** SSR Solution ID. */
+    public int ssr_sol_id;
+
+    /** Chain and type of flag. */
+    public int chain_id;
+
+    /** Constellation ID. */
+    public int const_id;
+
+    /** Number of faulty satellites. */
+    public int n_faulty_sats;
+
+    /** List of faulty satellites. */
+    public int[] faulty_sats;
 
     public MsgSsrFlagSatellites(int sender) {
         super(sender, TYPE);
@@ -41,18 +63,39 @@ public class MsgSsrFlagSatellites extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stub = parser.getArrayofU8();
+        obs_time = new GPSTimeSec().parse(parser);
+        num_msgs = parser.getU8();
+        seq_num = parser.getU8();
+        ssr_sol_id = parser.getU8();
+        chain_id = parser.getU8();
+        const_id = parser.getU8();
+        n_faulty_sats = parser.getU8();
+        faulty_sats = parser.getArrayofU8();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(stub);
+        obs_time.build(builder);
+        builder.putU8(num_msgs);
+        builder.putU8(seq_num);
+        builder.putU8(ssr_sol_id);
+        builder.putU8(chain_id);
+        builder.putU8(const_id);
+        builder.putU8(n_faulty_sats);
+        builder.putArrayofU8(faulty_sats);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stub", new JSONArray(stub));
+        obj.put("obs_time", obs_time.toJSON());
+        obj.put("num_msgs", num_msgs);
+        obj.put("seq_num", seq_num);
+        obj.put("ssr_sol_id", ssr_sol_id);
+        obj.put("chain_id", chain_id);
+        obj.put("const_id", const_id);
+        obj.put("n_faulty_sats", n_faulty_sats);
+        obj.put("faulty_sats", new JSONArray(faulty_sats));
         return obj;
     }
 }

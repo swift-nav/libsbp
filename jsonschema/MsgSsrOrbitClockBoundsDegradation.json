@@ -16,9 +16,17 @@
   "description":"",
   "type": "object",
   "properties": {
-    "stub": {"type": "array", "items": {"type": "integer"}}
+    "header": {"$ref": "BoundsHeader.json"},
+    "ssr_iod": {"type": "integer"},
+    "const_id": {"type": "integer"},
+    "sat_bitmask": {"type": "integer"},
+    "orbit_clock_bounds_degradation": {"$ref": "OrbitClockBoundDegradation.json"}
   },
   "required": [
-    "stub"
+    "header",
+    "ssr_iod",
+    "const_id",
+    "sat_bitmask",
+    "orbit_clock_bounds_degradation"
   ]
 }
