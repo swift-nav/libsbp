@@ -154,9 +154,6 @@ pub mod msg_imu_aux {
 
         /// ST Microelectronics ASM330LLH
         StMicroelectronicsAsm330Llh = 1,
-
-        /// TDK ICM-42670 (16bit temperature)
-        TdkIcm42670 = 3,
     }
 
     impl std::fmt::Display for ImuType {
@@ -166,7 +163,6 @@ pub mod msg_imu_aux {
                 ImuType::StMicroelectronicsAsm330Llh => {
                     f.write_str("ST Microelectronics ASM330LLH")
                 }
-                ImuType::TdkIcm42670 => f.write_str("TDK ICM-42670 (16bit temperature)"),
             }
         }
     }
@@ -177,7 +173,6 @@ pub mod msg_imu_aux {
             match i {
                 0 => Ok(ImuType::BoschBmi160),
                 1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
-                3 => Ok(ImuType::TdkIcm42670),
                 i => Err(i),
             }
         }

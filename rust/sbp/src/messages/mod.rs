@@ -653,7 +653,7 @@ pub enum Sbp {
     MsgVelEcefCovGnss(MsgVelEcefCovGnss),
     /// Leap second SBP message.
     MsgUtcLeapSecond(MsgUtcLeapSecond),
-    /// Reference Frame Transformation Parameter
+    /// Reference Frame Transformation Parameters
     MsgReferenceFrameParam(MsgReferenceFrameParam),
     /// Navigation DataBase Event
     MsgNdbEvent(MsgNdbEvent),

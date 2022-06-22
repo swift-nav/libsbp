@@ -39,18 +39,106 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
-  u8 stub[SBP_MSG_REFERENCE_FRAME_PARAM_STUB_MAX];
   /**
-   * Number of elements in stub
-   *
-   * When sending a message fill in this field with the number elements set in
-   * stub before calling an appropriate libsbp send function
-   *
-   * When receiving a message query this field for the number of elements in
-   * stub. The value of any elements beyond the index specified in this field is
-   * undefined
+   * SSR IOD parameter.
    */
-  u8 n_stub;
+  u8 ssr_iod;
+
+  /**
+   * Name of source coordinate-system using the EPSG identification code.
+   */
+  char sn[SBP_MSG_REFERENCE_FRAME_PARAM_SN_MAX];
+
+  /**
+   * Name of target coordinate-system using the EPSG identification code.
+   */
+  char tn[SBP_MSG_REFERENCE_FRAME_PARAM_TN_MAX];
+
+  /**
+   * System Identification Number.
+   */
+  u8 sin;
+
+  /**
+   * Utilized Transformation Message.
+   */
+  u16 utn;
+
+  /**
+   * Reference Epoch t0 for transformation parameter set given as Modified
+   * Julian Day (MDJ) Number minus 44244 days. [1 day]
+   */
+  u16 re_t0;
+
+  /**
+   * Translation in X for Reference Epoch t0. [0.001 m]
+   */
+  s32 delta_X0;
+
+  /**
+   * Translation in Y for Reference Epoch t0. [0.001 m]
+   */
+  s32 delta_Y0;
+
+  /**
+   * Translation in Z for Reference Epoch t0. [0.001 m]
+   */
+  s32 delta_Z0;
+
+  /**
+   * Rotation around the X-axis for Reference Epoch t0. [0.00002 "]
+   */
+  s32 theta_01;
+
+  /**
+   * Rotation around the Y-axis for Reference Epoch t0. [0.00002 "]
+   */
+  s32 theta_02;
+
+  /**
+   * Rotation around the Z-axis for Reference Epoch t0. [0.00002 "]
+   */
+  s32 theta_03;
+
+  /**
+   * Scale correction for Reference Epoch t0. [0.00001 ppm]
+   */
+  s32 scale;
+
+  /**
+   * Rate of change of translation in X. [0.00002 m/yr]
+   */
+  s32 dot_delta_X0;
+
+  /**
+   * Rate of change of translation in Y. [0.00002 m/yr]
+   */
+  s32 dot_delta_Y0;
+
+  /**
+   * Rate of change of translation in Z. [0.00002 m/yr]
+   */
+  s32 dot_delta_Z0;
+
+  /**
+   * Rate of change of rotation around the X-axis. [0.0000004 "/yr]
+   */
+  s32 dot_theta_01;
+
+  /**
+   * Rate of change of rotation around the Y-axis. [0.0000004 "/yr]
+   */
+  s32 dot_theta_02;
+
+  /**
+   * Rate of change of rotation around the Z-axis. [0.0000004 "/yr]
+   */
+  s32 dot_theta_03;
+
+  /**
+   * Rate of change of scale correction. [0.0000002 ppm/yr]
+   */
+  s16 dot_scale;
 } sbp_msg_reference_frame_param_t;
 
 /**
@@ -61,8 +149,8 @@ typedef struct {
  */
 static inline size_t sbp_msg_reference_frame_param_encoded_len(
     const sbp_msg_reference_frame_param_t *msg) {
-  return SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_OVERHEAD +
-         (msg->n_stub * SBP_ENCODED_LEN_U8);
+  (void)msg;
+  return SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_LEN;
 }
 
 /**

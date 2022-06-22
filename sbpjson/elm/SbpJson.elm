@@ -2297,7 +2297,26 @@ type alias MsgProtectionLevel =
     }
 
 type alias MsgReferenceFrameParam =
-    { stub : Array Int
+    { deltaX0 : Int
+    , deltaY0 : Int
+    , deltaZ0 : Int
+    , dotDeltaX0 : Int
+    , dotDeltaY0 : Int
+    , dotDeltaZ0 : Int
+    , dotScale : Int
+    , dotTheta01 : Int
+    , dotTheta02 : Int
+    , dotTheta03 : Int
+    , reT0 : Int
+    , scale : Int
+    , sin : Int
+    , sn : String
+    , ssrIod : Int
+    , theta01 : Int
+    , theta02 : Int
+    , theta03 : Int
+    , tn : String
+    , utn : Int
     }
 
 {-| This message from the host resets the Piksi back into the bootloader. -}
@@ -2955,7 +2974,15 @@ type alias MsgUserData =
 parameters.
 -}
 type alias MsgUTCLeapSecond =
-    { stub : Array Int
+    { biasCoeff : Int
+    , countAfter : Int
+    , countBefore : Int
+    , driftCoeff : Int
+    , driftRateCoeff : Int
+    , refDN : Int
+    , refWn : Int
+    , towS : Int
+    , wn : Int
     }
 
 {-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
@@ -6126,12 +6153,50 @@ encodeMsgProtectionLevel x =
 msgReferenceFrameParam : Jdec.Decoder MsgReferenceFrameParam
 msgReferenceFrameParam =
     Jpipe.decode MsgReferenceFrameParam
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "delta_X0" Jdec.int
+        |> Jpipe.required "delta_Y0" Jdec.int
+        |> Jpipe.required "delta_Z0" Jdec.int
+        |> Jpipe.required "dot_delta_X0" Jdec.int
+        |> Jpipe.required "dot_delta_Y0" Jdec.int
+        |> Jpipe.required "dot_delta_Z0" Jdec.int
+        |> Jpipe.required "dot_scale" Jdec.int
+        |> Jpipe.required "dot_theta_01" Jdec.int
+        |> Jpipe.required "dot_theta_02" Jdec.int
+        |> Jpipe.required "dot_theta_03" Jdec.int
+        |> Jpipe.required "re_t0" Jdec.int
+        |> Jpipe.required "scale" Jdec.int
+        |> Jpipe.required "sin" Jdec.int
+        |> Jpipe.required "sn" Jdec.string
+        |> Jpipe.required "ssr_iod" Jdec.int
+        |> Jpipe.required "theta_01" Jdec.int
+        |> Jpipe.required "theta_02" Jdec.int
+        |> Jpipe.required "theta_03" Jdec.int
+        |> Jpipe.required "tn" Jdec.string
+        |> Jpipe.required "utn" Jdec.int
 
 encodeMsgReferenceFrameParam : MsgReferenceFrameParam -> Jenc.Value
 encodeMsgReferenceFrameParam x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("delta_X0", Jenc.int x.deltaX0)
+        , ("delta_Y0", Jenc.int x.deltaY0)
+        , ("delta_Z0", Jenc.int x.deltaZ0)
+        , ("dot_delta_X0", Jenc.int x.dotDeltaX0)
+        , ("dot_delta_Y0", Jenc.int x.dotDeltaY0)
+        , ("dot_delta_Z0", Jenc.int x.dotDeltaZ0)
+        , ("dot_scale", Jenc.int x.dotScale)
+        , ("dot_theta_01", Jenc.int x.dotTheta01)
+        , ("dot_theta_02", Jenc.int x.dotTheta02)
+        , ("dot_theta_03", Jenc.int x.dotTheta03)
+        , ("re_t0", Jenc.int x.reT0)
+        , ("scale", Jenc.int x.scale)
+        , ("sin", Jenc.int x.sin)
+        , ("sn", Jenc.string x.sn)
+        , ("ssr_iod", Jenc.int x.ssrIod)
+        , ("theta_01", Jenc.int x.theta01)
+        , ("theta_02", Jenc.int x.theta02)
+        , ("theta_03", Jenc.int x.theta03)
+        , ("tn", Jenc.string x.tn)
+        , ("utn", Jenc.int x.utn)
         ]
 
 msgReset : Jdec.Decoder MsgReset
@@ -7246,12 +7311,28 @@ encodeMsgUserData x =
 msgUTCLeapSecond : Jdec.Decoder MsgUTCLeapSecond
 msgUTCLeapSecond =
     Jpipe.decode MsgUTCLeapSecond
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "bias_coeff" Jdec.int
+        |> Jpipe.required "count_after" Jdec.int
+        |> Jpipe.required "count_before" Jdec.int
+        |> Jpipe.required "drift_coeff" Jdec.int
+        |> Jpipe.required "drift_rate_coeff" Jdec.int
+        |> Jpipe.required "ref_dn" Jdec.int
+        |> Jpipe.required "ref_wn" Jdec.int
+        |> Jpipe.required "tow_s" Jdec.int
+        |> Jpipe.required "wn" Jdec.int
 
 encodeMsgUTCLeapSecond : MsgUTCLeapSecond -> Jenc.Value
 encodeMsgUTCLeapSecond x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("bias_coeff", Jenc.int x.biasCoeff)
+        , ("count_after", Jenc.int x.countAfter)
+        , ("count_before", Jenc.int x.countBefore)
+        , ("drift_coeff", Jenc.int x.driftCoeff)
+        , ("drift_rate_coeff", Jenc.int x.driftRateCoeff)
+        , ("ref_dn", Jenc.int x.refDN)
+        , ("ref_wn", Jenc.int x.refWn)
+        , ("tow_s", Jenc.int x.towS)
+        , ("wn", Jenc.int x.wn)
         ]
 
 msgUTCTime : Jdec.Decoder MsgUTCTime
