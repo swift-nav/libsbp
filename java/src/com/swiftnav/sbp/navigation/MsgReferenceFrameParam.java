@@ -37,7 +37,7 @@ public class MsgReferenceFrameParam extends SBPMessage {
     public int utn;
 
     /**
-     * Reference Epoch t0 for transformation parameter set given as Modified Julian Day (MDJ) Number
+     * Reference Epoch t0 for transformation parameter set given as Modified Julian Day (MJD) Number
      * minus 44244 days.
      */
     public int re_t0;

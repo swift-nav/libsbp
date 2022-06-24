@@ -66,7 +66,7 @@ typedef struct {
 
   /**
    * Reference Epoch t0 for transformation parameter set given as Modified
-   * Julian Day (MDJ) Number minus 44244 days. [1 day]
+   * Julian Day (MJD) Number minus 44244 days. [1 day]
    */
   u16 re_t0;
 

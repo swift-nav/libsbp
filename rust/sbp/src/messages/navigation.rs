@@ -6022,7 +6022,7 @@ pub mod msg_reference_frame_param {
         #[cfg_attr(feature = "serde", serde(rename(serialize = "utn")))]
         pub utn: u16,
         /// Reference Epoch t0 for transformation parameter set given as Modified
-        /// Julian Day (MDJ) Number minus 44244 days.
+        /// Julian Day (MJD) Number minus 44244 days.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "re_t0")))]
         pub re_t0: u16,
         /// Translation in X for Reference Epoch t0.

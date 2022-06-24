@@ -2379,7 +2379,7 @@ data MsgReferenceFrameParam = MsgReferenceFrameParam
     -- ^ Utilized Transformation Message.
   , _msgReferenceFrameParam_re_t0      :: !Word16
     -- ^ Reference Epoch t0 for transformation parameter set given as Modified
-    -- Julian Day (MDJ) Number minus 44244 days.
+    -- Julian Day (MJD) Number minus 44244 days.
   , _msgReferenceFrameParam_delta_X0   :: !Int32
     -- ^ Translation in X for Reference Epoch t0.
   , _msgReferenceFrameParam_delta_Y0   :: !Int32

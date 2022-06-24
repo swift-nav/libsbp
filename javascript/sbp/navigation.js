@@ -2196,7 +2196,7 @@ MsgUtcLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
  * @field sin number (unsigned 8-bit int, 1 byte) System Identification Number.
  * @field utn number (unsigned 16-bit int, 2 bytes) Utilized Transformation Message.
  * @field re_t0 number (unsigned 16-bit int, 2 bytes) Reference Epoch t0 for transformation parameter set given as Modified Julian Day
- *   (MDJ) Number minus 44244 days.
+ *   (MJD) Number minus 44244 days.
  * @field delta_X0 number (signed 32-bit int, 4 bytes) Translation in X for Reference Epoch t0.
  * @field delta_Y0 number (signed 32-bit int, 4 bytes) Translation in Y for Reference Epoch t0.
  * @field delta_Z0 number (signed 32-bit int, 4 bytes) Translation in Z for Reference Epoch t0.

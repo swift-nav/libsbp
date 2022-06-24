@@ -2507,7 +2507,7 @@ definitions:
            units: 1 day
            desc: >
              Reference Epoch t0 for transformation parameter set given as
-             Modified Julian Day (MDJ) Number minus 44244 days.
+             Modified Julian Day (MJD) Number minus 44244 days.
        - delta_X0:
            type: s32
            units: 0.001 m
