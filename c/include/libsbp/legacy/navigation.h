@@ -951,7 +951,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 sin;       /**< System Identification Number. */
   u16 utn;      /**< Utilized Transformation Message. */
   u16 re_t0;    /**< Reference Epoch t0 for transformation parameter
-                     set given as Modified Julian Day (MDJ) Number
+                     set given as Modified Julian Day (MJD) Number
                      minus 44244 days. [1 day] */
   s32 delta_X0; /**< Translation in X for Reference Epoch t0. [0.001 m] */
   s32 delta_Y0; /**< Translation in Y for Reference Epoch t0. [0.001 m] */
