@@ -53,7 +53,12 @@ pub struct (((m.msg_name))) {
     ((*- if f.desc *))
     /// (((f.desc | commentify(indent=2) )))
     ((*- endif *))
+    ((*- if f.type_id == "array" and "size" in f.options and f.options["size"].value >= 32 *))
+    #[cfg_attr(feature = "serde", serde(with="BigArray", rename(serialize = "(((f.identifier)))")))]
+    ((*- else *))
     #[cfg_attr(feature = "serde", serde(rename(serialize = "(((f.identifier)))")))]
+    ((*- endif *))
+
     pub (((f.field_name))): (((f.type))),
     ((*- endfor *))
 }
