@@ -270,6 +270,9 @@ mod lib {
 
     pub use bytes::{Buf, BufMut};
 
+    #[cfg(feature = "serde")]
+    pub use serde_big_array::BigArray;
+
     macro_rules! get_bit_range {
         ($bitrange:expr, $source_ty:ty, $target_ty:ty, $msb:expr, $lsb:expr) => {{
             let source_bit_len = std::mem::size_of::<$source_ty>() * 8;
