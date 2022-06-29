@@ -603,6 +603,7 @@ export interface MsgDops {
 
 export interface MsgEd25519Certificate {
     certificate_bytes: number[];
+    fingerprint:       number[];
     message_number:    number;
     total_messages:    number;
 }
@@ -4805,6 +4806,7 @@ const typeMap: any = {
     ], "any"),
     "MsgEd25519Certificate": o([
         { json: "certificate_bytes", js: "certificate_bytes", typ: a(0) },
+        { json: "fingerprint", js: "fingerprint", typ: a(0) },
         { json: "message_number", js: "message_number", typ: 0 },
         { json: "total_messages", js: "total_messages", typ: 0 },
     ], "any"),

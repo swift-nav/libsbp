@@ -35,6 +35,9 @@ pub mod msg_ed25519_certificate {
         /// Total number of messages.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "total_messages")))]
         pub total_messages: u8,
+        /// SHA-1 fingerprint of the associated certificate.
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "fingerprint")))]
+        pub fingerprint: [u8; 20],
         /// ED25519 certificate bytes.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "certificate_bytes")))]
         pub certificate_bytes: Vec<u8>,
@@ -76,15 +79,18 @@ pub mod msg_ed25519_certificate {
     impl WireFormat for MsgEd25519Certificate {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
+            + <[u8; 20] as WireFormat>::MIN_LEN
             + <Vec<u8> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.message_number)
                 + WireFormat::len(&self.total_messages)
+                + WireFormat::len(&self.fingerprint)
                 + WireFormat::len(&self.certificate_bytes)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
             WireFormat::write(&self.message_number, buf);
             WireFormat::write(&self.total_messages, buf);
+            WireFormat::write(&self.fingerprint, buf);
             WireFormat::write(&self.certificate_bytes, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
@@ -92,6 +98,7 @@ pub mod msg_ed25519_certificate {
                 sender_id: None,
                 message_number: WireFormat::parse_unchecked(buf),
                 total_messages: WireFormat::parse_unchecked(buf),
+                fingerprint: WireFormat::parse_unchecked(buf),
                 certificate_bytes: WireFormat::parse_unchecked(buf),
             }
         }

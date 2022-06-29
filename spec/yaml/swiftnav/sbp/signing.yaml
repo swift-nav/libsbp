@@ -44,6 +44,11 @@ definitions:
         - total_messages:
             type: u8
             desc: Total number of messages.
+        - fingerprint:
+            type: array
+            fill: u8
+            size: 20
+            desc: SHA-1 fingerprint of the associated certificate.
         - certificate_bytes:
             type: array
             fill: u8

@@ -72,6 +72,8 @@ data MsgEd25519Certificate = MsgEd25519Certificate
     -- ^ Message number out of total_messages (0 indexed).
   , _msgEd25519Certificate_total_messages  :: !Word8
     -- ^ Total number of messages.
+  , _msgEd25519Certificate_fingerprint     :: ![Word8]
+    -- ^ SHA-1 fingerprint of the associated certificate.
   , _msgEd25519Certificate_certificate_bytes :: ![Word8]
     -- ^ ED25519 certificate bytes.
   } deriving ( Show, Read, Eq )
@@ -80,12 +82,14 @@ instance Binary MsgEd25519Certificate where
   get = do
     _msgEd25519Certificate_message_number <- getWord8
     _msgEd25519Certificate_total_messages <- getWord8
+    _msgEd25519Certificate_fingerprint <- replicateM 20 getWord8
     _msgEd25519Certificate_certificate_bytes <- whileM (not <$> isEmpty) getWord8
     pure MsgEd25519Certificate {..}
 
   put MsgEd25519Certificate {..} = do
     putWord8 _msgEd25519Certificate_message_number
     putWord8 _msgEd25519Certificate_total_messages
+    mapM_ putWord8 _msgEd25519Certificate_fingerprint
     mapM_ putWord8 _msgEd25519Certificate_certificate_bytes
 
 $(makeSBP 'msgEd25519Certificate ''MsgEd25519Certificate)

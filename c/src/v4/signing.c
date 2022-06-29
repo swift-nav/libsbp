@@ -142,6 +142,11 @@ bool sbp_msg_ed25519_certificate_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->total_messages)) {
     return false;
   }
+  for (size_t i = 0; i < SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX; i++) {
+    if (!sbp_u8_encode(ctx, &msg->fingerprint[i])) {
+      return false;
+    }
+  }
   for (size_t i = 0; i < msg->n_certificate_bytes; i++) {
     if (!sbp_u8_encode(ctx, &msg->certificate_bytes[i])) {
       return false;
@@ -173,6 +178,11 @@ bool sbp_msg_ed25519_certificate_decode_internal(
   }
   if (!sbp_u8_decode(ctx, &msg->total_messages)) {
     return false;
+  }
+  for (uint8_t i = 0; i < SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX; i++) {
+    if (!sbp_u8_decode(ctx, &msg->fingerprint[i])) {
+      return false;
+    }
   }
   msg->n_certificate_bytes =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_ENCODED_LEN_U8);
@@ -224,6 +234,14 @@ int sbp_msg_ed25519_certificate_cmp(const sbp_msg_ed25519_certificate_t *a,
   }
 
   ret = sbp_u8_cmp(&a->total_messages, &b->total_messages);
+  if (ret != 0) {
+    return ret;
+  }
+
+  for (uint8_t i = 0;
+       ret == 0 && i < SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX; i++) {
+    ret = sbp_u8_cmp(&a->fingerprint[i], &b->fingerprint[i]);
+  }
   if (ret != 0) {
     return ret;
   }

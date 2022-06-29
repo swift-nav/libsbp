@@ -1218,6 +1218,7 @@ type alias MsgDops =
 
 type alias MsgEd25519Certificate =
     { certificateBytes : Array Int
+    , fingerprint : Array Int
     , messageNumber : Int
     , totalMessages : Int
     }
@@ -4485,6 +4486,7 @@ msgEd25519Certificate : Jdec.Decoder MsgEd25519Certificate
 msgEd25519Certificate =
     Jpipe.decode MsgEd25519Certificate
         |> Jpipe.required "certificate_bytes" (Jdec.array Jdec.int)
+        |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
         |> Jpipe.required "message_number" Jdec.int
         |> Jpipe.required "total_messages" Jdec.int
 
@@ -4492,6 +4494,7 @@ encodeMsgEd25519Certificate : MsgEd25519Certificate -> Jenc.Value
 encodeMsgEd25519Certificate x =
     Jenc.object
         [ ("certificate_bytes", makeArrayEncoder Jenc.int x.certificateBytes)
+        , ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
         , ("message_number", Jenc.int x.messageNumber)
         , ("total_messages", Jenc.int x.totalMessages)
         ]

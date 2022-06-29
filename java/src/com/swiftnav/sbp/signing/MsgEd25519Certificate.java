@@ -29,6 +29,9 @@ public class MsgEd25519Certificate extends SBPMessage {
     /** Total number of messages. */
     public int total_messages;
 
+    /** SHA-1 fingerprint of the associated certificate. */
+    public int[] fingerprint;
+
     /** ED25519 certificate bytes. */
     public int[] certificate_bytes;
 
@@ -50,6 +53,7 @@ public class MsgEd25519Certificate extends SBPMessage {
         /* Parse fields from binary */
         message_number = parser.getU8();
         total_messages = parser.getU8();
+        fingerprint = parser.getArrayofU8(20);
         certificate_bytes = parser.getArrayofU8();
     }
 
@@ -57,6 +61,7 @@ public class MsgEd25519Certificate extends SBPMessage {
     protected void build(Builder builder) {
         builder.putU8(message_number);
         builder.putU8(total_messages);
+        builder.putArrayofU8(fingerprint, 20);
         builder.putArrayofU8(certificate_bytes);
     }
 
@@ -65,6 +70,7 @@ public class MsgEd25519Certificate extends SBPMessage {
         JSONObject obj = super.toJSON();
         obj.put("message_number", message_number);
         obj.put("total_messages", total_messages);
+        obj.put("fingerprint", new JSONArray(fingerprint));
         obj.put("certificate_bytes", new JSONArray(certificate_bytes));
         return obj;
     }

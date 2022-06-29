@@ -50,6 +50,11 @@ typedef struct {
   u8 total_messages;
 
   /**
+   * SHA-1 fingerprint of the associated certificate.
+   */
+  u8 fingerprint[SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX];
+
+  /**
    * ED25519 certificate bytes.
    */
   u8 certificate_bytes[SBP_MSG_ED25519_CERTIFICATE_CERTIFICATE_BYTES_MAX];

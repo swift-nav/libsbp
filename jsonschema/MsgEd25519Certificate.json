@@ -18,11 +18,13 @@
   "properties": {
     "message_number": {"type": "integer"},
     "total_messages": {"type": "integer"},
+    "fingerprint": {"type": "array", "items": {"type": "integer"}},
     "certificate_bytes": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
     "message_number",
     "total_messages",
+    "fingerprint",
     "certificate_bytes"
   ]
 }

@@ -141,6 +141,8 @@ class MsgEd25519Certificate(SBP):
     Message number out of total_messages (0 indexed).
   total_messages : int
     Total number of messages.
+  fingerprint : array
+    SHA-1 fingerprint of the associated certificate.
   certificate_bytes : array
     ED25519 certificate bytes.
   sender : int
@@ -150,10 +152,12 @@ class MsgEd25519Certificate(SBP):
   _parser = construct.Struct(
                    'message_number' / construct.Int8ul,
                    'total_messages' / construct.Int8ul,
+                   'fingerprint' / construct.Array(20, construct.Int8ul),
                    'certificate_bytes' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'message_number',
                'total_messages',
+               'fingerprint',
                'certificate_bytes',
               ]
 
@@ -169,6 +173,7 @@ class MsgEd25519Certificate(SBP):
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.message_number = kwargs.pop('message_number')
       self.total_messages = kwargs.pop('total_messages')
+      self.fingerprint = kwargs.pop('fingerprint')
       self.certificate_bytes = kwargs.pop('certificate_bytes')
 
   def __repr__(self):

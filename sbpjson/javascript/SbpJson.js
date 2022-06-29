@@ -2213,6 +2213,7 @@ const typeMap = {
     ], "any"),
     "MsgEd25519Certificate": o([
         { json: "certificate_bytes", js: "certificate_bytes", typ: a(0) },
+        { json: "fingerprint", js: "fingerprint", typ: a(0) },
         { json: "message_number", js: "message_number", typ: 0 },
         { json: "total_messages", js: "total_messages", typ: 0 },
     ], "any"),

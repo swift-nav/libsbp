@@ -69,6 +69,7 @@ MsgEd25519Signature.prototype.fieldSpec.push(['signed_messages', 'array', 'write
  * Fields in the SBP payload (`sbp.payload`):
  * @field message_number number (unsigned 8-bit int, 1 byte) Message number out of total_messages (0 indexed).
  * @field total_messages number (unsigned 8-bit int, 1 byte) Total number of messages.
+ * @field fingerprint array SHA-1 fingerprint of the associated certificate.
  * @field certificate_bytes array ED25519 certificate bytes.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -88,10 +89,12 @@ MsgEd25519Certificate.prototype.parser = new Parser()
   .endianess('little')
   .uint8('message_number')
   .uint8('total_messages')
+  .array('fingerprint', { length: 20, type: 'uint8' })
   .array('certificate_bytes', { type: 'uint8', readUntil: 'eof' });
 MsgEd25519Certificate.prototype.fieldSpec = [];
 MsgEd25519Certificate.prototype.fieldSpec.push(['message_number', 'writeUInt8', 1]);
 MsgEd25519Certificate.prototype.fieldSpec.push(['total_messages', 'writeUInt8', 1]);
+MsgEd25519Certificate.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
 MsgEd25519Certificate.prototype.fieldSpec.push(['certificate_bytes', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
