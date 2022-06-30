@@ -25,9 +25,9 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
-SBP_MSG_ED25519_SIGNATURE = 0x0BD2
+SBP_MSG_ED25519_SIGNATURE = 0x0C01
 class MsgEd25519Signature(SBP):
-  """SBP class for message MSG_ED25519_SIGNATURE (0x0BD2).
+  """SBP class for message MSG_ED25519_SIGNATURE (0x0C01).
 
   You can have MSG_ED25519_SIGNATURE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -123,9 +123,9 @@ class MsgEd25519Signature(SBP):
     d.update(j)
     return d
     
-SBP_MSG_ED25519_CERTIFICATE = 0x0BD3
+SBP_MSG_ED25519_CERTIFICATE = 0x0C02
 class MsgEd25519Certificate(SBP):
-  """SBP class for message MSG_ED25519_CERTIFICATE (0x0BD3).
+  """SBP class for message MSG_ED25519_CERTIFICATE (0x0C02).
 
   You can have MSG_ED25519_CERTIFICATE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -137,10 +137,10 @@ class MsgEd25519Certificate(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  message_number : int
-    Message number out of total_messages (0 indexed).
-  total_messages : int
-    Total number of messages.
+  n_msg : int
+    Total number messages that make up the certificate. First nibble is the
+    size of the sequence (n), second nibble is the zero-indexed counter (ith
+    packet of n)
   fingerprint : array
     SHA-1 fingerprint of the associated certificate.
   certificate_bytes : array
@@ -150,13 +150,11 @@ class MsgEd25519Certificate(SBP):
 
   """
   _parser = construct.Struct(
-                   'message_number' / construct.Int8ul,
-                   'total_messages' / construct.Int8ul,
+                   'n_msg' / construct.Int8ul,
                    'fingerprint' / construct.Array(20, construct.Int8ul),
                    'certificate_bytes' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
-               'message_number',
-               'total_messages',
+               'n_msg',
                'fingerprint',
                'certificate_bytes',
               ]
@@ -171,8 +169,7 @@ class MsgEd25519Certificate(SBP):
       super( MsgEd25519Certificate, self).__init__()
       self.msg_type = SBP_MSG_ED25519_CERTIFICATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.message_number = kwargs.pop('message_number')
-      self.total_messages = kwargs.pop('total_messages')
+      self.n_msg = kwargs.pop('n_msg')
       self.fingerprint = kwargs.pop('fingerprint')
       self.certificate_bytes = kwargs.pop('certificate_bytes')
 
@@ -228,6 +225,6 @@ class MsgEd25519Certificate(SBP):
     
 
 msg_classes = {
-  0x0BD2: MsgEd25519Signature,
-  0x0BD3: MsgEd25519Certificate,
+  0x0C01: MsgEd25519Signature,
+  0x0C02: MsgEd25519Certificate,
 }

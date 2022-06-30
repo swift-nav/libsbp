@@ -17,7 +17,7 @@ include:
   - gnss.yaml
 definitions:
   - MSG_ED25519_SIGNATURE:
-      id: 0x0BD2
+      id: 0x0C01
       short_desc: ED25519 signature for groups of RTCM messages
       fields:
         - signature:
@@ -35,15 +35,15 @@ definitions:
             fill: u32
             desc: CRCs of signed messages.
   - MSG_ED25519_CERTIFICATE:
-      id: 0x0BD3
+      id: 0x0C02
       short_desc: ED25519 certificate, split over multiple messages
       fields:
-        - message_number:
+        - n_msg:
             type: u8
-            desc: Message number out of total_messages (0 indexed).
-        - total_messages:
-            type: u8
-            desc: Total number of messages.
+            desc: >
+              Total number messages that make up the certificate. First nibble
+              is the size of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
         - fingerprint:
             type: array
             fill: u8

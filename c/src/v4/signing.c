@@ -136,10 +136,7 @@ int sbp_msg_ed25519_signature_cmp(const sbp_msg_ed25519_signature_t *a,
 
 bool sbp_msg_ed25519_certificate_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ed25519_certificate_t *msg) {
-  if (!sbp_u8_encode(ctx, &msg->message_number)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->total_messages)) {
+  if (!sbp_u8_encode(ctx, &msg->n_msg)) {
     return false;
   }
   for (size_t i = 0; i < SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX; i++) {
@@ -173,10 +170,7 @@ s8 sbp_msg_ed25519_certificate_encode(
 
 bool sbp_msg_ed25519_certificate_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ed25519_certificate_t *msg) {
-  if (!sbp_u8_decode(ctx, &msg->message_number)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->total_messages)) {
+  if (!sbp_u8_decode(ctx, &msg->n_msg)) {
     return false;
   }
   for (uint8_t i = 0; i < SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX; i++) {
@@ -228,12 +222,7 @@ int sbp_msg_ed25519_certificate_cmp(const sbp_msg_ed25519_certificate_t *a,
                                     const sbp_msg_ed25519_certificate_t *b) {
   int ret = 0;
 
-  ret = sbp_u8_cmp(&a->message_number, &b->message_number);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->total_messages, &b->total_messages);
+  ret = sbp_u8_cmp(&a->n_msg, &b->n_msg);
   if (ret != 0) {
     return ret;
   }

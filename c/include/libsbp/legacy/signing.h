@@ -37,9 +37,10 @@ typedef struct SBP_ATTR_PACKED {
 } msg_ed25519_signature_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 message_number;       /**< Message number out of total_messages (0
-                                indexed). */
-  u8 total_messages;       /**< Total number of messages. */
+  u8 n_msg;                /**< Total number messages that make up the
+                                certificate. First nibble is the size of the
+                                sequence (n), second nibble is the zero-
+                                indexed counter (ith packet of n) */
   u8 fingerprint[20];      /**< SHA-1 fingerprint of the associated
                                 certificate. */
   u8 certificate_bytes[0]; /**< ED25519 certificate bytes. */

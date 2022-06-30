@@ -18,7 +18,7 @@
 #ifndef LIBSBP_SIGNING_MACROS_H
 #define LIBSBP_SIGNING_MACROS_H
 
-#define SBP_MSG_ED25519_SIGNATURE 0x0BD2
+#define SBP_MSG_ED25519_SIGNATURE 0x0C01
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ed25519_signature_t::signature (V4 API) or
@@ -58,7 +58,7 @@
  */
 #define SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD 84u
 
-#define SBP_MSG_ED25519_CERTIFICATE 0x0BD3
+#define SBP_MSG_ED25519_CERTIFICATE 0x0C02
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ed25519_certificate_t::fingerprint (V4 API) or
@@ -73,7 +73,7 @@
  * msg_ed25519_certificate_t::certificate_bytes (legacy API) before the maximum
  * SBP message size is exceeded
  */
-#define SBP_MSG_ED25519_CERTIFICATE_CERTIFICATE_BYTES_MAX 233u
+#define SBP_MSG_ED25519_CERTIFICATE_CERTIFICATE_BYTES_MAX 234u
 
 /**
  * Encoded length of sbp_msg_ed25519_certificate_t (V4 API) and
@@ -88,6 +88,6 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_ED25519_CERTIFICATE_ENCODED_OVERHEAD 22u
+#define SBP_MSG_ED25519_CERTIFICATE_ENCODED_OVERHEAD 21u
 
 #endif /* LIBSBP_SIGNING_MACROS_H */

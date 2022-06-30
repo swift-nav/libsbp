@@ -16,14 +16,12 @@
   "description":"",
   "type": "object",
   "properties": {
-    "message_number": {"type": "integer"},
-    "total_messages": {"type": "integer"},
+    "n_msg": {"type": "integer"},
     "fingerprint": {"type": "array", "items": {"type": "integer"}},
     "certificate_bytes": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "message_number",
-    "total_messages",
+    "n_msg",
     "fingerprint",
     "certificate_bytes"
   ]

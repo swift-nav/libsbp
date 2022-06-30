@@ -29,12 +29,11 @@ pub mod msg_ed25519_certificate {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing))]
         pub sender_id: Option<u16>,
-        /// Message number out of total_messages (0 indexed).
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "message_number")))]
-        pub message_number: u8,
-        /// Total number of messages.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "total_messages")))]
-        pub total_messages: u8,
+        /// Total number messages that make up the certificate. First nibble is the
+        /// size of the sequence (n), second nibble is the zero-indexed counter (ith
+        /// packet of n)
+        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_msg")))]
+        pub n_msg: u8,
         /// SHA-1 fingerprint of the associated certificate.
         #[cfg_attr(feature = "serde", serde(rename(serialize = "fingerprint")))]
         pub fingerprint: [u8; 20],
@@ -44,7 +43,7 @@ pub mod msg_ed25519_certificate {
     }
 
     impl ConcreteMessage for MsgEd25519Certificate {
-        const MESSAGE_TYPE: u16 = 3027;
+        const MESSAGE_TYPE: u16 = 3074;
         const MESSAGE_NAME: &'static str = "MSG_ED25519_CERTIFICATE";
     }
 
@@ -78,26 +77,22 @@ pub mod msg_ed25519_certificate {
 
     impl WireFormat for MsgEd25519Certificate {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
             + <[u8; 20] as WireFormat>::MIN_LEN
             + <Vec<u8> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.message_number)
-                + WireFormat::len(&self.total_messages)
+            WireFormat::len(&self.n_msg)
                 + WireFormat::len(&self.fingerprint)
                 + WireFormat::len(&self.certificate_bytes)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.message_number, buf);
-            WireFormat::write(&self.total_messages, buf);
+            WireFormat::write(&self.n_msg, buf);
             WireFormat::write(&self.fingerprint, buf);
             WireFormat::write(&self.certificate_bytes, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgEd25519Certificate {
                 sender_id: None,
-                message_number: WireFormat::parse_unchecked(buf),
-                total_messages: WireFormat::parse_unchecked(buf),
+                n_msg: WireFormat::parse_unchecked(buf),
                 fingerprint: WireFormat::parse_unchecked(buf),
                 certificate_bytes: WireFormat::parse_unchecked(buf),
             }
@@ -133,7 +128,7 @@ pub mod msg_ed25519_signature {
     }
 
     impl ConcreteMessage for MsgEd25519Signature {
-        const MESSAGE_TYPE: u16 = 3026;
+        const MESSAGE_TYPE: u16 = 3073;
         const MESSAGE_NAME: &'static str = "MSG_ED25519_SIGNATURE";
     }
 

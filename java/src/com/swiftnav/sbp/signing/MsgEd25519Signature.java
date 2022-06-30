@@ -21,7 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MsgEd25519Signature extends SBPMessage {
-    public static final int TYPE = 0x0BD2;
+    public static final int TYPE = 0x0C01;
 
     /** ED25519 signature for messages. */
     public int[] signature;

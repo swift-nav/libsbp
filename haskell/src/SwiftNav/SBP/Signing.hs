@@ -37,7 +37,7 @@ import SwiftNav.SBP.Gnss
 
 
 msgEd25519Signature :: Word16
-msgEd25519Signature = 0x0BD2
+msgEd25519Signature = 0x0C01
 
 data MsgEd25519Signature = MsgEd25519Signature
   { _msgEd25519Signature_signature     :: ![Word8]
@@ -65,13 +65,13 @@ $(makeJSON "_msgEd25519Signature_" ''MsgEd25519Signature)
 $(makeLenses ''MsgEd25519Signature)
 
 msgEd25519Certificate :: Word16
-msgEd25519Certificate = 0x0BD3
+msgEd25519Certificate = 0x0C02
 
 data MsgEd25519Certificate = MsgEd25519Certificate
-  { _msgEd25519Certificate_message_number  :: !Word8
-    -- ^ Message number out of total_messages (0 indexed).
-  , _msgEd25519Certificate_total_messages  :: !Word8
-    -- ^ Total number of messages.
+  { _msgEd25519Certificate_n_msg           :: !Word8
+    -- ^ Total number messages that make up the certificate. First nibble is the
+    -- size of the sequence (n), second nibble is the zero-indexed counter
+    -- (ith packet of n)
   , _msgEd25519Certificate_fingerprint     :: ![Word8]
     -- ^ SHA-1 fingerprint of the associated certificate.
   , _msgEd25519Certificate_certificate_bytes :: ![Word8]
@@ -80,15 +80,13 @@ data MsgEd25519Certificate = MsgEd25519Certificate
 
 instance Binary MsgEd25519Certificate where
   get = do
-    _msgEd25519Certificate_message_number <- getWord8
-    _msgEd25519Certificate_total_messages <- getWord8
+    _msgEd25519Certificate_n_msg <- getWord8
     _msgEd25519Certificate_fingerprint <- replicateM 20 getWord8
     _msgEd25519Certificate_certificate_bytes <- whileM (not <$> isEmpty) getWord8
     pure MsgEd25519Certificate {..}
 
   put MsgEd25519Certificate {..} = do
-    putWord8 _msgEd25519Certificate_message_number
-    putWord8 _msgEd25519Certificate_total_messages
+    putWord8 _msgEd25519Certificate_n_msg
     mapM_ putWord8 _msgEd25519Certificate_fingerprint
     mapM_ putWord8 _msgEd25519Certificate_certificate_bytes
 

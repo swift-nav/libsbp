@@ -21,13 +21,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MsgEd25519Certificate extends SBPMessage {
-    public static final int TYPE = 0x0BD3;
+    public static final int TYPE = 0x0C02;
 
-    /** Message number out of total_messages (0 indexed). */
-    public int message_number;
-
-    /** Total number of messages. */
-    public int total_messages;
+    /**
+     * Total number messages that make up the certificate. First nibble is the size of the sequence
+     * (n), second nibble is the zero-indexed counter (ith packet of n)
+     */
+    public int n_msg;
 
     /** SHA-1 fingerprint of the associated certificate. */
     public int[] fingerprint;
@@ -51,16 +51,14 @@ public class MsgEd25519Certificate extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        message_number = parser.getU8();
-        total_messages = parser.getU8();
+        n_msg = parser.getU8();
         fingerprint = parser.getArrayofU8(20);
         certificate_bytes = parser.getArrayofU8();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putU8(message_number);
-        builder.putU8(total_messages);
+        builder.putU8(n_msg);
         builder.putArrayofU8(fingerprint, 20);
         builder.putArrayofU8(certificate_bytes);
     }
@@ -68,8 +66,7 @@ public class MsgEd25519Certificate extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("message_number", message_number);
-        obj.put("total_messages", total_messages);
+        obj.put("n_msg", n_msg);
         obj.put("fingerprint", new JSONArray(fingerprint));
         obj.put("certificate_bytes", new JSONArray(certificate_bytes));
         return obj;

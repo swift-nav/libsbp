@@ -36,8 +36,7 @@ message MsgEd25519Signature {
 None
  */
 message MsgEd25519Certificate {
-    uint32 message_number = 1;
-    uint32 total_messages = 2;
-    repeated uint32 fingerprint = 3;
-    repeated uint32 certificate_bytes = 4;
+    uint32 n_msg = 1;
+    repeated uint32 fingerprint = 2;
+    repeated uint32 certificate_bytes = 3;
 }
