@@ -1,0 +1,42 @@
+/*
+ * Copyright (C) 2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Signing
+ *
+ * Messages relating to signatures
+ */
+
+package swiftnav.sbp.signing;
+
+import "gnss.proto";
+
+/** ED25519 signature for groups of RTCM messages
+ *
+None
+ */
+message MsgEd25519Signature {
+    repeated uint32 signature = 1;
+    repeated uint32 fingerprint = 2;
+    repeated uint32 signed_messages = 3;
+}
+
+/** ED25519 certificate, split over multiple messages
+ *
+None
+ */
+message MsgEd25519Certificate {
+    uint32 n_msg = 1;
+    repeated uint32 fingerprint = 2;
+    repeated uint32 certificate_bytes = 3;
+}

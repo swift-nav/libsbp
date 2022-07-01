@@ -36,6 +36,7 @@
 #include <libsbp/piksi_macros.h>
 #include <libsbp/sbas_macros.h>
 #include <libsbp/settings_macros.h>
+#include <libsbp/signing_macros.h>
 #include <libsbp/solution_meta_macros.h>
 #include <libsbp/ssr_macros.h>
 #include <libsbp/system_macros.h>
@@ -88,6 +89,8 @@ typedef enum {
   SbpMsgDgnssStatus = SBP_MSG_DGNSS_STATUS,
   SbpMsgDopsDepA = SBP_MSG_DOPS_DEP_A,
   SbpMsgDops = SBP_MSG_DOPS,
+  SbpMsgEd25519Certificate = SBP_MSG_ED25519_CERTIFICATE,
+  SbpMsgEd25519Signature = SBP_MSG_ED25519_SIGNATURE,
   SbpMsgEphemerisBds = SBP_MSG_EPHEMERIS_BDS,
   SbpMsgEphemerisDepA = SBP_MSG_EPHEMERIS_DEP_A,
   SbpMsgEphemerisDepB = SBP_MSG_EPHEMERIS_DEP_B,

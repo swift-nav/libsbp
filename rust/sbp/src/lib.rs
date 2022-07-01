@@ -160,7 +160,7 @@ pub mod time;
 
 pub(crate) mod de;
 pub(crate) mod ser;
-pub(crate) mod wire_format;
+pub mod wire_format;
 
 /// Denotes the start of frame transmission.
 pub const PREAMBLE: u8 = 0x55;
