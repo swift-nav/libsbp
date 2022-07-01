@@ -40,7 +40,11 @@ process. This is likely to change in the future.
 2. Increment `number_of_messages` in `python/tests/sbp/test_table.py`
    by the corresponding number of new messages.
 
-3. Generate new clients and documentation by running `make
+3. If adding a new "group" of messages (adding a new YAML file to
+   `spec/yaml/swiftnav/sbp`), add the new message group to 
+   `python/sbp/table.py` and `javascript/sbp/msg.js`. 
+
+4. Generate new clients and documentation by running `make
    all`. Verify that the generated code, which isn't too complicated,
    meets your expectations, as allowed messages are limited by the
    underlying language implementation. For example, you can't specify
@@ -49,16 +53,16 @@ process. This is likely to change in the future.
    materialize a 0-length array C99 extension in the middle of the
    struct. GCC won't compile this.
 
-4. (Optional) Add a [`test`](spec/tests/yaml/swiftnav/sbp) case and
+5. (Optional) Add a [`test`](spec/tests/yaml/swiftnav/sbp) case and
    update the appropriate language libaries using `make gen`.
    If a test case is not added, increment `EXPECTED_MISSING_MESSAGES`
    in `python/tests/sbp/test_messages.py`.
 
-5. Run `make test`.
+6. Run `make test`.
 
-6. Submit a pull request.
+7. Submit a pull request.
 
-7. If Swift's internal test tooling needs to be updated to use your
+8. If Swift's internal test tooling needs to be updated to use your
    new message, deploy the updated Python client first, and then the C
    client. We haven't quite decided on the details of this process.
 
