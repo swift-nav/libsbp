@@ -1,5 +1,16 @@
 # Changelog
 
+## [v4.5.0](https://github.com/swift-nav/libsbp/tree/v4.5.0) (2022-07-01)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.4.0...v4.5.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Add find module for starling-core \(\#116\) [\#1173](https://github.com/swift-nav/libsbp/pull/1173) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- fix typo in docs [\#1172](https://github.com/swift-nav/libsbp/pull/1172) ([fpezzinosn](https://github.com/fpezzinosn))
+- Auto submodule update: cmake - Add Module For Checking Atomic \(\#117\) [\#1171](https://github.com/swift-nav/libsbp/pull/1171) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Promote messages from staging to master \[OTA-172\] [\#1170](https://github.com/swift-nav/libsbp/pull/1170) ([fpezzinosn](https://github.com/fpezzinosn))
+
 ## [v4.4.0](https://github.com/swift-nav/libsbp/tree/v4.4.0) (2022-06-15)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.3.3...v4.4.0)
