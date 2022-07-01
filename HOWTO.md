@@ -63,10 +63,17 @@ process. This is likely to change in the future.
    client. We haven't quite decided on the details of this process.
 
 ##  Generating missing tests
+There are some tools that can assist with generating YAML based tests, like the
+ones already defined in the [`test`](spec/tests/yaml/swiftnav/sbp) directory.
+These YAML files are used to generate tests in the various languages that libsbp
+supports, to ensure that serializing and deserializing messages works as
+intended
 
-Using `generator/missing.py` and `generator/json2test.py`, the yaml files 
-for test cases can be generated using either `missing.py` to listen via socket
-or using `json2test.py` to translate json input files into yaml directly
+### Existing Messages
+For messages that are already being sent (eg: by Starling, or by a Piksi), the
+`generator/missing.py` script can be used to connect to a socket and
+automatically generate tests for any received messages that do not already have
+tests.
 
 Usage for `missing`:
 
@@ -74,7 +81,28 @@ Usage for `missing`:
 python missing.py --host [HOST] --port [PORT]
 ```
 
-* `missing.py` checks whether the message contains a test before writing one
+### New Messages
+The `json2test` script can be used to automatically generate tests for newly
+defined messages.
+
+To use `json2test` a JSON file should be hand written with example contents of a
+message. For example, to generate tests for the `MSG_HEARTBEAT` message (which
+contains a single field named `flags`), you would generate a JSON file of the
+form:
+
+```json
+{
+   "msg_type": 65535,
+   "flags": 12345,
+   "sender": 9876
+}
+```
+
+And then generate a test for using `json2test` with:
+
+```shell
+PYTHONPATH="python/" python generator/json2test.py --input heartbeat.json --output spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml
+```
 
 Usage for `json2test`
 
@@ -82,7 +110,8 @@ Usage for `json2test`
 python json2test --input [PATH_TO_JSON_IN] --output [PATH_TO_YAML_OUT]
 ```
 
-* can also provide message id with parameter `--msg-id [MESSAGE_ID]`
+* The `msg_type` can also be provided through a CLI parameter, with `--msg-id
+  [MESSAGE_ID]`
 
 # Message Guidelines
 
