@@ -26,8 +26,8 @@ import org.json.JSONObject;
  * <p>You can have MSG_SSR_GRIDDED_CORRECTION_BOUNDS inherent its fields directly from an inherited
  * SBP object, or construct it inline using a dict of its fields.
  *
- * <p>Note 1: Range: 0-17.5 m. i{@code <}= 200, mean = 0.01i; 200{@code <}i{@code <}=230,
- * mean=2+0.1(i-200); i{@code >}230, mean=5+0.5(i-230).
+ * <p>Note 1: Range: 0-17.5 m. i{@literal <}= 200, mean = 0.01i; 200{@literal <}i{@literal <}=230,
+ * mean=2+0.1(i-200); i{@literal >}230, mean=5+0.5(i-230).
  */
 public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
     public static final int TYPE = 0x05FE;
