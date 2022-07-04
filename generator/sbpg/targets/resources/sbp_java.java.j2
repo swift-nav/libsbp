@@ -94,7 +94,7 @@ public class (((m.identifier))) extends SBPStruct {
     ((* if m.fields *))
     ((*- for f in m.fields *))
     ((*- if f.desc *))
-    /** (((f.desc | wordwrap(wrapstring="\n      * ") ))) */
+    /** (((f.desc | replace("<", "{@code <}") | replace(">", "{@code >}") | wordwrap(wrapstring="\n      * ") ))) */
     ((*- endif *))
     public (((f | type_map))) (((f.identifier)));
     ((* endfor *))

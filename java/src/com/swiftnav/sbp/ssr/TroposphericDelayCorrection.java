@@ -29,8 +29,8 @@ public class TroposphericDelayCorrection extends SBPStruct {
     public int wet;
 
     /**
-     * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <= (3^class * (1 +
-     * value/16) - 1) mm
+     * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev {@code <}= (3^class *
+     * (1 + value/16) - 1) mm
      */
     public int stddev;
 

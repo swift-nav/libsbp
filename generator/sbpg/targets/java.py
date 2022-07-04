@@ -67,7 +67,7 @@ def commentify(environment: Environment,
   """
   Builds a comment.
   """
-  return indented_wordwrap(environment, value, indent=(" " * indent) + " * ", first=False)
+  return indented_wordwrap(environment, value.replace("<", "{@code <}").replace(">", "{@code >}"), indent=(" " * indent) + " * ", first=False)
 
 
 def type_map(field):
