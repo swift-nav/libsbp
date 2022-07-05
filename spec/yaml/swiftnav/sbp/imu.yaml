@@ -69,6 +69,127 @@ definitions:
             type: s16
             desc: Angular rate around IMU frame Z axis
 
+ - MSG_IMU_HIGH_RATE_DATA:
+    id: 0x0905
+    short_desc: IMU data
+    desc: >
+      This message contains timestamped high rate IMU data, i.e. acceleration and angular rate, as well as high-rate
+      status and health information.
+
+      If multiple IMUs are being sent from the same sender ID, they shall use different imu_id values.
+      When the physical IMU changes that's the source of the data (e.g. after a replacement of an ECU), then this
+      shall also result in using a different imu_id for the new IMU.
+
+      Timestamps can either be the GNSS time of week (wrapping around to zero after 604800 seconds) or a monotonic
+      local time (wrapping around to zero after 2^32 milliseconds). The timestamping mode shall be reported as part
+      of the status flags. When monotonic, local time is being used, all IMUs from the same sender ID must use the
+      same monotonic clock and the relation to GNSS time needs to be established using either MSG_GNSS_TIME_OFFSET
+      or MSG_PPS_TIME fom the same sender ID.
+
+      The time-tagging mode should not change throughout a run.
+    fields:
+        - time:
+            type: u32
+            units: ms
+            desc: >
+              Milliseconds since reference epoch.
+        - time_fractional:
+            type: u8
+            units: ms / 256
+            desc: >
+              Milliseconds since reference epoch, fractional part
+        - acc_x:
+            type: s32
+            units: 0.000000228406861 m/s^2
+            desc: Acceleration in the IMU frame X axis
+        - acc_y:
+            type: s32
+            units: 0.000000228406861 m/s^2
+            desc: Acceleration in the IMU frame Y axis
+        - acc_z:
+            type: s32
+            units: 0.000000228406861 m/s^2
+            desc: Acceleration in the IMU frame Z axis
+        - gyr_x:
+            type: s32
+            units: 0.000003725290298 deg/s
+            desc: Angular rate around IMU frame X axis
+        - gyr_y:
+            type: s32
+            units: 0.000003725290298 deg/s
+            desc: Angular rate around IMU frame Y axis
+        - gyr_z:
+            type: s32
+            units: 0.000003725290298 deg/s
+            desc: Angular rate around IMU frame Z axis
+        - imu_id:
+            type: u8
+            desc: Identifier of current IMU, e.g. to differentiate between multiple IMUs in the same vehicle
+        - flags:
+            type: u8
+            desc: Health and status flags
+            fields:
+              - 0:
+                  desc: IMU health indicator
+                  values:
+                      - 0: Healthy
+                      - 1: Not Healthy
+              - 1:
+                  desc: Accelerometer overrange indicator
+              - 2:
+                  desc: Gyroscope overrange indicator
+              - 3-6:
+                  desc: Reserved
+              - 7:
+                  desc: Timestamping mode
+                  values:
+                       - 0: Monotonic, local time
+                       - 1: GNSS time of week
+
+ - MSG_IMU_LOW_RATE_DATA:
+    id: 0x0906
+    short_desc: Low rate IMU data
+    desc: >
+      This message contains low-rate IMU meta-information like the type of the IMU that is being used,
+      temperature and extended status information.
+
+      The temperature field is a temperature difference from -60 degrees Celsius in 0.004 degree increments
+      - i.e. a value of 1 would mean a temperature of -59.996 degrees Celsius. An invalid or unavailable
+      temperature shall be denoted by a value of 0xFF
+
+      The flags field  contains high level status information just as the high rate IMU data but contains
+      additional space for more extensive status information. The usage of these reserved status bits depend
+      on the actual IMU model being used. Details can be found in the respective integration manual.
+    fields:
+        - imu_id:
+            type: u8
+            desc: Identifier of current IMU, e.g. to differentiate between multiple IMUs in the same vehicle
+        - imu_type:
+            type: u8
+            desc: IMU type used
+            values:
+              - 0: Bosch BMI160
+              - 1: ST Microelectronics ASM330LLH
+        - temperature:
+            type: u16
+            units: 0.004 K
+            desc: temperature difference from -60 degrees Celsius - use 0xFF for invalid
+        - flags:
+            type: u32
+            desc: Health and status flags
+            fields:
+              - 0:
+                  desc: IMU health indicator
+                  values:
+                      - 0: Healthy
+                      - 1: Not Healthy
+              - 1:
+                  desc: Accelerometer overrange indicator
+              - 2:
+                  desc: Gyroscope overrange indicator
+              - 3-31:
+                  desc: Reserved
+
  - MSG_IMU_AUX:
     id: 0x0901
     short_desc: Auxiliary IMU data
