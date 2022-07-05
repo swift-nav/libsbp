@@ -84,7 +84,7 @@ pub mod estimated_horizontal_error_ellipse {
     use super::*;
     use crate::messages::lib::*;
     /// Horizontal estimated error ellipse
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EstimatedHorizontalErrorEllipse {
         /// The semi major axis of the estimated horizontal error ellipse at the
@@ -136,7 +136,7 @@ pub mod msg_age_corrections {
     /// This message reports the Age of the corrections used for the current
     /// Differential solution.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAgeCorrections {
         /// The message sender_id
@@ -224,7 +224,7 @@ pub mod msg_baseline_ecef {
     /// base station to the rover receiver. The full GPS time is given by the
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcef {
         /// The message sender_id
@@ -405,7 +405,7 @@ pub mod msg_baseline_ecef_dep_a {
     /// base station to the rover receiver. The full GPS time is given by the
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcefDepA {
         /// The message sender_id
@@ -669,7 +669,7 @@ pub mod msg_baseline_heading_dep_a {
     /// to the rover relative to True North. The full GPS time is given by the
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineHeadingDepA {
         /// The message sender_id
@@ -915,7 +915,7 @@ pub mod msg_baseline_ned {
     /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
     /// week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNed {
         /// The message sender_id
@@ -1105,7 +1105,7 @@ pub mod msg_baseline_ned_dep_a {
     /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
     /// week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNedDepA {
         /// The message sender_id
@@ -1377,7 +1377,7 @@ pub mod msg_dops {
     /// flags field indicated whether the DOP reported corresponds to differential
     /// or SPP solution.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDops {
         /// The message sender_id
@@ -1581,7 +1581,7 @@ pub mod msg_dops_dep_a {
     /// This dilution of precision (DOP) message describes the effect of
     /// navigation satellite geometry on positional measurement precision.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDopsDepA {
         /// The message sender_id
@@ -1706,7 +1706,7 @@ pub mod msg_gps_time {
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTime {
         /// The message sender_id
@@ -1874,7 +1874,7 @@ pub mod msg_gps_time_dep_a {
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeDepA {
         /// The message sender_id
@@ -1991,7 +1991,7 @@ pub mod msg_gps_time_gnss {
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeGnss {
         /// The message sender_id
@@ -2155,7 +2155,7 @@ pub mod msg_pos_ecef {
     /// RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcef {
         /// The message sender_id
@@ -2446,7 +2446,7 @@ pub mod msg_pos_ecef_cov {
     /// rover's RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCov {
         /// The message sender_id
@@ -2772,7 +2772,7 @@ pub mod msg_pos_ecef_cov_gnss {
     /// rover's RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCovGnss {
         /// The message sender_id
@@ -3001,7 +3001,7 @@ pub mod msg_pos_ecef_dep_a {
     /// RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefDepA {
         /// The message sender_id
@@ -3274,7 +3274,7 @@ pub mod msg_pos_ecef_gnss {
     /// RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefGnss {
         /// The message sender_id
@@ -3468,7 +3468,7 @@ pub mod msg_pos_llh {
     /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
     /// matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlh {
         /// The message sender_id
@@ -3768,7 +3768,7 @@ pub mod msg_pos_llh_acc {
     /// The estimated errors are reported at a user-configurable confidence level.
     /// The user-configured percentile is encoded in the percentile field.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhAcc {
         /// The message sender_id
@@ -4214,7 +4214,7 @@ pub mod msg_pos_llh_cov {
     /// are reported against the "downward" measurement and care should be taken
     /// with the sign convention.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCov {
         /// The message sender_id
@@ -4540,7 +4540,7 @@ pub mod msg_pos_llh_cov_gnss {
     /// Thus, covariances are reported against the "downward" measurement and care
     /// should be taken with the sign convention.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCovGnss {
         /// The message sender_id
@@ -4774,7 +4774,7 @@ pub mod msg_pos_llh_dep_a {
     /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
     /// matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhDepA {
         /// The message sender_id
@@ -5100,7 +5100,7 @@ pub mod msg_pos_llh_gnss {
     /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
     /// matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhGnss {
         /// The message sender_id
@@ -5297,7 +5297,7 @@ pub mod msg_protection_level {
     /// estimate. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevel {
         /// The message sender_id
@@ -5815,7 +5815,7 @@ pub mod msg_protection_level_dep_a {
     /// associated with a given LLH position solution. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevelDepA {
         /// The message sender_id
@@ -6000,7 +6000,7 @@ pub mod msg_reference_frame_param {
     use super::*;
     use crate::messages::lib::*;
     /// Reference Frame Transformation Parameters
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReferenceFrameParam {
         /// The message sender_id
@@ -6207,7 +6207,7 @@ pub mod msg_utc_leap_second {
     /// Emulates the GPS CNAV message, reserving bytes for future broadcast of the
     /// drift model parameters.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcLeapSecond {
         /// The message sender_id
@@ -6339,7 +6339,7 @@ pub mod msg_utc_time {
     /// which indicate the source of the UTC offset value and source of the time
     /// fix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTime {
         /// The message sender_id
@@ -6577,7 +6577,7 @@ pub mod msg_utc_time_gnss {
     /// which indicate the source of the UTC offset value and source of the time
     /// fix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTimeGnss {
         /// The message sender_id
@@ -6821,7 +6821,7 @@ pub mod msg_vel_body {
     /// (tow). This message is only produced by inertial versions of Swift
     /// products and is not available from Piksi Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelBody {
         /// The message sender_id
@@ -7088,7 +7088,7 @@ pub mod msg_vel_cog {
     /// Note: course over ground represents the receiver's direction of travel,
     /// but not necessarily the device heading.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelCog {
         /// The message sender_id
@@ -7544,7 +7544,7 @@ pub mod msg_vel_ecef {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcef {
         /// The message sender_id
@@ -7812,7 +7812,7 @@ pub mod msg_vel_ecef_cov {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCov {
         /// The message sender_id
@@ -8115,7 +8115,7 @@ pub mod msg_vel_ecef_cov_gnss {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCovGnss {
         /// The message sender_id
@@ -8325,7 +8325,7 @@ pub mod msg_vel_ecef_dep_a {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefDepA {
         /// The message sender_id
@@ -8449,7 +8449,7 @@ pub mod msg_vel_ecef_gnss {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefGnss {
         /// The message sender_id
@@ -8625,7 +8625,7 @@ pub mod msg_vel_ned {
     /// tangent plane centered at the current position. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNed {
         /// The message sender_id
@@ -8903,7 +8903,7 @@ pub mod msg_vel_ned_cov {
     /// message is similar to the MSG_VEL_NED, but it includes the upper
     /// triangular portion of the 3x3 covariance matrix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCov {
         /// The message sender_id
@@ -9209,7 +9209,7 @@ pub mod msg_vel_ned_cov_gnss {
     /// message is similar to the MSG_VEL_NED, but it includes the upper
     /// triangular portion of the 3x3 covariance matrix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCovGnss {
         /// The message sender_id
@@ -9420,7 +9420,7 @@ pub mod msg_vel_ned_dep_a {
     /// tangent plane centered at the current position. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedDepA {
         /// The message sender_id
@@ -9552,7 +9552,7 @@ pub mod msg_vel_ned_gnss {
     /// tangent plane centered at the current position. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedGnss {
         /// The message sender_id

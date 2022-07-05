@@ -26,7 +26,7 @@ pub mod msg_user_data {
     /// This message can contain any application specific user data up to a
     /// maximum length of 255 bytes per message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUserData {
         /// The message sender_id

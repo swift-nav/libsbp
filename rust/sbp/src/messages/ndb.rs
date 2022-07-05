@@ -27,7 +27,7 @@ pub mod msg_ndb_event {
     /// This message is sent out when an object is stored into NDB. If needed
     /// message could also be sent out when fetching an object from NDB.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNdbEvent {
         /// The message sender_id

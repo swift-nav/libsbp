@@ -27,7 +27,7 @@ pub mod msg_sbas_raw {
     /// This message is sent once per second per SBAS satellite. ME checks the
     /// parity of the data block and sends only blocks that pass the check.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSbasRaw {
         /// The message sender_id

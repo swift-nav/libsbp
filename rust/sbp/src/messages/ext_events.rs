@@ -27,7 +27,7 @@ pub mod msg_ext_event {
     /// Reports detection of an external event, the GPS time it occurred, which
     /// pin it was and whether it was rising or falling.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgExtEvent {
         /// The message sender_id

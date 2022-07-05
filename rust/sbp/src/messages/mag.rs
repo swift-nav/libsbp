@@ -25,7 +25,7 @@ pub mod msg_mag_raw {
     ///
     /// Raw data from the magnetometer.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMagRaw {
         /// The message sender_id

@@ -36,7 +36,7 @@ pub mod msg_linux_cpu_state {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of CPU on the system, including a timestamp.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxCpuState {
         /// The message sender_id
@@ -196,7 +196,7 @@ pub mod msg_linux_cpu_state_dep_a {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of CPU on the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxCpuStateDepA {
         /// The message sender_id
@@ -296,7 +296,7 @@ pub mod msg_linux_mem_state {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of memory on the system, including a timestamp.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxMemState {
         /// The message sender_id
@@ -456,7 +456,7 @@ pub mod msg_linux_mem_state_dep_a {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of memory on the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxMemStateDepA {
         /// The message sender_id
@@ -555,7 +555,7 @@ pub mod msg_linux_process_fd_count {
     ///
     /// Top 10 list of processes with a large number of open file descriptors.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessFdCount {
         /// The message sender_id
@@ -647,7 +647,7 @@ pub mod msg_linux_process_fd_summary {
     ///
     /// Summary of open file descriptors on the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessFdSummary {
         /// The message sender_id
@@ -728,7 +728,7 @@ pub mod msg_linux_process_socket_counts {
     ///
     /// Top 10 list of processes with high socket counts.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessSocketCounts {
         /// The message sender_id
@@ -838,7 +838,7 @@ pub mod msg_linux_process_socket_queues {
     ///
     /// Top 10 list of sockets with deep queues.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessSocketQueues {
         /// The message sender_id
@@ -963,7 +963,7 @@ pub mod msg_linux_socket_usage {
     ///
     /// Summaries the socket usage across the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxSocketUsage {
         /// The message sender_id
@@ -1060,7 +1060,7 @@ pub mod msg_linux_sys_state {
     /// This presents a summary of CPU and memory utilization, including a
     /// timestamp.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxSysState {
         /// The message sender_id
@@ -1226,7 +1226,7 @@ pub mod msg_linux_sys_state_dep_a {
     ///
     /// This presents a summary of CPU and memory utilization.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxSysStateDepA {
         /// The message sender_id

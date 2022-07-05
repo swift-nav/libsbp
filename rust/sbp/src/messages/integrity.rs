@@ -28,7 +28,7 @@ pub mod integrity_ssr_header {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Common fields for SSR integrity messages
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct IntegritySSRHeader {
         /// GNSS reference time of the observation used to generate the flag.
@@ -101,7 +101,7 @@ pub mod msg_ssr_flag_high_level {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// High level integrity flags
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagHighLevel {
         /// The message sender_id
@@ -263,7 +263,7 @@ pub mod msg_ssr_flag_iono_grid_points {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// List of grid points which are faulty
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagIonoGridPoints {
         /// The message sender_id
@@ -345,7 +345,7 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// List of all the grid points to satellite which are faulty
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagIonoGridPointSatLos {
         /// The message sender_id
@@ -434,7 +434,7 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// List of all the LOS which are faulty
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagIonoTileSatLos {
         /// The message sender_id
@@ -516,7 +516,7 @@ pub mod msg_ssr_flag_satellites {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// List of satellites which are faulty, per constellation
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagSatellites {
         /// The message sender_id
@@ -633,7 +633,7 @@ pub mod msg_ssr_flag_tropo_grid_points {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// List of grid points which are faulty
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagTropoGridPoints {
         /// The message sender_id

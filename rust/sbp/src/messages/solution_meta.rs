@@ -32,7 +32,7 @@ pub mod gnss_input_type {
     /// Metadata around the GNSS sensors involved in the fuzed solution.
     /// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssInputType {
         /// flags that store all relevant info specific to this sensor type.
@@ -124,7 +124,7 @@ pub mod imu_input_type {
     /// Metadata around the IMU sensors involved in the fuzed solution. Accessible
     /// through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct ImuInputType {
         /// Instrument time, grade, and architecture for a sensor.
@@ -324,7 +324,7 @@ pub mod msg_soln_meta {
     /// complete in the Fusion Engine, when output solution is the last received
     /// valid GNSS solution and its tow is not a TOM.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMeta {
         /// The message sender_id
@@ -528,7 +528,7 @@ pub mod msg_soln_meta_dep_a {
     /// in computing the Fuzed Solution. It focuses primarily, but not only, on
     /// GNSS metadata.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMetaDepA {
         /// The message sender_id
@@ -736,7 +736,7 @@ pub mod odo_input_type {
     /// Metadata around the Odometry sensors involved in the fuzed solution.
     /// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct OdoInputType {
         /// Instrument ODO rate, grade, and quality.
@@ -927,7 +927,7 @@ pub mod solution_input_type {
     /// flags, for each sensor type, is described in the relevant structures in
     /// this section.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SolutionInputType {
         /// The type of sensor

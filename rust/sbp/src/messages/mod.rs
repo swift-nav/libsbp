@@ -339,7 +339,11 @@ impl std::fmt::Display for TryFromSbpError {
 impl std::error::Error for TryFromSbpError {}
 
 /// Represents any SBP message.
-#[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize),
+    serde(untagged)
+)]
 #[derive(Debug, PartialEq, Clone)]
 #[non_exhaustive]
 pub enum Sbp {

@@ -59,7 +59,7 @@ pub mod latency {
     /// current GPS time calculated locally by the receiver to give a precise
     /// measurement of the end-to-end communication latency in the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Latency {
         /// Average latency
@@ -116,7 +116,7 @@ pub mod msg_almanac {
     /// This is a legacy message for sending and loading a satellite alamanac onto
     /// the Piksi's flash memory from the host.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanac {
         /// The message sender_id
@@ -182,7 +182,7 @@ pub mod msg_cell_modem_status {
     /// periodically to update the host on the status of the modem and its various
     /// parameters.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCellModemStatus {
         /// The message sender_id
@@ -270,7 +270,7 @@ pub mod msg_command_output {
     /// MSG_COMMAND_REQ. The sequence number can be used to filter for filtering
     /// the correct command.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandOutput {
         /// The message sender_id
@@ -350,7 +350,7 @@ pub mod msg_command_req {
     /// MSG_LOG messages, and the exit code will be returned with
     /// MSG_COMMAND_RESP.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandReq {
         /// The message sender_id
@@ -429,7 +429,7 @@ pub mod msg_command_resp {
     /// The response to MSG_COMMAND_REQ with the return code of the command.  A
     /// return code of zero indicates success.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandResp {
         /// The message sender_id
@@ -508,7 +508,7 @@ pub mod msg_cw_results {
     /// interference channel on the SwiftNAP. This message will be removed in a
     /// future release.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCwResults {
         /// The message sender_id
@@ -574,7 +574,7 @@ pub mod msg_cw_start {
     /// interference channel on the SwiftNAP. This message will be removed in a
     /// future release.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCwStart {
         /// The message sender_id
@@ -640,7 +640,7 @@ pub mod msg_device_monitor {
     /// processor's monitoring system and the RF frontend die temperature if
     /// available.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDeviceMonitor {
         /// The message sender_id
@@ -746,7 +746,7 @@ pub mod msg_front_end_gain {
     /// that rf channel is not present in the hardware. A negative value implies
     /// an error for the particular gain stage as reported by the frontend.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFrontEndGain {
         /// The message sender_id
@@ -825,7 +825,7 @@ pub mod msg_iar_state {
     /// process, which resolves unknown integer ambiguities from double-
     /// differenced carrier-phase measurements from satellite observations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgIarState {
         /// The message sender_id
@@ -897,7 +897,7 @@ pub mod msg_init_base_dep {
     ///
     /// Deprecated
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInitBaseDep {
         /// The message sender_id
@@ -962,7 +962,7 @@ pub mod msg_mask_satellite {
     /// This message allows setting a mask to prevent a particular satellite from
     /// being used in various Piksi subsystems.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMaskSatellite {
         /// The message sender_id
@@ -1133,7 +1133,7 @@ pub mod msg_mask_satellite_dep {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMaskSatelliteDep {
         /// The message sender_id
@@ -1304,7 +1304,7 @@ pub mod msg_network_bandwidth_usage {
     ///
     /// The bandwidth usage, a list of usage by interface.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkBandwidthUsage {
         /// The message sender_id
@@ -1377,7 +1377,7 @@ pub mod msg_network_state_req {
     /// Request state of Piksi network interfaces. Output will be sent in
     /// MSG_NETWORK_STATE_RESP messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkStateReq {
         /// The message sender_id
@@ -1442,7 +1442,7 @@ pub mod msg_network_state_resp {
     /// The state of a network interface on the Piksi. Data is made to reflect
     /// output of ifaddrs struct returned by getifaddrs in c.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkStateResp {
         /// The message sender_id
@@ -1767,7 +1767,7 @@ pub mod msg_reset {
     ///
     /// This message from the host resets the Piksi back into the bootloader.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReset {
         /// The message sender_id
@@ -1887,7 +1887,7 @@ pub mod msg_reset_dep {
     ///
     /// This message from the host resets the Piksi back into the bootloader.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgResetDep {
         /// The message sender_id
@@ -1952,7 +1952,7 @@ pub mod msg_reset_filters {
     /// This message resets either the DGNSS Kalman filters or Integer Ambiguity
     /// Resolution (IAR) process.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgResetFilters {
         /// The message sender_id
@@ -2079,7 +2079,7 @@ pub mod msg_set_time {
     /// This message sets up timing functionality using a coarse GPS time estimate
     /// sent by the host.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSetTime {
         /// The message sender_id
@@ -2143,7 +2143,7 @@ pub mod msg_specan {
     ///
     /// Spectrum analyzer packet.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSpecan {
         /// The message sender_id
@@ -2257,7 +2257,7 @@ pub mod msg_specan_dep {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSpecanDep {
         /// The message sender_id
@@ -2373,7 +2373,7 @@ pub mod msg_thread_state {
     /// system (RTOS) thread usage statistics for the named thread. The reported
     /// percentage values must be normalized.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgThreadState {
         /// The message sender_id
@@ -2467,7 +2467,7 @@ pub mod msg_uart_state {
     /// timeliness of received base observations while the period indicates their
     /// likelihood of transmission.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUartState {
         /// The message sender_id
@@ -2567,7 +2567,7 @@ pub mod msg_uart_state_depa {
     ///
     /// Deprecated
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUartStateDepa {
         /// The message sender_id
@@ -2664,7 +2664,7 @@ pub mod network_usage {
     /// may vary, both a timestamp and period field is provided, though may not
     /// necessarily be populated with a value.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct NetworkUsage {
         /// Duration over which the measurement was collected
@@ -2732,7 +2732,7 @@ pub mod period {
     /// increase the period.  Long periods can cause momentary RTK solution
     /// outages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Period {
         /// Average period
@@ -2789,7 +2789,7 @@ pub mod uart_channel {
     /// Throughput, utilization, and error counts on the RX/TX buffers of this
     /// UART channel. The reported percentage values must be normalized.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct UARTChannel {
         /// UART transmit throughput

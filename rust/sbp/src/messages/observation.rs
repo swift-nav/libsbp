@@ -77,7 +77,7 @@ pub mod almanac_common_content {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Common fields for every almanac message
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct AlmanacCommonContent {
         /// GNSS signal identifier
@@ -156,7 +156,7 @@ pub mod almanac_common_content_dep {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Common fields for every almanac message
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct AlmanacCommonContentDep {
         /// GNSS signal identifier
@@ -242,7 +242,7 @@ pub mod carrier_phase_dep_a {
     /// fractional cycles. This has the opposite sign convention than a typical
     /// GPS receiver and the phase has the opposite sign as the pseudorange.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct CarrierPhaseDepA {
         /// Carrier phase whole cycles
@@ -284,7 +284,7 @@ pub mod doppler {
     /// Q16.8 layout, i.e. 16-bits of whole doppler and 8-bits of fractional
     /// doppler. This doppler is defined as positive for approaching satellites.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Doppler {
         /// Doppler whole Hz
@@ -320,7 +320,7 @@ pub mod ephemeris_common_content {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Common fields for every ephemeris message
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContent {
         /// GNSS signal identifier (16 bit)
@@ -389,7 +389,7 @@ pub mod ephemeris_common_content_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Common fields for every ephemeris message
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContentDepA {
         /// GNSS signal identifier
@@ -458,7 +458,7 @@ pub mod ephemeris_common_content_dep_b {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Common fields for every ephemeris message
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContentDepB {
         /// GNSS signal identifier (16 bit)
@@ -526,7 +526,7 @@ pub mod gnss_capb {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// GNSS capabilities masks
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssCapb {
         /// GPS SV active mask
@@ -664,7 +664,7 @@ pub mod msg_almanac_glo {
     /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
     /// almanac" for details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGlo {
         /// The message sender_id
@@ -789,7 +789,7 @@ pub mod msg_almanac_glo_dep {
     /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
     /// almanac" for details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGloDep {
         /// The message sender_id
@@ -914,7 +914,7 @@ pub mod msg_almanac_gps {
     /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
     /// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGps {
         /// The message sender_id
@@ -1052,7 +1052,7 @@ pub mod msg_almanac_gps_dep {
     /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
     /// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGpsDep {
         /// The message sender_id
@@ -1191,7 +1191,7 @@ pub mod msg_base_pos_ecef {
     /// accuracy surveyed location of the base station. Any error here will result
     /// in an error in the pseudo-absolute position output.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBasePosEcef {
         /// The message sender_id
@@ -1278,7 +1278,7 @@ pub mod msg_base_pos_llh {
     /// required to be a high-accuracy surveyed location of the base station. Any
     /// error here will result in an error in the pseudo-absolute position output.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBasePosLlh {
         /// The message sender_id
@@ -1365,7 +1365,7 @@ pub mod msg_ephemeris_bds {
     /// Please see the BeiDou Navigation Satellite System SIS-ICD Version 2.1,
     /// Table 5-9 for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisBds {
         /// The message sender_id
@@ -1606,7 +1606,7 @@ pub mod msg_ephemeris_dep_a {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepA {
         /// The message sender_id
@@ -1857,7 +1857,7 @@ pub mod msg_ephemeris_dep_b {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepB {
         /// The message sender_id
@@ -2118,7 +2118,7 @@ pub mod msg_ephemeris_dep_c {
     /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
     /// GPS-200, Table 20-III) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepC {
         /// The message sender_id
@@ -2393,7 +2393,7 @@ pub mod msg_ephemeris_dep_d {
     /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
     /// GPS-200, Table 20-III) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepD {
         /// The message sender_id
@@ -2668,7 +2668,7 @@ pub mod msg_ephemeris_gal {
     /// Please see the Signal In Space ICD OS SIS ICD, Issue 1.3, December 2016
     /// for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGal {
         /// The message sender_id
@@ -2913,7 +2913,7 @@ pub mod msg_ephemeris_gal_dep_a {
     /// This observation message has been deprecated in favor of an ephemeris
     /// message with explicit source of NAV data.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGalDepA {
         /// The message sender_id
@@ -3153,7 +3153,7 @@ pub mod msg_ephemeris_glo {
     /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
     /// immediate information (ephemeris parameters)" for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGlo {
         /// The message sender_id
@@ -3284,7 +3284,7 @@ pub mod msg_ephemeris_glo_dep_a {
     /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
     /// immediate information (ephemeris parameters)" for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepA {
         /// The message sender_id
@@ -3394,7 +3394,7 @@ pub mod msg_ephemeris_glo_dep_b {
     /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
     /// immediate information (ephemeris parameters)" for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepB {
         /// The message sender_id
@@ -3504,7 +3504,7 @@ pub mod msg_ephemeris_glo_dep_c {
     /// Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of
     /// immediate information (ephemeris parameters)" for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepC {
         /// The message sender_id
@@ -3626,7 +3626,7 @@ pub mod msg_ephemeris_glo_dep_d {
     /// This observation message has been deprecated in favor of ephemeris message
     /// using floats for size reduction.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepD {
         /// The message sender_id
@@ -3757,7 +3757,7 @@ pub mod msg_ephemeris_gps {
     /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
     /// GPS-200, Table 20-III) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGps {
         /// The message sender_id
@@ -3990,7 +3990,7 @@ pub mod msg_ephemeris_gps_dep_e {
     /// Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
     /// GPS-200, Table 20-III) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGpsDepE {
         /// The message sender_id
@@ -4221,7 +4221,7 @@ pub mod msg_ephemeris_gps_dep_f {
     /// This observation message has been deprecated in favor of ephemeris message
     /// using floats for size reduction.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGpsDepF {
         /// The message sender_id
@@ -4452,7 +4452,7 @@ pub mod msg_ephemeris_qzss {
     /// The ephemeris message returns a set of satellite orbit parameters that is
     /// used to calculate QZSS satellite position, velocity, and clock offset.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisQzss {
         /// The message sender_id
@@ -4678,7 +4678,7 @@ pub mod msg_ephemeris_sbas {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Satellite broadcast ephemeris for SBAS
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbas {
         /// The message sender_id
@@ -4781,7 +4781,7 @@ pub mod msg_ephemeris_sbas_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Satellite broadcast ephemeris for SBAS
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbasDepA {
         /// The message sender_id
@@ -4889,7 +4889,7 @@ pub mod msg_ephemeris_sbas_dep_b {
     /// This observation message has been deprecated in favor of ephemeris message
     /// using floats for size reduction.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbasDepB {
         /// The message sender_id
@@ -4998,7 +4998,7 @@ pub mod msg_glo_biases {
     /// ambiguity resolution for baselines with mixed receiver types (e.g.
     /// receiver of different manufacturers).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGloBiases {
         /// The message sender_id
@@ -5094,7 +5094,7 @@ pub mod msg_gnss_capb {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// GNSS capabilities
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGnssCapb {
         /// The message sender_id
@@ -5172,7 +5172,7 @@ pub mod msg_group_delay {
     ///
     /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelay {
         /// The message sender_id
@@ -5277,7 +5277,7 @@ pub mod msg_group_delay_dep_a {
     ///
     /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelayDepA {
         /// The message sender_id
@@ -5382,7 +5382,7 @@ pub mod msg_group_delay_dep_b {
     ///
     /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelayDepB {
         /// The message sender_id
@@ -5489,7 +5489,7 @@ pub mod msg_iono {
     /// utilize the ionospheric model for computation of the ionospheric delay.
     /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgIono {
         /// The message sender_id
@@ -5614,7 +5614,7 @@ pub mod msg_obs {
     /// cycles). The observations are be interoperable with 3rd party receivers
     /// and conform with typical RTCMv3 GNSS observations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObs {
         /// The message sender_id
@@ -5705,7 +5705,7 @@ pub mod msg_obs_dep_a {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepA {
         /// The message sender_id
@@ -5799,7 +5799,7 @@ pub mod msg_obs_dep_b {
     /// referenced to a nominal pseudorange which are not interoperable with most
     /// 3rd party GNSS receivers or typical RTCMv3 observations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepB {
         /// The message sender_id
@@ -5895,7 +5895,7 @@ pub mod msg_obs_dep_c {
     /// cycles). The observations are interoperable with 3rd party receivers and
     /// conform with typical RTCMv3 GNSS observations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepC {
         /// The message sender_id
@@ -5987,7 +5987,7 @@ pub mod msg_osr {
     /// The OSR message contains network corrections in an observation-like
     /// format.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOsr {
         /// The message sender_id
@@ -6079,7 +6079,7 @@ pub mod msg_sv_az_el {
     /// Azimuth and elevation angles of all the visible satellites that the device
     /// does have ephemeris or almanac for.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSvAzEl {
         /// The message sender_id
@@ -6151,7 +6151,7 @@ pub mod msg_sv_configuration_gps_dep {
     ///
     /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSvConfigurationGpsDep {
         /// The message sender_id
@@ -6228,7 +6228,7 @@ pub mod observation_header {
     ///
     /// Header of a GNSS observation message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct ObservationHeader {
         /// GNSS time of this observation
@@ -6269,7 +6269,7 @@ pub mod observation_header_dep {
     ///
     /// Header of a GPS observation message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct ObservationHeaderDep {
         /// GPS time of this observation
@@ -6316,7 +6316,7 @@ pub mod packed_obs_content {
     /// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are
     /// currently performed.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContent {
         /// Pseudorange observation
@@ -6638,7 +6638,7 @@ pub mod packed_obs_content_dep_a {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepA {
         /// Pseudorange observation
@@ -6704,7 +6704,7 @@ pub mod packed_obs_content_dep_b {
     /// Pseudorange and carrier phase observation for a satellite being tracked.
     /// Pseudoranges are referenced to a nominal pseudorange.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepB {
         /// Pseudorange observation
@@ -6771,7 +6771,7 @@ pub mod packed_obs_content_dep_c {
     /// The observations are be interoperable with 3rd party receivers and conform
     /// with typical RTCMv3 GNSS observations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepC {
         /// Pseudorange observation
@@ -6836,7 +6836,7 @@ pub mod packed_osr_content {
     ///
     /// Pseudorange and carrier phase network corrections for a satellite signal.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedOsrContent {
         /// Pseudorange observation
@@ -7165,7 +7165,7 @@ pub mod sv_az_el {
     ///
     /// Satellite azimuth and elevation.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SvAzEl {
         /// GNSS signal identifier

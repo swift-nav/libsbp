@@ -70,6 +70,8 @@ where
     }
 }
 
+impl<T, E> serde::Deserialize for SbpString<T, E> where T: AsRef {}
+
 impl<E, const LEN: usize> WireFormat for SbpString<[u8; LEN], E> {
     const MIN_LEN: usize = LEN;
 

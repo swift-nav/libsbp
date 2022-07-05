@@ -34,7 +34,7 @@ pub mod msg_fwd {
     /// forwarded msg contains. Protocol 0 represents SBP and the remaining values
     /// are implementation defined.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFwd {
         /// The message sender_id
@@ -121,7 +121,7 @@ pub mod msg_log {
     /// containing errors, warnings and informational messages at ERROR, WARNING,
     /// DEBUG, INFO logging levels.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLog {
         /// The message sender_id
@@ -274,7 +274,7 @@ pub mod msg_print_dep {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPrintDep {
         /// The message sender_id

@@ -57,7 +57,7 @@ pub mod bounds_header {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Header for the Bounds messages
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct BoundsHeader {
         /// GNSS reference time of the bound
@@ -121,7 +121,7 @@ pub mod code_biases_content {
     /// Code biases are to be added to pseudorange. The corrections conform with
     /// RTCMv3 MT 1059 / 1065.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct CodeBiasesContent {
         /// Signal encoded following RTCM specifications (DF380, DF381, DF382 and
@@ -158,7 +158,7 @@ pub mod code_phase_biases_sat_sig {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Code and Phase Biases Bounds per Satellite-Signal couple
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct CodePhaseBiasesSatSig {
         /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
@@ -231,7 +231,7 @@ pub mod grid_definition_header_dep_a {
     /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
     /// RLE encoded validity list.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GridDefinitionHeaderDepA {
         /// region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
@@ -304,7 +304,7 @@ pub mod gridded_correction_header {
     /// The LPP message contains nested variable length arrays which are not
     /// supported in SBP, so each grid point will be identified by the index.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GriddedCorrectionHeader {
         /// Unique identifier of the tile set this tile belongs to.
@@ -394,7 +394,7 @@ pub mod gridded_correction_header_dep_a {
     /// The 3GPP message contains nested variable length arrays which are not
     /// supported in SBP, so each grid point will be identified by the index.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GriddedCorrectionHeaderDepA {
         /// GNSS reference time of the correction
@@ -471,7 +471,7 @@ pub mod msg_ssr_code_biases {
     /// corresponding signal to get corrected pseudorange. It is an equivalent to
     /// the 1059 / 1065 RTCM message types.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrCodeBiases {
         /// The message sender_id
@@ -569,7 +569,7 @@ pub mod msg_ssr_code_phase_biases_bounds {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Combined Code and Phase Biases Bounds
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrCodePhaseBiasesBounds {
         /// The message sender_id
@@ -671,7 +671,7 @@ pub mod msg_ssr_gridded_correction {
     ///
     /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrection {
         /// The message sender_id
@@ -765,7 +765,7 @@ pub mod msg_ssr_gridded_correction_bounds {
     /// Note 1: Range: 0-17.5 m. i<= 200, mean = 0.01i; 200<i<=230,
     /// mean=2+0.1(i-200); i>230, mean=5+0.5(i-230).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrectionBounds {
         /// The message sender_id
@@ -921,7 +921,7 @@ pub mod msg_ssr_gridded_correction_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Deprecated
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrectionDepA {
         /// The message sender_id
@@ -1010,7 +1010,7 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Deprecated
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrectionNoStdDepA {
         /// The message sender_id
@@ -1099,7 +1099,7 @@ pub mod msg_ssr_grid_definition_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Deprecated
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGridDefinitionDepA {
         /// The message sender_id
@@ -1182,7 +1182,7 @@ pub mod msg_ssr_orbit_clock {
     /// correction to broadcast ephemeris and is an equivalent to the 1060 /1066
     /// RTCM message types.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClock {
         /// The message sender_id
@@ -1351,7 +1351,7 @@ pub mod msg_ssr_orbit_clock_bounds {
     /// Note 2: Range: 0-17.5 m. i<=200, std=0.01i; 200<i<=230, std=2+0.1(i-200)
     /// i>230, std=5+0.5(i-230).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClockBounds {
         /// The message sender_id
@@ -1447,7 +1447,7 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Combined Orbit and Clock Bound Degradation Parameter
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClockBoundsDegradation {
         /// The message sender_id
@@ -1548,7 +1548,7 @@ pub mod msg_ssr_orbit_clock_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Deprecated
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClockDepA {
         /// The message sender_id
@@ -1717,7 +1717,7 @@ pub mod msg_ssr_phase_biases {
     /// the phase wind-up correction. It is typically an equivalent to the 1265
     /// RTCM message types.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrPhaseBiases {
         /// The message sender_id
@@ -1843,7 +1843,7 @@ pub mod msg_ssr_satellite_apc {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Satellite antenna phase center corrections
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrSatelliteApc {
         /// The message sender_id
@@ -1911,7 +1911,7 @@ pub mod msg_ssr_stec_correction {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// STEC correction polynomial coefficients
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrStecCorrection {
         /// The message sender_id
@@ -2023,7 +2023,7 @@ pub mod msg_ssr_stec_correction_dep {
     ///
     /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrStecCorrectionDep {
         /// The message sender_id
@@ -2097,7 +2097,7 @@ pub mod msg_ssr_stec_correction_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// Deprecated
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrStecCorrectionDepA {
         /// The message sender_id
@@ -2182,7 +2182,7 @@ pub mod msg_ssr_tile_definition {
     /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
     /// correction points, not lists of points.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrTileDefinition {
         /// The message sender_id
@@ -2361,7 +2361,7 @@ pub mod msg_ssr_tile_definition_dep {
     /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
     /// correction points, not lists of points.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrTileDefinitionDep {
         /// The message sender_id
@@ -2526,7 +2526,7 @@ pub mod orbit_clock_bound {
     ///
     /// Orbit and clock bound.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct OrbitClockBound {
         /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
@@ -2618,7 +2618,7 @@ pub mod orbit_clock_bound_degradation {
     ///
     /// Orbit and clock bound degradation.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct OrbitClockBoundDegradation {
         /// Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
@@ -2717,7 +2717,7 @@ pub mod phase_biases_content {
     ///
     /// Phase biases are to be added to carrier phase measurements.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PhaseBiasesContent {
         /// Signal encoded following RTCM specifications (DF380, DF381, DF382 and
@@ -2787,7 +2787,7 @@ pub mod stec_header {
     /// since SBP message a limited to 255 bytes.  The header is used to tie
     /// multiple SBP messages into a sequence.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECHeader {
         /// Unique identifier of the tile set this tile belongs to.
@@ -2867,7 +2867,7 @@ pub mod stec_header_dep_a {
     /// since SBP message a limited to 255 bytes.  The header is used to tie
     /// multiple SBP messages into a sequence.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECHeaderDepA {
         /// GNSS reference time of the correction
@@ -2932,7 +2932,7 @@ pub mod stec_residual {
     /// STEC residual (mean and standard deviation) for the given satellite at the
     /// grid point.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECResidual {
         /// space vehicle identifier
@@ -2982,7 +2982,7 @@ pub mod stec_residual_no_std {
     ///
     /// STEC residual for the given satellite at the grid point.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECResidualNoStd {
         /// space vehicle identifier
@@ -3022,7 +3022,7 @@ pub mod stec_sat_element {
     ///
     /// STEC polynomial for the given satellite.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECSatElement {
         /// Unique space vehicle identifier
@@ -3073,7 +3073,7 @@ pub mod stec_sat_element_integrity {
     ///
     /// STEC polynomial and bounds for the given satellite.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECSatElementIntegrity {
         /// STEC residuals (mean, stddev)
@@ -3137,7 +3137,7 @@ pub mod satellite_apc {
     /// Contains phase center offset and elevation variation corrections for one
     /// signal on a satellite.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SatelliteAPC {
         /// GNSS signal identifier (16 bit)
@@ -3340,7 +3340,7 @@ pub mod tropospheric_delay_correction {
     /// Troposphere vertical delays (mean and standard deviation) at the grid
     /// point.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct TroposphericDelayCorrection {
         /// Hydrostatic vertical delay. Add 2.3 m to get actual value.
@@ -3390,7 +3390,7 @@ pub mod tropospheric_delay_correction_no_std {
     ///
     /// Troposphere vertical delays at the grid point.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct TroposphericDelayCorrectionNoStd {
         /// Hydrostatic vertical delay

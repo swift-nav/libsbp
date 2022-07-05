@@ -59,7 +59,7 @@ pub mod msg_settings_read_by_index_done {
     ///
     /// The settings message for indicating end of the settings values.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadByIndexDone {
         /// The message sender_id
@@ -123,7 +123,7 @@ pub mod msg_settings_read_by_index_req {
     /// The settings message for iterating through the settings values. A device
     /// will respond to this message with a "MSG_SETTINGS_READ_BY_INDEX_RESP".
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadByIndexReq {
         /// The message sender_id
@@ -204,7 +204,7 @@ pub mod msg_settings_read_by_index_resp {
     /// example string that could be sent from the device is
     /// "simulator\0enabled\0True\0enum:True,False\0".
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadByIndexResp {
         /// The message sender_id
@@ -290,7 +290,7 @@ pub mod msg_settings_read_req {
     /// device should respond with a MSG_SETTINGS_READ_RESP message (msg_id
     /// 0x00A5).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadReq {
         /// The message sender_id
@@ -367,7 +367,7 @@ pub mod msg_settings_read_resp {
     /// the NULL character and where quotation marks are omitted. An example
     /// string that could be sent from device is "solution\0soln_freq\010\0".
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadResp {
         /// The message sender_id
@@ -441,7 +441,7 @@ pub mod msg_settings_register {
     /// settings daemon.  The host should reply with MSG_SETTINGS_WRITE for this
     /// setting to set the initial value.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsRegister {
         /// The message sender_id
@@ -516,7 +516,7 @@ pub mod msg_settings_register_resp {
     /// was already registered or is available in the permanent setting storage
     /// and had a different value.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsRegisterResp {
         /// The message sender_id
@@ -664,7 +664,7 @@ pub mod msg_settings_save {
     /// The save settings message persists the device's current settings
     /// configuration to its onboard flash memory file system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsSave {
         /// The message sender_id
@@ -733,7 +733,7 @@ pub mod msg_settings_write {
     /// example string that could be sent to a device is
     /// "solution\0soln_freq\010\0".
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsWrite {
         /// The message sender_id
@@ -811,7 +811,7 @@ pub mod msg_settings_write_resp {
     /// An example string that could be sent from device is
     /// "solution\0soln_freq\010\0".
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsWriteResp {
         /// The message sender_id

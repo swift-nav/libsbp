@@ -41,7 +41,7 @@ pub mod msg_csac_telemetry {
     /// from a device. It is not produced or available on general Swift Products.
     /// It is intended to be a low rate message for status purposes.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCsacTelemetry {
         /// The message sender_id
@@ -121,7 +121,7 @@ pub mod msg_csac_telemetry_labels {
     /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a
     /// lower rate than the MSG_CSAC_TELEMETRY.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCsacTelemetryLabels {
         /// The message sender_id
@@ -201,7 +201,7 @@ pub mod msg_dgnss_status {
     /// corrections.  It is expected to be sent with each receipt of a complete
     /// corrections packet.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDgnssStatus {
         /// The message sender_id
@@ -346,7 +346,7 @@ pub mod msg_gnss_time_offset {
     /// translate messages tagged with a local timestamp (e.g. IMU or wheeltick
     /// messages) to GNSS time for the sender producing this message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGnssTimeOffset {
         /// The message sender_id
@@ -440,7 +440,7 @@ pub mod msg_group_meta {
     /// also lists the atomic contents (i.e. types of messages included) of the
     /// Solution Group.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupMeta {
         /// The message sender_id
@@ -592,7 +592,7 @@ pub mod msg_heartbeat {
     /// the system. To determine the source of the error, the remaining error
     /// flags should be inspected.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgHeartbeat {
         /// The message sender_id
@@ -935,7 +935,7 @@ pub mod msg_ins_status {
     /// The INS status message describes the state of the operation and
     /// initialization of the inertial navigation system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInsStatus {
         /// The message sender_id
@@ -1375,7 +1375,7 @@ pub mod msg_ins_updates {
     /// rejected INS updates. This message is expected to be extended in the
     /// future as new types of measurements are being added.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInsUpdates {
         /// The message sender_id
@@ -1750,7 +1750,7 @@ pub mod msg_pps_time {
     /// timestamping.  The sender ID for each of these MSG_PPS_TIME messages
     /// should match the sender ID of the respective sensor data.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPpsTime {
         /// The message sender_id
@@ -1895,7 +1895,7 @@ pub mod msg_sensor_aid_event {
     /// generated asynchronously to the solution messages and will be emitted
     /// anytime a sensor update is being processed.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSensorAidEvent {
         /// The message sender_id
@@ -2092,7 +2092,7 @@ pub mod msg_startup {
     /// the host or other attached devices that the system has started and is now
     /// ready to respond to commands or configuration requests.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStartup {
         /// The message sender_id
@@ -2278,7 +2278,7 @@ pub mod msg_status_journal {
     /// MSG_STATUS_REPORT) and functions as a error/event storage for telemetry
     /// purposes.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStatusJournal {
         /// The message sender_id
@@ -2472,7 +2472,7 @@ pub mod msg_status_report {
     /// but if the generic status code is initializing, it should be ignored.
     /// Refer to product documentation for details.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStatusReport {
         /// The message sender_id
@@ -2659,7 +2659,7 @@ pub mod status_journal_item {
     /// status codes.  If the generic state is reported as initializing, the
     /// specific state should be ignored.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct StatusJournalItem {
         /// Milliseconds since system startup
@@ -2699,7 +2699,7 @@ pub mod sub_system_report {
     /// Report the general and specific state of a subsystem.  If the generic
     /// state is reported as initializing, the specific state should be ignored.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SubSystemReport {
         /// Identity of reporting subsystem

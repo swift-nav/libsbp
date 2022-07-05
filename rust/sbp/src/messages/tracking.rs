@@ -42,7 +42,7 @@ pub mod msg_measurement_state {
     /// states. It reports status and carrier-to-noise density measurements for
     /// all tracked satellites.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMeasurementState {
         /// The message sender_id
@@ -115,7 +115,7 @@ pub mod msg_tracking_iq {
     /// When enabled, a tracking channel can output the correlations at each
     /// update interval.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingIq {
         /// The message sender_id
@@ -201,7 +201,7 @@ pub mod msg_tracking_iq_dep_a {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingIqDepA {
         /// The message sender_id
@@ -288,7 +288,7 @@ pub mod msg_tracking_iq_dep_b {
     /// When enabled, a tracking channel can output the correlations at each
     /// update interval.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingIqDepB {
         /// The message sender_id
@@ -376,7 +376,7 @@ pub mod msg_tracking_state {
     /// states. It reports status and carrier-to-noise density measurements for
     /// all tracked satellites.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingState {
         /// The message sender_id
@@ -448,7 +448,7 @@ pub mod msg_tracking_state_dep_a {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDepA {
         /// The message sender_id
@@ -520,7 +520,7 @@ pub mod msg_tracking_state_dep_b {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDepB {
         /// The message sender_id
@@ -592,7 +592,7 @@ pub mod msg_tracking_state_detailed_dep {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDetailedDep {
         /// The message sender_id
@@ -1609,7 +1609,7 @@ pub mod msg_tracking_state_detailed_dep_a {
     /// The tracking message returns a set tracking channel parameters for a
     /// single tracking channel useful for debugging issues.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDetailedDepA {
         /// The message sender_id
@@ -2628,7 +2628,7 @@ pub mod measurement_state {
     /// the FCN as 100 + FCN where FCN is in \[-7, +6\] or the Slot ID (from 1 to
     /// 28).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MeasurementState {
         /// Measurement Engine GNSS signal being tracked (carries either Glonass FCN
@@ -2669,7 +2669,7 @@ pub mod tracking_channel_correlation {
     ///
     /// Structure containing in-phase and quadrature correlation components.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelCorrelation {
         /// In-phase correlation
@@ -2709,7 +2709,7 @@ pub mod tracking_channel_correlation_dep {
     ///
     /// Structure containing in-phase and quadrature correlation components.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelCorrelationDep {
         /// In-phase correlation
@@ -2750,7 +2750,7 @@ pub mod tracking_channel_state {
     /// Tracking channel state for a specific satellite signal and measured signal
     /// power.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelState {
         /// GNSS signal being tracked
@@ -2797,7 +2797,7 @@ pub mod tracking_channel_state_dep_a {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelStateDepA {
         /// Status of tracking channel
@@ -2890,7 +2890,7 @@ pub mod tracking_channel_state_dep_b {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelStateDepB {
         /// Status of tracking channel

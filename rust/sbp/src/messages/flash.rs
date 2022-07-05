@@ -40,7 +40,7 @@ pub mod msg_flash_done {
     /// messages, such as MSG_FLASH_READ_REQ, or MSG_FLASH_PROGRAM, may return
     /// this message on failure.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashDone {
         /// The message sender_id
@@ -180,7 +180,7 @@ pub mod msg_flash_erase {
     /// message containing the return code - FLASH_OK (0) on success or
     /// FLASH_INVALID_FLASH (1) if the flash specified is invalid.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashErase {
         /// The message sender_id
@@ -306,7 +306,7 @@ pub mod msg_flash_program {
     /// (2) if the maximum write size is exceeded. Note that the sector-containing
     /// addresses must be erased before addresses can be programmed.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashProgram {
         /// The message sender_id
@@ -449,7 +449,7 @@ pub mod msg_flash_read_req {
     /// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
     /// allowed range.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashReadReq {
         /// The message sender_id
@@ -585,7 +585,7 @@ pub mod msg_flash_read_resp {
     /// is exceeded or FLASH_INVALID_ADDR (3) if the address is outside of the
     /// allowed range.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashReadResp {
         /// The message sender_id
@@ -717,7 +717,7 @@ pub mod msg_m25_flash_write_status {
     /// The flash status message writes to the 8-bit M25 flash status register.
     /// The device replies with a MSG_FLASH_DONE message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgM25FlashWriteStatus {
         /// The message sender_id
@@ -789,7 +789,7 @@ pub mod msg_stm_flash_lock_sector {
     /// The flash lock message locks a sector of the STM flash memory. The device
     /// replies with a MSG_FLASH_DONE message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmFlashLockSector {
         /// The message sender_id
@@ -861,7 +861,7 @@ pub mod msg_stm_flash_unlock_sector {
     /// The flash unlock message unlocks a sector of the STM flash memory. The
     /// device replies with a MSG_FLASH_DONE message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmFlashUnlockSector {
         /// The message sender_id
@@ -935,7 +935,7 @@ pub mod msg_stm_unique_id_req {
     /// the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
     /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmUniqueIdReq {
         /// The message sender_id
@@ -1001,7 +1001,7 @@ pub mod msg_stm_unique_id_resp {
     /// the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device responds with a
     /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmUniqueIdResp {
         /// The message sender_id

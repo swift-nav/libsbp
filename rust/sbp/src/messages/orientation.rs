@@ -36,7 +36,7 @@ pub mod msg_angular_rate {
     /// down direction. This message will only be available in future INS versions
     /// of Swift Products and is not produced by Piksi Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAngularRate {
         /// The message sender_id
@@ -194,7 +194,7 @@ pub mod msg_baseline_heading {
     /// intended that time-matched RTK mode is used when the base station is
     /// moving.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineHeading {
         /// The message sender_id
@@ -356,7 +356,7 @@ pub mod msg_orient_euler {
     /// in future INS versions of Swift Products and is not produced by Piksi
     /// Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOrientEuler {
         /// The message sender_id
@@ -536,7 +536,7 @@ pub mod msg_orient_quat {
     /// in future INS versions of Swift Products and is not produced by Piksi
     /// Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOrientQuat {
         /// The message sender_id

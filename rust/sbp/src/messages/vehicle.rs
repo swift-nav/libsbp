@@ -34,7 +34,7 @@ pub mod msg_odometry {
     /// available to synchronise odometry measurements with GNSS. Processor time
     /// shall roll over to zero after one week.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOdometry {
         /// The message sender_id
@@ -299,7 +299,7 @@ pub mod msg_wheeltick {
     /// when a PVT fix becomes available to synchronise wheeltick measurements
     /// with GNSS. Local CPU time shall roll over to zero after one week.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgWheeltick {
         /// The message sender_id
