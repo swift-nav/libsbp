@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp2json"
-version = "4.5.0-unreleased"
+version = "4.5.1-alpha"
 description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
