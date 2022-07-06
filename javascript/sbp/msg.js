@@ -106,6 +106,7 @@ var sbpImports = {
   piksi: require('./piksi.js'),
   sbas: require('./sbas.js'),
   settings: require('./settings.js'),
+  signings: require('./signing.js'),
   solution_meta: require('./solution_meta.js'),
   ssr: require('./ssr.js'),
   system: require('./system.js'),

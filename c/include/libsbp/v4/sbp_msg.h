@@ -41,6 +41,7 @@
 #include <libsbp/v4/piksi.h>
 #include <libsbp/v4/sbas.h>
 #include <libsbp/v4/settings.h>
+#include <libsbp/v4/signing.h>
 #include <libsbp/v4/solution_meta.h>
 #include <libsbp/v4/ssr.h>
 #include <libsbp/v4/system.h>
@@ -94,6 +95,8 @@ typedef union {
   sbp_msg_dgnss_status_t dgnss_status;
   sbp_msg_dops_dep_a_t dops_dep_a;
   sbp_msg_dops_t dops;
+  sbp_msg_ed25519_certificate_t ed25519_certificate;
+  sbp_msg_ed25519_signature_t ed25519_signature;
   sbp_msg_ephemeris_bds_t ephemeris_bds;
   sbp_msg_ephemeris_dep_a_t ephemeris_dep_a;
   sbp_msg_ephemeris_dep_b_t ephemeris_dep_b;
@@ -398,6 +401,12 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
       return sbp_msg_dops_dep_a_encode(buf, len, n_written, &msg->dops_dep_a);
     case SbpMsgDops:
       return sbp_msg_dops_encode(buf, len, n_written, &msg->dops);
+    case SbpMsgEd25519Certificate:
+      return sbp_msg_ed25519_certificate_encode(buf, len, n_written,
+                                                &msg->ed25519_certificate);
+    case SbpMsgEd25519Signature:
+      return sbp_msg_ed25519_signature_encode(buf, len, n_written,
+                                              &msg->ed25519_signature);
     case SbpMsgEphemerisBds:
       return sbp_msg_ephemeris_bds_encode(buf, len, n_written,
                                           &msg->ephemeris_bds);
@@ -1013,6 +1022,12 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_dops_dep_a_decode(buf, len, n_read, &msg->dops_dep_a);
     case SbpMsgDops:
       return sbp_msg_dops_decode(buf, len, n_read, &msg->dops);
+    case SbpMsgEd25519Certificate:
+      return sbp_msg_ed25519_certificate_decode(buf, len, n_read,
+                                                &msg->ed25519_certificate);
+    case SbpMsgEd25519Signature:
+      return sbp_msg_ed25519_signature_decode(buf, len, n_read,
+                                              &msg->ed25519_signature);
     case SbpMsgEphemerisBds:
       return sbp_msg_ephemeris_bds_decode(buf, len, n_read,
                                           &msg->ephemeris_bds);
@@ -1600,6 +1615,10 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_dops_dep_a_encoded_len(&msg->dops_dep_a);
     case SbpMsgDops:
       return sbp_msg_dops_encoded_len(&msg->dops);
+    case SbpMsgEd25519Certificate:
+      return sbp_msg_ed25519_certificate_encoded_len(&msg->ed25519_certificate);
+    case SbpMsgEd25519Signature:
+      return sbp_msg_ed25519_signature_encoded_len(&msg->ed25519_signature);
     case SbpMsgEphemerisBds:
       return sbp_msg_ephemeris_bds_encoded_len(&msg->ephemeris_bds);
     case SbpMsgEphemerisDepA:
@@ -2116,6 +2135,12 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_dops_dep_a_cmp(&a->dops_dep_a, &b->dops_dep_a);
     case SbpMsgDops:
       return sbp_msg_dops_cmp(&a->dops, &b->dops);
+    case SbpMsgEd25519Certificate:
+      return sbp_msg_ed25519_certificate_cmp(&a->ed25519_certificate,
+                                             &b->ed25519_certificate);
+    case SbpMsgEd25519Signature:
+      return sbp_msg_ed25519_signature_cmp(&a->ed25519_signature,
+                                           &b->ed25519_signature);
     case SbpMsgEphemerisBds:
       return sbp_msg_ephemeris_bds_cmp(&a->ephemeris_bds, &b->ephemeris_bds);
     case SbpMsgEphemerisDepA:
