@@ -187,6 +187,8 @@ import com.swiftnav.sbp.settings.MsgSettingsRegisterResp;
 import com.swiftnav.sbp.settings.MsgSettingsSave;
 import com.swiftnav.sbp.settings.MsgSettingsWrite;
 import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
+import com.swiftnav.sbp.signing.MsgEd25519Certificate;
+import com.swiftnav.sbp.signing.MsgEd25519Signature;
 import com.swiftnav.sbp.solution_meta.MsgSolnMeta;
 import com.swiftnav.sbp.solution_meta.MsgSolnMetaDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
@@ -584,6 +586,10 @@ final class MessageTable {
                 return new MsgSettingsRegister(msg);
             case MsgSettingsRegisterResp.TYPE:
                 return new MsgSettingsRegisterResp(msg);
+            case MsgEd25519Signature.TYPE:
+                return new MsgEd25519Signature(msg);
+            case MsgEd25519Certificate.TYPE:
+                return new MsgEd25519Certificate(msg);
             case MsgSolnMetaDepA.TYPE:
                 return new MsgSolnMetaDepA(msg);
             case MsgSolnMeta.TYPE:
