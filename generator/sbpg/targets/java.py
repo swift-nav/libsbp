@@ -60,6 +60,13 @@ def classnameify(s):
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
 
+def escape_comment_tags(comment: str):
+    """
+    Escape tags in a Javadoc comment string
+    """
+    return comment.replace("<", "{@literal <}").replace(">", "{@literal >}")
+
+
 @pass_environment
 def commentify(environment: Environment,
                value: str,
@@ -150,6 +157,7 @@ def jsonify(field):
     return field.identifier + ".toJSON()"
 
 JENV.filters['classnameify'] = classnameify
+JENV.filters['escape_comment_tags'] = escape_comment_tags
 JENV.filters['commentify'] = commentify
 JENV.filters['type_map'] = type_map
 JENV.filters['parse_type'] = parse_type
