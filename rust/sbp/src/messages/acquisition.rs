@@ -39,40 +39,40 @@ pub mod acq_sv_profile {
     #[derive(Debug, PartialEq, Clone)]
     pub struct AcqSvProfile {
         /// SV search job type (deep, fallback, etc)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "job_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "job_type"))]
         pub job_type: u8,
         /// Acquisition status 1 is Success, 0 is Failure
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        #[cfg_attr(feature = "serde", serde(rename = "status"))]
         pub status: u8,
         /// CN0 value. Only valid if status is '1'
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u16,
         /// Acquisition integration time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "int_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "int_time"))]
         pub int_time: u8,
         /// GNSS signal for which acquisition was attempted
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Acq frequency bin width
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bin_width")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bin_width"))]
         pub bin_width: u16,
         /// Timestamp of the job complete event
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "timestamp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp"))]
         pub timestamp: u32,
         /// Time spent to search for sid.code
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time_spent")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time_spent"))]
         pub time_spent: u32,
         /// Doppler range lowest frequency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_min")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf_min"))]
         pub cf_min: i32,
         /// Doppler range highest frequency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_max")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf_max"))]
         pub cf_max: i32,
         /// Doppler value of detected peak. Only valid if status is '1'
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf"))]
         pub cf: i32,
         /// Codephase of detected peak. Only valid if status is '1'
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cp"))]
         pub cp: u32,
     }
 
@@ -151,40 +151,40 @@ pub mod acq_sv_profile_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct AcqSvProfileDep {
         /// SV search job type (deep, fallback, etc)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "job_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "job_type"))]
         pub job_type: u8,
         /// Acquisition status 1 is Success, 0 is Failure
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        #[cfg_attr(feature = "serde", serde(rename = "status"))]
         pub status: u8,
         /// CN0 value. Only valid if status is '1'
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u16,
         /// Acquisition integration time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "int_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "int_time"))]
         pub int_time: u8,
         /// GNSS signal for which acquisition was attempted
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Acq frequency bin width
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bin_width")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bin_width"))]
         pub bin_width: u16,
         /// Timestamp of the job complete event
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "timestamp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp"))]
         pub timestamp: u32,
         /// Time spent to search for sid.code
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time_spent")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time_spent"))]
         pub time_spent: u32,
         /// Doppler range lowest frequency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_min")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf_min"))]
         pub cf_min: i32,
         /// Doppler range highest frequency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf_max")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf_max"))]
         pub cf_max: i32,
         /// Doppler value of detected peak. Only valid if status is '1'
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf"))]
         pub cf: i32,
         /// Codephase of detected peak. Only valid if status is '1'
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cp"))]
         pub cp: u32,
     }
 
@@ -266,19 +266,19 @@ pub mod msg_acq_result {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResult {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// CN/0 of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: f32,
         /// Code phase of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cp"))]
         pub cp: f32,
         /// Carrier frequency of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf"))]
         pub cf: f32,
         /// GNSS signal for which acquisition was attempted
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
     }
 
@@ -359,21 +359,21 @@ pub mod msg_acq_result_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResultDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// SNR of best point. Currently dimensionless, but will have units of dB Hz
         /// in the revision of this message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "snr")))]
+        #[cfg_attr(feature = "serde", serde(rename = "snr"))]
         pub snr: f32,
         /// Code phase of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cp"))]
         pub cp: f32,
         /// Carrier frequency of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf"))]
         pub cf: f32,
         /// PRN-1 identifier of the satellite signal for which acquisition was
         /// attempted
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "prn"))]
         pub prn: u8,
     }
 
@@ -454,20 +454,20 @@ pub mod msg_acq_result_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResultDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// SNR of best point. Currently in arbitrary SNR points, but will be in
         /// units of dB Hz in a later revision of this message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "snr")))]
+        #[cfg_attr(feature = "serde", serde(rename = "snr"))]
         pub snr: f32,
         /// Code phase of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cp"))]
         pub cp: f32,
         /// Carrier frequency of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf"))]
         pub cf: f32,
         /// GNSS signal for which acquisition was attempted
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
     }
 
@@ -548,19 +548,19 @@ pub mod msg_acq_result_dep_c {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResultDepC {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// CN/0 of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: f32,
         /// Code phase of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cp"))]
         pub cp: f32,
         /// Carrier frequency of best point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cf")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cf"))]
         pub cf: f32,
         /// GNSS signal for which acquisition was attempted
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
     }
 
@@ -642,10 +642,10 @@ pub mod msg_acq_sv_profile {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqSvProfile {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// SV profiles during acquisition time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acq_sv_profile")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acq_sv_profile"))]
         pub acq_sv_profile: Vec<AcqSvProfile>,
     }
 
@@ -714,10 +714,10 @@ pub mod msg_acq_sv_profile_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqSvProfileDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// SV profiles during acquisition time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acq_sv_profile")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acq_sv_profile"))]
         pub acq_sv_profile: Vec<AcqSvProfileDep>,
     }
 

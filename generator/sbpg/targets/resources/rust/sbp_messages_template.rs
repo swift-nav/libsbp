@@ -46,7 +46,7 @@ use crate::messages::(((i)))::*;
 pub struct (((m.msg_name))) {
     ((*- if m.is_real_message *))
     /// The message sender_id
-    #[cfg_attr(feature = "serde", serde(skip_serializing))]
+    #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
     pub sender_id: Option<u16>,
     ((*- endif *))
     ((*- for f in m.fields *))
@@ -54,9 +54,9 @@ pub struct (((m.msg_name))) {
     /// (((f.desc | commentify(indent=2) )))
     ((*- endif *))
     ((*- if f.type_id == "array" and "size" in f.options and f.options["size"].value >= 32 *))
-    #[cfg_attr(feature = "serde", serde(with="BigArray", rename(serialize = "(((f.identifier)))")))]
+    #[cfg_attr(feature = "serde", serde(with="BigArray", rename = "(((f.identifier)))"))]
     ((*- else *))
-    #[cfg_attr(feature = "serde", serde(rename(serialize = "(((f.identifier)))")))]
+    #[cfg_attr(feature = "serde", serde(rename = "(((f.identifier)))"))]
     ((*- endif *))
 
     pub (((f.field_name))): (((f.type))),

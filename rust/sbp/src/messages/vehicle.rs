@@ -38,18 +38,18 @@ pub mod msg_odometry {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOdometry {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Time field representing either milliseconds in the GPS Week or local CPU
         /// time from the producing system in milliseconds.  See the tow_source flag
         /// for the exact source of this timestamp.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// The signed forward component of vehicle velocity.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "velocity")))]
+        #[cfg_attr(feature = "serde", serde(rename = "velocity"))]
         pub velocity: i32,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -303,24 +303,24 @@ pub mod msg_wheeltick {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgWheeltick {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Time field representing either microseconds since the last PPS,
         /// microseconds in the GPS Week or local CPU time from the producing system
         /// in microseconds. See the synch_type field for the exact meaning of this
         /// timestamp.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: u64,
         /// Field indicating the type of timestamp contained in the time field.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// ID of the sensor producing this message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "source")))]
+        #[cfg_attr(feature = "serde", serde(rename = "source"))]
         pub source: u8,
         /// Free-running counter of the accumulated distance for this sensor. The
         /// counter should be incrementing if travelling into one direction and
         /// decrementing when travelling in the opposite direction.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ticks")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ticks"))]
         pub ticks: i32,
     }
 

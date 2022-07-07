@@ -38,10 +38,10 @@ pub mod msg_bootloader_handshake_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderHandshakeDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Version number string (not NULL terminated)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "handshake")))]
+        #[cfg_attr(feature = "serde", serde(rename = "handshake"))]
         pub handshake: Vec<u8>,
     }
 
@@ -111,7 +111,7 @@ pub mod msg_bootloader_handshake_req {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderHandshakeReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -177,13 +177,13 @@ pub mod msg_bootloader_handshake_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderHandshakeResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Bootloader flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u32,
         /// Bootloader version number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "version")))]
+        #[cfg_attr(feature = "serde", serde(rename = "version"))]
         pub version: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -296,10 +296,10 @@ pub mod msg_bootloader_jump_to_app {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderJumpToApp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Ignored by the device
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "jump")))]
+        #[cfg_attr(feature = "serde", serde(rename = "jump"))]
         pub jump: u8,
     }
 
@@ -372,7 +372,7 @@ pub mod msg_nap_device_dna_req {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNapDeviceDnaReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -440,10 +440,10 @@ pub mod msg_nap_device_dna_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNapDeviceDnaResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dna")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dna"))]
         pub dna: [u8; 8],
     }
 

@@ -81,19 +81,19 @@ pub mod almanac_common_content {
     #[derive(Debug, PartialEq, Clone)]
     pub struct AlmanacCommonContent {
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Reference time of almanac
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toa")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toa"))]
         pub toa: GpsTimeSec,
         /// User Range Accuracy
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ura"))]
         pub ura: f64,
         /// Curve fit interval
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fit_interval"))]
         pub fit_interval: u32,
         /// Status of almanac, 1 = valid, 0 = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite health status for GPS:
         ///   - bits 5-7: NAV data health status. See IS-GPS-200H
@@ -109,7 +109,7 @@ pub mod almanac_common_content {
         ///     '1' indicates that n-satellite is operational.
         ///   - bit 1: Bn(ln), '0' indicates the satellite is operational
         ///     and suitable for navigation.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
+        #[cfg_attr(feature = "serde", serde(rename = "health_bits"))]
         pub health_bits: u8,
     }
 
@@ -160,19 +160,19 @@ pub mod almanac_common_content_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct AlmanacCommonContentDep {
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Reference time of almanac
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toa")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toa"))]
         pub toa: GpsTimeSec,
         /// User Range Accuracy
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ura"))]
         pub ura: f64,
         /// Curve fit interval
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fit_interval"))]
         pub fit_interval: u32,
         /// Status of almanac, 1 = valid, 0 = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite health status for GPS:
         ///   - bits 5-7: NAV data health status. See IS-GPS-200H
@@ -188,7 +188,7 @@ pub mod almanac_common_content_dep {
         ///     '1' indicates that n-satellite is operational.
         ///   - bit 1: Bn(ln), '0' indicates the satellite is operational
         ///     and suitable for navigation.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
+        #[cfg_attr(feature = "serde", serde(rename = "health_bits"))]
         pub health_bits: u8,
     }
 
@@ -246,10 +246,10 @@ pub mod carrier_phase_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct CarrierPhaseDepA {
         /// Carrier phase whole cycles
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
+        #[cfg_attr(feature = "serde", serde(rename = "i"))]
         pub i: i32,
         /// Carrier phase fractional part
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "f")))]
+        #[cfg_attr(feature = "serde", serde(rename = "f"))]
         pub f: u8,
     }
 
@@ -288,10 +288,10 @@ pub mod doppler {
     #[derive(Debug, PartialEq, Clone)]
     pub struct Doppler {
         /// Doppler whole Hz
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
+        #[cfg_attr(feature = "serde", serde(rename = "i"))]
         pub i: i16,
         /// Doppler fractional part
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "f")))]
+        #[cfg_attr(feature = "serde", serde(rename = "f"))]
         pub f: u8,
     }
 
@@ -324,25 +324,25 @@ pub mod ephemeris_common_content {
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContent {
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Time of Ephemerides
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe"))]
         pub toe: GpsTimeSec,
         /// User Range Accuracy
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ura"))]
         pub ura: f32,
         /// Curve fit interval
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fit_interval"))]
         pub fit_interval: u32,
         /// Status of ephemeris, 1 = valid, 0 = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite health status.
         /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
         /// SBAS: 0 = valid, non-zero = invalid
         /// GLO: 0 = valid, non-zero = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
+        #[cfg_attr(feature = "serde", serde(rename = "health_bits"))]
         pub health_bits: u8,
     }
 
@@ -393,25 +393,25 @@ pub mod ephemeris_common_content_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContentDepA {
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Time of Ephemerides
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe"))]
         pub toe: GpsTimeDep,
         /// User Range Accuracy
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ura"))]
         pub ura: f64,
         /// Curve fit interval
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fit_interval"))]
         pub fit_interval: u32,
         /// Status of ephemeris, 1 = valid, 0 = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite health status.
         /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
         /// SBAS: 0 = valid, non-zero = invalid
         /// GLO: 0 = valid, non-zero = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
+        #[cfg_attr(feature = "serde", serde(rename = "health_bits"))]
         pub health_bits: u8,
     }
 
@@ -462,24 +462,24 @@ pub mod ephemeris_common_content_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContentDepB {
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Time of Ephemerides
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe"))]
         pub toe: GpsTimeSec,
         /// User Range Accuracy
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ura")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ura"))]
         pub ura: f64,
         /// Curve fit interval
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fit_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fit_interval"))]
         pub fit_interval: u32,
         /// Status of ephemeris, 1 = valid, 0 = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite health status.
         /// GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
         /// Others: 0 = valid, non-zero = invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "health_bits")))]
+        #[cfg_attr(feature = "serde", serde(rename = "health_bits"))]
         pub health_bits: u8,
     }
 
@@ -530,51 +530,51 @@ pub mod gnss_capb {
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssCapb {
         /// GPS SV active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gps_active")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gps_active"))]
         pub gps_active: u64,
         /// GPS L2C active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gps_l2c")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gps_l2c"))]
         pub gps_l2c: u64,
         /// GPS L5 active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gps_l5")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gps_l5"))]
         pub gps_l5: u64,
         /// GLO active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "glo_active")))]
+        #[cfg_attr(feature = "serde", serde(rename = "glo_active"))]
         pub glo_active: u32,
         /// GLO L2OF active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "glo_l2of")))]
+        #[cfg_attr(feature = "serde", serde(rename = "glo_l2of"))]
         pub glo_l2of: u32,
         /// GLO L3 active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "glo_l3")))]
+        #[cfg_attr(feature = "serde", serde(rename = "glo_l3"))]
         pub glo_l3: u32,
         /// SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
         /// <https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf>)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sbas_active")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sbas_active"))]
         pub sbas_active: u64,
         /// SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
         /// <https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf>)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sbas_l5")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sbas_l5"))]
         pub sbas_l5: u64,
         /// BDS active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_active")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bds_active"))]
         pub bds_active: u64,
         /// BDS D2NAV active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_d2nav")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bds_d2nav"))]
         pub bds_d2nav: u64,
         /// BDS B2 active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_b2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bds_b2"))]
         pub bds_b2: u64,
         /// BDS B2A active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bds_b2a")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bds_b2a"))]
         pub bds_b2a: u64,
         /// QZSS active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "qzss_active")))]
+        #[cfg_attr(feature = "serde", serde(rename = "qzss_active"))]
         pub qzss_active: u32,
         /// GAL active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gal_active")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gal_active"))]
         pub gal_active: u64,
         /// GAL E5 active mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gal_e5")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gal_e5"))]
         pub gal_e5: u64,
     }
 
@@ -668,32 +668,32 @@ pub mod msg_almanac_glo {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGlo {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all almanac types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: AlmanacCommonContent,
         /// Longitude of the first ascending node of the orbit in PZ-90.02
         /// coordinate system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lambda_na")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lambda_na"))]
         pub lambda_na: f64,
         /// Time of the first ascending node passage
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_lambda_na")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_lambda_na"))]
         pub t_lambda_na: f64,
         /// Value of inclination at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
+        #[cfg_attr(feature = "serde", serde(rename = "i"))]
         pub i: f64,
         /// Value of Draconian period at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t"))]
         pub t: f64,
         /// Rate of change of the Draconian period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_dot"))]
         pub t_dot: f64,
         /// Eccentricity at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "epsilon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "epsilon"))]
         pub epsilon: f64,
         /// Argument of perigee at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega"))]
         pub omega: f64,
     }
 
@@ -793,32 +793,32 @@ pub mod msg_almanac_glo_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGloDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all almanac types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: AlmanacCommonContentDep,
         /// Longitude of the first ascending node of the orbit in PZ-90.02
         /// coordinate system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lambda_na")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lambda_na"))]
         pub lambda_na: f64,
         /// Time of the first ascending node passage
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_lambda_na")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_lambda_na"))]
         pub t_lambda_na: f64,
         /// Value of inclination at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
+        #[cfg_attr(feature = "serde", serde(rename = "i"))]
         pub i: f64,
         /// Value of Draconian period at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t"))]
         pub t: f64,
         /// Rate of change of the Draconian period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_dot"))]
         pub t_dot: f64,
         /// Eccentricity at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "epsilon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "epsilon"))]
         pub epsilon: f64,
         /// Argument of perigee at instant of t_lambda
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega"))]
         pub omega: f64,
     }
 
@@ -918,37 +918,37 @@ pub mod msg_almanac_gps {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGps {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all almanac types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: AlmanacCommonContent,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
     }
 
@@ -1056,37 +1056,37 @@ pub mod msg_almanac_gps_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGpsDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all almanac types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: AlmanacCommonContentDep,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
     }
 
@@ -1195,16 +1195,16 @@ pub mod msg_base_pos_ecef {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBasePosEcef {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: f64,
         /// ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: f64,
         /// ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: f64,
     }
 
@@ -1282,16 +1282,16 @@ pub mod msg_base_pos_llh {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBasePosLlh {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
     }
 
@@ -1369,87 +1369,87 @@ pub mod msg_ephemeris_bds {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisBds {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContent,
         /// Group delay differential for B1
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd1"))]
         pub tgd1: f32,
         /// Group delay differential for B2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd2"))]
         pub tgd2: f32,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f32,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f32,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f32,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f32,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f32,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f32,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f32,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f32,
         /// Clock reference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
         pub toc: GpsTimeSec,
         /// Issue of ephemeris data
         /// Calculated from the navigation data parameter t_oe per RTCM/CSNO
         /// recommendation: IODE = mod (t_oe / 720, 240)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
         /// Issue of clock data
         /// Calculated from the navigation data parameter t_oe per RTCM/CSNO
         /// recommendation: IODE = mod (t_oc / 720, 240)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
     }
 
@@ -1610,89 +1610,89 @@ pub mod msg_ephemeris_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f64,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f64,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f64,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f64,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f64,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f64,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f64,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f64,
         /// Time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_tow"))]
         pub toe_tow: f64,
         /// Week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_wn"))]
         pub toe_wn: u16,
         /// Clock reference time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_tow"))]
         pub toc_tow: f64,
         /// Clock reference week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_wn"))]
         pub toc_wn: u16,
         /// Is valid?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite is healthy?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "healthy"))]
         pub healthy: u8,
         /// PRN being tracked
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "prn"))]
         pub prn: u8,
     }
 
@@ -1861,92 +1861,92 @@ pub mod msg_ephemeris_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f64,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f64,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f64,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f64,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f64,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f64,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f64,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f64,
         /// Time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_tow"))]
         pub toe_tow: f64,
         /// Week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_wn"))]
         pub toe_wn: u16,
         /// Clock reference time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_tow"))]
         pub toc_tow: f64,
         /// Clock reference week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_wn"))]
         pub toc_wn: u16,
         /// Is valid?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite is healthy?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "healthy"))]
         pub healthy: u8,
         /// PRN being tracked
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "prn"))]
         pub prn: u8,
         /// Issue of ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
     }
 
@@ -2122,98 +2122,98 @@ pub mod msg_ephemeris_dep_c {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepC {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f64,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f64,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f64,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f64,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f64,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f64,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f64,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f64,
         /// Time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_tow"))]
         pub toe_tow: f64,
         /// Week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_wn"))]
         pub toe_wn: u16,
         /// Clock reference time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_tow"))]
         pub toc_tow: f64,
         /// Clock reference week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_wn"))]
         pub toc_wn: u16,
         /// Is valid?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite is healthy?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "healthy"))]
         pub healthy: u8,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Issue of ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
         /// Issue of clock data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
         /// Reserved field
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
         pub reserved: u32,
     }
 
@@ -2397,98 +2397,98 @@ pub mod msg_ephemeris_dep_d {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepD {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f64,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f64,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f64,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f64,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f64,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f64,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f64,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f64,
         /// Time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_tow"))]
         pub toe_tow: f64,
         /// Week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toe_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toe_wn"))]
         pub toe_wn: u16,
         /// Clock reference time of week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_tow"))]
         pub toc_tow: f64,
         /// Clock reference week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc_wn"))]
         pub toc_wn: u16,
         /// Is valid?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
         /// Satellite is healthy?
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "healthy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "healthy"))]
         pub healthy: u8,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Issue of ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
         /// Issue of clock data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
         /// Reserved field
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
         pub reserved: u32,
     }
 
@@ -2672,86 +2672,86 @@ pub mod msg_ephemeris_gal {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGal {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContent,
         /// E1-E5a Broadcast Group Delay
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5a")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bgd_e1e5a"))]
         pub bgd_e1e5a: f32,
         /// E1-E5b Broadcast Group Delay
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5b")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bgd_e1e5b"))]
         pub bgd_e1e5b: f32,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f32,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f32,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f32,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f32,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f32,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f32,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f32,
         /// Clock reference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
         pub toc: GpsTimeSec,
         /// Issue of data (IODnav)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u16,
         /// Issue of data (IODnav). Always equal to iode
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
         /// 0=I/NAV, 1=F/NAV
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "source")))]
+        #[cfg_attr(feature = "serde", serde(rename = "source"))]
         pub source: u8,
     }
 
@@ -2917,83 +2917,83 @@ pub mod msg_ephemeris_gal_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGalDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContent,
         /// E1-E5a Broadcast Group Delay
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5a")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bgd_e1e5a"))]
         pub bgd_e1e5a: f32,
         /// E1-E5b Broadcast Group Delay
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bgd_e1e5b")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bgd_e1e5b"))]
         pub bgd_e1e5b: f32,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f32,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f32,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f32,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f32,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f32,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f32,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f32,
         /// Clock reference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
         pub toc: GpsTimeSec,
         /// Issue of data (IODnav)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u16,
         /// Issue of data (IODnav). Always equal to iode
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
     }
 
@@ -3157,34 +3157,34 @@ pub mod msg_ephemeris_glo {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGlo {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContent,
         /// Relative deviation of predicted carrier frequency from nominal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gamma"))]
         pub gamma: f32,
         /// Correction to the SV time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tau"))]
         pub tau: f32,
         /// Equipment delay between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d_tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d_tau"))]
         pub d_tau: f32,
         /// Position of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f64; 3],
         /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f32; 3],
         /// Frequency slot. FCN+8 (that is \[1..14\]). 0 or 0xFF for invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fcn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fcn"))]
         pub fcn: u8,
         /// Issue of data. Equal to the 7 bits of the immediate data word t_b
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod"))]
         pub iod: u8,
     }
 
@@ -3288,25 +3288,25 @@ pub mod msg_ephemeris_glo_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepA,
         /// Relative deviation of predicted carrier frequency from nominal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gamma"))]
         pub gamma: f64,
         /// Correction to the SV time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tau"))]
         pub tau: f64,
         /// Position of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f64; 3],
         /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f64; 3],
     }
 
@@ -3398,25 +3398,25 @@ pub mod msg_ephemeris_glo_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepB,
         /// Relative deviation of predicted carrier frequency from nominal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gamma"))]
         pub gamma: f64,
         /// Correction to the SV time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tau"))]
         pub tau: f64,
         /// Position of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f64; 3],
         /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f64; 3],
     }
 
@@ -3508,31 +3508,31 @@ pub mod msg_ephemeris_glo_dep_c {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepC {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepB,
         /// Relative deviation of predicted carrier frequency from nominal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gamma"))]
         pub gamma: f64,
         /// Correction to the SV time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tau"))]
         pub tau: f64,
         /// Equipment delay between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d_tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d_tau"))]
         pub d_tau: f64,
         /// Position of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f64; 3],
         /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f64; 3],
         /// Frequency slot. FCN+8 (that is \[1..14\]). 0 or 0xFF for invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fcn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fcn"))]
         pub fcn: u8,
     }
 
@@ -3630,34 +3630,34 @@ pub mod msg_ephemeris_glo_dep_d {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepD {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepB,
         /// Relative deviation of predicted carrier frequency from nominal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gamma")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gamma"))]
         pub gamma: f64,
         /// Correction to the SV time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tau"))]
         pub tau: f64,
         /// Equipment delay between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d_tau")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d_tau"))]
         pub d_tau: f64,
         /// Position of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f64; 3],
         /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f64; 3],
         /// Frequency slot. FCN+8 (that is \[1..14\]). 0 or 0xFF for invalid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fcn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fcn"))]
         pub fcn: u8,
         /// Issue of data. Equal to the 7 bits of the immediate data word t_b
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod"))]
         pub iod: u8,
     }
 
@@ -3761,80 +3761,80 @@ pub mod msg_ephemeris_gps {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGps {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContent,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f32,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f32,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f32,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f32,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f32,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f32,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f32,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f32,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f32,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f32,
         /// Clock reference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
         pub toc: GpsTimeSec,
         /// Issue of ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
         /// Issue of clock data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
     }
 
@@ -3994,80 +3994,80 @@ pub mod msg_ephemeris_gps_dep_e {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGpsDepE {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepA,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f64,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f64,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f64,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f64,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f64,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f64,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f64,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f64,
         /// Clock reference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
         pub toc: GpsTimeDep,
         /// Issue of ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
         /// Issue of clock data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
     }
 
@@ -4225,80 +4225,80 @@ pub mod msg_ephemeris_gps_dep_f {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGpsDepF {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepB,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f64,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f64,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f64,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f64,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f64,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f64,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f64,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f64,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f64,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f64,
         /// Clock reference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
         pub toc: GpsTimeSec,
         /// Issue of ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
         /// Issue of clock data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
     }
 
@@ -4456,80 +4456,80 @@ pub mod msg_ephemeris_qzss {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisQzss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContent,
         /// Group delay differential between L1 and L2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: f32,
         /// Amplitude of the sine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rs"))]
         pub c_rs: f32,
         /// Amplitude of the cosine harmonic correction term to the orbit radius
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_rc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_rc"))]
         pub c_rc: f32,
         /// Amplitude of the cosine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_uc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_uc"))]
         pub c_uc: f32,
         /// Amplitude of the sine harmonic correction term to the argument of
         /// latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_us")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_us"))]
         pub c_us: f32,
         /// Amplitude of the cosine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_ic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_ic"))]
         pub c_ic: f32,
         /// Amplitude of the sine harmonic correction term to the angle of
         /// inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c_is")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c_is"))]
         pub c_is: f32,
         /// Mean motion difference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dn"))]
         pub dn: f64,
         /// Mean anomaly at reference time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "m0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "m0"))]
         pub m0: f64,
         /// Eccentricity of satellite orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ecc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ecc"))]
         pub ecc: f64,
         /// Square root of the semi-major axis of orbit
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sqrta")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sqrta"))]
         pub sqrta: f64,
         /// Longitude of ascending node of orbit plane at weekly epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omega0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omega0"))]
         pub omega0: f64,
         /// Rate of right ascension
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "omegadot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "omegadot"))]
         pub omegadot: f64,
         /// Argument of perigee
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: f64,
         /// Inclination
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc"))]
         pub inc: f64,
         /// Inclination first derivative
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "inc_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "inc_dot"))]
         pub inc_dot: f64,
         /// Polynomial clock correction coefficient (clock bias)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af0"))]
         pub af0: f32,
         /// Polynomial clock correction coefficient (clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af1"))]
         pub af1: f32,
         /// Polynomial clock correction coefficient (rate of clock drift)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "af2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "af2"))]
         pub af2: f32,
         /// Clock reference
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "toc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "toc"))]
         pub toc: GpsTimeSec,
         /// Issue of ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iode")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iode"))]
         pub iode: u8,
         /// Issue of clock data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iodc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iodc"))]
         pub iodc: u16,
     }
 
@@ -4682,25 +4682,25 @@ pub mod msg_ephemeris_sbas {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbas {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContent,
         /// Position of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f32; 3],
         /// Acceleration of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f32; 3],
         /// Time offset of the GEO clock w.r.t. SBAS Network Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a_gf0"))]
         pub a_gf0: f32,
         /// Drift of the GEO clock w.r.t. SBAS Network Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a_gf1"))]
         pub a_gf1: f32,
     }
 
@@ -4785,25 +4785,25 @@ pub mod msg_ephemeris_sbas_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbasDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepA,
         /// Position of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f64; 3],
         /// Acceleration of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f64; 3],
         /// Time offset of the GEO clock w.r.t. SBAS Network Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a_gf0"))]
         pub a_gf0: f64,
         /// Drift of the GEO clock w.r.t. SBAS Network Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a_gf1"))]
         pub a_gf1: f64,
     }
 
@@ -4893,25 +4893,25 @@ pub mod msg_ephemeris_sbas_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbasDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Values common for all ephemeris types
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "common")))]
+        #[cfg_attr(feature = "serde", serde(rename = "common"))]
         pub common: EphemerisCommonContentDepB,
         /// Position of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pos"))]
         pub pos: [f64; 3],
         /// Velocity of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vel"))]
         pub vel: [f64; 3],
         /// Acceleration of the GEO at time toe
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc"))]
         pub acc: [f64; 3],
         /// Time offset of the GEO clock w.r.t. SBAS Network Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a_gf0"))]
         pub a_gf0: f64,
         /// Drift of the GEO clock w.r.t. SBAS Network Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a_gf1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a_gf1"))]
         pub a_gf1: f64,
     }
 
@@ -5002,22 +5002,22 @@ pub mod msg_glo_biases {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGloBiases {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GLONASS FDMA signals mask
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mask")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mask"))]
         pub mask: u8,
         /// GLONASS L1 C/A Code-Phase Bias
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "l1ca_bias")))]
+        #[cfg_attr(feature = "serde", serde(rename = "l1ca_bias"))]
         pub l1ca_bias: i16,
         /// GLONASS L1 P Code-Phase Bias
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "l1p_bias")))]
+        #[cfg_attr(feature = "serde", serde(rename = "l1p_bias"))]
         pub l1p_bias: i16,
         /// GLONASS L2 C/A Code-Phase Bias
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "l2ca_bias")))]
+        #[cfg_attr(feature = "serde", serde(rename = "l2ca_bias"))]
         pub l2ca_bias: i16,
         /// GLONASS L2 P Code-Phase Bias
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "l2p_bias")))]
+        #[cfg_attr(feature = "serde", serde(rename = "l2p_bias"))]
         pub l2p_bias: i16,
     }
 
@@ -5098,13 +5098,13 @@ pub mod msg_gnss_capb {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGnssCapb {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Navigation Message Correction Table Validity Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_nmct")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_nmct"))]
         pub t_nmct: GpsTimeSec,
         /// GNSS capabilities masks
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gc"))]
         pub gc: GnssCapb,
     }
 
@@ -5176,23 +5176,23 @@ pub mod msg_group_delay {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelay {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Data Predict Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_op")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_op"))]
         pub t_op: GpsTimeSec,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// bit-field indicating validity of the values, LSB indicating tgd validity
         /// etc. 1 = value is valid, 0 = value is not valid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: i16,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l1ca")))]
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l1ca"))]
         pub isc_l1ca: i16,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l2c")))]
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l2c"))]
         pub isc_l2c: i16,
     }
 
@@ -5281,23 +5281,23 @@ pub mod msg_group_delay_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelayDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Data Predict Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_op")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_op"))]
         pub t_op: GpsTimeDep,
         /// Satellite number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "prn"))]
         pub prn: u8,
         /// bit-field indicating validity of the values, LSB indicating tgd validity
         /// etc. 1 = value is valid, 0 = value is not valid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: i16,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l1ca")))]
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l1ca"))]
         pub isc_l1ca: i16,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l2c")))]
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l2c"))]
         pub isc_l2c: i16,
     }
 
@@ -5386,23 +5386,23 @@ pub mod msg_group_delay_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelayDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Data Predict Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_op")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_op"))]
         pub t_op: GpsTimeSec,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// bit-field indicating validity of the values, LSB indicating tgd validity
         /// etc. 1 = value is valid, 0 = value is not valid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "valid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "valid"))]
         pub valid: u8,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tgd")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tgd"))]
         pub tgd: i16,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l1ca")))]
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l1ca"))]
         pub isc_l1ca: i16,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "isc_l2c")))]
+        #[cfg_attr(feature = "serde", serde(rename = "isc_l2c"))]
         pub isc_l2c: i16,
     }
 
@@ -5493,26 +5493,26 @@ pub mod msg_iono {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgIono {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Navigation Message Correction Table Validity Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_nmct")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_nmct"))]
         pub t_nmct: GpsTimeSec,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a0"))]
         pub a0: f64,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a1"))]
         pub a1: f64,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a2"))]
         pub a2: f64,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "a3")))]
+        #[cfg_attr(feature = "serde", serde(rename = "a3"))]
         pub a3: f64,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "b0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "b0"))]
         pub b0: f64,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "b1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "b1"))]
         pub b1: f64,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "b2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "b2"))]
         pub b2: f64,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "b3")))]
+        #[cfg_attr(feature = "serde", serde(rename = "b3"))]
         pub b3: f64,
     }
 
@@ -5618,13 +5618,13 @@ pub mod msg_obs {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObs {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a GPS observation message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: ObservationHeader,
         /// Pseudorange and carrier phase observation for a satellite being tracked.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs"))]
         pub obs: Vec<PackedObsContent>,
     }
 
@@ -5709,13 +5709,13 @@ pub mod msg_obs_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a GPS observation message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: ObservationHeaderDep,
         /// Pseudorange and carrier phase observation for a satellite being tracked.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs"))]
         pub obs: Vec<PackedObsContentDepA>,
     }
 
@@ -5803,13 +5803,13 @@ pub mod msg_obs_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a GPS observation message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: ObservationHeaderDep,
         /// Pseudorange and carrier phase observation for a satellite being tracked.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs"))]
         pub obs: Vec<PackedObsContentDepB>,
     }
 
@@ -5899,13 +5899,13 @@ pub mod msg_obs_dep_c {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepC {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a GPS observation message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: ObservationHeaderDep,
         /// Pseudorange and carrier phase observation for a satellite being tracked.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs"))]
         pub obs: Vec<PackedObsContentDepC>,
     }
 
@@ -5991,13 +5991,13 @@ pub mod msg_osr {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOsr {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a GPS observation message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: ObservationHeader,
         /// Network correction for a satellite signal.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs"))]
         pub obs: Vec<PackedOsrContent>,
     }
 
@@ -6083,10 +6083,10 @@ pub mod msg_sv_az_el {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSvAzEl {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Azimuth and elevation per satellite
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "azel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "azel"))]
         pub azel: Vec<SvAzEl>,
     }
 
@@ -6155,13 +6155,13 @@ pub mod msg_sv_configuration_gps_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSvConfigurationGpsDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Navigation Message Correction Table Validity Time
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t_nmct")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t_nmct"))]
         pub t_nmct: GpsTimeSec,
         /// L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "l2c_mask")))]
+        #[cfg_attr(feature = "serde", serde(rename = "l2c_mask"))]
         pub l2c_mask: u32,
     }
 
@@ -6232,11 +6232,11 @@ pub mod observation_header {
     #[derive(Debug, PartialEq, Clone)]
     pub struct ObservationHeader {
         /// GNSS time of this observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t"))]
         pub t: GpsTime,
         /// Total number of observations. First nibble is the size of the sequence
         /// (n), second nibble is the zero-indexed counter (ith packet of n)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_obs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_obs"))]
         pub n_obs: u8,
     }
 
@@ -6273,11 +6273,11 @@ pub mod observation_header_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct ObservationHeaderDep {
         /// GPS time of this observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t"))]
         pub t: GpsTimeDep,
         /// Total number of observations. First nibble is the size of the sequence
         /// (n), second nibble is the zero-indexed counter (ith packet of n)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_obs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_obs"))]
         pub n_obs: u8,
     }
 
@@ -6320,16 +6320,16 @@ pub mod packed_obs_content {
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContent {
         /// Pseudorange observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P"))]
         pub p: u32,
         /// Carrier phase observation with typical sign convention.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+        #[cfg_attr(feature = "serde", serde(rename = "L"))]
         pub l: CarrierPhase,
         /// Doppler observation with typical sign convention.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "D")))]
+        #[cfg_attr(feature = "serde", serde(rename = "D"))]
         pub d: Doppler,
         /// Carrier-to-Noise density.  Zero implies invalid cn0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
         /// Lock timer. This value gives an indication of the time for which a
         /// signal has maintained continuous phase lock. Whenever a signal has lost
@@ -6337,15 +6337,15 @@ pub mod packed_obs_content {
         /// to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
         /// range from 0 to 15 and the most significant nibble is reserved for
         /// future use.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lock"))]
         pub lock: u8,
         /// Measurement status flags. A bit field of flags providing the status of
         /// this observation.  If this field is 0 it means only the Cn0 estimate for
         /// the signal is valid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
     }
 
@@ -6642,21 +6642,21 @@ pub mod packed_obs_content_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepA {
         /// Pseudorange observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P"))]
         pub p: u32,
         /// Carrier phase observation with opposite sign from typical convention
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+        #[cfg_attr(feature = "serde", serde(rename = "L"))]
         pub l: CarrierPhaseDepA,
         /// Carrier-to-Noise density
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
         /// Lock indicator. This value changes whenever a satellite signal has lost
         /// and regained lock, indicating that the carrier phase ambiguity may have
         /// changed.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lock"))]
         pub lock: u16,
         /// PRN-1 identifier of the satellite signal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "prn"))]
         pub prn: u8,
     }
 
@@ -6708,21 +6708,21 @@ pub mod packed_obs_content_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepB {
         /// Pseudorange observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P"))]
         pub p: u32,
         /// Carrier phase observation with opposite sign from typical convention.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+        #[cfg_attr(feature = "serde", serde(rename = "L"))]
         pub l: CarrierPhaseDepA,
         /// Carrier-to-Noise density
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
         /// Lock indicator. This value changes whenever a satellite signal has lost
         /// and regained lock, indicating that the carrier phase ambiguity may have
         /// changed.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lock"))]
         pub lock: u16,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
     }
 
@@ -6775,21 +6775,21 @@ pub mod packed_obs_content_dep_c {
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepC {
         /// Pseudorange observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P"))]
         pub p: u32,
         /// Carrier phase observation with typical sign convention.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+        #[cfg_attr(feature = "serde", serde(rename = "L"))]
         pub l: CarrierPhase,
         /// Carrier-to-Noise density
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
         /// Lock indicator. This value changes whenever a satellite signal has lost
         /// and regained lock, indicating that the carrier phase ambiguity may have
         /// changed.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lock"))]
         pub lock: u16,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
     }
 
@@ -6840,10 +6840,10 @@ pub mod packed_osr_content {
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedOsrContent {
         /// Pseudorange observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P"))]
         pub p: u32,
         /// Carrier phase observation with typical sign convention.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+        #[cfg_attr(feature = "serde", serde(rename = "L"))]
         pub l: CarrierPhase,
         /// Lock timer. This value gives an indication of the time for which a
         /// signal has maintained continuous phase lock. Whenever a signal has lost
@@ -6851,22 +6851,22 @@ pub mod packed_osr_content {
         /// to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
         /// range from 0 to 15 and the most significant nibble is reserved for
         /// future use.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lock"))]
         pub lock: u8,
         /// Correction flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Slant ionospheric correction standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iono_std")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iono_std"))]
         pub iono_std: u16,
         /// Slant tropospheric correction standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_std")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_std"))]
         pub tropo_std: u16,
         /// Orbit/clock/bias correction projected on range standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "range_std")))]
+        #[cfg_attr(feature = "serde", serde(rename = "range_std"))]
         pub range_std: u16,
     }
 
@@ -7169,13 +7169,13 @@ pub mod sv_az_el {
     #[derive(Debug, PartialEq, Clone)]
     pub struct SvAzEl {
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Azimuth angle (range 0..179)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "az")))]
+        #[cfg_attr(feature = "serde", serde(rename = "az"))]
         pub az: u8,
         /// Elevation angle (range -90..90)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "el")))]
+        #[cfg_attr(feature = "serde", serde(rename = "el"))]
         pub el: i8,
     }
 

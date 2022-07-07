@@ -44,10 +44,10 @@ pub mod msg_flash_done {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashDone {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Response flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "response")))]
+        #[cfg_attr(feature = "serde", serde(rename = "response"))]
         pub response: u8,
     }
 
@@ -184,13 +184,13 @@ pub mod msg_flash_erase {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashErase {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Target flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        #[cfg_attr(feature = "serde", serde(rename = "target"))]
         pub target: u8,
         /// Flash sector number to erase (0-11 for the STM, 0-15 for the M25)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sector_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sector_num"))]
         pub sector_num: u32,
     }
 
@@ -310,19 +310,19 @@ pub mod msg_flash_program {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashProgram {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Target flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        #[cfg_attr(feature = "serde", serde(rename = "target"))]
         pub target: u8,
         /// Starting address offset to program
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_start")))]
+        #[cfg_attr(feature = "serde", serde(rename = "addr_start"))]
         pub addr_start: [u8; 3],
         /// Length of set of addresses to program, counting up from starting address
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
+        #[cfg_attr(feature = "serde", serde(rename = "addr_len"))]
         pub addr_len: u8,
         /// Data to program addresses with, with length N=addr_len
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
+        #[cfg_attr(feature = "serde", serde(rename = "data"))]
         pub data: Vec<u8>,
     }
 
@@ -453,16 +453,16 @@ pub mod msg_flash_read_req {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashReadReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Target flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        #[cfg_attr(feature = "serde", serde(rename = "target"))]
         pub target: u8,
         /// Starting address offset to read from
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_start")))]
+        #[cfg_attr(feature = "serde", serde(rename = "addr_start"))]
         pub addr_start: [u8; 3],
         /// Length of set of addresses to read, counting up from starting address
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
+        #[cfg_attr(feature = "serde", serde(rename = "addr_len"))]
         pub addr_len: u8,
     }
 
@@ -589,16 +589,16 @@ pub mod msg_flash_read_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashReadResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Target flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "target")))]
+        #[cfg_attr(feature = "serde", serde(rename = "target"))]
         pub target: u8,
         /// Starting address offset to read from
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_start")))]
+        #[cfg_attr(feature = "serde", serde(rename = "addr_start"))]
         pub addr_start: [u8; 3],
         /// Length of set of addresses to read, counting up from starting address
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "addr_len")))]
+        #[cfg_attr(feature = "serde", serde(rename = "addr_len"))]
         pub addr_len: u8,
     }
 
@@ -721,10 +721,10 @@ pub mod msg_m25_flash_write_status {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgM25FlashWriteStatus {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Byte to write to the M25 flash status register
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        #[cfg_attr(feature = "serde", serde(rename = "status"))]
         pub status: [u8; 1],
     }
 
@@ -793,10 +793,10 @@ pub mod msg_stm_flash_lock_sector {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmFlashLockSector {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Flash sector number to lock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sector")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sector"))]
         pub sector: u32,
     }
 
@@ -865,10 +865,10 @@ pub mod msg_stm_flash_unlock_sector {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmFlashUnlockSector {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Flash sector number to unlock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sector")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sector"))]
         pub sector: u32,
     }
 
@@ -939,7 +939,7 @@ pub mod msg_stm_unique_id_req {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmUniqueIdReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -1005,10 +1005,10 @@ pub mod msg_stm_unique_id_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmUniqueIdResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Device unique ID
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stm_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stm_id"))]
         pub stm_id: [u8; 12],
     }
 

@@ -46,10 +46,10 @@ pub mod msg_measurement_state {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMeasurementState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// ME signal tracking channel state
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "states")))]
+        #[cfg_attr(feature = "serde", serde(rename = "states"))]
         pub states: Vec<MeasurementState>,
     }
 
@@ -119,16 +119,16 @@ pub mod msg_tracking_iq {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingIq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Tracking channel of origin
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "channel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "channel"))]
         pub channel: u8,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Early, Prompt and Late correlations
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corrs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corrs"))]
         pub corrs: [TrackingChannelCorrelation; 3],
     }
 
@@ -205,16 +205,16 @@ pub mod msg_tracking_iq_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingIqDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Tracking channel of origin
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "channel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "channel"))]
         pub channel: u8,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Early, Prompt and Late correlations
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corrs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corrs"))]
         pub corrs: [TrackingChannelCorrelationDep; 3],
     }
 
@@ -292,16 +292,16 @@ pub mod msg_tracking_iq_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingIqDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Tracking channel of origin
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "channel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "channel"))]
         pub channel: u8,
         /// GNSS signal identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Early, Prompt and Late correlations
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corrs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corrs"))]
         pub corrs: [TrackingChannelCorrelationDep; 3],
     }
 
@@ -380,10 +380,10 @@ pub mod msg_tracking_state {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Signal tracking channel state
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "states")))]
+        #[cfg_attr(feature = "serde", serde(rename = "states"))]
         pub states: Vec<TrackingChannelState>,
     }
 
@@ -452,10 +452,10 @@ pub mod msg_tracking_state_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Satellite tracking channel state
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "states")))]
+        #[cfg_attr(feature = "serde", serde(rename = "states"))]
         pub states: Vec<TrackingChannelStateDepA>,
     }
 
@@ -524,10 +524,10 @@ pub mod msg_tracking_state_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDepB {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Signal tracking channel state
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "states")))]
+        #[cfg_attr(feature = "serde", serde(rename = "states"))]
         pub states: Vec<TrackingChannelStateDepB>,
     }
 
@@ -596,76 +596,76 @@ pub mod msg_tracking_state_detailed_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDetailedDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Receiver clock time.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "recv_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "recv_time"))]
         pub recv_time: u64,
         /// Time of transmission of signal from satellite. TOW only valid when TOW
         /// status is decoded or propagated. WN only valid when week number valid
         /// flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tot"))]
         pub tot: GpsTimeDep,
         /// Pseudorange observation. Valid only when pseudorange valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P"))]
         pub p: u32,
         /// Pseudorange observation standard deviation. Valid only when pseudorange
         /// valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P_std")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P_std"))]
         pub p_std: u16,
         /// Carrier phase observation with typical sign convention. Valid only when
         /// PLL pessimistic lock is achieved.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+        #[cfg_attr(feature = "serde", serde(rename = "L"))]
         pub l: CarrierPhase,
         /// Carrier-to-Noise density
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
         /// Lock time. It is encoded according to DF402 from the RTCM 10403.2
         /// Amendment 2 specification. Valid values range from 0 to 15.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lock"))]
         pub lock: u16,
         /// GNSS signal identifier.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Carrier Doppler frequency.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "doppler")))]
+        #[cfg_attr(feature = "serde", serde(rename = "doppler"))]
         pub doppler: i32,
         /// Carrier Doppler frequency standard deviation.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "doppler_std")))]
+        #[cfg_attr(feature = "serde", serde(rename = "doppler_std"))]
         pub doppler_std: u16,
         /// Number of seconds of continuous tracking. Specifies how much time signal
         /// is in continuous track.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uptime")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uptime"))]
         pub uptime: u32,
         /// TCXO clock offset. Valid only when valid clock valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_offset")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_offset"))]
         pub clock_offset: i16,
         /// TCXO clock drift. Valid only when valid clock valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_drift")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_drift"))]
         pub clock_drift: i16,
         /// Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corr_spacing")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corr_spacing"))]
         pub corr_spacing: u16,
         /// Acceleration. Valid only when acceleration valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acceleration")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acceleration"))]
         pub acceleration: i8,
         /// Synchronization status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sync_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sync_flags"))]
         pub sync_flags: u8,
         /// TOW status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow_flags"))]
         pub tow_flags: u8,
         /// Tracking loop status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "track_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "track_flags"))]
         pub track_flags: u8,
         /// Navigation data status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "nav_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "nav_flags"))]
         pub nav_flags: u8,
         /// Parameters sets flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pset_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pset_flags"))]
         pub pset_flags: u8,
         /// Miscellaneous flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "misc_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "misc_flags"))]
         pub misc_flags: u8,
     }
 
@@ -1613,76 +1613,76 @@ pub mod msg_tracking_state_detailed_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgTrackingStateDetailedDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Receiver clock time.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "recv_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "recv_time"))]
         pub recv_time: u64,
         /// Time of transmission of signal from satellite. TOW only valid when TOW
         /// status is decoded or propagated. WN only valid when week number valid
         /// flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tot"))]
         pub tot: GpsTime,
         /// Pseudorange observation. Valid only when pseudorange valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P"))]
         pub p: u32,
         /// Pseudorange observation standard deviation. Valid only when pseudorange
         /// valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "P_std")))]
+        #[cfg_attr(feature = "serde", serde(rename = "P_std"))]
         pub p_std: u16,
         /// Carrier phase observation with typical sign convention. Valid only when
         /// PLL pessimistic lock is achieved.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "L")))]
+        #[cfg_attr(feature = "serde", serde(rename = "L"))]
         pub l: CarrierPhase,
         /// Carrier-to-Noise density
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
         /// Lock time. It is encoded according to DF402 from the RTCM 10403.2
         /// Amendment 2 specification. Valid values range from 0 to 15.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lock")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lock"))]
         pub lock: u16,
         /// GNSS signal identifier.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Carrier Doppler frequency.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "doppler")))]
+        #[cfg_attr(feature = "serde", serde(rename = "doppler"))]
         pub doppler: i32,
         /// Carrier Doppler frequency standard deviation.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "doppler_std")))]
+        #[cfg_attr(feature = "serde", serde(rename = "doppler_std"))]
         pub doppler_std: u16,
         /// Number of seconds of continuous tracking. Specifies how much time signal
         /// is in continuous track.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uptime")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uptime"))]
         pub uptime: u32,
         /// TCXO clock offset. Valid only when valid clock valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_offset")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_offset"))]
         pub clock_offset: i16,
         /// TCXO clock drift. Valid only when valid clock valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_drift")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_drift"))]
         pub clock_drift: i16,
         /// Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corr_spacing")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corr_spacing"))]
         pub corr_spacing: u16,
         /// Acceleration. Valid only when acceleration valid flag is set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acceleration")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acceleration"))]
         pub acceleration: i8,
         /// Synchronization status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sync_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sync_flags"))]
         pub sync_flags: u8,
         /// TOW status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow_flags"))]
         pub tow_flags: u8,
         /// Tracking loop status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "track_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "track_flags"))]
         pub track_flags: u8,
         /// Navigation data status flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "nav_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "nav_flags"))]
         pub nav_flags: u8,
         /// Parameters sets flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pset_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pset_flags"))]
         pub pset_flags: u8,
         /// Miscellaneous flags.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "misc_flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "misc_flags"))]
         pub misc_flags: u8,
     }
 
@@ -2633,10 +2633,10 @@ pub mod measurement_state {
     pub struct MeasurementState {
         /// Measurement Engine GNSS signal being tracked (carries either Glonass FCN
         /// or SLOT)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mesid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mesid"))]
         pub mesid: GnssSignal,
         /// Carrier-to-Noise density.  Zero implies invalid cn0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
     }
 
@@ -2673,10 +2673,10 @@ pub mod tracking_channel_correlation {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelCorrelation {
         /// In-phase correlation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "I")))]
+        #[cfg_attr(feature = "serde", serde(rename = "I"))]
         pub i: i16,
         /// Quadrature correlation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "Q")))]
+        #[cfg_attr(feature = "serde", serde(rename = "Q"))]
         pub q: i16,
     }
 
@@ -2713,10 +2713,10 @@ pub mod tracking_channel_correlation_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelCorrelationDep {
         /// In-phase correlation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "I")))]
+        #[cfg_attr(feature = "serde", serde(rename = "I"))]
         pub i: i32,
         /// Quadrature correlation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "Q")))]
+        #[cfg_attr(feature = "serde", serde(rename = "Q"))]
         pub q: i32,
     }
 
@@ -2754,13 +2754,13 @@ pub mod tracking_channel_state {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelState {
         /// GNSS signal being tracked
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Frequency channel number (GLONASS only)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fcn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fcn"))]
         pub fcn: u8,
         /// Carrier-to-Noise density.  Zero implies invalid cn0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
     }
 
@@ -2801,13 +2801,13 @@ pub mod tracking_channel_state_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelStateDepA {
         /// Status of tracking channel
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "state")))]
+        #[cfg_attr(feature = "serde", serde(rename = "state"))]
         pub state: u8,
         /// PRN-1 being tracked
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "prn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "prn"))]
         pub prn: u8,
         /// Carrier-to-noise density
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: f32,
     }
 
@@ -2894,13 +2894,13 @@ pub mod tracking_channel_state_dep_b {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TrackingChannelStateDepB {
         /// Status of tracking channel
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "state")))]
+        #[cfg_attr(feature = "serde", serde(rename = "state"))]
         pub state: u8,
         /// GNSS signal being tracked
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
         /// Carrier-to-noise density
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cn0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: f32,
     }
 

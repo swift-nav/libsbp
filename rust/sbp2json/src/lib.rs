@@ -1,19 +1,31 @@
 use std::io::{Read, Write};
 
+use sbp::json::JsonError;
 use sbp::{
     json::{Json2JsonEncoder, JsonEncoder},
-    SbpEncoder,
+    Sbp, SbpEncoder,
 };
 use serde_json::ser::Formatter;
 
 pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 
-pub fn json2sbp<R, W>(input: R, output: W, buffered: bool, fatal_errors: bool) -> Result<()>
+pub fn json2sbp<R, W>(
+    input: R,
+    output: W,
+    buffered: bool,
+    fatal_errors: bool,
+    from_fields: bool,
+) -> Result<()>
 where
     R: Read,
     W: Write,
 {
-    let source = maybe_fatal_errors(sbp::json::iter_messages(input), fatal_errors);
+    let it: Box<dyn Iterator<Item = std::result::Result<Sbp, JsonError>>> = if from_fields {
+        Box::new(sbp::json::iter_messages_from_fields(input))
+    } else {
+        Box::new(sbp::json::iter_messages(input))
+    };
+    let source = maybe_fatal_errors(it, fatal_errors);
     let mut sink = SbpEncoder::new(output);
     if buffered {
         sink.send_all(source)?;

@@ -38,16 +38,16 @@ pub mod msg_fwd {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFwd {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// source identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "source")))]
+        #[cfg_attr(feature = "serde", serde(rename = "source"))]
         pub source: u8,
         /// protocol identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "protocol")))]
+        #[cfg_attr(feature = "serde", serde(rename = "protocol"))]
         pub protocol: u8,
         /// variable length wrapped binary message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fwd_payload")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fwd_payload"))]
         pub fwd_payload: Vec<u8>,
     }
 
@@ -125,13 +125,13 @@ pub mod msg_log {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLog {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Logging level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "level")))]
+        #[cfg_attr(feature = "serde", serde(rename = "level"))]
         pub level: u8,
         /// Human-readable string
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "text")))]
+        #[cfg_attr(feature = "serde", serde(rename = "text"))]
         pub text: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -278,10 +278,10 @@ pub mod msg_print_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPrintDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Human-readable string
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "text")))]
+        #[cfg_attr(feature = "serde", serde(rename = "text"))]
         pub text: SbpString<Vec<u8>, Unterminated>,
     }
 

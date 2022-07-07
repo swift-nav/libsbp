@@ -32,25 +32,25 @@ pub mod integrity_ssr_header {
     #[derive(Debug, PartialEq, Clone)]
     pub struct IntegritySSRHeader {
         /// GNSS reference time of the observation used to generate the flag.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs_time"))]
         pub obs_time: GpsTimeSec,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u8,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u8,
         /// SSR Solution ID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_sol_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
         pub ssr_sol_id: u8,
         /// Unique identifier of the set this tile belongs to.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// Chain and type of flag.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "chain_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "chain_id"))]
         pub chain_id: u8,
     }
 
@@ -105,52 +105,49 @@ pub mod msg_ssr_flag_high_level {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagHighLevel {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GNSS reference time of the observation used to generate the flag.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs_time"))]
         pub obs_time: GpsTimeSec,
         /// GNSS reference time of the correction associated to the flag.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corr_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corr_time"))]
         pub corr_time: GpsTimeSec,
         /// SSR Solution ID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_sol_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
         pub ssr_sol_id: u8,
         /// Unique identifier of the set this tile belongs to.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// Chain and type of flag.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "chain_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "chain_id"))]
         pub chain_id: u8,
         /// Use GPS satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "use_gps_sat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "use_gps_sat"))]
         pub use_gps_sat: u8,
         /// Use GAL satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "use_gal_sat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "use_gal_sat"))]
         pub use_gal_sat: u8,
         /// Use BDS satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "use_bds_sat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "use_bds_sat"))]
         pub use_bds_sat: u8,
         /// Reserved
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
         pub reserved: [u8; 6],
         /// Use tropo grid points.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "use_tropo_grid_points")))]
+        #[cfg_attr(feature = "serde", serde(rename = "use_tropo_grid_points"))]
         pub use_tropo_grid_points: u8,
         /// Use iono grid points.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "use_iono_grid_points")))]
+        #[cfg_attr(feature = "serde", serde(rename = "use_iono_grid_points"))]
         pub use_iono_grid_points: u8,
         /// Use iono tile satellite LoS.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "use_iono_tile_sat_los")))]
+        #[cfg_attr(feature = "serde", serde(rename = "use_iono_tile_sat_los"))]
         pub use_iono_tile_sat_los: u8,
         /// Use iono grid point satellite LoS.
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "use_iono_grid_point_sat_los"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "use_iono_grid_point_sat_los"))]
         pub use_iono_grid_point_sat_los: u8,
     }
 
@@ -267,16 +264,16 @@ pub mod msg_ssr_flag_iono_grid_points {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagIonoGridPoints {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of an integrity message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: IntegritySSRHeader,
         /// Number of faulty grid points.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_faulty_points")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_faulty_points"))]
         pub n_faulty_points: u8,
         /// List of faulty grid points.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "faulty_points")))]
+        #[cfg_attr(feature = "serde", serde(rename = "faulty_points"))]
         pub faulty_points: Vec<u16>,
     }
 
@@ -349,19 +346,19 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagIonoGridPointSatLos {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of an integrity message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: IntegritySSRHeader,
         /// Index of the grid point.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "grid_point_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "grid_point_id"))]
         pub grid_point_id: u16,
         /// Number of faulty LOS.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_faulty_los")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_faulty_los"))]
         pub n_faulty_los: u8,
         /// List of faulty LOS
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "faulty_los")))]
+        #[cfg_attr(feature = "serde", serde(rename = "faulty_los"))]
         pub faulty_los: Vec<SvId>,
     }
 
@@ -438,16 +435,16 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagIonoTileSatLos {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of an integrity message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: IntegritySSRHeader,
         /// Number of faulty LOS.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_faulty_los")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_faulty_los"))]
         pub n_faulty_los: u8,
         /// List of faulty LOS
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "faulty_los")))]
+        #[cfg_attr(feature = "serde", serde(rename = "faulty_los"))]
         pub faulty_los: Vec<SvId>,
     }
 
@@ -520,31 +517,31 @@ pub mod msg_ssr_flag_satellites {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagSatellites {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GNSS reference time of the observation used to generate the flag.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs_time"))]
         pub obs_time: GpsTimeSec,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u8,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u8,
         /// SSR Solution ID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_sol_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
         pub ssr_sol_id: u8,
         /// Chain and type of flag.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "chain_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "chain_id"))]
         pub chain_id: u8,
         /// Constellation ID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "const_id"))]
         pub const_id: u8,
         /// Number of faulty satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_faulty_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_faulty_sats"))]
         pub n_faulty_sats: u8,
         /// List of faulty satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "faulty_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "faulty_sats"))]
         pub faulty_sats: Vec<u8>,
     }
 
@@ -637,16 +634,16 @@ pub mod msg_ssr_flag_tropo_grid_points {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrFlagTropoGridPoints {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of an integrity message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: IntegritySSRHeader,
         /// Number of faulty grid points.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_faulty_points")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_faulty_points"))]
         pub n_faulty_points: u8,
         /// List of faulty grid points.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "faulty_points")))]
+        #[cfg_attr(feature = "serde", serde(rename = "faulty_points"))]
         pub faulty_points: Vec<u16>,
     }
 

@@ -36,7 +36,7 @@ pub mod gnss_input_type {
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssInputType {
         /// flags that store all relevant info specific to this sensor type.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -128,7 +128,7 @@ pub mod imu_input_type {
     #[derive(Debug, PartialEq, Clone)]
     pub struct ImuInputType {
         /// Instrument time, grade, and architecture for a sensor.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -328,36 +328,36 @@ pub mod msg_soln_meta {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMeta {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS time of week rounded to the nearest millisecond
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Position Dilution of Precision as per last available DOPS from PVT
         /// engine (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pdop"))]
         pub pdop: u16,
         /// Horizontal Dilution of Precision as per last available DOPS from PVT
         /// engine (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hdop"))]
         pub hdop: u16,
         /// Vertical Dilution of Precision as per last available DOPS from PVT
         /// engine (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vdop"))]
         pub vdop: u16,
         /// Age of corrections as per last available AGE_CORRECTIONS from PVT engine
         /// (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "age_corrections")))]
+        #[cfg_attr(feature = "serde", serde(rename = "age_corrections"))]
         pub age_corrections: u16,
         /// Age and Time Status of the last received valid GNSS solution.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "age_gnss")))]
+        #[cfg_attr(feature = "serde", serde(rename = "age_gnss"))]
         pub age_gnss: u32,
         /// Array of Metadata describing the sensors potentially involved in the
         /// solution. Each element in the array represents a single sensor type and
         /// consists of flags containing (meta)data pertaining to that specific
         /// single sensor. Refer to each (XX)InputType descriptor in the present
         /// doc.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_in")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sol_in"))]
         pub sol_in: Vec<SolutionInputType>,
     }
 
@@ -532,42 +532,42 @@ pub mod msg_soln_meta_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMetaDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Position Dilution of Precision as per last available DOPS from PVT
         /// engine (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pdop"))]
         pub pdop: u16,
         /// Horizontal Dilution of Precision as per last available DOPS from PVT
         /// engine (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hdop"))]
         pub hdop: u16,
         /// Vertical Dilution of Precision as per last available DOPS from PVT
         /// engine (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vdop"))]
         pub vdop: u16,
         /// Number of satellites as per last available solution from PVT engine
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Age of corrections as per last available AGE_CORRECTIONS from PVT engine
         /// (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "age_corrections")))]
+        #[cfg_attr(feature = "serde", serde(rename = "age_corrections"))]
         pub age_corrections: u16,
         /// State of alignment and the status and receipt of the alignment inputs
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "alignment_status")))]
+        #[cfg_attr(feature = "serde", serde(rename = "alignment_status"))]
         pub alignment_status: u8,
         /// Tow of last-used GNSS position measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "last_used_gnss_pos_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "last_used_gnss_pos_tow"))]
         pub last_used_gnss_pos_tow: u32,
         /// Tow of last-used GNSS velocity measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "last_used_gnss_vel_tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "last_used_gnss_vel_tow"))]
         pub last_used_gnss_vel_tow: u32,
         /// Array of Metadata describing the sensors potentially involved in the
         /// solution. Each element in the array represents a single sensor type and
         /// consists of flags containing (meta)data pertaining to that specific
         /// single sensor. Refer to each (XX)InputType descriptor in the present
         /// doc.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_in")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sol_in"))]
         pub sol_in: Vec<SolutionInputType>,
     }
 
@@ -740,7 +740,7 @@ pub mod odo_input_type {
     #[derive(Debug, PartialEq, Clone)]
     pub struct OdoInputType {
         /// Instrument ODO rate, grade, and quality.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -931,10 +931,10 @@ pub mod solution_input_type {
     #[derive(Debug, PartialEq, Clone)]
     pub struct SolutionInputType {
         /// The type of sensor
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sensor_type"))]
         pub sensor_type: u8,
         /// Refer to each InputType description
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 

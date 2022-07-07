@@ -109,7 +109,7 @@ impl std::fmt::Display for TryFromSbpError {
 impl std::error::Error for TryFromSbpError {}
 
 /// Represents any SBP message.
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize), serde(untagged))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, PartialEq, Clone)]
 #[non_exhaustive]
 pub enum Sbp {
@@ -121,6 +121,26 @@ pub enum Sbp {
     ((*- endfor *))
     /// Unknown message type
     Unknown( Unknown ),
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Sbp {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+        where
+            D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        match value.get("msg_type").and_then(|v| v.as_u64()).and_then(|v| v.try_into().ok()) {
+            ((*- for m in msgs *))
+            Some( (((m.msg_name)))::MESSAGE_TYPE) => {
+                serde_json::from_value::<(((m.msg_name)))>(value).map(Sbp::(((m.msg_name))) )
+            },
+            ((*- endfor *))
+            _ => {
+                serde_json::from_value::<Unknown>(value).map(Sbp::Unknown)
+            },
+        }.map_err(serde::de::Error::custom)
+    }
 }
 
 impl Sbp {

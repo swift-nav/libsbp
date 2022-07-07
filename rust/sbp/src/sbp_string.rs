@@ -70,8 +70,27 @@ where
     }
 }
 
-impl<T, E> serde::Deserialize for SbpString<T, E> where T: AsRef {}
+#[cfg(feature = "serde")]
+impl<'de, E> serde::Deserialize<'de> for SbpString<Vec<u8>, E> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let bytes = Vec::deserialize(deserializer)?;
+        Ok(SbpString::new(bytes))
+    }
+}
 
+#[cfg(feature = "serde")]
+impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], E> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let bytes = serde_big_array::BigArray::deserialize(deserializer)?;
+        Ok(SbpString::new(bytes))
+    }
+}
 impl<E, const LEN: usize> WireFormat for SbpString<[u8; LEN], E> {
     const MIN_LEN: usize = LEN;
 

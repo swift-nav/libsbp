@@ -61,19 +61,19 @@ pub mod bounds_header {
     #[derive(Debug, PartialEq, Clone)]
     pub struct BoundsHeader {
         /// GNSS reference time of the bound
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u8,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u8,
         /// Update interval between consecutive bounds. Similar to RTCM DF391.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// SSR Solution ID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sol_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sol_id"))]
         pub sol_id: u8,
     }
 
@@ -126,10 +126,10 @@ pub mod code_biases_content {
     pub struct CodeBiasesContent {
         /// Signal encoded following RTCM specifications (DF380, DF381, DF382 and
         /// DF467).
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "code")))]
+        #[cfg_attr(feature = "serde", serde(rename = "code"))]
         pub code: u8,
         /// Code bias value
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "value")))]
+        #[cfg_attr(feature = "serde", serde(rename = "value"))]
         pub value: i16,
     }
 
@@ -163,23 +163,23 @@ pub mod code_phase_biases_sat_sig {
     pub struct CodePhaseBiasesSatSig {
         /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
         /// DF488 (BDS) depending on the constellation.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sat_id"))]
         pub sat_id: u8,
         /// Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
         /// DF382 (Galileo) or DF467 (BDS) depending on the constellation.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "signal_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "signal_id"))]
         pub signal_id: u8,
         /// Code Bias Mean. Range: 0-1.275 m
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "code_bias_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "code_bias_bound_mu"))]
         pub code_bias_bound_mu: u8,
         /// Code Bias Standard Deviation.  Range: 0-1.275 m
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "code_bias_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "code_bias_bound_sig"))]
         pub code_bias_bound_sig: u8,
         /// Phase Bias Mean. Range: 0-1.275 m
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "phase_bias_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "phase_bias_bound_mu"))]
         pub phase_bias_bound_mu: u8,
         /// Phase Bias Standard Deviation.  Range: 0-1.275 m
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "phase_bias_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "phase_bias_bound_sig"))]
         pub phase_bias_bound_sig: u8,
     }
 
@@ -235,24 +235,24 @@ pub mod grid_definition_header_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct GridDefinitionHeaderDepA {
         /// region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "region_size_inverse")))]
+        #[cfg_attr(feature = "serde", serde(rename = "region_size_inverse"))]
         pub region_size_inverse: u8,
         /// grid height (deg) = grid width (deg) = area_width / region_size 0 is an
         /// invalid value.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "area_width")))]
+        #[cfg_attr(feature = "serde", serde(rename = "area_width"))]
         pub area_width: u16,
         /// North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat_nw_corner_enc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat_nw_corner_enc"))]
         pub lat_nw_corner_enc: u16,
         /// North-West corner longitude (deg) = region_size * lon_nw_corner_enc -
         /// 180
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon_nw_corner_enc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon_nw_corner_enc"))]
         pub lon_nw_corner_enc: u16,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u8,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u8,
     }
 
@@ -308,33 +308,30 @@ pub mod gridded_correction_header {
     #[derive(Debug, PartialEq, Clone)]
     pub struct GriddedCorrectionHeader {
         /// Unique identifier of the tile set this tile belongs to.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u16,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u16,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR atmospheric correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_atmo")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_atmo"))]
         pub iod_atmo: u8,
         /// Quality of the troposphere data. Encoded following RTCM DF389
         /// specification in units of m.
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "tropo_quality_indicator"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_quality_indicator"))]
         pub tropo_quality_indicator: u8,
     }
 
@@ -398,27 +395,24 @@ pub mod gridded_correction_header_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct GriddedCorrectionHeaderDepA {
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u16,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u16,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR atmospheric correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_atmo")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_atmo"))]
         pub iod_atmo: u8,
         /// Quality of the troposphere data. Encoded following RTCM DF389
         /// specification in units of m.
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "tropo_quality_indicator"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_quality_indicator"))]
         pub tropo_quality_indicator: u8,
     }
 
@@ -475,24 +469,24 @@ pub mod msg_ssr_code_biases {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrCodeBiases {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
         /// indicate a change in the SSR generating configuration
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_ssr")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_ssr"))]
         pub iod_ssr: u8,
         /// Code biases for the different satellite signals
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "biases")))]
+        #[cfg_attr(feature = "serde", serde(rename = "biases"))]
         pub biases: Vec<CodeBiasesContent>,
     }
 
@@ -573,22 +567,22 @@ pub mod msg_ssr_code_phase_biases_bounds {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrCodePhaseBiasesBounds {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a bounds message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: BoundsHeader,
         /// IOD of the SSR bound.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_iod"))]
         pub ssr_iod: u8,
         /// Constellation ID to which the SVs belong.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "const_id"))]
         pub const_id: u8,
         /// Number of satellite-signal couples.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats_signals")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats_signals"))]
         pub n_sats_signals: u8,
         /// Code and Phase Biases Bounds per Satellite-Signal couple.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "satellites_signals")))]
+        #[cfg_attr(feature = "serde", serde(rename = "satellites_signals"))]
         pub satellites_signals: Vec<CodePhaseBiasesSatSig>,
     }
 
@@ -675,19 +669,19 @@ pub mod msg_ssr_gridded_correction {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrection {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a gridded correction message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: GriddedCorrectionHeader,
         /// Index of the grid point.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u16,
         /// Wet and hydrostatic vertical delays (mean, stddev).
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_delay_correction")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_delay_correction"))]
         pub tropo_delay_correction: TroposphericDelayCorrection,
         /// STEC residuals for each satellite (mean, stddev).
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_residuals")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_residuals"))]
         pub stec_residuals: Vec<STECResidual>,
     }
 
@@ -769,50 +763,47 @@ pub mod msg_ssr_gridded_correction_bounds {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrectionBounds {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a bounds message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: BoundsHeader,
         /// IOD of the correction.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod_atmo")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_iod_atmo"))]
         pub ssr_iod_atmo: u8,
         /// Set this tile belongs to.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// Tropo Quality Indicator. Similar to RTCM DF389.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_qi")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_qi"))]
         pub tropo_qi: u8,
         /// Index of the Grid Point.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "grid_point_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "grid_point_id"))]
         pub grid_point_id: u16,
         /// Tropospheric delay at grid point.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_delay_correction")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_delay_correction"))]
         pub tropo_delay_correction: TroposphericDelayCorrection,
         /// Vertical Hydrostatic Error Bound Mean.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_v_hydro_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_v_hydro_bound_mu"))]
         pub tropo_v_hydro_bound_mu: u8,
         /// Vertical Hydrostatic Error Bound StDev.
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "tropo_v_hydro_bound_sig"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_v_hydro_bound_sig"))]
         pub tropo_v_hydro_bound_sig: u8,
         /// Vertical Wet Error Bound Mean.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_v_wet_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_v_wet_bound_mu"))]
         pub tropo_v_wet_bound_mu: u8,
         /// Vertical Wet Error Bound StDev.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_v_wet_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_v_wet_bound_sig"))]
         pub tropo_v_wet_bound_sig: u8,
         /// Number of satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Array of STEC polynomial coefficients and its bounds for each space
         /// vehicle.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_sat_list")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_sat_list"))]
         pub stec_sat_list: Vec<STECSatElementIntegrity>,
     }
 
@@ -925,19 +916,19 @@ pub mod msg_ssr_gridded_correction_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrectionDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a Gridded Correction message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: GriddedCorrectionHeaderDepA,
         /// Index of the grid point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u16,
         /// Wet and hydrostatic vertical delays (mean, stddev)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_delay_correction")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_delay_correction"))]
         pub tropo_delay_correction: TroposphericDelayCorrection,
         /// STEC residuals for each satellite (mean, stddev)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_residuals")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_residuals"))]
         pub stec_residuals: Vec<STECResidual>,
     }
 
@@ -1014,19 +1005,19 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGriddedCorrectionNoStdDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a Gridded Correction message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: GriddedCorrectionHeaderDepA,
         /// Index of the grid point
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u16,
         /// Wet and hydrostatic vertical delays
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tropo_delay_correction")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tropo_delay_correction"))]
         pub tropo_delay_correction: TroposphericDelayCorrectionNoStd,
         /// STEC residuals for each satellite
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_residuals")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_residuals"))]
         pub stec_residuals: Vec<STECResidualNoStd>,
     }
 
@@ -1103,16 +1094,16 @@ pub mod msg_ssr_grid_definition_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrGridDefinitionDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a Gridded Correction message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: GridDefinitionHeaderDepA,
         /// Run Length Encode list of quadrants that contain valid data. The spec
         /// describes the encoding scheme in detail, but essentially the index of
         /// the quadrants that contain transitions between valid and invalid (and
         /// vice versa) are encoded as u8 integers.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rle_list")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rle_list"))]
         pub rle_list: Vec<u8>,
     }
 
@@ -1186,51 +1177,51 @@ pub mod msg_ssr_orbit_clock {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClock {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
         /// indicate a change in the SSR generating configuration
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_ssr")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_ssr"))]
         pub iod_ssr: u8,
         /// Issue of broadcast ephemeris data or IODCRC (Beidou)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod"))]
         pub iod: u32,
         /// Orbit radial delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "radial")))]
+        #[cfg_attr(feature = "serde", serde(rename = "radial"))]
         pub radial: i32,
         /// Orbit along delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "along")))]
+        #[cfg_attr(feature = "serde", serde(rename = "along"))]
         pub along: i32,
         /// Orbit along delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cross")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cross"))]
         pub cross: i32,
         /// Velocity of orbit radial delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_radial")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_radial"))]
         pub dot_radial: i32,
         /// Velocity of orbit along delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_along")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_along"))]
         pub dot_along: i32,
         /// Velocity of orbit cross delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_cross")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_cross"))]
         pub dot_cross: i32,
         /// C0 polynomial coefficient for correction of broadcast satellite clock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c0"))]
         pub c0: i32,
         /// C1 polynomial coefficient for correction of broadcast satellite clock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c1"))]
         pub c1: i32,
         /// C2 polynomial coefficient for correction of broadcast satellite clock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c2"))]
         pub c2: i32,
     }
 
@@ -1355,22 +1346,22 @@ pub mod msg_ssr_orbit_clock_bounds {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClockBounds {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a bounds message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: BoundsHeader,
         /// IOD of the SSR bound.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_iod"))]
         pub ssr_iod: u8,
         /// Constellation ID to which the SVs belong.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "const_id"))]
         pub const_id: u8,
         /// Number of satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Orbit and Clock Bounds per Satellite
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orbit_clock_bounds")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orbit_clock_bounds"))]
         pub orbit_clock_bounds: Vec<OrbitClockBound>,
     }
 
@@ -1451,27 +1442,24 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClockBoundsDegradation {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a bounds message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: BoundsHeader,
         /// IOD of the SSR bound degradation parameter.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_iod"))]
         pub ssr_iod: u8,
         /// Constellation ID to which the SVs belong.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "const_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "const_id"))]
         pub const_id: u8,
         /// Satellite Bit Mask. Put 1 for each satellite where the following
         /// degradation parameters are applicable, 0 otherwise. Encoded following
         /// RTCM DF394 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_bitmask")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sat_bitmask"))]
         pub sat_bitmask: u64,
         /// Orbit and Clock Bounds Degradation Parameters
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "orbit_clock_bounds_degradation"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "orbit_clock_bounds_degradation"))]
         pub orbit_clock_bounds_degradation: OrbitClockBoundDegradation,
     }
 
@@ -1552,51 +1540,51 @@ pub mod msg_ssr_orbit_clock_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrOrbitClockDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
         /// indicate a change in the SSR generating configuration
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_ssr")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_ssr"))]
         pub iod_ssr: u8,
         /// Issue of broadcast ephemeris data
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod"))]
         pub iod: u8,
         /// Orbit radial delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "radial")))]
+        #[cfg_attr(feature = "serde", serde(rename = "radial"))]
         pub radial: i32,
         /// Orbit along delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "along")))]
+        #[cfg_attr(feature = "serde", serde(rename = "along"))]
         pub along: i32,
         /// Orbit along delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cross")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cross"))]
         pub cross: i32,
         /// Velocity of orbit radial delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_radial")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_radial"))]
         pub dot_radial: i32,
         /// Velocity of orbit along delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_along")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_along"))]
         pub dot_along: i32,
         /// Velocity of orbit cross delta correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_cross")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_cross"))]
         pub dot_cross: i32,
         /// C0 polynomial coefficient for correction of broadcast satellite clock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c0"))]
         pub c0: i32,
         /// C1 polynomial coefficient for correction of broadcast satellite clock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c1")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c1"))]
         pub c1: i32,
         /// C2 polynomial coefficient for correction of broadcast satellite clock
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "c2")))]
+        #[cfg_attr(feature = "serde", serde(rename = "c2"))]
         pub c2: i32,
     }
 
@@ -1721,36 +1709,36 @@ pub mod msg_ssr_phase_biases {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrPhaseBiases {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
         /// indicate a change in the SSR generating configuration
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_ssr")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_ssr"))]
         pub iod_ssr: u8,
         /// Indicator for the dispersive phase biases property.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dispersive_bias")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dispersive_bias"))]
         pub dispersive_bias: u8,
         /// Consistency indicator for Melbourne-Wubbena linear combinations
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mw_consistency")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mw_consistency"))]
         pub mw_consistency: u8,
         /// Satellite yaw angle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "yaw")))]
+        #[cfg_attr(feature = "serde", serde(rename = "yaw"))]
         pub yaw: u16,
         /// Satellite yaw angle rate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "yaw_rate")))]
+        #[cfg_attr(feature = "serde", serde(rename = "yaw_rate"))]
         pub yaw_rate: i8,
         /// Phase biases corrections for a satellite being tracked.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "biases")))]
+        #[cfg_attr(feature = "serde", serde(rename = "biases"))]
         pub biases: Vec<PhaseBiasesContent>,
     }
 
@@ -1847,10 +1835,10 @@ pub mod msg_ssr_satellite_apc {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrSatelliteApc {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Satellite antenna phase center corrections
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "apc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "apc"))]
         pub apc: Vec<SatelliteAPC>,
     }
 
@@ -1915,25 +1903,25 @@ pub mod msg_ssr_stec_correction {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrStecCorrection {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a STEC correction with bounds message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: BoundsHeader,
         /// IOD of the SSR atmospheric correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod_atmo")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_iod_atmo"))]
         pub ssr_iod_atmo: u8,
         /// Tile set ID
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Tile ID
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// Number of satellites.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Array of STEC polynomial coefficients for each space vehicle.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_sat_list")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_sat_list"))]
         pub stec_sat_list: Vec<STECSatElement>,
     }
 
@@ -2027,13 +2015,13 @@ pub mod msg_ssr_stec_correction_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrStecCorrectionDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a STEC polynomial coefficient message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: STECHeader,
         /// Array of STEC polynomial coefficients for each space vehicle.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_sat_list")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_sat_list"))]
         pub stec_sat_list: Vec<STECSatElement>,
     }
 
@@ -2101,13 +2089,13 @@ pub mod msg_ssr_stec_correction_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrStecCorrectionDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Header of a STEC message
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "header")))]
+        #[cfg_attr(feature = "serde", serde(rename = "header"))]
         pub header: STECHeaderDepA,
         /// Array of STEC information for each space vehicle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_sat_list")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_sat_list"))]
         pub stec_sat_list: Vec<STECSatElement>,
     }
 
@@ -2186,17 +2174,17 @@ pub mod msg_ssr_tile_definition {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrTileDefinition {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// SSR Solution ID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_sol_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
         pub ssr_sol_id: u8,
         /// Unique identifier of the tile set this tile belongs to.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
         /// See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// North-West corner correction point latitude.
         ///
@@ -2206,7 +2194,7 @@ pub mod msg_ssr_tile_definition {
         /// N = floor((X / 90) * 2^14)
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corner_nw_lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corner_nw_lat"))]
         pub corner_nw_lat: i16,
         /// North-West corner correction point longitude.
         ///
@@ -2216,27 +2204,27 @@ pub mod msg_ssr_tile_definition {
         /// N = floor((X / 180) * 2^15)
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corner_nw_lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corner_nw_lon"))]
         pub corner_nw_lon: i16,
         /// Spacing of the correction points in the latitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "spacing_lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "spacing_lat"))]
         pub spacing_lat: u16,
         /// Spacing of the correction points in the longitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "spacing_lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "spacing_lon"))]
         pub spacing_lon: u16,
         /// Number of steps in the latitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rows")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rows"))]
         pub rows: u16,
         /// Number of steps in the longitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cols")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cols"))]
         pub cols: u16,
         /// Specifies the availability of correction data at the correction points
         /// in the array.
@@ -2253,7 +2241,7 @@ pub mod msg_ssr_tile_definition {
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
         /// definition of the bits is inverted.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bitmask")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bitmask"))]
         pub bitmask: u64,
     }
 
@@ -2365,14 +2353,14 @@ pub mod msg_ssr_tile_definition_dep {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSsrTileDefinitionDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Unique identifier of the tile set this tile belongs to.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
         /// See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// North-West corner correction point latitude.
         ///
@@ -2382,7 +2370,7 @@ pub mod msg_ssr_tile_definition_dep {
         /// N = floor((X / 90) * 2^14)
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corner_nw_lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corner_nw_lat"))]
         pub corner_nw_lat: i16,
         /// North-West corner correction point longitude.
         ///
@@ -2392,27 +2380,27 @@ pub mod msg_ssr_tile_definition_dep {
         /// N = floor((X / 180) * 2^15)
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "corner_nw_lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "corner_nw_lon"))]
         pub corner_nw_lon: i16,
         /// Spacing of the correction points in the latitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "spacing_lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "spacing_lat"))]
         pub spacing_lat: u16,
         /// Spacing of the correction points in the longitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "spacing_lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "spacing_lon"))]
         pub spacing_lon: u16,
         /// Number of steps in the latitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rows")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rows"))]
         pub rows: u16,
         /// Number of steps in the longitude direction.
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cols")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cols"))]
         pub cols: u16,
         /// Specifies the availability of correction data at the correction points
         /// in the array.
@@ -2429,7 +2417,7 @@ pub mod msg_ssr_tile_definition_dep {
         ///
         /// See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
         /// definition of the bits is inverted.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bitmask")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bitmask"))]
         pub bitmask: u64,
     }
 
@@ -2531,31 +2519,31 @@ pub mod orbit_clock_bound {
     pub struct OrbitClockBound {
         /// Satellite ID. Similar to either RTCM DF068 (GPS), DF252 (Galileo), or
         /// DF488 (BDS) depending on the constellation.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sat_id"))]
         pub sat_id: u8,
         /// Mean Radial. See Note 1.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_radial_bound_mu"))]
         pub orb_radial_bound_mu: u8,
         /// Mean Along-Track. See Note 1.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_along_bound_mu"))]
         pub orb_along_bound_mu: u8,
         /// Mean Cross-Track. See Note 1.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_cross_bound_mu"))]
         pub orb_cross_bound_mu: u8,
         /// Standard Deviation Radial. See Note 2.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_radial_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_radial_bound_sig"))]
         pub orb_radial_bound_sig: u8,
         /// Standard Deviation Along-Track. See Note 2.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_along_bound_sig"))]
         pub orb_along_bound_sig: u8,
         /// Standard Deviation Cross-Track. See Note 2.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_cross_bound_sig"))]
         pub orb_cross_bound_sig: u8,
         /// Clock Bound Mean. See Note 1.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_bound_mu"))]
         pub clock_bound_mu: u8,
         /// Clock Bound Standard Deviation. See Note 2.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_bound_sig"))]
         pub clock_bound_sig: u8,
     }
 
@@ -2622,43 +2610,31 @@ pub mod orbit_clock_bound_degradation {
     #[derive(Debug, PartialEq, Clone)]
     pub struct OrbitClockBoundDegradation {
         /// Orbit Bound Mean Radial First derivative. Range: 0-0.255 m/s
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "orb_radial_bound_mu_dot"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_radial_bound_mu_dot"))]
         pub orb_radial_bound_mu_dot: u8,
         /// Orbit Bound Mean Along-Track First derivative. Range: 0-0.255 m/s
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_along_bound_mu_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_along_bound_mu_dot"))]
         pub orb_along_bound_mu_dot: u8,
         /// Orbit Bound Mean Cross-Track First derivative. Range: 0-0.255 m/s
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orb_cross_bound_mu_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_cross_bound_mu_dot"))]
         pub orb_cross_bound_mu_dot: u8,
         /// Orbit Bound Standard Deviation Radial First derivative. Range: 0-0.255
         /// m/s
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "orb_radial_bound_sig_dot"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_radial_bound_sig_dot"))]
         pub orb_radial_bound_sig_dot: u8,
         /// Orbit Bound Standard Deviation Along-Track First derivative. Range:
         /// 0-0.255 m/s
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "orb_along_bound_sig_dot"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_along_bound_sig_dot"))]
         pub orb_along_bound_sig_dot: u8,
         /// Orbit Bound Standard Deviation Cross-Track First derivative. Range:
         /// 0-0.255 m/s
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "orb_cross_bound_sig_dot"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "orb_cross_bound_sig_dot"))]
         pub orb_cross_bound_sig_dot: u8,
         /// Clock Bound Mean First derivative. Range: 0-0.255 m/s
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_mu_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_bound_mu_dot"))]
         pub clock_bound_mu_dot: u8,
         /// Clock Bound Standard Deviation First derivative. Range: 0-0.255 m/s
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "clock_bound_sig_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "clock_bound_sig_dot"))]
         pub clock_bound_sig_dot: u8,
     }
 
@@ -2722,23 +2698,20 @@ pub mod phase_biases_content {
     pub struct PhaseBiasesContent {
         /// Signal encoded following RTCM specifications (DF380, DF381, DF382 and
         /// DF467)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "code")))]
+        #[cfg_attr(feature = "serde", serde(rename = "code"))]
         pub code: u8,
         /// Indicator for integer property
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "integer_indicator")))]
+        #[cfg_attr(feature = "serde", serde(rename = "integer_indicator"))]
         pub integer_indicator: u8,
         /// Indicator for two groups of Wide-Lane(s) integer property
-        #[cfg_attr(
-            feature = "serde",
-            serde(rename(serialize = "widelane_integer_indicator"))
-        )]
+        #[cfg_attr(feature = "serde", serde(rename = "widelane_integer_indicator"))]
         pub widelane_integer_indicator: u8,
         /// Signal phase discontinuity counter. Increased for every discontinuity in
         /// phase.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "discontinuity_counter")))]
+        #[cfg_attr(feature = "serde", serde(rename = "discontinuity_counter"))]
         pub discontinuity_counter: u8,
         /// Phase bias for specified signal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bias")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bias"))]
         pub bias: i32,
     }
 
@@ -2791,26 +2764,26 @@ pub mod stec_header {
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECHeader {
         /// Unique identifier of the tile set this tile belongs to.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_set_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
         /// Unique identifier of this tile in the tile set.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tile_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
         pub tile_id: u16,
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u8,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u8,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR atmospheric correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_atmo")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_atmo"))]
         pub iod_atmo: u8,
     }
 
@@ -2871,20 +2844,20 @@ pub mod stec_header_dep_a {
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECHeaderDepA {
         /// GNSS reference time of the correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: GpsTimeSec,
         /// Number of messages in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_msgs"))]
         pub num_msgs: u8,
         /// Position of this message in the dataset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seq_num")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u8,
         /// Update interval between consecutive corrections. Encoded following RTCM
         /// DF391 specification.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "update_interval")))]
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
         pub update_interval: u8,
         /// IOD of the SSR atmospheric correction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "iod_atmo")))]
+        #[cfg_attr(feature = "serde", serde(rename = "iod_atmo"))]
         pub iod_atmo: u8,
     }
 
@@ -2936,14 +2909,14 @@ pub mod stec_residual {
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECResidual {
         /// space vehicle identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sv_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sv_id"))]
         pub sv_id: SvId,
         /// STEC residual
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "residual"))]
         pub residual: i16,
         /// Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
         /// (3^class * (1 + value/16) - 1) * 10 TECU
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stddev")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stddev"))]
         pub stddev: u8,
     }
 
@@ -2986,10 +2959,10 @@ pub mod stec_residual_no_std {
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECResidualNoStd {
         /// space vehicle identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sv_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sv_id"))]
         pub sv_id: SvId,
         /// STEC residual
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "residual"))]
         pub residual: i16,
     }
 
@@ -3026,15 +2999,15 @@ pub mod stec_sat_element {
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECSatElement {
         /// Unique space vehicle identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sv_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sv_id"))]
         pub sv_id: SvId,
         /// Quality of the STEC data. Encoded following RTCM DF389 specification but
         /// in units of TECU instead of m.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_quality_indicator")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_quality_indicator"))]
         pub stec_quality_indicator: u8,
         /// Coefficients of the STEC polynomial in the order of C00, C01, C10, C11.
         /// C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_coeff")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_coeff"))]
         pub stec_coeff: [i16; 4],
     }
 
@@ -3077,19 +3050,19 @@ pub mod stec_sat_element_integrity {
     #[derive(Debug, PartialEq, Clone)]
     pub struct STECSatElementIntegrity {
         /// STEC residuals (mean, stddev)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_residual"))]
         pub stec_residual: STECResidual,
         /// Error Bound Mean. See Note 1.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_mu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_bound_mu"))]
         pub stec_bound_mu: u8,
         /// Error Bound StDev. See Note 1.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_sig")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_bound_sig"))]
         pub stec_bound_sig: u8,
         /// Error Bound Mean First derivative.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_mu_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_bound_mu_dot"))]
         pub stec_bound_mu_dot: u8,
         /// Error Bound StDev First derivative.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stec_bound_sig_dot")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stec_bound_sig_dot"))]
         pub stec_bound_sig_dot: u8,
     }
 
@@ -3141,22 +3114,22 @@ pub mod satellite_apc {
     #[derive(Debug, PartialEq, Clone)]
     pub struct SatelliteAPC {
         /// GNSS signal identifier (16 bit)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// Additional satellite information
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat_info")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sat_info"))]
         pub sat_info: u8,
         /// Satellite Code, as defined by IGS. Typically the space vehicle number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "svn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "svn"))]
         pub svn: u16,
         /// Mean phase center offset, X Y and Z axes. See IGS ANTEX file format
         /// description for coordinate system definition.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pco")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pco"))]
         pub pco: [i16; 3],
         /// Elevation dependent phase center variations. First element is 0 degrees
         /// separation from the Z axis, subsequent elements represent elevation
         /// variations in 1 degree increments.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pcv")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pcv"))]
         pub pcv: [i8; 21],
     }
 
@@ -3344,14 +3317,14 @@ pub mod tropospheric_delay_correction {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TroposphericDelayCorrection {
         /// Hydrostatic vertical delay. Add 2.3 m to get actual value.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hydro")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hydro"))]
         pub hydro: i16,
         /// Wet vertical delay. Add 0.252 m to get actual value.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wet")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wet"))]
         pub wet: i8,
         /// Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
         /// (3^class * (1 + value/16) - 1) mm
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stddev")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stddev"))]
         pub stddev: u8,
     }
 
@@ -3394,10 +3367,10 @@ pub mod tropospheric_delay_correction_no_std {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TroposphericDelayCorrectionNoStd {
         /// Hydrostatic vertical delay
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hydro")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hydro"))]
         pub hydro: i16,
         /// Wet vertical delay
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wet")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wet"))]
         pub wet: i8,
     }
 

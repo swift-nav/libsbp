@@ -23,13 +23,13 @@ pub mod msg_ed25519_certificate {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// ED25519 certificate, split over multiple messages
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEd25519Certificate {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stub"))]
         pub stub: Vec<u8>,
     }
 
@@ -90,13 +90,13 @@ pub mod msg_ed25519_signature {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
     /// ED25519 signature for groups of RTCM messages
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEd25519Signature {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stub")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stub"))]
         pub stub: Vec<u8>,
     }
 

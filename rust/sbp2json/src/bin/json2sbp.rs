@@ -35,10 +35,14 @@ struct Options {
     /// Stop on first error encountered
     #[clap(long)]
     fatal_errors: bool,
+
+    /// From fields
+    #[clap(long)]
+    from_fields: bool,
 }
 
 fn main() -> Result<()> {
-    let options = Options::parse();
+    let options: Options = Options::parse();
 
     if options.debug {
         std::env::set_var("RUST_LOG", "debug");
@@ -56,5 +60,11 @@ fn main() -> Result<()> {
         _ => Box::new(io::stdout().lock()),
     };
 
-    json2sbp(stdin, stdout, options.buffered, options.fatal_errors)
+    json2sbp(
+        stdin,
+        stdout,
+        options.buffered,
+        options.fatal_errors,
+        options.from_fields,
+    )
 }

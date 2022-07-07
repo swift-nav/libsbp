@@ -31,19 +31,19 @@ pub mod msg_sbas_raw {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSbasRaw {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GNSS signal identifier.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
         /// GPS time-of-week at the start of the data block.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// SBAS message type (0-63)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "message_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "message_type"))]
         pub message_type: u8,
         /// Raw SBAS data field of 212 bits (last byte padded with zeros).
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
+        #[cfg_attr(feature = "serde", serde(rename = "data"))]
         pub data: [u8; 27],
     }
 

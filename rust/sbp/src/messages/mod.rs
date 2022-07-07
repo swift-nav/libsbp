@@ -345,11 +345,7 @@ impl std::fmt::Display for TryFromSbpError {
 impl std::error::Error for TryFromSbpError {}
 
 /// Represents any SBP message.
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize),
-    serde(untagged)
-)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, PartialEq, Clone)]
 #[non_exhaustive]
 pub enum Sbp {
@@ -797,6 +793,718 @@ pub enum Sbp {
     MsgHeartbeat(MsgHeartbeat),
     /// Unknown message type
     Unknown(Unknown),
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Sbp {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let value = serde_json::Value::deserialize(deserializer)?;
+        match value
+            .get("msg_type")
+            .and_then(|v| v.as_u64())
+            .and_then(|v| v.try_into().ok())
+        {
+            Some(MsgPrintDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPrintDep>(value).map(Sbp::MsgPrintDep)
+            }
+            Some(MsgTrackingStateDetailedDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingStateDetailedDep>(value)
+                    .map(Sbp::MsgTrackingStateDetailedDep)
+            }
+            Some(MsgTrackingStateDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingStateDepB>(value).map(Sbp::MsgTrackingStateDepB)
+            }
+            Some(MsgAcqResultDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAcqResultDepB>(value).map(Sbp::MsgAcqResultDepB)
+            }
+            Some(MsgAcqResultDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAcqResultDepA>(value).map(Sbp::MsgAcqResultDepA)
+            }
+            Some(MsgTrackingStateDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingStateDepA>(value).map(Sbp::MsgTrackingStateDepA)
+            }
+            Some(MsgThreadState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgThreadState>(value).map(Sbp::MsgThreadState)
+            }
+            Some(MsgUartStateDepa::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgUartStateDepa>(value).map(Sbp::MsgUartStateDepa)
+            }
+            Some(MsgIarState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgIarState>(value).map(Sbp::MsgIarState)
+            }
+            Some(MsgEphemerisDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisDepA>(value).map(Sbp::MsgEphemerisDepA)
+            }
+            Some(MsgMaskSatelliteDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgMaskSatelliteDep>(value).map(Sbp::MsgMaskSatelliteDep)
+            }
+            Some(MsgTrackingIqDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingIqDepA>(value).map(Sbp::MsgTrackingIqDepA)
+            }
+            Some(MsgUartState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgUartState>(value).map(Sbp::MsgUartState)
+            }
+            Some(MsgAcqSvProfileDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAcqSvProfileDep>(value).map(Sbp::MsgAcqSvProfileDep)
+            }
+            Some(MsgAcqResultDepC::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAcqResultDepC>(value).map(Sbp::MsgAcqResultDepC)
+            }
+            Some(MsgTrackingStateDetailedDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingStateDetailedDepA>(value)
+                    .map(Sbp::MsgTrackingStateDetailedDepA)
+            }
+            Some(MsgResetFilters::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgResetFilters>(value).map(Sbp::MsgResetFilters)
+            }
+            Some(MsgInitBaseDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgInitBaseDep>(value).map(Sbp::MsgInitBaseDep)
+            }
+            Some(MsgMaskSatellite::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgMaskSatellite>(value).map(Sbp::MsgMaskSatellite)
+            }
+            Some(MsgTrackingIqDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingIqDepB>(value).map(Sbp::MsgTrackingIqDepB)
+            }
+            Some(MsgTrackingIq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingIq>(value).map(Sbp::MsgTrackingIq)
+            }
+            Some(MsgAcqSvProfile::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAcqSvProfile>(value).map(Sbp::MsgAcqSvProfile)
+            }
+            Some(MsgAcqResult::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAcqResult>(value).map(Sbp::MsgAcqResult)
+            }
+            Some(MsgTrackingState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTrackingState>(value).map(Sbp::MsgTrackingState)
+            }
+            Some(MsgObsDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgObsDepB>(value).map(Sbp::MsgObsDepB)
+            }
+            Some(MsgBasePosLlh::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBasePosLlh>(value).map(Sbp::MsgBasePosLlh)
+            }
+            Some(MsgObsDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgObsDepA>(value).map(Sbp::MsgObsDepA)
+            }
+            Some(MsgEphemerisDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisDepB>(value).map(Sbp::MsgEphemerisDepB)
+            }
+            Some(MsgEphemerisDepC::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisDepC>(value).map(Sbp::MsgEphemerisDepC)
+            }
+            Some(MsgBasePosEcef::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBasePosEcef>(value).map(Sbp::MsgBasePosEcef)
+            }
+            Some(MsgObsDepC::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgObsDepC>(value).map(Sbp::MsgObsDepC)
+            }
+            Some(MsgObs::MESSAGE_TYPE) => serde_json::from_value::<MsgObs>(value).map(Sbp::MsgObs),
+            Some(MsgSpecanDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSpecanDep>(value).map(Sbp::MsgSpecanDep)
+            }
+            Some(MsgSpecan::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSpecan>(value).map(Sbp::MsgSpecan)
+            }
+            Some(MsgMeasurementState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgMeasurementState>(value).map(Sbp::MsgMeasurementState)
+            }
+            Some(MsgSetTime::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSetTime>(value).map(Sbp::MsgSetTime)
+            }
+            Some(MsgAlmanac::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAlmanac>(value).map(Sbp::MsgAlmanac)
+            }
+            Some(MsgAlmanacGpsDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAlmanacGpsDep>(value).map(Sbp::MsgAlmanacGpsDep)
+            }
+            Some(MsgAlmanacGloDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAlmanacGloDep>(value).map(Sbp::MsgAlmanacGloDep)
+            }
+            Some(MsgAlmanacGps::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAlmanacGps>(value).map(Sbp::MsgAlmanacGps)
+            }
+            Some(MsgAlmanacGlo::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAlmanacGlo>(value).map(Sbp::MsgAlmanacGlo)
+            }
+            Some(MsgGloBiases::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGloBiases>(value).map(Sbp::MsgGloBiases)
+            }
+            Some(MsgEphemerisDepD::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisDepD>(value).map(Sbp::MsgEphemerisDepD)
+            }
+            Some(MsgEphemerisGpsDepE::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGpsDepE>(value).map(Sbp::MsgEphemerisGpsDepE)
+            }
+            Some(MsgEphemerisSbasDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisSbasDepA>(value).map(Sbp::MsgEphemerisSbasDepA)
+            }
+            Some(MsgEphemerisGloDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGloDepA>(value).map(Sbp::MsgEphemerisGloDepA)
+            }
+            Some(MsgEphemerisSbasDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisSbasDepB>(value).map(Sbp::MsgEphemerisSbasDepB)
+            }
+            Some(MsgEphemerisGloDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGloDepB>(value).map(Sbp::MsgEphemerisGloDepB)
+            }
+            Some(MsgEphemerisGpsDepF::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGpsDepF>(value).map(Sbp::MsgEphemerisGpsDepF)
+            }
+            Some(MsgEphemerisGloDepC::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGloDepC>(value).map(Sbp::MsgEphemerisGloDepC)
+            }
+            Some(MsgEphemerisGloDepD::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGloDepD>(value).map(Sbp::MsgEphemerisGloDepD)
+            }
+            Some(MsgEphemerisBds::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisBds>(value).map(Sbp::MsgEphemerisBds)
+            }
+            Some(MsgEphemerisGps::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGps>(value).map(Sbp::MsgEphemerisGps)
+            }
+            Some(MsgEphemerisGlo::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGlo>(value).map(Sbp::MsgEphemerisGlo)
+            }
+            Some(MsgEphemerisSbas::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisSbas>(value).map(Sbp::MsgEphemerisSbas)
+            }
+            Some(MsgEphemerisGal::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGal>(value).map(Sbp::MsgEphemerisGal)
+            }
+            Some(MsgEphemerisQzss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisQzss>(value).map(Sbp::MsgEphemerisQzss)
+            }
+            Some(MsgIono::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgIono>(value).map(Sbp::MsgIono)
+            }
+            Some(MsgSvConfigurationGpsDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSvConfigurationGpsDep>(value)
+                    .map(Sbp::MsgSvConfigurationGpsDep)
+            }
+            Some(MsgGroupDelayDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGroupDelayDepA>(value).map(Sbp::MsgGroupDelayDepA)
+            }
+            Some(MsgGroupDelayDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGroupDelayDepB>(value).map(Sbp::MsgGroupDelayDepB)
+            }
+            Some(MsgGroupDelay::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGroupDelay>(value).map(Sbp::MsgGroupDelay)
+            }
+            Some(MsgEphemerisGalDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEphemerisGalDepA>(value).map(Sbp::MsgEphemerisGalDepA)
+            }
+            Some(MsgGnssCapb::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGnssCapb>(value).map(Sbp::MsgGnssCapb)
+            }
+            Some(MsgSvAzEl::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSvAzEl>(value).map(Sbp::MsgSvAzEl)
+            }
+            Some(MsgSettingsWrite::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsWrite>(value).map(Sbp::MsgSettingsWrite)
+            }
+            Some(MsgSettingsSave::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsSave>(value).map(Sbp::MsgSettingsSave)
+            }
+            Some(MsgSettingsReadByIndexReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsReadByIndexReq>(value)
+                    .map(Sbp::MsgSettingsReadByIndexReq)
+            }
+            Some(MsgFileioReadResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioReadResp>(value).map(Sbp::MsgFileioReadResp)
+            }
+            Some(MsgSettingsReadReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsReadReq>(value).map(Sbp::MsgSettingsReadReq)
+            }
+            Some(MsgSettingsReadResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsReadResp>(value).map(Sbp::MsgSettingsReadResp)
+            }
+            Some(MsgSettingsReadByIndexDone::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsReadByIndexDone>(value)
+                    .map(Sbp::MsgSettingsReadByIndexDone)
+            }
+            Some(MsgSettingsReadByIndexResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsReadByIndexResp>(value)
+                    .map(Sbp::MsgSettingsReadByIndexResp)
+            }
+            Some(MsgFileioReadReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioReadReq>(value).map(Sbp::MsgFileioReadReq)
+            }
+            Some(MsgFileioReadDirReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioReadDirReq>(value).map(Sbp::MsgFileioReadDirReq)
+            }
+            Some(MsgFileioReadDirResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioReadDirResp>(value).map(Sbp::MsgFileioReadDirResp)
+            }
+            Some(MsgFileioWriteResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioWriteResp>(value).map(Sbp::MsgFileioWriteResp)
+            }
+            Some(MsgFileioRemove::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioRemove>(value).map(Sbp::MsgFileioRemove)
+            }
+            Some(MsgFileioWriteReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioWriteReq>(value).map(Sbp::MsgFileioWriteReq)
+            }
+            Some(MsgSettingsRegister::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsRegister>(value).map(Sbp::MsgSettingsRegister)
+            }
+            Some(MsgSettingsWriteResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsWriteResp>(value).map(Sbp::MsgSettingsWriteResp)
+            }
+            Some(MsgBootloaderHandshakeDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBootloaderHandshakeDepA>(value)
+                    .map(Sbp::MsgBootloaderHandshakeDepA)
+            }
+            Some(MsgBootloaderJumpToApp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBootloaderJumpToApp>(value)
+                    .map(Sbp::MsgBootloaderJumpToApp)
+            }
+            Some(MsgResetDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgResetDep>(value).map(Sbp::MsgResetDep)
+            }
+            Some(MsgBootloaderHandshakeReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBootloaderHandshakeReq>(value)
+                    .map(Sbp::MsgBootloaderHandshakeReq)
+            }
+            Some(MsgBootloaderHandshakeResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBootloaderHandshakeResp>(value)
+                    .map(Sbp::MsgBootloaderHandshakeResp)
+            }
+            Some(MsgDeviceMonitor::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgDeviceMonitor>(value).map(Sbp::MsgDeviceMonitor)
+            }
+            Some(MsgReset::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgReset>(value).map(Sbp::MsgReset)
+            }
+            Some(MsgCommandReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCommandReq>(value).map(Sbp::MsgCommandReq)
+            }
+            Some(MsgCommandResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCommandResp>(value).map(Sbp::MsgCommandResp)
+            }
+            Some(MsgNetworkStateReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgNetworkStateReq>(value).map(Sbp::MsgNetworkStateReq)
+            }
+            Some(MsgNetworkStateResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgNetworkStateResp>(value).map(Sbp::MsgNetworkStateResp)
+            }
+            Some(MsgCommandOutput::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCommandOutput>(value).map(Sbp::MsgCommandOutput)
+            }
+            Some(MsgNetworkBandwidthUsage::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgNetworkBandwidthUsage>(value)
+                    .map(Sbp::MsgNetworkBandwidthUsage)
+            }
+            Some(MsgCellModemStatus::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCellModemStatus>(value).map(Sbp::MsgCellModemStatus)
+            }
+            Some(MsgFrontEndGain::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFrontEndGain>(value).map(Sbp::MsgFrontEndGain)
+            }
+            Some(MsgCwResults::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCwResults>(value).map(Sbp::MsgCwResults)
+            }
+            Some(MsgCwStart::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCwStart>(value).map(Sbp::MsgCwStart)
+            }
+            Some(MsgNapDeviceDnaResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgNapDeviceDnaResp>(value).map(Sbp::MsgNapDeviceDnaResp)
+            }
+            Some(MsgNapDeviceDnaReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgNapDeviceDnaReq>(value).map(Sbp::MsgNapDeviceDnaReq)
+            }
+            Some(MsgFlashDone::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFlashDone>(value).map(Sbp::MsgFlashDone)
+            }
+            Some(MsgFlashReadResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFlashReadResp>(value).map(Sbp::MsgFlashReadResp)
+            }
+            Some(MsgFlashErase::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFlashErase>(value).map(Sbp::MsgFlashErase)
+            }
+            Some(MsgStmFlashLockSector::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgStmFlashLockSector>(value)
+                    .map(Sbp::MsgStmFlashLockSector)
+            }
+            Some(MsgStmFlashUnlockSector::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgStmFlashUnlockSector>(value)
+                    .map(Sbp::MsgStmFlashUnlockSector)
+            }
+            Some(MsgStmUniqueIdResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgStmUniqueIdResp>(value).map(Sbp::MsgStmUniqueIdResp)
+            }
+            Some(MsgFlashProgram::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFlashProgram>(value).map(Sbp::MsgFlashProgram)
+            }
+            Some(MsgFlashReadReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFlashReadReq>(value).map(Sbp::MsgFlashReadReq)
+            }
+            Some(MsgStmUniqueIdReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgStmUniqueIdReq>(value).map(Sbp::MsgStmUniqueIdReq)
+            }
+            Some(MsgM25FlashWriteStatus::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgM25FlashWriteStatus>(value)
+                    .map(Sbp::MsgM25FlashWriteStatus)
+            }
+            Some(MsgGpsTimeDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGpsTimeDepA>(value).map(Sbp::MsgGpsTimeDepA)
+            }
+            Some(MsgExtEvent::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgExtEvent>(value).map(Sbp::MsgExtEvent)
+            }
+            Some(MsgGpsTime::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGpsTime>(value).map(Sbp::MsgGpsTime)
+            }
+            Some(MsgUtcTime::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgUtcTime>(value).map(Sbp::MsgUtcTime)
+            }
+            Some(MsgGpsTimeGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGpsTimeGnss>(value).map(Sbp::MsgGpsTimeGnss)
+            }
+            Some(MsgUtcTimeGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgUtcTimeGnss>(value).map(Sbp::MsgUtcTimeGnss)
+            }
+            Some(MsgSettingsRegisterResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSettingsRegisterResp>(value)
+                    .map(Sbp::MsgSettingsRegisterResp)
+            }
+            Some(MsgPosEcefDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosEcefDepA>(value).map(Sbp::MsgPosEcefDepA)
+            }
+            Some(MsgPosLlhDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosLlhDepA>(value).map(Sbp::MsgPosLlhDepA)
+            }
+            Some(MsgBaselineEcefDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBaselineEcefDepA>(value).map(Sbp::MsgBaselineEcefDepA)
+            }
+            Some(MsgBaselineNedDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBaselineNedDepA>(value).map(Sbp::MsgBaselineNedDepA)
+            }
+            Some(MsgVelEcefDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelEcefDepA>(value).map(Sbp::MsgVelEcefDepA)
+            }
+            Some(MsgVelNedDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelNedDepA>(value).map(Sbp::MsgVelNedDepA)
+            }
+            Some(MsgDopsDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgDopsDepA>(value).map(Sbp::MsgDopsDepA)
+            }
+            Some(MsgBaselineHeadingDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBaselineHeadingDepA>(value)
+                    .map(Sbp::MsgBaselineHeadingDepA)
+            }
+            Some(MsgDops::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgDops>(value).map(Sbp::MsgDops)
+            }
+            Some(MsgPosEcef::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosEcef>(value).map(Sbp::MsgPosEcef)
+            }
+            Some(MsgPosLlh::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosLlh>(value).map(Sbp::MsgPosLlh)
+            }
+            Some(MsgBaselineEcef::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBaselineEcef>(value).map(Sbp::MsgBaselineEcef)
+            }
+            Some(MsgBaselineNed::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBaselineNed>(value).map(Sbp::MsgBaselineNed)
+            }
+            Some(MsgVelEcef::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelEcef>(value).map(Sbp::MsgVelEcef)
+            }
+            Some(MsgVelNed::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelNed>(value).map(Sbp::MsgVelNed)
+            }
+            Some(MsgBaselineHeading::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgBaselineHeading>(value).map(Sbp::MsgBaselineHeading)
+            }
+            Some(MsgAgeCorrections::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAgeCorrections>(value).map(Sbp::MsgAgeCorrections)
+            }
+            Some(MsgPosLlhCov::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosLlhCov>(value).map(Sbp::MsgPosLlhCov)
+            }
+            Some(MsgVelNedCov::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelNedCov>(value).map(Sbp::MsgVelNedCov)
+            }
+            Some(MsgVelBody::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelBody>(value).map(Sbp::MsgVelBody)
+            }
+            Some(MsgPosEcefCov::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosEcefCov>(value).map(Sbp::MsgPosEcefCov)
+            }
+            Some(MsgVelEcefCov::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelEcefCov>(value).map(Sbp::MsgVelEcefCov)
+            }
+            Some(MsgProtectionLevelDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgProtectionLevelDepA>(value)
+                    .map(Sbp::MsgProtectionLevelDepA)
+            }
+            Some(MsgProtectionLevel::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgProtectionLevel>(value).map(Sbp::MsgProtectionLevel)
+            }
+            Some(MsgPosLlhAcc::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosLlhAcc>(value).map(Sbp::MsgPosLlhAcc)
+            }
+            Some(MsgVelCog::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelCog>(value).map(Sbp::MsgVelCog)
+            }
+            Some(MsgOrientQuat::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgOrientQuat>(value).map(Sbp::MsgOrientQuat)
+            }
+            Some(MsgOrientEuler::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgOrientEuler>(value).map(Sbp::MsgOrientEuler)
+            }
+            Some(MsgAngularRate::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAngularRate>(value).map(Sbp::MsgAngularRate)
+            }
+            Some(MsgPosEcefGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosEcefGnss>(value).map(Sbp::MsgPosEcefGnss)
+            }
+            Some(MsgPosLlhGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosLlhGnss>(value).map(Sbp::MsgPosLlhGnss)
+            }
+            Some(MsgVelEcefGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelEcefGnss>(value).map(Sbp::MsgVelEcefGnss)
+            }
+            Some(MsgVelNedGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelNedGnss>(value).map(Sbp::MsgVelNedGnss)
+            }
+            Some(MsgPosLlhCovGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosLlhCovGnss>(value).map(Sbp::MsgPosLlhCovGnss)
+            }
+            Some(MsgVelNedCovGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelNedCovGnss>(value).map(Sbp::MsgVelNedCovGnss)
+            }
+            Some(MsgPosEcefCovGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosEcefCovGnss>(value).map(Sbp::MsgPosEcefCovGnss)
+            }
+            Some(MsgVelEcefCovGnss::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgVelEcefCovGnss>(value).map(Sbp::MsgVelEcefCovGnss)
+            }
+            Some(MsgUtcLeapSecond::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgUtcLeapSecond>(value).map(Sbp::MsgUtcLeapSecond)
+            }
+            Some(MsgReferenceFrameParam::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgReferenceFrameParam>(value)
+                    .map(Sbp::MsgReferenceFrameParam)
+            }
+            Some(MsgNdbEvent::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgNdbEvent>(value).map(Sbp::MsgNdbEvent)
+            }
+            Some(MsgLog::MESSAGE_TYPE) => serde_json::from_value::<MsgLog>(value).map(Sbp::MsgLog),
+            Some(MsgFwd::MESSAGE_TYPE) => serde_json::from_value::<MsgFwd>(value).map(Sbp::MsgFwd),
+            Some(MsgSsrOrbitClockDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrOrbitClockDepA>(value).map(Sbp::MsgSsrOrbitClockDepA)
+            }
+            Some(MsgSsrOrbitClock::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrOrbitClock>(value).map(Sbp::MsgSsrOrbitClock)
+            }
+            Some(MsgSsrOrbitClockBounds::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrOrbitClockBounds>(value)
+                    .map(Sbp::MsgSsrOrbitClockBounds)
+            }
+            Some(MsgSsrOrbitClockBoundsDegradation::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrOrbitClockBoundsDegradation>(value)
+                    .map(Sbp::MsgSsrOrbitClockBoundsDegradation)
+            }
+            Some(MsgSsrCodeBiases::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrCodeBiases>(value).map(Sbp::MsgSsrCodeBiases)
+            }
+            Some(MsgSsrPhaseBiases::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrPhaseBiases>(value).map(Sbp::MsgSsrPhaseBiases)
+            }
+            Some(MsgSsrStecCorrectionDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrStecCorrectionDepA>(value)
+                    .map(Sbp::MsgSsrStecCorrectionDepA)
+            }
+            Some(MsgSsrCodePhaseBiasesBounds::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrCodePhaseBiasesBounds>(value)
+                    .map(Sbp::MsgSsrCodePhaseBiasesBounds)
+            }
+            Some(MsgSsrGriddedCorrectionNoStdDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrGriddedCorrectionNoStdDepA>(value)
+                    .map(Sbp::MsgSsrGriddedCorrectionNoStdDepA)
+            }
+            Some(MsgSsrGridDefinitionDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrGridDefinitionDepA>(value)
+                    .map(Sbp::MsgSsrGridDefinitionDepA)
+            }
+            Some(MsgSsrTileDefinitionDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrTileDefinitionDep>(value)
+                    .map(Sbp::MsgSsrTileDefinitionDep)
+            }
+            Some(MsgSsrTileDefinition::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrTileDefinition>(value).map(Sbp::MsgSsrTileDefinition)
+            }
+            Some(MsgSsrGriddedCorrectionDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrGriddedCorrectionDepA>(value)
+                    .map(Sbp::MsgSsrGriddedCorrectionDepA)
+            }
+            Some(MsgSsrStecCorrectionDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrStecCorrectionDep>(value)
+                    .map(Sbp::MsgSsrStecCorrectionDep)
+            }
+            Some(MsgSsrGriddedCorrection::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrGriddedCorrection>(value)
+                    .map(Sbp::MsgSsrGriddedCorrection)
+            }
+            Some(MsgSsrStecCorrection::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrStecCorrection>(value).map(Sbp::MsgSsrStecCorrection)
+            }
+            Some(MsgSsrGriddedCorrectionBounds::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrGriddedCorrectionBounds>(value)
+                    .map(Sbp::MsgSsrGriddedCorrectionBounds)
+            }
+            Some(MsgSsrSatelliteApc::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrSatelliteApc>(value).map(Sbp::MsgSsrSatelliteApc)
+            }
+            Some(MsgOsr::MESSAGE_TYPE) => serde_json::from_value::<MsgOsr>(value).map(Sbp::MsgOsr),
+            Some(MsgUserData::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgUserData>(value).map(Sbp::MsgUserData)
+            }
+            Some(MsgImuRaw::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgImuRaw>(value).map(Sbp::MsgImuRaw)
+            }
+            Some(MsgImuAux::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgImuAux>(value).map(Sbp::MsgImuAux)
+            }
+            Some(MsgMagRaw::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgMagRaw>(value).map(Sbp::MsgMagRaw)
+            }
+            Some(MsgOdometry::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgOdometry>(value).map(Sbp::MsgOdometry)
+            }
+            Some(MsgWheeltick::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgWheeltick>(value).map(Sbp::MsgWheeltick)
+            }
+            Some(MsgSsrFlagHighLevel::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrFlagHighLevel>(value).map(Sbp::MsgSsrFlagHighLevel)
+            }
+            Some(MsgSsrFlagSatellites::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrFlagSatellites>(value).map(Sbp::MsgSsrFlagSatellites)
+            }
+            Some(MsgSsrFlagTropoGridPoints::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrFlagTropoGridPoints>(value)
+                    .map(Sbp::MsgSsrFlagTropoGridPoints)
+            }
+            Some(MsgSsrFlagIonoGridPoints::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrFlagIonoGridPoints>(value)
+                    .map(Sbp::MsgSsrFlagIonoGridPoints)
+            }
+            Some(MsgSsrFlagIonoTileSatLos::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrFlagIonoTileSatLos>(value)
+                    .map(Sbp::MsgSsrFlagIonoTileSatLos)
+            }
+            Some(MsgSsrFlagIonoGridPointSatLos::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrFlagIonoGridPointSatLos>(value)
+                    .map(Sbp::MsgSsrFlagIonoGridPointSatLos)
+            }
+            Some(MsgEd25519Signature::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEd25519Signature>(value).map(Sbp::MsgEd25519Signature)
+            }
+            Some(MsgEd25519Certificate::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEd25519Certificate>(value)
+                    .map(Sbp::MsgEd25519Certificate)
+            }
+            Some(MsgFileioConfigReq::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioConfigReq>(value).map(Sbp::MsgFileioConfigReq)
+            }
+            Some(MsgFileioConfigResp::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgFileioConfigResp>(value).map(Sbp::MsgFileioConfigResp)
+            }
+            Some(MsgSbasRaw::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSbasRaw>(value).map(Sbp::MsgSbasRaw)
+            }
+            Some(MsgLinuxCpuStateDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxCpuStateDepA>(value).map(Sbp::MsgLinuxCpuStateDepA)
+            }
+            Some(MsgLinuxMemStateDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxMemStateDepA>(value).map(Sbp::MsgLinuxMemStateDepA)
+            }
+            Some(MsgLinuxSysStateDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxSysStateDepA>(value).map(Sbp::MsgLinuxSysStateDepA)
+            }
+            Some(MsgLinuxProcessSocketCounts::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxProcessSocketCounts>(value)
+                    .map(Sbp::MsgLinuxProcessSocketCounts)
+            }
+            Some(MsgLinuxProcessSocketQueues::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxProcessSocketQueues>(value)
+                    .map(Sbp::MsgLinuxProcessSocketQueues)
+            }
+            Some(MsgLinuxSocketUsage::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxSocketUsage>(value).map(Sbp::MsgLinuxSocketUsage)
+            }
+            Some(MsgLinuxProcessFdCount::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxProcessFdCount>(value)
+                    .map(Sbp::MsgLinuxProcessFdCount)
+            }
+            Some(MsgLinuxProcessFdSummary::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxProcessFdSummary>(value)
+                    .map(Sbp::MsgLinuxProcessFdSummary)
+            }
+            Some(MsgLinuxCpuState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxCpuState>(value).map(Sbp::MsgLinuxCpuState)
+            }
+            Some(MsgLinuxMemState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxMemState>(value).map(Sbp::MsgLinuxMemState)
+            }
+            Some(MsgLinuxSysState::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgLinuxSysState>(value).map(Sbp::MsgLinuxSysState)
+            }
+            Some(MsgStartup::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgStartup>(value).map(Sbp::MsgStartup)
+            }
+            Some(MsgDgnssStatus::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgDgnssStatus>(value).map(Sbp::MsgDgnssStatus)
+            }
+            Some(MsgInsStatus::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgInsStatus>(value).map(Sbp::MsgInsStatus)
+            }
+            Some(MsgCsacTelemetry::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCsacTelemetry>(value).map(Sbp::MsgCsacTelemetry)
+            }
+            Some(MsgCsacTelemetryLabels::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCsacTelemetryLabels>(value)
+                    .map(Sbp::MsgCsacTelemetryLabels)
+            }
+            Some(MsgInsUpdates::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgInsUpdates>(value).map(Sbp::MsgInsUpdates)
+            }
+            Some(MsgGnssTimeOffset::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGnssTimeOffset>(value).map(Sbp::MsgGnssTimeOffset)
+            }
+            Some(MsgPpsTime::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPpsTime>(value).map(Sbp::MsgPpsTime)
+            }
+            Some(MsgSensorAidEvent::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSensorAidEvent>(value).map(Sbp::MsgSensorAidEvent)
+            }
+            Some(MsgGroupMeta::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgGroupMeta>(value).map(Sbp::MsgGroupMeta)
+            }
+            Some(MsgSolnMeta::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSolnMeta>(value).map(Sbp::MsgSolnMeta)
+            }
+            Some(MsgSolnMetaDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSolnMetaDepA>(value).map(Sbp::MsgSolnMetaDepA)
+            }
+            Some(MsgStatusJournal::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgStatusJournal>(value).map(Sbp::MsgStatusJournal)
+            }
+            Some(MsgStatusReport::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgStatusReport>(value).map(Sbp::MsgStatusReport)
+            }
+            Some(MsgHeartbeat::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgHeartbeat>(value).map(Sbp::MsgHeartbeat)
+            }
+            _ => serde_json::from_value::<Unknown>(value).map(Sbp::Unknown),
+        }
+        .map_err(serde::de::Error::custom)
+    }
 }
 
 impl Sbp {

@@ -17,6 +17,16 @@ pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, 
     JsonDecoder::framed(input)
 }
 
+/// Deserialize the IO stream into an iterator of messages.
+pub fn iter_messages_from_fields<R: io::Read>(
+    input: R,
+) -> impl Iterator<Item = Result<Sbp, JsonError>> {
+    Deserializer::from_reader(input)
+        .into_iter()
+        .map(|msg| msg.map_err(JsonError::SerdeJsonError))
+        .inspect(|msg| println!("{:?}", msg))
+}
+
 /// Deserialize the IO stream into an iterator of [Json2JsonInput] messages.
 pub fn iter_json2json_messages<R: io::Read>(
     input: R,

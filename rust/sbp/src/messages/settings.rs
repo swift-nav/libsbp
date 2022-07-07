@@ -63,7 +63,7 @@ pub mod msg_settings_read_by_index_done {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadByIndexDone {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -127,11 +127,11 @@ pub mod msg_settings_read_by_index_req {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadByIndexReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// An index into the device settings, with values ranging from 0 to
         /// length(settings).
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u16,
     }
 
@@ -208,15 +208,15 @@ pub mod msg_settings_read_by_index_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadByIndexResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// An index into the device settings, with values ranging from 0 to
         /// length(settings)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u16,
         /// A NULL-terminated and delimited string with contents
         /// "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "setting"))]
         pub setting: SbpString<Vec<u8>, Multipart>,
     }
 
@@ -294,11 +294,11 @@ pub mod msg_settings_read_req {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// A NULL-terminated and NULL-delimited string with contents
         /// "SECTION_SETTING\0SETTING\0"
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "setting"))]
         pub setting: SbpString<Vec<u8>, Multipart>,
     }
 
@@ -371,11 +371,11 @@ pub mod msg_settings_read_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsReadResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// A NULL-terminated and NULL-delimited string with contents
         /// "SECTION_SETTING\0SETTING\0VALUE\0"
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "setting"))]
         pub setting: SbpString<Vec<u8>, Multipart>,
     }
 
@@ -445,11 +445,11 @@ pub mod msg_settings_register {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsRegister {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// A NULL-terminated and delimited string with contents
         /// "SECTION_SETTING\0SETTING\0VALUE".
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "setting"))]
         pub setting: SbpString<Vec<u8>, Multipart>,
     }
 
@@ -520,15 +520,15 @@ pub mod msg_settings_register_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsRegisterResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Register status
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        #[cfg_attr(feature = "serde", serde(rename = "status"))]
         pub status: u8,
         /// A NULL-terminated and delimited string with contents
         /// "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
         /// according to the status field.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "setting"))]
         pub setting: SbpString<Vec<u8>, Multipart>,
     }
 
@@ -668,7 +668,7 @@ pub mod msg_settings_save {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsSave {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -737,11 +737,11 @@ pub mod msg_settings_write {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsWrite {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// A NULL-terminated and NULL-delimited string with contents
         /// "SECTION_SETTING\0SETTING\0VALUE\0"
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "setting"))]
         pub setting: SbpString<Vec<u8>, Multipart>,
     }
 
@@ -815,14 +815,14 @@ pub mod msg_settings_write_resp {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSettingsWriteResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Write status
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        #[cfg_attr(feature = "serde", serde(rename = "status"))]
         pub status: u8,
         /// A NULL-terminated and delimited string with contents
         /// "SECTION_SETTING\0SETTING\0VALUE\0"
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "setting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "setting"))]
         pub setting: SbpString<Vec<u8>, Multipart>,
     }
 

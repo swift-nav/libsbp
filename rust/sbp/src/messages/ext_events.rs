@@ -31,23 +31,23 @@ pub mod msg_ext_event {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgExtEvent {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
         /// GPS time of week rounded to the nearest millisecond
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
         /// 500000)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ns_residual"))]
         pub ns_residual: i32,
         /// Flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// Pin number.  0..9 = DEBUG0..9.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pin")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pin"))]
         pub pin: u8,
     }
 

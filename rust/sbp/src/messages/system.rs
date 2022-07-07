@@ -45,14 +45,14 @@ pub mod msg_csac_telemetry {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCsacTelemetry {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Index representing the type of telemetry in use.  It is implementation
         /// defined.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "id"))]
         pub id: u8,
         /// Comma separated list of values as defined by the index
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "telemetry")))]
+        #[cfg_attr(feature = "serde", serde(rename = "telemetry"))]
         pub telemetry: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -125,14 +125,14 @@ pub mod msg_csac_telemetry_labels {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCsacTelemetryLabels {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Index representing the type of telemetry in use.  It is implementation
         /// defined.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "id"))]
         pub id: u8,
         /// Comma separated list of telemetry field values
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "telemetry_labels")))]
+        #[cfg_attr(feature = "serde", serde(rename = "telemetry_labels"))]
         pub telemetry_labels: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -205,19 +205,19 @@ pub mod msg_dgnss_status {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDgnssStatus {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// Latency of observation receipt
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "latency")))]
+        #[cfg_attr(feature = "serde", serde(rename = "latency"))]
         pub latency: u16,
         /// Number of signals from base station
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_signals")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_signals"))]
         pub num_signals: u8,
         /// Corrections source string
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "source")))]
+        #[cfg_attr(feature = "serde", serde(rename = "source"))]
         pub source: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -350,19 +350,19 @@ pub mod msg_gnss_time_offset {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGnssTimeOffset {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Weeks portion of the time offset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "weeks")))]
+        #[cfg_attr(feature = "serde", serde(rename = "weeks"))]
         pub weeks: i16,
         /// Milliseconds portion of the time offset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "milliseconds")))]
+        #[cfg_attr(feature = "serde", serde(rename = "milliseconds"))]
         pub milliseconds: i32,
         /// Microseconds portion of the time offset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "microseconds")))]
+        #[cfg_attr(feature = "serde", serde(rename = "microseconds"))]
         pub microseconds: i16,
         /// Status flags (reserved)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -444,20 +444,20 @@ pub mod msg_group_meta {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupMeta {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "group_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "group_id"))]
         pub group_id: u8,
         /// Status flags (reserved)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// Size of list group_msgs
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_group_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_group_msgs"))]
         pub n_group_msgs: u8,
         /// An in-order list of message types included in the Solution Group,
         /// including GROUP_META itself
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "group_msgs")))]
+        #[cfg_attr(feature = "serde", serde(rename = "group_msgs"))]
         pub group_msgs: Vec<u16>,
     }
 
@@ -596,10 +596,10 @@ pub mod msg_heartbeat {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgHeartbeat {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u32,
     }
 
@@ -939,10 +939,10 @@ pub mod msg_ins_status {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInsStatus {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u32,
     }
 
@@ -1379,28 +1379,28 @@ pub mod msg_ins_updates {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInsUpdates {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// GNSS position update status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gnsspos")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gnsspos"))]
         pub gnsspos: u8,
         /// GNSS velocity update status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gnssvel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gnssvel"))]
         pub gnssvel: u8,
         /// Wheelticks update status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wheelticks")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wheelticks"))]
         pub wheelticks: u8,
         /// Wheelticks update status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "speed")))]
+        #[cfg_attr(feature = "serde", serde(rename = "speed"))]
         pub speed: u8,
         /// NHC update status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "nhc")))]
+        #[cfg_attr(feature = "serde", serde(rename = "nhc"))]
         pub nhc: u8,
         /// Zero velocity update status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "zerovel")))]
+        #[cfg_attr(feature = "serde", serde(rename = "zerovel"))]
         pub zerovel: u8,
     }
 
@@ -1754,13 +1754,13 @@ pub mod msg_pps_time {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPpsTime {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Local time in microseconds
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: u64,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -1899,31 +1899,31 @@ pub mod msg_sensor_aid_event {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSensorAidEvent {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Update timestamp in milliseconds.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: u32,
         /// Sensor type
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sensor_type"))]
         pub sensor_type: u8,
         /// Sensor identifier
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_id")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sensor_id"))]
         pub sensor_id: u16,
         /// Reserved for future use
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sensor_state")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sensor_state"))]
         pub sensor_state: u8,
         /// Number of available measurements in this epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_available_meas")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_available_meas"))]
         pub n_available_meas: u8,
         /// Number of attempted measurements in this epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_attempted_meas")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_attempted_meas"))]
         pub n_attempted_meas: u8,
         /// Number of accepted measurements in this epoch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_accepted_meas")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_accepted_meas"))]
         pub n_accepted_meas: u8,
         /// Reserved for future use
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u32,
     }
 
@@ -2096,16 +2096,16 @@ pub mod msg_startup {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStartup {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Cause of startup
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cause")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cause"))]
         pub cause: u8,
         /// Startup type
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "startup_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "startup_type"))]
         pub startup_type: u8,
         /// Reserved
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
         pub reserved: u16,
     }
 
@@ -2282,24 +2282,24 @@ pub mod msg_status_journal {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStatusJournal {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Identity of reporting system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reporting_system")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reporting_system"))]
         pub reporting_system: u16,
         /// SBP protocol version
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sbp_version")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sbp_version"))]
         pub sbp_version: u16,
         /// Total number of status reports sent since system startup
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "total_status_reports")))]
+        #[cfg_attr(feature = "serde", serde(rename = "total_status_reports"))]
         pub total_status_reports: u32,
         /// Index and number of messages in this sequence. First nibble is the size
         /// of the sequence (n), second nibble is the zero-indexed counter (ith
         /// packet of n)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence_descriptor")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence_descriptor"))]
         pub sequence_descriptor: u8,
         /// Status journal
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "journal")))]
+        #[cfg_attr(feature = "serde", serde(rename = "journal"))]
         pub journal: Vec<StatusJournalItem>,
     }
 
@@ -2476,22 +2476,22 @@ pub mod msg_status_report {
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStatusReport {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Identity of reporting system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reporting_system")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reporting_system"))]
         pub reporting_system: u16,
         /// SBP protocol version
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sbp_version")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sbp_version"))]
         pub sbp_version: u16,
         /// Increments on each status report sent
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// Number of seconds since system start-up
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uptime")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uptime"))]
         pub uptime: u32,
         /// Reported status of individual subsystems
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "status")))]
+        #[cfg_attr(feature = "serde", serde(rename = "status"))]
         pub status: Vec<SubSystemReport>,
     }
 
@@ -2663,9 +2663,9 @@ pub mod status_journal_item {
     #[derive(Debug, PartialEq, Clone)]
     pub struct StatusJournalItem {
         /// Milliseconds since system startup
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uptime")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uptime"))]
         pub uptime: u32,
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "report")))]
+        #[cfg_attr(feature = "serde", serde(rename = "report"))]
         pub report: SubSystemReport,
     }
 
@@ -2703,13 +2703,13 @@ pub mod sub_system_report {
     #[derive(Debug, PartialEq, Clone)]
     pub struct SubSystemReport {
         /// Identity of reporting subsystem
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "component")))]
+        #[cfg_attr(feature = "serde", serde(rename = "component"))]
         pub component: u16,
         /// Generic form status report
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "generic")))]
+        #[cfg_attr(feature = "serde", serde(rename = "generic"))]
         pub generic: u8,
         /// Subsystem specific status code
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "specific")))]
+        #[cfg_attr(feature = "serde", serde(rename = "specific"))]
         pub specific: u8,
     }
 
