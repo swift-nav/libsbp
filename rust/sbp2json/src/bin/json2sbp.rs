@@ -36,7 +36,7 @@ struct Options {
     #[clap(long)]
     fatal_errors: bool,
 
-    /// From fields
+    /// Generate SBP from the json fields instead of the base64 encoded payload
     #[clap(long)]
     from_fields: bool,
 }

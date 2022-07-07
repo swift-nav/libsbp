@@ -17,7 +17,8 @@ pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, 
     JsonDecoder::framed(input)
 }
 
-/// Deserialize the IO stream into an iterator of messages.
+/// Deserialize the IO stream into an iterator of messages. Unlike [iter_messages], this function
+/// will use the fields of the JSON message, rather than the base64 encoded payload.
 pub fn iter_messages_from_fields<R: io::Read>(
     input: R,
 ) -> impl Iterator<Item = Result<Sbp, JsonError>> {

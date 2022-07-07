@@ -1,10 +1,8 @@
 use std::io::{Read, Write};
 
-use dencode::{IterSink, IterSinkExt};
-use sbp::json::JsonError;
 use sbp::{
     json::{Json2JsonEncoder, JsonEncoder},
-    Sbp, SbpEncoder,
+    SbpEncoder,
 };
 use serde_json::ser::Formatter;
 
