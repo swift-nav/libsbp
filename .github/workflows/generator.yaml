@@ -43,8 +43,11 @@ jobs:
           git diff --cached --exit-code
           git diff --exit-code
 
-      - name: Generate html
+      - name: Generate html for python
         run: make html-python  # emits python/docs/build/html, not checked in
+
+      - name: Generate javadocs for java
+        run: make javadocs # emits java/build/docs/javadoc, not used
 
       - name: Installing pdf dependencies
         run: |

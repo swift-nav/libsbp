@@ -504,6 +504,11 @@ java-examples:
 	cd $(SWIFTNAV_ROOT)/java/example && gradle clean fatjar
 	$(call announce-end,"Finished building fat jar")
 
+javadoc javadocs:
+	$(call announce-begin,"Building javadocs")
+	cd $(SWIFTNAV_ROOT)/java && gradle javadoc --stacktrace
+	$(call announce-end,"Finished building javadocs")
+
 spec-validator-fmt:
 	python -m black scripts/spec_validator.py
 

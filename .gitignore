@@ -87,3 +87,7 @@ current-spec/
 .vscode/
 .gradle/
 gradle.properties
+
+java/gradlew
+java/gradlew.bat
+java/gradle/wrapper

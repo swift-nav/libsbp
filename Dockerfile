@@ -99,7 +99,7 @@ ENV PATH=${SDKMAN_DIR}/candidates/gradle/current/bin:${PATH}
 RUN \
      java --version \
   && gradle --version \
-  && pip3 install tox sphinx tox-run-command \
+  && pip3 install tox sphinx tox-run-command construct pytest  \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --profile minimal --no-modify-path \
   && rustup component add rustfmt
 

@@ -33,6 +33,7 @@ from sbp import orientation as orientation
 from sbp import sbas as sbas
 from sbp import ssr as ssr
 from sbp import solution_meta as solmeta
+from sbp import signing as signing
 
 import warnings
 
@@ -41,7 +42,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 219
+  number_of_messages = 221
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -71,6 +72,7 @@ def test_table_unqiue_count():
                         + len(sbas.msg_classes)
                         + len(ssr.msg_classes)
                         + len(solmeta.msg_classes)
+                        + len(signing.msg_classes)
                          )
   assert len(_SBP_TABLE) == number_of_messages
 
