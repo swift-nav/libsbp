@@ -91,6 +91,7 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
         Ok(SbpString::new(bytes))
     }
 }
+
 impl<E, const LEN: usize> WireFormat for SbpString<[u8; LEN], E> {
     const MIN_LEN: usize = LEN;
 

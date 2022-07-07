@@ -5,7 +5,7 @@ use std::path::PathBuf;
 
 use clap::Parser;
 
-use converters::{json2sbp, Result};
+use converters::{json2sbp, jsonfields2sbp, Result};
 
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
@@ -60,11 +60,9 @@ fn main() -> Result<()> {
         _ => Box::new(io::stdout().lock()),
     };
 
-    json2sbp(
-        stdin,
-        stdout,
-        options.buffered,
-        options.fatal_errors,
-        options.from_fields,
-    )
+    if options.from_fields {
+        jsonfields2sbp(stdin, stdout, options.buffered, options.fatal_errors)
+    } else {
+        json2sbp(stdin, stdout, options.buffered, options.fatal_errors)
+    }
 }

@@ -24,7 +24,6 @@ pub fn iter_messages_from_fields<R: io::Read>(
     Deserializer::from_reader(input)
         .into_iter()
         .map(|msg| msg.map_err(JsonError::SerdeJsonError))
-        .inspect(|msg| println!("{:?}", msg))
 }
 
 /// Deserialize the IO stream into an iterator of [Json2JsonInput] messages.
