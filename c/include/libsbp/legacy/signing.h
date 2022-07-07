@@ -11,28 +11,35 @@
  */
 
 /*****************************************************************************
- * Automatically generated with generate.py. Please do not hand edit!
+ * Automatically generated from yaml/swiftnav/sbp/signing.yaml
+ * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_VERSION_H
-#define LIBSBP_VERSION_H
-
-/** \addtogroup sbp
+/** \defgroup signing Signing
+ *
+ * Messages relating to signatures
  * \{ */
 
-/** Protocol major version. */
-#define SBP_MAJOR_VERSION 4
-/** Protocol minor version. */
-#define SBP_MINOR_VERSION 5
-/** Protocol patch version. */
-#define SBP_PATCH_VERSION 0
+#ifndef LIBSBP_LEGACY_SIGNING_MESSAGES_H
+#define LIBSBP_LEGACY_SIGNING_MESSAGES_H
 
-/** Full SBP version string. */
-#define SBP_VERSION "4.5.1-alpha"
+#include <libsbp/common.h>
 
-/** Is this a staging branch? */
-#define SBP_STAGING 0
+#include <libsbp/legacy/gnss.h>
+#include <libsbp/signing_macros.h>
+
+SBP_PACK_START
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_ed25519_signature_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stub[0];
+} msg_ed25519_certificate_t;
 
 /** \} */
 
-#endif /* LIBSBP_VERSION_H */
+SBP_PACK_END
+
+#endif /* LIBSBP_LEGACY_SIGNING_MESSAGES_H */

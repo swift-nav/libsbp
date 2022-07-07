@@ -11,28 +11,20 @@
  */
 
 /*****************************************************************************
- * Automatically generated with generate.py. Please do not hand edit!
+ * Automatically generated from yaml/swiftnav/sbp/signing.yaml
+ * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_VERSION_H
-#define LIBSBP_VERSION_H
+#ifndef LIBSBP_SIGNING_MESSAGES_H
+#define LIBSBP_SIGNING_MESSAGES_H
 
-/** \addtogroup sbp
- * \{ */
+#include <libsbp/common.h>
 
-/** Protocol major version. */
-#define SBP_MAJOR_VERSION 4
-/** Protocol minor version. */
-#define SBP_MINOR_VERSION 5
-/** Protocol patch version. */
-#define SBP_PATCH_VERSION 0
+SBP_MESSAGE(
+    "Legacy SBP definitions have moved. To continue using legacy message "
+    "definitions include `libsbp/legacy/signing.h` instead. Access to legacy "
+    "types via `libsbp/signing.h` will be removed in version 5.")
 
-/** Full SBP version string. */
-#define SBP_VERSION "4.5.1-alpha"
+#include <libsbp/legacy/signing.h>
 
-/** Is this a staging branch? */
-#define SBP_STAGING 0
-
-/** \} */
-
-#endif /* LIBSBP_VERSION_H */
+#endif /* LIBSBP_SIGNING_MESSAGES_H */

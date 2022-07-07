@@ -36,6 +36,7 @@
 #include <libsbp/v4/sbas.h>
 #include <libsbp/v4/sbp_msg.h>
 #include <libsbp/v4/settings.h>
+#include <libsbp/v4/signing.h>
 #include <libsbp/v4/solution_meta.h>
 #include <libsbp/v4/ssr.h>
 #include <libsbp/v4/system.h>
@@ -1328,6 +1329,77 @@ struct MessageTraits<sbp_msg_dops_t> {
   }
   static size_t encoded_len(const sbp_msg_dops_t &msg) {
     return sbp_msg_dops_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ed25519_certificate_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgEd25519Certificate;
+  static const sbp_msg_ed25519_certificate_t &get(const sbp_msg_t &msg) {
+    return msg.ed25519_certificate;
+  }
+  static sbp_msg_ed25519_certificate_t &get(sbp_msg_t &msg) {
+    return msg.ed25519_certificate;
+  }
+  static void to_sbp_msg(const sbp_msg_ed25519_certificate_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ed25519_certificate = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ed25519_certificate_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ed25519_certificate = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ed25519_certificate_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_ed25519_certificate_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ed25519_certificate_t &msg) {
+    return sbp_msg_ed25519_certificate_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ed25519_certificate_t *msg) {
+    return sbp_msg_ed25519_certificate_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ed25519_certificate_t &msg) {
+    return sbp_msg_ed25519_certificate_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_ed25519_signature_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgEd25519Signature;
+  static const sbp_msg_ed25519_signature_t &get(const sbp_msg_t &msg) {
+    return msg.ed25519_signature;
+  }
+  static sbp_msg_ed25519_signature_t &get(sbp_msg_t &msg) {
+    return msg.ed25519_signature;
+  }
+  static void to_sbp_msg(const sbp_msg_ed25519_signature_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->ed25519_signature = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_ed25519_signature_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.ed25519_signature = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_ed25519_signature_t &msg, sbp_write_fn_t write) {
+    return sbp_msg_ed25519_signature_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_ed25519_signature_t &msg) {
+    return sbp_msg_ed25519_signature_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_ed25519_signature_t *msg) {
+    return sbp_msg_ed25519_signature_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_ed25519_signature_t &msg) {
+    return sbp_msg_ed25519_signature_encoded_len(&msg);
   }
 };
 
