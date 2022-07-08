@@ -102,6 +102,13 @@ impl<'de, E> serde::Deserialize<'de> for SbpString<Vec<u8>, E> {
                 Ok(SbpString::new(v.into_bytes()))
             }
 
+            fn visit_bytes<Er>(self, v: &[u8]) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.to_vec()))
+            }
+
             fn visit_byte_buf<Er>(self, v: Vec<u8>) -> Result<Self::Value, Er>
             where
                 Er: Error,
@@ -132,14 +139,40 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
             where
                 Er: Error,
             {
-                Ok(SbpString::new(v.as_bytes().try_into().unwrap()))
+                let data = v.as_bytes().try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
             }
 
             fn visit_string<Er>(self, v: String) -> Result<Self::Value, Er>
             where
                 Er: Error,
             {
-                Ok(SbpString::new(v.into_bytes().try_into().unwrap()))
+                let data = v.into_bytes().try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
+            }
+
+            fn visit_bytes<Er>(self, v: &[u8]) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                let data = v.try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
+            }
+
+            fn visit_byte_buf<Er>(self, v: Vec<u8>) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                let data = v.try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
             }
         }
         deserializer.deserialize_any(SbpStringVisitor(PhantomData))
