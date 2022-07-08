@@ -23,6 +23,13 @@ pub fn run_json2sbp(reader: File, writer: File) {
     run_bin("json2sbp", reader, writer).assert().success();
 }
 
+pub fn run_jsonfields2sbp(reader: File, writer: File) {
+    run_bin("json2sbp", reader, writer)
+        .arg("--from-fields")
+        .assert()
+        .success();
+}
+
 pub fn run_json2json(reader: File, writer: File) {
     run_bin("json2json", reader, writer)
         .arg("--float-compat")

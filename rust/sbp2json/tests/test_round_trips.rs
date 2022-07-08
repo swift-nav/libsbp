@@ -11,6 +11,7 @@ use common::{
     DeleteTestOutput, ThirdTransform,
 };
 
+use crate::common::run_jsonfields2sbp;
 use serde_json::ser::CompactFormatter;
 
 #[test]
@@ -67,6 +68,21 @@ fn test_json2sbp() {
         tranform1,
         tranform2,
         "json2sbp",
+        "roundtrip.json",
+        make_none_transform!(),
+        true,
+    )
+}
+
+#[test]
+fn test_jsonfields2sbp() {
+    let tranform1 = |reader, writer| run_jsonfields2sbp(reader, writer);
+    let tranform2 = |reader, writer| run_sbp2json(reader, writer);
+
+    test_round_trip(
+        tranform1,
+        tranform2,
+        "jsonfields2sbp",
         "roundtrip.json",
         make_none_transform!(),
         true,
