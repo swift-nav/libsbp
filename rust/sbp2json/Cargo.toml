@@ -18,7 +18,7 @@ keywords = ["encoding", "parsing"]
 
 [dependencies.sbp]
 path = "../sbp" # TODO: replace with published `sbp` crate version
-features = ["json"]
+features = ["json", "float_roundtrip"]
 
 [dependencies]
 env_logger = "0.8"
