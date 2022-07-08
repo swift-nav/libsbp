@@ -11,10 +11,6 @@ use converters::{json2sbp, Result};
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert SBP JSON data to binary SBP.
-///
-/// Typical usage:
-///
-///     cat sbp.json | json2sbp
 #[derive(Debug, Parser)]
 #[clap(name = "json2sbp", verbatim_doc_comment, version)]
 struct Options {

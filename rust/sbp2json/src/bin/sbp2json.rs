@@ -12,14 +12,6 @@ use converters::{sbp2json, Result};
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert binary SBP data to JSON.
-///
-/// Typical usage:
-///
-///     cat sbp.dat | sbp2json
-///
-/// Or combined with socat:
-///
-///     socat tcp:192.168.1.222:55555 - | sbp2json
 #[derive(Debug, Parser)]
 #[structopt(name = "sbp2json", verbatim_doc_comment, version)]
 pub struct Options {
