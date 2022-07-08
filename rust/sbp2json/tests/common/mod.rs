@@ -12,11 +12,12 @@ use assert_json_diff::{assert_json_matches_no_panic, CompareMode, Config, Numeri
 use serde_json::{Deserializer, Value};
 use sha2::{Digest, Sha256};
 
-pub fn run_sbp2json(reader: File, writer: File) {
-    run_bin("sbp2json", reader, writer)
-        .arg("--float-compat")
-        .assert()
-        .success();
+pub fn run_sbp2json(reader: File, writer: File, float_compat: bool) {
+    let mut cmd = run_bin("sbp2json", reader, writer);
+    if float_compat {
+        cmd.arg("--float-compat");
+    }
+    cmd.assert().success();
 }
 
 pub fn run_json2sbp(reader: File, writer: File) {
