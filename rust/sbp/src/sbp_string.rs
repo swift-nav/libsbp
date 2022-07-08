@@ -1,3 +1,4 @@
+use std::convert::TryInto;
 use std::fmt;
 use std::fmt::Formatter;
 use std::marker::PhantomData;
@@ -111,8 +112,23 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
     where
         D: serde::Deserializer<'de>,
     {
-        let bytes = serde_big_array::BigArray::deserialize(deserializer)?;
-        Ok(SbpString::new(bytes))
+        struct SbpStringVisitor<E, const LEN: usize>(PhantomData<SbpString<[u8; LEN], E>>);
+
+        impl<'de, E, const LEN: usize> Visitor<'de> for SbpStringVisitor<E, LEN> {
+            type Value = SbpString<[u8; LEN], E>;
+
+            fn expecting(&self, formatter: &mut Formatter) -> fmt::Result {
+                formatter.write_str("string")
+            }
+
+            fn visit_string<Er>(self, v: String) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.into_bytes().try_into().unwrap()))
+            }
+        }
+        deserializer.deserialize_any(SbpStringVisitor(PhantomData))
     }
 }
 
