@@ -1,7 +1,9 @@
 use std::fmt;
+use std::fmt::Formatter;
 use std::marker::PhantomData;
 
 use bytes::{Buf, BufMut};
+use serde::de::{Error, Visitor};
 
 use crate::wire_format::WireFormat;
 
@@ -76,8 +78,30 @@ impl<'de, E> serde::Deserialize<'de> for SbpString<Vec<u8>, E> {
     where
         D: serde::Deserializer<'de>,
     {
-        let bytes = Vec::deserialize(deserializer)?;
-        Ok(SbpString::new(bytes))
+        struct SbpStringVisitor<E>(PhantomData<SbpString<Vec<u8>, E>>);
+
+        impl<'de, E> Visitor<'de> for SbpStringVisitor<E> {
+            type Value = SbpString<Vec<u8>, E>;
+
+            fn expecting(&self, formatter: &mut Formatter) -> fmt::Result {
+                formatter.write_str("string")
+            }
+
+            fn visit_string<Er>(self, v: String) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.into_bytes()))
+            }
+
+            fn visit_byte_buf<Er>(self, v: Vec<u8>) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v))
+            }
+        }
+        deserializer.deserialize_any(SbpStringVisitor(PhantomData))
     }
 }
 
