@@ -88,6 +88,13 @@ impl<'de, E> serde::Deserialize<'de> for SbpString<Vec<u8>, E> {
                 formatter.write_str("string")
             }
 
+            fn visit_str<Er>(self, v: &str) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.as_bytes().to_vec()))
+            }
+
             fn visit_string<Er>(self, v: String) -> Result<Self::Value, Er>
             where
                 Er: Error,
@@ -119,6 +126,13 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
 
             fn expecting(&self, formatter: &mut Formatter) -> fmt::Result {
                 formatter.write_str("string")
+            }
+
+            fn visit_str<Er>(self, v: &str) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.as_bytes().try_into().unwrap()))
             }
 
             fn visit_string<Er>(self, v: String) -> Result<Self::Value, Er>
