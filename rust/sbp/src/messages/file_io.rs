@@ -43,14 +43,14 @@ pub mod msg_fileio_config_req {
     /// window of FileIO data that can be in-flight during read or write
     /// operations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioConfigReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Advice sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
     }
 
@@ -118,23 +118,23 @@ pub mod msg_fileio_config_resp {
     /// window of FileIO data that can be in-flight during read or write
     /// operations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioConfigResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Advice sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// The number of SBP packets in the data in-flight window
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "window_size")))]
+        #[cfg_attr(feature = "serde", serde(rename = "window_size"))]
         pub window_size: u32,
         /// The number of SBP packets sent in one PDU
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "batch_size")))]
+        #[cfg_attr(feature = "serde", serde(rename = "batch_size"))]
         pub batch_size: u32,
         /// The version of FileIO that is supported
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fileio_version")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fileio_version"))]
         pub fileio_version: u32,
     }
 
@@ -218,20 +218,20 @@ pub mod msg_fileio_read_dir_req {
     /// device will only respond to this message when it is received from sender
     /// ID 0x42.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadDirReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Read sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// The offset to skip the first n elements of the file list
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "offset")))]
+        #[cfg_attr(feature = "serde", serde(rename = "offset"))]
         pub offset: u32,
         /// Name of the directory to list
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dirname")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dirname"))]
         pub dirname: SbpString<Vec<u8>, NullTerminated>,
     }
 
@@ -307,17 +307,17 @@ pub mod msg_fileio_read_dir_resp {
     /// the end of the list is identified by an packet with no entries. The
     /// sequence number in the response is preserved from the request.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadDirResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Read sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// Contents of read directory
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
+        #[cfg_attr(feature = "serde", serde(rename = "contents"))]
         pub contents: Vec<u8>,
     }
 
@@ -389,23 +389,23 @@ pub mod msg_fileio_read_req {
     /// print "Invalid fileio read message". A device will only respond to this
     /// message when it is received from sender ID 0x42.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Read sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// File offset
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "offset")))]
+        #[cfg_attr(feature = "serde", serde(rename = "offset"))]
         pub offset: u32,
         /// Chunk size to read
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "chunk_size")))]
+        #[cfg_attr(feature = "serde", serde(rename = "chunk_size"))]
         pub chunk_size: u8,
         /// Name of the file to read from
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "filename")))]
+        #[cfg_attr(feature = "serde", serde(rename = "filename"))]
         pub filename: SbpString<Vec<u8>, NullTerminated>,
     }
 
@@ -484,17 +484,17 @@ pub mod msg_fileio_read_resp {
     /// message length field indicates how many bytes were successfully read. The
     /// sequence number in the response is preserved from the request.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Read sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// Contents of read file
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
+        #[cfg_attr(feature = "serde", serde(rename = "contents"))]
         pub contents: Vec<u8>,
     }
 
@@ -563,14 +563,14 @@ pub mod msg_fileio_remove {
     /// fileio remove message". A device will only process this message when it is
     /// received from sender ID 0x42.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioRemove {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Name of the file to delete
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "filename")))]
+        #[cfg_attr(feature = "serde", serde(rename = "filename"))]
         pub filename: SbpString<Vec<u8>, NullTerminated>,
     }
 
@@ -640,23 +640,23 @@ pub mod msg_fileio_write_req {
     /// fileio write message". A device will only process this message when it is
     /// received from sender ID 0x42.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioWriteReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Write sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// Offset into the file at which to start writing in bytes
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "offset")))]
+        #[cfg_attr(feature = "serde", serde(rename = "offset"))]
         pub offset: u32,
         /// Name of the file to write to
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "filename")))]
+        #[cfg_attr(feature = "serde", serde(rename = "filename"))]
         pub filename: SbpString<Vec<u8>, NullTerminated>,
         /// Variable-length array of data to write
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "data")))]
+        #[cfg_attr(feature = "serde", serde(rename = "data"))]
         pub data: Vec<u8>,
     }
 
@@ -735,14 +735,14 @@ pub mod msg_fileio_write_resp {
     /// MSG_FILEIO_WRITE_REQ message to check integrity of the write. The sequence
     /// number in the response is preserved from the request.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioWriteResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Write sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
     }
 

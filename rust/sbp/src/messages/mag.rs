@@ -25,27 +25,27 @@ pub mod msg_mag_raw {
     ///
     /// Raw data from the magnetometer.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMagRaw {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Milliseconds since start of GPS week. If the high bit is set, the time
         /// is unknown or invalid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Milliseconds since start of GPS week, fractional part
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_f")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow_f"))]
         pub tow_f: u8,
         /// Magnetic field in the body frame X axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mag_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mag_x"))]
         pub mag_x: i16,
         /// Magnetic field in the body frame Y axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mag_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mag_y"))]
         pub mag_y: i16,
         /// Magnetic field in the body frame Z axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mag_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mag_z"))]
         pub mag_z: i16,
     }
 

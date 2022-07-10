@@ -33,14 +33,14 @@ pub mod carrier_phase {
     /// number with Q32.8 layout, i.e. 32-bits of whole cycles and 8-bits of
     /// fractional cycles. This phase has the same sign as the pseudorange.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct CarrierPhase {
         /// Carrier phase whole cycles
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "i")))]
+        #[cfg_attr(feature = "serde", serde(rename = "i"))]
         pub i: i32,
         /// Carrier phase fractional part
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "f")))]
+        #[cfg_attr(feature = "serde", serde(rename = "f"))]
         pub f: u8,
     }
 
@@ -74,18 +74,18 @@ pub mod gps_time {
     /// beginning of the week on the Saturday/Sunday transition. In most cases,
     /// observations are epoch aligned so ns field will be 0.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GpsTime {
         /// Milliseconds since start of GPS week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
         /// 500000)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ns_residual"))]
         pub ns_residual: i32,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
     }
 
@@ -124,14 +124,14 @@ pub mod gps_time_dep {
     /// A wire-appropriate GPS time, defined as the number of milliseconds since
     /// beginning of the week on the Saturday/Sunday transition.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GpsTimeDep {
         /// Milliseconds since start of GPS week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
     }
 
@@ -164,14 +164,14 @@ pub mod gps_time_sec {
     /// A GPS time, defined as the number of seconds since beginning of the week
     /// on the Saturday/Sunday transition.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GpsTimeSec {
         /// Seconds since start of GPS week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
     }
 
@@ -204,15 +204,15 @@ pub mod gnss_signal {
     /// Signal identifier containing constellation, band, and satellite
     /// identifier.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssSignal {
         /// Constellation-specific satellite identifier. This field for Glonass can
         /// either be (100+FCN) where FCN is in \[-7,+6\] or the Slot ID in \[1,28\].
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sat"))]
         pub sat: u8,
         /// Signal constellation, band and code
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "code")))]
+        #[cfg_attr(feature = "serde", serde(rename = "code"))]
         pub code: u8,
     }
 
@@ -339,20 +339,20 @@ pub mod gnss_signal_dep {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssSignalDep {
         /// Constellation-specific satellite identifier.
         ///
         /// Note: unlike GnssSignal, GPS satellites are encoded as (PRN - 1). Other
         /// constellations do not have this offset.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sat"))]
         pub sat: u16,
         /// Signal constellation, band and code
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "code")))]
+        #[cfg_attr(feature = "serde", serde(rename = "code"))]
         pub code: u8,
         /// Reserved
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
         pub reserved: u8,
     }
 
@@ -461,14 +461,14 @@ pub mod sv_id {
     /// A (Constellation ID, satellite ID) tuple that uniquely identifies a space
     /// vehicle.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SvId {
         /// ID of the space vehicle within its constellation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "satId")))]
+        #[cfg_attr(feature = "serde", serde(rename = "satId"))]
         pub sat_id: u8,
         /// Constellation ID to which the SV belongs
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "constellation")))]
+        #[cfg_attr(feature = "serde", serde(rename = "constellation"))]
         pub constellation: u8,
     }
 

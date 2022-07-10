@@ -28,20 +28,20 @@ pub mod msg_imu_aux {
     /// always be consistent but the rest of the payload is device specific and
     /// depends on the value of `imu_type`.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgImuAux {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// IMU type
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "imu_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "imu_type"))]
         pub imu_type: u8,
         /// Raw IMU temperature
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "temp")))]
+        #[cfg_attr(feature = "serde", serde(rename = "temp"))]
         pub temp: i16,
         /// IMU configuration
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "imu_conf")))]
+        #[cfg_attr(feature = "serde", serde(rename = "imu_conf"))]
         pub imu_conf: u8,
     }
 
@@ -283,35 +283,35 @@ pub mod msg_imu_raw {
     ///
     /// The time-tagging mode should not change throughout a run.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgImuRaw {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Milliseconds since reference epoch and time status.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Milliseconds since reference epoch, fractional part
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_f")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow_f"))]
         pub tow_f: u8,
         /// Acceleration in the IMU frame X axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc_x"))]
         pub acc_x: i16,
         /// Acceleration in the IMU frame Y axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc_y"))]
         pub acc_y: i16,
         /// Acceleration in the IMU frame Z axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "acc_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "acc_z"))]
         pub acc_z: i16,
         /// Angular rate around IMU frame X axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gyr_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gyr_x"))]
         pub gyr_x: i16,
         /// Angular rate around IMU frame Y axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gyr_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gyr_y"))]
         pub gyr_y: i16,
         /// Angular rate around IMU frame Z axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gyr_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gyr_z"))]
         pub gyr_z: i16,
     }
 

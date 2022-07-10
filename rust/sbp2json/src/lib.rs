@@ -25,6 +25,23 @@ where
     Ok(())
 }
 
+pub fn jsonfields2sbp<R, W>(input: R, output: W, buffered: bool, fatal_errors: bool) -> Result<()>
+where
+    R: Read,
+    W: Write,
+{
+    let source = maybe_fatal_errors(sbp::json::iter_messages_from_fields(input), fatal_errors);
+    let mut sink = SbpEncoder::new(output);
+    if buffered {
+        sink.send_all(source)?;
+    } else {
+        for msg in source {
+            sink.send(&msg)?;
+        }
+    }
+    Ok(())
+}
+
 pub fn json2json<R, W, F>(
     input: R,
     output: W,

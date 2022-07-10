@@ -84,20 +84,20 @@ pub mod estimated_horizontal_error_ellipse {
     use super::*;
     use crate::messages::lib::*;
     /// Horizontal estimated error ellipse
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EstimatedHorizontalErrorEllipse {
         /// The semi major axis of the estimated horizontal error ellipse at the
         /// user-configured confidence level; zero implies invalid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "semi_major")))]
+        #[cfg_attr(feature = "serde", serde(rename = "semi_major"))]
         pub semi_major: f32,
         /// The semi minor axis of the estimated horizontal error ellipse at the
         /// user-configured confidence level; zero implies invalid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "semi_minor")))]
+        #[cfg_attr(feature = "serde", serde(rename = "semi_minor"))]
         pub semi_minor: f32,
         /// The orientation of the semi major axis of the estimated horizontal error
         /// ellipse with respect to North.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orientation")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orientation"))]
         pub orientation: f32,
     }
 
@@ -136,17 +136,17 @@ pub mod msg_age_corrections {
     /// This message reports the Age of the corrections used for the current
     /// Differential solution.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAgeCorrections {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Age of the corrections (0xFFFF indicates invalid)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "age")))]
+        #[cfg_attr(feature = "serde", serde(rename = "age"))]
         pub age: u16,
     }
 
@@ -224,32 +224,32 @@ pub mod msg_baseline_ecef {
     /// base station to the rover receiver. The full GPS time is given by the
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcef {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Baseline ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Baseline ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Baseline ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -405,32 +405,32 @@ pub mod msg_baseline_ecef_dep_a {
     /// base station to the rover receiver. The full GPS time is given by the
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcefDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Baseline ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Baseline ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Baseline ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Position accuracy estimate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -669,23 +669,23 @@ pub mod msg_baseline_heading_dep_a {
     /// to the rover relative to True North. The full GPS time is given by the
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineHeadingDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Heading
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "heading")))]
+        #[cfg_attr(feature = "serde", serde(rename = "heading"))]
         pub heading: u32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -915,35 +915,35 @@ pub mod msg_baseline_ned {
     /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
     /// week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNed {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Baseline North coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n"))]
         pub n: i32,
         /// Baseline East coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "e"))]
         pub e: i32,
         /// Baseline Down coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d"))]
         pub d: i32,
         /// Horizontal position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -1105,35 +1105,35 @@ pub mod msg_baseline_ned_dep_a {
     /// GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
     /// week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNedDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Baseline North coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n"))]
         pub n: i32,
         /// Baseline East coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "e"))]
         pub e: i32,
         /// Baseline Down coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d"))]
         pub d: i32,
         /// Horizontal position accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical position accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -1377,32 +1377,32 @@ pub mod msg_dops {
     /// flags field indicated whether the DOP reported corresponds to differential
     /// or SPP solution.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDops {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Geometric Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gdop"))]
         pub gdop: u16,
         /// Position Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pdop"))]
         pub pdop: u16,
         /// Time Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tdop"))]
         pub tdop: u16,
         /// Horizontal Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hdop"))]
         pub hdop: u16,
         /// Vertical Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vdop"))]
         pub vdop: u16,
         /// Indicates the position solution with which the DOPS message corresponds
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -1581,29 +1581,29 @@ pub mod msg_dops_dep_a {
     /// This dilution of precision (DOP) message describes the effect of
     /// navigation satellite geometry on positional measurement precision.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDopsDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Geometric Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "gdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "gdop"))]
         pub gdop: u16,
         /// Position Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pdop"))]
         pub pdop: u16,
         /// Time Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tdop"))]
         pub tdop: u16,
         /// Horizontal Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hdop"))]
         pub hdop: u16,
         /// Vertical Dilution of Precision
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vdop")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vdop"))]
         pub vdop: u16,
     }
 
@@ -1706,24 +1706,24 @@ pub mod msg_gps_time {
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTime {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
         /// GPS time of week rounded to the nearest millisecond
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
         /// 500000)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ns_residual"))]
         pub ns_residual: i32,
         /// Status flags (reserved)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -1874,24 +1874,24 @@ pub mod msg_gps_time_dep_a {
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
         /// GPS time of week rounded to the nearest millisecond
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
         /// 500000)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ns_residual"))]
         pub ns_residual: i32,
         /// Status flags (reserved)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -1991,24 +1991,24 @@ pub mod msg_gps_time_gnss {
     /// same time (but lacking the ns field) and indicates a more precise time of
     /// these messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
         /// GPS time of week rounded to the nearest millisecond
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
         /// 500000)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ns_residual")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ns_residual"))]
         pub ns_residual: i32,
         /// Status flags (reserved)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -2155,32 +2155,32 @@ pub mod msg_pos_ecef {
     /// RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcef {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: f64,
         /// ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: f64,
         /// ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: f64,
         /// Position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -2446,47 +2446,47 @@ pub mod msg_pos_ecef_cov {
     /// rover's RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCov {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: f64,
         /// ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: f64,
         /// ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: f64,
         /// Estimated variance of x
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_x"))]
         pub cov_x_x: f32,
         /// Estimated covariance of x and y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_y"))]
         pub cov_x_y: f32,
         /// Estimated covariance of x and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_z"))]
         pub cov_x_z: f32,
         /// Estimated variance of y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_y"))]
         pub cov_y_y: f32,
         /// Estimated covariance of y and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_z"))]
         pub cov_y_z: f32,
         /// Estimated variance of z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_z_z"))]
         pub cov_z_z: f32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -2772,47 +2772,47 @@ pub mod msg_pos_ecef_cov_gnss {
     /// rover's RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCovGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: f64,
         /// ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: f64,
         /// ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: f64,
         /// Estimated variance of x
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_x"))]
         pub cov_x_x: f32,
         /// Estimated covariance of x and y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_y"))]
         pub cov_x_y: f32,
         /// Estimated covariance of x and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_z"))]
         pub cov_x_z: f32,
         /// Estimated variance of y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_y"))]
         pub cov_y_y: f32,
         /// Estimated covariance of y and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_z"))]
         pub cov_y_z: f32,
         /// Estimated variance of z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_z_z"))]
         pub cov_z_z: f32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -3001,32 +3001,32 @@ pub mod msg_pos_ecef_dep_a {
     /// RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: f64,
         /// ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: f64,
         /// ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: f64,
         /// Position accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -3274,32 +3274,32 @@ pub mod msg_pos_ecef_gnss {
     /// RTK baseline vector. The full GPS time is given by the preceding
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: f64,
         /// ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: f64,
         /// ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: f64,
         /// Position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -3468,35 +3468,35 @@ pub mod msg_pos_llh {
     /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
     /// matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlh {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height above WGS84 ellipsoid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Horizontal position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -3768,58 +3768,58 @@ pub mod msg_pos_llh_acc {
     /// The estimated errors are reported at a user-configurable confidence level.
     /// The user-configured percentile is encoded in the percentile field.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhAcc {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height above WGS84 ellipsoid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Height above the geoid (i.e. height above mean sea level). See
         /// confidence_and_geoid for geoid model used.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "orthometric_height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "orthometric_height"))]
         pub orthometric_height: f64,
         /// Estimated horizontal error at the user-configured confidence level; zero
         /// implies invalid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: f32,
         /// Estimated vertical error at the user-configured confidence level; zero
         /// implies invalid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: f32,
         /// Estimated cross-track error at the user-configured confidence level;
         /// zero implies invalid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ct_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ct_accuracy"))]
         pub ct_accuracy: f32,
         /// Estimated along-track error at the user-configured confidence level;
         /// zero implies invalid.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "at_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "at_accuracy"))]
         pub at_accuracy: f32,
         /// The estimated horizontal error ellipse at the user-configured confidence
         /// level.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_ellipse")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_ellipse"))]
         pub h_ellipse: EstimatedHorizontalErrorEllipse,
         /// The lower bits describe the configured confidence level for the
         /// estimated position error. The middle bits describe the geoid model used
         /// to calculate the orthometric height.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "confidence_and_geoid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "confidence_and_geoid"))]
         pub confidence_and_geoid: u8,
         /// Number of satellites used in solution.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -4214,47 +4214,47 @@ pub mod msg_pos_llh_cov {
     /// are reported against the "downward" measurement and care should be taken
     /// with the sign convention.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCov {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height above WGS84 ellipsoid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Estimated variance of northing
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_n"))]
         pub cov_n_n: f32,
         /// Covariance of northing and easting
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_e"))]
         pub cov_n_e: f32,
         /// Covariance of northing and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_d"))]
         pub cov_n_d: f32,
         /// Estimated variance of easting
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_e"))]
         pub cov_e_e: f32,
         /// Covariance of easting and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_d"))]
         pub cov_e_d: f32,
         /// Estimated variance of downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_d_d"))]
         pub cov_d_d: f32,
         /// Number of satellites used in solution.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -4540,47 +4540,47 @@ pub mod msg_pos_llh_cov_gnss {
     /// Thus, covariances are reported against the "downward" measurement and care
     /// should be taken with the sign convention.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCovGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height above WGS84 ellipsoid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Estimated variance of northing
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_n"))]
         pub cov_n_n: f32,
         /// Covariance of northing and easting
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_e"))]
         pub cov_n_e: f32,
         /// Covariance of northing and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_d"))]
         pub cov_n_d: f32,
         /// Estimated variance of easting
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_e"))]
         pub cov_e_e: f32,
         /// Covariance of easting and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_d"))]
         pub cov_e_d: f32,
         /// Estimated variance of downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_d_d"))]
         pub cov_d_d: f32,
         /// Number of satellites used in solution.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -4774,35 +4774,35 @@ pub mod msg_pos_llh_dep_a {
     /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
     /// matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Horizontal position accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical position accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -5100,35 +5100,35 @@ pub mod msg_pos_llh_gnss {
     /// vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
     /// matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height above WGS84 ellipsoid
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Horizontal position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical position estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -5297,76 +5297,76 @@ pub mod msg_protection_level {
     /// estimate. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevel {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// GPS week number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: i16,
         /// Horizontal protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hpl"))]
         pub hpl: u16,
         /// Vertical protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vpl"))]
         pub vpl: u16,
         /// Along-track position error protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "atpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "atpl"))]
         pub atpl: u16,
         /// Cross-track position error protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ctpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ctpl"))]
         pub ctpl: u16,
         /// Protection level for the error vector between estimated and true
         /// along/cross track velocity vector
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hvpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hvpl"))]
         pub hvpl: u16,
         /// Protection level for the velocity in vehicle upright direction
         /// (different from vertical direction if on a slope)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vvpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vvpl"))]
         pub vvpl: u16,
         /// Heading orientation protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hopl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hopl"))]
         pub hopl: u16,
         /// Pitch orientation protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "popl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "popl"))]
         pub popl: u16,
         /// Roll orientation protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ropl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ropl"))]
         pub ropl: u16,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Velocity in vehicle x direction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_x"))]
         pub v_x: i32,
         /// Velocity in vehicle y direction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_y"))]
         pub v_y: i32,
         /// Velocity in vehicle z direction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_z"))]
         pub v_z: i32,
         /// Roll angle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "roll")))]
+        #[cfg_attr(feature = "serde", serde(rename = "roll"))]
         pub roll: i32,
         /// Pitch angle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pitch")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pitch"))]
         pub pitch: i32,
         /// Heading angle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "heading")))]
+        #[cfg_attr(feature = "serde", serde(rename = "heading"))]
         pub heading: i32,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u32,
     }
 
@@ -5815,32 +5815,32 @@ pub mod msg_protection_level_dep_a {
     /// associated with a given LLH position solution. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevelDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Vertical protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "vpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "vpl"))]
         pub vpl: u16,
         /// Horizontal protection level
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hpl")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hpl"))]
         pub hpl: u16,
         /// Latitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lat")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lat"))]
         pub lat: f64,
         /// Longitude
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lon")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lon"))]
         pub lon: f64,
         /// Height
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "height")))]
+        #[cfg_attr(feature = "serde", serde(rename = "height"))]
         pub height: f64,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -6000,72 +6000,72 @@ pub mod msg_reference_frame_param {
     use super::*;
     use crate::messages::lib::*;
     /// Reference Frame Transformation Parameters
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReferenceFrameParam {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// SSR IOD parameter.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ssr_iod")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_iod"))]
         pub ssr_iod: u8,
         /// Name of source coordinate-system using the EPSG identification code.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sn"))]
         pub sn: SbpString<[u8; 32], NullTerminated>,
         /// Name of target coordinate-system using the EPSG identification code.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tn"))]
         pub tn: SbpString<[u8; 32], NullTerminated>,
         /// System Identification Number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sin")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sin"))]
         pub sin: u8,
         /// Utilized Transformation Message.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "utn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "utn"))]
         pub utn: u16,
         /// Reference Epoch t0 for transformation parameter set given as Modified
         /// Julian Day (MJD) Number minus 44244 days.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "re_t0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "re_t0"))]
         pub re_t0: u16,
         /// Translation in X for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_X0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "delta_X0"))]
         pub delta_x0: i32,
         /// Translation in Y for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_Y0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "delta_Y0"))]
         pub delta_y0: i32,
         /// Translation in Z for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "delta_Z0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "delta_Z0"))]
         pub delta_z0: i32,
         /// Rotation around the X-axis for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_01")))]
+        #[cfg_attr(feature = "serde", serde(rename = "theta_01"))]
         pub theta_01: i32,
         /// Rotation around the Y-axis for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_02")))]
+        #[cfg_attr(feature = "serde", serde(rename = "theta_02"))]
         pub theta_02: i32,
         /// Rotation around the Z-axis for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "theta_03")))]
+        #[cfg_attr(feature = "serde", serde(rename = "theta_03"))]
         pub theta_03: i32,
         /// Scale correction for Reference Epoch t0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "scale")))]
+        #[cfg_attr(feature = "serde", serde(rename = "scale"))]
         pub scale: i32,
         /// Rate of change of translation in X.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_X0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_delta_X0"))]
         pub dot_delta_x0: i32,
         /// Rate of change of translation in Y.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_Y0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_delta_Y0"))]
         pub dot_delta_y0: i32,
         /// Rate of change of translation in Z.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_delta_Z0")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_delta_Z0"))]
         pub dot_delta_z0: i32,
         /// Rate of change of rotation around the X-axis.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_01")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_theta_01"))]
         pub dot_theta_01: i32,
         /// Rate of change of rotation around the Y-axis.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_02")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_theta_02"))]
         pub dot_theta_02: i32,
         /// Rate of change of rotation around the Z-axis.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_theta_03")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_theta_03"))]
         pub dot_theta_03: i32,
         /// Rate of change of scale correction.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dot_scale")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dot_scale"))]
         pub dot_scale: i16,
     }
 
@@ -6207,41 +6207,41 @@ pub mod msg_utc_leap_second {
     /// Emulates the GPS CNAV message, reserving bytes for future broadcast of the
     /// drift model parameters.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcLeapSecond {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Reserved. Bias coefficient of GPS time scale with respect to UTC drift
         /// model.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "bias_coeff")))]
+        #[cfg_attr(feature = "serde", serde(rename = "bias_coeff"))]
         pub bias_coeff: i16,
         /// Reserved. Drift coefficient of GPS time scale with respect to UTC drift
         /// model.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_coeff")))]
+        #[cfg_attr(feature = "serde", serde(rename = "drift_coeff"))]
         pub drift_coeff: i16,
         /// Reserved. Drift rate correction coefficient of GPS time scale with
         /// respect to UTC drift model.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "drift_rate_coeff")))]
+        #[cfg_attr(feature = "serde", serde(rename = "drift_rate_coeff"))]
         pub drift_rate_coeff: i8,
         /// Leap second count before insertion.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_before")))]
+        #[cfg_attr(feature = "serde", serde(rename = "count_before"))]
         pub count_before: i8,
         /// Reserved. Drift model reference week second.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow_s")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow_s"))]
         pub tow_s: u16,
         /// Reserved. Drift model reference week number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
         /// Leap second reference week number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_wn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ref_wn"))]
         pub ref_wn: u16,
         /// Leap second reference day number.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ref_dn")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ref_dn"))]
         pub ref_dn: u8,
         /// Leap second count after insertion.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "count_after")))]
+        #[cfg_attr(feature = "serde", serde(rename = "count_after"))]
         pub count_after: i8,
     }
 
@@ -6339,38 +6339,38 @@ pub mod msg_utc_time {
     /// which indicate the source of the UTC offset value and source of the time
     /// fix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTime {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Indicates source and time validity
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// GPS time of week rounded to the nearest millisecond
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Year
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "year")))]
+        #[cfg_attr(feature = "serde", serde(rename = "year"))]
         pub year: u16,
         /// Month (range 1 .. 12)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "month")))]
+        #[cfg_attr(feature = "serde", serde(rename = "month"))]
         pub month: u8,
         /// days in the month (range 1-31)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "day")))]
+        #[cfg_attr(feature = "serde", serde(rename = "day"))]
         pub day: u8,
         /// hours of day (range 0-23)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hours")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hours"))]
         pub hours: u8,
         /// minutes of hour (range 0-59)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "minutes")))]
+        #[cfg_attr(feature = "serde", serde(rename = "minutes"))]
         pub minutes: u8,
         /// seconds of minute (range 0-60) rounded down
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seconds")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seconds"))]
         pub seconds: u8,
         /// nanoseconds of second (range 0-999999999)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ns")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ns"))]
         pub ns: u32,
     }
 
@@ -6577,38 +6577,38 @@ pub mod msg_utc_time_gnss {
     /// which indicate the source of the UTC offset value and source of the time
     /// fix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTimeGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Indicates source and time validity
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// GPS time of week rounded to the nearest millisecond
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Year
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "year")))]
+        #[cfg_attr(feature = "serde", serde(rename = "year"))]
         pub year: u16,
         /// Month (range 1 .. 12)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "month")))]
+        #[cfg_attr(feature = "serde", serde(rename = "month"))]
         pub month: u8,
         /// days in the month (range 1-31)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "day")))]
+        #[cfg_attr(feature = "serde", serde(rename = "day"))]
         pub day: u8,
         /// hours of day (range 0-23)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "hours")))]
+        #[cfg_attr(feature = "serde", serde(rename = "hours"))]
         pub hours: u8,
         /// minutes of hour (range 0-59)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "minutes")))]
+        #[cfg_attr(feature = "serde", serde(rename = "minutes"))]
         pub minutes: u8,
         /// seconds of minute (range 0-60) rounded down
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "seconds")))]
+        #[cfg_attr(feature = "serde", serde(rename = "seconds"))]
         pub seconds: u8,
         /// nanoseconds of second (range 0-999999999)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ns")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ns"))]
         pub ns: u32,
     }
 
@@ -6821,47 +6821,47 @@ pub mod msg_vel_body {
     /// (tow). This message is only produced by inertial versions of Swift
     /// products and is not available from Piksi Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelBody {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity in x direction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Velocity in y direction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Velocity in z direction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Estimated variance of x
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_x"))]
         pub cov_x_x: f32,
         /// Covariance of x and y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_y"))]
         pub cov_x_y: f32,
         /// Covariance of x and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_z"))]
         pub cov_x_z: f32,
         /// Estimated variance of y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_y"))]
         pub cov_y_y: f32,
         /// Covariance of y and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_z"))]
         pub cov_y_z: f32,
         /// Estimated variance of z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_z_z"))]
         pub cov_z_z: f32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -7088,35 +7088,35 @@ pub mod msg_vel_cog {
     /// Note: course over ground represents the receiver's direction of travel,
     /// but not necessarily the device heading.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelCog {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Course over ground relative to north direction
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cog")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cog"))]
         pub cog: u32,
         /// Speed over ground (based on horizontal velocity)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sog")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sog"))]
         pub sog: u32,
         /// Vertical velocity component (positive up)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_up")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_up"))]
         pub v_up: i32,
         /// Course over ground estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cog_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cog_accuracy"))]
         pub cog_accuracy: u32,
         /// Speed over ground estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sog_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sog_accuracy"))]
         pub sog_accuracy: u32,
         /// Vertical velocity estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_up_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_up_accuracy"))]
         pub v_up_accuracy: u32,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u16,
     }
 
@@ -7544,32 +7544,32 @@ pub mod msg_vel_ecef {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcef {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Velocity ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Velocity ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Velocity estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -7812,47 +7812,47 @@ pub mod msg_vel_ecef_cov {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCov {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Velocity ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Velocity ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Estimated variance of x
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_x"))]
         pub cov_x_x: f32,
         /// Estimated covariance of x and y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_y"))]
         pub cov_x_y: f32,
         /// Estimated covariance of x and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_z"))]
         pub cov_x_z: f32,
         /// Estimated variance of y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_y"))]
         pub cov_y_y: f32,
         /// Estimated covariance of y and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_z"))]
         pub cov_y_z: f32,
         /// Estimated variance of z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_z_z"))]
         pub cov_z_z: f32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -8115,47 +8115,47 @@ pub mod msg_vel_ecef_cov_gnss {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCovGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Velocity ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Velocity ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Estimated variance of x
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_x"))]
         pub cov_x_x: f32,
         /// Estimated covariance of x and y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_y"))]
         pub cov_x_y: f32,
         /// Estimated covariance of x and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_x_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_x_z"))]
         pub cov_x_z: f32,
         /// Estimated variance of y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_y"))]
         pub cov_y_y: f32,
         /// Estimated covariance of y and z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_y_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_y_z"))]
         pub cov_y_z: f32,
         /// Estimated variance of z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_z_z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_z_z"))]
         pub cov_z_z: f32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -8325,32 +8325,32 @@ pub mod msg_vel_ecef_dep_a {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Velocity ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Velocity ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Velocity accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags (reserved)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -8449,32 +8449,32 @@ pub mod msg_vel_ecef_gnss {
     /// coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
     /// the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity ECEF X coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// Velocity ECEF Y coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// Velocity ECEF Z coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Velocity estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "accuracy"))]
         pub accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -8625,35 +8625,35 @@ pub mod msg_vel_ned {
     /// tangent plane centered at the current position. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNed {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity North coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n"))]
         pub n: i32,
         /// Velocity East coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "e"))]
         pub e: i32,
         /// Velocity Down coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d"))]
         pub d: i32,
         /// Horizontal velocity estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical velocity estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -8903,47 +8903,47 @@ pub mod msg_vel_ned_cov {
     /// message is similar to the MSG_VEL_NED, but it includes the upper
     /// triangular portion of the 3x3 covariance matrix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCov {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity North coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n"))]
         pub n: i32,
         /// Velocity East coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "e"))]
         pub e: i32,
         /// Velocity Down coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d"))]
         pub d: i32,
         /// Estimated variance of northward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_n"))]
         pub cov_n_n: f32,
         /// Covariance of northward and eastward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_e"))]
         pub cov_n_e: f32,
         /// Covariance of northward and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_d"))]
         pub cov_n_d: f32,
         /// Estimated variance of eastward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_e"))]
         pub cov_e_e: f32,
         /// Covariance of eastward and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_d"))]
         pub cov_e_d: f32,
         /// Estimated variance of downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_d_d"))]
         pub cov_d_d: f32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -9209,47 +9209,47 @@ pub mod msg_vel_ned_cov_gnss {
     /// message is similar to the MSG_VEL_NED, but it includes the upper
     /// triangular portion of the 3x3 covariance matrix.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCovGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity North coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n"))]
         pub n: i32,
         /// Velocity East coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "e"))]
         pub e: i32,
         /// Velocity Down coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d"))]
         pub d: i32,
         /// Estimated variance of northward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_n"))]
         pub cov_n_n: f32,
         /// Covariance of northward and eastward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_e"))]
         pub cov_n_e: f32,
         /// Covariance of northward and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_n_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_n_d"))]
         pub cov_n_d: f32,
         /// Estimated variance of eastward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_e"))]
         pub cov_e_e: f32,
         /// Covariance of eastward and downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_e_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_e_d"))]
         pub cov_e_d: f32,
         /// Estimated variance of downward measurement
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cov_d_d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cov_d_d"))]
         pub cov_d_d: f32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -9420,35 +9420,35 @@ pub mod msg_vel_ned_dep_a {
     /// tangent plane centered at the current position. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity North coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n"))]
         pub n: i32,
         /// Velocity East coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "e"))]
         pub e: i32,
         /// Velocity Down coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d"))]
         pub d: i32,
         /// Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical velocity accuracy estimate (not implemented). Defaults to 0.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags (reserved)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -9552,35 +9552,35 @@ pub mod msg_vel_ned_gnss {
     /// tangent plane centered at the current position. The full GPS time is given
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedGnss {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Velocity North coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n"))]
         pub n: i32,
         /// Velocity East coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "e")))]
+        #[cfg_attr(feature = "serde", serde(rename = "e"))]
         pub e: i32,
         /// Velocity Down coordinate
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "d")))]
+        #[cfg_attr(feature = "serde", serde(rename = "d"))]
         pub d: i32,
         /// Horizontal velocity estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "h_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "h_accuracy"))]
         pub h_accuracy: u16,
         /// Vertical velocity estimated standard deviation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "v_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "v_accuracy"))]
         pub v_accuracy: u16,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 

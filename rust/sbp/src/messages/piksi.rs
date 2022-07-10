@@ -59,20 +59,20 @@ pub mod latency {
     /// current GPS time calculated locally by the receiver to give a precise
     /// measurement of the end-to-end communication latency in the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Latency {
         /// Average latency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "avg")))]
+        #[cfg_attr(feature = "serde", serde(rename = "avg"))]
         pub avg: i32,
         /// Minimum latency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lmin")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lmin"))]
         pub lmin: i32,
         /// Maximum latency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "lmax")))]
+        #[cfg_attr(feature = "serde", serde(rename = "lmax"))]
         pub lmax: i32,
         /// Smoothed estimate of the current latency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "current")))]
+        #[cfg_attr(feature = "serde", serde(rename = "current"))]
         pub current: i32,
     }
 
@@ -116,11 +116,11 @@ pub mod msg_almanac {
     /// This is a legacy message for sending and loading a satellite alamanac onto
     /// the Piksi's flash memory from the host.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanac {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -182,20 +182,20 @@ pub mod msg_cell_modem_status {
     /// periodically to update the host on the status of the modem and its various
     /// parameters.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCellModemStatus {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Received cell signal strength in dBm, zero translates to unknown
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "signal_strength")))]
+        #[cfg_attr(feature = "serde", serde(rename = "signal_strength"))]
         pub signal_strength: i8,
         /// BER as reported by the modem, zero translates to unknown
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "signal_error_rate")))]
+        #[cfg_attr(feature = "serde", serde(rename = "signal_error_rate"))]
         pub signal_error_rate: f32,
         /// Unspecified data TBD for this schema
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "reserved")))]
+        #[cfg_attr(feature = "serde", serde(rename = "reserved"))]
         pub reserved: Vec<u8>,
     }
 
@@ -270,17 +270,17 @@ pub mod msg_command_output {
     /// MSG_COMMAND_REQ. The sequence number can be used to filter for filtering
     /// the correct command.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandOutput {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// Line of standard output or standard error
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "line")))]
+        #[cfg_attr(feature = "serde", serde(rename = "line"))]
         pub line: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -350,17 +350,17 @@ pub mod msg_command_req {
     /// MSG_LOG messages, and the exit code will be returned with
     /// MSG_COMMAND_RESP.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// Command line to execute
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "command")))]
+        #[cfg_attr(feature = "serde", serde(rename = "command"))]
         pub command: SbpString<Vec<u8>, NullTerminated>,
     }
 
@@ -429,17 +429,17 @@ pub mod msg_command_resp {
     /// The response to MSG_COMMAND_REQ with the return code of the command.  A
     /// return code of zero indicates success.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Sequence number
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sequence")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sequence"))]
         pub sequence: u32,
         /// Exit code
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "code")))]
+        #[cfg_attr(feature = "serde", serde(rename = "code"))]
         pub code: i32,
     }
 
@@ -508,11 +508,11 @@ pub mod msg_cw_results {
     /// interference channel on the SwiftNAP. This message will be removed in a
     /// future release.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCwResults {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -574,11 +574,11 @@ pub mod msg_cw_start {
     /// interference channel on the SwiftNAP. This message will be removed in a
     /// future release.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCwStart {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -640,26 +640,26 @@ pub mod msg_device_monitor {
     /// processor's monitoring system and the RF frontend die temperature if
     /// available.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDeviceMonitor {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Device V_in
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "dev_vin")))]
+        #[cfg_attr(feature = "serde", serde(rename = "dev_vin"))]
         pub dev_vin: i16,
         /// Processor V_int
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cpu_vint")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cpu_vint"))]
         pub cpu_vint: i16,
         /// Processor V_aux
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cpu_vaux")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cpu_vaux"))]
         pub cpu_vaux: i16,
         /// Processor temperature
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cpu_temperature")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cpu_temperature"))]
         pub cpu_temperature: i16,
         /// Frontend temperature (if available)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fe_temperature")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fe_temperature"))]
         pub fe_temperature: i16,
     }
 
@@ -746,17 +746,17 @@ pub mod msg_front_end_gain {
     /// that rf channel is not present in the hardware. A negative value implies
     /// an error for the particular gain stage as reported by the frontend.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFrontEndGain {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// RF gain for each frontend channel
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rf_gain")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rf_gain"))]
         pub rf_gain: [i8; 8],
         /// Intermediate frequency gain for each frontend channel
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "if_gain")))]
+        #[cfg_attr(feature = "serde", serde(rename = "if_gain"))]
         pub if_gain: [i8; 8],
     }
 
@@ -825,14 +825,14 @@ pub mod msg_iar_state {
     /// process, which resolves unknown integer ambiguities from double-
     /// differenced carrier-phase measurements from satellite observations.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgIarState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Number of integer ambiguity hypotheses remaining
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "num_hyps")))]
+        #[cfg_attr(feature = "serde", serde(rename = "num_hyps"))]
         pub num_hyps: u32,
     }
 
@@ -897,11 +897,11 @@ pub mod msg_init_base_dep {
     ///
     /// Deprecated
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInitBaseDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -962,17 +962,17 @@ pub mod msg_mask_satellite {
     /// This message allows setting a mask to prevent a particular satellite from
     /// being used in various Piksi subsystems.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMaskSatellite {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Mask of systems that should ignore this satellite.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mask")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mask"))]
         pub mask: u8,
         /// GNSS signal for which the mask is applied
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignal,
     }
 
@@ -1133,17 +1133,17 @@ pub mod msg_mask_satellite_dep {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMaskSatelliteDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Mask of systems that should ignore this satellite.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mask")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mask"))]
         pub mask: u8,
         /// GNSS signal for which the mask is applied
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
     }
 
@@ -1304,14 +1304,14 @@ pub mod msg_network_bandwidth_usage {
     ///
     /// The bandwidth usage, a list of usage by interface.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkBandwidthUsage {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Usage measurement array
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "interfaces")))]
+        #[cfg_attr(feature = "serde", serde(rename = "interfaces"))]
         pub interfaces: Vec<NetworkUsage>,
     }
 
@@ -1377,11 +1377,11 @@ pub mod msg_network_state_req {
     /// Request state of Piksi network interfaces. Output will be sent in
     /// MSG_NETWORK_STATE_RESP messages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkStateReq {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -1442,35 +1442,35 @@ pub mod msg_network_state_resp {
     /// The state of a network interface on the Piksi. Data is made to reflect
     /// output of ifaddrs struct returned by getifaddrs in c.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkStateResp {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// IPv4 address (all zero when unavailable)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ipv4_address")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ipv4_address"))]
         pub ipv4_address: [u8; 4],
         /// IPv4 netmask CIDR notation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ipv4_mask_size")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ipv4_mask_size"))]
         pub ipv4_mask_size: u8,
         /// IPv6 address (all zero when unavailable)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ipv6_address")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ipv6_address"))]
         pub ipv6_address: [u8; 16],
         /// IPv6 netmask CIDR notation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "ipv6_mask_size")))]
+        #[cfg_attr(feature = "serde", serde(rename = "ipv6_mask_size"))]
         pub ipv6_mask_size: u8,
         /// Number of Rx bytes
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rx_bytes")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rx_bytes"))]
         pub rx_bytes: u32,
         /// Number of Tx bytes
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tx_bytes")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tx_bytes"))]
         pub tx_bytes: u32,
         /// Interface Name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "interface_name")))]
+        #[cfg_attr(feature = "serde", serde(rename = "interface_name"))]
         pub interface_name: SbpString<[u8; 16], Unterminated>,
         /// Interface flags from SIOCGIFFLAGS
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u32,
     }
 
@@ -1767,14 +1767,14 @@ pub mod msg_reset {
     ///
     /// This message from the host resets the Piksi back into the bootloader.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReset {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Reset flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u32,
     }
 
@@ -1887,11 +1887,11 @@ pub mod msg_reset_dep {
     ///
     /// This message from the host resets the Piksi back into the bootloader.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgResetDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -1952,14 +1952,14 @@ pub mod msg_reset_filters {
     /// This message resets either the DGNSS Kalman filters or Integer Ambiguity
     /// Resolution (IAR) process.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgResetFilters {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Filter flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "filter")))]
+        #[cfg_attr(feature = "serde", serde(rename = "filter"))]
         pub filter: u8,
     }
 
@@ -2079,11 +2079,11 @@ pub mod msg_set_time {
     /// This message sets up timing functionality using a coarse GPS time estimate
     /// sent by the host.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSetTime {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
     }
 
@@ -2143,32 +2143,32 @@ pub mod msg_specan {
     ///
     /// Spectrum analyzer packet.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSpecan {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Channel ID
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "channel_tag")))]
+        #[cfg_attr(feature = "serde", serde(rename = "channel_tag"))]
         pub channel_tag: u16,
         /// Receiver time of this observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t"))]
         pub t: GpsTime,
         /// Reference frequency of this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "freq_ref")))]
+        #[cfg_attr(feature = "serde", serde(rename = "freq_ref"))]
         pub freq_ref: f32,
         /// Frequency step of points in this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "freq_step")))]
+        #[cfg_attr(feature = "serde", serde(rename = "freq_step"))]
         pub freq_step: f32,
         /// Reference amplitude of this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "amplitude_ref")))]
+        #[cfg_attr(feature = "serde", serde(rename = "amplitude_ref"))]
         pub amplitude_ref: f32,
         /// Amplitude unit value of points in this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "amplitude_unit")))]
+        #[cfg_attr(feature = "serde", serde(rename = "amplitude_unit"))]
         pub amplitude_unit: f32,
         /// Amplitude values (in the above units) of points in this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "amplitude_value")))]
+        #[cfg_attr(feature = "serde", serde(rename = "amplitude_value"))]
         pub amplitude_value: Vec<u8>,
     }
 
@@ -2257,32 +2257,32 @@ pub mod msg_specan_dep {
     ///
     /// Deprecated.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSpecanDep {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Channel ID
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "channel_tag")))]
+        #[cfg_attr(feature = "serde", serde(rename = "channel_tag"))]
         pub channel_tag: u16,
         /// Receiver time of this observation
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "t")))]
+        #[cfg_attr(feature = "serde", serde(rename = "t"))]
         pub t: GpsTimeDep,
         /// Reference frequency of this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "freq_ref")))]
+        #[cfg_attr(feature = "serde", serde(rename = "freq_ref"))]
         pub freq_ref: f32,
         /// Frequency step of points in this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "freq_step")))]
+        #[cfg_attr(feature = "serde", serde(rename = "freq_step"))]
         pub freq_step: f32,
         /// Reference amplitude of this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "amplitude_ref")))]
+        #[cfg_attr(feature = "serde", serde(rename = "amplitude_ref"))]
         pub amplitude_ref: f32,
         /// Amplitude unit value of points in this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "amplitude_unit")))]
+        #[cfg_attr(feature = "serde", serde(rename = "amplitude_unit"))]
         pub amplitude_unit: f32,
         /// Amplitude values (in the above units) of points in this packet
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "amplitude_value")))]
+        #[cfg_attr(feature = "serde", serde(rename = "amplitude_value"))]
         pub amplitude_value: Vec<u8>,
     }
 
@@ -2373,21 +2373,21 @@ pub mod msg_thread_state {
     /// system (RTOS) thread usage statistics for the named thread. The reported
     /// percentage values must be normalized.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgThreadState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Thread name (NULL terminated)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "name")))]
+        #[cfg_attr(feature = "serde", serde(rename = "name"))]
         pub name: SbpString<[u8; 20], NullTerminated>,
         /// Percentage cpu use for this thread. Values range from 0 - 1000 and needs
         /// to be renormalized to 100
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cpu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cpu"))]
         pub cpu: u16,
         /// Free stack space for this thread
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "stack_free")))]
+        #[cfg_attr(feature = "serde", serde(rename = "stack_free"))]
         pub stack_free: u32,
     }
 
@@ -2467,26 +2467,26 @@ pub mod msg_uart_state {
     /// timeliness of received base observations while the period indicates their
     /// likelihood of transmission.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUartState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// State of UART A
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uart_a")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uart_a"))]
         pub uart_a: UARTChannel,
         /// State of UART B
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uart_b")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uart_b"))]
         pub uart_b: UARTChannel,
         /// State of UART FTDI (USB logger)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uart_ftdi")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uart_ftdi"))]
         pub uart_ftdi: UARTChannel,
         /// UART communication latency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "latency")))]
+        #[cfg_attr(feature = "serde", serde(rename = "latency"))]
         pub latency: Latency,
         /// Observation receipt period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "obs_period")))]
+        #[cfg_attr(feature = "serde", serde(rename = "obs_period"))]
         pub obs_period: Period,
     }
 
@@ -2567,23 +2567,23 @@ pub mod msg_uart_state_depa {
     ///
     /// Deprecated
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUartStateDepa {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// State of UART A
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uart_a")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uart_a"))]
         pub uart_a: UARTChannel,
         /// State of UART B
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uart_b")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uart_b"))]
         pub uart_b: UARTChannel,
         /// State of UART FTDI (USB logger)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "uart_ftdi")))]
+        #[cfg_attr(feature = "serde", serde(rename = "uart_ftdi"))]
         pub uart_ftdi: UARTChannel,
         /// UART communication latency
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "latency")))]
+        #[cfg_attr(feature = "serde", serde(rename = "latency"))]
         pub latency: Latency,
     }
 
@@ -2664,23 +2664,23 @@ pub mod network_usage {
     /// may vary, both a timestamp and period field is provided, though may not
     /// necessarily be populated with a value.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct NetworkUsage {
         /// Duration over which the measurement was collected
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "duration")))]
+        #[cfg_attr(feature = "serde", serde(rename = "duration"))]
         pub duration: u64,
         /// Number of bytes handled in total within period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "total_bytes")))]
+        #[cfg_attr(feature = "serde", serde(rename = "total_bytes"))]
         pub total_bytes: u64,
         /// Number of bytes transmitted within period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rx_bytes")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rx_bytes"))]
         pub rx_bytes: u32,
         /// Number of bytes received within period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tx_bytes")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tx_bytes"))]
         pub tx_bytes: u32,
         /// Interface Name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "interface_name")))]
+        #[cfg_attr(feature = "serde", serde(rename = "interface_name"))]
         pub interface_name: SbpString<[u8; 16], Unterminated>,
     }
 
@@ -2732,20 +2732,20 @@ pub mod period {
     /// increase the period.  Long periods can cause momentary RTK solution
     /// outages.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Period {
         /// Average period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "avg")))]
+        #[cfg_attr(feature = "serde", serde(rename = "avg"))]
         pub avg: i32,
         /// Minimum period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pmin")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pmin"))]
         pub pmin: i32,
         /// Maximum period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pmax")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pmax"))]
         pub pmax: i32,
         /// Smoothed estimate of the current period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "current")))]
+        #[cfg_attr(feature = "serde", serde(rename = "current"))]
         pub current: i32,
     }
 
@@ -2789,26 +2789,26 @@ pub mod uart_channel {
     /// Throughput, utilization, and error counts on the RX/TX buffers of this
     /// UART channel. The reported percentage values must be normalized.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct UARTChannel {
         /// UART transmit throughput
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tx_throughput")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tx_throughput"))]
         pub tx_throughput: f32,
         /// UART receive throughput
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rx_throughput")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rx_throughput"))]
         pub rx_throughput: f32,
         /// UART CRC error count
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "crc_error_count")))]
+        #[cfg_attr(feature = "serde", serde(rename = "crc_error_count"))]
         pub crc_error_count: u16,
         /// UART IO error count
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "io_error_count")))]
+        #[cfg_attr(feature = "serde", serde(rename = "io_error_count"))]
         pub io_error_count: u16,
         /// UART transmit buffer percentage utilization (ranges from 0 to 255)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tx_buffer_level")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tx_buffer_level"))]
         pub tx_buffer_level: u8,
         /// UART receive buffer percentage utilization (ranges from 0 to 255)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "rx_buffer_level")))]
+        #[cfg_attr(feature = "serde", serde(rename = "rx_buffer_level"))]
         pub rx_buffer_level: u8,
     }
 
