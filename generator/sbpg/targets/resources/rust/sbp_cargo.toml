@@ -20,7 +20,8 @@ readme = "../../README.md"
 [features]
 default = []
 async = ["futures", "dencode/async"]
-json = ["serde", "serde_json", "serde-big-array", "base64"]
+serde = ["dep:serde", "serde-big-array"]
+json = ["serde", "serde_json", "base64"]
 float_roundtrip = ["serde_json/float_roundtrip"]
 link = ["slotmap"]
 
