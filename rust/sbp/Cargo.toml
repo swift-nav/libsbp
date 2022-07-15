@@ -22,7 +22,7 @@ default = []
 async = ["futures", "dencode/async"]
 serde = ["dep:serde", "serde-big-array"]
 json = ["serde", "serde_json", "base64"]
-float_roundtrip = ["serde_json/float_roundtrip"]
+float_roundtrip = ["serde", "serde_json/float_roundtrip"]
 link = ["slotmap"]
 
 [lib]
