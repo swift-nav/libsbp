@@ -795,7 +795,7 @@ pub enum Sbp {
     Unknown(Unknown),
 }
 
-#[cfg(feature = "serde")]
+#[cfg(feature = "serde_json")]
 impl<'de> serde::Deserialize<'de> for Sbp {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
