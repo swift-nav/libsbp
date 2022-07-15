@@ -1,9 +1,8 @@
-use std::convert::TryInto;
 use std::fmt;
-use std::fmt::Formatter;
 use std::marker::PhantomData;
 
 use bytes::{Buf, BufMut};
+#[cfg(feature = "serde")]
 use serde::de::{Error, Visitor};
 
 use crate::wire_format::WireFormat;
@@ -84,7 +83,7 @@ impl<'de, E> serde::Deserialize<'de> for SbpString<Vec<u8>, E> {
         impl<'de, E> Visitor<'de> for SbpStringVisitor<E> {
             type Value = SbpString<Vec<u8>, E>;
 
-            fn expecting(&self, formatter: &mut Formatter) -> fmt::Result {
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
                 formatter.write_str("string")
             }
 
@@ -126,12 +125,14 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
     where
         D: serde::Deserializer<'de>,
     {
+        use std::convert::TryInto;
+
         struct SbpStringVisitor<E, const LEN: usize>(PhantomData<SbpString<[u8; LEN], E>>);
 
         impl<'de, E, const LEN: usize> Visitor<'de> for SbpStringVisitor<E, LEN> {
             type Value = SbpString<[u8; LEN], E>;
 
-            fn expecting(&self, formatter: &mut Formatter) -> fmt::Result {
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
                 formatter.write_str("string")
             }
 
