@@ -229,6 +229,7 @@ typedef union {
   sbp_msg_ssr_grid_definition_dep_a_t ssr_grid_definition_dep_a;
   sbp_msg_ssr_gridded_correction_bounds_t ssr_gridded_correction_bounds;
   sbp_msg_ssr_gridded_correction_dep_a_t ssr_gridded_correction_dep_a;
+  sbp_msg_ssr_gridded_correction_dep_t ssr_gridded_correction_dep;
   sbp_msg_ssr_gridded_correction_no_std_dep_a_t
       ssr_gridded_correction_no_std_dep_a;
   sbp_msg_ssr_gridded_correction_t ssr_gridded_correction;
@@ -764,6 +765,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_encode(
           buf, len, n_written, &msg->ssr_gridded_correction_dep_a);
+    case SbpMsgSsrGriddedCorrectionDep:
+      return sbp_msg_ssr_gridded_correction_dep_encode(
+          buf, len, n_written, &msg->ssr_gridded_correction_dep);
     case SbpMsgSsrGriddedCorrectionNoStdDepA:
       return sbp_msg_ssr_gridded_correction_no_std_dep_a_encode(
           buf, len, n_written, &msg->ssr_gridded_correction_no_std_dep_a);
@@ -1382,6 +1386,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_decode(
           buf, len, n_read, &msg->ssr_gridded_correction_dep_a);
+    case SbpMsgSsrGriddedCorrectionDep:
+      return sbp_msg_ssr_gridded_correction_dep_decode(
+          buf, len, n_read, &msg->ssr_gridded_correction_dep);
     case SbpMsgSsrGriddedCorrectionNoStdDepA:
       return sbp_msg_ssr_gridded_correction_no_std_dep_a_decode(
           buf, len, n_read, &msg->ssr_gridded_correction_no_std_dep_a);
@@ -1909,6 +1916,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_encoded_len(
           &msg->ssr_gridded_correction_dep_a);
+    case SbpMsgSsrGriddedCorrectionDep:
+      return sbp_msg_ssr_gridded_correction_dep_encoded_len(
+          &msg->ssr_gridded_correction_dep);
     case SbpMsgSsrGriddedCorrectionNoStdDepA:
       return sbp_msg_ssr_gridded_correction_no_std_dep_a_encoded_len(
           &msg->ssr_gridded_correction_no_std_dep_a);
@@ -2476,6 +2486,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrGriddedCorrectionDepA:
       return sbp_msg_ssr_gridded_correction_dep_a_cmp(
           &a->ssr_gridded_correction_dep_a, &b->ssr_gridded_correction_dep_a);
+    case SbpMsgSsrGriddedCorrectionDep:
+      return sbp_msg_ssr_gridded_correction_dep_cmp(
+          &a->ssr_gridded_correction_dep, &b->ssr_gridded_correction_dep);
     case SbpMsgSsrGriddedCorrectionNoStdDepA:
       return sbp_msg_ssr_gridded_correction_no_std_dep_a_cmp(
           &a->ssr_gridded_correction_no_std_dep_a,

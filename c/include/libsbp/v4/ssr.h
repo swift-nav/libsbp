@@ -27,6 +27,7 @@
 #include <libsbp/v4/ssr/MSG_SSR_CODE_PHASE_BIASES_BOUNDS.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_BOUNDS.h>
+#include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_DEP.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_GRID_DEFINITION_DEP_A.h>

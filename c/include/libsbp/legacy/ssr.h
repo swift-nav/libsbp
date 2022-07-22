@@ -291,9 +291,8 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Gridded troposphere and STEC correction residuals
  *
- * STEC residuals are per space vehicle, troposphere is not.
- *
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
+ * STEC residuals are per space vehicle, troposphere is not. It is typically
+ * equivalent to the QZSS CLAS Sub Type 9 messages.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -311,6 +310,28 @@ typedef struct SBP_ATTR_PACKED {
   stec_residual_t stec_residuals[0]; /**< STEC residuals for each
                                           satellite (mean, stddev). */
 } msg_ssr_gridded_correction_t;
+
+/** Gridded troposphere and STEC correction residuals
+ *
+ * STEC residuals are per space vehicle, troposphere is not. It is typically
+ * equivalent to the QZSS CLAS Sub Type 9 messages.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  gridded_correction_header_t header; /**< Header of a
+                                           gridded
+                                           correction
+                                           message */
+  u16 index;                          /**< Index of the grid point. */
+  tropospheric_delay_correction_t tropo_delay_correction; /**< Wet and
+                                                               hydrostatic
+                                                               vertical
+                                                               delays
+                                                               (mean,
+                                                               stddev). */
+  stec_residual_t stec_residuals[0]; /**< STEC residuals for each
+                                          satellite (mean, stddev). */
+} msg_ssr_gridded_correction_dep_t;
 
 /** None
  *

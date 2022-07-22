@@ -223,6 +223,7 @@ typedef enum {
   SbpMsgSsrGridDefinitionDepA = SBP_MSG_SSR_GRID_DEFINITION_DEP_A,
   SbpMsgSsrGriddedCorrectionBounds = SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS,
   SbpMsgSsrGriddedCorrectionDepA = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A,
+  SbpMsgSsrGriddedCorrectionDep = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP,
   SbpMsgSsrGriddedCorrectionNoStdDepA =
       SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A,
   SbpMsgSsrGriddedCorrection = SBP_MSG_SSR_GRIDDED_CORRECTION,

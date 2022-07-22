@@ -186,7 +186,7 @@
  */
 #define SBP_MSG_SSR_STEC_CORRECTION_ENCODED_OVERHEAD 16u
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
+#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FF
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ssr_gridded_correction_t::stec_residuals (V4 API) or
@@ -209,6 +209,30 @@
  * structure and its variable length component(s)
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_ENCODED_OVERHEAD 23u
+
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP 0x05FC
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_gridded_correction_dep_t::stec_residuals (V4 API) or
+ * msg_ssr_gridded_correction_dep_t::stec_residuals (legacy API) before the
+ * maximum SBP message size is exceeded
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_STEC_RESIDUALS_MAX 46u
+
+/**
+ * Encoded length of sbp_msg_ssr_gridded_correction_dep_t (V4 API) and
+ * msg_ssr_gridded_correction_dep_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_gridded_correction_dep_encoded_len to determine the actual size
+ * of an instance of this message. Users of the legacy API are required to track
+ * the encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_ENCODED_OVERHEAD 23u
 
 /**
  * Encoded length of sbp_stec_sat_element_integrity_t (V4 API) and
