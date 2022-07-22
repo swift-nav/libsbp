@@ -434,12 +434,31 @@ definitions:
            desc: Array of STEC polynomial coefficients for each space vehicle.
 
  - MSG_SSR_GRIDDED_CORRECTION:
+    id: 0x05FF
+    short_desc: Gridded troposphere and STEC correction residuals
+    desc: >
+      STEC residuals are per space vehicle, troposphere is not.
+      It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
+    fields:
+        - header:
+            type: GriddedCorrectionHeader
+            desc: Header of a gridded correction message
+        - index:
+            type: u16
+            desc: Index of the grid point.
+        - tropo_delay_correction:
+            type: TroposphericDelayCorrection
+            desc: Wet and hydrostatic vertical delays (mean, stddev).
+        - stec_residuals:
+            type: array
+            fill: STECResidual
+            desc: STEC residuals for each satellite (mean, stddev).
+
+ - MSG_SSR_GRIDDED_CORRECTION_DEP:
     id: 0x05FC
     short_desc: Gridded troposphere and STEC correction residuals
     desc: >
       STEC residuals are per space vehicle, troposphere is not.
-
-
       It is typically equivalent to the QZSS CLAS Sub Type 9 messages.
     fields:
         - header:
