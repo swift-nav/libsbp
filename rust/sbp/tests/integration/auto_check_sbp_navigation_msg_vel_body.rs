@@ -97,3 +97,95 @@ fn test_auto_check_sbp_navigation_msg_vel_body() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_navigation_msg_vel_body() {
+    {
+        let json_input = r#"{"cov_y_z": 3, "cov_y_y": 7, "n_sats": 3, "sender": 66, "msg_type": 531, "cov_x_z": 7, "cov_x_y": 5, "cov_x_x": 0, "tow": 1, "crc": 36984, "length": 42, "flags": 8, "y": 2, "x": 4, "z": 1, "preamble": 85, "payload": "AQAAAAQAAAACAAAAAQAAAAAAAAAAAKBAAADgQAAA4EAAAEBAAAAAQAMI", "cov_z_z": 2}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelBody(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x213,
+                    "Incorrect message type, expected 0x213, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x42,
+                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id
+                );
+                assert!(
+                    msg.cov_x_x.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for cov_x_x, expected 0.00000000000000000e+00, is {:e}",
+                    msg.cov_x_x
+                );
+                assert!(
+                    msg.cov_x_y.almost_eq(5.00000000000000000e+00),
+                    "incorrect value for cov_x_y, expected 5.00000000000000000e+00, is {:e}",
+                    msg.cov_x_y
+                );
+                assert!(
+                    msg.cov_x_z.almost_eq(7.00000000000000000e+00),
+                    "incorrect value for cov_x_z, expected 7.00000000000000000e+00, is {:e}",
+                    msg.cov_x_z
+                );
+                assert!(
+                    msg.cov_y_y.almost_eq(7.00000000000000000e+00),
+                    "incorrect value for cov_y_y, expected 7.00000000000000000e+00, is {:e}",
+                    msg.cov_y_y
+                );
+                assert!(
+                    msg.cov_y_z.almost_eq(3.00000000000000000e+00),
+                    "incorrect value for cov_y_z, expected 3.00000000000000000e+00, is {:e}",
+                    msg.cov_y_z
+                );
+                assert!(
+                    msg.cov_z_z.almost_eq(2.00000000000000000e+00),
+                    "incorrect value for cov_z_z, expected 2.00000000000000000e+00, is {:e}",
+                    msg.cov_z_z
+                );
+                assert_eq!(
+                    msg.flags, 8,
+                    "incorrect value for flags, expected 8, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.n_sats, 3,
+                    "incorrect value for n_sats, expected 3, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 1,
+                    "incorrect value for tow, expected 1, is {}",
+                    msg.tow
+                );
+                assert_eq!(msg.x, 4, "incorrect value for x, expected 4, is {}", msg.x);
+                assert_eq!(msg.y, 2, "incorrect value for y, expected 2, is {}", msg.y);
+                assert_eq!(msg.z, 1, "incorrect value for z, expected 1, is {}", msg.z);
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelBody"),
+        };
+    }
+}

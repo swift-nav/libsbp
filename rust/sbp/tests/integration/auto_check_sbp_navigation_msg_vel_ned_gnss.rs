@@ -85,3 +85,83 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_gnss() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_gnss() {
+    {
+        let json_input = r#"{"tow":501868200,"n":-5,"e":0,"d":-10,"h_accuracy":40,"v_accuracy":89,"n_sats":21,"flags":2,"preamble":85,"msg_type":558,"sender":4096,"payload":"qObpHfv///8AAAAA9v///ygAWQAVAg==","crc":43875,"length":22}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedGnss(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x22e,
+                    "Incorrect message type, expected 0x22e, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x1000,
+                    "incorrect sender id, expected 0x1000, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, -10,
+                    "incorrect value for d, expected -10, is {}",
+                    msg.d
+                );
+                assert_eq!(msg.e, 0, "incorrect value for e, expected 0, is {}", msg.e);
+                assert_eq!(
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 40,
+                    "incorrect value for h_accuracy, expected 40, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -5,
+                    "incorrect value for n, expected -5, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 21,
+                    "incorrect value for n_sats, expected 21, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 501868200,
+                    "incorrect value for tow, expected 501868200, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 89,
+                    "incorrect value for v_accuracy, expected 89, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDGnss"),
+        };
+    }
+}

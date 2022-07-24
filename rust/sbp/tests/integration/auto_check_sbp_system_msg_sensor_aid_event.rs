@@ -88,3 +88,87 @@ fn test_auto_check_sbp_system_msg_sensor_aid_event() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_system_msg_sensor_aid_event() {
+    {
+        let json_input = r#"{"preamble": 85, "msg_type": 65289, "sender": 35027, "length": 15, "payload": "MPZ6EwAAAAAAAAAAAAAA", "crc": 60449, "time": 326825520, "sensor_type": 0, "sensor_id": 0, "sensor_state": 0, "n_available_meas": 0, "n_attempted_meas": 0, "n_accepted_meas": 0, "flags": 0}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgSensorAidEvent(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0xFF09,
+                    "Incorrect message type, expected 0xFF09, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88D3,
+                    "incorrect sender id, expected 0x88D3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.n_accepted_meas, 0,
+                    "incorrect value for n_accepted_meas, expected 0, is {}",
+                    msg.n_accepted_meas
+                );
+                assert_eq!(
+                    msg.n_attempted_meas, 0,
+                    "incorrect value for n_attempted_meas, expected 0, is {}",
+                    msg.n_attempted_meas
+                );
+                assert_eq!(
+                    msg.n_available_meas, 0,
+                    "incorrect value for n_available_meas, expected 0, is {}",
+                    msg.n_available_meas
+                );
+                assert_eq!(
+                    msg.sensor_id, 0,
+                    "incorrect value for sensor_id, expected 0, is {}",
+                    msg.sensor_id
+                );
+                assert_eq!(
+                    msg.sensor_state, 0,
+                    "incorrect value for sensor_state, expected 0, is {}",
+                    msg.sensor_state
+                );
+                assert_eq!(
+                    msg.sensor_type, 0,
+                    "incorrect value for sensor_type, expected 0, is {}",
+                    msg.sensor_type
+                );
+                assert_eq!(
+                    msg.time, 326825520,
+                    "incorrect value for time, expected 326825520, is {}",
+                    msg.time
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgSensorAidEvent"),
+        };
+    }
+}

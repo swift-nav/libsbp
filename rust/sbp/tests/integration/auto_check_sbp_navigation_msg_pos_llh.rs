@@ -386,3 +386,403 @@ fn test_auto_check_sbp_navigation_msg_pos_llh() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_navigation_msg_pos_llh() {
+    {
+        let json_input = r#"{"v_accuracy": 0, "n_sats": 14, "sender": 35027, "msg_type": 522, "lon": -121.87505366879361, "tow": 326825000, "height": 28.21160739227208, "crc": 41647, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130398358085, "preamble": 85, "payload": "KPR6E8lqm7oqoEJAqG0a4QB4XsCCZu3mKzY8QAAAAAAOAg=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPosLlh(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x20a,
+                    "Incorrect message type, expected 0x20a, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert!(
+                    msg.height.almost_eq(2.82116073922720787e+01),
+                    "incorrect value for height, expected 2.82116073922720787e+01, is {:e}",
+                    msg.height
+                );
+                assert!(
+                    msg.lat.almost_eq(3.72513039835808470e+01),
+                    "incorrect value for lat, expected 3.72513039835808470e+01, is {:e}",
+                    msg.lat
+                );
+                assert!(
+                    msg.lon.almost_eq(-1.21875053668793612e+02),
+                    "incorrect value for lon, expected -1.21875053668793612e+02, is {:e}",
+                    msg.lon
+                );
+                assert_eq!(
+                    msg.n_sats, 14,
+                    "incorrect value for n_sats, expected 14, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 326825000,
+                    "incorrect value for tow, expected 326825000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPosLLH"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505349618341, "tow": 326826000, "height": 27.742055560866373, "crc": 45350, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251303074738104, "preamble": 85, "payload": "EPh6EzSx+7IqoEJA7RZh4AB4XsBrvG1a9707QAAAAAAPAg=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPosLlh(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x20a,
+                    "Incorrect message type, expected 0x20a, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert!(
+                    msg.height.almost_eq(2.77420555608663726e+01),
+                    "incorrect value for height, expected 2.77420555608663726e+01, is {:e}",
+                    msg.height
+                );
+                assert!(
+                    msg.lat.almost_eq(3.72513030747381038e+01),
+                    "incorrect value for lat, expected 3.72513030747381038e+01, is {:e}",
+                    msg.lat
+                );
+                assert!(
+                    msg.lon.almost_eq(-1.21875053496183412e+02),
+                    "incorrect value for lon, expected -1.21875053496183412e+02, is {:e}",
+                    msg.lon
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 326826000,
+                    "incorrect value for tow, expected 326826000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPosLLH"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505373641241, "tow": 326827000, "height": 27.613721582970516, "crc": 10291, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.25130117370741, "preamble": 85, "payload": "+Pt6E4dCCaMqoEJAkghj4QB4XsAttY/bHJ07QAAAAAAPAg=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPosLlh(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x20a,
+                    "Incorrect message type, expected 0x20a, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert!(
+                    msg.height.almost_eq(2.76137215829705163e+01),
+                    "incorrect value for height, expected 2.76137215829705163e+01, is {:e}",
+                    msg.height
+                );
+                assert!(
+                    msg.lat.almost_eq(3.72513011737074109e+01),
+                    "incorrect value for lat, expected 3.72513011737074109e+01, is {:e}",
+                    msg.lat
+                );
+                assert!(
+                    msg.lon.almost_eq(-1.21875053736412411e+02),
+                    "incorrect value for lon, expected -1.21875053736412411e+02, is {:e}",
+                    msg.lon
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 326827000,
+                    "incorrect value for tow, expected 326827000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPosLLH"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505511141057, "tow": 326828000, "height": 27.80259807042305, "crc": 49676, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251296042079176, "preamble": 85, "payload": "4P96ExIs/XcqoEJAMG0n5wB4XsC5TDARd807QAAAAAAPAg=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPosLlh(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x20a,
+                    "Incorrect message type, expected 0x20a, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert!(
+                    msg.height.almost_eq(2.78025980704230484e+01),
+                    "incorrect value for height, expected 2.78025980704230484e+01, is {:e}",
+                    msg.height
+                );
+                assert!(
+                    msg.lat.almost_eq(3.72512960420791757e+01),
+                    "incorrect value for lat, expected 3.72512960420791757e+01, is {:e}",
+                    msg.lat
+                );
+                assert!(
+                    msg.lon.almost_eq(-1.21875055111410575e+02),
+                    "incorrect value for lon, expected -1.21875055111410575e+02, is {:e}",
+                    msg.lon
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 326828000,
+                    "incorrect value for tow, expected 326828000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPosLLH"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "n_sats": 15, "sender": 35027, "msg_type": 522, "lon": -121.87505609407974, "tow": 326829000, "height": 27.939512310879213, "crc": 26402, "length": 34, "flags": 2, "h_accuracy": 0, "lat": 37.251292578377395, "preamble": 85, "payload": "yAN7E+Ht7loqoEJAO49G6wB4XsBlavngg/A7QAAAAAAPAg=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPosLlh(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x20a,
+                    "Incorrect message type, expected 0x20a, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert!(
+                    msg.height.almost_eq(2.79395123108792127e+01),
+                    "incorrect value for height, expected 2.79395123108792127e+01, is {:e}",
+                    msg.height
+                );
+                assert!(
+                    msg.lat.almost_eq(3.72512925783773952e+01),
+                    "incorrect value for lat, expected 3.72512925783773952e+01, is {:e}",
+                    msg.lat
+                );
+                assert!(
+                    msg.lon.almost_eq(-1.21875056094079739e+02),
+                    "incorrect value for lon, expected -1.21875056094079739e+02, is {:e}",
+                    msg.lon
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 326829000,
+                    "incorrect value for tow, expected 326829000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPosLLH"),
+        };
+    }
+}

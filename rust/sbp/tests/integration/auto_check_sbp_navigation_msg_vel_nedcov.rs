@@ -98,3 +98,95 @@ fn test_auto_check_sbp_navigation_msg_vel_nedcov() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_navigation_msg_vel_nedcov() {
+    {
+        let json_input = r#"{"cov_e_d": 1, "cov_e_e": 1, "n_sats": 10, "sender": 66, "msg_type": 530, "cov_n_n": 1, "cov_n_e": 1, "tow": 100, "n": 1, "crc": 52568, "length": 42, "cov_n_d": 1, "flags": 0, "e": 1, "cov_d_d": 1, "preamble": 85, "payload": "ZAAAAAEAAAABAAAAAQAAAAAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwoA", "d": 1}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedCov(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x212,
+                    "Incorrect message type, expected 0x212, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x42,
+                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id
+                );
+                assert!(
+                    msg.cov_d_d.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_d_d, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_d_d
+                );
+                assert!(
+                    msg.cov_e_d.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_e_d, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_e_d
+                );
+                assert!(
+                    msg.cov_e_e.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_e_e, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_e_e
+                );
+                assert!(
+                    msg.cov_n_d.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_n_d, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_n_d
+                );
+                assert!(
+                    msg.cov_n_e.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_n_e, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_n_e
+                );
+                assert!(
+                    msg.cov_n_n.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for cov_n_n, expected 1.00000000000000000e+00, is {:e}",
+                    msg.cov_n_n
+                );
+                assert_eq!(msg.d, 1, "incorrect value for d, expected 1, is {}", msg.d);
+                assert_eq!(msg.e, 1, "incorrect value for e, expected 1, is {}", msg.e);
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(msg.n, 1, "incorrect value for n, expected 1, is {}", msg.n);
+                assert_eq!(
+                    msg.n_sats, 10,
+                    "incorrect value for n_sats, expected 10, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 100,
+                    "incorrect value for tow, expected 100, is {}",
+                    msg.tow
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDCov"),
+        };
+    }
+}

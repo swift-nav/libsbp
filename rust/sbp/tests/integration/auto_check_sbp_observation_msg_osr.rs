@@ -678,3 +678,667 @@ fn test_auto_check_sbp_observation_msg_osr() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_observation_msg_osr() {
+    {
+        let json_input = r#"{"header":{"t":{"tow":501867000,"ns_residual":0,"wn":2152},"n_obs":64},"obs":[{"P":1156681547,"L":{"i":121567974,"f":66},"lock":15,"flags":3,"sid":{"sat":1,"code":0},"iono_std":13,"tropo_std":7,"range_std":7},{"P":1063905486,"L":{"i":111817196,"f":75},"lock":15,"flags":3,"sid":{"sat":13,"code":0},"iono_std":13,"tropo_std":3,"range_std":3},{"P":1053200685,"L":{"i":110692129,"f":128},"lock":15,"flags":3,"sid":{"sat":14,"code":0},"iono_std":13,"tropo_std":3,"range_std":3},{"P":1137476697,"L":{"i":119549583,"f":127},"lock":15,"flags":3,"sid":{"sat":15,"code":0},"iono_std":13,"tropo_std":5,"range_std":5},{"P":1017446132,"L":{"i":106934294,"f":55},"lock":15,"flags":3,"sid":{"sat":17,"code":0},"iono_std":0,"tropo_std":2,"range_std":2},{"P":1046846826,"L":{"i":110024343,"f":108},"lock":15,"flags":3,"sid":{"sat":19,"code":0},"iono_std":13,"tropo_std":3,"range_std":3},{"P":1060957521,"L":{"i":111507381,"f":206},"lock":15,"flags":3,"sid":{"sat":28,"code":0},"iono_std":13,"tropo_std":3,"range_std":3},{"P":1081009286,"L":{"i":113614775,"f":200},"lock":15,"flags":3,"sid":{"sat":30,"code":0},"iono_std":13,"tropo_std":3,"range_std":3},{"P":1156681781,"L":{"i":94728270,"f":170},"lock":15,"flags":3,"sid":{"sat":1,"code":6},"iono_std":21,"tropo_std":7,"range_std":7},{"P":1063905531,"L":{"i":87130275,"f":129},"lock":15,"flags":3,"sid":{"sat":13,"code":6},"iono_std":21,"tropo_std":3,"range_std":3},{"P":1053200752,"L":{"i":86253605,"f":46},"lock":15,"flags":3,"sid":{"sat":14,"code":6},"iono_std":21,"tropo_std":3,"range_std":3},{"P":1137476774,"L":{"i":93155512,"f":95},"lock":15,"flags":3,"sid":{"sat":15,"code":6},"iono_std":21,"tropo_std":5,"range_std":5}],"preamble":85,"msg_type":1600,"sender":0,"payload":"+OHpHQAAAABoCEBLj/FE5vo+B0IPAwEADQAHAAcAzuhpP+wxqgZLDwMNAA0AAwADAC2Rxj4hB5kGgA8DDgANAAMAAwBZhMxDjy4gB38PAw8ADQAFAAUA9P6kPBawXwY3DwMRAAAAAgACAGqdZT6X1o4GbA8DEwANAAMAAwBR7Tw/tXelBs4PAxwADQADAAMAhuRuQLefxQbIDwMeAA0AAwADADWQ8UROcKUFqg8DAQYVAAcABwD76Gk/o4AxBYEPAw0GFQADAAMAcJHGPiUgJAUuDwMOBhUAAwADAKaEzEO4cI0FXw8DDwYVAAUABQA=","crc":58233,"length":239}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgOsr(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x640,
+                    "Incorrect message type, expected 0x640, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0,
+                    "incorrect sender id, expected 0, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.header.n_obs, 64,
+                    "incorrect value for header.n_obs, expected 64, is {}",
+                    msg.header.n_obs
+                );
+                assert_eq!(
+                    msg.header.t.ns_residual, 0,
+                    "incorrect value for header.t.ns_residual, expected 0, is {}",
+                    msg.header.t.ns_residual
+                );
+                assert_eq!(
+                    msg.header.t.tow, 501867000,
+                    "incorrect value for header.t.tow, expected 501867000, is {}",
+                    msg.header.t.tow
+                );
+                assert_eq!(
+                    msg.header.t.wn, 2152,
+                    "incorrect value for header.t.wn, expected 2152, is {}",
+                    msg.header.t.wn
+                );
+                assert_eq!(
+                    msg.obs[0].l.f, 66,
+                    "incorrect value for obs[0].l.f, expected 66, is {}",
+                    msg.obs[0].l.f
+                );
+                assert_eq!(
+                    msg.obs[0].l.i, 121567974,
+                    "incorrect value for obs[0].l.i, expected 121567974, is {}",
+                    msg.obs[0].l.i
+                );
+                assert_eq!(
+                    msg.obs[0].p, 1156681547,
+                    "incorrect value for obs[0].p, expected 1156681547, is {}",
+                    msg.obs[0].p
+                );
+                assert_eq!(
+                    msg.obs[0].flags, 3,
+                    "incorrect value for obs[0].flags, expected 3, is {}",
+                    msg.obs[0].flags
+                );
+                assert_eq!(
+                    msg.obs[0].iono_std, 13,
+                    "incorrect value for obs[0].iono_std, expected 13, is {}",
+                    msg.obs[0].iono_std
+                );
+                assert_eq!(
+                    msg.obs[0].lock, 15,
+                    "incorrect value for obs[0].lock, expected 15, is {}",
+                    msg.obs[0].lock
+                );
+                assert_eq!(
+                    msg.obs[0].range_std, 7,
+                    "incorrect value for obs[0].range_std, expected 7, is {}",
+                    msg.obs[0].range_std
+                );
+                assert_eq!(
+                    msg.obs[0].sid.code, 0,
+                    "incorrect value for obs[0].sid.code, expected 0, is {}",
+                    msg.obs[0].sid.code
+                );
+                assert_eq!(
+                    msg.obs[0].sid.sat, 1,
+                    "incorrect value for obs[0].sid.sat, expected 1, is {}",
+                    msg.obs[0].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[0].tropo_std, 7,
+                    "incorrect value for obs[0].tropo_std, expected 7, is {}",
+                    msg.obs[0].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[1].l.f, 75,
+                    "incorrect value for obs[1].l.f, expected 75, is {}",
+                    msg.obs[1].l.f
+                );
+                assert_eq!(
+                    msg.obs[1].l.i, 111817196,
+                    "incorrect value for obs[1].l.i, expected 111817196, is {}",
+                    msg.obs[1].l.i
+                );
+                assert_eq!(
+                    msg.obs[1].p, 1063905486,
+                    "incorrect value for obs[1].p, expected 1063905486, is {}",
+                    msg.obs[1].p
+                );
+                assert_eq!(
+                    msg.obs[1].flags, 3,
+                    "incorrect value for obs[1].flags, expected 3, is {}",
+                    msg.obs[1].flags
+                );
+                assert_eq!(
+                    msg.obs[1].iono_std, 13,
+                    "incorrect value for obs[1].iono_std, expected 13, is {}",
+                    msg.obs[1].iono_std
+                );
+                assert_eq!(
+                    msg.obs[1].lock, 15,
+                    "incorrect value for obs[1].lock, expected 15, is {}",
+                    msg.obs[1].lock
+                );
+                assert_eq!(
+                    msg.obs[1].range_std, 3,
+                    "incorrect value for obs[1].range_std, expected 3, is {}",
+                    msg.obs[1].range_std
+                );
+                assert_eq!(
+                    msg.obs[1].sid.code, 0,
+                    "incorrect value for obs[1].sid.code, expected 0, is {}",
+                    msg.obs[1].sid.code
+                );
+                assert_eq!(
+                    msg.obs[1].sid.sat, 13,
+                    "incorrect value for obs[1].sid.sat, expected 13, is {}",
+                    msg.obs[1].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[1].tropo_std, 3,
+                    "incorrect value for obs[1].tropo_std, expected 3, is {}",
+                    msg.obs[1].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[2].l.f, 128,
+                    "incorrect value for obs[2].l.f, expected 128, is {}",
+                    msg.obs[2].l.f
+                );
+                assert_eq!(
+                    msg.obs[2].l.i, 110692129,
+                    "incorrect value for obs[2].l.i, expected 110692129, is {}",
+                    msg.obs[2].l.i
+                );
+                assert_eq!(
+                    msg.obs[2].p, 1053200685,
+                    "incorrect value for obs[2].p, expected 1053200685, is {}",
+                    msg.obs[2].p
+                );
+                assert_eq!(
+                    msg.obs[2].flags, 3,
+                    "incorrect value for obs[2].flags, expected 3, is {}",
+                    msg.obs[2].flags
+                );
+                assert_eq!(
+                    msg.obs[2].iono_std, 13,
+                    "incorrect value for obs[2].iono_std, expected 13, is {}",
+                    msg.obs[2].iono_std
+                );
+                assert_eq!(
+                    msg.obs[2].lock, 15,
+                    "incorrect value for obs[2].lock, expected 15, is {}",
+                    msg.obs[2].lock
+                );
+                assert_eq!(
+                    msg.obs[2].range_std, 3,
+                    "incorrect value for obs[2].range_std, expected 3, is {}",
+                    msg.obs[2].range_std
+                );
+                assert_eq!(
+                    msg.obs[2].sid.code, 0,
+                    "incorrect value for obs[2].sid.code, expected 0, is {}",
+                    msg.obs[2].sid.code
+                );
+                assert_eq!(
+                    msg.obs[2].sid.sat, 14,
+                    "incorrect value for obs[2].sid.sat, expected 14, is {}",
+                    msg.obs[2].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[2].tropo_std, 3,
+                    "incorrect value for obs[2].tropo_std, expected 3, is {}",
+                    msg.obs[2].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[3].l.f, 127,
+                    "incorrect value for obs[3].l.f, expected 127, is {}",
+                    msg.obs[3].l.f
+                );
+                assert_eq!(
+                    msg.obs[3].l.i, 119549583,
+                    "incorrect value for obs[3].l.i, expected 119549583, is {}",
+                    msg.obs[3].l.i
+                );
+                assert_eq!(
+                    msg.obs[3].p, 1137476697,
+                    "incorrect value for obs[3].p, expected 1137476697, is {}",
+                    msg.obs[3].p
+                );
+                assert_eq!(
+                    msg.obs[3].flags, 3,
+                    "incorrect value for obs[3].flags, expected 3, is {}",
+                    msg.obs[3].flags
+                );
+                assert_eq!(
+                    msg.obs[3].iono_std, 13,
+                    "incorrect value for obs[3].iono_std, expected 13, is {}",
+                    msg.obs[3].iono_std
+                );
+                assert_eq!(
+                    msg.obs[3].lock, 15,
+                    "incorrect value for obs[3].lock, expected 15, is {}",
+                    msg.obs[3].lock
+                );
+                assert_eq!(
+                    msg.obs[3].range_std, 5,
+                    "incorrect value for obs[3].range_std, expected 5, is {}",
+                    msg.obs[3].range_std
+                );
+                assert_eq!(
+                    msg.obs[3].sid.code, 0,
+                    "incorrect value for obs[3].sid.code, expected 0, is {}",
+                    msg.obs[3].sid.code
+                );
+                assert_eq!(
+                    msg.obs[3].sid.sat, 15,
+                    "incorrect value for obs[3].sid.sat, expected 15, is {}",
+                    msg.obs[3].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[3].tropo_std, 5,
+                    "incorrect value for obs[3].tropo_std, expected 5, is {}",
+                    msg.obs[3].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[4].l.f, 55,
+                    "incorrect value for obs[4].l.f, expected 55, is {}",
+                    msg.obs[4].l.f
+                );
+                assert_eq!(
+                    msg.obs[4].l.i, 106934294,
+                    "incorrect value for obs[4].l.i, expected 106934294, is {}",
+                    msg.obs[4].l.i
+                );
+                assert_eq!(
+                    msg.obs[4].p, 1017446132,
+                    "incorrect value for obs[4].p, expected 1017446132, is {}",
+                    msg.obs[4].p
+                );
+                assert_eq!(
+                    msg.obs[4].flags, 3,
+                    "incorrect value for obs[4].flags, expected 3, is {}",
+                    msg.obs[4].flags
+                );
+                assert_eq!(
+                    msg.obs[4].iono_std, 0,
+                    "incorrect value for obs[4].iono_std, expected 0, is {}",
+                    msg.obs[4].iono_std
+                );
+                assert_eq!(
+                    msg.obs[4].lock, 15,
+                    "incorrect value for obs[4].lock, expected 15, is {}",
+                    msg.obs[4].lock
+                );
+                assert_eq!(
+                    msg.obs[4].range_std, 2,
+                    "incorrect value for obs[4].range_std, expected 2, is {}",
+                    msg.obs[4].range_std
+                );
+                assert_eq!(
+                    msg.obs[4].sid.code, 0,
+                    "incorrect value for obs[4].sid.code, expected 0, is {}",
+                    msg.obs[4].sid.code
+                );
+                assert_eq!(
+                    msg.obs[4].sid.sat, 17,
+                    "incorrect value for obs[4].sid.sat, expected 17, is {}",
+                    msg.obs[4].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[4].tropo_std, 2,
+                    "incorrect value for obs[4].tropo_std, expected 2, is {}",
+                    msg.obs[4].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[5].l.f, 108,
+                    "incorrect value for obs[5].l.f, expected 108, is {}",
+                    msg.obs[5].l.f
+                );
+                assert_eq!(
+                    msg.obs[5].l.i, 110024343,
+                    "incorrect value for obs[5].l.i, expected 110024343, is {}",
+                    msg.obs[5].l.i
+                );
+                assert_eq!(
+                    msg.obs[5].p, 1046846826,
+                    "incorrect value for obs[5].p, expected 1046846826, is {}",
+                    msg.obs[5].p
+                );
+                assert_eq!(
+                    msg.obs[5].flags, 3,
+                    "incorrect value for obs[5].flags, expected 3, is {}",
+                    msg.obs[5].flags
+                );
+                assert_eq!(
+                    msg.obs[5].iono_std, 13,
+                    "incorrect value for obs[5].iono_std, expected 13, is {}",
+                    msg.obs[5].iono_std
+                );
+                assert_eq!(
+                    msg.obs[5].lock, 15,
+                    "incorrect value for obs[5].lock, expected 15, is {}",
+                    msg.obs[5].lock
+                );
+                assert_eq!(
+                    msg.obs[5].range_std, 3,
+                    "incorrect value for obs[5].range_std, expected 3, is {}",
+                    msg.obs[5].range_std
+                );
+                assert_eq!(
+                    msg.obs[5].sid.code, 0,
+                    "incorrect value for obs[5].sid.code, expected 0, is {}",
+                    msg.obs[5].sid.code
+                );
+                assert_eq!(
+                    msg.obs[5].sid.sat, 19,
+                    "incorrect value for obs[5].sid.sat, expected 19, is {}",
+                    msg.obs[5].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[5].tropo_std, 3,
+                    "incorrect value for obs[5].tropo_std, expected 3, is {}",
+                    msg.obs[5].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[6].l.f, 206,
+                    "incorrect value for obs[6].l.f, expected 206, is {}",
+                    msg.obs[6].l.f
+                );
+                assert_eq!(
+                    msg.obs[6].l.i, 111507381,
+                    "incorrect value for obs[6].l.i, expected 111507381, is {}",
+                    msg.obs[6].l.i
+                );
+                assert_eq!(
+                    msg.obs[6].p, 1060957521,
+                    "incorrect value for obs[6].p, expected 1060957521, is {}",
+                    msg.obs[6].p
+                );
+                assert_eq!(
+                    msg.obs[6].flags, 3,
+                    "incorrect value for obs[6].flags, expected 3, is {}",
+                    msg.obs[6].flags
+                );
+                assert_eq!(
+                    msg.obs[6].iono_std, 13,
+                    "incorrect value for obs[6].iono_std, expected 13, is {}",
+                    msg.obs[6].iono_std
+                );
+                assert_eq!(
+                    msg.obs[6].lock, 15,
+                    "incorrect value for obs[6].lock, expected 15, is {}",
+                    msg.obs[6].lock
+                );
+                assert_eq!(
+                    msg.obs[6].range_std, 3,
+                    "incorrect value for obs[6].range_std, expected 3, is {}",
+                    msg.obs[6].range_std
+                );
+                assert_eq!(
+                    msg.obs[6].sid.code, 0,
+                    "incorrect value for obs[6].sid.code, expected 0, is {}",
+                    msg.obs[6].sid.code
+                );
+                assert_eq!(
+                    msg.obs[6].sid.sat, 28,
+                    "incorrect value for obs[6].sid.sat, expected 28, is {}",
+                    msg.obs[6].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[6].tropo_std, 3,
+                    "incorrect value for obs[6].tropo_std, expected 3, is {}",
+                    msg.obs[6].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[7].l.f, 200,
+                    "incorrect value for obs[7].l.f, expected 200, is {}",
+                    msg.obs[7].l.f
+                );
+                assert_eq!(
+                    msg.obs[7].l.i, 113614775,
+                    "incorrect value for obs[7].l.i, expected 113614775, is {}",
+                    msg.obs[7].l.i
+                );
+                assert_eq!(
+                    msg.obs[7].p, 1081009286,
+                    "incorrect value for obs[7].p, expected 1081009286, is {}",
+                    msg.obs[7].p
+                );
+                assert_eq!(
+                    msg.obs[7].flags, 3,
+                    "incorrect value for obs[7].flags, expected 3, is {}",
+                    msg.obs[7].flags
+                );
+                assert_eq!(
+                    msg.obs[7].iono_std, 13,
+                    "incorrect value for obs[7].iono_std, expected 13, is {}",
+                    msg.obs[7].iono_std
+                );
+                assert_eq!(
+                    msg.obs[7].lock, 15,
+                    "incorrect value for obs[7].lock, expected 15, is {}",
+                    msg.obs[7].lock
+                );
+                assert_eq!(
+                    msg.obs[7].range_std, 3,
+                    "incorrect value for obs[7].range_std, expected 3, is {}",
+                    msg.obs[7].range_std
+                );
+                assert_eq!(
+                    msg.obs[7].sid.code, 0,
+                    "incorrect value for obs[7].sid.code, expected 0, is {}",
+                    msg.obs[7].sid.code
+                );
+                assert_eq!(
+                    msg.obs[7].sid.sat, 30,
+                    "incorrect value for obs[7].sid.sat, expected 30, is {}",
+                    msg.obs[7].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[7].tropo_std, 3,
+                    "incorrect value for obs[7].tropo_std, expected 3, is {}",
+                    msg.obs[7].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[8].l.f, 170,
+                    "incorrect value for obs[8].l.f, expected 170, is {}",
+                    msg.obs[8].l.f
+                );
+                assert_eq!(
+                    msg.obs[8].l.i, 94728270,
+                    "incorrect value for obs[8].l.i, expected 94728270, is {}",
+                    msg.obs[8].l.i
+                );
+                assert_eq!(
+                    msg.obs[8].p, 1156681781,
+                    "incorrect value for obs[8].p, expected 1156681781, is {}",
+                    msg.obs[8].p
+                );
+                assert_eq!(
+                    msg.obs[8].flags, 3,
+                    "incorrect value for obs[8].flags, expected 3, is {}",
+                    msg.obs[8].flags
+                );
+                assert_eq!(
+                    msg.obs[8].iono_std, 21,
+                    "incorrect value for obs[8].iono_std, expected 21, is {}",
+                    msg.obs[8].iono_std
+                );
+                assert_eq!(
+                    msg.obs[8].lock, 15,
+                    "incorrect value for obs[8].lock, expected 15, is {}",
+                    msg.obs[8].lock
+                );
+                assert_eq!(
+                    msg.obs[8].range_std, 7,
+                    "incorrect value for obs[8].range_std, expected 7, is {}",
+                    msg.obs[8].range_std
+                );
+                assert_eq!(
+                    msg.obs[8].sid.code, 6,
+                    "incorrect value for obs[8].sid.code, expected 6, is {}",
+                    msg.obs[8].sid.code
+                );
+                assert_eq!(
+                    msg.obs[8].sid.sat, 1,
+                    "incorrect value for obs[8].sid.sat, expected 1, is {}",
+                    msg.obs[8].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[8].tropo_std, 7,
+                    "incorrect value for obs[8].tropo_std, expected 7, is {}",
+                    msg.obs[8].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[9].l.f, 129,
+                    "incorrect value for obs[9].l.f, expected 129, is {}",
+                    msg.obs[9].l.f
+                );
+                assert_eq!(
+                    msg.obs[9].l.i, 87130275,
+                    "incorrect value for obs[9].l.i, expected 87130275, is {}",
+                    msg.obs[9].l.i
+                );
+                assert_eq!(
+                    msg.obs[9].p, 1063905531,
+                    "incorrect value for obs[9].p, expected 1063905531, is {}",
+                    msg.obs[9].p
+                );
+                assert_eq!(
+                    msg.obs[9].flags, 3,
+                    "incorrect value for obs[9].flags, expected 3, is {}",
+                    msg.obs[9].flags
+                );
+                assert_eq!(
+                    msg.obs[9].iono_std, 21,
+                    "incorrect value for obs[9].iono_std, expected 21, is {}",
+                    msg.obs[9].iono_std
+                );
+                assert_eq!(
+                    msg.obs[9].lock, 15,
+                    "incorrect value for obs[9].lock, expected 15, is {}",
+                    msg.obs[9].lock
+                );
+                assert_eq!(
+                    msg.obs[9].range_std, 3,
+                    "incorrect value for obs[9].range_std, expected 3, is {}",
+                    msg.obs[9].range_std
+                );
+                assert_eq!(
+                    msg.obs[9].sid.code, 6,
+                    "incorrect value for obs[9].sid.code, expected 6, is {}",
+                    msg.obs[9].sid.code
+                );
+                assert_eq!(
+                    msg.obs[9].sid.sat, 13,
+                    "incorrect value for obs[9].sid.sat, expected 13, is {}",
+                    msg.obs[9].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[9].tropo_std, 3,
+                    "incorrect value for obs[9].tropo_std, expected 3, is {}",
+                    msg.obs[9].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[10].l.f, 46,
+                    "incorrect value for obs[10].l.f, expected 46, is {}",
+                    msg.obs[10].l.f
+                );
+                assert_eq!(
+                    msg.obs[10].l.i, 86253605,
+                    "incorrect value for obs[10].l.i, expected 86253605, is {}",
+                    msg.obs[10].l.i
+                );
+                assert_eq!(
+                    msg.obs[10].p, 1053200752,
+                    "incorrect value for obs[10].p, expected 1053200752, is {}",
+                    msg.obs[10].p
+                );
+                assert_eq!(
+                    msg.obs[10].flags, 3,
+                    "incorrect value for obs[10].flags, expected 3, is {}",
+                    msg.obs[10].flags
+                );
+                assert_eq!(
+                    msg.obs[10].iono_std, 21,
+                    "incorrect value for obs[10].iono_std, expected 21, is {}",
+                    msg.obs[10].iono_std
+                );
+                assert_eq!(
+                    msg.obs[10].lock, 15,
+                    "incorrect value for obs[10].lock, expected 15, is {}",
+                    msg.obs[10].lock
+                );
+                assert_eq!(
+                    msg.obs[10].range_std, 3,
+                    "incorrect value for obs[10].range_std, expected 3, is {}",
+                    msg.obs[10].range_std
+                );
+                assert_eq!(
+                    msg.obs[10].sid.code, 6,
+                    "incorrect value for obs[10].sid.code, expected 6, is {}",
+                    msg.obs[10].sid.code
+                );
+                assert_eq!(
+                    msg.obs[10].sid.sat, 14,
+                    "incorrect value for obs[10].sid.sat, expected 14, is {}",
+                    msg.obs[10].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[10].tropo_std, 3,
+                    "incorrect value for obs[10].tropo_std, expected 3, is {}",
+                    msg.obs[10].tropo_std
+                );
+                assert_eq!(
+                    msg.obs[11].l.f, 95,
+                    "incorrect value for obs[11].l.f, expected 95, is {}",
+                    msg.obs[11].l.f
+                );
+                assert_eq!(
+                    msg.obs[11].l.i, 93155512,
+                    "incorrect value for obs[11].l.i, expected 93155512, is {}",
+                    msg.obs[11].l.i
+                );
+                assert_eq!(
+                    msg.obs[11].p, 1137476774,
+                    "incorrect value for obs[11].p, expected 1137476774, is {}",
+                    msg.obs[11].p
+                );
+                assert_eq!(
+                    msg.obs[11].flags, 3,
+                    "incorrect value for obs[11].flags, expected 3, is {}",
+                    msg.obs[11].flags
+                );
+                assert_eq!(
+                    msg.obs[11].iono_std, 21,
+                    "incorrect value for obs[11].iono_std, expected 21, is {}",
+                    msg.obs[11].iono_std
+                );
+                assert_eq!(
+                    msg.obs[11].lock, 15,
+                    "incorrect value for obs[11].lock, expected 15, is {}",
+                    msg.obs[11].lock
+                );
+                assert_eq!(
+                    msg.obs[11].range_std, 5,
+                    "incorrect value for obs[11].range_std, expected 5, is {}",
+                    msg.obs[11].range_std
+                );
+                assert_eq!(
+                    msg.obs[11].sid.code, 6,
+                    "incorrect value for obs[11].sid.code, expected 6, is {}",
+                    msg.obs[11].sid.code
+                );
+                assert_eq!(
+                    msg.obs[11].sid.sat, 15,
+                    "incorrect value for obs[11].sid.sat, expected 15, is {}",
+                    msg.obs[11].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[11].tropo_std, 5,
+                    "incorrect value for obs[11].tropo_std, expected 5, is {}",
+                    msg.obs[11].tropo_std
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgOsr"),
+        };
+    }
+}

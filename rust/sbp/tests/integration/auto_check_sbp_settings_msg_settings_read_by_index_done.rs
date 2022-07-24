@@ -46,3 +46,47 @@ fn test_auto_check_sbp_settings_msg_settings_read_by_index_done() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_settings_msg_settings_read_by_index_done() {
+    {
+        let json_input = r#"{"sender": 55286, "msg_type": 166, "crc": 15011, "length": 0, "preamble": 85, "payload": ""}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgSettingsReadByIndexDone(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0xa6,
+                    "Incorrect message type, expected 0xa6, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgSettingsReadByIndexDone"),
+        };
+    }
+}

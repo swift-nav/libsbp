@@ -286,3 +286,308 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
+    {
+        let json_input = r#"{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n", "crc": 26484, "length": 43, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMTUgZm91bmQgQCAtMjQ5NyBIeiwgMjAgU05SCg=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPrintDep(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x10,
+                    "Incorrect message type, expected 0x10, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x2222,
+                    "incorrect sender id, expected 0x2222, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.text.to_string(),
+                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
+"
+                    .to_string(),
+                    "incorrect value for msg.text, expected string '{}', is '{}'",
+                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
+"
+                    .to_string(),
+                    msg.text
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPrintDep"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n", "crc": 11148, "length": 42, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMzEgZm91bmQgQCA0MjQ1IEh6LCAyMSBTTlIK"}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPrintDep(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x10,
+                    "Incorrect message type, expected 0x10, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x2222,
+                    "incorrect sender id, expected 0x2222, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.text.to_string(),
+                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
+"
+                    .to_string(),
+                    "incorrect value for msg.text, expected string '{}', is '{}'",
+                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
+"
+                    .to_string(),
+                    msg.text
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPrintDep"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 8738, "msg_type": 16, "text": "INFO: Disabling channel 0 (PRN 11)\n", "crc": 36631, "length": 35, "preamble": 85, "payload": "SU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMCAoUFJOIDExKQo="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPrintDep(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x10,
+                    "Incorrect message type, expected 0x10, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x2222,
+                    "incorrect sender id, expected 0x2222, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.text.to_string(),
+                    "INFO: Disabling channel 0 (PRN 11)
+"
+                    .to_string(),
+                    "incorrect value for msg.text, expected string '{}', is '{}'",
+                    "INFO: Disabling channel 0 (PRN 11)
+"
+                    .to_string(),
+                    msg.text
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPrintDep"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n", "crc": 12527, "length": 41, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gMiBmb3VuZCBAIDM5OTYgSHosIDIwIFNOUgo="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPrintDep(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x10,
+                    "Incorrect message type, expected 0x10, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x2222,
+                    "incorrect sender id, expected 0x2222, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.text.to_string(),
+                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
+"
+                    .to_string(),
+                    "incorrect value for msg.text, expected string '{}', is '{}'",
+                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
+"
+                    .to_string(),
+                    msg.text
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPrintDep"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 8738, "msg_type": 16, "text": "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n", "crc": 63535, "length": 42, "preamble": 85, "payload": "SU5GTzogYWNxOiBQUk4gNCBmb3VuZCBAIC03NDkyIEh6LCAyMCBTTlIK"}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPrintDep(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x10,
+                    "Incorrect message type, expected 0x10, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x2222,
+                    "incorrect sender id, expected 0x2222, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.text.to_string(),
+                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
+"
+                    .to_string(),
+                    "incorrect value for msg.text, expected string '{}', is '{}'",
+                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
+"
+                    .to_string(),
+                    msg.text
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPrintDep"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 8738, "msg_type": 16, "text": "INFO: Disabling channel 1 (PRN 15)\n", "crc": 35742, "length": 35, "preamble": 85, "payload": "SU5GTzogRGlzYWJsaW5nIGNoYW5uZWwgMSAoUFJOIDE1KQo="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPrintDep(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x10,
+                    "Incorrect message type, expected 0x10, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x2222,
+                    "incorrect sender id, expected 0x2222, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.text.to_string(),
+                    "INFO: Disabling channel 1 (PRN 15)
+"
+                    .to_string(),
+                    "incorrect value for msg.text, expected string '{}', is '{}'",
+                    "INFO: Disabling channel 1 (PRN 15)
+"
+                    .to_string(),
+                    msg.text
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPrintDep"),
+        };
+    }
+}

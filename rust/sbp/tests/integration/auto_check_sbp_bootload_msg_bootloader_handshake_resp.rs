@@ -114,3 +114,122 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
+    {
+        let json_input = r#"{"sender": 0, "msg_type": 180, "crc": 457, "length": 9, "version": "v1.2\n", "flags": 0, "preamble": 85, "payload": "AAAAAHYxLjIK"}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgBootloaderHandshakeResp(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0xb4,
+                    "Incorrect message type, expected 0xb4, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x0,
+                    "incorrect sender id, expected 0x0, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.version.to_string(),
+                    "v1.2
+"
+                    .to_string(),
+                    "incorrect value for msg.version, expected string '{}', is '{}'",
+                    "v1.2
+"
+                    .to_string(),
+                    msg.version
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
+        };
+    }
+    {
+        let json_input = r#"{ "handshake": [118, 49, 46, 50], "crc": 52737, "length": 4, "msg_type": 176, "payload": "djEuMg==", "preamble": 85, "sender": 1219 }"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgBootloaderHandshakeDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0xb0,
+                    "Incorrect message type, expected 0xb0, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.handshake[0], 118,
+                    "incorrect value for handshake[0], expected 118, is {}",
+                    msg.handshake[0]
+                );
+                assert_eq!(
+                    msg.handshake[1], 49,
+                    "incorrect value for handshake[1], expected 49, is {}",
+                    msg.handshake[1]
+                );
+                assert_eq!(
+                    msg.handshake[2], 46,
+                    "incorrect value for handshake[2], expected 46, is {}",
+                    msg.handshake[2]
+                );
+                assert_eq!(
+                    msg.handshake[3], 50,
+                    "incorrect value for handshake[3], expected 50, is {}",
+                    msg.handshake[3]
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeDepA"),
+        };
+    }
+}

@@ -58,3 +58,40 @@ fn test_(((s.suite_name|snake_case)))()
     ((*- endfor *))
 }
 
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_(((s.suite_name|snake_case)))()
+{
+    ((*- for t in s.tests *))
+    {
+        let json_input = r#"((( t.raw_json )))"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter.next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter.next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(msg) => {
+                assert_eq!( msg.message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.message_type());
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {}", sender_id);
+                ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+            },
+            _ => panic!("Invalid message type! Expected a (((t.msg.name)))"),
+        };
+    }
+    ((*- endfor *))
+}
+
