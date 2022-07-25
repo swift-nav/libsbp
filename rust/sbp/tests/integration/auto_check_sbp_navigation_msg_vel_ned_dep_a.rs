@@ -787,3 +787,845 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 3996, "sender": 55286, "msg_type": 517, "tow": 2567700, "n": -1082, "crc": 23713, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 9, "preamble": 85, "payload": "FC4nAMb7//+cDwAAAAAAAAAAAAAJAA==", "d": 0}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
+                assert_eq!(
+                    msg.e, 3996,
+                    "incorrect value for e, expected 3996, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -1082,
+                    "incorrect value for n, expected -1082, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 9,
+                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 2567700,
+                    "incorrect value for tow, expected 2567700, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 3791, "sender": 55286, "msg_type": 517, "tow": 2567800, "n": -1010, "crc": 41085, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 9, "preamble": 85, "payload": "eC4nAA78///PDgAAAAAAAAAAAAAJAA==", "d": 0}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
+                assert_eq!(
+                    msg.e, 3791,
+                    "incorrect value for e, expected 3791, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -1010,
+                    "incorrect value for n, expected -1010, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 9,
+                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 2567800,
+                    "incorrect value for tow, expected 2567800, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 3724, "sender": 55286, "msg_type": 517, "tow": 2567900, "n": -976, "crc": 34739, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 9, "preamble": 85, "payload": "3C4nADD8//+MDgAAAAAAAAAAAAAJAA==", "d": 0}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
+                assert_eq!(
+                    msg.e, 3724,
+                    "incorrect value for e, expected 3724, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -976,
+                    "incorrect value for n, expected -976, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 9,
+                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 2567900,
+                    "incorrect value for tow, expected 2567900, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 3848, "sender": 55286, "msg_type": 517, "tow": 2568000, "n": -992, "crc": 45363, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 9, "preamble": 85, "payload": "QC8nACD8//8IDwAAAAAAAAAAAAAJAA==", "d": 0}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
+                assert_eq!(
+                    msg.e, 3848,
+                    "incorrect value for e, expected 3848, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -992,
+                    "incorrect value for n, expected -992, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 9,
+                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 2568000,
+                    "incorrect value for tow, expected 2568000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 3724, "sender": 55286, "msg_type": 517, "tow": 2568100, "n": -944, "crc": 23, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 9, "preamble": 85, "payload": "pC8nAFD8//+MDgAAAAAAAAAAAAAJAA==", "d": 0}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
+                assert_eq!(
+                    msg.e, 3724,
+                    "incorrect value for e, expected 3724, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -944,
+                    "incorrect value for n, expected -944, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 9,
+                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 2568100,
+                    "incorrect value for tow, expected 2568100, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 26, "sender": 1219, "msg_type": 517, "tow": 407084500, "n": -27, "crc": 6532, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8, "preamble": 85, "payload": "1J1DGOX///8aAAAAGQAAAAAAAAAIAA==", "d": 25}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, 25,
+                    "incorrect value for d, expected 25, is {}",
+                    msg.d
+                );
+                assert_eq!(
+                    msg.e, 26,
+                    "incorrect value for e, expected 26, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -27,
+                    "incorrect value for n, expected -27, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 8,
+                    "incorrect value for n_sats, expected 8, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 407084500,
+                    "incorrect value for tow, expected 407084500, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 15, "sender": 1219, "msg_type": 517, "tow": 407084600, "n": 4, "crc": 3626, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8, "preamble": 85, "payload": "OJ5DGAQAAAAPAAAA6P///wAAAAAIAA==", "d": -24}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, -24,
+                    "incorrect value for d, expected -24, is {}",
+                    msg.d
+                );
+                assert_eq!(
+                    msg.e, 15,
+                    "incorrect value for e, expected 15, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(msg.n, 4, "incorrect value for n, expected 4, is {}", msg.n);
+                assert_eq!(
+                    msg.n_sats, 8,
+                    "incorrect value for n_sats, expected 8, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 407084600,
+                    "incorrect value for tow, expected 407084600, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": -24, "sender": 1219, "msg_type": 517, "tow": 407084700, "n": -5, "crc": 38106, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8, "preamble": 85, "payload": "nJ5DGPv////o////9////wAAAAAIAA==", "d": -9}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, -9,
+                    "incorrect value for d, expected -9, is {}",
+                    msg.d
+                );
+                assert_eq!(
+                    msg.e, -24,
+                    "incorrect value for e, expected -24, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -5,
+                    "incorrect value for n, expected -5, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 8,
+                    "incorrect value for n_sats, expected 8, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 407084700,
+                    "incorrect value for tow, expected 407084700, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": 2, "sender": 1219, "msg_type": 517, "tow": 407084800, "n": 10, "crc": 4244, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8, "preamble": 85, "payload": "AJ9DGAoAAAACAAAA3v///wAAAAAIAA==", "d": -34}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, -34,
+                    "incorrect value for d, expected -34, is {}",
+                    msg.d
+                );
+                assert_eq!(msg.e, 2, "incorrect value for e, expected 2, is {}", msg.e);
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, 10,
+                    "incorrect value for n, expected 10, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 8,
+                    "incorrect value for n_sats, expected 8, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 407084800,
+                    "incorrect value for tow, expected 407084800, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": -2, "sender": 1219, "msg_type": 517, "tow": 407084900, "n": -8, "crc": 60671, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8, "preamble": 85, "payload": "ZJ9DGPj////+////BwAAAAAAAAAIAA==", "d": 7}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(msg.d, 7, "incorrect value for d, expected 7, is {}", msg.d);
+                assert_eq!(
+                    msg.e, -2,
+                    "incorrect value for e, expected -2, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -8,
+                    "incorrect value for n, expected -8, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 8,
+                    "incorrect value for n_sats, expected 8, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 407084900,
+                    "incorrect value for tow, expected 407084900, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+    {
+        let json_input = r#"{"v_accuracy": 0, "e": -3, "sender": 1219, "msg_type": 517, "tow": 407151150, "n": -1, "crc": 48550, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 5, "preamble": 85, "payload": "LqJEGP/////9////lP///wAAAAAFAA==", "d": -108}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgVelNedDepA(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, -108,
+                    "incorrect value for d, expected -108, is {}",
+                    msg.d
+                );
+                assert_eq!(
+                    msg.e, -3,
+                    "incorrect value for e, expected -3, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, -1,
+                    "incorrect value for n, expected -1, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 5,
+                    "incorrect value for n_sats, expected 5, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 407151150,
+                    "incorrect value for tow, expected 407151150, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
+        };
+    }
+}

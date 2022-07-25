@@ -1230,3 +1230,1238 @@ fn test_auto_check_sbp_observation_msg_obs_dep_b() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_observation_msg_obs_dep_b() {
+    {
+        let json_input = r#"{"sender": 55286, "msg_type": 67, "header": {"n_obs": 32, "t": {"wn": 1787, "tow": 2567800}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 202}, "L": {"i": 117913055, "f": 27}, "cn0": 157, "P": 2243669940}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 203}, "L": {"i": 129899608, "f": 175}, "cn0": 144, "P": 2471857210}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 208}, "L": {"i": 122531024, "f": 135}, "cn0": 151, "P": 2331544796}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 212}, "L": {"i": 119280243, "f": 242}, "cn0": 156, "P": 2269692589}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 217}, "L": {"i": 109691922, "f": 120}, "cn0": 168, "P": 2087293092}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 218}, "L": {"i": 123340754, "f": 87}, "cn0": 150, "P": 2347034654}], "crc": 21929, "length": 103, "preamble": 85, "payload": "eC4nAPsGILSvu4XfNQcHG50AAMoAAAA6jFWTWBy+B6+QAADLAAAA3Iz4itCsTQeHlwAA0AAAAK3CSIdzEhwH8pwAANQAAACkkGl8EsSJBnioAADZAAAAHujki9IHWgdXlgAA2gAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgObsDepB(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x43,
+                    "Incorrect message type, expected 0x43, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.header.n_obs, 32,
+                    "incorrect value for header.n_obs, expected 32, is {}",
+                    msg.header.n_obs
+                );
+                assert_eq!(
+                    msg.header.t.tow, 2567800,
+                    "incorrect value for header.t.tow, expected 2567800, is {}",
+                    msg.header.t.tow
+                );
+                assert_eq!(
+                    msg.header.t.wn, 1787,
+                    "incorrect value for header.t.wn, expected 1787, is {}",
+                    msg.header.t.wn
+                );
+                assert_eq!(
+                    msg.obs[0].l.f, 27,
+                    "incorrect value for obs[0].l.f, expected 27, is {}",
+                    msg.obs[0].l.f
+                );
+                assert_eq!(
+                    msg.obs[0].l.i, 117913055,
+                    "incorrect value for obs[0].l.i, expected 117913055, is {}",
+                    msg.obs[0].l.i
+                );
+                assert_eq!(
+                    msg.obs[0].p, 2243669940,
+                    "incorrect value for obs[0].p, expected 2243669940, is {}",
+                    msg.obs[0].p
+                );
+                assert_eq!(
+                    msg.obs[0].cn0, 157,
+                    "incorrect value for obs[0].cn0, expected 157, is {}",
+                    msg.obs[0].cn0
+                );
+                assert_eq!(
+                    msg.obs[0].lock, 0,
+                    "incorrect value for obs[0].lock, expected 0, is {}",
+                    msg.obs[0].lock
+                );
+                assert_eq!(
+                    msg.obs[0].sid.code, 0,
+                    "incorrect value for obs[0].sid.code, expected 0, is {}",
+                    msg.obs[0].sid.code
+                );
+                assert_eq!(
+                    msg.obs[0].sid.reserved, 0,
+                    "incorrect value for obs[0].sid.reserved, expected 0, is {}",
+                    msg.obs[0].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[0].sid.sat, 202,
+                    "incorrect value for obs[0].sid.sat, expected 202, is {}",
+                    msg.obs[0].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[1].l.f, 175,
+                    "incorrect value for obs[1].l.f, expected 175, is {}",
+                    msg.obs[1].l.f
+                );
+                assert_eq!(
+                    msg.obs[1].l.i, 129899608,
+                    "incorrect value for obs[1].l.i, expected 129899608, is {}",
+                    msg.obs[1].l.i
+                );
+                assert_eq!(
+                    msg.obs[1].p, 2471857210,
+                    "incorrect value for obs[1].p, expected 2471857210, is {}",
+                    msg.obs[1].p
+                );
+                assert_eq!(
+                    msg.obs[1].cn0, 144,
+                    "incorrect value for obs[1].cn0, expected 144, is {}",
+                    msg.obs[1].cn0
+                );
+                assert_eq!(
+                    msg.obs[1].lock, 0,
+                    "incorrect value for obs[1].lock, expected 0, is {}",
+                    msg.obs[1].lock
+                );
+                assert_eq!(
+                    msg.obs[1].sid.code, 0,
+                    "incorrect value for obs[1].sid.code, expected 0, is {}",
+                    msg.obs[1].sid.code
+                );
+                assert_eq!(
+                    msg.obs[1].sid.reserved, 0,
+                    "incorrect value for obs[1].sid.reserved, expected 0, is {}",
+                    msg.obs[1].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[1].sid.sat, 203,
+                    "incorrect value for obs[1].sid.sat, expected 203, is {}",
+                    msg.obs[1].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[2].l.f, 135,
+                    "incorrect value for obs[2].l.f, expected 135, is {}",
+                    msg.obs[2].l.f
+                );
+                assert_eq!(
+                    msg.obs[2].l.i, 122531024,
+                    "incorrect value for obs[2].l.i, expected 122531024, is {}",
+                    msg.obs[2].l.i
+                );
+                assert_eq!(
+                    msg.obs[2].p, 2331544796,
+                    "incorrect value for obs[2].p, expected 2331544796, is {}",
+                    msg.obs[2].p
+                );
+                assert_eq!(
+                    msg.obs[2].cn0, 151,
+                    "incorrect value for obs[2].cn0, expected 151, is {}",
+                    msg.obs[2].cn0
+                );
+                assert_eq!(
+                    msg.obs[2].lock, 0,
+                    "incorrect value for obs[2].lock, expected 0, is {}",
+                    msg.obs[2].lock
+                );
+                assert_eq!(
+                    msg.obs[2].sid.code, 0,
+                    "incorrect value for obs[2].sid.code, expected 0, is {}",
+                    msg.obs[2].sid.code
+                );
+                assert_eq!(
+                    msg.obs[2].sid.reserved, 0,
+                    "incorrect value for obs[2].sid.reserved, expected 0, is {}",
+                    msg.obs[2].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[2].sid.sat, 208,
+                    "incorrect value for obs[2].sid.sat, expected 208, is {}",
+                    msg.obs[2].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[3].l.f, 242,
+                    "incorrect value for obs[3].l.f, expected 242, is {}",
+                    msg.obs[3].l.f
+                );
+                assert_eq!(
+                    msg.obs[3].l.i, 119280243,
+                    "incorrect value for obs[3].l.i, expected 119280243, is {}",
+                    msg.obs[3].l.i
+                );
+                assert_eq!(
+                    msg.obs[3].p, 2269692589,
+                    "incorrect value for obs[3].p, expected 2269692589, is {}",
+                    msg.obs[3].p
+                );
+                assert_eq!(
+                    msg.obs[3].cn0, 156,
+                    "incorrect value for obs[3].cn0, expected 156, is {}",
+                    msg.obs[3].cn0
+                );
+                assert_eq!(
+                    msg.obs[3].lock, 0,
+                    "incorrect value for obs[3].lock, expected 0, is {}",
+                    msg.obs[3].lock
+                );
+                assert_eq!(
+                    msg.obs[3].sid.code, 0,
+                    "incorrect value for obs[3].sid.code, expected 0, is {}",
+                    msg.obs[3].sid.code
+                );
+                assert_eq!(
+                    msg.obs[3].sid.reserved, 0,
+                    "incorrect value for obs[3].sid.reserved, expected 0, is {}",
+                    msg.obs[3].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[3].sid.sat, 212,
+                    "incorrect value for obs[3].sid.sat, expected 212, is {}",
+                    msg.obs[3].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[4].l.f, 120,
+                    "incorrect value for obs[4].l.f, expected 120, is {}",
+                    msg.obs[4].l.f
+                );
+                assert_eq!(
+                    msg.obs[4].l.i, 109691922,
+                    "incorrect value for obs[4].l.i, expected 109691922, is {}",
+                    msg.obs[4].l.i
+                );
+                assert_eq!(
+                    msg.obs[4].p, 2087293092,
+                    "incorrect value for obs[4].p, expected 2087293092, is {}",
+                    msg.obs[4].p
+                );
+                assert_eq!(
+                    msg.obs[4].cn0, 168,
+                    "incorrect value for obs[4].cn0, expected 168, is {}",
+                    msg.obs[4].cn0
+                );
+                assert_eq!(
+                    msg.obs[4].lock, 0,
+                    "incorrect value for obs[4].lock, expected 0, is {}",
+                    msg.obs[4].lock
+                );
+                assert_eq!(
+                    msg.obs[4].sid.code, 0,
+                    "incorrect value for obs[4].sid.code, expected 0, is {}",
+                    msg.obs[4].sid.code
+                );
+                assert_eq!(
+                    msg.obs[4].sid.reserved, 0,
+                    "incorrect value for obs[4].sid.reserved, expected 0, is {}",
+                    msg.obs[4].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[4].sid.sat, 217,
+                    "incorrect value for obs[4].sid.sat, expected 217, is {}",
+                    msg.obs[4].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[5].l.f, 87,
+                    "incorrect value for obs[5].l.f, expected 87, is {}",
+                    msg.obs[5].l.f
+                );
+                assert_eq!(
+                    msg.obs[5].l.i, 123340754,
+                    "incorrect value for obs[5].l.i, expected 123340754, is {}",
+                    msg.obs[5].l.i
+                );
+                assert_eq!(
+                    msg.obs[5].p, 2347034654,
+                    "incorrect value for obs[5].p, expected 2347034654, is {}",
+                    msg.obs[5].p
+                );
+                assert_eq!(
+                    msg.obs[5].cn0, 150,
+                    "incorrect value for obs[5].cn0, expected 150, is {}",
+                    msg.obs[5].cn0
+                );
+                assert_eq!(
+                    msg.obs[5].lock, 0,
+                    "incorrect value for obs[5].lock, expected 0, is {}",
+                    msg.obs[5].lock
+                );
+                assert_eq!(
+                    msg.obs[5].sid.code, 0,
+                    "incorrect value for obs[5].sid.code, expected 0, is {}",
+                    msg.obs[5].sid.code
+                );
+                assert_eq!(
+                    msg.obs[5].sid.reserved, 0,
+                    "incorrect value for obs[5].sid.reserved, expected 0, is {}",
+                    msg.obs[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[5].sid.sat, 218,
+                    "incorrect value for obs[5].sid.sat, expected 218, is {}",
+                    msg.obs[5].sid.sat
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgObsDepB"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 55286, "msg_type": 67, "header": {"n_obs": 33, "t": {"wn": 1787, "tow": 2567800}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 220}, "L": {"i": 120256389, "f": 219}, "cn0": 154, "P": 2288371524}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 222}, "L": {"i": 117692256, "f": 235}, "cn0": 156, "P": 2239434459}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 225}, "L": {"i": 107851013, "f": 174}, "cn0": 170, "P": 2052171351}], "crc": 59659, "length": 55, "preamble": 85, "payload": "eC4nAPsGIUTHZYiF9yoH25oAANwAAADbDnuFYNcDB+ucAADeAAAAV6ZRegWtbQauqgAA4QAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgObsDepB(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x43,
+                    "Incorrect message type, expected 0x43, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.header.n_obs, 33,
+                    "incorrect value for header.n_obs, expected 33, is {}",
+                    msg.header.n_obs
+                );
+                assert_eq!(
+                    msg.header.t.tow, 2567800,
+                    "incorrect value for header.t.tow, expected 2567800, is {}",
+                    msg.header.t.tow
+                );
+                assert_eq!(
+                    msg.header.t.wn, 1787,
+                    "incorrect value for header.t.wn, expected 1787, is {}",
+                    msg.header.t.wn
+                );
+                assert_eq!(
+                    msg.obs[0].l.f, 219,
+                    "incorrect value for obs[0].l.f, expected 219, is {}",
+                    msg.obs[0].l.f
+                );
+                assert_eq!(
+                    msg.obs[0].l.i, 120256389,
+                    "incorrect value for obs[0].l.i, expected 120256389, is {}",
+                    msg.obs[0].l.i
+                );
+                assert_eq!(
+                    msg.obs[0].p, 2288371524,
+                    "incorrect value for obs[0].p, expected 2288371524, is {}",
+                    msg.obs[0].p
+                );
+                assert_eq!(
+                    msg.obs[0].cn0, 154,
+                    "incorrect value for obs[0].cn0, expected 154, is {}",
+                    msg.obs[0].cn0
+                );
+                assert_eq!(
+                    msg.obs[0].lock, 0,
+                    "incorrect value for obs[0].lock, expected 0, is {}",
+                    msg.obs[0].lock
+                );
+                assert_eq!(
+                    msg.obs[0].sid.code, 0,
+                    "incorrect value for obs[0].sid.code, expected 0, is {}",
+                    msg.obs[0].sid.code
+                );
+                assert_eq!(
+                    msg.obs[0].sid.reserved, 0,
+                    "incorrect value for obs[0].sid.reserved, expected 0, is {}",
+                    msg.obs[0].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[0].sid.sat, 220,
+                    "incorrect value for obs[0].sid.sat, expected 220, is {}",
+                    msg.obs[0].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[1].l.f, 235,
+                    "incorrect value for obs[1].l.f, expected 235, is {}",
+                    msg.obs[1].l.f
+                );
+                assert_eq!(
+                    msg.obs[1].l.i, 117692256,
+                    "incorrect value for obs[1].l.i, expected 117692256, is {}",
+                    msg.obs[1].l.i
+                );
+                assert_eq!(
+                    msg.obs[1].p, 2239434459,
+                    "incorrect value for obs[1].p, expected 2239434459, is {}",
+                    msg.obs[1].p
+                );
+                assert_eq!(
+                    msg.obs[1].cn0, 156,
+                    "incorrect value for obs[1].cn0, expected 156, is {}",
+                    msg.obs[1].cn0
+                );
+                assert_eq!(
+                    msg.obs[1].lock, 0,
+                    "incorrect value for obs[1].lock, expected 0, is {}",
+                    msg.obs[1].lock
+                );
+                assert_eq!(
+                    msg.obs[1].sid.code, 0,
+                    "incorrect value for obs[1].sid.code, expected 0, is {}",
+                    msg.obs[1].sid.code
+                );
+                assert_eq!(
+                    msg.obs[1].sid.reserved, 0,
+                    "incorrect value for obs[1].sid.reserved, expected 0, is {}",
+                    msg.obs[1].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[1].sid.sat, 222,
+                    "incorrect value for obs[1].sid.sat, expected 222, is {}",
+                    msg.obs[1].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[2].l.f, 174,
+                    "incorrect value for obs[2].l.f, expected 174, is {}",
+                    msg.obs[2].l.f
+                );
+                assert_eq!(
+                    msg.obs[2].l.i, 107851013,
+                    "incorrect value for obs[2].l.i, expected 107851013, is {}",
+                    msg.obs[2].l.i
+                );
+                assert_eq!(
+                    msg.obs[2].p, 2052171351,
+                    "incorrect value for obs[2].p, expected 2052171351, is {}",
+                    msg.obs[2].p
+                );
+                assert_eq!(
+                    msg.obs[2].cn0, 170,
+                    "incorrect value for obs[2].cn0, expected 170, is {}",
+                    msg.obs[2].cn0
+                );
+                assert_eq!(
+                    msg.obs[2].lock, 0,
+                    "incorrect value for obs[2].lock, expected 0, is {}",
+                    msg.obs[2].lock
+                );
+                assert_eq!(
+                    msg.obs[2].sid.code, 0,
+                    "incorrect value for obs[2].sid.code, expected 0, is {}",
+                    msg.obs[2].sid.code
+                );
+                assert_eq!(
+                    msg.obs[2].sid.reserved, 0,
+                    "incorrect value for obs[2].sid.reserved, expected 0, is {}",
+                    msg.obs[2].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[2].sid.sat, 225,
+                    "incorrect value for obs[2].sid.sat, expected 225, is {}",
+                    msg.obs[2].sid.sat
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgObsDepB"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 55286, "msg_type": 67, "header": {"n_obs": 32, "t": {"wn": 1787, "tow": 2568000}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 202}, "L": {"i": 117912556, "f": 94}, "cn0": 156, "P": 2243658852}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 203}, "L": {"i": 129900210, "f": 40}, "cn0": 140, "P": 2471868513}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 208}, "L": {"i": 122530650, "f": 2}, "cn0": 150, "P": 2331537287}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 212}, "L": {"i": 119280830, "f": 241}, "cn0": 155, "P": 2269703860}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 217}, "L": {"i": 109691996, "f": 153}, "cn0": 168, "P": 2087295247}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 218}, "L": {"i": 123340176, "f": 41}, "cn0": 150, "P": 2347022641}], "crc": 25329, "length": 103, "preamble": 85, "payload": "QC8nAPsGIGSEu4XsMwcHXpwAAMoAAABhuFWTsh6+ByiMAADLAAAAh2/4ilqrTQcClgAA0AAAALTuSIe+FBwH8ZsAANQAAAAPmWl8XMSJBpmoAADZAAAAMbnki5AFWgcplgAA2gAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgObsDepB(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x43,
+                    "Incorrect message type, expected 0x43, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.header.n_obs, 32,
+                    "incorrect value for header.n_obs, expected 32, is {}",
+                    msg.header.n_obs
+                );
+                assert_eq!(
+                    msg.header.t.tow, 2568000,
+                    "incorrect value for header.t.tow, expected 2568000, is {}",
+                    msg.header.t.tow
+                );
+                assert_eq!(
+                    msg.header.t.wn, 1787,
+                    "incorrect value for header.t.wn, expected 1787, is {}",
+                    msg.header.t.wn
+                );
+                assert_eq!(
+                    msg.obs[0].l.f, 94,
+                    "incorrect value for obs[0].l.f, expected 94, is {}",
+                    msg.obs[0].l.f
+                );
+                assert_eq!(
+                    msg.obs[0].l.i, 117912556,
+                    "incorrect value for obs[0].l.i, expected 117912556, is {}",
+                    msg.obs[0].l.i
+                );
+                assert_eq!(
+                    msg.obs[0].p, 2243658852,
+                    "incorrect value for obs[0].p, expected 2243658852, is {}",
+                    msg.obs[0].p
+                );
+                assert_eq!(
+                    msg.obs[0].cn0, 156,
+                    "incorrect value for obs[0].cn0, expected 156, is {}",
+                    msg.obs[0].cn0
+                );
+                assert_eq!(
+                    msg.obs[0].lock, 0,
+                    "incorrect value for obs[0].lock, expected 0, is {}",
+                    msg.obs[0].lock
+                );
+                assert_eq!(
+                    msg.obs[0].sid.code, 0,
+                    "incorrect value for obs[0].sid.code, expected 0, is {}",
+                    msg.obs[0].sid.code
+                );
+                assert_eq!(
+                    msg.obs[0].sid.reserved, 0,
+                    "incorrect value for obs[0].sid.reserved, expected 0, is {}",
+                    msg.obs[0].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[0].sid.sat, 202,
+                    "incorrect value for obs[0].sid.sat, expected 202, is {}",
+                    msg.obs[0].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[1].l.f, 40,
+                    "incorrect value for obs[1].l.f, expected 40, is {}",
+                    msg.obs[1].l.f
+                );
+                assert_eq!(
+                    msg.obs[1].l.i, 129900210,
+                    "incorrect value for obs[1].l.i, expected 129900210, is {}",
+                    msg.obs[1].l.i
+                );
+                assert_eq!(
+                    msg.obs[1].p, 2471868513,
+                    "incorrect value for obs[1].p, expected 2471868513, is {}",
+                    msg.obs[1].p
+                );
+                assert_eq!(
+                    msg.obs[1].cn0, 140,
+                    "incorrect value for obs[1].cn0, expected 140, is {}",
+                    msg.obs[1].cn0
+                );
+                assert_eq!(
+                    msg.obs[1].lock, 0,
+                    "incorrect value for obs[1].lock, expected 0, is {}",
+                    msg.obs[1].lock
+                );
+                assert_eq!(
+                    msg.obs[1].sid.code, 0,
+                    "incorrect value for obs[1].sid.code, expected 0, is {}",
+                    msg.obs[1].sid.code
+                );
+                assert_eq!(
+                    msg.obs[1].sid.reserved, 0,
+                    "incorrect value for obs[1].sid.reserved, expected 0, is {}",
+                    msg.obs[1].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[1].sid.sat, 203,
+                    "incorrect value for obs[1].sid.sat, expected 203, is {}",
+                    msg.obs[1].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[2].l.f, 2,
+                    "incorrect value for obs[2].l.f, expected 2, is {}",
+                    msg.obs[2].l.f
+                );
+                assert_eq!(
+                    msg.obs[2].l.i, 122530650,
+                    "incorrect value for obs[2].l.i, expected 122530650, is {}",
+                    msg.obs[2].l.i
+                );
+                assert_eq!(
+                    msg.obs[2].p, 2331537287,
+                    "incorrect value for obs[2].p, expected 2331537287, is {}",
+                    msg.obs[2].p
+                );
+                assert_eq!(
+                    msg.obs[2].cn0, 150,
+                    "incorrect value for obs[2].cn0, expected 150, is {}",
+                    msg.obs[2].cn0
+                );
+                assert_eq!(
+                    msg.obs[2].lock, 0,
+                    "incorrect value for obs[2].lock, expected 0, is {}",
+                    msg.obs[2].lock
+                );
+                assert_eq!(
+                    msg.obs[2].sid.code, 0,
+                    "incorrect value for obs[2].sid.code, expected 0, is {}",
+                    msg.obs[2].sid.code
+                );
+                assert_eq!(
+                    msg.obs[2].sid.reserved, 0,
+                    "incorrect value for obs[2].sid.reserved, expected 0, is {}",
+                    msg.obs[2].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[2].sid.sat, 208,
+                    "incorrect value for obs[2].sid.sat, expected 208, is {}",
+                    msg.obs[2].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[3].l.f, 241,
+                    "incorrect value for obs[3].l.f, expected 241, is {}",
+                    msg.obs[3].l.f
+                );
+                assert_eq!(
+                    msg.obs[3].l.i, 119280830,
+                    "incorrect value for obs[3].l.i, expected 119280830, is {}",
+                    msg.obs[3].l.i
+                );
+                assert_eq!(
+                    msg.obs[3].p, 2269703860,
+                    "incorrect value for obs[3].p, expected 2269703860, is {}",
+                    msg.obs[3].p
+                );
+                assert_eq!(
+                    msg.obs[3].cn0, 155,
+                    "incorrect value for obs[3].cn0, expected 155, is {}",
+                    msg.obs[3].cn0
+                );
+                assert_eq!(
+                    msg.obs[3].lock, 0,
+                    "incorrect value for obs[3].lock, expected 0, is {}",
+                    msg.obs[3].lock
+                );
+                assert_eq!(
+                    msg.obs[3].sid.code, 0,
+                    "incorrect value for obs[3].sid.code, expected 0, is {}",
+                    msg.obs[3].sid.code
+                );
+                assert_eq!(
+                    msg.obs[3].sid.reserved, 0,
+                    "incorrect value for obs[3].sid.reserved, expected 0, is {}",
+                    msg.obs[3].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[3].sid.sat, 212,
+                    "incorrect value for obs[3].sid.sat, expected 212, is {}",
+                    msg.obs[3].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[4].l.f, 153,
+                    "incorrect value for obs[4].l.f, expected 153, is {}",
+                    msg.obs[4].l.f
+                );
+                assert_eq!(
+                    msg.obs[4].l.i, 109691996,
+                    "incorrect value for obs[4].l.i, expected 109691996, is {}",
+                    msg.obs[4].l.i
+                );
+                assert_eq!(
+                    msg.obs[4].p, 2087295247,
+                    "incorrect value for obs[4].p, expected 2087295247, is {}",
+                    msg.obs[4].p
+                );
+                assert_eq!(
+                    msg.obs[4].cn0, 168,
+                    "incorrect value for obs[4].cn0, expected 168, is {}",
+                    msg.obs[4].cn0
+                );
+                assert_eq!(
+                    msg.obs[4].lock, 0,
+                    "incorrect value for obs[4].lock, expected 0, is {}",
+                    msg.obs[4].lock
+                );
+                assert_eq!(
+                    msg.obs[4].sid.code, 0,
+                    "incorrect value for obs[4].sid.code, expected 0, is {}",
+                    msg.obs[4].sid.code
+                );
+                assert_eq!(
+                    msg.obs[4].sid.reserved, 0,
+                    "incorrect value for obs[4].sid.reserved, expected 0, is {}",
+                    msg.obs[4].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[4].sid.sat, 217,
+                    "incorrect value for obs[4].sid.sat, expected 217, is {}",
+                    msg.obs[4].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[5].l.f, 41,
+                    "incorrect value for obs[5].l.f, expected 41, is {}",
+                    msg.obs[5].l.f
+                );
+                assert_eq!(
+                    msg.obs[5].l.i, 123340176,
+                    "incorrect value for obs[5].l.i, expected 123340176, is {}",
+                    msg.obs[5].l.i
+                );
+                assert_eq!(
+                    msg.obs[5].p, 2347022641,
+                    "incorrect value for obs[5].p, expected 2347022641, is {}",
+                    msg.obs[5].p
+                );
+                assert_eq!(
+                    msg.obs[5].cn0, 150,
+                    "incorrect value for obs[5].cn0, expected 150, is {}",
+                    msg.obs[5].cn0
+                );
+                assert_eq!(
+                    msg.obs[5].lock, 0,
+                    "incorrect value for obs[5].lock, expected 0, is {}",
+                    msg.obs[5].lock
+                );
+                assert_eq!(
+                    msg.obs[5].sid.code, 0,
+                    "incorrect value for obs[5].sid.code, expected 0, is {}",
+                    msg.obs[5].sid.code
+                );
+                assert_eq!(
+                    msg.obs[5].sid.reserved, 0,
+                    "incorrect value for obs[5].sid.reserved, expected 0, is {}",
+                    msg.obs[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[5].sid.sat, 218,
+                    "incorrect value for obs[5].sid.sat, expected 218, is {}",
+                    msg.obs[5].sid.sat
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgObsDepB"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 55286, "msg_type": 67, "header": {"n_obs": 33, "t": {"wn": 1787, "tow": 2568000}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 220}, "L": {"i": 120255759, "f": 20}, "cn0": 154, "P": 2288358634}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 222}, "L": {"i": 117691920, "f": 38}, "cn0": 156, "P": 2239428560}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 225}, "L": {"i": 107850774, "f": 7}, "cn0": 172, "P": 2052167183}], "crc": 3529, "length": 55, "preamble": 85, "payload": "QC8nAPsGIeqUZYgP9SoHFJoAANwAAADQ93qFENYDByacAADeAAAAD5ZRehasbQYHrAAA4QAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgObsDepB(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x43,
+                    "Incorrect message type, expected 0x43, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.header.n_obs, 33,
+                    "incorrect value for header.n_obs, expected 33, is {}",
+                    msg.header.n_obs
+                );
+                assert_eq!(
+                    msg.header.t.tow, 2568000,
+                    "incorrect value for header.t.tow, expected 2568000, is {}",
+                    msg.header.t.tow
+                );
+                assert_eq!(
+                    msg.header.t.wn, 1787,
+                    "incorrect value for header.t.wn, expected 1787, is {}",
+                    msg.header.t.wn
+                );
+                assert_eq!(
+                    msg.obs[0].l.f, 20,
+                    "incorrect value for obs[0].l.f, expected 20, is {}",
+                    msg.obs[0].l.f
+                );
+                assert_eq!(
+                    msg.obs[0].l.i, 120255759,
+                    "incorrect value for obs[0].l.i, expected 120255759, is {}",
+                    msg.obs[0].l.i
+                );
+                assert_eq!(
+                    msg.obs[0].p, 2288358634,
+                    "incorrect value for obs[0].p, expected 2288358634, is {}",
+                    msg.obs[0].p
+                );
+                assert_eq!(
+                    msg.obs[0].cn0, 154,
+                    "incorrect value for obs[0].cn0, expected 154, is {}",
+                    msg.obs[0].cn0
+                );
+                assert_eq!(
+                    msg.obs[0].lock, 0,
+                    "incorrect value for obs[0].lock, expected 0, is {}",
+                    msg.obs[0].lock
+                );
+                assert_eq!(
+                    msg.obs[0].sid.code, 0,
+                    "incorrect value for obs[0].sid.code, expected 0, is {}",
+                    msg.obs[0].sid.code
+                );
+                assert_eq!(
+                    msg.obs[0].sid.reserved, 0,
+                    "incorrect value for obs[0].sid.reserved, expected 0, is {}",
+                    msg.obs[0].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[0].sid.sat, 220,
+                    "incorrect value for obs[0].sid.sat, expected 220, is {}",
+                    msg.obs[0].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[1].l.f, 38,
+                    "incorrect value for obs[1].l.f, expected 38, is {}",
+                    msg.obs[1].l.f
+                );
+                assert_eq!(
+                    msg.obs[1].l.i, 117691920,
+                    "incorrect value for obs[1].l.i, expected 117691920, is {}",
+                    msg.obs[1].l.i
+                );
+                assert_eq!(
+                    msg.obs[1].p, 2239428560,
+                    "incorrect value for obs[1].p, expected 2239428560, is {}",
+                    msg.obs[1].p
+                );
+                assert_eq!(
+                    msg.obs[1].cn0, 156,
+                    "incorrect value for obs[1].cn0, expected 156, is {}",
+                    msg.obs[1].cn0
+                );
+                assert_eq!(
+                    msg.obs[1].lock, 0,
+                    "incorrect value for obs[1].lock, expected 0, is {}",
+                    msg.obs[1].lock
+                );
+                assert_eq!(
+                    msg.obs[1].sid.code, 0,
+                    "incorrect value for obs[1].sid.code, expected 0, is {}",
+                    msg.obs[1].sid.code
+                );
+                assert_eq!(
+                    msg.obs[1].sid.reserved, 0,
+                    "incorrect value for obs[1].sid.reserved, expected 0, is {}",
+                    msg.obs[1].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[1].sid.sat, 222,
+                    "incorrect value for obs[1].sid.sat, expected 222, is {}",
+                    msg.obs[1].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[2].l.f, 7,
+                    "incorrect value for obs[2].l.f, expected 7, is {}",
+                    msg.obs[2].l.f
+                );
+                assert_eq!(
+                    msg.obs[2].l.i, 107850774,
+                    "incorrect value for obs[2].l.i, expected 107850774, is {}",
+                    msg.obs[2].l.i
+                );
+                assert_eq!(
+                    msg.obs[2].p, 2052167183,
+                    "incorrect value for obs[2].p, expected 2052167183, is {}",
+                    msg.obs[2].p
+                );
+                assert_eq!(
+                    msg.obs[2].cn0, 172,
+                    "incorrect value for obs[2].cn0, expected 172, is {}",
+                    msg.obs[2].cn0
+                );
+                assert_eq!(
+                    msg.obs[2].lock, 0,
+                    "incorrect value for obs[2].lock, expected 0, is {}",
+                    msg.obs[2].lock
+                );
+                assert_eq!(
+                    msg.obs[2].sid.code, 0,
+                    "incorrect value for obs[2].sid.code, expected 0, is {}",
+                    msg.obs[2].sid.code
+                );
+                assert_eq!(
+                    msg.obs[2].sid.reserved, 0,
+                    "incorrect value for obs[2].sid.reserved, expected 0, is {}",
+                    msg.obs[2].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[2].sid.sat, 225,
+                    "incorrect value for obs[2].sid.sat, expected 225, is {}",
+                    msg.obs[2].sid.sat
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgObsDepB"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 55286, "msg_type": 67, "header": {"n_obs": 32, "t": {"wn": 1787, "tow": 2568200}}, "obs": [{"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 202}, "L": {"i": 117912057, "f": 165}, "cn0": 156, "P": 2243649790}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 203}, "L": {"i": 129900811, "f": 106}, "cn0": 143, "P": 2471880049}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 208}, "L": {"i": 122530275, "f": 159}, "cn0": 150, "P": 2331530678}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 212}, "L": {"i": 119281418, "f": 7}, "cn0": 156, "P": 2269714449}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 217}, "L": {"i": 109692070, "f": 186}, "cn0": 170, "P": 2087295852}, {"lock": 0, "sid": {"code": 0, "reserved": 0, "sat": 218}, "L": {"i": 123339597, "f": 236}, "cn0": 151, "P": 2347011798}], "crc": 30267, "length": 103, "preamble": 85, "payload": "CDAnAPsGIP5gu4X5MQcHpZwAAMoAAABx5VWTCyG+B2qPAADLAAAAtlX4iuOpTQeflgAA0AAAABEYSYcKFxwHB5wAANQAAABsm2l8psSJBrqqAADZAAAA1o7ki00DWgfslwAA2gAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgObsDepB(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x43,
+                    "Incorrect message type, expected 0x43, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.header.n_obs, 32,
+                    "incorrect value for header.n_obs, expected 32, is {}",
+                    msg.header.n_obs
+                );
+                assert_eq!(
+                    msg.header.t.tow, 2568200,
+                    "incorrect value for header.t.tow, expected 2568200, is {}",
+                    msg.header.t.tow
+                );
+                assert_eq!(
+                    msg.header.t.wn, 1787,
+                    "incorrect value for header.t.wn, expected 1787, is {}",
+                    msg.header.t.wn
+                );
+                assert_eq!(
+                    msg.obs[0].l.f, 165,
+                    "incorrect value for obs[0].l.f, expected 165, is {}",
+                    msg.obs[0].l.f
+                );
+                assert_eq!(
+                    msg.obs[0].l.i, 117912057,
+                    "incorrect value for obs[0].l.i, expected 117912057, is {}",
+                    msg.obs[0].l.i
+                );
+                assert_eq!(
+                    msg.obs[0].p, 2243649790,
+                    "incorrect value for obs[0].p, expected 2243649790, is {}",
+                    msg.obs[0].p
+                );
+                assert_eq!(
+                    msg.obs[0].cn0, 156,
+                    "incorrect value for obs[0].cn0, expected 156, is {}",
+                    msg.obs[0].cn0
+                );
+                assert_eq!(
+                    msg.obs[0].lock, 0,
+                    "incorrect value for obs[0].lock, expected 0, is {}",
+                    msg.obs[0].lock
+                );
+                assert_eq!(
+                    msg.obs[0].sid.code, 0,
+                    "incorrect value for obs[0].sid.code, expected 0, is {}",
+                    msg.obs[0].sid.code
+                );
+                assert_eq!(
+                    msg.obs[0].sid.reserved, 0,
+                    "incorrect value for obs[0].sid.reserved, expected 0, is {}",
+                    msg.obs[0].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[0].sid.sat, 202,
+                    "incorrect value for obs[0].sid.sat, expected 202, is {}",
+                    msg.obs[0].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[1].l.f, 106,
+                    "incorrect value for obs[1].l.f, expected 106, is {}",
+                    msg.obs[1].l.f
+                );
+                assert_eq!(
+                    msg.obs[1].l.i, 129900811,
+                    "incorrect value for obs[1].l.i, expected 129900811, is {}",
+                    msg.obs[1].l.i
+                );
+                assert_eq!(
+                    msg.obs[1].p, 2471880049,
+                    "incorrect value for obs[1].p, expected 2471880049, is {}",
+                    msg.obs[1].p
+                );
+                assert_eq!(
+                    msg.obs[1].cn0, 143,
+                    "incorrect value for obs[1].cn0, expected 143, is {}",
+                    msg.obs[1].cn0
+                );
+                assert_eq!(
+                    msg.obs[1].lock, 0,
+                    "incorrect value for obs[1].lock, expected 0, is {}",
+                    msg.obs[1].lock
+                );
+                assert_eq!(
+                    msg.obs[1].sid.code, 0,
+                    "incorrect value for obs[1].sid.code, expected 0, is {}",
+                    msg.obs[1].sid.code
+                );
+                assert_eq!(
+                    msg.obs[1].sid.reserved, 0,
+                    "incorrect value for obs[1].sid.reserved, expected 0, is {}",
+                    msg.obs[1].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[1].sid.sat, 203,
+                    "incorrect value for obs[1].sid.sat, expected 203, is {}",
+                    msg.obs[1].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[2].l.f, 159,
+                    "incorrect value for obs[2].l.f, expected 159, is {}",
+                    msg.obs[2].l.f
+                );
+                assert_eq!(
+                    msg.obs[2].l.i, 122530275,
+                    "incorrect value for obs[2].l.i, expected 122530275, is {}",
+                    msg.obs[2].l.i
+                );
+                assert_eq!(
+                    msg.obs[2].p, 2331530678,
+                    "incorrect value for obs[2].p, expected 2331530678, is {}",
+                    msg.obs[2].p
+                );
+                assert_eq!(
+                    msg.obs[2].cn0, 150,
+                    "incorrect value for obs[2].cn0, expected 150, is {}",
+                    msg.obs[2].cn0
+                );
+                assert_eq!(
+                    msg.obs[2].lock, 0,
+                    "incorrect value for obs[2].lock, expected 0, is {}",
+                    msg.obs[2].lock
+                );
+                assert_eq!(
+                    msg.obs[2].sid.code, 0,
+                    "incorrect value for obs[2].sid.code, expected 0, is {}",
+                    msg.obs[2].sid.code
+                );
+                assert_eq!(
+                    msg.obs[2].sid.reserved, 0,
+                    "incorrect value for obs[2].sid.reserved, expected 0, is {}",
+                    msg.obs[2].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[2].sid.sat, 208,
+                    "incorrect value for obs[2].sid.sat, expected 208, is {}",
+                    msg.obs[2].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[3].l.f, 7,
+                    "incorrect value for obs[3].l.f, expected 7, is {}",
+                    msg.obs[3].l.f
+                );
+                assert_eq!(
+                    msg.obs[3].l.i, 119281418,
+                    "incorrect value for obs[3].l.i, expected 119281418, is {}",
+                    msg.obs[3].l.i
+                );
+                assert_eq!(
+                    msg.obs[3].p, 2269714449,
+                    "incorrect value for obs[3].p, expected 2269714449, is {}",
+                    msg.obs[3].p
+                );
+                assert_eq!(
+                    msg.obs[3].cn0, 156,
+                    "incorrect value for obs[3].cn0, expected 156, is {}",
+                    msg.obs[3].cn0
+                );
+                assert_eq!(
+                    msg.obs[3].lock, 0,
+                    "incorrect value for obs[3].lock, expected 0, is {}",
+                    msg.obs[3].lock
+                );
+                assert_eq!(
+                    msg.obs[3].sid.code, 0,
+                    "incorrect value for obs[3].sid.code, expected 0, is {}",
+                    msg.obs[3].sid.code
+                );
+                assert_eq!(
+                    msg.obs[3].sid.reserved, 0,
+                    "incorrect value for obs[3].sid.reserved, expected 0, is {}",
+                    msg.obs[3].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[3].sid.sat, 212,
+                    "incorrect value for obs[3].sid.sat, expected 212, is {}",
+                    msg.obs[3].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[4].l.f, 186,
+                    "incorrect value for obs[4].l.f, expected 186, is {}",
+                    msg.obs[4].l.f
+                );
+                assert_eq!(
+                    msg.obs[4].l.i, 109692070,
+                    "incorrect value for obs[4].l.i, expected 109692070, is {}",
+                    msg.obs[4].l.i
+                );
+                assert_eq!(
+                    msg.obs[4].p, 2087295852,
+                    "incorrect value for obs[4].p, expected 2087295852, is {}",
+                    msg.obs[4].p
+                );
+                assert_eq!(
+                    msg.obs[4].cn0, 170,
+                    "incorrect value for obs[4].cn0, expected 170, is {}",
+                    msg.obs[4].cn0
+                );
+                assert_eq!(
+                    msg.obs[4].lock, 0,
+                    "incorrect value for obs[4].lock, expected 0, is {}",
+                    msg.obs[4].lock
+                );
+                assert_eq!(
+                    msg.obs[4].sid.code, 0,
+                    "incorrect value for obs[4].sid.code, expected 0, is {}",
+                    msg.obs[4].sid.code
+                );
+                assert_eq!(
+                    msg.obs[4].sid.reserved, 0,
+                    "incorrect value for obs[4].sid.reserved, expected 0, is {}",
+                    msg.obs[4].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[4].sid.sat, 217,
+                    "incorrect value for obs[4].sid.sat, expected 217, is {}",
+                    msg.obs[4].sid.sat
+                );
+                assert_eq!(
+                    msg.obs[5].l.f, 236,
+                    "incorrect value for obs[5].l.f, expected 236, is {}",
+                    msg.obs[5].l.f
+                );
+                assert_eq!(
+                    msg.obs[5].l.i, 123339597,
+                    "incorrect value for obs[5].l.i, expected 123339597, is {}",
+                    msg.obs[5].l.i
+                );
+                assert_eq!(
+                    msg.obs[5].p, 2347011798,
+                    "incorrect value for obs[5].p, expected 2347011798, is {}",
+                    msg.obs[5].p
+                );
+                assert_eq!(
+                    msg.obs[5].cn0, 151,
+                    "incorrect value for obs[5].cn0, expected 151, is {}",
+                    msg.obs[5].cn0
+                );
+                assert_eq!(
+                    msg.obs[5].lock, 0,
+                    "incorrect value for obs[5].lock, expected 0, is {}",
+                    msg.obs[5].lock
+                );
+                assert_eq!(
+                    msg.obs[5].sid.code, 0,
+                    "incorrect value for obs[5].sid.code, expected 0, is {}",
+                    msg.obs[5].sid.code
+                );
+                assert_eq!(
+                    msg.obs[5].sid.reserved, 0,
+                    "incorrect value for obs[5].sid.reserved, expected 0, is {}",
+                    msg.obs[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.obs[5].sid.sat, 218,
+                    "incorrect value for obs[5].sid.sat, expected 218, is {}",
+                    msg.obs[5].sid.sat
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgObsDepB"),
+        };
+    }
+}

@@ -51,3 +51,52 @@ fn test_auto_check_sbp_file_io_msg_fileio_write_resp() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_file_io_msg_fileio_write_resp() {
+    {
+        let json_input = r#"{"sender": 66, "msg_type": 171, "sequence": 202, "crc": 62451, "length": 4, "preamble": 85, "payload": "ygAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgFileioWriteResp(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0xab,
+                    "Incorrect message type, expected 0xab, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x42,
+                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.sequence, 202,
+                    "incorrect value for sequence, expected 202, is {}",
+                    msg.sequence
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgFileioWriteResp"),
+        };
+    }
+}

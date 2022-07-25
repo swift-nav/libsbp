@@ -261,3 +261,316 @@ fn test_auto_check_sbp_piksi_msg_iar_state() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_piksi_msg_iar_state() {
+    {
+        let json_input = r#"{"sender": 55286, "msg_type": 25, "num_hyps": 1, "crc": 36056, "length": 4, "preamble": 85, "payload": "AQAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgIarState(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x19,
+                    "Incorrect message type, expected 0x19, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.num_hyps, 1,
+                    "incorrect value for num_hyps, expected 1, is {}",
+                    msg.num_hyps
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgIarState"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 1219, "msg_type": 25, "num_hyps": 0, "crc": 45074, "length": 4, "preamble": 85, "payload": "AAAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgIarState(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x19,
+                    "Incorrect message type, expected 0x19, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.num_hyps, 0,
+                    "incorrect value for num_hyps, expected 0, is {}",
+                    msg.num_hyps
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgIarState"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 1219, "msg_type": 25, "num_hyps": 1, "crc": 50854, "length": 4, "preamble": 85, "payload": "AQAAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgIarState(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x19,
+                    "Incorrect message type, expected 0x19, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.num_hyps, 1,
+                    "incorrect value for num_hyps, expected 1, is {}",
+                    msg.num_hyps
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgIarState"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 1219, "msg_type": 25, "num_hyps": 729, "crc": 34054, "length": 4, "preamble": 85, "payload": "2QIAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgIarState(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x19,
+                    "Incorrect message type, expected 0x19, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.num_hyps, 729,
+                    "incorrect value for num_hyps, expected 729, is {}",
+                    msg.num_hyps
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgIarState"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 1219, "msg_type": 25, "num_hyps": 728, "crc": 62386, "length": 4, "preamble": 85, "payload": "2AIAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgIarState(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x19,
+                    "Incorrect message type, expected 0x19, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.num_hyps, 728,
+                    "incorrect value for num_hyps, expected 728, is {}",
+                    msg.num_hyps
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgIarState"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 1219, "msg_type": 25, "num_hyps": 727, "crc": 10076, "length": 4, "preamble": 85, "payload": "1wIAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgIarState(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x19,
+                    "Incorrect message type, expected 0x19, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.num_hyps, 727,
+                    "incorrect value for num_hyps, expected 727, is {}",
+                    msg.num_hyps
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgIarState"),
+        };
+    }
+    {
+        let json_input = r#"{"sender": 1219, "msg_type": 25, "num_hyps": 723, "crc": 60845, "length": 4, "preamble": 85, "payload": "0wIAAA=="}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgIarState(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x19,
+                    "Incorrect message type, expected 0x19, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x4c3,
+                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.num_hyps, 723,
+                    "incorrect value for num_hyps, expected 723, is {}",
+                    msg.num_hyps
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgIarState"),
+        };
+    }
+}

@@ -102,3 +102,100 @@ fn test_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_degradation() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_degradation() {
+    {
+        let json_input = r#"{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 2, "update_interval": 3, "sol_id": 48}, "ssr_iod": 15, "const_id": 1, "sat_bitmask": 10, "orbit_clock_bounds_degradation": {"orb_radial_bound_mu_dot": 200, "orb_along_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 199, "orb_cross_bound_mu_dot": 198, "orb_radial_bound_sig_dot": 197, "orb_along_bound_sig_dot": 196, "orb_cross_bound_sig_dot": 195, "clock_bound_mu_dot": 194, "clock_bound_sig_dot": 193}, "preamble": 85, "msg_type": 1503, "sender": 66, "length": 28, "payload": "tAAAAAMAAQIDMA8BCgAAAAAAAADIx8bFxMPCwQ==", "crc": 30152}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgSsrOrbitClockBoundsDegradation(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    1503,
+                    "Incorrect message type, expected 1503, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x0042,
+                    "incorrect sender id, expected 0x0042, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.const_id, 1,
+                    "incorrect value for const_id, expected 1, is {}",
+                    msg.const_id
+                );
+                assert_eq!(
+                    msg.header.num_msgs, 1,
+                    "incorrect value for header.num_msgs, expected 1, is {}",
+                    msg.header.num_msgs
+                );
+                assert_eq!(
+                    msg.header.seq_num, 2,
+                    "incorrect value for header.seq_num, expected 2, is {}",
+                    msg.header.seq_num
+                );
+                assert_eq!(
+                    msg.header.sol_id, 48,
+                    "incorrect value for header.sol_id, expected 48, is {}",
+                    msg.header.sol_id
+                );
+                assert_eq!(
+                    msg.header.time.tow, 180,
+                    "incorrect value for header.time.tow, expected 180, is {}",
+                    msg.header.time.tow
+                );
+                assert_eq!(
+                    msg.header.time.wn, 3,
+                    "incorrect value for header.time.wn, expected 3, is {}",
+                    msg.header.time.wn
+                );
+                assert_eq!(
+                    msg.header.update_interval, 3,
+                    "incorrect value for header.update_interval, expected 3, is {}",
+                    msg.header.update_interval
+                );
+                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_mu_dot, 194, "incorrect value for orbit_clock_bounds_degradation.clock_bound_mu_dot, expected 194, is {}", msg.orbit_clock_bounds_degradation.clock_bound_mu_dot);
+                assert_eq!(msg.orbit_clock_bounds_degradation.clock_bound_sig_dot, 193, "incorrect value for orbit_clock_bounds_degradation.clock_bound_sig_dot, expected 193, is {}", msg.orbit_clock_bounds_degradation.clock_bound_sig_dot);
+                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot, 199, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_mu_dot, expected 199, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_mu_dot);
+                assert_eq!(msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot, 196, "incorrect value for orbit_clock_bounds_degradation.orb_along_bound_sig_dot, expected 196, is {}", msg.orbit_clock_bounds_degradation.orb_along_bound_sig_dot);
+                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, 198, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_mu_dot, expected 198, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_mu_dot);
+                assert_eq!(msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, 195, "incorrect value for orbit_clock_bounds_degradation.orb_cross_bound_sig_dot, expected 195, is {}", msg.orbit_clock_bounds_degradation.orb_cross_bound_sig_dot);
+                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, 200, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_mu_dot, expected 200, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_mu_dot);
+                assert_eq!(msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, 197, "incorrect value for orbit_clock_bounds_degradation.orb_radial_bound_sig_dot, expected 197, is {}", msg.orbit_clock_bounds_degradation.orb_radial_bound_sig_dot);
+                assert_eq!(
+                    msg.sat_bitmask, 10,
+                    "incorrect value for sat_bitmask, expected 10, is {}",
+                    msg.sat_bitmask
+                );
+                assert_eq!(
+                    msg.ssr_iod, 15,
+                    "incorrect value for ssr_iod, expected 15, is {}",
+                    msg.ssr_iod
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgSsrOrbitClockBoundsDegradation"),
+        };
+    }
+}

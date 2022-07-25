@@ -62,3 +62,59 @@ fn test_auto_check_sbp_logging_msg_log() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_logging_msg_log() {
+    {
+        let json_input = r#"{"level":6,"text":"Filtered all obs from 2314 at tow 83.539019","preamble":85,"msg_type":1025,"sender":2314,"payload":"BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk=","crc":41905,"length":44}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgLog(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x0401,
+                    "Incorrect message type, expected 0x0401, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x90a,
+                    "incorrect sender id, expected 0x90a, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.level, 6,
+                    "incorrect value for level, expected 6, is {}",
+                    msg.level
+                );
+                assert_eq!(
+                    msg.text.to_string(),
+                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    "incorrect value for msg.text, expected string '{}', is '{}'",
+                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    msg.text
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgLog"),
+        };
+    }
+}

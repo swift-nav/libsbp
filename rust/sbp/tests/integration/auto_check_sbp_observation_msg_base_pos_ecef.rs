@@ -64,3 +64,62 @@ fn test_auto_check_sbp_observation_msg_base_pos_ecef() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_observation_msg_base_pos_ecef() {
+    {
+        let json_input = r#"{"x":-2726575.9189,"y":-4315267.2798,"z":3811455.9642,"preamble":85,"msg_type":72,"sender":0,"payload":"5IOe9VfNRMFCPujRIHZQwdXnavs/FE1B","crc":32194,"length":24}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgBasePosEcef(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x48,
+                    "Incorrect message type, expected 0x48, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0,
+                    "incorrect sender id, expected 0, is {}",
+                    sender_id
+                );
+                assert!(
+                    msg.x.almost_eq(-2.72657591889999993e+06),
+                    "incorrect value for x, expected -2.72657591889999993e+06, is {:e}",
+                    msg.x
+                );
+                assert!(
+                    msg.y.almost_eq(-4.31526727979999967e+06),
+                    "incorrect value for y, expected -4.31526727979999967e+06, is {:e}",
+                    msg.y
+                );
+                assert!(
+                    msg.z.almost_eq(3.81145596419999981e+06),
+                    "incorrect value for z, expected 3.81145596419999981e+06, is {:e}",
+                    msg.z
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgBasePosECEF"),
+        };
+    }
+}

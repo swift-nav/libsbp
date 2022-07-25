@@ -84,3 +84,82 @@ fn test_auto_check_sbp_navigation_msg_pos_ecefgnss() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_navigation_msg_pos_ecefgnss() {
+    {
+        let json_input = r#"{"tow":501867800,"x":-2694229.7079770807,"y":-4264073.427345817,"z":3890655.013186158,"accuracy":182,"n_sats":18,"flags":4,"preamble":85,"msg_type":553,"sender":4096,"payload":"GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ=","crc":647,"length":32}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgPosEcefGnss(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x229,
+                    "Incorrect message type, expected 0x229, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x1000,
+                    "incorrect sender id, expected 0x1000, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.accuracy, 182,
+                    "incorrect value for accuracy, expected 182, is {}",
+                    msg.accuracy
+                );
+                assert_eq!(
+                    msg.flags, 4,
+                    "incorrect value for flags, expected 4, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.n_sats, 18,
+                    "incorrect value for n_sats, expected 18, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 501867800,
+                    "incorrect value for tow, expected 501867800, is {}",
+                    msg.tow
+                );
+                assert!(
+                    msg.x.almost_eq(-2.69422970797708072e+06),
+                    "incorrect value for x, expected -2.69422970797708072e+06, is {:e}",
+                    msg.x
+                );
+                assert!(
+                    msg.y.almost_eq(-4.26407342734581698e+06),
+                    "incorrect value for y, expected -4.26407342734581698e+06, is {:e}",
+                    msg.y
+                );
+                assert!(
+                    msg.z.almost_eq(3.89065501318615815e+06),
+                    "incorrect value for z, expected 3.89065501318615815e+06, is {:e}",
+                    msg.z
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgPosECEFGnss"),
+        };
+    }
+}

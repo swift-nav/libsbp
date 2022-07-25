@@ -83,3 +83,82 @@ fn test_auto_check_sbp_system_msg_ins_updates() {
         assert_eq!(frame, payload.into_inner());
     }
 }
+
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_system_msg_ins_updates() {
+    {
+        let json_input = r#"{"tow":504489300,"gnsspos":0,"gnssvel":0,"wheelticks":0,"speed":0,"nhc":0,"zerovel":0,"preamble":85,"msg_type":65286,"sender":789,"payload":"VOURHgAAAAAAAA==","crc":16209,"length":10}"#.as_bytes();
+
+        let sbp_msg = {
+            // Json to Sbp message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // Json to Sbp message from payload
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgInsUpdates(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0xff06,
+                    "Incorrect message type, expected 0xff06, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x315,
+                    "incorrect sender id, expected 0x315, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.gnsspos, 0,
+                    "incorrect value for gnsspos, expected 0, is {}",
+                    msg.gnsspos
+                );
+                assert_eq!(
+                    msg.gnssvel, 0,
+                    "incorrect value for gnssvel, expected 0, is {}",
+                    msg.gnssvel
+                );
+                assert_eq!(
+                    msg.nhc, 0,
+                    "incorrect value for nhc, expected 0, is {}",
+                    msg.nhc
+                );
+                assert_eq!(
+                    msg.speed, 0,
+                    "incorrect value for speed, expected 0, is {}",
+                    msg.speed
+                );
+                assert_eq!(
+                    msg.tow, 504489300,
+                    "incorrect value for tow, expected 504489300, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.wheelticks, 0,
+                    "incorrect value for wheelticks, expected 0, is {}",
+                    msg.wheelticks
+                );
+                assert_eq!(
+                    msg.zerovel, 0,
+                    "incorrect value for zerovel, expected 0, is {}",
+                    msg.zerovel
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgInsUpdates"),
+        };
+    }
+}
