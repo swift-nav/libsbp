@@ -14,7 +14,6 @@ set(libsbp_SRCS
 swift_add_library(sbp
   SOURCES ${libsbp_SRCS}
 )
-add_library(swiftnav::sbp ALIAS sbp)
 
 target_compile_definitions(sbp
   PRIVATE
