@@ -16,13 +16,9 @@
   "description":"",
   "type": "object",
   "properties": {
-    "n_msg": {"type": "integer"},
-    "fingerprint": {"type": "array", "items": {"type": "integer"}},
-    "certificate_bytes": {"type": "array", "items": {"type": "integer"}}
+    "stub": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "n_msg",
-    "fingerprint",
-    "certificate_bytes"
+    "stub"
   ]
 }

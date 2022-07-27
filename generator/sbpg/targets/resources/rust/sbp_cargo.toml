@@ -20,7 +20,9 @@ readme = "../../README.md"
 [features]
 default = []
 async = ["futures", "dencode/async"]
-json = ["serde", "serde_json", "serde-big-array", "base64"]
+serde = ["dep:serde", "serde-big-array"]
+json = ["serde", "serde_json", "base64"]
+float_roundtrip = ["serde", "serde_json/float_roundtrip"]
 link = ["slotmap"]
 
 [lib]
@@ -45,7 +47,11 @@ features = ["derive"]
 optional = true
 
 [dependencies.serde_json]
-version = "1.0"
+version = "1"
+optional = true
+
+[dependencies.serde-big-array]
+version = "0.4"
 optional = true
 
 [dependencies.serde-big-array]

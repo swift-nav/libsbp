@@ -11,6 +11,7 @@ use common::{
     DeleteTestOutput, ThirdTransform,
 };
 
+use crate::common::run_jsonfields2sbp;
 use serde_json::ser::CompactFormatter;
 
 #[test]
@@ -45,7 +46,7 @@ fn test_continue_on_error() {
 
 #[test]
 fn test_sbp2json() {
-    let tranform1 = |reader, writer| run_sbp2json(reader, writer);
+    let tranform1 = |reader, writer| run_sbp2json(reader, writer, true);
     let tranform2 = |reader, writer| run_json2sbp(reader, writer);
 
     test_round_trip(
@@ -61,12 +62,27 @@ fn test_sbp2json() {
 #[test]
 fn test_json2sbp() {
     let tranform1 = |reader, writer| run_json2sbp(reader, writer);
-    let tranform2 = |reader, writer| run_sbp2json(reader, writer);
+    let tranform2 = |reader, writer| run_sbp2json(reader, writer, true);
 
     test_round_trip(
         tranform1,
         tranform2,
         "json2sbp",
+        "roundtrip_float_compat.json",
+        make_none_transform!(),
+        true,
+    )
+}
+
+#[test]
+fn test_jsonfields2sbp() {
+    let tranform1 = |reader, writer| run_jsonfields2sbp(reader, writer);
+    let tranform2 = |reader, writer| run_sbp2json(reader, writer, false);
+
+    test_round_trip(
+        tranform1,
+        tranform2,
+        "jsonfields2sbp",
         "roundtrip.json",
         make_none_transform!(),
         true,
@@ -79,7 +95,7 @@ fn test_json2json() {
     let tranform2 = |reader, writer| run_json2sbp(reader, writer);
 
     let third_transform = ThirdTransform {
-        transform: |reader, writer| run_sbp2json(reader, writer),
+        transform: |reader, writer| run_sbp2json(reader, writer, true),
         expected_output: "roundtrip.json2json.output".into(),
     };
 

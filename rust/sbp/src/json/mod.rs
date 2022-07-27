@@ -13,7 +13,7 @@ pub use serde_json::ser::CompactFormatter;
 
 #[cfg(feature = "async")]
 pub use de::stream_messages;
-pub use de::{iter_json2json_messages, iter_messages};
+pub use de::{iter_json2json_messages, iter_messages, iter_messages_from_fields};
 
 pub use ser::{to_vec, to_writer, Json2JsonEncoder, JsonEncoder};
 

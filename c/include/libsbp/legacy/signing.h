@@ -31,19 +31,11 @@
 SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
-  u8 signature[64];   /**< ED25519 signature for messages. */
-  u8 fingerprint[20]; /**< SHA-1 fingerprint of the associated certificate. */
-  u32 signed_messages[0]; /**< CRCs of signed messages. */
+  u8 stub[0];
 } msg_ed25519_signature_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 n_msg;                /**< Total number messages that make up the
-                                certificate. First nibble is the size of the
-                                sequence (n), second nibble is the zero-
-                                indexed counter (ith packet of n) */
-  u8 fingerprint[20];      /**< SHA-1 fingerprint of the associated
-                                certificate. */
-  u8 certificate_bytes[0]; /**< ED25519 certificate bytes. */
+  u8 stub[0];
 } msg_ed25519_certificate_t;
 
 /** \} */

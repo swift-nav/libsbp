@@ -5264,7 +5264,7 @@ class MsgReferenceFrameParam(SBP):
     Utilized Transformation Message.
   re_t0 : int
     Reference Epoch t0 for transformation parameter set given as Modified
-    Julian Day (MDJ) Number minus 44244 days.
+    Julian Day (MJD) Number minus 44244 days.
   delta_X0 : int
     Translation in X for Reference Epoch t0.
   delta_Y0 : int

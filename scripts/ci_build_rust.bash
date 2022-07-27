@@ -24,6 +24,13 @@ else
     exit 1
 fi
 
+cargo build --no-default-features -p sbp
+cargo build --no-default-features -p sbp --features serde
+cargo build --no-default-features -p sbp --features json
+cargo build --no-default-features -p sbp --features async
+cargo build --no-default-features -p sbp --features link
+cargo build --no-default-features -p sbp --features float_roundtrip
+
 if [ "$RUNNER_OS" == "Linux" ]; then
   cargo build --all --release --target=x86_64-unknown-linux-musl
   cd target/x86_64-unknown-linux-musl/release

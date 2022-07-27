@@ -2,6 +2,8 @@ use std::fmt;
 use std::marker::PhantomData;
 
 use bytes::{Buf, BufMut};
+#[cfg(feature = "serde")]
+use serde::de::{Error, Visitor};
 
 use crate::wire_format::WireFormat;
 
@@ -67,6 +69,114 @@ where
     {
         let s = String::from_utf8_lossy(self.as_bytes());
         serializer.serialize_str(&s)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de, E> serde::Deserialize<'de> for SbpString<Vec<u8>, E> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct SbpStringVisitor<E>(PhantomData<SbpString<Vec<u8>, E>>);
+
+        impl<'de, E> Visitor<'de> for SbpStringVisitor<E> {
+            type Value = SbpString<Vec<u8>, E>;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("string")
+            }
+
+            fn visit_str<Er>(self, v: &str) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.as_bytes().to_vec()))
+            }
+
+            fn visit_string<Er>(self, v: String) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.into_bytes()))
+            }
+
+            fn visit_bytes<Er>(self, v: &[u8]) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v.to_vec()))
+            }
+
+            fn visit_byte_buf<Er>(self, v: Vec<u8>) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                Ok(SbpString::new(v))
+            }
+        }
+        deserializer.deserialize_any(SbpStringVisitor(PhantomData))
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], E> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use std::convert::TryInto;
+
+        struct SbpStringVisitor<E, const LEN: usize>(PhantomData<SbpString<[u8; LEN], E>>);
+
+        impl<'de, E, const LEN: usize> Visitor<'de> for SbpStringVisitor<E, LEN> {
+            type Value = SbpString<[u8; LEN], E>;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("string")
+            }
+
+            fn visit_str<Er>(self, v: &str) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                let data = v.as_bytes().try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
+            }
+
+            fn visit_string<Er>(self, v: String) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                let data = v.into_bytes().try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
+            }
+
+            fn visit_bytes<Er>(self, v: &[u8]) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                let data = v.try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
+            }
+
+            fn visit_byte_buf<Er>(self, v: Vec<u8>) -> Result<Self::Value, Er>
+            where
+                Er: Error,
+            {
+                let data = v.try_into().map_err(|_| {
+                    Error::custom(format!("was expecting a string of length {}", LEN))
+                })?;
+                Ok(SbpString::new(data))
+            }
+        }
+        deserializer.deserialize_any(SbpStringVisitor(PhantomData))
     }
 }
 

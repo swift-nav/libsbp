@@ -26,14 +26,14 @@ pub mod msg_user_data {
     /// This message can contain any application specific user data up to a
     /// maximum length of 255 bytes per message.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUserData {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// User data payload
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "contents")))]
+        #[cfg_attr(feature = "serde", serde(rename = "contents"))]
         pub contents: Vec<u8>,
     }
 

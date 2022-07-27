@@ -13,6 +13,11 @@
 
 use crate::*;
 
+/// Tests [`sbp::iter_messages`], from payload into SBP messages
+///
+/// Asserts:
+/// -   SBP fields equates to that of the field
+/// -   Payload is identical
 #[test]
 fn test_auto_check_sbp_navigation_msg_age_corrections() {
     {
@@ -52,6 +57,139 @@ fn test_auto_check_sbp_navigation_msg_age_corrections() {
             }
             _ => panic!("Invalid message type! Expected a MsgAgeCorrections"),
         };
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
+        assert_eq!(frame, payload.into_inner());
+    }
+}
+
+/// Tests [`sbp::json::iter_messages`] for JSON payload -> SBP message
+/// and [`sbp::json::iter_messages_from_fields`] for JSON fields -> SBP message.
+///
+/// Asserts:
+/// -   SBP message constructed via payload is identical to from fields
+/// -   SBP fields equates to that of the field
+/// -   Payload is identical
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_auto_check_sbp_navigation_msg_age_corrections() {
+    {
+        let json_input = r#"{"sender": 66, "msg_type": 528, "age": 30, "tow": 100, "crc": 51945, "length": 6, "preamble": 85, "payload": "ZAAAAB4A"}"#.as_bytes();
+
+        let sbp_msg = {
+            // JSON to SBP message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // JSON to SBP message from fields
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter
+                .next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgAgeCorrections(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x210,
+                    "Incorrect message type, expected 0x210, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x42,
+                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.age, 30,
+                    "incorrect value for age, expected 30, is {}",
+                    msg.age
+                );
+                assert_eq!(
+                    msg.tow, 100,
+                    "incorrect value for tow, expected 100, is {}",
+                    msg.tow
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgAgeCorrections"),
+        };
+    }
+}
+
+/// Tests [`sbp::json::JsonEncoder`] for roundtrip SBP message -> JSON
+///
+/// Assumes:
+/// -   [`self::test_auto_check_sbp_navigation_msg_age_corrections`] passes
+///
+/// Asserts:
+/// -   SBP fields equates to that of the field
+/// -   Payload is identical
+#[test]
+#[cfg(feature = "json")]
+fn test_sbp2json_auto_check_sbp_navigation_msg_age_corrections() {
+    {
+        let mut payload = Cursor::new(vec![85, 16, 2, 66, 0, 6, 100, 0, 0, 0, 30, 0, 233, 202]);
+
+        // Construct sbp message
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
+
+        let mut json_buffer = vec![];
+        // Populate json buffer, CompactFormatter
+        sbp::json::JsonEncoder::new(&mut json_buffer, sbp::json::CompactFormatter {})
+            .send(&sbp_msg)
+            .unwrap();
+
+        // Reconstruct Sbp message from json fields, roundtrip
+        let sbp_msg = sbp::messages::Sbp::MsgAgeCorrections(
+            serde_json::from_str(
+                std::str::from_utf8(json_buffer.as_slice())
+                    .unwrap()
+                    .to_string()
+                    .as_str(),
+            )
+            .unwrap(),
+        );
+        match &sbp_msg {
+            sbp::messages::Sbp::MsgAgeCorrections(msg) => {
+                assert_eq!(
+                    msg.message_type(),
+                    0x210,
+                    "Incorrect message type, expected 0x210, is {}",
+                    msg.message_type()
+                );
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x42,
+                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.age, 30,
+                    "incorrect value for age, expected 30, is {}",
+                    msg.age
+                );
+                assert_eq!(
+                    msg.tow, 100,
+                    "incorrect value for tow, expected 100, is {}",
+                    msg.tow
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgAgeCorrections"),
+        };
+
+        // Check payload is still identical
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }

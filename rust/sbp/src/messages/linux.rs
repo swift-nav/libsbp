@@ -36,32 +36,32 @@ pub mod msg_linux_cpu_state {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of CPU on the system, including a timestamp.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxCpuState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// sequence of this status message, values from 0-9
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u8,
         /// the PID of the process
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid"))]
         pub pid: u16,
         /// percent of CPU used, expressed as a fraction of 256
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pcpu"))]
         pub pcpu: u8,
         /// timestamp of message, refer to flags field for how to interpret
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: u32,
         /// flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// fixed length string representing the thread name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tname"))]
         pub tname: SbpString<[u8; 15], Unterminated>,
         /// the command line (as much as it fits in the remaining packet)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cmdline"))]
         pub cmdline: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -196,26 +196,26 @@ pub mod msg_linux_cpu_state_dep_a {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of CPU on the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxCpuStateDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// sequence of this status message, values from 0-9
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u8,
         /// the PID of the process
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid"))]
         pub pid: u16,
         /// percent of cpu used, expressed as a fraction of 256
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pcpu"))]
         pub pcpu: u8,
         /// fixed length string representing the thread name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tname"))]
         pub tname: SbpString<[u8; 15], Unterminated>,
         /// the command line (as much as it fits in the remaining packet)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cmdline"))]
         pub cmdline: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -296,32 +296,32 @@ pub mod msg_linux_mem_state {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of memory on the system, including a timestamp.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxMemState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// sequence of this status message, values from 0-9
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u8,
         /// the PID of the process
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid"))]
         pub pid: u16,
         /// percent of memory used, expressed as a fraction of 256
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pmem"))]
         pub pmem: u8,
         /// timestamp of message, refer to flags field for how to interpret
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: u32,
         /// flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// fixed length string representing the thread name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tname"))]
         pub tname: SbpString<[u8; 15], Unterminated>,
         /// the command line (as much as it fits in the remaining packet)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cmdline"))]
         pub cmdline: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -456,26 +456,26 @@ pub mod msg_linux_mem_state_dep_a {
     /// This message indicates the process state of the top 10 heaviest consumers
     /// of memory on the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxMemStateDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// sequence of this status message, values from 0-9
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u8,
         /// the PID of the process
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid"))]
         pub pid: u16,
         /// percent of memory used, expressed as a fraction of 256
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pmem"))]
         pub pmem: u8,
         /// fixed length string representing the thread name
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tname")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tname"))]
         pub tname: SbpString<[u8; 15], Unterminated>,
         /// the command line (as much as it fits in the remaining packet)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cmdline"))]
         pub cmdline: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -555,23 +555,23 @@ pub mod msg_linux_process_fd_count {
     ///
     /// Top 10 list of processes with a large number of open file descriptors.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessFdCount {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// sequence of this status message, values from 0-9
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u8,
         /// the PID of the process in question
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid"))]
         pub pid: u16,
         /// a count of the number of file descriptors opened by the process
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "fd_count")))]
+        #[cfg_attr(feature = "serde", serde(rename = "fd_count"))]
         pub fd_count: u16,
         /// the command line of the process in question
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cmdline"))]
         pub cmdline: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -647,21 +647,21 @@ pub mod msg_linux_process_fd_summary {
     ///
     /// Summary of open file descriptors on the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessFdSummary {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// count of total FDs open on the system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "sys_fd_count")))]
+        #[cfg_attr(feature = "serde", serde(rename = "sys_fd_count"))]
         pub sys_fd_count: u32,
         /// A null delimited list of strings which alternates between a string
         /// representation of the process count and the file name whose count it
         /// being reported.  That is, in C string syntax
         /// "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
         /// NULL terminators in a row.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "most_opened")))]
+        #[cfg_attr(feature = "serde", serde(rename = "most_opened"))]
         pub most_opened: SbpString<Vec<u8>, DoubleNullTerminated>,
     }
 
@@ -728,33 +728,33 @@ pub mod msg_linux_process_socket_counts {
     ///
     /// Top 10 list of processes with high socket counts.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessSocketCounts {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// sequence of this status message, values from 0-9
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u8,
         /// the PID of the process in question
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid"))]
         pub pid: u16,
         /// the number of sockets the process is using
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_count")))]
+        #[cfg_attr(feature = "serde", serde(rename = "socket_count"))]
         pub socket_count: u16,
         /// A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
         /// (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_types")))]
+        #[cfg_attr(feature = "serde", serde(rename = "socket_types"))]
         pub socket_types: u16,
         /// A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
         /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
         /// wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
         /// (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_states")))]
+        #[cfg_attr(feature = "serde", serde(rename = "socket_states"))]
         pub socket_states: u16,
         /// the command line of the process in question
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cmdline"))]
         pub cmdline: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -838,40 +838,40 @@ pub mod msg_linux_process_socket_queues {
     ///
     /// Top 10 list of sockets with deep queues.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxProcessSocketQueues {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// sequence of this status message, values from 0-9
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "index")))]
+        #[cfg_attr(feature = "serde", serde(rename = "index"))]
         pub index: u8,
         /// the PID of the process in question
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid"))]
         pub pid: u16,
         /// the total amount of receive data queued for this process
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "recv_queued")))]
+        #[cfg_attr(feature = "serde", serde(rename = "recv_queued"))]
         pub recv_queued: u16,
         /// the total amount of send data queued for this process
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "send_queued")))]
+        #[cfg_attr(feature = "serde", serde(rename = "send_queued"))]
         pub send_queued: u16,
         /// A bitfield indicating the socket types used: 0x1 (tcp), 0x2 (udp), 0x4
         /// (unix stream), 0x8 (unix dgram), 0x10 (netlink), and 0x8000 (unknown)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_types")))]
+        #[cfg_attr(feature = "serde", serde(rename = "socket_types"))]
         pub socket_types: u16,
         /// A bitfield indicating the socket states: 0x1 (established), 0x2 (syn-
         /// sent), 0x4 (syn-recv), 0x8 (fin-wait-1), 0x10 (fin-wait-2), 0x20 (time-
         /// wait), 0x40 (closed), 0x80 (close-wait), 0x100 (last-ack), 0x200
         /// (listen), 0x400 (closing), 0x800 (unconnected), and 0x8000 (unknown)
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_states")))]
+        #[cfg_attr(feature = "serde", serde(rename = "socket_states"))]
         pub socket_states: u16,
         /// Address of the largest queue, remote or local depending on the
         /// directionality of the connection.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "address_of_largest")))]
+        #[cfg_attr(feature = "serde", serde(rename = "address_of_largest"))]
         pub address_of_largest: SbpString<[u8; 64], Unterminated>,
         /// the command line of the process in question
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "cmdline")))]
+        #[cfg_attr(feature = "serde", serde(rename = "cmdline"))]
         pub cmdline: SbpString<Vec<u8>, Unterminated>,
     }
 
@@ -963,27 +963,27 @@ pub mod msg_linux_socket_usage {
     ///
     /// Summaries the socket usage across the system.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxSocketUsage {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// average socket queue depths across all sockets on the system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "avg_queue_depth")))]
+        #[cfg_attr(feature = "serde", serde(rename = "avg_queue_depth"))]
         pub avg_queue_depth: u32,
         /// the max queue depth seen within the reporting period
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "max_queue_depth")))]
+        #[cfg_attr(feature = "serde", serde(rename = "max_queue_depth"))]
         pub max_queue_depth: u32,
         /// A count for each socket type reported in the `socket_types_reported`
         /// field, the first entry corresponds to the first enabled bit in
         /// `types_reported`.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_state_counts")))]
+        #[cfg_attr(feature = "serde", serde(rename = "socket_state_counts"))]
         pub socket_state_counts: [u16; 16],
         /// A count for each socket type reported in the `socket_types_reported`
         /// field, the first entry corresponds to the first enabled bit in
         /// `types_reported`.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "socket_type_counts")))]
+        #[cfg_attr(feature = "serde", serde(rename = "socket_type_counts"))]
         pub socket_type_counts: [u16; 16],
     }
 
@@ -1060,35 +1060,35 @@ pub mod msg_linux_sys_state {
     /// This presents a summary of CPU and memory utilization, including a
     /// timestamp.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxSysState {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// total system memory, in MiB
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mem_total")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mem_total"))]
         pub mem_total: u16,
         /// percent of CPU used, expressed as a fraction of 256
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pcpu"))]
         pub pcpu: u8,
         /// percent of memory used, expressed as a fraction of 256
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pmem"))]
         pub pmem: u8,
         /// number of processes that started during collection phase
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_starting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "procs_starting"))]
         pub procs_starting: u16,
         /// number of processes that stopped during collection phase
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_stopping")))]
+        #[cfg_attr(feature = "serde", serde(rename = "procs_stopping"))]
         pub procs_stopping: u16,
         /// the count of processes on the system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid_count")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid_count"))]
         pub pid_count: u16,
         /// timestamp of message, refer to flags field for how to interpret
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
         pub time: u32,
         /// flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -1226,29 +1226,29 @@ pub mod msg_linux_sys_state_dep_a {
     ///
     /// This presents a summary of CPU and memory utilization.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLinuxSysStateDepA {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// total system memory
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "mem_total")))]
+        #[cfg_attr(feature = "serde", serde(rename = "mem_total"))]
         pub mem_total: u16,
         /// percent of total cpu currently utilized
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pcpu")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pcpu"))]
         pub pcpu: u8,
         /// percent of total memory currently utilized
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pmem")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pmem"))]
         pub pmem: u8,
         /// number of processes that started during collection phase
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_starting")))]
+        #[cfg_attr(feature = "serde", serde(rename = "procs_starting"))]
         pub procs_starting: u16,
         /// number of processes that stopped during collection phase
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "procs_stopping")))]
+        #[cfg_attr(feature = "serde", serde(rename = "procs_stopping"))]
         pub procs_stopping: u16,
         /// the count of processes on the system
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pid_count")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pid_count"))]
         pub pid_count: u16,
     }
 

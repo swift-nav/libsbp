@@ -115,6 +115,8 @@ mod auto_check_sbp_vehicle_msg_odometry;
 pub use std::io::Cursor;
 
 pub use sbp::iter_messages;
+#[cfg(feature = "json")]
+pub use sbp::json::{iter_messages as json2sbp_iter_msg, iter_messages_from_fields};
 pub use sbp::messages::SbpMessage;
 
 pub trait AlmostEq {

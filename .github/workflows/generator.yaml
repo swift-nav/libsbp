@@ -43,8 +43,11 @@ jobs:
           git diff --cached --exit-code
           git diff --exit-code
 
-      - name: Generate html
-        run: make html-python  # emits python/docs/build/html, not checked in
+#      - name: Generate html for python
+#        run: make html-python  # emits python/docs/build/html, not checked in
+
+      - name: Generate javadocs for java
+        run: make javadocs # emits java/build/docs/javadoc, not used
 
       - name: Installing pdf dependencies
         run: |
@@ -62,6 +65,6 @@ jobs:
           name: ${{ steps.pdf.outputs.artifact_name }}
           path: ${{ steps.pdf.outputs.artifact_name }}
 
-      # name: Check generated pdf
-      # run: |
-      #   git diff --name-only --exit-code
+#      - name: Check generated pdf
+#        run: |
+#          git diff --name-only --exit-code

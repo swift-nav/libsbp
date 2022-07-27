@@ -34,6 +34,7 @@ definitions:
             type: array
             fill: u32
             desc: CRCs of signed messages.
+
   - MSG_ED25519_CERTIFICATE:
       id: 0x0C02
       short_desc: ED25519 certificate, split over multiple messages

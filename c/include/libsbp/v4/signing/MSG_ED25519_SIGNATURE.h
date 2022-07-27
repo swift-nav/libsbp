@@ -39,31 +39,18 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
+  u8 stub[SBP_MSG_ED25519_SIGNATURE_STUB_MAX];
   /**
-   * ED25519 signature for messages.
-   */
-  u8 signature[SBP_MSG_ED25519_SIGNATURE_SIGNATURE_MAX];
-
-  /**
-   * SHA-1 fingerprint of the associated certificate.
-   */
-  u8 fingerprint[SBP_MSG_ED25519_SIGNATURE_FINGERPRINT_MAX];
-
-  /**
-   * CRCs of signed messages.
-   */
-  u32 signed_messages[SBP_MSG_ED25519_SIGNATURE_SIGNED_MESSAGES_MAX];
-  /**
-   * Number of elements in signed_messages
+   * Number of elements in stub
    *
    * When sending a message fill in this field with the number elements set in
-   * signed_messages before calling an appropriate libsbp send function
+   * stub before calling an appropriate libsbp send function
    *
    * When receiving a message query this field for the number of elements in
-   * signed_messages. The value of any elements beyond the index specified in
-   * this field is undefined
+   * stub. The value of any elements beyond the index specified in this field is
+   * undefined
    */
-  u8 n_signed_messages;
+  u8 n_stub;
 } sbp_msg_ed25519_signature_t;
 
 /**
@@ -75,7 +62,7 @@ typedef struct {
 static inline size_t sbp_msg_ed25519_signature_encoded_len(
     const sbp_msg_ed25519_signature_t *msg) {
   return SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD +
-         (msg->n_signed_messages * SBP_ENCODED_LEN_U32);
+         (msg->n_stub * SBP_ENCODED_LEN_U8);
 }
 
 /**

@@ -1217,15 +1217,11 @@ type alias MsgDops =
     }
 
 type alias MsgEd25519Certificate =
-    { certificateBytes : Array Int
-    , fingerprint : Array Int
-    , nMsg : Int
+    { stub : Array Int
     }
 
 type alias MsgEd25519Signature =
-    { fingerprint : Array Int
-    , signature : Array Int
-    , signedMessages : Array Int
+    { stub : Array Int
     }
 
 {-| The ephemeris message returns a set of satellite orbit parameters that is used to
@@ -4484,31 +4480,23 @@ encodeMsgDops x =
 msgEd25519Certificate : Jdec.Decoder MsgEd25519Certificate
 msgEd25519Certificate =
     Jpipe.decode MsgEd25519Certificate
-        |> Jpipe.required "certificate_bytes" (Jdec.array Jdec.int)
-        |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
-        |> Jpipe.required "n_msg" Jdec.int
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
 
 encodeMsgEd25519Certificate : MsgEd25519Certificate -> Jenc.Value
 encodeMsgEd25519Certificate x =
     Jenc.object
-        [ ("certificate_bytes", makeArrayEncoder Jenc.int x.certificateBytes)
-        , ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
-        , ("n_msg", Jenc.int x.nMsg)
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgEd25519Signature : Jdec.Decoder MsgEd25519Signature
 msgEd25519Signature =
     Jpipe.decode MsgEd25519Signature
-        |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
-        |> Jpipe.required "signature" (Jdec.array Jdec.int)
-        |> Jpipe.required "signed_messages" (Jdec.array Jdec.int)
+        |> Jpipe.required "stub" (Jdec.array Jdec.int)
 
 encodeMsgEd25519Signature : MsgEd25519Signature -> Jenc.Value
 encodeMsgEd25519Signature x =
     Jenc.object
-        [ ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
-        , ("signature", makeArrayEncoder Jenc.int x.signature)
-        , ("signed_messages", makeArrayEncoder Jenc.int x.signedMessages)
+        [ ("stub", makeArrayEncoder Jenc.int x.stub)
         ]
 
 msgEphemerisBds : Jdec.Decoder MsgEphemerisBds

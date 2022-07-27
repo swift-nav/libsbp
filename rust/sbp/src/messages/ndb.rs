@@ -27,41 +27,41 @@ pub mod msg_ndb_event {
     /// This message is sent out when an object is stored into NDB. If needed
     /// message could also be sent out when fetching an object from NDB.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNdbEvent {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// HW time in milliseconds.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "recv_time")))]
+        #[cfg_attr(feature = "serde", serde(rename = "recv_time"))]
         pub recv_time: u64,
         /// Event type.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "event")))]
+        #[cfg_attr(feature = "serde", serde(rename = "event"))]
         pub event: u8,
         /// Event object type.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "object_type")))]
+        #[cfg_attr(feature = "serde", serde(rename = "object_type"))]
         pub object_type: u8,
         /// Event result.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "result")))]
+        #[cfg_attr(feature = "serde", serde(rename = "result"))]
         pub result: u8,
         /// Data source for STORE event, reserved for other events.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "data_source")))]
+        #[cfg_attr(feature = "serde", serde(rename = "data_source"))]
         pub data_source: u8,
         /// GNSS signal identifier, If object_type is Ephemeris OR Almanac, sid
         /// indicates for which signal the object belongs to. Reserved in other
         /// cases.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "object_sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "object_sid"))]
         pub object_sid: GnssSignal,
         /// GNSS signal identifier, If object_type is Almanac, Almanac WN, Iono OR
         /// L2C capabilities AND data_source is NDB_DS_RECEIVER sid indicates from
         /// which SV data was decoded. Reserved in other cases.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "src_sid")))]
+        #[cfg_attr(feature = "serde", serde(rename = "src_sid"))]
         pub src_sid: GnssSignal,
         /// A unique identifier of the sending hardware. For v1.0, set to the 2
         /// least significant bytes of the device serial number, valid only if
         /// data_source is NDB_DS_SBP. Reserved in case of other data_source.
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "original_sender")))]
+        #[cfg_attr(feature = "serde", serde(rename = "original_sender"))]
         pub original_sender: u16,
     }
 

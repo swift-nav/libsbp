@@ -36,26 +36,26 @@ pub mod msg_angular_rate {
     /// down direction. This message will only be available in future INS versions
     /// of Swift Products and is not produced by Piksi Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAngularRate {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// angular rate about x axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// angular rate about y axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// angular rate about z axis
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -194,23 +194,23 @@ pub mod msg_baseline_heading {
     /// intended that time-matched RTK mode is used when the base station is
     /// moving.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineHeading {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Heading
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "heading")))]
+        #[cfg_attr(feature = "serde", serde(rename = "heading"))]
         pub heading: u32,
         /// Number of satellites used in solution
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "n_sats")))]
+        #[cfg_attr(feature = "serde", serde(rename = "n_sats"))]
         pub n_sats: u8,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -356,35 +356,35 @@ pub mod msg_orient_euler {
     /// in future INS versions of Swift Products and is not produced by Piksi
     /// Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOrientEuler {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// rotation about the forward axis of the vehicle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "roll")))]
+        #[cfg_attr(feature = "serde", serde(rename = "roll"))]
         pub roll: i32,
         /// rotation about the rightward axis of the vehicle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pitch")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pitch"))]
         pub pitch: i32,
         /// rotation about the downward axis of the vehicle
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "yaw")))]
+        #[cfg_attr(feature = "serde", serde(rename = "yaw"))]
         pub yaw: i32,
         /// Estimated standard deviation of roll
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "roll_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "roll_accuracy"))]
         pub roll_accuracy: f32,
         /// Estimated standard deviation of pitch
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "pitch_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "pitch_accuracy"))]
         pub pitch_accuracy: f32,
         /// Estimated standard deviation of yaw
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "yaw_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "yaw_accuracy"))]
         pub yaw_accuracy: f32,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 
@@ -536,41 +536,41 @@ pub mod msg_orient_quat {
     /// in future INS versions of Swift Products and is not produced by Piksi
     /// Multi or Duro.
     ///
-    #[cfg_attr(feature = "serde", derive(serde::Serialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOrientQuat {
         /// The message sender_id
-        #[cfg_attr(feature = "serde", serde(skip_serializing))]
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// GPS Time of Week
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "tow")))]
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
         /// Real component
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
         pub w: i32,
         /// 1st imaginary component
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
         pub x: i32,
         /// 2nd imaginary component
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
         pub y: i32,
         /// 3rd imaginary component
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
         pub z: i32,
         /// Estimated standard deviation of w
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "w_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "w_accuracy"))]
         pub w_accuracy: f32,
         /// Estimated standard deviation of x
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "x_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "x_accuracy"))]
         pub x_accuracy: f32,
         /// Estimated standard deviation of y
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "y_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "y_accuracy"))]
         pub y_accuracy: f32,
         /// Estimated standard deviation of z
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "z_accuracy")))]
+        #[cfg_attr(feature = "serde", serde(rename = "z_accuracy"))]
         pub z_accuracy: f32,
         /// Status flags
-        #[cfg_attr(feature = "serde", serde(rename(serialize = "flags")))]
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
     }
 

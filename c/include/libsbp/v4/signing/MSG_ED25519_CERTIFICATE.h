@@ -39,33 +39,18 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
+  u8 stub[SBP_MSG_ED25519_CERTIFICATE_STUB_MAX];
   /**
-   * Total number messages that make up the certificate. First nibble is the
-   * size of the sequence (n), second nibble is the zero-indexed counter (ith
-   * packet of n)
-   */
-  u8 n_msg;
-
-  /**
-   * SHA-1 fingerprint of the associated certificate.
-   */
-  u8 fingerprint[SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX];
-
-  /**
-   * ED25519 certificate bytes.
-   */
-  u8 certificate_bytes[SBP_MSG_ED25519_CERTIFICATE_CERTIFICATE_BYTES_MAX];
-  /**
-   * Number of elements in certificate_bytes
+   * Number of elements in stub
    *
    * When sending a message fill in this field with the number elements set in
-   * certificate_bytes before calling an appropriate libsbp send function
+   * stub before calling an appropriate libsbp send function
    *
    * When receiving a message query this field for the number of elements in
-   * certificate_bytes. The value of any elements beyond the index specified in
-   * this field is undefined
+   * stub. The value of any elements beyond the index specified in this field is
+   * undefined
    */
-  u8 n_certificate_bytes;
+  u8 n_stub;
 } sbp_msg_ed25519_certificate_t;
 
 /**
@@ -77,7 +62,7 @@ typedef struct {
 static inline size_t sbp_msg_ed25519_certificate_encoded_len(
     const sbp_msg_ed25519_certificate_t *msg) {
   return SBP_MSG_ED25519_CERTIFICATE_ENCODED_OVERHEAD +
-         (msg->n_certificate_bytes * SBP_ENCODED_LEN_U8);
+         (msg->n_stub * SBP_ENCODED_LEN_U8);
 }
 
 /**

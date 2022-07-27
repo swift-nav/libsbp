@@ -12,10 +12,6 @@ use converters::{json2json, Result};
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert "compact" SBP JSON data to an "exploded" form
-///
-/// Typical usage:
-///
-///     cat console-json-log.json | json2json
 #[derive(Debug, Parser)]
 #[clap(name = "json2json", verbatim_doc_comment, version)]
 struct Options {
