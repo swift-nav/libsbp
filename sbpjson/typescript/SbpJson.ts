@@ -602,11 +602,15 @@ export interface MsgDops {
 }
 
 export interface MsgEd25519Certificate {
-    stub: number[];
+    certificate_bytes: number[];
+    fingerprint:       number[];
+    n_msg:             number;
 }
 
 export interface MsgEd25519Signature {
-    stub: number[];
+    fingerprint:     number[];
+    signature:       number[];
+    signed_messages: number[];
 }
 
 /**
@@ -4800,10 +4804,14 @@ const typeMap: any = {
         { json: "vdop", js: "vdop", typ: 0 },
     ], "any"),
     "MsgEd25519Certificate": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "certificate_bytes", js: "certificate_bytes", typ: a(0) },
+        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "n_msg", js: "n_msg", typ: 0 },
     ], "any"),
     "MsgEd25519Signature": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "signature", js: "signature", typ: a(0) },
+        { json: "signed_messages", js: "signed_messages", typ: a(0) },
     ], "any"),
     "MsgEphemerisBds": o([
         { json: "af0", js: "af0", typ: 3.14 },

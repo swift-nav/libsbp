@@ -35,7 +35,9 @@ let SvId = require("./gnss").SvId;
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field signature array ED25519 signature for messages.
+ * @field fingerprint array SHA-1 fingerprint of the associated certificate.
+ * @field signed_messages array CRCs of signed messages.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -52,16 +54,23 @@ MsgEd25519Signature.prototype.msg_type = 0x0C01;
 MsgEd25519Signature.prototype.constructor = MsgEd25519Signature;
 MsgEd25519Signature.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .array('signature', { length: 64, type: 'uint8' })
+  .array('fingerprint', { length: 20, type: 'uint8' })
+  .array('signed_messages', { type: 'uint32le', readUntil: 'eof' });
 MsgEd25519Signature.prototype.fieldSpec = [];
-MsgEd25519Signature.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgEd25519Signature.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
+MsgEd25519Signature.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
+MsgEd25519Signature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt32LE', function () { return 4; }, null]);
 
 /**
  * SBP class for message MSG_ED25519_CERTIFICATE (0x0C02).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field stub array
+ * @field n_msg number (unsigned 8-bit int, 1 byte) Total number messages that make up the certificate. First nibble is the size of
+ *   the sequence (n), second nibble is the zero-indexed counter (ith packet of n)
+ * @field fingerprint array SHA-1 fingerprint of the associated certificate.
+ * @field certificate_bytes array ED25519 certificate bytes.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -78,9 +87,13 @@ MsgEd25519Certificate.prototype.msg_type = 0x0C02;
 MsgEd25519Certificate.prototype.constructor = MsgEd25519Certificate;
 MsgEd25519Certificate.prototype.parser = new Parser()
   .endianess('little')
-  .array('stub', { type: 'uint8', readUntil: 'eof' });
+  .uint8('n_msg')
+  .array('fingerprint', { length: 20, type: 'uint8' })
+  .array('certificate_bytes', { type: 'uint8', readUntil: 'eof' });
 MsgEd25519Certificate.prototype.fieldSpec = [];
-MsgEd25519Certificate.prototype.fieldSpec.push(['stub', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgEd25519Certificate.prototype.fieldSpec.push(['n_msg', 'writeUInt8', 1]);
+MsgEd25519Certificate.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
+MsgEd25519Certificate.prototype.fieldSpec.push(['certificate_bytes', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
   0x0C01: MsgEd25519Signature,
