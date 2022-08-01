@@ -5255,9 +5255,9 @@ class MsgReferenceFrameParam(SBP):
   ssr_iod : int
     SSR IOD parameter.
   sn : string
-    Name of source coordinate-system using the EPSG identification code.
+    Name of source coordinate-system.
   tn : string
-    Name of target coordinate-system using the EPSG identification code.
+    Name of target coordinate-system.
   sin : int
     System Identification Number.
   utn : int

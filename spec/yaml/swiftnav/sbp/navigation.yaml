@@ -2490,12 +2490,12 @@ definitions:
            type: string
            encoding: null_terminated
            size: 32
-           desc: Name of source coordinate-system using the EPSG identification code.
+           desc: Name of source coordinate-system.
        - tn:
            type: string
            encoding: null_terminated
            size: 32
-           desc: Name of target coordinate-system using the EPSG identification code.
+           desc: Name of target coordinate-system.
        - sin:
            type: u8
            desc: System Identification Number.
