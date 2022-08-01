@@ -2370,9 +2370,9 @@ data MsgReferenceFrameParam = MsgReferenceFrameParam
   { _msgReferenceFrameParam_ssr_iod    :: !Word8
     -- ^ SSR IOD parameter.
   , _msgReferenceFrameParam_sn         :: !Text
-    -- ^ Name of source coordinate-system using the EPSG identification code.
+    -- ^ Name of source coordinate-system.
   , _msgReferenceFrameParam_tn         :: !Text
-    -- ^ Name of target coordinate-system using the EPSG identification code.
+    -- ^ Name of target coordinate-system.
   , _msgReferenceFrameParam_sin        :: !Word8
     -- ^ System Identification Number.
   , _msgReferenceFrameParam_utn        :: !Word16

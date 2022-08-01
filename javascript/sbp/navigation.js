@@ -2191,8 +2191,8 @@ MsgUtcLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);
  
  * Fields in the SBP payload (`sbp.payload`):
  * @field ssr_iod number (unsigned 8-bit int, 1 byte) SSR IOD parameter.
- * @field sn string Name of source coordinate-system using the EPSG identification code.
- * @field tn string Name of target coordinate-system using the EPSG identification code.
+ * @field sn string Name of source coordinate-system.
+ * @field tn string Name of target coordinate-system.
  * @field sin number (unsigned 8-bit int, 1 byte) System Identification Number.
  * @field utn number (unsigned 16-bit int, 2 bytes) Utilized Transformation Message.
  * @field re_t0 number (unsigned 16-bit int, 2 bytes) Reference Epoch t0 for transformation parameter set given as Modified Julian Day

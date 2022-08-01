@@ -6009,10 +6009,10 @@ pub mod msg_reference_frame_param {
         /// SSR IOD parameter.
         #[cfg_attr(feature = "serde", serde(rename = "ssr_iod"))]
         pub ssr_iod: u8,
-        /// Name of source coordinate-system using the EPSG identification code.
+        /// Name of source coordinate-system.
         #[cfg_attr(feature = "serde", serde(rename = "sn"))]
         pub sn: SbpString<[u8; 32], NullTerminated>,
-        /// Name of target coordinate-system using the EPSG identification code.
+        /// Name of target coordinate-system.
         #[cfg_attr(feature = "serde", serde(rename = "tn"))]
         pub tn: SbpString<[u8; 32], NullTerminated>,
         /// System Identification Number.

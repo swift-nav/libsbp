@@ -944,10 +944,8 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 ssr_iod;   /**< SSR IOD parameter. */
-  char sn[32];  /**< Name of source coordinate-system using the EPSG
-                     identification code. */
-  char tn[32];  /**< Name of target coordinate-system using the EPSG
-                     identification code. */
+  char sn[32];  /**< Name of source coordinate-system. */
+  char tn[32];  /**< Name of target coordinate-system. */
   u8 sin;       /**< System Identification Number. */
   u16 utn;      /**< Utilized Transformation Message. */
   u16 re_t0;    /**< Reference Epoch t0 for transformation parameter
