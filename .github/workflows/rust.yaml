@@ -88,11 +88,11 @@ jobs:
         shell: bash
         run: |
           if [ ${{ matrix.os }} == "ubuntu-18.04" ]; then
-            echo LINUX_RELEASE_ARCHIVE=${{ steps.build.output.artifact_name }} >> $GITHUB_ENV
+            echo "::set-output name=LINUX_RELEASE_ARCHIVE::${{ steps.build.output.artifact_name }}"
           elif [ ${{ matrix.os }} == "macos-12" ]; then
-            echo MAC_RELEASE_ARCHIVE=${{ steps.build.output.artifact_name }} >> $GITHUB_ENV
+            echo "::set-output name=MAC_RELEASE_ARCHIVE::${{ steps.build.output.artifact_name }}"
           elif [ ${{ matrix.os }} == "windows-2022" ]; then
-            echo WINDOWS_RELEASE_ARCHIVE=${{ steps.build.output.artifact_name }} >> $GITHUB_ENV
+            echo "::set-output name=WINDOWS_RELEASE_ARCHIVE::${{ steps.build.output.artifact_name }}"
           fi
 
       - name: Upload Release
@@ -114,9 +114,9 @@ jobs:
       - name: Hook into package registry
         uses: swift-nav/swift-cli-publisher@v2
         env:
-          DL_LINUX: ${{ env.LINUX_RELEASE_ARCHIVE }}
-          DL_MAC: ${{ env.MAC_RELEASE_ARCHIVE }}
-          DL_WIN: ${{ env.WINDOWS_RELEASE_ARCHIVE }}
+          DL_LINUX: ${{ needs.build.outputs.LINUX_RELEASE_ARCHIVE }}
+          DL_MAC: ${{ needs.build.outputs.MAC_RELEASE_ARCHIVE }}
+          DL_WIN: ${{ needs.build.outputs.WINDOWS_RELEASE_ARCHIVE }}
           TOOLS: "sbp2json,json2sbp,json2json"
         with:
           token: ${{ secrets.GH_TOKEN }}
