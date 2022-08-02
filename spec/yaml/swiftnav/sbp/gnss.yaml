@@ -41,12 +41,10 @@ definitions:
                       - 4: GLO L2CA
                       - 5: GPS L1P
                       - 6: GPS L2P
-                      - 9:  GPS L5I
-                      - 12: BDS2 B1 
+                      - 12: BDS2 B1
                       - 13: BDS2 B2 
                       - 14: GAL E1B
                       - 20: GAL E7I
-                      - 26: GAL E5I
                       - 47: BDS3 B2a
 
  - SvId:

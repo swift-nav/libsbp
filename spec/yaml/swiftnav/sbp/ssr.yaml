@@ -740,7 +740,7 @@ definitions:
  - MSG_SSR_STEC_CORRECTION_DEP_A:
     id: 0x05EB
     short_desc: Deprecated
-    public: True
+    public: False
     replaced_by:
       - MSG_SSR_STEC_CORRECTION
     fields:
@@ -769,7 +769,7 @@ definitions:
  - MSG_SSR_GRIDDED_CORRECTION_DEP_A:
     id: 0x05FA
     short_desc: Deprecated
-    public: True
+    public: False
     replaced_by:
       - MSG_SSR_GRIDDED_CORRECTION
     fields:
@@ -785,7 +785,7 @@ definitions:
  - MSG_SSR_GRID_DEFINITION_DEP_A:
     id: 0x05F5
     short_desc: Deprecated
-    public: True
+    public: False
     replaced_by:
       - MSG_SSR_TILE_DEFINITION
     fields:
