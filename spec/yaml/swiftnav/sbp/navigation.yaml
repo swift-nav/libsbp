@@ -2435,15 +2435,15 @@ definitions:
     desc: >
       UTC-GPST leap seconds before and after the most recent (past, or future, for announced insertions) UTC leap second insertion.
     fields:
-      - bias_coeff:
+      - reserved_0:
           type: s16
           desc: >
             Reserved.
-      - drift_coeff:
+      - reserved_1:
           type: s16
           desc: >
             Reserved.
-      - drift_rate_coeff:
+      - reserved_2:
           type: s8
           desc: >
             Reserved.
@@ -2451,10 +2451,10 @@ definitions:
           type: s8
           units: s
           desc: Leap second count before insertion.
-      - tow_s:
+      - reserved_3:
           type: u16
           desc: Reserved.
-      - wn:
+      - reserved_4:
           type: u16
           desc: Reserved.
       - ref_wn:
