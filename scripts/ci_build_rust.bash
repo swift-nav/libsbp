@@ -7,7 +7,7 @@ VERSION="$(git describe --always --tags --dirty)"
 if [ "$RUNNER_OS" == "macOS" ]; then
     ARTIFACT_NAME="sbp_tools-${VERSION}-x86_64-apple-darwin.zip"
     EXECUTABLES=("sbp2json" "json2sbp" "json2json")
-    PACKAGE_CMD="zip ../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
+    PACKAGE_CMD="zip ../../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
 elif [ "$RUNNER_OS" == "Linux" ]; then
     ARTIFACT_NAME="sbp_tools-${VERSION}-x86_64-unknown-linux-musl.zip"
     EXECUTABLES=("sbp2json" "json2sbp" "json2json")
@@ -15,7 +15,7 @@ elif [ "$RUNNER_OS" == "Linux" ]; then
 elif [ "$RUNNER_OS" == "Windows" ]; then
     ARTIFACT_NAME="sbp_tools-${VERSION}-x86_64-pc-windows-msvc.zip"
     EXECUTABLES=("sbp2json.exe" "json2sbp.exe" "json2json.exe")
-    PACKAGE_CMD="7z a -tzip ../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
+    PACKAGE_CMD="7z a -tzip ../../../$ARTIFACT_NAME ${EXECUTABLES[*]}"
 else
     echo "$RUNNER_OS not supported"
     exit 1
