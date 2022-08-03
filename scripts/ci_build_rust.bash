@@ -32,10 +32,10 @@ if [ "$RUNNER_OS" == "Linux" ]; then
   cargo build --all --release --target=x86_64-unknown-linux-musl
   cd target/x86_64-unknown-linux-musl/release
 elif [ "$RUNNER_OS" == "Windows" ]; then
-  cargo build --all --release
+  cargo build --all --release --target=x86_64-pc-windows-msvc
   cd target/x86_64-pc-windows-msvc/release
 elif [ "$RUNNER_OS" == "macOS" ]; then
-  cargo build --all --release
+  cargo build --all --release --target=x86_64-apple-darwin
   cd target/x86_64-apple-darwin/release
 else
   cargo build --all --release
