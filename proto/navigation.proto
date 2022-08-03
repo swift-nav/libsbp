@@ -652,16 +652,11 @@ message MsgProtectionLevel {
 /** Leap second SBP message.
 
  *
- * Emulates the GPS CNAV message, reserving bytes for future broadcast of the
- * drift model parameters.
+ * UTC-GPST leap seconds before and after the most recent (past, or future,
+ * for announced insertions) UTC leap second insertion.
  */
 message MsgUtcLeapSecond {
-    sint32 bias_coeff = 1;
-    sint32 drift_coeff = 2;
-    sint32 drift_rate_coeff = 3;
     sint32 count_before = 4;
-    uint32 tow_s = 5;
-    uint32 wn = 6;
     uint32 ref_wn = 7;
     uint32 ref_dn = 8;
     sint32 count_after = 9;

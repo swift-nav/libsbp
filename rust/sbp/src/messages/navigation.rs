@@ -6204,8 +6204,8 @@ pub mod msg_utc_leap_second {
     /// Leap second SBP message.
 
     ///
-    /// Emulates the GPS CNAV message, reserving bytes for future broadcast of the
-    /// drift model parameters.
+    /// UTC-GPST leap seconds before and after the most recent (past, or future,
+    /// for announced insertions) UTC leap second insertion.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
@@ -6213,27 +6213,24 @@ pub mod msg_utc_leap_second {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// Reserved. Bias coefficient of GPS time scale with respect to UTC drift
-        /// model.
-        #[cfg_attr(feature = "serde", serde(rename = "bias_coeff"))]
-        pub bias_coeff: i16,
-        /// Reserved. Drift coefficient of GPS time scale with respect to UTC drift
-        /// model.
-        #[cfg_attr(feature = "serde", serde(rename = "drift_coeff"))]
-        pub drift_coeff: i16,
-        /// Reserved. Drift rate correction coefficient of GPS time scale with
-        /// respect to UTC drift model.
-        #[cfg_attr(feature = "serde", serde(rename = "drift_rate_coeff"))]
-        pub drift_rate_coeff: i8,
+        /// Reserved.
+        #[cfg_attr(feature = "serde", serde(rename = "reserved_0"))]
+        pub reserved_0: i16,
+        /// Reserved.
+        #[cfg_attr(feature = "serde", serde(rename = "reserved_1"))]
+        pub reserved_1: i16,
+        /// Reserved.
+        #[cfg_attr(feature = "serde", serde(rename = "reserved_2"))]
+        pub reserved_2: i8,
         /// Leap second count before insertion.
         #[cfg_attr(feature = "serde", serde(rename = "count_before"))]
         pub count_before: i8,
-        /// Reserved. Drift model reference week second.
-        #[cfg_attr(feature = "serde", serde(rename = "tow_s"))]
-        pub tow_s: u16,
-        /// Reserved. Drift model reference week number.
-        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
-        pub wn: u16,
+        /// Reserved.
+        #[cfg_attr(feature = "serde", serde(rename = "reserved_3"))]
+        pub reserved_3: u16,
+        /// Reserved.
+        #[cfg_attr(feature = "serde", serde(rename = "reserved_4"))]
+        pub reserved_4: u16,
         /// Leap second reference week number.
         #[cfg_attr(feature = "serde", serde(rename = "ref_wn"))]
         pub ref_wn: u16,
@@ -6289,23 +6286,23 @@ pub mod msg_utc_leap_second {
             + <u8 as WireFormat>::MIN_LEN
             + <i8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.bias_coeff)
-                + WireFormat::len(&self.drift_coeff)
-                + WireFormat::len(&self.drift_rate_coeff)
+            WireFormat::len(&self.reserved_0)
+                + WireFormat::len(&self.reserved_1)
+                + WireFormat::len(&self.reserved_2)
                 + WireFormat::len(&self.count_before)
-                + WireFormat::len(&self.tow_s)
-                + WireFormat::len(&self.wn)
+                + WireFormat::len(&self.reserved_3)
+                + WireFormat::len(&self.reserved_4)
                 + WireFormat::len(&self.ref_wn)
                 + WireFormat::len(&self.ref_dn)
                 + WireFormat::len(&self.count_after)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.bias_coeff, buf);
-            WireFormat::write(&self.drift_coeff, buf);
-            WireFormat::write(&self.drift_rate_coeff, buf);
+            WireFormat::write(&self.reserved_0, buf);
+            WireFormat::write(&self.reserved_1, buf);
+            WireFormat::write(&self.reserved_2, buf);
             WireFormat::write(&self.count_before, buf);
-            WireFormat::write(&self.tow_s, buf);
-            WireFormat::write(&self.wn, buf);
+            WireFormat::write(&self.reserved_3, buf);
+            WireFormat::write(&self.reserved_4, buf);
             WireFormat::write(&self.ref_wn, buf);
             WireFormat::write(&self.ref_dn, buf);
             WireFormat::write(&self.count_after, buf);
@@ -6313,12 +6310,12 @@ pub mod msg_utc_leap_second {
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgUtcLeapSecond {
                 sender_id: None,
-                bias_coeff: WireFormat::parse_unchecked(buf),
-                drift_coeff: WireFormat::parse_unchecked(buf),
-                drift_rate_coeff: WireFormat::parse_unchecked(buf),
+                reserved_0: WireFormat::parse_unchecked(buf),
+                reserved_1: WireFormat::parse_unchecked(buf),
+                reserved_2: WireFormat::parse_unchecked(buf),
                 count_before: WireFormat::parse_unchecked(buf),
-                tow_s: WireFormat::parse_unchecked(buf),
-                wn: WireFormat::parse_unchecked(buf),
+                reserved_3: WireFormat::parse_unchecked(buf),
+                reserved_4: WireFormat::parse_unchecked(buf),
                 ref_wn: WireFormat::parse_unchecked(buf),
                 ref_dn: WireFormat::parse_unchecked(buf),
                 count_after: WireFormat::parse_unchecked(buf),

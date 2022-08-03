@@ -80,15 +80,15 @@ TEST_F(Test_auto_check_sbp_navigation_MsgUTCLeapSecond0, Test) {
   };
 
   sbp_msg_utc_leap_second_t test_msg{};
-  test_msg.bias_coeff = 1;
   test_msg.count_after = 9;
   test_msg.count_before = 4;
-  test_msg.drift_coeff = 2;
-  test_msg.drift_rate_coeff = 3;
   test_msg.ref_dn = 8;
   test_msg.ref_wn = 7;
-  test_msg.tow_s = 5;
-  test_msg.wn = 6;
+  test_msg.reserved_0 = 1;
+  test_msg.reserved_1 = 2;
+  test_msg.reserved_2 = 3;
+  test_msg.reserved_3 = 5;
+  test_msg.reserved_4 = 6;
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -102,30 +102,31 @@ TEST_F(Test_auto_check_sbp_navigation_MsgUTCLeapSecond0, Test) {
   EXPECT_EQ(n_callbacks_logged_, 1);
   EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_, test_msg);
-  EXPECT_EQ(last_msg_.bias_coeff, 1)
-      << "incorrect value for last_msg_.bias_coeff, expected 1, is "
-      << last_msg_.bias_coeff;
   EXPECT_EQ(last_msg_.count_after, 9)
       << "incorrect value for last_msg_.count_after, expected 9, is "
       << last_msg_.count_after;
   EXPECT_EQ(last_msg_.count_before, 4)
       << "incorrect value for last_msg_.count_before, expected 4, is "
       << last_msg_.count_before;
-  EXPECT_EQ(last_msg_.drift_coeff, 2)
-      << "incorrect value for last_msg_.drift_coeff, expected 2, is "
-      << last_msg_.drift_coeff;
-  EXPECT_EQ(last_msg_.drift_rate_coeff, 3)
-      << "incorrect value for last_msg_.drift_rate_coeff, expected 3, is "
-      << last_msg_.drift_rate_coeff;
   EXPECT_EQ(last_msg_.ref_dn, 8)
       << "incorrect value for last_msg_.ref_dn, expected 8, is "
       << last_msg_.ref_dn;
   EXPECT_EQ(last_msg_.ref_wn, 7)
       << "incorrect value for last_msg_.ref_wn, expected 7, is "
       << last_msg_.ref_wn;
-  EXPECT_EQ(last_msg_.tow_s, 5)
-      << "incorrect value for last_msg_.tow_s, expected 5, is "
-      << last_msg_.tow_s;
-  EXPECT_EQ(last_msg_.wn, 6)
-      << "incorrect value for last_msg_.wn, expected 6, is " << last_msg_.wn;
+  EXPECT_EQ(last_msg_.reserved_0, 1)
+      << "incorrect value for last_msg_.reserved_0, expected 1, is "
+      << last_msg_.reserved_0;
+  EXPECT_EQ(last_msg_.reserved_1, 2)
+      << "incorrect value for last_msg_.reserved_1, expected 2, is "
+      << last_msg_.reserved_1;
+  EXPECT_EQ(last_msg_.reserved_2, 3)
+      << "incorrect value for last_msg_.reserved_2, expected 3, is "
+      << last_msg_.reserved_2;
+  EXPECT_EQ(last_msg_.reserved_3, 5)
+      << "incorrect value for last_msg_.reserved_3, expected 5, is "
+      << last_msg_.reserved_3;
+  EXPECT_EQ(last_msg_.reserved_4, 6)
+      << "incorrect value for last_msg_.reserved_4, expected 6, is "
+      << last_msg_.reserved_4;
 }

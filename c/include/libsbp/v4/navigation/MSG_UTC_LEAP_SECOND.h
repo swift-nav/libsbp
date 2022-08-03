@@ -41,27 +41,24 @@ extern "C" {
 /** Leap second SBP message.
 
  *
-* Emulates the GPS CNAV message, reserving bytes for future broadcast of the
-drift model parameters.
+* UTC-GPST leap seconds before and after the most recent (past, or future, for
+announced insertions) UTC leap second insertion.
  */
 typedef struct {
   /**
-   * Reserved. Bias coefficient of GPS time scale with respect to UTC drift
-   * model. [2^-35 s]
+   * Reserved.
    */
-  s16 bias_coeff;
+  s16 reserved_0;
 
   /**
-   * Reserved. Drift coefficient of GPS time scale with respect to UTC drift
-   * model. [2^-51 s/s]
+   * Reserved.
    */
-  s16 drift_coeff;
+  s16 reserved_1;
 
   /**
-   * Reserved. Drift rate correction coefficient of GPS time scale with respect
-   * to UTC drift model. [2^-68 s/s^2]
+   * Reserved.
    */
-  s8 drift_rate_coeff;
+  s8 reserved_2;
 
   /**
    * Leap second count before insertion. [s]
@@ -69,14 +66,14 @@ typedef struct {
   s8 count_before;
 
   /**
-   * Reserved. Drift model reference week second. [s]
+   * Reserved.
    */
-  u16 tow_s;
+  u16 reserved_3;
 
   /**
-   * Reserved. Drift model reference week number. [weeks]
+   * Reserved.
    */
-  u16 wn;
+  u16 reserved_4;
 
   /**
    * Leap second reference week number. [weeks]

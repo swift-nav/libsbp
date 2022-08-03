@@ -2135,17 +2135,16 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 /**
  * SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
  *
- * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift
- * model parameters.
+ * UTC-GPST leap seconds before and after the most recent (past, or future, for
+ * announced insertions) UTC leap second insertion.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field bias_coeff number (signed 16-bit int, 2 bytes) Reserved. Bias coefficient of GPS time scale with respect to UTC drift model.
- * @field drift_coeff number (signed 16-bit int, 2 bytes) Reserved. Drift coefficient of GPS time scale with respect to UTC drift model.
- * @field drift_rate_coeff number (signed 8-bit int, 1 byte) Reserved. Drift rate correction coefficient of GPS time scale with respect to
- *   UTC drift model.
+ * @field reserved_0 number (signed 16-bit int, 2 bytes) Reserved.
+ * @field reserved_1 number (signed 16-bit int, 2 bytes) Reserved.
+ * @field reserved_2 number (signed 8-bit int, 1 byte) Reserved.
  * @field count_before number (signed 8-bit int, 1 byte) Leap second count before insertion.
- * @field tow_s number (unsigned 16-bit int, 2 bytes) Reserved. Drift model reference week second.
- * @field wn number (unsigned 16-bit int, 2 bytes) Reserved. Drift model reference week number.
+ * @field reserved_3 number (unsigned 16-bit int, 2 bytes) Reserved.
+ * @field reserved_4 number (unsigned 16-bit int, 2 bytes) Reserved.
  * @field ref_wn number (unsigned 16-bit int, 2 bytes) Leap second reference week number.
  * @field ref_dn number (unsigned 8-bit int, 1 byte) Leap second reference day number.
  * @field count_after number (signed 8-bit int, 1 byte) Leap second count after insertion.
@@ -2165,22 +2164,22 @@ MsgUtcLeapSecond.prototype.msg_type = 0x023A;
 MsgUtcLeapSecond.prototype.constructor = MsgUtcLeapSecond;
 MsgUtcLeapSecond.prototype.parser = new Parser()
   .endianess('little')
-  .int16('bias_coeff')
-  .int16('drift_coeff')
-  .int8('drift_rate_coeff')
+  .int16('reserved_0')
+  .int16('reserved_1')
+  .int8('reserved_2')
   .int8('count_before')
-  .uint16('tow_s')
-  .uint16('wn')
+  .uint16('reserved_3')
+  .uint16('reserved_4')
   .uint16('ref_wn')
   .uint8('ref_dn')
   .int8('count_after');
 MsgUtcLeapSecond.prototype.fieldSpec = [];
-MsgUtcLeapSecond.prototype.fieldSpec.push(['bias_coeff', 'writeInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_coeff', 'writeInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['drift_rate_coeff', 'writeInt8', 1]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['reserved_0', 'writeInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['reserved_1', 'writeInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['reserved_2', 'writeInt8', 1]);
 MsgUtcLeapSecond.prototype.fieldSpec.push(['count_before', 'writeInt8', 1]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['tow_s', 'writeUInt16LE', 2]);
-MsgUtcLeapSecond.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['reserved_3', 'writeUInt16LE', 2]);
+MsgUtcLeapSecond.prototype.fieldSpec.push(['reserved_4', 'writeUInt16LE', 2]);
 MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_wn', 'writeUInt16LE', 2]);
 MsgUtcLeapSecond.prototype.fieldSpec.push(['ref_dn', 'writeUInt8', 1]);
 MsgUtcLeapSecond.prototype.fieldSpec.push(['count_after', 'writeInt8', 1]);

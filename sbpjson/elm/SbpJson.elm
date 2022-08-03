@@ -2986,19 +2986,14 @@ type alias MsgUserData =
     { contents : Array Int
     }
 
-{-| Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
-parameters.
+{-| UTC-GPST leap seconds before and after the most recent (past, or future, for announced
+insertions) UTC leap second insertion.
 -}
 type alias MsgUTCLeapSecond =
-    { biasCoeff : Int
-    , countAfter : Int
+    { countAfter : Int
     , countBefore : Int
-    , driftCoeff : Int
-    , driftRateCoeff : Int
     , refDN : Int
     , refWn : Int
-    , towS : Int
-    , wn : Int
     }
 
 {-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
@@ -7355,28 +7350,18 @@ encodeMsgUserData x =
 msgUTCLeapSecond : Jdec.Decoder MsgUTCLeapSecond
 msgUTCLeapSecond =
     Jpipe.decode MsgUTCLeapSecond
-        |> Jpipe.required "bias_coeff" Jdec.int
         |> Jpipe.required "count_after" Jdec.int
         |> Jpipe.required "count_before" Jdec.int
-        |> Jpipe.required "drift_coeff" Jdec.int
-        |> Jpipe.required "drift_rate_coeff" Jdec.int
         |> Jpipe.required "ref_dn" Jdec.int
         |> Jpipe.required "ref_wn" Jdec.int
-        |> Jpipe.required "tow_s" Jdec.int
-        |> Jpipe.required "wn" Jdec.int
 
 encodeMsgUTCLeapSecond : MsgUTCLeapSecond -> Jenc.Value
 encodeMsgUTCLeapSecond x =
     Jenc.object
-        [ ("bias_coeff", Jenc.int x.biasCoeff)
-        , ("count_after", Jenc.int x.countAfter)
+        [ ("count_after", Jenc.int x.countAfter)
         , ("count_before", Jenc.int x.countBefore)
-        , ("drift_coeff", Jenc.int x.driftCoeff)
-        , ("drift_rate_coeff", Jenc.int x.driftRateCoeff)
         , ("ref_dn", Jenc.int x.refDN)
         , ("ref_wn", Jenc.int x.refWn)
-        , ("tow_s", Jenc.int x.towS)
-        , ("wn", Jenc.int x.wn)
         ]
 
 msgUTCTime : Jdec.Decoder MsgUTCTime
