@@ -82,6 +82,13 @@ jobs:
         id: build
         run: ./scripts/ci_build_rust.bash
         shell: bash
+        
+      - name: Debugging
+        shell: bash
+        run: |
+          find .
+          echo "====ls"
+          ls .
 
       - name: Upload Release
 #        if: startsWith(github.ref, 'refs/tags/v')
