@@ -13,7 +13,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert binary SBP data to JSON.
 #[derive(Debug, Parser)]
-#[structopt(name = "sbp2json", verbatim_doc_comment, version)]
+#[structopt(name = "sbp2json", verbatim_doc_comment, version = env!("VERGEN_GIT_SEMVER"))]
 pub struct Options {
     /// Path to input file
     input: Option<PathBuf>,

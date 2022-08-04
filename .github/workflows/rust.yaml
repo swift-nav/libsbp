@@ -78,6 +78,9 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Fetch Tags
+        run: git fetch --tags --prune --force
+
       - name: Build ${{ matrix.os }} binaries
         id: build
         run: ./scripts/ci_build_rust.bash
