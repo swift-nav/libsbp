@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Store tags
         shell: bash
-        run: echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+        run: echo "VERSION=${GITHUB_REF##refs/tags/}" >> $GITHUB_ENV
 
       - name: Hook into package registry
         uses: swift-nav/swift-cli-publisher@v2
