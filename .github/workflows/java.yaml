@@ -14,7 +14,7 @@ on:
 jobs:
   tests-java-1_8:
     name: Test
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
 
