@@ -14,7 +14,7 @@ on:
 jobs:
   coverage:
     name: Code Coverage
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
         with:
@@ -51,8 +51,8 @@ jobs:
         exclude: [
           { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
-    name: "Ubuntu 18.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
-    runs-on: ubuntu-18.04
+    name: "Ubuntu 22.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
         with:
@@ -128,7 +128,7 @@ jobs:
 
   big-endian:
     name: Test Big Endian
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
         with:
