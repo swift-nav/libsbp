@@ -2460,7 +2460,7 @@ definitions:
       - ref_wn:
           type: u16
           units: weeks
-          desc: Leap second reference week number.
+          desc: Leap second reference GPS week number.
       - ref_dn:
           type: u8
           units: days
