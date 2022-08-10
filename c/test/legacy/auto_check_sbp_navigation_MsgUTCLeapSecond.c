@@ -132,15 +132,15 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgUTCLeapSecond) {
     u8 test_msg_len = 0;
     msg_utc_leap_second_t *test_msg = (msg_utc_leap_second_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->bias_coeff = 1;
     test_msg->count_after = 9;
     test_msg->count_before = 4;
-    test_msg->drift_coeff = 2;
-    test_msg->drift_rate_coeff = 3;
     test_msg->ref_dn = 8;
     test_msg->ref_wn = 7;
-    test_msg->tow_s = 5;
-    test_msg->wn = 6;
+    test_msg->reserved_0 = 1;
+    test_msg->reserved_1 = 2;
+    test_msg->reserved_2 = 3;
+    test_msg->reserved_3 = 5;
+    test_msg->reserved_4 = 6;
     sbp_payload_send(&sbp_state, 570, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -196,32 +196,33 @@ START_TEST(test_legacy_auto_check_sbp_navigation_MsgUTCLeapSecond) {
         (msg_utc_leap_second_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->bias_coeff == 1,
-                  "incorrect value for bias_coeff, expected 1, is %d",
-                  check_msg->bias_coeff);
     ck_assert_msg(check_msg->count_after == 9,
                   "incorrect value for count_after, expected 9, is %d",
                   check_msg->count_after);
     ck_assert_msg(check_msg->count_before == 4,
                   "incorrect value for count_before, expected 4, is %d",
                   check_msg->count_before);
-    ck_assert_msg(check_msg->drift_coeff == 2,
-                  "incorrect value for drift_coeff, expected 2, is %d",
-                  check_msg->drift_coeff);
-    ck_assert_msg(check_msg->drift_rate_coeff == 3,
-                  "incorrect value for drift_rate_coeff, expected 3, is %d",
-                  check_msg->drift_rate_coeff);
     ck_assert_msg(check_msg->ref_dn == 8,
                   "incorrect value for ref_dn, expected 8, is %d",
                   check_msg->ref_dn);
     ck_assert_msg(check_msg->ref_wn == 7,
                   "incorrect value for ref_wn, expected 7, is %d",
                   check_msg->ref_wn);
-    ck_assert_msg(check_msg->tow_s == 5,
-                  "incorrect value for tow_s, expected 5, is %d",
-                  check_msg->tow_s);
-    ck_assert_msg(check_msg->wn == 6,
-                  "incorrect value for wn, expected 6, is %d", check_msg->wn);
+    ck_assert_msg(check_msg->reserved_0 == 1,
+                  "incorrect value for reserved_0, expected 1, is %d",
+                  check_msg->reserved_0);
+    ck_assert_msg(check_msg->reserved_1 == 2,
+                  "incorrect value for reserved_1, expected 2, is %d",
+                  check_msg->reserved_1);
+    ck_assert_msg(check_msg->reserved_2 == 3,
+                  "incorrect value for reserved_2, expected 3, is %d",
+                  check_msg->reserved_2);
+    ck_assert_msg(check_msg->reserved_3 == 5,
+                  "incorrect value for reserved_3, expected 5, is %d",
+                  check_msg->reserved_3);
+    ck_assert_msg(check_msg->reserved_4 == 6,
+                  "incorrect value for reserved_4, expected 6, is %d",
+                  check_msg->reserved_4);
   }
 }
 END_TEST

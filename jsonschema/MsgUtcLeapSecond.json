@@ -13,26 +13,16 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgUtcLeapSecond",
   "title":"MsgUtcLeapSecond",
-  "description":"Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model parameters.\n",
+  "description":"UTC-GPST leap seconds before and after the most recent (past, or future, for announced insertions) UTC leap second insertion.\n",
   "type": "object",
   "properties": {
-    "bias_coeff": {"type": "integer"},
-    "drift_coeff": {"type": "integer"},
-    "drift_rate_coeff": {"type": "integer"},
     "count_before": {"type": "integer"},
-    "tow_s": {"type": "integer"},
-    "wn": {"type": "integer"},
     "ref_wn": {"type": "integer"},
     "ref_dn": {"type": "integer"},
     "count_after": {"type": "integer"}
   },
   "required": [
-    "bias_coeff",
-    "drift_coeff",
-    "drift_rate_coeff",
     "count_before",
-    "tow_s",
-    "wn",
     "ref_wn",
     "ref_dn",
     "count_after"

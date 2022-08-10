@@ -102,23 +102,23 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCLeapSecond) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.utc_leap_second.bias_coeff = 1;
-
     test_msg.utc_leap_second.count_after = 9;
 
     test_msg.utc_leap_second.count_before = 4;
-
-    test_msg.utc_leap_second.drift_coeff = 2;
-
-    test_msg.utc_leap_second.drift_rate_coeff = 3;
 
     test_msg.utc_leap_second.ref_dn = 8;
 
     test_msg.utc_leap_second.ref_wn = 7;
 
-    test_msg.utc_leap_second.tow_s = 5;
+    test_msg.utc_leap_second.reserved_0 = 1;
 
-    test_msg.utc_leap_second.wn = 6;
+    test_msg.utc_leap_second.reserved_1 = 2;
+
+    test_msg.utc_leap_second.reserved_2 = 3;
+
+    test_msg.utc_leap_second.reserved_3 = 5;
+
+    test_msg.utc_leap_second.reserved_4 = 6;
 
     sbp_message_send(&sbp_state, SbpMsgUtcLeapSecond, 66, &test_msg,
                      &dummy_write);
@@ -144,11 +144,6 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCLeapSecond) {
         sbp_message_cmp(SbpMsgUtcLeapSecond, &last_msg.msg, &test_msg) == 0,
         "Sent and received messages did not compare equal");
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.bias_coeff == 1,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.bias_coeff, expected 1, is %d",
-                  last_msg.msg.utc_leap_second.bias_coeff);
-
     ck_assert_msg(last_msg.msg.utc_leap_second.count_after == 9,
                   "incorrect value for "
                   "last_msg.msg.utc_leap_second.count_after, expected 9, is %d",
@@ -160,17 +155,6 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCLeapSecond) {
         "expected 4, is %d",
         last_msg.msg.utc_leap_second.count_before);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.drift_coeff == 2,
-                  "incorrect value for "
-                  "last_msg.msg.utc_leap_second.drift_coeff, expected 2, is %d",
-                  last_msg.msg.utc_leap_second.drift_coeff);
-
-    ck_assert_msg(
-        last_msg.msg.utc_leap_second.drift_rate_coeff == 3,
-        "incorrect value for last_msg.msg.utc_leap_second.drift_rate_coeff, "
-        "expected 3, is %d",
-        last_msg.msg.utc_leap_second.drift_rate_coeff);
-
     ck_assert_msg(last_msg.msg.utc_leap_second.ref_dn == 8,
                   "incorrect value for last_msg.msg.utc_leap_second.ref_dn, "
                   "expected 8, is %d",
@@ -181,15 +165,30 @@ START_TEST(test_auto_check_sbp_navigation_MsgUTCLeapSecond) {
                   "expected 7, is %d",
                   last_msg.msg.utc_leap_second.ref_wn);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.tow_s == 5,
-                  "incorrect value for last_msg.msg.utc_leap_second.tow_s, "
-                  "expected 5, is %d",
-                  last_msg.msg.utc_leap_second.tow_s);
+    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_0 == 1,
+                  "incorrect value for "
+                  "last_msg.msg.utc_leap_second.reserved_0, expected 1, is %d",
+                  last_msg.msg.utc_leap_second.reserved_0);
 
-    ck_assert_msg(last_msg.msg.utc_leap_second.wn == 6,
-                  "incorrect value for last_msg.msg.utc_leap_second.wn, "
-                  "expected 6, is %d",
-                  last_msg.msg.utc_leap_second.wn);
+    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_1 == 2,
+                  "incorrect value for "
+                  "last_msg.msg.utc_leap_second.reserved_1, expected 2, is %d",
+                  last_msg.msg.utc_leap_second.reserved_1);
+
+    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_2 == 3,
+                  "incorrect value for "
+                  "last_msg.msg.utc_leap_second.reserved_2, expected 3, is %d",
+                  last_msg.msg.utc_leap_second.reserved_2);
+
+    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_3 == 5,
+                  "incorrect value for "
+                  "last_msg.msg.utc_leap_second.reserved_3, expected 5, is %d",
+                  last_msg.msg.utc_leap_second.reserved_3);
+
+    ck_assert_msg(last_msg.msg.utc_leap_second.reserved_4 == 6,
+                  "incorrect value for "
+                  "last_msg.msg.utc_leap_second.reserved_4, expected 6, is %d",
+                  last_msg.msg.utc_leap_second.reserved_4);
   }
 }
 END_TEST

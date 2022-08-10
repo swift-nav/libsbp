@@ -2521,19 +2521,14 @@ export interface MsgUserData {
 }
 
 /**
- * Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
- * parameters.
+ * UTC-GPST leap seconds before and after the most recent (past, or future, for announced
+ * insertions) UTC leap second insertion.
  */
 export interface MsgUTCLeapSecond {
-    bias_coeff:       number;
-    count_after:      number;
-    count_before:     number;
-    drift_coeff:      number;
-    drift_rate_coeff: number;
-    ref_dn:           number;
-    ref_wn:           number;
-    tow_s:            number;
-    wn:               number;
+    count_after:  number;
+    count_before: number;
+    ref_dn:       number;
+    ref_wn:       number;
 }
 
 /**
@@ -5870,15 +5865,10 @@ const typeMap: any = {
         { json: "contents", js: "contents", typ: a(0) },
     ], "any"),
     "MsgUTCLeapSecond": o([
-        { json: "bias_coeff", js: "bias_coeff", typ: 0 },
         { json: "count_after", js: "count_after", typ: 0 },
         { json: "count_before", js: "count_before", typ: 0 },
-        { json: "drift_coeff", js: "drift_coeff", typ: 0 },
-        { json: "drift_rate_coeff", js: "drift_rate_coeff", typ: 0 },
         { json: "ref_dn", js: "ref_dn", typ: 0 },
         { json: "ref_wn", js: "ref_wn", typ: 0 },
-        { json: "tow_s", js: "tow_s", typ: 0 },
-        { json: "wn", js: "wn", typ: 0 },
     ], "any"),
     "MsgUTCTime": o([
         { json: "day", js: "day", typ: 0 },

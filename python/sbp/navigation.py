@@ -5114,30 +5114,27 @@ class MsgUtcLeapSecond(SBP):
   of its fields.
 
   
-  Emulates the GPS CNAV message, reserving bytes for future broadcast of the
-  drift model parameters.
+  UTC-GPST leap seconds before and after the most recent (past, or future, for
+  announced insertions) UTC leap second insertion.
 
   Parameters
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  bias_coeff : int
-    Reserved. Bias coefficient of GPS time scale with respect to UTC drift
-    model.
-  drift_coeff : int
-    Reserved. Drift coefficient of GPS time scale with respect to UTC drift
-    model.
-  drift_rate_coeff : int
-    Reserved. Drift rate correction coefficient of GPS time scale with respect
-    to UTC drift model.
+  reserved_0 : int
+    Reserved.
+  reserved_1 : int
+    Reserved.
+  reserved_2 : int
+    Reserved.
   count_before : int
     Leap second count before insertion.
-  tow_s : int
-    Reserved. Drift model reference week second.
-  wn : int
-    Reserved. Drift model reference week number.
+  reserved_3 : int
+    Reserved.
+  reserved_4 : int
+    Reserved.
   ref_wn : int
-    Leap second reference week number.
+    Leap second reference GPS week number.
   ref_dn : int
     Leap second reference day number.
   count_after : int
@@ -5147,22 +5144,22 @@ class MsgUtcLeapSecond(SBP):
 
   """
   _parser = construct.Struct(
-                   'bias_coeff' / construct.Int16sl,
-                   'drift_coeff' / construct.Int16sl,
-                   'drift_rate_coeff' / construct.Int8sl,
+                   'reserved_0' / construct.Int16sl,
+                   'reserved_1' / construct.Int16sl,
+                   'reserved_2' / construct.Int8sl,
                    'count_before' / construct.Int8sl,
-                   'tow_s' / construct.Int16ul,
-                   'wn' / construct.Int16ul,
+                   'reserved_3' / construct.Int16ul,
+                   'reserved_4' / construct.Int16ul,
                    'ref_wn' / construct.Int16ul,
                    'ref_dn' / construct.Int8ul,
                    'count_after' / construct.Int8sl,)
   __slots__ = [
-               'bias_coeff',
-               'drift_coeff',
-               'drift_rate_coeff',
+               'reserved_0',
+               'reserved_1',
+               'reserved_2',
                'count_before',
-               'tow_s',
-               'wn',
+               'reserved_3',
+               'reserved_4',
                'ref_wn',
                'ref_dn',
                'count_after',
@@ -5178,12 +5175,12 @@ class MsgUtcLeapSecond(SBP):
       super( MsgUtcLeapSecond, self).__init__()
       self.msg_type = SBP_MSG_UTC_LEAP_SECOND
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.bias_coeff = kwargs.pop('bias_coeff')
-      self.drift_coeff = kwargs.pop('drift_coeff')
-      self.drift_rate_coeff = kwargs.pop('drift_rate_coeff')
+      self.reserved_0 = kwargs.pop('reserved_0')
+      self.reserved_1 = kwargs.pop('reserved_1')
+      self.reserved_2 = kwargs.pop('reserved_2')
       self.count_before = kwargs.pop('count_before')
-      self.tow_s = kwargs.pop('tow_s')
-      self.wn = kwargs.pop('wn')
+      self.reserved_3 = kwargs.pop('reserved_3')
+      self.reserved_4 = kwargs.pop('reserved_4')
       self.ref_wn = kwargs.pop('ref_wn')
       self.ref_dn = kwargs.pop('ref_dn')
       self.count_after = kwargs.pop('count_after')

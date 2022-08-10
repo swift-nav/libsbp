@@ -47,11 +47,6 @@ fn test_auto_check_sbp_navigation_msg_utc_leap_second() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.bias_coeff, 1,
-                    "incorrect value for bias_coeff, expected 1, is {}",
-                    msg.bias_coeff
-                );
-                assert_eq!(
                     msg.count_after, 9,
                     "incorrect value for count_after, expected 9, is {}",
                     msg.count_after
@@ -60,16 +55,6 @@ fn test_auto_check_sbp_navigation_msg_utc_leap_second() {
                     msg.count_before, 4,
                     "incorrect value for count_before, expected 4, is {}",
                     msg.count_before
-                );
-                assert_eq!(
-                    msg.drift_coeff, 2,
-                    "incorrect value for drift_coeff, expected 2, is {}",
-                    msg.drift_coeff
-                );
-                assert_eq!(
-                    msg.drift_rate_coeff, 3,
-                    "incorrect value for drift_rate_coeff, expected 3, is {}",
-                    msg.drift_rate_coeff
                 );
                 assert_eq!(
                     msg.ref_dn, 8,
@@ -82,14 +67,29 @@ fn test_auto_check_sbp_navigation_msg_utc_leap_second() {
                     msg.ref_wn
                 );
                 assert_eq!(
-                    msg.tow_s, 5,
-                    "incorrect value for tow_s, expected 5, is {}",
-                    msg.tow_s
+                    msg.reserved_0, 1,
+                    "incorrect value for reserved_0, expected 1, is {}",
+                    msg.reserved_0
                 );
                 assert_eq!(
-                    msg.wn, 6,
-                    "incorrect value for wn, expected 6, is {}",
-                    msg.wn
+                    msg.reserved_1, 2,
+                    "incorrect value for reserved_1, expected 2, is {}",
+                    msg.reserved_1
+                );
+                assert_eq!(
+                    msg.reserved_2, 3,
+                    "incorrect value for reserved_2, expected 3, is {}",
+                    msg.reserved_2
+                );
+                assert_eq!(
+                    msg.reserved_3, 5,
+                    "incorrect value for reserved_3, expected 5, is {}",
+                    msg.reserved_3
+                );
+                assert_eq!(
+                    msg.reserved_4, 6,
+                    "incorrect value for reserved_4, expected 6, is {}",
+                    msg.reserved_4
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgUtcLeapSecond"),
@@ -110,7 +110,7 @@ fn test_auto_check_sbp_navigation_msg_utc_leap_second() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_navigation_msg_utc_leap_second() {
     {
-        let json_input = r#"{"bias_coeff": 1, "drift_coeff": 2, "drift_rate_coeff": 3, "count_before": 4, "tow_s": 5, "wn": 6, "ref_wn": 7, "ref_dn": 8, "count_after": 9, "preamble": 85, "msg_type": 570, "sender": 66, "length": 14, "payload": "AQACAAMEBQAGAAcACAk=", "crc": 59442}"#.as_bytes();
+        let json_input = r#"{"reserved_0": 1, "reserved_1": 2, "reserved_2": 3, "count_before": 4, "reserved_3": 5, "reserved_4": 6, "ref_wn": 7, "ref_dn": 8, "count_after": 9, "preamble": 85, "msg_type": 570, "sender": 66, "length": 14, "payload": "AQACAAMEBQAGAAcACAk=", "crc": 59442}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -145,11 +145,6 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_utc_leap_second() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.bias_coeff, 1,
-                    "incorrect value for bias_coeff, expected 1, is {}",
-                    msg.bias_coeff
-                );
-                assert_eq!(
                     msg.count_after, 9,
                     "incorrect value for count_after, expected 9, is {}",
                     msg.count_after
@@ -158,16 +153,6 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_utc_leap_second() {
                     msg.count_before, 4,
                     "incorrect value for count_before, expected 4, is {}",
                     msg.count_before
-                );
-                assert_eq!(
-                    msg.drift_coeff, 2,
-                    "incorrect value for drift_coeff, expected 2, is {}",
-                    msg.drift_coeff
-                );
-                assert_eq!(
-                    msg.drift_rate_coeff, 3,
-                    "incorrect value for drift_rate_coeff, expected 3, is {}",
-                    msg.drift_rate_coeff
                 );
                 assert_eq!(
                     msg.ref_dn, 8,
@@ -180,14 +165,29 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_utc_leap_second() {
                     msg.ref_wn
                 );
                 assert_eq!(
-                    msg.tow_s, 5,
-                    "incorrect value for tow_s, expected 5, is {}",
-                    msg.tow_s
+                    msg.reserved_0, 1,
+                    "incorrect value for reserved_0, expected 1, is {}",
+                    msg.reserved_0
                 );
                 assert_eq!(
-                    msg.wn, 6,
-                    "incorrect value for wn, expected 6, is {}",
-                    msg.wn
+                    msg.reserved_1, 2,
+                    "incorrect value for reserved_1, expected 2, is {}",
+                    msg.reserved_1
+                );
+                assert_eq!(
+                    msg.reserved_2, 3,
+                    "incorrect value for reserved_2, expected 3, is {}",
+                    msg.reserved_2
+                );
+                assert_eq!(
+                    msg.reserved_3, 5,
+                    "incorrect value for reserved_3, expected 5, is {}",
+                    msg.reserved_3
+                );
+                assert_eq!(
+                    msg.reserved_4, 6,
+                    "incorrect value for reserved_4, expected 6, is {}",
+                    msg.reserved_4
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgUtcLeapSecond"),
@@ -250,11 +250,6 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_utc_leap_second() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.bias_coeff, 1,
-                    "incorrect value for bias_coeff, expected 1, is {}",
-                    msg.bias_coeff
-                );
-                assert_eq!(
                     msg.count_after, 9,
                     "incorrect value for count_after, expected 9, is {}",
                     msg.count_after
@@ -263,16 +258,6 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_utc_leap_second() {
                     msg.count_before, 4,
                     "incorrect value for count_before, expected 4, is {}",
                     msg.count_before
-                );
-                assert_eq!(
-                    msg.drift_coeff, 2,
-                    "incorrect value for drift_coeff, expected 2, is {}",
-                    msg.drift_coeff
-                );
-                assert_eq!(
-                    msg.drift_rate_coeff, 3,
-                    "incorrect value for drift_rate_coeff, expected 3, is {}",
-                    msg.drift_rate_coeff
                 );
                 assert_eq!(
                     msg.ref_dn, 8,
@@ -285,14 +270,29 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_utc_leap_second() {
                     msg.ref_wn
                 );
                 assert_eq!(
-                    msg.tow_s, 5,
-                    "incorrect value for tow_s, expected 5, is {}",
-                    msg.tow_s
+                    msg.reserved_0, 1,
+                    "incorrect value for reserved_0, expected 1, is {}",
+                    msg.reserved_0
                 );
                 assert_eq!(
-                    msg.wn, 6,
-                    "incorrect value for wn, expected 6, is {}",
-                    msg.wn
+                    msg.reserved_1, 2,
+                    "incorrect value for reserved_1, expected 2, is {}",
+                    msg.reserved_1
+                );
+                assert_eq!(
+                    msg.reserved_2, 3,
+                    "incorrect value for reserved_2, expected 3, is {}",
+                    msg.reserved_2
+                );
+                assert_eq!(
+                    msg.reserved_3, 5,
+                    "incorrect value for reserved_3, expected 5, is {}",
+                    msg.reserved_3
+                );
+                assert_eq!(
+                    msg.reserved_4, 6,
+                    "incorrect value for reserved_4, expected 6, is {}",
+                    msg.reserved_4
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgUtcLeapSecond"),

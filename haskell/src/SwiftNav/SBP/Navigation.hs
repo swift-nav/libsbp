@@ -2309,52 +2309,49 @@ msgUtcLeapSecond = 0x023A
 
 -- | SBP class for message MSG_UTC_LEAP_SECOND (0x023A).
 --
--- Emulates the GPS CNAV message, reserving bytes for future broadcast of the
--- drift model parameters.
+-- UTC-GPST leap seconds before and after the most recent (past, or future,
+-- for announced insertions) UTC leap second insertion.
 data MsgUtcLeapSecond = MsgUtcLeapSecond
-  { _msgUtcLeapSecond_bias_coeff     :: !Int16
-    -- ^ Reserved. Bias coefficient of GPS time scale with respect to UTC drift
-    -- model.
-  , _msgUtcLeapSecond_drift_coeff    :: !Int16
-    -- ^ Reserved. Drift coefficient of GPS time scale with respect to UTC drift
-    -- model.
-  , _msgUtcLeapSecond_drift_rate_coeff :: !Int8
-    -- ^ Reserved. Drift rate correction coefficient of GPS time scale with
-    -- respect to UTC drift model.
-  , _msgUtcLeapSecond_count_before   :: !Int8
+  { _msgUtcLeapSecond_reserved_0 :: !Int16
+    -- ^ Reserved.
+  , _msgUtcLeapSecond_reserved_1 :: !Int16
+    -- ^ Reserved.
+  , _msgUtcLeapSecond_reserved_2 :: !Int8
+    -- ^ Reserved.
+  , _msgUtcLeapSecond_count_before :: !Int8
     -- ^ Leap second count before insertion.
-  , _msgUtcLeapSecond_tow_s          :: !Word16
-    -- ^ Reserved. Drift model reference week second.
-  , _msgUtcLeapSecond_wn             :: !Word16
-    -- ^ Reserved. Drift model reference week number.
-  , _msgUtcLeapSecond_ref_wn         :: !Word16
-    -- ^ Leap second reference week number.
-  , _msgUtcLeapSecond_ref_dn         :: !Word8
+  , _msgUtcLeapSecond_reserved_3 :: !Word16
+    -- ^ Reserved.
+  , _msgUtcLeapSecond_reserved_4 :: !Word16
+    -- ^ Reserved.
+  , _msgUtcLeapSecond_ref_wn     :: !Word16
+    -- ^ Leap second reference GPS week number.
+  , _msgUtcLeapSecond_ref_dn     :: !Word8
     -- ^ Leap second reference day number.
-  , _msgUtcLeapSecond_count_after    :: !Int8
+  , _msgUtcLeapSecond_count_after :: !Int8
     -- ^ Leap second count after insertion.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgUtcLeapSecond where
   get = do
-    _msgUtcLeapSecond_bias_coeff <- (fromIntegral <$> getWord16le)
-    _msgUtcLeapSecond_drift_coeff <- (fromIntegral <$> getWord16le)
-    _msgUtcLeapSecond_drift_rate_coeff <- (fromIntegral <$> getWord8)
+    _msgUtcLeapSecond_reserved_0 <- (fromIntegral <$> getWord16le)
+    _msgUtcLeapSecond_reserved_1 <- (fromIntegral <$> getWord16le)
+    _msgUtcLeapSecond_reserved_2 <- (fromIntegral <$> getWord8)
     _msgUtcLeapSecond_count_before <- (fromIntegral <$> getWord8)
-    _msgUtcLeapSecond_tow_s <- getWord16le
-    _msgUtcLeapSecond_wn <- getWord16le
+    _msgUtcLeapSecond_reserved_3 <- getWord16le
+    _msgUtcLeapSecond_reserved_4 <- getWord16le
     _msgUtcLeapSecond_ref_wn <- getWord16le
     _msgUtcLeapSecond_ref_dn <- getWord8
     _msgUtcLeapSecond_count_after <- (fromIntegral <$> getWord8)
     pure MsgUtcLeapSecond {..}
 
   put MsgUtcLeapSecond {..} = do
-    (putWord16le . fromIntegral) _msgUtcLeapSecond_bias_coeff
-    (putWord16le . fromIntegral) _msgUtcLeapSecond_drift_coeff
-    (putWord8 . fromIntegral) _msgUtcLeapSecond_drift_rate_coeff
+    (putWord16le . fromIntegral) _msgUtcLeapSecond_reserved_0
+    (putWord16le . fromIntegral) _msgUtcLeapSecond_reserved_1
+    (putWord8 . fromIntegral) _msgUtcLeapSecond_reserved_2
     (putWord8 . fromIntegral) _msgUtcLeapSecond_count_before
-    putWord16le _msgUtcLeapSecond_tow_s
-    putWord16le _msgUtcLeapSecond_wn
+    putWord16le _msgUtcLeapSecond_reserved_3
+    putWord16le _msgUtcLeapSecond_reserved_4
     putWord16le _msgUtcLeapSecond_ref_wn
     putWord8 _msgUtcLeapSecond_ref_dn
     (putWord8 . fromIntegral) _msgUtcLeapSecond_count_after
