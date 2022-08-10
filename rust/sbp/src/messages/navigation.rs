@@ -6231,7 +6231,7 @@ pub mod msg_utc_leap_second {
         /// Reserved.
         #[cfg_attr(feature = "serde", serde(rename = "reserved_4"))]
         pub reserved_4: u16,
-        /// Leap second reference week number.
+        /// Leap second reference GPS week number.
         #[cfg_attr(feature = "serde", serde(rename = "ref_wn"))]
         pub ref_wn: u16,
         /// Leap second reference day number.

@@ -48,7 +48,7 @@ public class MsgUtcLeapSecond extends SBPMessage {
     /** Reserved. */
     public int reserved_4;
 
-    /** Leap second reference week number. */
+    /** Leap second reference GPS week number. */
     public int ref_wn;
 
     /** Leap second reference day number. */

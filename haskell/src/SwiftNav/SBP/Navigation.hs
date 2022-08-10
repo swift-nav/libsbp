@@ -2325,7 +2325,7 @@ data MsgUtcLeapSecond = MsgUtcLeapSecond
   , _msgUtcLeapSecond_reserved_4 :: !Word16
     -- ^ Reserved.
   , _msgUtcLeapSecond_ref_wn     :: !Word16
-    -- ^ Leap second reference week number.
+    -- ^ Leap second reference GPS week number.
   , _msgUtcLeapSecond_ref_dn     :: !Word8
     -- ^ Leap second reference day number.
   , _msgUtcLeapSecond_count_after :: !Int8

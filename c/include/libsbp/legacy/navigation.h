@@ -933,7 +933,7 @@ typedef struct SBP_ATTR_PACKED {
   s8 count_before; /**< Leap second count before insertion. [s] */
   u16 reserved_3;  /**< Reserved. */
   u16 reserved_4;  /**< Reserved. */
-  u16 ref_wn;      /**< Leap second reference week number. [weeks] */
+  u16 ref_wn;      /**< Leap second reference GPS week number. [weeks] */
   u8 ref_dn;       /**< Leap second reference day number. [days] */
   s8 count_after;  /**< Leap second count after insertion. [s] */
 } msg_utc_leap_second_t;

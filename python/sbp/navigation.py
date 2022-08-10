@@ -5134,7 +5134,7 @@ class MsgUtcLeapSecond(SBP):
   reserved_4 : int
     Reserved.
   ref_wn : int
-    Leap second reference week number.
+    Leap second reference GPS week number.
   ref_dn : int
     Leap second reference day number.
   count_after : int

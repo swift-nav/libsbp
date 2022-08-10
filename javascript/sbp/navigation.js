@@ -2145,7 +2145,7 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
  * @field count_before number (signed 8-bit int, 1 byte) Leap second count before insertion.
  * @field reserved_3 number (unsigned 16-bit int, 2 bytes) Reserved.
  * @field reserved_4 number (unsigned 16-bit int, 2 bytes) Reserved.
- * @field ref_wn number (unsigned 16-bit int, 2 bytes) Leap second reference week number.
+ * @field ref_wn number (unsigned 16-bit int, 2 bytes) Leap second reference GPS week number.
  * @field ref_dn number (unsigned 8-bit int, 1 byte) Leap second reference day number.
  * @field count_after number (signed 8-bit int, 1 byte) Leap second count after insertion.
  *

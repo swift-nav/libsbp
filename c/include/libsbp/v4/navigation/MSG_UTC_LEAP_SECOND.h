@@ -76,7 +76,7 @@ typedef struct {
   u16 reserved_4;
 
   /**
-   * Leap second reference week number. [weeks]
+   * Leap second reference GPS week number. [weeks]
    */
   u16 ref_wn;
 
