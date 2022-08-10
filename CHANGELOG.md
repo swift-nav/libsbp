@@ -1,5 +1,35 @@
 # Changelog
 
+## [v4.6.0](https://github.com/swift-nav/libsbp/tree/v4.6.0) (2022-08-04)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.5.0...v4.6.0)
+
+**Closed issues:**
+
+- GPS Trace different than the ENU Trace [\#1195](https://github.com/swift-nav/libsbp/issues/1195)
+
+**Merged pull requests:**
+
+- Hooking package-register updater [\#1203](https://github.com/swift-nav/libsbp/pull/1203) ([adrian-kong](https://github.com/adrian-kong))
+- Allows any string identifier for target and source frame names of MSG\_REFERENCE\_FRAME\_PARAM message \[OTA-198\] [\#1201](https://github.com/swift-nav/libsbp/pull/1201) ([jtec](https://github.com/jtec))
+- Auto submodule update: cmake - Rollback SonarCloud Changes \(\#126\) [\#1200](https://github.com/swift-nav/libsbp/pull/1200) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Added sbp2json test [\#1198](https://github.com/swift-nav/libsbp/pull/1198) ([adrian-kong](https://github.com/adrian-kong))
+- Added json sbp rust tests [\#1196](https://github.com/swift-nav/libsbp/pull/1196) ([adrian-kong](https://github.com/adrian-kong))
+- build\(deps\): bump terser from 4.6.6 to 4.8.1 [\#1194](https://github.com/swift-nav/libsbp/pull/1194) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Auto submodule update: cmake - sonarcloud: Use Inclusions Property \(\#121\) [\#1193](https://github.com/swift-nav/libsbp/pull/1193) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - Fix Sonarcloud sonar-project.properties \(\#120\) [\#1192](https://github.com/swift-nav/libsbp/pull/1192) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- rust: fix serde feature for standalone compilation [\#1191](https://github.com/swift-nav/libsbp/pull/1191) ([silverjam](https://github.com/silverjam))
+- make serde feature depend on serde-big-array [\#1190](https://github.com/swift-nav/libsbp/pull/1190) ([silverjam](https://github.com/silverjam))
+- Auto submodule update: cmake - Add clang format 11 \(\#119\) [\#1189](https://github.com/swift-nav/libsbp/pull/1189) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - Allow project wide default setting for exceptions and rtti \(\#118\) [\#1188](https://github.com/swift-nav/libsbp/pull/1188) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- rust: remove usage examples [\#1187](https://github.com/swift-nav/libsbp/pull/1187) ([silverjam](https://github.com/silverjam))
+- Add staging fixes to master [\#1185](https://github.com/swift-nav/libsbp/pull/1185) ([samvrlewis](https://github.com/samvrlewis))
+- Add stubbed signing messages \[GV2-90\] [\#1184](https://github.com/swift-nav/libsbp/pull/1184) ([samvrlewis](https://github.com/samvrlewis))
+- json2sbp: construct sbp from json fields [\#1183](https://github.com/swift-nav/libsbp/pull/1183) ([adrian-kong](https://github.com/adrian-kong))
+- Adds javadoc generator test [\#1182](https://github.com/swift-nav/libsbp/pull/1182) ([adrian-kong](https://github.com/adrian-kong))
+- Enforce Java 11 in build gradle [\#1181](https://github.com/swift-nav/libsbp/pull/1181) ([adrian-kong](https://github.com/adrian-kong))
+- \[DEVINFRA-806\] Updated CHANGELOG and prep for next release [\#1179](https://github.com/swift-nav/libsbp/pull/1179) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.5.0](https://github.com/swift-nav/libsbp/tree/v4.5.0) (2022-07-01)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.4.0...v4.5.0)

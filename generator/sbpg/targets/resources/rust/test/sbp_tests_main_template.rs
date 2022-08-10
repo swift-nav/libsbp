@@ -17,8 +17,10 @@ mod (((test_name)));
 
 pub use std::io::Cursor;
 
-pub use sbp::messages::SbpMessage;
 pub use sbp::iter_messages;
+#[cfg(feature = "json")]
+pub use sbp::json::{iter_messages as json2sbp_iter_msg, iter_messages_from_fields};
+pub use sbp::messages::SbpMessage;
 
 pub trait AlmostEq {
     fn almost_eq(self, rhs: Self) -> bool;

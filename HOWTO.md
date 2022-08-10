@@ -195,13 +195,6 @@ inside the container (so you don't have to setup git inside the docker container
    This will ensure that version information for language libraries
    will be generated cleanly.
 
-   If running the release macOS you may need to install
-   llvm though brew (recommend installing llvm 6 with `brew instal llvm@6`)
-   then add it to your path with `export PATH=$(brew --prefix llvm@6)/bin:$PATH`.
-   You can also use Nixpkgs to setup a complete build environment for
-   running a release.  [Install Nixpkgs](https://nixos.org/nix/download.html)
-   and then run `nix-shell` prior to running `make all`.
-
 3. Run make targets for each language and re-tag.  For python:
 
     ```shell

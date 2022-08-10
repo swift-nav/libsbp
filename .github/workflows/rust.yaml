@@ -58,12 +58,12 @@ jobs:
 
   build:
     name: Build binaries
-    needs: [lint, test]
+    needs: [ lint, test ]
     strategy:
       matrix:
         os:
           - ubuntu-18.04
-          - macos-10.15
+          - macos-12
           - windows-2022
     runs-on: ${{ matrix.os }}
     steps:
@@ -78,33 +78,44 @@ jobs:
           toolchain: stable
           override: true
 
+      - name: Fetch Tags
+        run: git fetch --tags --prune --force
+
       - name: Build ${{ matrix.os }} binaries
         id: build
         run: ./scripts/ci_build_rust.bash
         shell: bash
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.build.outputs.artifact_name }}
-          path: ${{ steps.build.outputs.artifact_name }}
-
-  publish:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: [build]
-    name: Publish github release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/download-artifact@v2
-        with:
-          path: artifacts
-
       - name: Upload Release
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "artifacts/*/*.zip"
+          file: "*.zip"
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
+
+  registry:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [ build ]
+    name: Publish rust release to package-registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Store tags
+        shell: bash
+        run: echo "VERSION=${GITHUB_REF##refs/tags/}" >> $GITHUB_ENV
+
+      - name: Hook into package registry
+        uses: swift-nav/swift-cli-publisher@v2
+        env:
+          DL_LINUX: "sbp_tools-${{ env.VERSION }}-x86_64-unknown-linux-musl.zip"
+          DL_MAC: "sbp_tools-${{ env.VERSION }}-x86_64-apple-darwin.zip"
+          DL_WIN: "sbp_tools-${{ env.VERSION }}-x86_64-pc-windows-msvc.zip"
+          TOOLS: "sbp2json,json2sbp,json2json"
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          gh-name: ${{ secrets.GH_NAME }}
+          gh-email: ${{ secrets.GH_EMAIL }}
+
+

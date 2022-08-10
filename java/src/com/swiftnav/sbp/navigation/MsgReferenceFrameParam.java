@@ -24,10 +24,10 @@ public class MsgReferenceFrameParam extends SBPMessage {
     /** SSR IOD parameter. */
     public int ssr_iod;
 
-    /** Name of source coordinate-system using the EPSG identification code. */
+    /** Name of source coordinate-system. */
     public String sn;
 
-    /** Name of target coordinate-system using the EPSG identification code. */
+    /** Name of target coordinate-system. */
     public String tn;
 
     /** System Identification Number. */

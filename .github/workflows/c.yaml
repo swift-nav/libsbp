@@ -94,8 +94,8 @@ jobs:
 
 
   macos:
-    name: macOS Catalina
-    runs-on: macos-10.15
+    name: macOS Big Sur
+    runs-on: macos-11
     steps:
       - uses: actions/checkout@v2
         with:

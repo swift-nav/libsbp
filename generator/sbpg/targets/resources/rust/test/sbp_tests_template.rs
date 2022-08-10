@@ -29,6 +29,11 @@ assert_eq!(msg.(((prefix|snake_case))), (((value))), "incorrect value for (((pre
 ((*- endif *))
 ((*- endmacro *))
 
+/// Tests [`sbp::iter_messages`], from payload into SBP messages
+///
+/// Asserts:
+/// -   SBP fields equates to that of the field
+/// -   Payload is identical
 #[test]
 fn test_(((s.suite_name|snake_case)))()
 {
@@ -52,6 +57,97 @@ fn test_(((s.suite_name|snake_case)))()
             },
             _ => panic!("Invalid message type! Expected a (((t.msg.name)))"),
         };
+        let frame = sbp::to_vec(&sbp_msg).unwrap();
+        assert_eq!(frame, payload.into_inner());
+    }
+    ((*- endfor *))
+}
+
+/// Tests [`sbp::json::iter_messages`] for JSON payload -> SBP message
+/// and [`sbp::json::iter_messages_from_fields`] for JSON fields -> SBP message.
+///
+/// Asserts:
+/// -   SBP message constructed via payload is identical to from fields
+/// -   SBP fields equates to that of the field
+/// -   Payload is identical
+#[test]
+#[cfg(feature = "json")]
+fn test_json2sbp_(((s.suite_name|snake_case)))()
+{
+    ((*- for t in s.tests *))
+    {
+        let json_input = r#"((( t.raw_json )))"#.as_bytes();
+
+        let sbp_msg = {
+            // JSON to SBP message from payload
+            let mut iter = json2sbp_iter_msg(json_input);
+            let from_payload = iter.next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            // JSON to SBP message from fields
+            let mut iter = iter_messages_from_fields(json_input);
+            let from_fields = iter.next()
+                .expect("no message found")
+                .expect("failed to parse message");
+
+            assert_eq!(from_fields, from_payload);
+            from_fields
+        };
+        match &sbp_msg {
+            sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(msg) => {
+                assert_eq!( msg.message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.message_type());
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {}", sender_id);
+                ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+            },
+            _ => panic!("Invalid message type! Expected a (((t.msg.name)))"),
+        };
+    }
+    ((*- endfor *))
+}
+
+/// Tests [`sbp::json::JsonEncoder`] for roundtrip SBP message -> JSON
+///
+/// Assumes:
+/// -   [`self::test_(((s.suite_name|snake_case)))`] passes
+///
+/// Asserts:
+/// -   SBP fields equates to that of the field
+/// -   Payload is identical
+#[test]
+#[cfg(feature = "json")]
+fn test_sbp2json_(((s.suite_name|snake_case)))()
+{
+    ((*- for t in s.tests *))
+    {
+        let mut payload = Cursor::new(vec![ ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) ]);
+
+        // Construct sbp message
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
+
+        let mut json_buffer = vec![];
+        // Populate json buffer, CompactFormatter
+        sbp::json::JsonEncoder::new(&mut json_buffer, sbp::json::CompactFormatter {}).send(&sbp_msg).unwrap();
+
+        // Reconstruct Sbp message from json fields, roundtrip
+        let sbp_msg = sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(serde_json::from_str(std::str::from_utf8(json_buffer.as_slice()).unwrap().to_string().as_str()).unwrap());
+        match &sbp_msg {
+            sbp::messages::Sbp::(((t.msg.name|lower_acronyms)))(msg) => {
+                assert_eq!( msg.message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.message_type());
+                let sender_id = msg.sender_id().unwrap();
+                assert_eq!(sender_id, (((t.sbp.sender))), "incorrect sender id, expected (((t.sbp.sender))), is {}", sender_id);
+                ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+            },
+            _ => panic!("Invalid message type! Expected a (((t.msg.name)))"),
+        };
+
+        // Check payload is still identical
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
     }
