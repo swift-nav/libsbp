@@ -53,18 +53,18 @@ jobs:
         ]
     name: "Ubuntu 18.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: ubuntu-latest
+    container: ubuntu:18.04
     steps:
-      - uses: docker://ubuntu:18.04
+      - name: Setup
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+          
       - uses: actions/checkout@v2
         with:
           submodules: recursive
           fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
-
+          
       - name: Configure
         run: |
           cmake -S c -B build \
