@@ -51,8 +51,10 @@ jobs:
         exclude: [
           { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
-    name: "Ubuntu 20.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
-    runs-on: ubuntu-20.04
+    name: "Ubuntu 18.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:18.04
     steps:
       - uses: actions/checkout@v2
         with:
