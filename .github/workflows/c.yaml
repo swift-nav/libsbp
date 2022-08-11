@@ -58,8 +58,6 @@ jobs:
       - name: Setup
         run: |
           apt-get -qq update
-#          apt-get -qq install software-properties-common
-#          add-apt-repository ppa:git-core/ppa -y
           apt-get -qq install libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
           
       - uses: actions/checkout@v2
