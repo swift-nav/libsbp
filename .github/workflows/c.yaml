@@ -53,14 +53,14 @@ jobs:
         ]
     name: "Ubuntu 18.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: ubuntu-latest
-    container: ubuntu:18.04
     steps:
+      - uses: docker://swiftnav/libsbp-build:2022-06-14
       - name: Setup
         run: |
           apt-get -qq update
-          apt-get -qq install software-properties-common
-          add-apt-repository ppa:git-core/ppa -y
-          apt-get -qq install cmake git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+#          apt-get -qq install software-properties-common
+#          add-apt-repository ppa:git-core/ppa -y
+          apt-get -qq install libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
           
       - uses: actions/checkout@v2
         with:
