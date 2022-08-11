@@ -23,8 +23,8 @@ jobs:
 
       - name: Setup
         run: |
-          apt-get -qq update
-          apt-get -qq install lcov libeigen3-dev libserialport-dev
+          sudo apt-get -qq update
+          sudo apt-get -qq install lcov libeigen3-dev libserialport-dev
 
       - name: Run tests
         run: make test-c
@@ -57,8 +57,8 @@ jobs:
     steps:
       - name: Setup
         run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+          apt-get -qq update
+          apt-get -qq install git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
           
       - uses: actions/checkout@v2
         with:
