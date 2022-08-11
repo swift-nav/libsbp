@@ -60,7 +60,7 @@ jobs:
           apt-get -qq update
           apt-get -qq install software-properties-common
           add-apt-repository ppa:git-core/ppa -y
-          apt-get -qq install git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+          apt-get -qq install cmake git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
           
       - uses: actions/checkout@v2
         with:
