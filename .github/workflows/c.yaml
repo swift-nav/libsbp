@@ -57,9 +57,8 @@ jobs:
     steps:
       - name: Setup
         run: |
-          apt-get -qq git
-          apt-get -qq update
-          apt-get -qq install libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+          apt-get -qq upgrade update
+          apt-get -qq install git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
           
       - uses: actions/checkout@v2
         with:
