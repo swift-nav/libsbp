@@ -69,7 +69,7 @@ jobs:
           
       - name: Configure
         run: |
-          mkdir build
+          ls
           cmake -S c -B build \
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
             -DCMAKE_C_COMPILER=${{ matrix.compiler.c }} \
