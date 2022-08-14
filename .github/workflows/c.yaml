@@ -66,6 +66,7 @@ jobs:
 
       - name: Configure
         run: |
+          ls
           cmake -S c -B build \
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
             -DCMAKE_C_COMPILER=${{ matrix.compiler.c }} \
@@ -104,7 +105,6 @@ jobs:
 
       - name: Configure
         run: |
-          ls
           cmake -S c -B build \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_C_COMPILER=clang \
