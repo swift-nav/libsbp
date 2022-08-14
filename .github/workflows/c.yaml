@@ -55,17 +55,16 @@ jobs:
     runs-on: ubuntu-latest
     container: ubuntu:18.04
     steps:
-      - name: debug
-        run: |
-          cmake --version
-          cmake
-          
       - name: Setup
         run: |
           apt-get -qq update
           apt-get -qq install software-properties-common
           add-apt-repository ppa:git-core/ppa -y
           apt-get -qq install cmake git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+      - name: debug
+        run: |
+          cmake --version
+          cmake
           
       - uses: actions/checkout@v2
         with:
