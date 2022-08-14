@@ -55,6 +55,11 @@ jobs:
     runs-on: ubuntu-latest
     container: ubuntu:18.04
     steps:
+      - name: debug
+        run: |
+          cmake --version
+          cmake
+          
       - name: Setup
         run: |
           apt-get -qq update
@@ -69,7 +74,6 @@ jobs:
           
       - name: Configure
         run: |
-          ls
           cmake -S c -B build \
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
             -DCMAKE_C_COMPILER=${{ matrix.compiler.c }} \
