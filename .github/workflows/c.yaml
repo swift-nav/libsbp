@@ -104,6 +104,7 @@ jobs:
 
       - name: Configure
         run: |
+          ls
           cmake -S c -B build \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_C_COMPILER=clang \
