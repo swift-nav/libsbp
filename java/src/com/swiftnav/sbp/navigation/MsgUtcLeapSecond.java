@@ -24,34 +24,31 @@ import org.json.JSONObject;
  * <p>You can have MSG_UTC_LEAP_SECOND inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>Emulates the GPS CNAV message, reserving bytes for future broadcast of the drift model
- * parameters.
+ * <p>UTC-GPST leap seconds before and after the most recent (past, or future, for announced
+ * insertions) UTC leap second insertion.
  */
 public class MsgUtcLeapSecond extends SBPMessage {
     public static final int TYPE = 0x023A;
 
-    /** Reserved. Bias coefficient of GPS time scale with respect to UTC drift model. */
-    public int bias_coeff;
+    /** Reserved. */
+    public int reserved_0;
 
-    /** Reserved. Drift coefficient of GPS time scale with respect to UTC drift model. */
-    public int drift_coeff;
+    /** Reserved. */
+    public int reserved_1;
 
-    /**
-     * Reserved. Drift rate correction coefficient of GPS time scale with respect to UTC drift
-     * model.
-     */
-    public int drift_rate_coeff;
+    /** Reserved. */
+    public int reserved_2;
 
     /** Leap second count before insertion. */
     public int count_before;
 
-    /** Reserved. Drift model reference week second. */
-    public int tow_s;
+    /** Reserved. */
+    public int reserved_3;
 
-    /** Reserved. Drift model reference week number. */
-    public int wn;
+    /** Reserved. */
+    public int reserved_4;
 
-    /** Leap second reference week number. */
+    /** Leap second reference GPS week number. */
     public int ref_wn;
 
     /** Leap second reference day number. */
@@ -76,12 +73,12 @@ public class MsgUtcLeapSecond extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        bias_coeff = parser.getS16();
-        drift_coeff = parser.getS16();
-        drift_rate_coeff = parser.getS8();
+        reserved_0 = parser.getS16();
+        reserved_1 = parser.getS16();
+        reserved_2 = parser.getS8();
         count_before = parser.getS8();
-        tow_s = parser.getU16();
-        wn = parser.getU16();
+        reserved_3 = parser.getU16();
+        reserved_4 = parser.getU16();
         ref_wn = parser.getU16();
         ref_dn = parser.getU8();
         count_after = parser.getS8();
@@ -89,12 +86,12 @@ public class MsgUtcLeapSecond extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        builder.putS16(bias_coeff);
-        builder.putS16(drift_coeff);
-        builder.putS8(drift_rate_coeff);
+        builder.putS16(reserved_0);
+        builder.putS16(reserved_1);
+        builder.putS8(reserved_2);
         builder.putS8(count_before);
-        builder.putU16(tow_s);
-        builder.putU16(wn);
+        builder.putU16(reserved_3);
+        builder.putU16(reserved_4);
         builder.putU16(ref_wn);
         builder.putU8(ref_dn);
         builder.putS8(count_after);
@@ -103,12 +100,12 @@ public class MsgUtcLeapSecond extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("bias_coeff", bias_coeff);
-        obj.put("drift_coeff", drift_coeff);
-        obj.put("drift_rate_coeff", drift_rate_coeff);
+        obj.put("reserved_0", reserved_0);
+        obj.put("reserved_1", reserved_1);
+        obj.put("reserved_2", reserved_2);
         obj.put("count_before", count_before);
-        obj.put("tow_s", tow_s);
-        obj.put("wn", wn);
+        obj.put("reserved_3", reserved_3);
+        obj.put("reserved_4", reserved_4);
         obj.put("ref_wn", ref_wn);
         obj.put("ref_dn", ref_dn);
         obj.put("count_after", count_after);

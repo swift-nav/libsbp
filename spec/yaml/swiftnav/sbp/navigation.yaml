@@ -2433,43 +2433,34 @@ definitions:
     short_desc: >
       Leap second SBP message.
     desc: >
-      Emulates the GPS CNAV message, reserving bytes for future broadcast of
-      the drift model parameters.
+      UTC-GPST leap seconds before and after the most recent (past, or future, for announced insertions) UTC leap second insertion.
     fields:
-      - bias_coeff:
+      - reserved_0:
           type: s16
-          units: 2^-35 s
           desc: >
-            Reserved. Bias coefficient of GPS time scale with respect to UTC
-            drift model.
-      - drift_coeff:
+            Reserved.
+      - reserved_1:
           type: s16
-          units: 2^-51 s/s
           desc: >
-            Reserved. Drift coefficient of GPS time scale with respect to UTC
-            drift model.
-      - drift_rate_coeff:
+            Reserved.
+      - reserved_2:
           type: s8
-          units: 2^-68 s/s^2
           desc: >
-            Reserved. Drift rate correction coefficient of GPS time scale with
-            respect to UTC drift model.
+            Reserved.
       - count_before:
           type: s8
           units: s
           desc: Leap second count before insertion.
-      - tow_s:
+      - reserved_3:
           type: u16
-          units: s
-          desc: Reserved. Drift model reference week second.
-      - wn:
+          desc: Reserved.
+      - reserved_4:
           type: u16
-          units: weeks
-          desc: Reserved. Drift model reference week number.
+          desc: Reserved.
       - ref_wn:
           type: u16
           units: weeks
-          desc: Leap second reference week number.
+          desc: Leap second reference GPS week number.
       - ref_dn:
           type: u8
           units: days

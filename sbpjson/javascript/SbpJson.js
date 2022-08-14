@@ -3282,15 +3282,10 @@ const typeMap = {
         { json: "contents", js: "contents", typ: a(0) },
     ], "any"),
     "MsgUTCLeapSecond": o([
-        { json: "bias_coeff", js: "bias_coeff", typ: 0 },
         { json: "count_after", js: "count_after", typ: 0 },
         { json: "count_before", js: "count_before", typ: 0 },
-        { json: "drift_coeff", js: "drift_coeff", typ: 0 },
-        { json: "drift_rate_coeff", js: "drift_rate_coeff", typ: 0 },
         { json: "ref_dn", js: "ref_dn", typ: 0 },
         { json: "ref_wn", js: "ref_wn", typ: 0 },
-        { json: "tow_s", js: "tow_s", typ: 0 },
-        { json: "wn", js: "wn", typ: 0 },
     ], "any"),
     "MsgUTCTime": o([
         { json: "day", js: "day", typ: 0 },

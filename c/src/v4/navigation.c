@@ -5974,22 +5974,22 @@ int sbp_msg_protection_level_cmp(const sbp_msg_protection_level_t *a,
 
 bool sbp_msg_utc_leap_second_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_utc_leap_second_t *msg) {
-  if (!sbp_s16_encode(ctx, &msg->bias_coeff)) {
+  if (!sbp_s16_encode(ctx, &msg->reserved_0)) {
     return false;
   }
-  if (!sbp_s16_encode(ctx, &msg->drift_coeff)) {
+  if (!sbp_s16_encode(ctx, &msg->reserved_1)) {
     return false;
   }
-  if (!sbp_s8_encode(ctx, &msg->drift_rate_coeff)) {
+  if (!sbp_s8_encode(ctx, &msg->reserved_2)) {
     return false;
   }
   if (!sbp_s8_encode(ctx, &msg->count_before)) {
     return false;
   }
-  if (!sbp_u16_encode(ctx, &msg->tow_s)) {
+  if (!sbp_u16_encode(ctx, &msg->reserved_3)) {
     return false;
   }
-  if (!sbp_u16_encode(ctx, &msg->wn)) {
+  if (!sbp_u16_encode(ctx, &msg->reserved_4)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->ref_wn)) {
@@ -6021,22 +6021,22 @@ s8 sbp_msg_utc_leap_second_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_utc_leap_second_decode_internal(sbp_decode_ctx_t *ctx,
                                              sbp_msg_utc_leap_second_t *msg) {
-  if (!sbp_s16_decode(ctx, &msg->bias_coeff)) {
+  if (!sbp_s16_decode(ctx, &msg->reserved_0)) {
     return false;
   }
-  if (!sbp_s16_decode(ctx, &msg->drift_coeff)) {
+  if (!sbp_s16_decode(ctx, &msg->reserved_1)) {
     return false;
   }
-  if (!sbp_s8_decode(ctx, &msg->drift_rate_coeff)) {
+  if (!sbp_s8_decode(ctx, &msg->reserved_2)) {
     return false;
   }
   if (!sbp_s8_decode(ctx, &msg->count_before)) {
     return false;
   }
-  if (!sbp_u16_decode(ctx, &msg->tow_s)) {
+  if (!sbp_u16_decode(ctx, &msg->reserved_3)) {
     return false;
   }
-  if (!sbp_u16_decode(ctx, &msg->wn)) {
+  if (!sbp_u16_decode(ctx, &msg->reserved_4)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->ref_wn)) {
@@ -6085,17 +6085,17 @@ int sbp_msg_utc_leap_second_cmp(const sbp_msg_utc_leap_second_t *a,
                                 const sbp_msg_utc_leap_second_t *b) {
   int ret = 0;
 
-  ret = sbp_s16_cmp(&a->bias_coeff, &b->bias_coeff);
+  ret = sbp_s16_cmp(&a->reserved_0, &b->reserved_0);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_s16_cmp(&a->drift_coeff, &b->drift_coeff);
+  ret = sbp_s16_cmp(&a->reserved_1, &b->reserved_1);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_s8_cmp(&a->drift_rate_coeff, &b->drift_rate_coeff);
+  ret = sbp_s8_cmp(&a->reserved_2, &b->reserved_2);
   if (ret != 0) {
     return ret;
   }
@@ -6105,12 +6105,12 @@ int sbp_msg_utc_leap_second_cmp(const sbp_msg_utc_leap_second_t *a,
     return ret;
   }
 
-  ret = sbp_u16_cmp(&a->tow_s, &b->tow_s);
+  ret = sbp_u16_cmp(&a->reserved_3, &b->reserved_3);
   if (ret != 0) {
     return ret;
   }
 
-  ret = sbp_u16_cmp(&a->wn, &b->wn);
+  ret = sbp_u16_cmp(&a->reserved_4, &b->reserved_4);
   if (ret != 0) {
     return ret;
   }

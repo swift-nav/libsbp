@@ -40,16 +40,6 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
-        value = msg.bias_coeff;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.bias_coeff + "' != '" + 1 + "'",
-                    value.equals(BigInteger.valueOf(1L)));
-        } else {
-            value = value.longValue();
-            expected = 1L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.count_after;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -70,26 +60,6 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
             expected = 4L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.drift_coeff;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.drift_coeff + "' != '" + 2 + "'",
-                    value.equals(BigInteger.valueOf(2L)));
-        } else {
-            value = value.longValue();
-            expected = 2L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.drift_rate_coeff;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.drift_rate_coeff + "' != '" + 3 + "'",
-                    value.equals(BigInteger.valueOf(3L)));
-        } else {
-            value = value.longValue();
-            expected = 3L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
         value = msg.ref_dn;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
@@ -108,19 +78,51 @@ public class auto_check_sbp_navigation_MsgUTCLeapSecondTest {
             expected = 7L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.tow_s;
+        value = msg.reserved_0;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.tow_s + "' != '" + 5 + "'", value.equals(BigInteger.valueOf(5L)));
+                    "'" + msg.reserved_0 + "' != '" + 1 + "'",
+                    value.equals(BigInteger.valueOf(1L)));
+        } else {
+            value = value.longValue();
+            expected = 1L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.reserved_1;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.reserved_1 + "' != '" + 2 + "'",
+                    value.equals(BigInteger.valueOf(2L)));
+        } else {
+            value = value.longValue();
+            expected = 2L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.reserved_2;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.reserved_2 + "' != '" + 3 + "'",
+                    value.equals(BigInteger.valueOf(3L)));
+        } else {
+            value = value.longValue();
+            expected = 3L;
+            org.junit.Assert.assertEquals(value, expected);
+        }
+        value = msg.reserved_3;
+        if (value instanceof BigInteger) {
+            org.junit.Assert.assertTrue(
+                    "'" + msg.reserved_3 + "' != '" + 5 + "'",
+                    value.equals(BigInteger.valueOf(5L)));
         } else {
             value = value.longValue();
             expected = 5L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.wn;
+        value = msg.reserved_4;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.wn + "' != '" + 6 + "'", value.equals(BigInteger.valueOf(6L)));
+                    "'" + msg.reserved_4 + "' != '" + 6 + "'",
+                    value.equals(BigInteger.valueOf(6L)));
         } else {
             value = value.longValue();
             expected = 6L;
