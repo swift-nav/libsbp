@@ -60,7 +60,7 @@ jobs:
           apt-get -qq update
           apt-get -qq install software-properties-common
           add-apt-repository ppa:git-core/ppa -y
-          add-apt-repository ppa:george-edison55/cmake-3.x
+          add-apt-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
           apt-get -qq install cmake git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
       - name: debug
         run: |
