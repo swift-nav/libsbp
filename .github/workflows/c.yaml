@@ -54,6 +54,11 @@ jobs:
     name: "Ubuntu 18.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
     runs-on: ubuntu-18.04
     steps:
+      - name: debug
+        run: |
+          cmake --version
+          cmake
+          
       - uses: actions/checkout@v2
         with:
           submodules: recursive
