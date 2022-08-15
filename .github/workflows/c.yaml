@@ -59,9 +59,12 @@ jobs:
         run: |
           apt-get -qq update
           apt-get -qq install software-properties-common
+          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add -
+          apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
           add-apt-repository ppa:git-core/ppa -y
-          apt-get -qq install git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
-      - uses: lukka/get-cmake@latest
+          apt-get -qq update
+          apt-get -qq install cmake git libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+
       - name: debug
         run: |
           cmake --version
