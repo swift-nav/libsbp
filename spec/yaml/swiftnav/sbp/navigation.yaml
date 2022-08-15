@@ -1627,27 +1627,27 @@ definitions:
               desc: Velocity in z direction
           - cov_x_x:
               type: float
-              units: m^2
+              units: (m/s)^2
               desc: Estimated variance of x
           - cov_x_y:
               type: float
-              units: m^2
+              units: (m/s)^2
               desc: Covariance of x and y
           - cov_x_z:
               type: float
-              units: m^2
+              units: (m/s)^2
               desc: Covariance of x and z
           - cov_y_y:
               type: float
-              units: m^2
+              units: (m/s)^2
               desc: Estimated variance of y
           - cov_y_z:
               type: float
-              units: m^2
+              units: (m/s)^2
               desc: Covariance of y and z
           - cov_z_z:
               type: float
-              units: m^2
+              units: (m/s)^2
               desc: Estimated variance of z
           - n_sats:
               type: u8
@@ -2555,3 +2555,109 @@ definitions:
            type: s16
            units: 0.0000002 ppm/yr
            desc: Rate of change of scale correction.
+
+ - MSG_POSE_RELATIVE:
+     id: 0x0245
+     short_desc: Relative Pose
+     desc: >
+       This solution message reports the relative pose of a sensor between
+       two time instances. The relative pose comprises of a rotation and
+       a translation which relates the sensor (e.g. camera) frame at a given
+       time (first keyframe) to the sensor frame at another time (second key frame).
+       The relative translations is a 3x1 vector described in the first keyframe. 
+       Relative rotation is described by a quaternion from second keyframe to the first keyframe.
+     fields:
+       - timestamp_1:
+           type: u32
+           units: ms
+           desc: Timestamp of first keyframe
+       - timestamp_2:
+           type: u32
+           units: ms
+           desc: Timestamp of second keyframe
+       - trans:
+           type: array
+           size: 3
+           fill: s32
+           desc: Relative translation [x,y,z] described in first keyframe
+           units: mm
+       - w:
+           type: s32
+           units: 2^-31
+           desc: Real component of quaternion to describe relative rotation (second to first keyframe)
+       - x:
+           type: s32
+           units: 2^-31
+           desc: 1st imaginary component of quaternion to describe relative rotation (second to first keyframe)
+       - y:
+           type: s32
+           units: 2^-31
+           desc: 2nd imaginary component of quaternion to describe relative rotation (second to first keyframe)
+       - z:
+           type: s32
+           units: 2^-31
+           desc: 3rd imaginary component of quaternion to describe relative rotation (second to first keyframe)
+       - cov_r_x_x:
+           type: float
+           units: m^2
+           desc: Estimated variance of x (relative translation)
+       - cov_r_x_y:
+           type: float
+           units: m^2
+           desc: Covariance of x and y (relative translation)
+       - cov_r_x_z:
+           type: float
+           units: m^2
+           desc: Covariance of x and z (relative translation)
+       - cov_r_y_y:
+           type: float
+           units: m^2
+           desc: Estimated variance of y (relative translation)
+       - cov_r_y_z:
+           type: float
+           units: m^2
+           desc: Covariance of y and z (relative translation)
+       - cov_r_z_z:
+           type: float
+           units: m^2
+           desc: Estimated variance of z (relative translation)
+       - cov_c_x_x:
+           type: float
+           units: rad^2
+           desc: Estimated variance of x (relative rotation)
+       - cov_c_x_y:
+           type: float
+           units: rad^2
+           desc: Covariance of x and y (relative rotation)
+       - cov_c_x_z:
+           type: float
+           units: rad^2
+           desc: Covariance of x and z (relative rotation)
+       - cov_c_y_y:
+           type: float
+           units: rad^2
+           desc: Estimated variance of y (relative rotation)
+       - cov_c_y_z:
+           type: float
+           units: rad^2
+           desc: Covariance of y and z (relative rotation)
+       - cov_c_z_z:
+           type: float
+           units: rad^2
+           desc: Estimated variance of z (relative rotation)
+       - flags:
+           type: u8
+           desc: Status flags of relative translation and rotation
+           fields:
+             - 4-7:
+                 desc: Reserved
+             - 2-3:
+                 desc: Relative translation status
+                 values:
+                   - 0: Invalid
+                   - 1: Valid
+             - 0-1:
+                 desc: Relative rotation status
+                 values:
+                   - 0: Invalid
+                   - 1: Valid

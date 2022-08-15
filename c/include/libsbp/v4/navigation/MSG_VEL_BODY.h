@@ -72,32 +72,32 @@ typedef struct {
   s32 z;
 
   /**
-   * Estimated variance of x [m^2]
+   * Estimated variance of x [(m/s)^2]
    */
   float cov_x_x;
 
   /**
-   * Covariance of x and y [m^2]
+   * Covariance of x and y [(m/s)^2]
    */
   float cov_x_y;
 
   /**
-   * Covariance of x and z [m^2]
+   * Covariance of x and z [(m/s)^2]
    */
   float cov_x_z;
 
   /**
-   * Estimated variance of y [m^2]
+   * Estimated variance of y [(m/s)^2]
    */
   float cov_y_y;
 
   /**
-   * Covariance of y and z [m^2]
+   * Covariance of y and z [(m/s)^2]
    */
   float cov_y_z;
 
   /**
-   * Estimated variance of z [m^2]
+   * Estimated variance of z [(m/s)^2]
    */
   float cov_z_z;
 

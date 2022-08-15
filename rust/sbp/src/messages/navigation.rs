@@ -59,6 +59,7 @@ pub use msg_pos_llh_cov::MsgPosLlhCov;
 pub use msg_pos_llh_cov_gnss::MsgPosLlhCovGnss;
 pub use msg_pos_llh_dep_a::MsgPosLlhDepA;
 pub use msg_pos_llh_gnss::MsgPosLlhGnss;
+pub use msg_pos_relative::MsgPosRelative;
 pub use msg_protection_level::MsgProtectionLevel;
 pub use msg_protection_level_dep_a::MsgProtectionLevelDepA;
 pub use msg_reference_frame_param::MsgReferenceFrameParam;
@@ -5279,6 +5280,310 @@ pub mod msg_pos_llh_gnss {
                 3 => Ok(FixMode::FloatRtk),
                 4 => Ok(FixMode::FixedRtk),
                 6 => Ok(FixMode::SbasPosition),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_pos_relative {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Relative Pose
+    ///
+    /// This solution message reports the relative pose of a sensor between two
+    /// time instances. The relative pose comprises of a rotation and a
+    /// translation which relates the sensor (e.g. camera) frame at a given time
+    /// (first keyframe) to the sensor frame at another time (second key frame).
+    /// The relative translations is a 3x1 vector described in the first keyframe.
+    /// Relative rotation is described by a quaternion from second keyframe to the
+    /// first keyframe.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgPosRelative {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// Timestamp of first keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp_1"))]
+        pub timestamp_1: u32,
+        /// Timestamp of second keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp_2"))]
+        pub timestamp_2: u32,
+        /// Relative translation \[x,y,z\] described in first keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "trans"))]
+        pub trans: [f64; 3],
+        /// Real component of quaternion to describe relative rotation (second to
+        /// first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
+        pub w: i32,
+        /// 1st imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
+        pub x: i32,
+        /// 2nd imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
+        pub y: i32,
+        /// 3rd imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
+        pub z: i32,
+        /// Estimated variance of x (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_x"))]
+        pub cov_r_x_x: f32,
+        /// Covariance of x and y (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_y"))]
+        pub cov_r_x_y: f32,
+        /// Covariance of x and z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_z"))]
+        pub cov_r_x_z: f32,
+        /// Estimated variance of y (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_y_y"))]
+        pub cov_r_y_y: f32,
+        /// Covariance of y and z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_y_z"))]
+        pub cov_r_y_z: f32,
+        /// Estimated variance of z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_z_z"))]
+        pub cov_r_z_z: f32,
+        /// Estimated variance of x (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_x"))]
+        pub cov_c_x_x: f32,
+        /// Covariance of x and y (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_y"))]
+        pub cov_c_x_y: f32,
+        /// Covariance of x and z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_z"))]
+        pub cov_c_x_z: f32,
+        /// Estimated variance of y (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_y_y"))]
+        pub cov_c_y_y: f32,
+        /// Covariance of y and z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_y_z"))]
+        pub cov_c_y_z: f32,
+        /// Estimated variance of z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_z_z"))]
+        pub cov_c_z_z: f32,
+        /// Status flags of relative translation and rotation
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u8,
+    }
+
+    impl MsgPosRelative {
+        /// Gets the [RelativeTranslation][self::RelativeTranslation] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RelativeTranslation` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RelativeTranslation` were added.
+        pub fn relative_translation(&self) -> Result<RelativeTranslation, u8> {
+            get_bit_range!(self.flags, u8, u8, 4, 3).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [RelativeTranslation][RelativeTranslation] of the `flags` bitfield.
+        pub fn set_relative_translation(&mut self, relative_translation: RelativeTranslation) {
+            set_bit_range!(&mut self.flags, relative_translation, u8, u8, 4, 3);
+        }
+
+        /// Gets the [RelativeRotation][self::RelativeRotation] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RelativeRotation` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RelativeRotation` were added.
+        pub fn relative_rotation(&self) -> Result<RelativeRotation, u8> {
+            get_bit_range!(self.flags, u8, u8, 2, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [RelativeRotation][RelativeRotation] of the `flags` bitfield.
+        pub fn set_relative_rotation(&mut self, relative_rotation: RelativeRotation) {
+            set_bit_range!(&mut self.flags, relative_rotation, u8, u8, 2, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgPosRelative {
+        const MESSAGE_TYPE: u16 = 581;
+        const MESSAGE_NAME: &'static str = "MSG_POS_RELATIVE";
+    }
+
+    impl SbpMessage for MsgPosRelative {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgPosRelative {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgPosRelative(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgPosRelative {
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <[f64; 3] as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.timestamp_1)
+                + WireFormat::len(&self.timestamp_2)
+                + WireFormat::len(&self.trans)
+                + WireFormat::len(&self.w)
+                + WireFormat::len(&self.x)
+                + WireFormat::len(&self.y)
+                + WireFormat::len(&self.z)
+                + WireFormat::len(&self.cov_r_x_x)
+                + WireFormat::len(&self.cov_r_x_y)
+                + WireFormat::len(&self.cov_r_x_z)
+                + WireFormat::len(&self.cov_r_y_y)
+                + WireFormat::len(&self.cov_r_y_z)
+                + WireFormat::len(&self.cov_r_z_z)
+                + WireFormat::len(&self.cov_c_x_x)
+                + WireFormat::len(&self.cov_c_x_y)
+                + WireFormat::len(&self.cov_c_x_z)
+                + WireFormat::len(&self.cov_c_y_y)
+                + WireFormat::len(&self.cov_c_y_z)
+                + WireFormat::len(&self.cov_c_z_z)
+                + WireFormat::len(&self.flags)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.timestamp_1, buf);
+            WireFormat::write(&self.timestamp_2, buf);
+            WireFormat::write(&self.trans, buf);
+            WireFormat::write(&self.w, buf);
+            WireFormat::write(&self.x, buf);
+            WireFormat::write(&self.y, buf);
+            WireFormat::write(&self.z, buf);
+            WireFormat::write(&self.cov_r_x_x, buf);
+            WireFormat::write(&self.cov_r_x_y, buf);
+            WireFormat::write(&self.cov_r_x_z, buf);
+            WireFormat::write(&self.cov_r_y_y, buf);
+            WireFormat::write(&self.cov_r_y_z, buf);
+            WireFormat::write(&self.cov_r_z_z, buf);
+            WireFormat::write(&self.cov_c_x_x, buf);
+            WireFormat::write(&self.cov_c_x_y, buf);
+            WireFormat::write(&self.cov_c_x_z, buf);
+            WireFormat::write(&self.cov_c_y_y, buf);
+            WireFormat::write(&self.cov_c_y_z, buf);
+            WireFormat::write(&self.cov_c_z_z, buf);
+            WireFormat::write(&self.flags, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgPosRelative {
+                sender_id: None,
+                timestamp_1: WireFormat::parse_unchecked(buf),
+                timestamp_2: WireFormat::parse_unchecked(buf),
+                trans: WireFormat::parse_unchecked(buf),
+                w: WireFormat::parse_unchecked(buf),
+                x: WireFormat::parse_unchecked(buf),
+                y: WireFormat::parse_unchecked(buf),
+                z: WireFormat::parse_unchecked(buf),
+                cov_r_x_x: WireFormat::parse_unchecked(buf),
+                cov_r_x_y: WireFormat::parse_unchecked(buf),
+                cov_r_x_z: WireFormat::parse_unchecked(buf),
+                cov_r_y_y: WireFormat::parse_unchecked(buf),
+                cov_r_y_z: WireFormat::parse_unchecked(buf),
+                cov_r_z_z: WireFormat::parse_unchecked(buf),
+                cov_c_x_x: WireFormat::parse_unchecked(buf),
+                cov_c_x_y: WireFormat::parse_unchecked(buf),
+                cov_c_x_z: WireFormat::parse_unchecked(buf),
+                cov_c_y_y: WireFormat::parse_unchecked(buf),
+                cov_c_y_z: WireFormat::parse_unchecked(buf),
+                cov_c_z_z: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Relative Translation
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum RelativeTranslation {
+        /// Invalid
+        Invalid = 0,
+
+        /// Valid
+        Valid = 1,
+    }
+
+    impl std::fmt::Display for RelativeTranslation {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                RelativeTranslation::Invalid => f.write_str("Invalid"),
+                RelativeTranslation::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for RelativeTranslation {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(RelativeTranslation::Invalid),
+                1 => Ok(RelativeTranslation::Valid),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Relative Rotation
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum RelativeRotation {
+        /// Invalid
+        Invalid = 0,
+
+        /// Valid
+        Valid = 1,
+    }
+
+    impl std::fmt::Display for RelativeRotation {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                RelativeRotation::Invalid => f.write_str("Invalid"),
+                RelativeRotation::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for RelativeRotation {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, Self::Error> {
+            match i {
+                0 => Ok(RelativeRotation::Invalid),
+                1 => Ok(RelativeRotation::Valid),
                 i => Err(i),
             }
         }

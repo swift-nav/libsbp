@@ -4793,6 +4793,41 @@ struct MessageTraits<sbp_msg_pos_llh_t> {
 };
 
 template <>
+struct MessageTraits<sbp_msg_pose_relative_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgPoseRelative;
+  static const sbp_msg_pose_relative_t &get(const sbp_msg_t &msg) {
+    return msg.pose_relative;
+  }
+  static sbp_msg_pose_relative_t &get(sbp_msg_t &msg) {
+    return msg.pose_relative;
+  }
+  static void to_sbp_msg(const sbp_msg_pose_relative_t &msg,
+                         sbp_msg_t *sbp_msg) {
+    sbp_msg->pose_relative = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_pose_relative_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.pose_relative = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_pose_relative_t &msg, sbp_write_fn_t write) {
+    return sbp_msg_pose_relative_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_pose_relative_t &msg) {
+    return sbp_msg_pose_relative_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_pose_relative_t *msg) {
+    return sbp_msg_pose_relative_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_pose_relative_t &msg) {
+    return sbp_msg_pose_relative_encoded_len(&msg);
+  }
+};
+
+template <>
 struct MessageTraits<sbp_msg_pps_time_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPpsTime;
   static const sbp_msg_pps_time_t &get(const sbp_msg_t &msg) {

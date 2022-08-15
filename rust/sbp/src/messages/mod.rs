@@ -111,6 +111,7 @@ use self::navigation::msg_pos_llh_cov::MsgPosLlhCov;
 use self::navigation::msg_pos_llh_cov_gnss::MsgPosLlhCovGnss;
 use self::navigation::msg_pos_llh_dep_a::MsgPosLlhDepA;
 use self::navigation::msg_pos_llh_gnss::MsgPosLlhGnss;
+use self::navigation::msg_pos_relative::MsgPosRelative;
 use self::navigation::msg_protection_level::MsgProtectionLevel;
 use self::navigation::msg_protection_level_dep_a::MsgProtectionLevelDepA;
 use self::navigation::msg_reference_frame_param::MsgReferenceFrameParam;
@@ -661,6 +662,8 @@ pub enum Sbp {
     MsgUtcLeapSecond(MsgUtcLeapSecond),
     /// Reference Frame Transformation Parameters
     MsgReferenceFrameParam(MsgReferenceFrameParam),
+    /// Relative Pose
+    MsgPosRelative(MsgPosRelative),
     /// Navigation DataBase Event
     MsgNdbEvent(MsgNdbEvent),
     /// Plaintext logging messages with levels
@@ -1290,6 +1293,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgReferenceFrameParam::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgReferenceFrameParam>(value)
                     .map(Sbp::MsgReferenceFrameParam)
+            }
+            Some(MsgPosRelative::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgPosRelative>(value).map(Sbp::MsgPosRelative)
             }
             Some(MsgNdbEvent::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgNdbEvent>(value).map(Sbp::MsgNdbEvent)
@@ -2315,6 +2321,11 @@ impl Sbp {
                 msg.set_sender_id(frame.sender_id);
                 Ok(Sbp::MsgReferenceFrameParam(msg))
             }
+            MsgPosRelative::MESSAGE_TYPE => {
+                let mut msg = MsgPosRelative::parse(&mut frame.payload)?;
+                msg.set_sender_id(frame.sender_id);
+                Ok(Sbp::MsgPosRelative(msg))
+            }
             MsgNdbEvent::MESSAGE_TYPE => {
                 let mut msg = MsgNdbEvent::parse(&mut frame.payload)?;
                 msg.set_sender_id(frame.sender_id);
@@ -2808,6 +2819,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => msg.message_name(),
             Sbp::MsgUtcLeapSecond(msg) => msg.message_name(),
             Sbp::MsgReferenceFrameParam(msg) => msg.message_name(),
+            Sbp::MsgPosRelative(msg) => msg.message_name(),
             Sbp::MsgNdbEvent(msg) => msg.message_name(),
             Sbp::MsgLog(msg) => msg.message_name(),
             Sbp::MsgFwd(msg) => msg.message_name(),
@@ -3035,6 +3047,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => msg.message_type(),
             Sbp::MsgUtcLeapSecond(msg) => msg.message_type(),
             Sbp::MsgReferenceFrameParam(msg) => msg.message_type(),
+            Sbp::MsgPosRelative(msg) => msg.message_type(),
             Sbp::MsgNdbEvent(msg) => msg.message_type(),
             Sbp::MsgLog(msg) => msg.message_type(),
             Sbp::MsgFwd(msg) => msg.message_type(),
@@ -3262,6 +3275,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => msg.sender_id(),
             Sbp::MsgUtcLeapSecond(msg) => msg.sender_id(),
             Sbp::MsgReferenceFrameParam(msg) => msg.sender_id(),
+            Sbp::MsgPosRelative(msg) => msg.sender_id(),
             Sbp::MsgNdbEvent(msg) => msg.sender_id(),
             Sbp::MsgLog(msg) => msg.sender_id(),
             Sbp::MsgFwd(msg) => msg.sender_id(),
@@ -3489,6 +3503,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgUtcLeapSecond(msg) => msg.set_sender_id(new_id),
             Sbp::MsgReferenceFrameParam(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgPosRelative(msg) => msg.set_sender_id(new_id),
             Sbp::MsgNdbEvent(msg) => msg.set_sender_id(new_id),
             Sbp::MsgLog(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFwd(msg) => msg.set_sender_id(new_id),
@@ -3716,6 +3731,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => msg.encoded_len(),
             Sbp::MsgUtcLeapSecond(msg) => msg.encoded_len(),
             Sbp::MsgReferenceFrameParam(msg) => msg.encoded_len(),
+            Sbp::MsgPosRelative(msg) => msg.encoded_len(),
             Sbp::MsgNdbEvent(msg) => msg.encoded_len(),
             Sbp::MsgLog(msg) => msg.encoded_len(),
             Sbp::MsgFwd(msg) => msg.encoded_len(),
@@ -3946,6 +3962,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => msg.gps_time(),
             Sbp::MsgUtcLeapSecond(msg) => msg.gps_time(),
             Sbp::MsgReferenceFrameParam(msg) => msg.gps_time(),
+            Sbp::MsgPosRelative(msg) => msg.gps_time(),
             Sbp::MsgNdbEvent(msg) => msg.gps_time(),
             Sbp::MsgLog(msg) => msg.gps_time(),
             Sbp::MsgFwd(msg) => msg.gps_time(),
@@ -4181,6 +4198,7 @@ impl WireFormat for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgUtcLeapSecond(msg) => WireFormat::write(msg, buf),
             Sbp::MsgReferenceFrameParam(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgPosRelative(msg) => WireFormat::write(msg, buf),
             Sbp::MsgNdbEvent(msg) => WireFormat::write(msg, buf),
             Sbp::MsgLog(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFwd(msg) => WireFormat::write(msg, buf),
@@ -4408,6 +4426,7 @@ impl WireFormat for Sbp {
             Sbp::MsgVelEcefCovGnss(msg) => WireFormat::len(msg),
             Sbp::MsgUtcLeapSecond(msg) => WireFormat::len(msg),
             Sbp::MsgReferenceFrameParam(msg) => WireFormat::len(msg),
+            Sbp::MsgPosRelative(msg) => WireFormat::len(msg),
             Sbp::MsgNdbEvent(msg) => WireFormat::len(msg),
             Sbp::MsgLog(msg) => WireFormat::len(msg),
             Sbp::MsgFwd(msg) => WireFormat::len(msg),
@@ -5411,6 +5430,12 @@ impl From<MsgUtcLeapSecond> for Sbp {
 impl From<MsgReferenceFrameParam> for Sbp {
     fn from(msg: MsgReferenceFrameParam) -> Self {
         Sbp::MsgReferenceFrameParam(msg)
+    }
+}
+
+impl From<MsgPosRelative> for Sbp {
+    fn from(msg: MsgPosRelative) -> Self {
+        Sbp::MsgPosRelative(msg)
     }
 }
 

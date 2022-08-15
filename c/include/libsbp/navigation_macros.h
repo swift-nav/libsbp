@@ -1766,4 +1766,51 @@
  */
 #define SBP_MSG_REFERENCE_FRAME_PARAM_ENCODED_LEN 124u
 
+#define SBP_MSG_POSE_RELATIVE 0x0245
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_pose_relative_t::trans (V4 API) or msg_pose_relative_t::trans (legacy
+ * API) before the maximum SBP message size is exceeded
+ */
+#define SBP_MSG_POSE_RELATIVE_TRANS_MAX 3u
+
+#define SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_MASK (0x3u)
+#define SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_SHIFT (2u)
+#define SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_SHIFT) & \
+        SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_MASK))
+#define SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_SET(flags, val)        \
+  do {                                                                       \
+    (flags) =                                                                \
+        (u8)((flags &                                                        \
+              (~(SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_MASK          \
+                 << SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_SHIFT))) | \
+             (((val) & (SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_MASK)) \
+              << (SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_SHIFT)));    \
+  } while (0)
+
+#define SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_INVALID (0)
+#define SBP_POSE_RELATIVE_RELATIVE_TRANSLATION_STATUS_VALID (1)
+#define SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_MASK (0x3u)
+#define SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_SHIFT (0u)
+#define SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_SHIFT) & \
+        SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_MASK))
+#define SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_MASK          \
+                    << SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_SHIFT))) | \
+        (((val) & (SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_MASK))         \
+         << (SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_SHIFT)));            \
+  } while (0)
+
+#define SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_INVALID (0)
+#define SBP_POSE_RELATIVE_RELATIVE_ROTATION_STATUS_VALID (1)
+/**
+ * Encoded length of sbp_msg_pose_relative_t (V4 API) and
+ * msg_pose_relative_t (legacy API)
+ */
+#define SBP_MSG_POSE_RELATIVE_ENCODED_LEN 85u
+
 #endif /* LIBSBP_NAVIGATION_MACROS_H */

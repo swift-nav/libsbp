@@ -187,6 +187,7 @@ typedef enum {
   SbpMsgPosLlhDepA = SBP_MSG_POS_LLH_DEP_A,
   SbpMsgPosLlhGnss = SBP_MSG_POS_LLH_GNSS,
   SbpMsgPosLlh = SBP_MSG_POS_LLH,
+  SbpMsgPoseRelative = SBP_MSG_POSE_RELATIVE,
   SbpMsgPpsTime = SBP_MSG_PPS_TIME,
   SbpMsgPrintDep = SBP_MSG_PRINT_DEP,
   SbpMsgProtectionLevelDepA = SBP_MSG_PROTECTION_LEVEL_DEP_A,

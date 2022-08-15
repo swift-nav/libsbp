@@ -5419,6 +5419,200 @@ class MsgReferenceFrameParam(SBP):
     d.update(j)
     return d
     
+SBP_MSG_POSE_RELATIVE = 0x0245
+class MsgPoseRelative(SBP):
+  """SBP class for message MSG_POSE_RELATIVE (0x0245).
+
+  You can have MSG_POSE_RELATIVE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This solution message reports the relative pose of a sensor between two time
+  instances. The relative pose comprises of a rotation and a translation which
+  relates the sensor (e.g. camera) frame at a given time (first keyframe) to
+  the sensor frame at another time (second key frame). The relative
+  translations is a 3x1 vector described in the first keyframe.  Relative
+  rotation is described by a quaternion from second keyframe to the first
+  keyframe.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  timestamp_1 : int
+    Timestamp of first keyframe
+  timestamp_2 : int
+    Timestamp of second keyframe
+  trans : array
+    Relative translation [x,y,z] described in first keyframe
+  w : int
+    Real component of quaternion to describe relative rotation (second to
+    first keyframe)
+  x : int
+    1st imaginary component of quaternion to describe relative rotation
+    (second to first keyframe)
+  y : int
+    2nd imaginary component of quaternion to describe relative rotation
+    (second to first keyframe)
+  z : int
+    3rd imaginary component of quaternion to describe relative rotation
+    (second to first keyframe)
+  cov_r_x_x : float
+    Estimated variance of x (relative translation)
+  cov_r_x_y : float
+    Covariance of x and y (relative translation)
+  cov_r_x_z : float
+    Covariance of x and z (relative translation)
+  cov_r_y_y : float
+    Estimated variance of y (relative translation)
+  cov_r_y_z : float
+    Covariance of y and z (relative translation)
+  cov_r_z_z : float
+    Estimated variance of z (relative translation)
+  cov_c_x_x : float
+    Estimated variance of x (relative rotation)
+  cov_c_x_y : float
+    Covariance of x and y (relative rotation)
+  cov_c_x_z : float
+    Covariance of x and z (relative rotation)
+  cov_c_y_y : float
+    Estimated variance of y (relative rotation)
+  cov_c_y_z : float
+    Covariance of y and z (relative rotation)
+  cov_c_z_z : float
+    Estimated variance of z (relative rotation)
+  flags : int
+    Status flags of relative translation and rotation
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'timestamp_1' / construct.Int32ul,
+                   'timestamp_2' / construct.Int32ul,
+                   'trans' / construct.Array(3, construct.Int32sl),
+                   'w' / construct.Int32sl,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'cov_r_x_x' / construct.Float32l,
+                   'cov_r_x_y' / construct.Float32l,
+                   'cov_r_x_z' / construct.Float32l,
+                   'cov_r_y_y' / construct.Float32l,
+                   'cov_r_y_z' / construct.Float32l,
+                   'cov_r_z_z' / construct.Float32l,
+                   'cov_c_x_x' / construct.Float32l,
+                   'cov_c_x_y' / construct.Float32l,
+                   'cov_c_x_z' / construct.Float32l,
+                   'cov_c_y_y' / construct.Float32l,
+                   'cov_c_y_z' / construct.Float32l,
+                   'cov_c_z_z' / construct.Float32l,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'timestamp_1',
+               'timestamp_2',
+               'trans',
+               'w',
+               'x',
+               'y',
+               'z',
+               'cov_r_x_x',
+               'cov_r_x_y',
+               'cov_r_x_z',
+               'cov_r_y_y',
+               'cov_r_y_z',
+               'cov_r_z_z',
+               'cov_c_x_x',
+               'cov_c_x_y',
+               'cov_c_x_z',
+               'cov_c_y_y',
+               'cov_c_y_z',
+               'cov_c_z_z',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPoseRelative,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPoseRelative, self).__init__()
+      self.msg_type = SBP_MSG_POSE_RELATIVE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.timestamp_1 = kwargs.pop('timestamp_1')
+      self.timestamp_2 = kwargs.pop('timestamp_2')
+      self.trans = kwargs.pop('trans')
+      self.w = kwargs.pop('w')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.cov_r_x_x = kwargs.pop('cov_r_x_x')
+      self.cov_r_x_y = kwargs.pop('cov_r_x_y')
+      self.cov_r_x_z = kwargs.pop('cov_r_x_z')
+      self.cov_r_y_y = kwargs.pop('cov_r_y_y')
+      self.cov_r_y_z = kwargs.pop('cov_r_y_z')
+      self.cov_r_z_z = kwargs.pop('cov_r_z_z')
+      self.cov_c_x_x = kwargs.pop('cov_c_x_x')
+      self.cov_c_x_y = kwargs.pop('cov_c_x_y')
+      self.cov_c_x_z = kwargs.pop('cov_c_x_z')
+      self.cov_c_y_y = kwargs.pop('cov_c_y_y')
+      self.cov_c_y_z = kwargs.pop('cov_c_y_z')
+      self.cov_c_z_z = kwargs.pop('cov_c_z_z')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPoseRelative.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPoseRelative(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPoseRelative._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPoseRelative._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPoseRelative._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPoseRelative, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0102: MsgGPSTime,
@@ -5461,4 +5655,5 @@ msg_classes = {
   0x0217: MsgProtectionLevel,
   0x023A: MsgUtcLeapSecond,
   0x0244: MsgReferenceFrameParam,
+  0x0245: MsgPoseRelative,
 }

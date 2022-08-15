@@ -2456,3 +2456,112 @@ instance Binary MsgReferenceFrameParam where
 $(makeSBP 'msgReferenceFrameParam ''MsgReferenceFrameParam)
 $(makeJSON "_msgReferenceFrameParam_" ''MsgReferenceFrameParam)
 $(makeLenses ''MsgReferenceFrameParam)
+
+msgPosRelative :: Word16
+msgPosRelative = 0x0245
+
+-- | SBP class for message MSG_POS_RELATIVE (0x0245).
+--
+-- This solution message reports the relative pose of a sensor between two
+-- time instances. The relative pose comprises of a rotation and a translation
+-- which relates the sensor (e.g. camera) frame at a given time (first
+-- keyframe) to the sensor frame at another time (second key frame). The
+-- relative translations is a 3x1 vector described in the first keyframe.
+-- Relative rotation is described by a quaternion from second keyframe to the
+-- first keyframe.
+data MsgPosRelative = MsgPosRelative
+  { _msgPosRelative_timestamp_1 :: !Word32
+    -- ^ Timestamp of first keyframe
+  , _msgPosRelative_timestamp_2 :: !Word32
+    -- ^ Timestamp of second keyframe
+  , _msgPosRelative_trans     :: ![Double]
+    -- ^ Relative translation [x,y,z] described in first keyframe
+  , _msgPosRelative_w         :: !Int32
+    -- ^ Real component of quaternion to describe relative rotation (second to
+    -- first keyframe)
+  , _msgPosRelative_x         :: !Int32
+    -- ^ 1st imaginary component of quaternion to describe relative rotation
+    -- (second to first keyframe)
+  , _msgPosRelative_y         :: !Int32
+    -- ^ 2nd imaginary component of quaternion to describe relative rotation
+    -- (second to first keyframe)
+  , _msgPosRelative_z         :: !Int32
+    -- ^ 3rd imaginary component of quaternion to describe relative rotation
+    -- (second to first keyframe)
+  , _msgPosRelative_cov_r_x_x :: !Float
+    -- ^ Estimated variance of x (relative translation)
+  , _msgPosRelative_cov_r_x_y :: !Float
+    -- ^ Covariance of x and y (relative translation)
+  , _msgPosRelative_cov_r_x_z :: !Float
+    -- ^ Covariance of x and z (relative translation)
+  , _msgPosRelative_cov_r_y_y :: !Float
+    -- ^ Estimated variance of y (relative translation)
+  , _msgPosRelative_cov_r_y_z :: !Float
+    -- ^ Covariance of y and z (relative translation)
+  , _msgPosRelative_cov_r_z_z :: !Float
+    -- ^ Estimated variance of z (relative translation)
+  , _msgPosRelative_cov_c_x_x :: !Float
+    -- ^ Estimated variance of x (relative rotation)
+  , _msgPosRelative_cov_c_x_y :: !Float
+    -- ^ Covariance of x and y (relative rotation)
+  , _msgPosRelative_cov_c_x_z :: !Float
+    -- ^ Covariance of x and z (relative rotation)
+  , _msgPosRelative_cov_c_y_y :: !Float
+    -- ^ Estimated variance of y (relative rotation)
+  , _msgPosRelative_cov_c_y_z :: !Float
+    -- ^ Covariance of y and z (relative rotation)
+  , _msgPosRelative_cov_c_z_z :: !Float
+    -- ^ Estimated variance of z (relative rotation)
+  , _msgPosRelative_flags     :: !Word8
+    -- ^ Status flags of relative translation and rotation
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgPosRelative where
+  get = do
+    _msgPosRelative_timestamp_1 <- getWord32le
+    _msgPosRelative_timestamp_2 <- getWord32le
+    _msgPosRelative_trans <- replicateM 3 getFloat64le
+    _msgPosRelative_w <- (fromIntegral <$> getWord32le)
+    _msgPosRelative_x <- (fromIntegral <$> getWord32le)
+    _msgPosRelative_y <- (fromIntegral <$> getWord32le)
+    _msgPosRelative_z <- (fromIntegral <$> getWord32le)
+    _msgPosRelative_cov_r_x_x <- getFloat32le
+    _msgPosRelative_cov_r_x_y <- getFloat32le
+    _msgPosRelative_cov_r_x_z <- getFloat32le
+    _msgPosRelative_cov_r_y_y <- getFloat32le
+    _msgPosRelative_cov_r_y_z <- getFloat32le
+    _msgPosRelative_cov_r_z_z <- getFloat32le
+    _msgPosRelative_cov_c_x_x <- getFloat32le
+    _msgPosRelative_cov_c_x_y <- getFloat32le
+    _msgPosRelative_cov_c_x_z <- getFloat32le
+    _msgPosRelative_cov_c_y_y <- getFloat32le
+    _msgPosRelative_cov_c_y_z <- getFloat32le
+    _msgPosRelative_cov_c_z_z <- getFloat32le
+    _msgPosRelative_flags <- getWord8
+    pure MsgPosRelative {..}
+
+  put MsgPosRelative {..} = do
+    putWord32le _msgPosRelative_timestamp_1
+    putWord32le _msgPosRelative_timestamp_2
+    mapM_ putFloat64le _msgPosRelative_trans
+    (putWord32le . fromIntegral) _msgPosRelative_w
+    (putWord32le . fromIntegral) _msgPosRelative_x
+    (putWord32le . fromIntegral) _msgPosRelative_y
+    (putWord32le . fromIntegral) _msgPosRelative_z
+    putFloat32le _msgPosRelative_cov_r_x_x
+    putFloat32le _msgPosRelative_cov_r_x_y
+    putFloat32le _msgPosRelative_cov_r_x_z
+    putFloat32le _msgPosRelative_cov_r_y_y
+    putFloat32le _msgPosRelative_cov_r_y_z
+    putFloat32le _msgPosRelative_cov_r_z_z
+    putFloat32le _msgPosRelative_cov_c_x_x
+    putFloat32le _msgPosRelative_cov_c_x_y
+    putFloat32le _msgPosRelative_cov_c_x_z
+    putFloat32le _msgPosRelative_cov_c_y_y
+    putFloat32le _msgPosRelative_cov_c_y_z
+    putFloat32le _msgPosRelative_cov_c_z_z
+    putWord8 _msgPosRelative_flags
+
+$(makeSBP 'msgPosRelative ''MsgPosRelative)
+$(makeJSON "_msgPosRelative_" ''MsgPosRelative)
+$(makeLenses ''MsgPosRelative)

@@ -193,6 +193,7 @@ typedef union {
   sbp_msg_pos_llh_dep_a_t pos_llh_dep_a;
   sbp_msg_pos_llh_gnss_t pos_llh_gnss;
   sbp_msg_pos_llh_t pos_llh;
+  sbp_msg_pose_relative_t pose_relative;
   sbp_msg_pps_time_t pps_time;
   sbp_msg_print_dep_t print_dep;
   sbp_msg_protection_level_dep_a_t protection_level_dep_a;
@@ -665,6 +666,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
                                          &msg->pos_llh_gnss);
     case SbpMsgPosLlh:
       return sbp_msg_pos_llh_encode(buf, len, n_written, &msg->pos_llh);
+    case SbpMsgPoseRelative:
+      return sbp_msg_pose_relative_encode(buf, len, n_written,
+                                          &msg->pose_relative);
     case SbpMsgPpsTime:
       return sbp_msg_pps_time_encode(buf, len, n_written, &msg->pps_time);
     case SbpMsgPrintDep:
@@ -1283,6 +1287,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
       return sbp_msg_pos_llh_gnss_decode(buf, len, n_read, &msg->pos_llh_gnss);
     case SbpMsgPosLlh:
       return sbp_msg_pos_llh_decode(buf, len, n_read, &msg->pos_llh);
+    case SbpMsgPoseRelative:
+      return sbp_msg_pose_relative_decode(buf, len, n_read,
+                                          &msg->pose_relative);
     case SbpMsgPpsTime:
       return sbp_msg_pps_time_decode(buf, len, n_read, &msg->pps_time);
     case SbpMsgPrintDep:
@@ -1823,6 +1830,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_pos_llh_gnss_encoded_len(&msg->pos_llh_gnss);
     case SbpMsgPosLlh:
       return sbp_msg_pos_llh_encoded_len(&msg->pos_llh);
+    case SbpMsgPoseRelative:
+      return sbp_msg_pose_relative_encoded_len(&msg->pose_relative);
     case SbpMsgPpsTime:
       return sbp_msg_pps_time_encoded_len(&msg->pps_time);
     case SbpMsgPrintDep:
@@ -2379,6 +2388,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
       return sbp_msg_pos_llh_gnss_cmp(&a->pos_llh_gnss, &b->pos_llh_gnss);
     case SbpMsgPosLlh:
       return sbp_msg_pos_llh_cmp(&a->pos_llh, &b->pos_llh);
+    case SbpMsgPoseRelative:
+      return sbp_msg_pose_relative_cmp(&a->pose_relative, &b->pose_relative);
     case SbpMsgPpsTime:
       return sbp_msg_pps_time_cmp(&a->pps_time, &b->pps_time);
     case SbpMsgPrintDep:
