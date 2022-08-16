@@ -39,15 +39,24 @@ class MsgEd25519Signature(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  signature : array
+    ED25519 signature for messages.
+  fingerprint : array
+    SHA-1 fingerprint of the associated certificate.
+  signed_messages : array
+    CRCs of signed messages.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'signature' / construct.Array(64, construct.Int8ul),
+                   'fingerprint' / construct.Array(20, construct.Int8ul),
+                   'signed_messages' / construct.GreedyRange(construct.Int32ul),)
   __slots__ = [
-               'stub',
+               'signature',
+               'fingerprint',
+               'signed_messages',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -60,7 +69,9 @@ class MsgEd25519Signature(SBP):
       super( MsgEd25519Signature, self).__init__()
       self.msg_type = SBP_MSG_ED25519_SIGNATURE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.signature = kwargs.pop('signature')
+      self.fingerprint = kwargs.pop('fingerprint')
+      self.signed_messages = kwargs.pop('signed_messages')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -126,15 +137,26 @@ class MsgEd25519Certificate(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  stub : array
+  n_msg : int
+    Total number messages that make up the certificate. First nibble is the
+    size of the sequence (n), second nibble is the zero-indexed counter (ith
+    packet of n)
+  fingerprint : array
+    SHA-1 fingerprint of the associated certificate.
+  certificate_bytes : array
+    ED25519 certificate bytes.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'stub' / construct.GreedyRange(construct.Int8ul),)
+                   'n_msg' / construct.Int8ul,
+                   'fingerprint' / construct.Array(20, construct.Int8ul),
+                   'certificate_bytes' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
-               'stub',
+               'n_msg',
+               'fingerprint',
+               'certificate_bytes',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -147,7 +169,9 @@ class MsgEd25519Certificate(SBP):
       super( MsgEd25519Certificate, self).__init__()
       self.msg_type = SBP_MSG_ED25519_CERTIFICATE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.stub = kwargs.pop('stub')
+      self.n_msg = kwargs.pop('n_msg')
+      self.fingerprint = kwargs.pop('fingerprint')
+      self.certificate_bytes = kwargs.pop('certificate_bytes')
 
   def __repr__(self):
     return fmt_repr(self)
