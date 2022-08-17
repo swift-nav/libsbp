@@ -20,6 +20,37 @@ import com.swiftnav.sbp.gnss.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
+ *
+ * <p>You can have MSG_SSR_FLAG_HIGH_LEVEL inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
+ *
+ * <p>Integrity monitoring flags for multiple aggregated elements. An element could be a satellite,
+ * SSR grid point, or SSR tile. A group of aggregated elements being monitored for integrity could
+ * refer to:
+ *
+ * <p>- Satellites in a particular {GPS, GAL, BDS} constellation.
+ *
+ * <p>- Satellites in the line-of-sight of a particular SSR tile.
+ *
+ * <p>- Satellites in the line-of-sight of a particular SSR grid point.
+ *
+ * <p>The integrity usage for a group of aggregated elements varies according to the integrity flag
+ * of the satellites comprising that group.
+ *
+ * <p>SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity check and have flag
+ * INTEGRITY_FLAG_OK.
+ *
+ * <p>SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed the integrity
+ * check. Refer to more granular integrity messages for details on the specific failing elements.
+ *
+ * <p>SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity check, do not use
+ * for positioning.
+ *
+ * <p>SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of elements in the
+ * group.
+ */
 public class MsgSsrFlagHighLevel extends SBPMessage {
     public static final int TYPE = 0x0BB9;
 

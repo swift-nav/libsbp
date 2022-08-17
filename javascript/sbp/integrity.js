@@ -76,7 +76,21 @@ IntegritySSRHeader.prototype.fieldSpec.push(['chain_id', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_SSR_FLAG_HIGH_LEVEL (0x0BB9).
  *
- 
+ * Integrity monitoring flags for multiple aggregated elements. An element could be
+ * a satellite, SSR grid point, or SSR tile. A group of aggregated elements being
+ * monitored for integrity could refer to:  - Satellites in a particular {GPS, GAL,
+ * BDS} constellation.  - Satellites in the line-of-sight of a particular SSR tile.
+ * - Satellites in the line-of-sight of a particular SSR grid point.  The integrity
+ * usage for a group of aggregated elements varies according to the integrity flag
+ * of the satellites comprising that group.  SSR_INTEGRITY_USAGE_NOMINAL: All
+ * satellites received passed the integrity check and have flag INTEGRITY_FLAG_OK.
+ * SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed
+ * the integrity check. Refer to more granular integrity messages for details on
+ * the specific failing elements.  SSR_INTEGRITY_USAGE_ALERT: Most elements in the
+ * group failed the integrity check, do not use for positioning.
+ * SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of
+ * elements in the group.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field obs_time GPSTimeSec GNSS reference time of the observation used to generate the flag.
  * @field corr_time GPSTimeSec GNSS reference time of the correction associated to the flag.

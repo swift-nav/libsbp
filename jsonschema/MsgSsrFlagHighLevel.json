@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrFlagHighLevel",
   "title":"MsgSsrFlagHighLevel",
-  "description":"",
+  "description":"Integrity monitoring flags for multiple aggregated elements. An element could be a satellite, SSR grid point, or SSR tile. A group of aggregated elements being monitored for integrity could refer to:,\n,\n- Satellites in a particular {GPS, GAL, BDS} constellation.,\n,\n- Satellites in the line-of-sight of a particular SSR tile.,\n,\n- Satellites in the line-of-sight of a particular SSR grid point.,\n,\nThe integrity usage for a group of aggregated elements varies according to the integrity flag of the satellites comprising that group.,\n,\nSSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity check and have flag INTEGRITY_FLAG_OK.,\n,\nSSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed the integrity check. Refer to more granular integrity messages for details on the specific failing elements.,\n,\nSSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity check, do not use for positioning.,\n,\nSSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of elements in the group.\n",
   "type": "object",
   "properties": {
     "obs_time": {"$ref": "GpsTimeSec.json"},
