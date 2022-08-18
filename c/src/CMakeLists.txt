@@ -14,7 +14,6 @@ set(libsbp_SRCS
 swift_add_library(sbp
   SOURCES ${libsbp_SRCS}
 )
-add_library(swiftnav::sbp ALIAS sbp)
 
 if(I_KNOW_WHAT_I_AM_DOING_AND_HOW_DANGEROUS_IT_IS__LIBSBP_DISABLE_CRC_VALIDATION)
   target_compile_definitions(sbp PRIVATE LIBSBP_DISABLE_CRC_VALIDATION)

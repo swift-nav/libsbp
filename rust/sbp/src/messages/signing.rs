@@ -29,8 +29,17 @@ pub mod msg_ed25519_certificate {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        #[cfg_attr(feature = "serde", serde(rename = "stub"))]
-        pub stub: Vec<u8>,
+        /// Total number messages that make up the certificate. First nibble is the
+        /// size of the sequence (n), second nibble is the zero-indexed counter (ith
+        /// packet of n)
+        #[cfg_attr(feature = "serde", serde(rename = "n_msg"))]
+        pub n_msg: u8,
+        /// SHA-1 fingerprint of the associated certificate.
+        #[cfg_attr(feature = "serde", serde(rename = "fingerprint"))]
+        pub fingerprint: [u8; 20],
+        /// ED25519 certificate bytes.
+        #[cfg_attr(feature = "serde", serde(rename = "certificate_bytes"))]
+        pub certificate_bytes: Vec<u8>,
     }
 
     impl ConcreteMessage for MsgEd25519Certificate {
@@ -67,17 +76,25 @@ pub mod msg_ed25519_certificate {
     }
 
     impl WireFormat for MsgEd25519Certificate {
-        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <[u8; 20] as WireFormat>::MIN_LEN
+            + <Vec<u8> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.stub)
+            WireFormat::len(&self.n_msg)
+                + WireFormat::len(&self.fingerprint)
+                + WireFormat::len(&self.certificate_bytes)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.stub, buf);
+            WireFormat::write(&self.n_msg, buf);
+            WireFormat::write(&self.fingerprint, buf);
+            WireFormat::write(&self.certificate_bytes, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgEd25519Certificate {
                 sender_id: None,
-                stub: WireFormat::parse_unchecked(buf),
+                n_msg: WireFormat::parse_unchecked(buf),
+                fingerprint: WireFormat::parse_unchecked(buf),
+                certificate_bytes: WireFormat::parse_unchecked(buf),
             }
         }
     }
@@ -96,8 +113,15 @@ pub mod msg_ed25519_signature {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        #[cfg_attr(feature = "serde", serde(rename = "stub"))]
-        pub stub: Vec<u8>,
+        /// ED25519 signature for messages.
+        #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
+        pub signature: [u8; 64],
+        /// SHA-1 fingerprint of the associated certificate.
+        #[cfg_attr(feature = "serde", serde(rename = "fingerprint"))]
+        pub fingerprint: [u8; 20],
+        /// CRCs of signed messages.
+        #[cfg_attr(feature = "serde", serde(rename = "signed_messages"))]
+        pub signed_messages: Vec<u32>,
     }
 
     impl ConcreteMessage for MsgEd25519Signature {
@@ -134,17 +158,25 @@ pub mod msg_ed25519_signature {
     }
 
     impl WireFormat for MsgEd25519Signature {
-        const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
+        const MIN_LEN: usize = <[u8; 64] as WireFormat>::MIN_LEN
+            + <[u8; 20] as WireFormat>::MIN_LEN
+            + <Vec<u32> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.stub)
+            WireFormat::len(&self.signature)
+                + WireFormat::len(&self.fingerprint)
+                + WireFormat::len(&self.signed_messages)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.stub, buf);
+            WireFormat::write(&self.signature, buf);
+            WireFormat::write(&self.fingerprint, buf);
+            WireFormat::write(&self.signed_messages, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgEd25519Signature {
                 sender_id: None,
-                stub: WireFormat::parse_unchecked(buf),
+                signature: WireFormat::parse_unchecked(buf),
+                fingerprint: WireFormat::parse_unchecked(buf),
+                signed_messages: WireFormat::parse_unchecked(buf),
             }
         }
     }
