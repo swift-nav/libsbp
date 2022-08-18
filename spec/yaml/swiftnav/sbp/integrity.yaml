@@ -44,6 +44,40 @@ definitions:
   - MSG_SSR_FLAG_HIGH_LEVEL:
       id: 0x0BB9
       short_desc: High level integrity flags
+      desc: >
+        Integrity monitoring flags for multiple aggregated elements.
+        An element could be a satellite, SSR grid point, or SSR tile.
+        A group of aggregated elements being monitored for integrity could refer to:
+
+
+        - Satellites in a particular {GPS, GAL, BDS} constellation.
+
+
+        - Satellites in the line-of-sight of a particular SSR tile.
+
+
+        - Satellites in the line-of-sight of a particular SSR grid point.
+
+
+        The integrity usage for a group of aggregated elements varies according to the
+        integrity flag of the satellites comprising that group.
+
+
+        SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity
+        check and have flag INTEGRITY_FLAG_OK.
+
+
+        SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group
+        failed the integrity check. Refer to more granular integrity messages for
+        details on the specific failing elements.
+
+
+        SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity
+        check, do not use for positioning.
+
+
+        SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of
+        elements in the group.
       fields:
         - obs_time:
             type: GPSTimeSec
@@ -66,12 +100,36 @@ definitions:
         - use_gps_sat:
             type: u8
             desc: Use GPS satellites.
+            fields:
+              - 0-2:
+                  desc: Use GPS satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
         - use_gal_sat:
             type: u8
             desc: Use GAL satellites.
+            fields:
+              - 0-2:
+                  desc: Use GAL satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
         - use_bds_sat:
             type: u8
             desc: Use BDS satellites.
+            fields:
+              - 0-2:
+                  desc: Use BDS satellites.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
         - reserved:
             type: array
             size: 6
@@ -80,15 +138,47 @@ definitions:
         - use_tropo_grid_points:
             type: u8
             desc: Use tropo grid points.
+            fields:
+              - 0-2:
+                  desc: Use tropo grid points.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
         - use_iono_grid_points:
             type: u8
             desc: Use iono grid points.
+            fields:
+              - 0-2:
+                  desc: Use iono grid points.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
         - use_iono_tile_sat_los:
             type: u8
             desc: Use iono tile satellite LoS.
+            fields:
+              - 0-2:
+                  desc: Use iono tile satellite LoS.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
         - use_iono_grid_point_sat_los:
             type: u8
             desc: Use iono grid point satellite LoS.
+            fields:
+              - 0-2:
+                  desc: Use iono grid point satellite LoS.
+                  values:
+                    - 0: Nominal
+                    - 1: Warning
+                    - 2: Alert
+                    - 3: Not monitored
 
   - MSG_SSR_FLAG_SATELLITES:
       id: 0x0BBD
