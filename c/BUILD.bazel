@@ -1,0 +1,46 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+SBP_INCLUDE = glob(["include/**/*.h"])
+SBP_INCLUDE_INTERNAL = glob(["src/**/*.h"])
+
+print(SBP_INCLUDE_INTERNAL)
+
+cc_library(
+    name = "sbp",
+    srcs = [
+        "src/edc.c",
+        "src/sbp.c",
+        "src/v4/string/sbp_string.c",
+        "src/v4/string/multipart.c",
+        "src/v4/string/null_terminated.c",
+        "src/v4/string/double_null_terminated.c",
+        # generated files
+        "src/v4/acquisition.c",
+        "src/v4/bootload.c",
+        "src/v4/ext_events.c",
+        "src/v4/file_io.c",
+        "src/v4/flash.c",
+        "src/v4/gnss.c",
+        "src/v4/imu.c",
+        "src/v4/integrity.c",
+        "src/v4/linux.c",
+        "src/v4/logging.c",
+        "src/v4/mag.c",
+        "src/v4/navigation.c",
+        "src/v4/ndb.c",
+        "src/v4/observation.c",
+        "src/v4/orientation.c",
+        "src/v4/piksi.c",
+        "src/v4/sbas.c",
+        "src/v4/settings.c",
+        "src/v4/solution_meta.c",
+        "src/v4/ssr.c",
+        "src/v4/system.c",
+        "src/v4/tracking.c",
+        "src/v4/user.c",
+        "src/v4/vehicle.c",
+    ],
+    hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
+    includes = ["include", "src/include"], # FIXME - Don't expose this path publically.
+)
+

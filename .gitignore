@@ -91,3 +91,9 @@ gradle.properties
 java/gradlew
 java/gradlew.bat
 java/gradle/wrapper
+
+# Bazel
+bazel-bin
+bazel-out
+bazel-testlogs
+bazel-docker
