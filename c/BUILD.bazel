@@ -3,8 +3,6 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 SBP_INCLUDE = glob(["include/**/*.h"])
 SBP_INCLUDE_INTERNAL = glob(["src/**/*.h"])
 
-print(SBP_INCLUDE_INTERNAL)
-
 cc_library(
     name = "sbp",
     srcs = [
@@ -14,6 +12,7 @@ cc_library(
         "src/v4/string/multipart.c",
         "src/v4/string/null_terminated.c",
         "src/v4/string/double_null_terminated.c",
+        "src/v4/string/unterminated.c",
         # generated files
         "src/v4/acquisition.c",
         "src/v4/bootload.c",
@@ -33,6 +32,7 @@ cc_library(
         "src/v4/piksi.c",
         "src/v4/sbas.c",
         "src/v4/settings.c",
+        "src/v4/signing.c",
         "src/v4/solution_meta.c",
         "src/v4/ssr.c",
         "src/v4/system.c",
@@ -42,5 +42,23 @@ cc_library(
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
     includes = ["include", "src/include"], # FIXME - Don't expose this path publically.
+)
+
+SBP_LEGACY_C_SOURCES = glob(["test/legacy/auto*.c"])
+
+cc_test(
+    name = "sbp-legacy-test",
+    srcs = [
+            "test/check_main_legacy.c",
+            "test/check_edc.c",
+            "test/check_sbp.c",
+            "test/check_bitfield_macros.c",
+            "test/check_suites_legacy.h",
+    ] + SBP_LEGACY_C_SOURCES,
+    includes = ["include/libsbp"],
+    deps = [
+            ":sbp",
+            "@my-check//:check",
+    ],
 )
 
