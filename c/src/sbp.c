@@ -551,7 +551,14 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
       crc = crc16_ccitt((u8*)&(buf), 2, crc);
       crc = crc16_ccitt(&(s->msg_len), sizeof(s->msg_len), crc);
       crc = crc16_ccitt(SBP_FRAME_MSG_PAYLOAD(s->frame_buff), s->msg_len, crc);
-      if (s->crc == crc) {
+
+      #ifdef LIBSBP_DISABLE_CRC_VALIDATION
+      const bool valid_crc = true;
+      #else
+      const bool valid_crc = (s->crc == crc);
+      #endif
+
+      if (valid_crc) {
         /* Message complete, process frame callbacks and payload callbacks. */
         ret = process_frame(s, s->sender_id, s->msg_type,
                                 s->msg_len, SBP_FRAME_MSG_PAYLOAD(s->frame_buff),
