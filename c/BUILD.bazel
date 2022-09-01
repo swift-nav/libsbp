@@ -46,6 +46,7 @@ cc_library(
         "include",
         "src/include",
     ],  # FIXME - Don't expose this path publically.
+    visibility = [ "//visibility:public" ],
 )
 
 SBP_LEGACY_C_SOURCES = glob(["test/legacy/auto*.c"])
