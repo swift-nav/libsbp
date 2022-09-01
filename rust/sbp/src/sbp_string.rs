@@ -46,8 +46,14 @@ impl<T: AsRef<[u8]>> SbpString<T, Multipart> {
 }
 
 impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
-    pub fn parse(&self) -> Result<Vec<std::borrow::Cow<str>>, MultipartError> {
-        parse_to_vec(self.as_bytes(), 1)
+    pub fn parse(&self) -> Result<std::borrow::Cow<str>, MultipartError> {
+        parse_to_vec(self.as_bytes(), 1).and_then(|vec| {
+            if vec.len() != 1 {
+                Err(MultipartError)
+            } else {
+                vec.get(0).ok_or_else(|| MultipartError)
+            }
+        })
     }
 }
 
