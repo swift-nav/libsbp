@@ -51,7 +51,7 @@ impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
             if vec.len() != 1 {
                 Err(MultipartError)
             } else {
-                vec.get(0).ok_or_else(|| MultipartError)
+                Ok(vec.get(0).unwrap().clone())
             }
         })
     }
