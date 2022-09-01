@@ -39,39 +39,51 @@ pub struct Options {
 }
 
 fn main() -> Result<()> {
-    let options = Options::parse();
-
-    if options.debug {
-        std::env::set_var("RUST_LOG", "debug");
+    for msg in sbp::json::iter_messages(io::stdin()) {
+        match msg {
+            Ok(msg) => {
+                if let sbp::Sbp::MsgSettingsReadByIndexResp(msg) = msg {
+                    println!("{:?}", msg.setting.parse());
+                }
+            }
+            _ => {}
+        }
     }
 
-    env_logger::init();
-
-    let stdin: Box<dyn Read> = match options.input {
-        Some(path) => Box::new(File::open(path)?),
-        _ => Box::new(io::stdin().lock()),
-    };
-
-    let stdout: Box<dyn Write> = match options.output {
-        Some(path) => Box::new(File::create(path)?),
-        _ => Box::new(io::stdout().lock()),
-    };
-
-    if options.float_compat {
-        sbp2json(
-            stdin,
-            stdout,
-            HaskellishFloatFormatter {},
-            options.buffered,
-            options.fatal_errors,
-        )
-    } else {
-        sbp2json(
-            stdin,
-            stdout,
-            CompactFormatter {},
-            options.buffered,
-            options.fatal_errors,
-        )
-    }
+    Ok(())
+    // let options = Options::parse();
+    //
+    // if options.debug {
+    //     std::env::set_var("RUST_LOG", "debug");
+    // }
+    //
+    // env_logger::init();
+    //
+    // let stdin: Box<dyn Read> = match options.input {
+    //     Some(path) => Box::new(File::open(path)?),
+    //     _ => Box::new(io::stdin().lock()),
+    // };
+    //
+    // let stdout: Box<dyn Write> = match options.output {
+    //     Some(path) => Box::new(File::create(path)?),
+    //     _ => Box::new(io::stdout().lock()),
+    // };
+    //
+    // if options.float_compat {
+    //     sbp2json(
+    //         stdin,
+    //         stdout,
+    //         HaskellishFloatFormatter {},
+    //         options.buffered,
+    //         options.fatal_errors,
+    //     )
+    // } else {
+    //     sbp2json(
+    //         stdin,
+    //         stdout,
+    //         CompactFormatter {},
+    //         options.buffered,
+    //         options.fatal_errors,
+    //     )
+    // }
 }

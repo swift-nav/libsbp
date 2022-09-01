@@ -1,4 +1,6 @@
+use std::borrow::Cow;
 use std::fmt;
+use std::fmt::Formatter;
 use std::marker::PhantomData;
 
 use bytes::{Buf, BufMut};
@@ -34,6 +36,24 @@ where
     /// Returns a byte vector of this SbpString's contents.
     pub fn to_vec(&self) -> Vec<u8> {
         self.data.as_ref().to_vec()
+    }
+}
+
+impl<T: AsRef<[u8]>> SbpString<T, Multipart> {
+    pub fn parse(&self) -> Result<Vec<std::borrow::Cow<str>>, MultipartError> {
+        parse_to_vec(self.as_bytes(), 1)
+    }
+}
+
+impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
+    pub fn parse(&self) -> Result<Vec<std::borrow::Cow<str>>, MultipartError> {
+        parse_to_vec(self.as_bytes(), 1)
+    }
+}
+
+impl<T: AsRef<[u8]>> SbpString<T, DoubleNullTerminated> {
+    pub fn parse(&self) -> Result<Vec<std::borrow::Cow<str>>, MultipartError> {
+        parse_to_vec(self.as_bytes(), 2)
     }
 }
 
@@ -218,6 +238,9 @@ macro_rules! forward_payload_vec {
     };
 }
 
+#[derive(Debug)]
+pub struct MultipartError;
+
 /// Handles encoding and decoding of unterminated strings.
 ///
 /// In SBP an unterminated string is a sequence of characters without a NULL
@@ -288,6 +311,26 @@ forward_payload_vec!(Multipart, 0);
 pub struct DoubleNullTerminated;
 
 forward_payload_vec!(DoubleNullTerminated, 2);
+
+fn parse_to_vec(bytes: &[u8], null: usize) -> Result<Vec<Cow<str>>, MultipartError> {
+    let mut bytes: &[u8] = bytes;
+    for _ in 0..null {
+        match bytes.split_last() {
+            Some((last, other)) => {
+                if last == &0 {
+                    bytes = other;
+                } else {
+                    return Err(MultipartError);
+                }
+            }
+            None => return Err(MultipartError),
+        };
+    }
+    Ok(bytes
+        .split(|b| b == &0)
+        .map(String::from_utf8_lossy)
+        .collect())
+}
 
 #[cfg(test)]
 mod tests {
