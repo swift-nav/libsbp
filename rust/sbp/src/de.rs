@@ -1,3 +1,5 @@
+use std::borrow::{Borrow, BorrowMut};
+use std::io::Read;
 use std::{
     io,
     time::{Duration, Instant},
@@ -217,7 +219,7 @@ impl Decoder for SbpFramer {
     type Error = Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        todo!()
+        Ok(SbpFrame::<BytesMut>::parse(src))
     }
     fn decode_eof(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         todo!()
@@ -226,45 +228,52 @@ impl Decoder for SbpFramer {
 
 pub struct SbpFrame<B> {
     inner: B,
+    payload_len: usize,
 }
 
-impl<B: bytes::Buf> SbpFrame<B> {
-
-    pub fn new(bytes: B) -> Self {
-        Self { inner: bytes }
+impl SbpFrame<BytesMut> {
+    pub fn new(inner: BytesMut, payload_len: usize) -> Self {
+        Self { inner, payload_len }
     }
 
     pub fn msg_type(&self) -> u16 {
-        todo!()
+        let mut slice = &self.inner[1..];
+        slice.get_u16_le()
     }
 
     pub fn sender_id(&self) -> u16 {
-        todo!()
+        let mut slice = &self.inner[3..];
+        slice.get_u16_le()
     }
 
     pub fn payload(&self) -> &[u8] {
-        todo!()
+        let mut payload = &self.inner[HEADER_LEN..self.payload_len];
+        payload
     }
 
-    pub fn check_crc(&self) -> io::Result<()> {
-        todo!()
+    pub fn check_crc(&self) -> bool {
+        let mut slice = &self.inner[self.payload_len..];
+        let crc = slice.get_u16_le();
+        check_crc(self.msg_type(), self.sender_id(), self.payload(),crc)
     }
 
     pub fn len(&self) -> usize {
-        todo!()
+        self.inner.len()
     }
 }
 
 impl SbpFrame<BytesMut> {
     pub fn parse(buf: &mut BytesMut) -> Option<Self> {
-        todo!()
-        // if buf.len() < HEADER_LEN {
-        //     return None;
-        // }
-        // let payload_len = todo!();
-        // // return none if not enough bytes
-        // let at = HEADER_LEN + payload_len + CRC_LEN;
-        // Some(SbpFrame::new(buf.split_to(at)))
+        if buf.len() < HEADER_LEN {
+            return None;
+        }
+        let payload_len = *&buf[5] as usize;
+        // return none if not enough bytes
+        let at = HEADER_LEN + payload_len + CRC_LEN;
+        if buf.len() < at {
+            return None;
+        }
+        Some(SbpFrame::new(buf.split_to(at), payload_len))
     }
 }
 

@@ -158,7 +158,7 @@ mod swiftnav_conversions;
 #[cfg(feature = "swiftnav")]
 pub mod time;
 
-pub mod de;
+pub(crate) mod de;
 pub(crate) mod ser;
 pub(crate) mod wire_format;
 
