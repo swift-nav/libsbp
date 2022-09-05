@@ -174,6 +174,107 @@ impl std::fmt::Display for CrcError {
 
 impl std::error::Error for CrcError {}
 
+// pub struct Framer<R>(FramedRead<R, SbpDecoder>);
+//
+// impl<R> Framer<R> {
+//     pub fn new(reader: R) -> Self {
+//         Self(FramedRead::new(reader, Framer))
+//     }
+// }
+//
+// impl<R: io::Read> Iterator for Framer<R> {
+//     type Item = io::Result<Frame<BytesMut>>;
+//     fn next(&mut self) -> Option<Self::Item> {
+//         self.0.next()
+//     }
+// }
+
+pub struct Framer<R> {
+    inner: FramedRead<R, SbpFramer>,
+}
+
+impl<R: io::Read> Framer<R> {
+    pub fn new(reader: R) -> Self {
+        Self {
+            inner: FramedRead::new(reader, SbpFramer),
+        }
+    }
+}
+
+impl<R: io::Read> Iterator for Framer<R> {
+    type Item = Result<SbpFrame<BytesMut>, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.inner.next()
+    }
+}
+
+#[derive(Debug, Clone, Default)]
+struct SbpFramer;
+
+impl Decoder for SbpFramer {
+    type Item = SbpFrame<BytesMut>;
+    type Error = Error;
+
+    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
+        todo!()
+    }
+    fn decode_eof(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
+        todo!()
+    }
+}
+
+pub struct SbpFrame<B> {
+    inner: B,
+}
+
+impl<B: bytes::Buf> SbpFrame<B> {
+
+    pub fn new(bytes: B) -> Self {
+        Self { inner: bytes }
+    }
+
+    pub fn msg_type(&self) -> u16 {
+        todo!()
+    }
+
+    pub fn sender_id(&self) -> u16 {
+        todo!()
+    }
+
+    pub fn payload(&self) -> &[u8] {
+        todo!()
+    }
+
+    pub fn check_crc(&self) -> io::Result<()> {
+        todo!()
+    }
+
+    pub fn len(&self) -> usize {
+        todo!()
+    }
+}
+
+impl SbpFrame<BytesMut> {
+    pub fn parse(buf: &mut BytesMut) -> Option<Self> {
+        todo!()
+        // if buf.len() < HEADER_LEN {
+        //     return None;
+        // }
+        // let payload_len = todo!();
+        // // return none if not enough bytes
+        // let at = HEADER_LEN + payload_len + CRC_LEN;
+        // Some(SbpFrame::new(buf.split_to(at)))
+    }
+}
+
+impl<'a> SbpFrame<&'a [u8]> {
+    pub fn parse(buf: &'a mut [u8]) -> Option<Self> {
+        // same but no .split_to() - just create a new slice from the input
+        todo!()
+    }
+}
+
 #[derive(Debug, Clone, Default)]
 struct SbpDecoder;
 
