@@ -13,7 +13,7 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 /// Convert "compact" SBP JSON data to an "exploded" form
 #[derive(Debug, Parser)]
-#[clap(name = "json2json", verbatim_doc_comment, version = env!("VERGEN_GIT_SEMVER"))]
+#[clap(name = "json2json", verbatim_doc_comment, version = env!("VERGEN_SEMVER_LIGHTWEIGHT"))]
 struct Options {
     /// Path to input file
     input: Option<PathBuf>,
