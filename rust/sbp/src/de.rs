@@ -226,39 +226,48 @@ impl Decoder for SbpFramer {
     }
 }
 
-pub struct SbpFrame<B> {
-    inner: B,
-    payload_len: usize,
-}
+pub struct SbpFrame<B>(B);
 
-impl SbpFrame<BytesMut> {
-    pub fn new(inner: BytesMut, payload_len: usize) -> Self {
-        Self { inner, payload_len }
-    }
-
+impl<B: bytes::Buf> SbpFrame<B> {
     pub fn msg_type(&self) -> u16 {
-        let mut slice = &self.inner[1..];
+        let mut slice = &self.0.chunk()[1..];
         slice.get_u16_le()
     }
 
     pub fn sender_id(&self) -> u16 {
-        let mut slice = &self.inner[3..];
+        let mut slice = &self.0.chunk()[3..];
         slice.get_u16_le()
+    }
+    pub fn payload_len(&self) -> usize {
+        let mut slice = &self.0.chunk()[5..];
+        slice.get_u8().into()
     }
 
     pub fn payload(&self) -> &[u8] {
-        let mut payload = &self.inner[HEADER_LEN..self.payload_len];
-        payload
+        &self.0.chunk()[HEADER_LEN..HEADER_LEN + self.payload_len()]
     }
 
-    pub fn check_crc(&self) -> bool {
-        let mut slice = &self.inner[self.payload_len..];
-        let crc = slice.get_u16_le();
-        check_crc(self.msg_type(), self.sender_id(), self.payload(),crc)
+    pub fn crc(&self) -> u16 {
+        let mut slice = &self.0.chunk()[HEADER_LEN + self.payload_len()..];
+        slice.get_u16_le()
+    }
+
+    pub fn check_crc(&self) -> Result<u16, CrcError> {
+        let actual = self.crc();
+        let data = &self.0.chunk()[1..HEADER_LEN + self.payload_len()];
+        if actual == crc16::State::<crc16::XMODEM>::calculate(data) {
+            Ok(actual)
+        } else {
+            Err(CrcError {
+                msg_type: self.msg_type(),
+                sender_id: self.sender_id(),
+                crc: actual,
+            })
+        }
     }
 
     pub fn len(&self) -> usize {
-        self.inner.len()
+        self.0.chunk().len()
     }
 }
 
@@ -273,7 +282,7 @@ impl SbpFrame<BytesMut> {
         if buf.len() < at {
             return None;
         }
-        Some(SbpFrame::new(buf.split_to(at), payload_len))
+        Some(SbpFrame(buf.split_to(at)))
     }
 }
 
