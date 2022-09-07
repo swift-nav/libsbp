@@ -43,8 +43,8 @@ use crate::{de, wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 /// }
 /// ```
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, Error>> {
-    SbpDecode::new(input)
-    // SbpDecoder::framed(input)
+    // SbpDecode::new(input)
+    SbpDecoder::framed(input)
 }
 
 /// Deserialize the IO stream into an iterator of messages. Provide a timeout
@@ -252,6 +252,7 @@ impl Decoder for SbpFramer {
     }
 }
 
+#[derive(Debug)]
 pub struct SbpFrame<B>(B);
 
 impl<B: bytes::Buf> SbpFrame<B> {
@@ -264,9 +265,9 @@ impl<B: bytes::Buf> SbpFrame<B> {
         let mut slice = &self.0.chunk()[3..];
         slice.get_u16_le()
     }
+
     pub fn payload_len(&self) -> usize {
-        let mut slice = &self.0.chunk()[5..];
-        slice.get_u8().into()
+        self.0.chunk()[5] as usize
     }
 
     pub fn payload(&self) -> &[u8] {
@@ -303,7 +304,6 @@ impl SbpFrame<BytesMut> {
             return None;
         }
         let payload_len = *&buf[5] as usize;
-        // return none if not enough bytes
         let at = HEADER_LEN + payload_len + CRC_LEN;
         if buf.len() < at {
             return None;
