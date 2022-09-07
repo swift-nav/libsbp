@@ -88,6 +88,7 @@ pub fn parse_frame(buf: &mut BytesMut) -> Option<Result<Frame<BytesMut>, CrcErro
     buf.advance(HEADER_LEN);
     let payload = buf.split_to(payload_len);
     let crc = buf.get_u16_le();
+    // println!("{:?} {:?}", &buf,&slice);
     if check_crc(msg_type, sender_id, &payload, crc) {
         Some(Ok(Frame {
             msg_type,
@@ -300,6 +301,11 @@ impl<B: bytes::Buf> SbpFrame<B> {
 
 impl SbpFrame<BytesMut> {
     pub fn parse(buf: &mut BytesMut) -> Option<Self> {
+        if let Some(index) = buf.iter().position(|b| b == &PREAMBLE) {
+            buf.advance(index);
+            return None;
+        }
+
         if buf.len() < HEADER_LEN {
             return None;
         }
