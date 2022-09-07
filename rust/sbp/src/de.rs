@@ -8,7 +8,7 @@ use std::{
 use bytes::{Buf, BytesMut};
 use dencode::{Decoder, FramedRead};
 
-use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
+use crate::{de, wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 
 /// Deserialize the IO stream into an iterator of messages.
 ///
@@ -43,7 +43,8 @@ use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 /// }
 /// ```
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, Error>> {
-    SbpDecoder::framed(input)
+    SbpDecode::new(input)
+    // SbpDecoder::framed(input)
 }
 
 /// Deserialize the IO stream into an iterator of messages. Provide a timeout
@@ -208,6 +209,31 @@ impl<R: io::Read> Iterator for Framer<R> {
 
     fn next(&mut self) -> Option<Self::Item> {
         self.inner.next()
+    }
+}
+
+// not sure a good naming for this atm
+pub struct SbpDecode<R>(FramedRead<R, SbpFramer>);
+
+impl<R: io::Read> SbpDecode<R> {
+    pub fn new(reader: R) -> Self {
+        SbpDecode(FramedRead::new(reader, SbpFramer))
+    }
+}
+
+impl<R: io::Read> Iterator for SbpDecode<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.next().and_then(|frame| {
+            frame.map_or(None, |f| {
+                Some(
+                    f.check_crc()
+                        .map_err(|e| de::Error::from(e))
+                        .and_then(|_| Sbp::from_sbp_frame(f).map_err(|e| de::Error::from(e))),
+                )
+            })
+        })
     }
 }
 
