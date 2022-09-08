@@ -302,7 +302,7 @@ mod lib {
     pub(crate) use set_bit_range;
 }
 
-use crate::de::SbpFrame;
+
 use lib::*;
 
 /// Common functionality available to all SBP messages.

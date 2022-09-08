@@ -1,14 +1,12 @@
-use std::borrow::{Borrow, BorrowMut};
-use std::io::Read;
 use std::{
     io,
     time::{Duration, Instant},
 };
 
 use bytes::{Buf, BytesMut};
-use dencode::{Decoder, FramedRead};
+use dencode::{Decoder as _, FramedRead};
 
-use crate::{de, wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
+use crate::{wire_format::PayloadParseError, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 
 /// Deserialize the IO stream into an iterator of messages.
 ///
@@ -43,8 +41,7 @@ use crate::{de, wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 /// }
 /// ```
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, Error>> {
-    SbpDecode::new(input)
-    // SbpDecoder::framed(input)
+    Decoder::new(input)
 }
 
 /// Deserialize the IO stream into an iterator of messages. Provide a timeout
@@ -61,7 +58,7 @@ pub fn iter_messages_with_timeout<R: io::Read>(
 pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     input: R,
 ) -> impl futures::Stream<Item = Result<Sbp, Error>> {
-    SbpDecoder::framed(input)
+    Decoder::new(input)
 }
 
 #[cfg(feature = "async")]
@@ -72,19 +69,185 @@ pub fn stream_messages_with_timeout<R: futures::AsyncRead + Unpin>(
     TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
 }
 
-fn check_crc(msg_type: u16, sender_id: u16, payload: &[u8], crc_in: u16) -> bool {
-    let mut crc = crc16::State::<crc16::XMODEM>::new();
-    crc.update(&msg_type.to_le_bytes());
-    crc.update(&sender_id.to_le_bytes());
-    crc.update(&[payload.len() as u8]);
-    crc.update(payload);
-    crc.get() == crc_in
+pub struct Frame(BytesMut);
+
+impl Frame {
+    pub fn to_sbp(&self) -> Result<Sbp, Error> {
+        todo!()
+    }
+
+    pub fn as_bytes(&self) -> &[u8] {
+        &self.0
+    }
+
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+
+    pub fn msg_type(&self) -> u16 {
+        let mut slice = &self.0[1..];
+        slice.get_u16_le()
+    }
+
+    pub fn sender_id(&self) -> u16 {
+        let mut slice = &self.0[3..];
+        slice.get_u16_le()
+    }
+
+    pub fn payload_len(&self) -> usize {
+        self.0[5] as usize
+    }
+
+    pub fn payload(&self) -> &[u8] {
+        &self.0[HEADER_LEN..HEADER_LEN + self.payload_len()]
+    }
+
+    pub fn crc(&self) -> u16 {
+        let mut slice = &self.0[HEADER_LEN + self.payload_len()..];
+        slice.get_u16_le()
+    }
+
+    pub fn check_crc(&self) -> Result<u16, CrcError> {
+        let actual = self.crc();
+        let data = &self.0[1..HEADER_LEN + self.payload_len()];
+        if actual == crc16::State::<crc16::XMODEM>::calculate(data) {
+            Ok(actual)
+        } else {
+            Err(CrcError {
+                msg_type: self.msg_type(),
+                sender_id: self.sender_id(),
+                crc: actual,
+            })
+        }
+    }
+}
+
+pub struct Framer<R>(FramedRead<R, FramerImpl>);
+
+impl<R> Framer<R> {
+    pub fn new(reader: R) -> Self {
+        Framer(FramedRead::new(reader, FramerImpl))
+    }
+}
+
+impl<R: io::Read> Iterator for Framer<R> {
+    type Item = Result<Frame, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.next()
+    }
+}
+
+struct FramerImpl;
+
+impl dencode::Decoder for FramerImpl {
+    type Item = Frame;
+    type Error = io::Error;
+
+    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
+        let start = match src.iter().position(|b| b == &PREAMBLE) {
+            Some(idx) => idx,
+            None => {
+                src.clear();
+                return Ok(None);
+            }
+        };
+        src.advance(start);
+        if src.len() < HEADER_LEN {
+            src.reserve(MAX_FRAME_LEN);
+            return Ok(None);
+        }
+        let end = HEADER_LEN + src[5] as usize + CRC_LEN;
+        if src.len() < end {
+            src.reserve(MAX_FRAME_LEN);
+            return Ok(None);
+        }
+        Ok(Some(Frame(src.split_to(end))))
+    }
+}
+
+pub struct Decoder<R>(Framer<R>);
+
+impl<R> Decoder<R> {
+    pub fn new(reader: R) -> Self {
+        Decoder(Framer::new(reader))
+    }
+}
+
+impl<R: io::Read> Iterator for Decoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let frame = match self.0.next()? {
+            Ok(frame) => frame,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(frame.to_sbp())
+    }
+}
+
+#[cfg(feature = "async")]
+impl<R: futures::AsyncRead + Unpin> futures::Stream for Decoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn poll_next(
+        mut self: std::pin::Pin<&mut Self>,
+        cx: &mut std::task::Context<'_>,
+    ) -> std::task::Poll<Option<Self::Item>> {
+        let frame = match futures::ready!(std::pin::Pin::new(&mut self.0).poll_next(cx)) {
+            Some(Ok(frame)) => frame,
+            Some(Err(e)) => return std::task::Poll::Ready(Some(Err(e.into()))),
+            None => return std::task::Poll::Ready(None),
+        };
+        let msg = frame.to_sbp();
+        std::task::Poll::Ready(Some(msg))
+    }
+}
+
+struct TimeoutSbpDecoder {
+    timeout_duration: Duration,
+    last_msg_received: Instant,
+}
+
+impl TimeoutSbpDecoder {
+    fn new(timeout_duration: Duration) -> Self {
+        Self {
+            timeout_duration,
+            last_msg_received: Instant::now(),
+        }
+    }
+    fn framed_with_timeout<W>(
+        writer: W,
+        timeout_duration: Duration,
+    ) -> FramedRead<W, TimeoutSbpDecoder> {
+        FramedRead::new(writer, Self::new(timeout_duration))
+    }
+}
+
+impl dencode::Decoder for TimeoutSbpDecoder {
+    type Item = Sbp;
+    type Error = Error;
+
+    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
+        if self.last_msg_received.elapsed() > self.timeout_duration {
+            return Err(std::io::Error::new(std::io::ErrorKind::TimedOut, "timeout").into());
+        }
+        let frame = match FramerImpl.decode(src)? {
+            Some(frame) => frame,
+            None => return Ok(None),
+        };
+        let next = frame.to_sbp();
+        if let Ok(Some(_)) = next {
+            self.last_msg_received = Instant::now();
+        }
+        next
+    }
 }
 
 /// All errors that can occur while reading messages.
 #[derive(Debug)]
 pub enum Error {
-    PayloadParseError(wire_format::PayloadParseError),
+    PayloadParseError(PayloadParseError),
     CrcError(CrcError),
     IoError(io::Error),
 }
@@ -101,8 +264,8 @@ impl std::fmt::Display for Error {
 
 impl std::error::Error for Error {}
 
-impl From<wire_format::PayloadParseError> for Error {
-    fn from(e: wire_format::PayloadParseError) -> Self {
+impl From<PayloadParseError> for Error {
+    fn from(e: PayloadParseError) -> Self {
         Error::PayloadParseError(e)
     }
 }
@@ -138,173 +301,6 @@ impl std::fmt::Display for CrcError {
 
 impl std::error::Error for CrcError {}
 
-pub struct Framer<R> {
-    inner: FramedRead<R, SbpFramer>,
-}
-
-impl<R: io::Read> Framer<R> {
-    pub fn new(reader: R) -> Self {
-        Self {
-            inner: FramedRead::new(reader, SbpFramer),
-        }
-    }
-}
-
-impl<R: io::Read> Iterator for Framer<R> {
-    type Item = Result<SbpFrame<BytesMut>, Error>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.inner.next()
-    }
-}
-
-// not sure a good naming for this atm
-pub struct SbpDecode<R>(FramedRead<R, SbpFramer>);
-
-impl<R: io::Read> SbpDecode<R> {
-    pub fn new(reader: R) -> Self {
-        SbpDecode(FramedRead::new(reader, SbpFramer))
-    }
-}
-
-impl<R: io::Read> Iterator for SbpDecode<R> {
-    type Item = Result<Sbp, Error>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.0.next().and_then(|frame| {
-            frame.map_or(None, |f| {
-                Some(f.check_crc().map_err(|e| de::Error::from(e)).and_then(|_| {
-                    Sbp::from_field(f.msg_type(), f.sender_id(), f.payload())
-                        .map_err(|e| de::Error::from(e))
-                }))
-            })
-        })
-    }
-}
-
-#[derive(Debug, Clone, Default)]
-struct SbpFramer;
-
-impl Decoder for SbpFramer {
-    type Item = SbpFrame<BytesMut>;
-    type Error = Error;
-
-    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        let start = match src.iter().position(|b| b == &PREAMBLE) {
-            Some(idx) => idx,
-            None => {
-                src.clear();
-                return Ok(None);
-            }
-        };
-        src.advance(start);
-        if src.len() < HEADER_LEN {
-            src.reserve(MAX_FRAME_LEN);
-            return Ok(None);
-        }
-        let payload_len = src[5] as usize;
-        let at = HEADER_LEN + payload_len + CRC_LEN;
-        if src.len() < at {
-            src.reserve(MAX_FRAME_LEN);
-            return Ok(None);
-        }
-        let frame = SbpFrame(src.split_to(at));
-        Ok(Some(frame))
-    }
-
-    fn decode_eof(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        todo!()
-    }
-}
-
-/// The wire representation of an SBP message.
-#[derive(Debug)]
-pub struct SbpFrame<B>(B);
-
-impl<B: bytes::Buf> SbpFrame<B> {
-    pub fn msg_type(&self) -> u16 {
-        let mut slice = &self.0.chunk()[1..];
-        slice.get_u16_le()
-    }
-
-    pub fn sender_id(&self) -> u16 {
-        let mut slice = &self.0.chunk()[3..];
-        slice.get_u16_le()
-    }
-
-    pub fn payload_len(&self) -> usize {
-        self.0.chunk()[5] as usize
-    }
-
-    pub fn payload(&self) -> &[u8] {
-        &self.0.chunk()[HEADER_LEN..HEADER_LEN + self.payload_len()]
-    }
-
-    pub fn crc(&self) -> u16 {
-        let mut slice = &self.0.chunk()[HEADER_LEN + self.payload_len()..];
-        slice.get_u16_le()
-    }
-
-    pub fn check_crc(&self) -> Result<u16, CrcError> {
-        let actual = self.crc();
-        let data = &self.0.chunk()[1..HEADER_LEN + self.payload_len()];
-        if actual == crc16::State::<crc16::XMODEM>::calculate(data) {
-            Ok(actual)
-        } else {
-            Err(CrcError {
-                msg_type: self.msg_type(),
-                sender_id: self.sender_id(),
-                crc: actual,
-            })
-        }
-    }
-
-    pub fn len(&self) -> usize {
-        self.0.chunk().len()
-    }
-}
-
-struct TimeoutSbpDecoder {
-    timeout_duration: Duration,
-    last_msg_received: Instant,
-}
-
-impl TimeoutSbpDecoder {
-    fn new(timeout_duration: Duration) -> Self {
-        Self {
-            timeout_duration,
-            last_msg_received: Instant::now(),
-        }
-    }
-    fn framed_with_timeout<W>(
-        writer: W,
-        timeout_duration: Duration,
-    ) -> FramedRead<W, TimeoutSbpDecoder> {
-        FramedRead::new(writer, Self::new(timeout_duration))
-    }
-}
-
-impl Decoder for TimeoutSbpDecoder {
-    type Item = Sbp;
-    type Error = Error;
-
-    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        if self.last_msg_received.elapsed() > self.timeout_duration {
-            return Err(std::io::Error::new(std::io::ErrorKind::TimedOut, "timeout").into());
-        }
-        let mut res = SbpDecode::new(src.reader());
-        let next = res.next().transpose();
-        if let Ok(Some(_)) = next {
-            self.last_msg_received = Instant::now();
-        }
-        next
-    }
-
-    fn decode_eof(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        todo!()
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use std::{
@@ -312,9 +308,7 @@ mod tests {
         io::{Cursor, Write},
     };
 
-    use bytes::BufMut;
-
-    use crate::{messages::navigation::MsgBaselineEcef, wire_format::WireFormat};
+    use crate::messages::navigation::MsgBaselineEcef;
 
     use super::*;
 
@@ -370,20 +364,18 @@ mod tests {
     #[test]
     fn test_parse_nothing() {
         let data = vec![0u8; 1000];
-        let mut bytes = BytesMut::from(&data[..]);
+        let bytes = BytesMut::from(&data[..]);
         assert_eq!(bytes.len(), 1000);
-        assert!(matches!(SbpDecoder.decode(&mut bytes), Ok(None)));
-        assert!(bytes.is_empty());
+        assert!(matches!(Decoder::new(bytes.reader()).next(), None));
     }
 
     #[test]
     fn test_parse_bad_message() {
         // Properly framed data but the payload isn't right given the message type
         let data: Vec<u8> = vec![0x55, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x65, 0x8D];
-        let mut bytes = BytesMut::from(&data[..]);
-        let actual = SbpDecoder.decode(&mut bytes);
+        let bytes = BytesMut::from(&data[..]);
+        let actual = Decoder::new(bytes.reader()).next().unwrap();
         assert!(matches!(actual, Err(Error::PayloadParseError(_))));
-        assert!(bytes.is_empty());
     }
 
     #[test]
@@ -424,26 +416,8 @@ mod tests {
     }
 
     #[test]
-    fn test_invalid_utf8() {
-        let packet = vec![
-            0x55, 0xa7, 0x0, 0x0, 0x10, 0x48, 0x8, 0x0, 0x73, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f,
-            0x6e, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xb6, 0xe8, 0xab,
-        ];
-        let mut msgs = iter_messages(Cursor::new(packet));
-
-        let sbp_result = msgs.next().unwrap();
-        assert!(sbp_result.is_ok());
-
-        let sbp_message = sbp_result.unwrap();
-        assert_eq!(sbp_message.len(), 72);
-    }
-
-    #[test]
     fn test_decode_sbp() {
-        let mut packet = BytesMut::from(
+        let packet = BytesMut::from(
             &[
                 0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee,
                 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb,
@@ -461,8 +435,7 @@ mod tests {
             z: 631798,
         };
 
-        let msg = SbpDecoder.decode(&mut packet).unwrap().unwrap();
-        assert!(packet.is_empty());
+        let msg = Decoder::new(packet.reader()).next().unwrap().unwrap();
 
         let msg: MsgBaselineEcef = msg.try_into().unwrap();
         assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
