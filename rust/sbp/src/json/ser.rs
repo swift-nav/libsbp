@@ -8,7 +8,6 @@ use serde_json::{ser::Formatter, Serializer};
 use super::{JsonError, JsonOutput};
 
 use crate::{
-    de::Frame,
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
     SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, PREAMBLE,
@@ -194,11 +193,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
     fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<(), Self::Error> {
         let formatter = self.formatter.clone();
         let payload = base64::decode(input.data.payload)?;
-        let msg = Sbp::from_frame(Frame {
-            msg_type: input.data.msg_type,
-            sender_id: input.data.sender,
-            payload: BytesMut::from(&payload[..]),
-        })?;
+        let msg = Sbp::from_field(input.data.msg_type, input.data.sender, BytesMut::from(&payload[..]))?;
         let output = Json2JsonOutput {
             data: JsonOutput {
                 common: get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?,

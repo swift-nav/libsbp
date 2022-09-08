@@ -158,7 +158,7 @@ mod swiftnav_conversions;
 #[cfg(feature = "swiftnav")]
 pub mod time;
 
-pub(crate) mod de;
+pub mod de;
 pub(crate) mod ser;
 pub(crate) mod wire_format;
 
@@ -190,7 +190,7 @@ pub use crate::messages::SbpMessage;
 pub use ser::{to_vec, to_writer, Error as SerializeError, SbpEncoder};
 
 #[doc(inline)]
-pub use de::{iter_messages, iter_messages_with_timeout, Error as DeserializeError, Frame};
+pub use de::{iter_messages, iter_messages_with_timeout, Error as DeserializeError};
 
 #[cfg(feature = "async")]
 #[doc(inline)]

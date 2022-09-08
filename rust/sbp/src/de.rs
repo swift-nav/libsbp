@@ -43,8 +43,8 @@ use crate::{de, wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 /// }
 /// ```
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, Error>> {
-    // SbpDecode::new(input)
-    SbpDecoder::framed(input)
+    SbpDecode::new(input)
+    // SbpDecoder::framed(input)
 }
 
 /// Deserialize the IO stream into an iterator of messages. Provide a timeout
@@ -72,38 +72,6 @@ pub fn stream_messages_with_timeout<R: futures::AsyncRead + Unpin>(
     TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
 }
 
-pub fn parse_frame(buf: &mut BytesMut) -> Option<Result<Frame<BytesMut>, CrcError>> {
-    if buf.len() < HEADER_LEN {
-        return None;
-    }
-    // use a separate slice to parse the header so we don't advance the buffer
-    // until we know we have enough bytes to parse the payload + crc
-    let mut slice = &buf[1..];
-    let msg_type = slice.get_u16_le();
-    let sender_id = slice.get_u16_le();
-    let payload_len = slice.get_u8() as usize;
-    if slice.len() < payload_len + CRC_LEN {
-        return None;
-    }
-    buf.advance(HEADER_LEN);
-    let payload = buf.split_to(payload_len);
-    let crc = buf.get_u16_le();
-    // println!("{:?} {:?}", &buf,&slice);
-    if check_crc(msg_type, sender_id, &payload, crc) {
-        Some(Ok(Frame {
-            msg_type,
-            sender_id,
-            payload,
-        }))
-    } else {
-        Some(Err(CrcError {
-            msg_type,
-            sender_id,
-            crc,
-        }))
-    }
-}
-
 fn check_crc(msg_type: u16, sender_id: u16, payload: &[u8], crc_in: u16) -> bool {
     let mut crc = crc16::State::<crc16::XMODEM>::new();
     crc.update(&msg_type.to_le_bytes());
@@ -111,14 +79,6 @@ fn check_crc(msg_type: u16, sender_id: u16, payload: &[u8], crc_in: u16) -> bool
     crc.update(&[payload.len() as u8]);
     crc.update(payload);
     crc.get() == crc_in
-}
-
-/// The wire representation of an SBP message.
-#[derive(Debug)]
-pub struct Frame<B> {
-    pub msg_type: u16,
-    pub sender_id: u16,
-    pub payload: B,
 }
 
 /// All errors that can occur while reading messages.
@@ -178,21 +138,6 @@ impl std::fmt::Display for CrcError {
 
 impl std::error::Error for CrcError {}
 
-// pub struct Framer<R>(FramedRead<R, SbpDecoder>);
-//
-// impl<R> Framer<R> {
-//     pub fn new(reader: R) -> Self {
-//         Self(FramedRead::new(reader, Framer))
-//     }
-// }
-//
-// impl<R: io::Read> Iterator for Framer<R> {
-//     type Item = io::Result<Frame<BytesMut>>;
-//     fn next(&mut self) -> Option<Self::Item> {
-//         self.0.next()
-//     }
-// }
-
 pub struct Framer<R> {
     inner: FramedRead<R, SbpFramer>,
 }
@@ -228,11 +173,10 @@ impl<R: io::Read> Iterator for SbpDecode<R> {
     fn next(&mut self) -> Option<Self::Item> {
         self.0.next().and_then(|frame| {
             frame.map_or(None, |f| {
-                Some(
-                    f.check_crc()
+                Some(f.check_crc().map_err(|e| de::Error::from(e)).and_then(|_| {
+                    Sbp::from_field(f.msg_type(), f.sender_id(), f.payload())
                         .map_err(|e| de::Error::from(e))
-                        .and_then(|_| Sbp::from_sbp_frame(f).map_err(|e| de::Error::from(e))),
-                )
+                }))
             })
         })
     }
@@ -246,13 +190,34 @@ impl Decoder for SbpFramer {
     type Error = Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        Ok(SbpFrame::<BytesMut>::parse(src))
+        let start = match src.iter().position(|b| b == &PREAMBLE) {
+            Some(idx) => idx,
+            None => {
+                src.clear();
+                return Ok(None);
+            }
+        };
+        src.advance(start);
+        if src.len() < HEADER_LEN {
+            src.reserve(MAX_FRAME_LEN);
+            return Ok(None);
+        }
+        let payload_len = src[5] as usize;
+        let at = HEADER_LEN + payload_len + CRC_LEN;
+        if src.len() < at {
+            src.reserve(MAX_FRAME_LEN);
+            return Ok(None);
+        }
+        let frame = SbpFrame(src.split_to(at));
+        Ok(Some(frame))
     }
+
     fn decode_eof(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         todo!()
     }
 }
 
+/// The wire representation of an SBP message.
 #[derive(Debug)]
 pub struct SbpFrame<B>(B);
 
@@ -299,76 +264,7 @@ impl<B: bytes::Buf> SbpFrame<B> {
     }
 }
 
-impl SbpFrame<BytesMut> {
-    pub fn parse(buf: &mut BytesMut) -> Option<Self> {
-        if let Some(index) = buf.iter().position(|b| b == &PREAMBLE) {
-            buf.advance(index);
-            return None;
-        }
-
-        if buf.len() < HEADER_LEN {
-            return None;
-        }
-        let payload_len = *&buf[5] as usize;
-        let at = HEADER_LEN + payload_len + CRC_LEN;
-        if buf.len() < at {
-            return None;
-        }
-        Some(SbpFrame(buf.split_to(at)))
-    }
-}
-
-impl<'a> SbpFrame<&'a [u8]> {
-    pub fn parse(buf: &'a mut [u8]) -> Option<Self> {
-        // same but no .split_to() - just create a new slice from the input
-        todo!()
-    }
-}
-
-#[derive(Debug, Clone, Default)]
-struct SbpDecoder;
-
-impl SbpDecoder {
-    fn framed<W>(writer: W) -> FramedRead<W, SbpDecoder> {
-        FramedRead::new(writer, SbpDecoder)
-    }
-}
-
-impl Decoder for SbpDecoder {
-    type Item = Sbp;
-    type Error = Error;
-
-    fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        let start = match src.iter().position(|b| b == &PREAMBLE) {
-            Some(idx) => idx,
-            None => {
-                src.clear();
-                return Ok(None);
-            }
-        };
-        src.advance(start);
-        match parse_frame(src) {
-            Some(Ok(frame)) => Ok(Some(Sbp::from_frame(frame)?)),
-            Some(Err(err)) => Err(err.into()),
-            None => {
-                src.reserve(MAX_FRAME_LEN);
-                Ok(None)
-            }
-        }
-    }
-
-    fn decode_eof(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        let res = match self.decode(buf) {
-            Ok(Some(frame)) => Ok(Some(frame)),
-            _ => Ok(None),
-        };
-        buf.clear();
-        res
-    }
-}
-
 struct TimeoutSbpDecoder {
-    decoder: SbpDecoder,
     timeout_duration: Duration,
     last_msg_received: Instant,
 }
@@ -376,7 +272,6 @@ struct TimeoutSbpDecoder {
 impl TimeoutSbpDecoder {
     fn new(timeout_duration: Duration) -> Self {
         Self {
-            decoder: SbpDecoder,
             timeout_duration,
             last_msg_received: Instant::now(),
         }
@@ -397,15 +292,16 @@ impl Decoder for TimeoutSbpDecoder {
         if self.last_msg_received.elapsed() > self.timeout_duration {
             return Err(std::io::Error::new(std::io::ErrorKind::TimedOut, "timeout").into());
         }
-        let res = self.decoder.decode(src);
-        if let Ok(Some(_)) = res {
+        let mut res = SbpDecode::new(src.reader());
+        let next = res.next().transpose();
+        if let Ok(Some(_)) = next {
             self.last_msg_received = Instant::now();
         }
-        res
+        next
     }
 
     fn decode_eof(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        self.decoder.decode_eof(buf)
+        todo!()
     }
 }
 
