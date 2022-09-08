@@ -10,7 +10,7 @@ use crate::{
     messages::Sbp,
     BUFLEN,
 };
-use crate::de::SbpFrame;
+
 
 /// Deserialize the IO stream into an iterator of messages.
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, JsonError>> {
