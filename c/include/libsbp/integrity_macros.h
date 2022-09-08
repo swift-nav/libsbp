@@ -25,6 +25,60 @@
 #define SBP_INTEGRITY_SSR_HEADER_ENCODED_LEN 14u
 
 #define SBP_MSG_SSR_FLAG_HIGH_LEVEL 0x0BB9
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_SHIFT) & \
+        SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_MASK          \
+                    << SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_SHIFT))) | \
+        (((val) & (SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_MASK))         \
+         << (SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GPS_SATELLITES_NOT_MONITORED (3)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_SHIFT) & \
+        SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_MASK          \
+                    << SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_SHIFT))) | \
+        (((val) & (SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_MASK))         \
+         << (SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_GAL_SATELLITES_NOT_MONITORED (3)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_SHIFT) & \
+        SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_SET(flags, val)           \
+  do {                                                                       \
+    (flags) = (u8)(                                                          \
+        (flags & (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_MASK          \
+                    << SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_SHIFT))) | \
+        (((val) & (SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_MASK))         \
+         << (SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_BDS_SATELLITES_NOT_MONITORED (3)
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ssr_flag_high_level_t::reserved (V4 API) or
@@ -33,6 +87,87 @@
  */
 #define SBP_MSG_SSR_FLAG_HIGH_LEVEL_RESERVED_MAX 6u
 
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_SHIFT) & \
+        SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_SET(flags, val)        \
+  do {                                                                       \
+    (flags) =                                                                \
+        (u8)((flags &                                                        \
+              (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_MASK          \
+                 << SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_SHIFT))) | \
+             (((val) & (SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_MASK)) \
+              << (SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_SHIFT)));    \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_TROPO_GRID_POINTS_NOT_MONITORED (3)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_SHIFT) & \
+        SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_SET(flags, val)           \
+  do {                                                                         \
+    (flags) = (u8)(                                                            \
+        (flags & (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_MASK          \
+                    << SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_SHIFT))) | \
+        (((val) & (SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_MASK))         \
+         << (SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_SHIFT)));            \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINTS_NOT_MONITORED (3)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_GET(flags)    \
+  ((u8)((u8)((flags) >>                                                   \
+             SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_SHIFT) & \
+        SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_SET(flags, val)   \
+  do {                                                                        \
+    (flags) = (u8)(                                                           \
+        (flags &                                                              \
+         (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_MASK          \
+            << SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_SHIFT))) | \
+        (((val) & (SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_MASK)) \
+         << (SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_SHIFT)));    \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_TILE_SATELLITE_LOS_NOT_MONITORED (3)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_MASK (0x7u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_SHIFT (0u)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_GET(flags)  \
+  ((u8)(                                                                      \
+      (u8)((flags) >>                                                         \
+           SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_SHIFT) & \
+      SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_MASK))
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_SET(flags,        \
+                                                                      val)          \
+  do {                                                                              \
+    (flags) = (u8)(                                                                 \
+        (flags &                                                                    \
+         (~(SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_MASK          \
+            << SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_SHIFT))) | \
+        (((val) &                                                                   \
+          (SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_MASK))         \
+         << (SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_SHIFT)));    \
+  } while (0)
+
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_NOMINAL (0)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_WARNING (1)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_ALERT (2)
+#define SBP_SSR_FLAG_HIGH_LEVEL_USE_IONO_GRID_POINT_SATELLITE_LOS_NOT_MONITORED \
+  (3)
 /**
  * Encoded length of sbp_msg_ssr_flag_high_level_t (V4 API) and
  * msg_ssr_flag_high_level_t (legacy API)

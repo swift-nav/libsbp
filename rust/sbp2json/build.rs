@@ -1,5 +1,5 @@
-use vergen::{vergen, Config};
-
 fn main() {
-    vergen(Config::default()).unwrap();
+    use vergen::{generate_cargo_keys, ConstantsFlags};
+    let flags = ConstantsFlags::all();
+    generate_cargo_keys(flags).expect("Unable to generate the cargo keys!");
 }

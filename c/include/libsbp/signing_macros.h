@@ -21,10 +21,27 @@
 #define SBP_MSG_ED25519_SIGNATURE 0x0C01
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ed25519_signature_t::stub (V4 API) or msg_ed25519_signature_t::stub
- * (legacy API) before the maximum SBP message size is exceeded
+ * sbp_msg_ed25519_signature_t::signature (V4 API) or
+ * msg_ed25519_signature_t::signature (legacy API) before the maximum SBP
+ * message size is exceeded
  */
-#define SBP_MSG_ED25519_SIGNATURE_STUB_MAX 255u
+#define SBP_MSG_ED25519_SIGNATURE_SIGNATURE_MAX 64u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_signature_t::fingerprint (V4 API) or
+ * msg_ed25519_signature_t::fingerprint (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_ED25519_SIGNATURE_FINGERPRINT_MAX 20u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_signature_t::signed_messages (V4 API) or
+ * msg_ed25519_signature_t::signed_messages (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_ED25519_SIGNATURE_SIGNED_MESSAGES_MAX 42u
 
 /**
  * Encoded length of sbp_msg_ed25519_signature_t (V4 API) and
@@ -39,16 +56,24 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD 0u
+#define SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD 84u
 
 #define SBP_MSG_ED25519_CERTIFICATE 0x0C02
 /**
  * The maximum number of items that can be stored in
- * sbp_msg_ed25519_certificate_t::stub (V4 API) or
- * msg_ed25519_certificate_t::stub (legacy API) before the maximum SBP message
- * size is exceeded
+ * sbp_msg_ed25519_certificate_t::fingerprint (V4 API) or
+ * msg_ed25519_certificate_t::fingerprint (legacy API) before the maximum SBP
+ * message size is exceeded
  */
-#define SBP_MSG_ED25519_CERTIFICATE_STUB_MAX 255u
+#define SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX 20u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_certificate_t::certificate_bytes (V4 API) or
+ * msg_ed25519_certificate_t::certificate_bytes (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_ED25519_CERTIFICATE_CERTIFICATE_BYTES_MAX 234u
 
 /**
  * Encoded length of sbp_msg_ed25519_certificate_t (V4 API) and
@@ -63,6 +88,6 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_ED25519_CERTIFICATE_ENCODED_OVERHEAD 0u
+#define SBP_MSG_ED25519_CERTIFICATE_ENCODED_OVERHEAD 21u
 
 #endif /* LIBSBP_SIGNING_MACROS_H */

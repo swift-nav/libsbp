@@ -98,6 +98,8 @@ Suite* auto_check_sbp_piksi_MsgUartStateDepA_suite(void);
 Suite* auto_check_sbp_sbas_MsgSbasRaw_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsReadByIndexDone_suite(void);
 Suite* auto_check_sbp_settings_MsgSettingsReadByIndexResp_suite(void);
+Suite* auto_check_sbp_signing_MsgEd25519Certificate_suite(void);
+Suite* auto_check_sbp_signing_MsgEd25519Signature_suite(void);
 Suite* auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds_suite(void);
 Suite* auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds_suite(void);
 Suite* auto_check_sbp_ssr_MsgSsrOrbitClockBounds_suite(void);

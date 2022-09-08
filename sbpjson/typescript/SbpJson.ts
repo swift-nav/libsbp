@@ -602,11 +602,15 @@ export interface MsgDops {
 }
 
 export interface MsgEd25519Certificate {
-    stub: number[];
+    certificate_bytes: number[];
+    fingerprint:       number[];
+    n_msg:             number;
 }
 
 export interface MsgEd25519Signature {
-    stub: number[];
+    fingerprint:     number[];
+    signature:       number[];
+    signed_messages: number[];
 }
 
 /**
@@ -2033,6 +2037,33 @@ export interface CodePhaseBiasesSatSig {
     signal_id:            number;
 }
 
+/**
+ * Integrity monitoring flags for multiple aggregated elements. An element could be a
+ * satellite, SSR grid point, or SSR tile. A group of aggregated elements being monitored
+ * for integrity could refer to:,
+ * ,
+ * - Satellites in a particular {GPS, GAL, BDS} constellation.,
+ * ,
+ * - Satellites in the line-of-sight of a particular SSR tile.,
+ * ,
+ * - Satellites in the line-of-sight of a particular SSR grid point.,
+ * ,
+ * The integrity usage for a group of aggregated elements varies according to the integrity
+ * flag of the satellites comprising that group.,
+ * ,
+ * SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity check and have
+ * flag INTEGRITY_FLAG_OK.,
+ * ,
+ * SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed the
+ * integrity check. Refer to more granular integrity messages for details on the specific
+ * failing elements.,
+ * ,
+ * SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity check, do not
+ * use for positioning.,
+ * ,
+ * SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of elements in the
+ * group.
+ */
 export interface MsgSsrFlagHighLevel {
     chain_id:                    number;
     corr_time:                   GpsTimeSEC;
@@ -4795,10 +4826,14 @@ const typeMap: any = {
         { json: "vdop", js: "vdop", typ: 0 },
     ], "any"),
     "MsgEd25519Certificate": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "certificate_bytes", js: "certificate_bytes", typ: a(0) },
+        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "n_msg", js: "n_msg", typ: 0 },
     ], "any"),
     "MsgEd25519Signature": o([
-        { json: "stub", js: "stub", typ: a(0) },
+        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "signature", js: "signature", typ: a(0) },
+        { json: "signed_messages", js: "signed_messages", typ: a(0) },
     ], "any"),
     "MsgEphemerisBds": o([
         { json: "af0", js: "af0", typ: 3.14 },

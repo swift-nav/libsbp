@@ -1217,11 +1217,15 @@ type alias MsgDops =
     }
 
 type alias MsgEd25519Certificate =
-    { stub : Array Int
+    { certificateBytes : Array Int
+    , fingerprint : Array Int
+    , nMsg : Int
     }
 
 type alias MsgEd25519Signature =
-    { stub : Array Int
+    { fingerprint : Array Int
+    , signature : Array Int
+    , signedMessages : Array Int
     }
 
 {-| The ephemeris message returns a set of satellite orbit parameters that is used to
@@ -2541,6 +2545,32 @@ type alias CodePhaseBiasesSatSig =
     , signalID : Int
     }
 
+{-| Integrity monitoring flags for multiple aggregated elements. An element could be a
+satellite, SSR grid point, or SSR tile. A group of aggregated elements being monitored
+for integrity could refer to:,
+,
+- Satellites in a particular {GPS, GAL, BDS} constellation.,
+,
+- Satellites in the line-of-sight of a particular SSR tile.,
+,
+- Satellites in the line-of-sight of a particular SSR grid point.,
+,
+The integrity usage for a group of aggregated elements varies according to the integrity
+flag of the satellites comprising that group.,
+,
+SSR_INTEGRITY_USAGE_NOMINAL: All satellites received passed the integrity check and have
+flag INTEGRITY_FLAG_OK.,
+,
+SSR_INTEGRITY_USAGE_WARNING: A limited number of elements in the group failed the
+integrity check. Refer to more granular integrity messages for details on the specific
+failing elements.,
+,
+SSR_INTEGRITY_USAGE_ALERT: Most elements in the group failed the integrity check, do not
+use for positioning.,
+,
+SSR_INTEGRITY_USAGE_NOT_MONITORED: Unable to verify the integrity flag of elements in the
+group.
+-}
 type alias MsgSsrFlagHighLevel =
     { chainID : Int
     , corrTime : GpsTimeSEC
@@ -4475,23 +4505,31 @@ encodeMsgDops x =
 msgEd25519Certificate : Jdec.Decoder MsgEd25519Certificate
 msgEd25519Certificate =
     Jpipe.decode MsgEd25519Certificate
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "certificate_bytes" (Jdec.array Jdec.int)
+        |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
+        |> Jpipe.required "n_msg" Jdec.int
 
 encodeMsgEd25519Certificate : MsgEd25519Certificate -> Jenc.Value
 encodeMsgEd25519Certificate x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("certificate_bytes", makeArrayEncoder Jenc.int x.certificateBytes)
+        , ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
+        , ("n_msg", Jenc.int x.nMsg)
         ]
 
 msgEd25519Signature : Jdec.Decoder MsgEd25519Signature
 msgEd25519Signature =
     Jpipe.decode MsgEd25519Signature
-        |> Jpipe.required "stub" (Jdec.array Jdec.int)
+        |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
+        |> Jpipe.required "signature" (Jdec.array Jdec.int)
+        |> Jpipe.required "signed_messages" (Jdec.array Jdec.int)
 
 encodeMsgEd25519Signature : MsgEd25519Signature -> Jenc.Value
 encodeMsgEd25519Signature x =
     Jenc.object
-        [ ("stub", makeArrayEncoder Jenc.int x.stub)
+        [ ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
+        , ("signature", makeArrayEncoder Jenc.int x.signature)
+        , ("signed_messages", makeArrayEncoder Jenc.int x.signedMessages)
         ]
 
 msgEphemerisBds : Jdec.Decoder MsgEphemerisBds

@@ -26,7 +26,9 @@ import "gnss.proto";
 None
  */
 message MsgEd25519Signature {
-    repeated uint32 stub = 1;
+    repeated uint32 signature = 1;
+    repeated uint32 fingerprint = 2;
+    repeated uint32 signed_messages = 3;
 }
 
 /** ED25519 certificate, split over multiple messages
@@ -34,5 +36,7 @@ message MsgEd25519Signature {
 None
  */
 message MsgEd25519Certificate {
-    repeated uint32 stub = 1;
+    uint32 n_msg = 1;
+    repeated uint32 fingerprint = 2;
+    repeated uint32 certificate_bytes = 3;
 }

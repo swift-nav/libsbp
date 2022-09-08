@@ -23,7 +23,14 @@ import org.json.JSONObject;
 public class MsgEd25519Signature extends SBPMessage {
     public static final int TYPE = 0x0C01;
 
-    public int[] stub;
+    /** ED25519 signature for messages. */
+    public int[] signature;
+
+    /** SHA-1 fingerprint of the associated certificate. */
+    public int[] fingerprint;
+
+    /** CRCs of signed messages. */
+    public long[] signed_messages;
 
     public MsgEd25519Signature(int sender) {
         super(sender, TYPE);
@@ -41,18 +48,24 @@ public class MsgEd25519Signature extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stub = parser.getArrayofU8();
+        signature = parser.getArrayofU8(64);
+        fingerprint = parser.getArrayofU8(20);
+        signed_messages = parser.getArrayofU32();
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putArrayofU8(stub);
+        builder.putArrayofU8(signature, 64);
+        builder.putArrayofU8(fingerprint, 20);
+        builder.putArrayofU32(signed_messages);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stub", new JSONArray(stub));
+        obj.put("signature", new JSONArray(signature));
+        obj.put("fingerprint", new JSONArray(fingerprint));
+        obj.put("signed_messages", new JSONArray(signed_messages));
         return obj;
     }
 }

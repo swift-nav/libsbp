@@ -1,5 +1,20 @@
 # Changelog
 
+## [v4.7.0](https://github.com/swift-nav/libsbp/tree/v4.7.0) (2022-08-31)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.6.0...v4.7.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - compile compile command cleanup \(\#130\) [\#1215](https://github.com/swift-nav/libsbp/pull/1215) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - Fix empty test source files \(\#129\) [\#1214](https://github.com/swift-nav/libsbp/pull/1214) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - Fix Sonarcloud sonar-project.properties \(\#127\) [\#1213](https://github.com/swift-nav/libsbp/pull/1213) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - Remove checks introduced between clang tidy 6 and 14 \(\#125\) [\#1211](https://github.com/swift-nav/libsbp/pull/1211) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Include the Integrity usage flag states \[OTA-266\] [\#1209](https://github.com/swift-nav/libsbp/pull/1209) ([fpezzinosn](https://github.com/fpezzinosn))
+- signing: promote signing messages out of staging \[FIC-443\] [\#1208](https://github.com/swift-nav/libsbp/pull/1208) ([silverjam](https://github.com/silverjam))
+- Removes units and details of probable future use from reserved message fields \[OTA-197\] [\#1202](https://github.com/swift-nav/libsbp/pull/1202) ([jtec](https://github.com/jtec))
+- Automatically create alias targets in cmake - Submodule update \[ESD-2467\] [\#1199](https://github.com/swift-nav/libsbp/pull/1199) ([lucasle-sn](https://github.com/lucasle-sn))
+
 ## [v4.6.0](https://github.com/swift-nav/libsbp/tree/v4.6.0) (2022-08-04)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.5.0...v4.6.0)

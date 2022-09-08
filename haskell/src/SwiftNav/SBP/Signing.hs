@@ -40,16 +40,25 @@ msgEd25519Signature :: Word16
 msgEd25519Signature = 0x0C01
 
 data MsgEd25519Signature = MsgEd25519Signature
-  { _msgEd25519Signature_stub :: ![Word8]
+  { _msgEd25519Signature_signature     :: ![Word8]
+    -- ^ ED25519 signature for messages.
+  , _msgEd25519Signature_fingerprint   :: ![Word8]
+    -- ^ SHA-1 fingerprint of the associated certificate.
+  , _msgEd25519Signature_signed_messages :: ![Word32]
+    -- ^ CRCs of signed messages.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEd25519Signature where
   get = do
-    _msgEd25519Signature_stub <- whileM (not <$> isEmpty) getWord8
+    _msgEd25519Signature_signature <- replicateM 64 getWord8
+    _msgEd25519Signature_fingerprint <- replicateM 20 getWord8
+    _msgEd25519Signature_signed_messages <- whileM (not <$> isEmpty) getWord32le
     pure MsgEd25519Signature {..}
 
   put MsgEd25519Signature {..} = do
-    mapM_ putWord8 _msgEd25519Signature_stub
+    mapM_ putWord8 _msgEd25519Signature_signature
+    mapM_ putWord8 _msgEd25519Signature_fingerprint
+    mapM_ putWord32le _msgEd25519Signature_signed_messages
 
 $(makeSBP 'msgEd25519Signature ''MsgEd25519Signature)
 $(makeJSON "_msgEd25519Signature_" ''MsgEd25519Signature)
@@ -59,16 +68,27 @@ msgEd25519Certificate :: Word16
 msgEd25519Certificate = 0x0C02
 
 data MsgEd25519Certificate = MsgEd25519Certificate
-  { _msgEd25519Certificate_stub :: ![Word8]
+  { _msgEd25519Certificate_n_msg           :: !Word8
+    -- ^ Total number messages that make up the certificate. First nibble is the
+    -- size of the sequence (n), second nibble is the zero-indexed counter
+    -- (ith packet of n)
+  , _msgEd25519Certificate_fingerprint     :: ![Word8]
+    -- ^ SHA-1 fingerprint of the associated certificate.
+  , _msgEd25519Certificate_certificate_bytes :: ![Word8]
+    -- ^ ED25519 certificate bytes.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEd25519Certificate where
   get = do
-    _msgEd25519Certificate_stub <- whileM (not <$> isEmpty) getWord8
+    _msgEd25519Certificate_n_msg <- getWord8
+    _msgEd25519Certificate_fingerprint <- replicateM 20 getWord8
+    _msgEd25519Certificate_certificate_bytes <- whileM (not <$> isEmpty) getWord8
     pure MsgEd25519Certificate {..}
 
   put MsgEd25519Certificate {..} = do
-    mapM_ putWord8 _msgEd25519Certificate_stub
+    putWord8 _msgEd25519Certificate_n_msg
+    mapM_ putWord8 _msgEd25519Certificate_fingerprint
+    mapM_ putWord8 _msgEd25519Certificate_certificate_bytes
 
 $(makeSBP 'msgEd25519Certificate ''MsgEd25519Certificate)
 $(makeJSON "_msgEd25519Certificate_" ''MsgEd25519Certificate)
