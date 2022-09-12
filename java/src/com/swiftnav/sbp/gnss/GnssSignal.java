@@ -22,8 +22,8 @@ import org.json.JSONObject;
 public class GnssSignal extends SBPStruct {
 
     /**
-     * Constellation-specific satellite identifier. This field for Glonass can either be (100+FCN)
-     * where FCN is in [-7,+6] or the Slot ID in [1,28].
+     * Constellation-specific satellite id. For GLO can either be (100+FCN) where FCN is in [-7,+6]
+     * or the Slot ID in [1,28].
      */
     public int sat;
 
