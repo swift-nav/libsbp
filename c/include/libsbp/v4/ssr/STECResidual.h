@@ -56,8 +56,8 @@ typedef struct {
   s16 residual;
 
   /**
-   * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
-   * (3^class * (1 + value/16) - 1) * 10 TECU
+   * Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+   * value/16) - 1) * 10
    */
   u8 stddev;
 } sbp_stec_residual_t;

@@ -2914,8 +2914,8 @@ pub mod stec_residual {
         /// STEC residual
         #[cfg_attr(feature = "serde", serde(rename = "residual"))]
         pub residual: i16,
-        /// Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
-        /// (3^class * (1 + value/16) - 1) * 10 TECU
+        /// Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+        /// value/16) - 1) * 10
         #[cfg_attr(feature = "serde", serde(rename = "stddev"))]
         pub stddev: u8,
     }
@@ -3322,8 +3322,8 @@ pub mod tropospheric_delay_correction {
         /// Wet vertical delay. Add 0.252 m to get actual value.
         #[cfg_attr(feature = "serde", serde(rename = "wet"))]
         pub wet: i8,
-        /// Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
-        /// (3^class * (1 + value/16) - 1) mm
+        /// Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+        /// value/16) - 1)
         #[cfg_attr(feature = "serde", serde(rename = "stddev"))]
         pub stddev: u8,
     }
