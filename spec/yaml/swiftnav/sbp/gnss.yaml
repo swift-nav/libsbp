@@ -25,7 +25,7 @@ definitions:
         - sat:
             type: u8
             desc: >
-                Constellation-specific satellite identifier. This field for Glonass can
+                Constellation-specific satellite id. For GLO can
                 either be (100+FCN) where FCN is in [-7,+6] or
                 the Slot ID in [1,28].
         - code:
@@ -55,10 +55,19 @@ definitions:
     fields:
     - satId:
         type: u8
-        desc: ID of the space vehicle within its constellation
+        desc: >
+          Constellation-specific satellite id. For GLO can
+          either be (100+FCN) where FCN is in [-7,+6] or
+          the Slot ID in [1,28].
     - constellation:
         type: u8
         desc: Constellation ID to which the SV belongs
+        fields:
+          - 0-7:
+              values:
+                - 0: GPS
+                - 3: BDS
+                - 5: GAL
 
  - GnssSignalDep:
     short_desc: Deprecated
