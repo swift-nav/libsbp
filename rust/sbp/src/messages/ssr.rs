@@ -3214,7 +3214,7 @@ pub mod satellite_apc {
         GlonassK1 = 9,
 
         /// GALILEO
-        GALILEO = 10,
+        GalILEO = 10,
 
         /// BEIDOU 2G
         Beidou2G = 11,
@@ -3257,7 +3257,7 @@ pub mod satellite_apc {
                 SatelliteType::GLONASS => f.write_str("GLONASS"),
                 SatelliteType::GlonassM => f.write_str("GLONASS M"),
                 SatelliteType::GlonassK1 => f.write_str("GLONASS K1"),
-                SatelliteType::GALILEO => f.write_str("GALILEO"),
+                SatelliteType::GalILEO => f.write_str("GALILEO"),
                 SatelliteType::Beidou2G => f.write_str("BEIDOU 2G"),
                 SatelliteType::Beidou2I => f.write_str("BEIDOU 2I"),
                 SatelliteType::Beidou2M => f.write_str("BEIDOU 2M"),
@@ -3285,7 +3285,7 @@ pub mod satellite_apc {
                 7 => Ok(SatelliteType::GLONASS),
                 8 => Ok(SatelliteType::GlonassM),
                 9 => Ok(SatelliteType::GlonassK1),
-                10 => Ok(SatelliteType::GALILEO),
+                10 => Ok(SatelliteType::GalILEO),
                 11 => Ok(SatelliteType::Beidou2G),
                 12 => Ok(SatelliteType::Beidou2I),
                 13 => Ok(SatelliteType::Beidou2M),
