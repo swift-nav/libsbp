@@ -3205,7 +3205,7 @@ pub mod satellite_apc {
         GpsIii = 6,
 
         /// GLONASS
-        GLONASS = 7,
+        Glonass = 7,
 
         /// GLONASS M
         GlonassM = 8,
@@ -3214,7 +3214,7 @@ pub mod satellite_apc {
         GlonassK1 = 9,
 
         /// GALILEO
-        GALILEO = 10,
+        Galileo = 10,
 
         /// BEIDOU 2G
         Beidou2G = 11,
@@ -3241,7 +3241,7 @@ pub mod satellite_apc {
         Beidou3ICast = 18,
 
         /// QZSS
-        QZSS = 19,
+        Qzss = 19,
     }
 
     impl std::fmt::Display for SatelliteType {
@@ -3254,10 +3254,10 @@ pub mod satellite_apc {
                 SatelliteType::GpsIir => f.write_str("GPS IIR"),
                 SatelliteType::GpsIif => f.write_str("GPS IIF"),
                 SatelliteType::GpsIii => f.write_str("GPS III"),
-                SatelliteType::GLONASS => f.write_str("GLONASS"),
+                SatelliteType::Glonass => f.write_str("GLONASS"),
                 SatelliteType::GlonassM => f.write_str("GLONASS M"),
                 SatelliteType::GlonassK1 => f.write_str("GLONASS K1"),
-                SatelliteType::GALILEO => f.write_str("GALILEO"),
+                SatelliteType::Galileo => f.write_str("GALILEO"),
                 SatelliteType::Beidou2G => f.write_str("BEIDOU 2G"),
                 SatelliteType::Beidou2I => f.write_str("BEIDOU 2I"),
                 SatelliteType::Beidou2M => f.write_str("BEIDOU 2M"),
@@ -3266,7 +3266,7 @@ pub mod satellite_apc {
                 SatelliteType::Beidou3MCast => f.write_str("BEIDOU 3M, CAST"),
                 SatelliteType::Beidou3GCast => f.write_str("BEIDOU 3G, CAST"),
                 SatelliteType::Beidou3ICast => f.write_str("BEIDOU 3I, CAST"),
-                SatelliteType::QZSS => f.write_str("QZSS"),
+                SatelliteType::Qzss => f.write_str("QZSS"),
             }
         }
     }
@@ -3282,10 +3282,10 @@ pub mod satellite_apc {
                 4 => Ok(SatelliteType::GpsIir),
                 5 => Ok(SatelliteType::GpsIif),
                 6 => Ok(SatelliteType::GpsIii),
-                7 => Ok(SatelliteType::GLONASS),
+                7 => Ok(SatelliteType::Glonass),
                 8 => Ok(SatelliteType::GlonassM),
                 9 => Ok(SatelliteType::GlonassK1),
-                10 => Ok(SatelliteType::GALILEO),
+                10 => Ok(SatelliteType::Galileo),
                 11 => Ok(SatelliteType::Beidou2G),
                 12 => Ok(SatelliteType::Beidou2I),
                 13 => Ok(SatelliteType::Beidou2M),
@@ -3294,7 +3294,7 @@ pub mod satellite_apc {
                 16 => Ok(SatelliteType::Beidou3MCast),
                 17 => Ok(SatelliteType::Beidou3GCast),
                 18 => Ok(SatelliteType::Beidou3ICast),
-                19 => Ok(SatelliteType::QZSS),
+                19 => Ok(SatelliteType::Qzss),
                 i => Err(i),
             }
         }

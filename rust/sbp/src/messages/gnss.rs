@@ -512,18 +512,18 @@ pub mod sv_id {
         Gps = 0,
 
         /// BDS
-        BDS = 3,
+        Bds = 3,
 
         /// GAL
-        GAL = 5,
+        Gal = 5,
     }
 
     impl std::fmt::Display for Constellation {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
                 Constellation::Gps => f.write_str("GPS"),
-                Constellation::BDS => f.write_str("BDS"),
-                Constellation::GAL => f.write_str("GAL"),
+                Constellation::Bds => f.write_str("BDS"),
+                Constellation::Gal => f.write_str("GAL"),
             }
         }
     }
@@ -533,8 +533,8 @@ pub mod sv_id {
         fn try_from(i: u8) -> Result<Self, Self::Error> {
             match i {
                 0 => Ok(Constellation::Gps),
-                3 => Ok(Constellation::BDS),
-                5 => Ok(Constellation::GAL),
+                3 => Ok(Constellation::Bds),
+                5 => Ok(Constellation::Gal),
                 i => Err(i),
             }
         }

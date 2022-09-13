@@ -308,7 +308,7 @@ pub mod msg_dgnss_status {
         CodeDifference = 1,
 
         /// RTK
-        RTK = 2,
+        Rtk = 2,
     }
 
     impl std::fmt::Display for DifferentialType {
@@ -316,7 +316,7 @@ pub mod msg_dgnss_status {
             match self {
                 DifferentialType::Invalid => f.write_str("Invalid"),
                 DifferentialType::CodeDifference => f.write_str("Code Difference"),
-                DifferentialType::RTK => f.write_str("RTK"),
+                DifferentialType::Rtk => f.write_str("RTK"),
             }
         }
     }
@@ -327,7 +327,7 @@ pub mod msg_dgnss_status {
             match i {
                 0 => Ok(DifferentialType::Invalid),
                 1 => Ok(DifferentialType::CodeDifference),
-                2 => Ok(DifferentialType::RTK),
+                2 => Ok(DifferentialType::Rtk),
                 i => Err(i),
             }
         }
@@ -548,7 +548,7 @@ pub mod msg_group_meta {
         GnssOnly = 1,
 
         /// GNSS+INS (Fuzed)
-        GnssINS = 2,
+        Gnssins = 2,
     }
 
     impl std::fmt::Display for SolutionGroupType {
@@ -556,7 +556,7 @@ pub mod msg_group_meta {
             match self {
                 SolutionGroupType::None => f.write_str("None (invalid)"),
                 SolutionGroupType::GnssOnly => f.write_str("GNSS only"),
-                SolutionGroupType::GnssINS => f.write_str("GNSS+INS (Fuzed)"),
+                SolutionGroupType::Gnssins => f.write_str("GNSS+INS (Fuzed)"),
             }
         }
     }
@@ -567,7 +567,7 @@ pub mod msg_group_meta {
             match i {
                 0 => Ok(SolutionGroupType::None),
                 1 => Ok(SolutionGroupType::GnssOnly),
-                2 => Ok(SolutionGroupType::GnssINS),
+                2 => Ok(SolutionGroupType::Gnssins),
                 i => Err(i),
             }
         }
@@ -2782,7 +2782,7 @@ pub mod sub_system_report {
         DifferentialGnssEngine = 3,
 
         /// CAN
-        CAN = 4,
+        Can = 4,
 
         /// Wheel Odometry
         WheelOdometry = 5,
@@ -2798,7 +2798,7 @@ pub mod sub_system_report {
                 Subsystem::MeasurementEngine => f.write_str("Measurement Engine"),
                 Subsystem::CorrectionsClient => f.write_str("Corrections Client"),
                 Subsystem::DifferentialGnssEngine => f.write_str("Differential GNSS Engine"),
-                Subsystem::CAN => f.write_str("CAN"),
+                Subsystem::Can => f.write_str("CAN"),
                 Subsystem::WheelOdometry => f.write_str("Wheel Odometry"),
                 Subsystem::SensorFusionEngine => f.write_str("Sensor Fusion Engine"),
             }
@@ -2813,7 +2813,7 @@ pub mod sub_system_report {
                 1 => Ok(Subsystem::MeasurementEngine),
                 2 => Ok(Subsystem::CorrectionsClient),
                 3 => Ok(Subsystem::DifferentialGnssEngine),
-                4 => Ok(Subsystem::CAN),
+                4 => Ok(Subsystem::Can),
                 5 => Ok(Subsystem::WheelOdometry),
                 6 => Ok(Subsystem::SensorFusionEngine),
                 i => Err(i),
