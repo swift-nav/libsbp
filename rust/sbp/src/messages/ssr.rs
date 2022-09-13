@@ -3273,7 +3273,7 @@ pub mod satellite_apc {
 
     impl TryFrom<u8> for SatelliteType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SatelliteType::UnknownType),
                 1 => Ok(SatelliteType::GpsI),

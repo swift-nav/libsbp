@@ -170,7 +170,7 @@ pub mod msg_angular_rate {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::Invalid),
                 1 => Ok(InsNavigationMode::Valid),
@@ -329,7 +329,7 @@ pub mod msg_baseline_heading {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 2 => Ok(FixMode::DifferentialGnss),
@@ -511,7 +511,7 @@ pub mod msg_orient_euler {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::Invalid),
                 1 => Ok(InsNavigationMode::Valid),
@@ -705,7 +705,7 @@ pub mod msg_orient_quat {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::Invalid),
                 1 => Ok(InsNavigationMode::Valid),

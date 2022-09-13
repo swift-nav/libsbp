@@ -248,7 +248,7 @@ pub mod msg_log {
 
     impl TryFrom<u8> for LoggingLevel {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(LoggingLevel::Emerg),
                 1 => Ok(LoggingLevel::Alert),

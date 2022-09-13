@@ -445,7 +445,7 @@ pub mod msg_ssr_flag_high_level {
 
     impl TryFrom<u8> for UseGpsSatellites {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UseGpsSatellites::Nominal),
                 1 => Ok(UseGpsSatellites::Warning),
@@ -485,7 +485,7 @@ pub mod msg_ssr_flag_high_level {
 
     impl TryFrom<u8> for UseGalSatellites {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UseGalSatellites::Nominal),
                 1 => Ok(UseGalSatellites::Warning),
@@ -525,7 +525,7 @@ pub mod msg_ssr_flag_high_level {
 
     impl TryFrom<u8> for UseBdsSatellites {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UseBdsSatellites::Nominal),
                 1 => Ok(UseBdsSatellites::Warning),
@@ -565,7 +565,7 @@ pub mod msg_ssr_flag_high_level {
 
     impl TryFrom<u8> for UseTropoGridPoints {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UseTropoGridPoints::Nominal),
                 1 => Ok(UseTropoGridPoints::Warning),
@@ -605,7 +605,7 @@ pub mod msg_ssr_flag_high_level {
 
     impl TryFrom<u8> for UseIonoGridPoints {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UseIonoGridPoints::Nominal),
                 1 => Ok(UseIonoGridPoints::Warning),
@@ -645,7 +645,7 @@ pub mod msg_ssr_flag_high_level {
 
     impl TryFrom<u8> for UseIonoTileSatelliteLoS {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UseIonoTileSatelliteLoS::Nominal),
                 1 => Ok(UseIonoTileSatelliteLoS::Warning),
@@ -685,7 +685,7 @@ pub mod msg_ssr_flag_high_level {
 
     impl TryFrom<u8> for UseIonoGridPointSatelliteLoS {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UseIonoGridPointSatelliteLoS::Nominal),
                 1 => Ok(UseIonoGridPointSatelliteLoS::Warning),

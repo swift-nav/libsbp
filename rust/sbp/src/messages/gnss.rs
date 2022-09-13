@@ -309,7 +309,7 @@ pub mod gnss_signal {
 
     impl TryFrom<u8> for Code {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Code::GpsL1Ca),
                 1 => Ok(Code::GpsL2Cm),
@@ -435,7 +435,7 @@ pub mod gnss_signal_dep {
 
     impl TryFrom<u8> for Code {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Code::GpsL1Ca),
                 1 => Ok(Code::GpsL2Cm),
@@ -530,7 +530,7 @@ pub mod sv_id {
 
     impl TryFrom<u8> for Constellation {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Constellation::Gps),
                 3 => Ok(Constellation::Bds),

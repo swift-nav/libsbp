@@ -229,7 +229,7 @@ pub mod msg_ndb_event {
 
     impl TryFrom<u8> for EventType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(EventType::Unknown),
                 1 => Ok(EventType::Store),
@@ -281,7 +281,7 @@ pub mod msg_ndb_event {
 
     impl TryFrom<u8> for EventObjectType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(EventObjectType::Unknown),
                 1 => Ok(EventObjectType::Ephemeris),
@@ -352,7 +352,7 @@ pub mod msg_ndb_event {
 
     impl TryFrom<u8> for EventResult {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(EventResult::NdbErrNone),
                 1 => Ok(EventResult::NdbErrMissingIe),
@@ -399,7 +399,7 @@ pub mod msg_ndb_event {
 
     impl TryFrom<u8> for DataSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(DataSource::NdbDsUndefined),
                 1 => Ok(DataSource::NdbDsInit),

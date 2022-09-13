@@ -169,7 +169,7 @@ pub mod msg_imu_aux {
 
     impl TryFrom<u8> for ImuType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(ImuType::BoschBmi160),
                 1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
@@ -211,7 +211,7 @@ pub mod msg_imu_aux {
 
     impl TryFrom<u8> for GyroscopeRange {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(GyroscopeRange::_2000DegS),
                 1 => Ok(GyroscopeRange::_1000DegS),
@@ -252,7 +252,7 @@ pub mod msg_imu_aux {
 
     impl TryFrom<u8> for AccelerometerRange {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(AccelerometerRange::_2G),
                 1 => Ok(AccelerometerRange::_4G),
@@ -474,7 +474,7 @@ pub mod msg_imu_raw {
 
     impl TryFrom<u8> for TimeStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
                 1 => Ok(TimeStatus::ReferenceEpochIsTimeOfSystemStartup),
