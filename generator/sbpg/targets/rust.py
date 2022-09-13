@@ -108,8 +108,8 @@ def snake_case(s):
 
 
 def lower_acronyms(s):
-    acronyms = ACRONYMS + ["GNSS", "IMU", "BDS", "GAL"]
-    lower_acronyms = LOWER_ACRONYMS + ["Gnss", "Imu", "Bds", "Gal"]
+    acronyms = ACRONYMS + ["GNSS", "IMU"]
+    lower_acronyms = LOWER_ACRONYMS + ["Gnss", "Imu"]
     for (i, a) in enumerate(acronyms):
         s = s.replace(a, lower_acronyms[i])
     return s
