@@ -107,12 +107,24 @@ def snake_case(s):
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s).lower()
 
 
+def camel_case_split(identifier):
+    # https://stackoverflow.com/a/29920015
+    matches = re.finditer('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)', identifier)
+    return [m.group(0) for m in matches]
+
 def lower_acronyms(s):
-    acronyms = ACRONYMS + ["GNSS", "IMU"]
-    lower_acronyms = LOWER_ACRONYMS + ["Gnss", "Imu"]
-    for (i, a) in enumerate(acronyms):
-        s = s.replace(a, lower_acronyms[i])
-    return s
+    if s.isupper() and s.isalpha():
+        return s.title()
+    acronyms = ACRONYMS + ["GNSS", "IMU", "GAL", "BDS"]
+    lower_acronyms = LOWER_ACRONYMS + ["Gnss", "Imu", "Gal", "Bds"]
+    result = []
+    for word in camel_case_split(s):
+        idx = acronyms.index(word) if word in acronyms else None
+        if idx is not None:
+            result.append(lower_acronyms[idx])
+        else:
+            result.append(word)
+    return "".join(result)
 
 
 def wrap_urls(s):
