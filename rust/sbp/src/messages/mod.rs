@@ -1509,6 +1509,29 @@ impl<'de> serde::Deserialize<'de> for Sbp {
 }
 
 impl Sbp {
+    /// Parse a message from given fields.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use std::convert::TryInto;
+    ///
+    /// use sbp::messages::logging::MsgLog;
+    /// use sbp::Sbp;
+    ///
+    /// fn main() -> Result<(), Box<dyn std::error::Error>> {
+    ///     // log level 1 and with "hello" as the message
+    ///     let msg_type = 1025;
+    ///     let sender_id = 1;
+    ///     let payload: &[u8] = &[1, 104, 101, 108, 108, 111];
+    ///
+    ///     let msg: MsgLog = Sbp::from_field(msg_type, sender_id, payload)?.try_into()?;
+    ///     assert_eq!(msg.sender_id, Some(1));
+    ///     assert_eq!(msg.level, 1);
+    ///     assert_eq!(msg.text.as_bytes(), "hello".as_bytes());
+    ///     Ok(())
+    /// }
+    /// ```
     pub fn from_field<B: bytes::Buf>(
         msg_type: u16,
         sender_id: u16,

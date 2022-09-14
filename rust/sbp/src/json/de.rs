@@ -102,7 +102,7 @@ fn decode_one<T>(buf: &mut BytesMut) -> Result<Option<T>, serde_json::Error>
 where
     T: DeserializeOwned,
 {
-    let mut de = Deserializer::from_slice(&buf).into_iter::<T>();
+    let mut de = Deserializer::from_slice(buf).into_iter::<T>();
     let value = de.next();
     let bytes_read = de.byte_offset();
     buf.advance(bytes_read);

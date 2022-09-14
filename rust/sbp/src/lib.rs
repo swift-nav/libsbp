@@ -168,6 +168,9 @@ pub const PREAMBLE: u8 = 0x55;
 /// Length of the header section.
 pub const HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 
+/// Position of payload
+pub const PAYLOAD_INDEX: usize = HEADER_LEN - 1;
+
 /// Internal buffer length.
 pub(crate) const BUFLEN: usize = 128;
 
