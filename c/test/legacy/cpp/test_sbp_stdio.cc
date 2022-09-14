@@ -81,7 +81,6 @@ class SbpStdioTest : public ::testing::Test {
     state.set_reader(&reader);
     state.set_writer(&writer);
     MsgObsHandler handler(&state);
-
     while (true) {
       s8 status = state.process();
       if (status < SBP_OK) {
@@ -97,11 +96,19 @@ class SbpStdioTest : public ::testing::Test {
 };
 
 TEST_F(SbpStdioTest, ReadsSbpFiles) {
-  EXPECT_EQ(num_entries_in_file("gnss_data.sbp"), 3);
+  if(char* SBP_DATA_PATH = std::getenv("SBP_DATA_PATH")){
+    EXPECT_EQ(num_entries_in_file(strcat(SBP_DATA_PATH, "gnss_data.sbp")), 3);
+  } else {
+    EXPECT_EQ(num_entries_in_file("gnss_data.sbp"), 3);
+  }
 }
 
 TEST_F(SbpStdioTest, WritesToSbpFiles) {
-  write_to_file("gnss_data.sbp", "gnss_data_output.sbp");
+  if(char* SBP_DATA_PATH = std::getenv("SBP_DATA_PATH")){
+    write_to_file(strcat(SBP_DATA_PATH, "gnss_data.sbp"), "gnss_data_output.sbp");
+  } else {
+    write_to_file("gnss_data.sbp", "gnss_data_output.sbp");
+  }
   EXPECT_EQ(num_entries_in_file("gnss_data_output.sbp"), 9);
 }
 
