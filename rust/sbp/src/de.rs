@@ -144,7 +144,7 @@ impl<R: io::Read> Iterator for Framer<R> {
 
 struct Decoder<R>(FramedRead<R, FramerImpl>);
 
-impl<R: io::Read> Decoder<R> {
+impl<R> Decoder<R> {
     pub fn new(reader: R) -> Self {
         Decoder(FramedRead::new(reader, FramerImpl))
     }
