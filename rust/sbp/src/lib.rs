@@ -190,6 +190,12 @@ pub use messages::Sbp;
 pub use crate::messages::SbpMessage;
 
 #[doc(inline)]
+pub use crate::de::Framer;
+
+#[doc(inline)]
+pub use crate::de::Frame;
+
+#[doc(inline)]
 pub use ser::{to_vec, to_writer, Error as SerializeError, SbpEncoder};
 
 #[doc(inline)]

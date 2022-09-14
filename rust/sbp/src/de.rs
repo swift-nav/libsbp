@@ -126,7 +126,7 @@ impl std::fmt::Display for CrcError {
 
 impl std::error::Error for CrcError {}
 
-struct Framer<R>(FramedRead<R, FramerImpl>);
+pub struct Framer<R>(FramedRead<R, FramerImpl>);
 
 impl<R: io::Read> Framer<R> {
     pub fn new(reader: R) -> Self {
@@ -260,14 +260,14 @@ impl Frame {
 
     pub fn to_sbp(&self) -> Result<Sbp, Error> {
         self.check_crc()?;
-        Ok(Sbp::from_field(
+        Ok(Sbp::from_parts(
             self.msg_type(),
             self.sender_id(),
             self.payload(),
         )?)
     }
 
-    pub fn to_bytes(&self) -> Box<dyn AsRef<[u8]> + '_> {
+    pub fn as_bytes(&self) -> Box<dyn AsRef<[u8]> + '_> {
         Box::new(self.0.chunk())
     }
 }

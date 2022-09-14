@@ -193,7 +193,7 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
     fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<(), Self::Error> {
         let formatter = self.formatter.clone();
         let payload = base64::decode(input.data.payload)?;
-        let msg = Sbp::from_field(
+        let msg = Sbp::from_parts(
             input.data.msg_type,
             input.data.sender,
             BytesMut::from(&payload[..]),
