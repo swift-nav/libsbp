@@ -11,7 +11,6 @@ use crate::{
     BUFLEN,
 };
 
-
 /// Deserialize the IO stream into an iterator of messages.
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, JsonError>> {
     JsonDecoder::framed(input)
@@ -62,7 +61,11 @@ impl JsonDecoder {
         let data = input.into_inner();
         self.payload_buf.clear();
         base64::decode_config_buf(data.payload, base64::STANDARD, &mut self.payload_buf)?;
-        let msg = Sbp::from_field( data.msg_type,data.sender, BytesMut::from(&self.payload_buf[..]), )?;
+        let msg = Sbp::from_field(
+            data.msg_type,
+            data.sender,
+            BytesMut::from(&self.payload_buf[..]),
+        )?;
         Ok(msg)
     }
 }
