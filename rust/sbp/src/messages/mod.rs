@@ -302,7 +302,6 @@ mod lib {
     pub(crate) use set_bit_range;
 }
 
-
 use lib::*;
 
 /// Common functionality available to all SBP messages.
