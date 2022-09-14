@@ -267,8 +267,8 @@ impl Frame {
         )?)
     }
 
-    pub fn as_bytes(&self) -> Box<dyn AsRef<[u8]> + '_> {
-        Box::new(self.0.chunk())
+    pub fn as_bytes(&self) -> &[u8] {
+        self.0.chunk()
     }
 }
 
