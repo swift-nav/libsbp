@@ -20,16 +20,19 @@
 \vspace{3em}
 \begin{table}[H]
   \centering
-  \begin{tabularx}{\textwidth}{baachX}
+  \rowcolors{2}{gray!20}{white}
+  \begin{tabularx}{\textwidth}{bZacNX}
     \toprule
+    \hiderowcolors
     Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
+    \showrowcolors
     ((*- for f in m.fields *))
       $\mathtt{(((f.offset)))}$ &
       $\mathtt{(((f.size)))}$ &
       (((f.fmt))) &
       (((f.units|escape_tex))) &
-      \texttt{(((f.name|escape_tex)))} &
+      \texttt{(((f.name|escape_table_name)))} &
       ((*- if f.is_gnss_signal *))
       \hangindent=0.5em{(((f.desc|append_signals_table)))} \\
       ((*- else *))
@@ -37,6 +40,7 @@
       ((*- endif *))
       ((*- endfor *))
     \midrule
+    \hiderowcolors
     & $\mathtt{(((m.size)))}$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
@@ -116,19 +120,23 @@
 \vspace{3em}
 \begin{table}[h]
   \centering
-  \begin{tabularx}{\textwidth}{ccaclX}
+  \rowcolors{2}{gray!20}{white}
+  \begin{tabularx}{\textwidth}{cZacNX}
     \toprule
+    \hiderowcolors
     Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
+    \showrowcolors
     \midrule
     ((*- for f in m.fields *))
       $\mathtt{(((f.offset)))}$ &
       $\mathtt{(((f.size)))}$ &
       (((f.fmt))) &
       (((f.units|escape_tex))) &
-      \texttt{(((f.name|escape_tex)))} &
+      \texttt{(((f.name|escape_table_name)))} &
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
       ((*- endfor *))
     \midrule
+    \hiderowcolors
     & $\mathtt{(((m.size)))}$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}

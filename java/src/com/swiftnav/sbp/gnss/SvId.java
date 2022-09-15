@@ -21,7 +21,10 @@ import org.json.JSONObject;
 
 public class SvId extends SBPStruct {
 
-    /** ID of the space vehicle within its constellation */
+    /**
+     * Constellation-specific satellite id. For GLO can either be (100+FCN) where FCN is in [-7,+6]
+     * or the Slot ID in [1,28].
+     */
     public int satId;
 
     /** Constellation ID to which the SV belongs */

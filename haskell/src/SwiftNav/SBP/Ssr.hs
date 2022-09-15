@@ -256,8 +256,8 @@ data TroposphericDelayCorrection = TroposphericDelayCorrection
   , _troposphericDelayCorrection_wet  :: !Int8
     -- ^ Wet vertical delay. Add 0.252 m to get actual value.
   , _troposphericDelayCorrection_stddev :: !Word8
-    -- ^ Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev
-    -- <= (3^class * (1 + value/16) - 1) mm
+    -- ^ Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+    -- value/16) - 1)
   } deriving ( Show, Read, Eq )
 
 instance Binary TroposphericDelayCorrection where
@@ -308,8 +308,8 @@ data STECResidual = STECResidual
   , _sTECResidual_residual :: !Int16
     -- ^ STEC residual
   , _sTECResidual_stddev :: !Word8
-    -- ^ Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev
-    -- <= (3^class * (1 + value/16) - 1) * 10 TECU
+    -- ^ Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+    -- value/16) - 1) * 10
   } deriving ( Show, Read, Eq )
 
 instance Binary STECResidual where

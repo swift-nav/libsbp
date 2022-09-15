@@ -217,7 +217,7 @@ impl std::fmt::Display for (((b.type_name))) {
 
 impl TryFrom<(((b.type)))> for (((b.type_name))) {
     type Error = (((b.type)));
-    fn try_from(i: (((b.type))) ) -> Result<Self, Self::Error> {
+    fn try_from(i: (((b.type))) ) -> Result<Self, (((b.type)))> {
         match i {
             ((*- for v in b.vals *))
             (((v.value))) => Ok( (((b.type_name))) :: (((v.name))) ),

@@ -47,6 +47,19 @@
  */
 #define SBP_V4_GNSS_SIGNAL_ENCODED_LEN 2u
 
+#define SBP_SVID__MASK (0xffu)
+#define SBP_SVID__SHIFT (0u)
+#define SBP_SVID__GET(flags) \
+  ((u8)((u8)((flags) >> SBP_SVID__SHIFT) & SBP_SVID__MASK))
+#define SBP_SVID__SET(flags, val)                                      \
+  do {                                                                 \
+    (flags) = (u8)((flags & (~(SBP_SVID__MASK << SBP_SVID__SHIFT))) |  \
+                   (((val) & (SBP_SVID__MASK)) << (SBP_SVID__SHIFT))); \
+  } while (0)
+
+#define SBP_SVID_GPS (0)
+#define SBP_SVID_BDS (3)
+#define SBP_SVID_GAL (5)
 /**
  * Encoded length of sbp_sv_id_t (V4 API) and
  * sv_id_t (legacy API)

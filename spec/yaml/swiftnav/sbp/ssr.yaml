@@ -182,9 +182,8 @@ definitions:
         type: u8
         units: mm
         desc: >
-          Modified DF389 scale.
-          Class is upper 3 bits, value is lower 5.
-          stddev <= (3^class * (1 + value/16) - 1) mm
+          Modified DF389. class 3 MSB, value 5 LSB.
+          stddev = (3^class * (1 + value/16) - 1)
 
  - STECResidualNoStd:
     desc: STEC residual for the given satellite at the grid point.
@@ -212,8 +211,8 @@ definitions:
     - stddev:
         type: u8
         desc: >
-          Modified DF389 scale. Class is upper 3 bits, value is lower 5.
-          stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
+          Modified DF389. class 3 MSB, value 5 LSB.
+          stddev = (3^class * (1 + value/16) - 1) * 10
 
  - MSG_SSR_ORBIT_CLOCK:
     id: 0x05DD
