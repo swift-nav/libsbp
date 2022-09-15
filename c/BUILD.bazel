@@ -130,7 +130,6 @@ cc_test(
     data = [
         "test/legacy/cpp/sbp_data/gnss_data.sbp",
     ],
-    env = {"SBP_DATA_PATH": "c/test/legacy/cpp/sbp_data/"},
     deps = [
         ":sbp",
         "@my-googletest//:gtest_main",

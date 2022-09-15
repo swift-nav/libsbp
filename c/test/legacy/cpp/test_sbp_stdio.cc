@@ -96,19 +96,11 @@ class SbpStdioTest : public ::testing::Test {
 };
 
 TEST_F(SbpStdioTest, ReadsSbpFiles) {
-  if(char* SBP_DATA_PATH = std::getenv("SBP_DATA_PATH")){
-    EXPECT_EQ(num_entries_in_file(strcat(SBP_DATA_PATH, "gnss_data.sbp")), 3);
-  } else {
-    EXPECT_EQ(num_entries_in_file("gnss_data.sbp"), 3);
-  }
+  EXPECT_EQ(num_entries_in_file("c/test/legacy/cpp/sbp_data/gnss_data.sbp"), 3);
 }
 
 TEST_F(SbpStdioTest, WritesToSbpFiles) {
-  if(char* SBP_DATA_PATH = std::getenv("SBP_DATA_PATH")){
-    write_to_file(strcat(SBP_DATA_PATH, "gnss_data.sbp"), "gnss_data_output.sbp");
-  } else {
-    write_to_file("gnss_data.sbp", "gnss_data_output.sbp");
-  }
+  write_to_file("c/test/legacy/cpp/sbp_data/gnss_data.sbp", "gnss_data_output.sbp");
   EXPECT_EQ(num_entries_in_file("gnss_data_output.sbp"), 9);
 }
 
