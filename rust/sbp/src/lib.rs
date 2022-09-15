@@ -190,6 +190,9 @@ pub use messages::Sbp;
 pub use crate::messages::SbpMessage;
 
 #[doc(inline)]
+pub use crate::de::Decoder;
+
+#[doc(inline)]
 pub use crate::de::Framer;
 
 #[doc(inline)]
