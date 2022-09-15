@@ -1,7 +1,9 @@
 use std::borrow::Cow;
 use std::fmt;
 use std::fmt::Formatter;
+use std::io::{BufRead, Read};
 use std::marker::PhantomData;
+use std::slice::Split;
 
 use bytes::{Buf, BufMut};
 #[cfg(feature = "serde")]
@@ -20,7 +22,8 @@ impl<T, E> SbpString<T, E>
 where
     T: AsRef<[u8]>,
 {
-    /// Creates a new SbpString.
+    /// Creates a new SbpString with a given encoding.
+    /// Does not check validity of data with encoding.
     pub fn new(data: T) -> Self {
         Self {
             data,
@@ -39,27 +42,95 @@ where
     }
 }
 
-impl<T: AsRef<[u8]>> SbpString<T, Multipart> {
-    pub fn parse(&self) -> Result<Vec<std::borrow::Cow<str>>, MultipartError> {
-        parse_to_vec(self.as_bytes(), 1)
+impl<T: AsRef<[u8]>> SbpString<T, Unterminated> {
+    /// Checked unterminated SbpString builder, verify last byte is non null
+    pub fn unterminated(data: T) -> Result<Self, UnterminatedError> {
+        match data.as_ref().last() {
+            Some(l) => {
+                if l != &0 {
+                    Ok(Self::new(data))
+                } else {
+                    Err(UnterminatedError)
+                }
+            }
+            None => Err(UnterminatedError),
+        }
     }
 }
 
 impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
-    pub fn parse(&self) -> Result<std::borrow::Cow<str>, MultipartError> {
-        parse_to_vec(self.as_bytes(), 1).and_then(|vec| {
-            if vec.len() != 1 {
-                Err(MultipartError)
-            } else {
-                Ok(vec.get(0).unwrap().clone())
+    pub fn null_terminated(data: T) -> Result<Self, NullTerminatedError> {
+        match data.as_ref().last() {
+            Some(l) => {
+                if l == &0 {
+                    Ok(Self::new(data))
+                } else {
+                    Err(NullTerminatedError)
+                }
             }
-        })
+            None => Err(NullTerminatedError),
+        }
     }
 }
 
-impl<T: AsRef<[u8]>> SbpString<T, DoubleNullTerminated> {
-    pub fn parse(&self) -> Result<Vec<std::borrow::Cow<str>>, MultipartError> {
-        parse_to_vec(self.as_bytes(), 2)
+// pub type Parts<'a> = std::slice::Split<'a, u8, fn(&u8) -> bool>;
+
+impl SbpString<Vec<u8>, Multipart> {
+    pub fn multipart(data: impl Into<Vec<u8>>) -> Result<Self, MultipartError> {
+        let vec = data.into();
+        if let [.., one] = vec.as_slice() {
+            if one == &0 {
+                return Ok(SbpString::new(vec));
+            }
+        };
+        Err(MultipartError)
+    }
+
+    /// Unchecked from parts builder to construct Multipart SbpString
+    pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
+        // let intersperse = parts
+        //     .into_iter()
+        //     .flat_map(|c| [c, [0u8]]);
+        // SbpString::multipart(intersperse).unwrap()
+        todo!()
+    }
+
+    pub fn parts(&self) -> Vec<Cow<str>> {
+        self.data
+            .split(|a| a == &0)
+            .map(String::from_utf8_lossy)
+            .collect()
+    }
+}
+
+impl SbpString<Vec<u8>, DoubleNullTerminated> {
+    pub fn double_null_terminated(
+        data: impl Into<Vec<u8>>,
+    ) -> Result<Self, DoubleNullTerminatedError> {
+        let vec = data.into();
+        if let [.., two, one] = vec.as_slice() {
+            if one == &0 && two == &0 {
+                return Ok(SbpString::new(vec));
+            }
+        };
+        Err(DoubleNullTerminatedError)
+    }
+
+    pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
+        // let intersperse = parts
+        //     .into_iter()
+        //     .flat_map(|c| [c, [0u8]]);
+        // SbpString::multipart(intersperse).unwrap()
+        todo!()
+    }
+
+    pub fn parts(&self) -> Vec<Cow<str>> {
+        let slice = self.data.as_slice();
+        // skip last 2 bytes
+        slice[0..slice.len() - 2]
+            .split(|a| a == &0)
+            .map(String::from_utf8_lossy)
+            .collect()
     }
 }
 
@@ -245,7 +316,13 @@ macro_rules! forward_payload_vec {
 }
 
 #[derive(Debug)]
+pub struct UnterminatedError;
+#[derive(Debug)]
 pub struct MultipartError;
+#[derive(Debug)]
+pub struct NullTerminatedError;
+#[derive(Debug)]
+pub struct DoubleNullTerminatedError;
 
 /// Handles encoding and decoding of unterminated strings.
 ///
@@ -317,26 +394,6 @@ forward_payload_vec!(Multipart, 0);
 pub struct DoubleNullTerminated;
 
 forward_payload_vec!(DoubleNullTerminated, 2);
-
-fn parse_to_vec(bytes: &[u8], null: usize) -> Result<Vec<Cow<str>>, MultipartError> {
-    let mut bytes: &[u8] = bytes;
-    for _ in 0..null {
-        match bytes.split_last() {
-            Some((last, other)) => {
-                if last == &0 {
-                    bytes = other;
-                } else {
-                    return Err(MultipartError);
-                }
-            }
-            None => return Err(MultipartError),
-        };
-    }
-    Ok(bytes
-        .split(|b| b == &0)
-        .map(String::from_utf8_lossy)
-        .collect())
-}
 
 #[cfg(test)]
 mod tests {
