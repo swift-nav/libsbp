@@ -47,8 +47,7 @@ LATEX_SUBS_ALLOW_EXPONENTS = (
 
 TEMPLATE_NAME = "sbp_messages_desc.tex"
 
-LATEX_SUBS = (
-    (re.compile(r'\\'), r'\\textbackslash'),
+LATEX_SUBS_MIN = (
     (re.compile(r'([{}_#%&$])'), r'\\\1'),
     (re.compile(r'@@(\S+)\[([^\]]+)\]'), r'\\href{\1}{\2}'),
     (re.compile(r'~'), r'\~{}'),
@@ -57,17 +56,35 @@ LATEX_SUBS = (
     (re.compile(r'\.\.\.+'), r'\\ldots'),
 )
 
+LATEX_SUBS_ALL = (
+    (re.compile(r'\\'), r'\\textbackslash'),
+) + LATEX_SUBS_MIN
+
+MAX_NAME_LENGTH = 27
+
+
 def append_signals_table(value):
     return value + " (see pg. ~\\pageref{sec:signals})"
 
+
+def _escape_tex(value, subs):
+    for pattern, replacement in subs:
+        value = pattern.sub(replacement, value)
+    return value
+
+
 def escape_tex(value):
-  """
-  Make text tex safe
-  """
-  newval = value
-  for pattern, replacement in LATEX_SUBS:
-    newval = pattern.sub(replacement, newval)
-  return newval
+    """
+    Make text tex safe
+    """
+    return _escape_tex(value, LATEX_SUBS_ALL)
+
+
+def escape_table_name(value):
+    if len(value) > MAX_NAME_LENGTH:
+        value = value[:MAX_NAME_LENGTH] + " \\newline " + value[MAX_NAME_LENGTH:]
+    return _escape_tex(value, LATEX_SUBS_MIN)
+
 
 def classnameify(s):
   """
@@ -75,8 +92,10 @@ def classnameify(s):
   """
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
+
 def header_write(v):
   return re.sub('Io', 'IO', v)
+
 
 def packagenameify(s):
   """
@@ -84,11 +103,13 @@ def packagenameify(s):
   """
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('.')[-1:])
 
+
 def nobrackets(v):
   """
   Remove brackets
   """
   return v.replace('[', '').replace(']', '')
+
 
 def removearray(v):
   """
@@ -96,11 +117,13 @@ def removearray(v):
   """
   return re.sub('^[a-z]*\[N\]\.', '', v)
 
+
 def removehost(v):
   """
   Clean up array name
   """
   return re.sub('^[a-z]*\[N\]\.', '', v)
+
 
 def remove_dir(v):
   """
@@ -108,14 +131,17 @@ def remove_dir(v):
   """
   return v.split("(host")[0]
 
+
 def get_size(v):
   """
   Clean up array name
   """
   return field_sizes[v] if field_sizes.get(v, None) else "---"
 
+
 JENV.filters['append_signals_table'] = append_signals_table
 JENV.filters['escape_tex'] = escape_tex
+JENV.filters['escape_table_name'] = escape_table_name
 JENV.filters['classnameify'] = classnameify
 JENV.filters['packagenameify'] = packagenameify
 JENV.filters['nobrackets'] = nobrackets
