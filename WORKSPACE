@@ -6,6 +6,11 @@ new_local_repository(
     path = "c/third_party/check",
 )
 
+local_repository(
+    name = "my-googletest",
+    path = "c/third_party/googletest",
+)
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(

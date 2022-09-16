@@ -47,11 +47,11 @@ cc_library(
         "src/v4/vehicle.c",
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
+    copts = ["-Ic/src/include"],
     includes = [
         "include",
-        "src/include",
-    ],  # FIXME - Don't expose this path publically.
-    visibility = [ "//visibility:public" ],
+    ],
+    visibility = ["//visibility:public"],
 )
 
 SBP_LEGACY_C_SOURCES = glob(["test/legacy/auto*.c"])
@@ -65,9 +65,73 @@ cc_test(
         "test/check_bitfield_macros.c",
         "test/check_suites_legacy.h",
     ] + SBP_LEGACY_C_SOURCES,
+    includes = [
+        "include/libsbp",
+    ],
+    deps = [
+        ":sbp",
+        "@my-check//:check",
+    ],
+)
+
+SBP_V4_C_SOURCES = glob(["test/auto*.c"])
+
+cc_test(
+    name = "sbp-v4-test",
+    srcs = [
+        "test/check_main.c",
+        "test/check_edc.c",
+        "test/check_sbp.c",
+        "test/check_bitfield_macros.c",
+        "test/check_suites.h",
+    ] + SBP_V4_C_SOURCES,
     includes = ["include/libsbp"],
     deps = [
         ":sbp",
         "@my-check//:check",
+    ],
+)
+
+SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
+
+cc_test(
+    name = "sbp-cpp-v4-test",
+    srcs = SBP_CPP_V4_C_SOURCES,
+    deps = [
+        ":sbp",
+        "@my-googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "sbp-string-test",
+    srcs = [
+        "test/string/test_double_null_terminated.cc",
+        "test/string/test_multipart.cc",
+        "test/string/test_null_terminated.cc",
+        "test/string/test_unterminated.cc",
+    ],
+    includes = [
+        "src/include",
+    ],
+    deps = [
+        ":sbp",
+        "@my-googletest//:gtest_main",
+    ],
+)
+
+SBP_CPP_LEGACY_SOURCES = glob(["test/legacy/cpp/auto*.cc"])
+
+cc_test(
+    name = "sbp-cpp-legacy-test",
+    srcs = [
+        "test/legacy/cpp/test_sbp_stdio.cc",
+    ] + SBP_CPP_LEGACY_SOURCES,
+    data = [
+        "test/legacy/cpp/sbp_data/gnss_data.sbp",
+    ],
+    deps = [
+        ":sbp",
+        "@my-googletest//:gtest_main",
     ],
 )
