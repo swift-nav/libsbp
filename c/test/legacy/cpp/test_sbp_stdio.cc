@@ -100,7 +100,8 @@ TEST_F(SbpStdioTest, ReadsSbpFiles) {
 }
 
 TEST_F(SbpStdioTest, WritesToSbpFiles) {
-  write_to_file("c/test/legacy/cpp/sbp_data/gnss_data.sbp", "gnss_data_output.sbp");
+  write_to_file("c/test/legacy/cpp/sbp_data/gnss_data.sbp",
+                "gnss_data_output.sbp");
   EXPECT_EQ(num_entries_in_file("gnss_data_output.sbp"), 9);
 }
 
