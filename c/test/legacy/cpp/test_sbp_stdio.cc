@@ -35,6 +35,19 @@ class MsgObsHandler : private sbp::PayloadHandler<msg_obs_t> {
     header_params_.msg_type = SBP_MSG_OBS;
     header_params_.payload_len = message_length;
     header_params_.payload = msg;
+    const uint8_t * payload_it = reinterpret_cast<const uint8_t *>(&header_params_.payload);
+    const uint8_t * msg_it = reinterpret_cast<const uint8_t *>(&msg);
+    fprintf(stderr, "msg ");
+    for(int i = 0;i < message_length;i++,msg_it++){
+      fprintf(stderr, "%d ", *msg_it);
+    }
+    fprintf(stderr, "\n");
+    
+    fprintf(stderr, "payload ");
+    for(int i = 0;i < message_length;i++,payload_it++){
+      fprintf(stderr, "%d ", *payload_it);
+    }
+    fprintf(stderr, "\n");
   }
 
   void write_message() const {
