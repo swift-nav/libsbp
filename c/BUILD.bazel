@@ -1,0 +1,137 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
+
+SBP_INCLUDE = glob(["include/**/*.h"])
+
+SBP_INCLUDE_INTERNAL = glob(["src/**/*.h"])
+
+refresh_compile_commands(
+    name = "refresh_compile_commands",
+)
+
+cc_library(
+    name = "sbp",
+    srcs = [
+        "src/edc.c",
+        "src/sbp.c",
+        "src/v4/string/sbp_string.c",
+        "src/v4/string/multipart.c",
+        "src/v4/string/null_terminated.c",
+        "src/v4/string/double_null_terminated.c",
+        "src/v4/string/unterminated.c",
+        # generated files
+        "src/v4/acquisition.c",
+        "src/v4/bootload.c",
+        "src/v4/ext_events.c",
+        "src/v4/file_io.c",
+        "src/v4/flash.c",
+        "src/v4/gnss.c",
+        "src/v4/imu.c",
+        "src/v4/integrity.c",
+        "src/v4/linux.c",
+        "src/v4/logging.c",
+        "src/v4/mag.c",
+        "src/v4/navigation.c",
+        "src/v4/ndb.c",
+        "src/v4/observation.c",
+        "src/v4/orientation.c",
+        "src/v4/piksi.c",
+        "src/v4/sbas.c",
+        "src/v4/settings.c",
+        "src/v4/signing.c",
+        "src/v4/solution_meta.c",
+        "src/v4/ssr.c",
+        "src/v4/system.c",
+        "src/v4/tracking.c",
+        "src/v4/user.c",
+        "src/v4/vehicle.c",
+    ],
+    hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
+    copts = ["-Ic/src/include"],
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+SBP_LEGACY_C_SOURCES = glob(["test/legacy/auto*.c"])
+
+cc_test(
+    name = "sbp-legacy-test",
+    srcs = [
+        "test/check_main_legacy.c",
+        "test/check_edc.c",
+        "test/check_sbp.c",
+        "test/check_bitfield_macros.c",
+        "test/check_suites_legacy.h",
+    ] + SBP_LEGACY_C_SOURCES,
+    includes = [
+        "include/libsbp",
+    ],
+    deps = [
+        ":sbp",
+        "@my-check//:check",
+    ],
+)
+
+SBP_V4_C_SOURCES = glob(["test/auto*.c"])
+
+cc_test(
+    name = "sbp-v4-test",
+    srcs = [
+        "test/check_main.c",
+        "test/check_edc.c",
+        "test/check_sbp.c",
+        "test/check_bitfield_macros.c",
+        "test/check_suites.h",
+    ] + SBP_V4_C_SOURCES,
+    includes = ["include/libsbp"],
+    deps = [
+        ":sbp",
+        "@my-check//:check",
+    ],
+)
+
+SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
+
+cc_test(
+    name = "sbp-cpp-v4-test",
+    srcs = SBP_CPP_V4_C_SOURCES,
+    deps = [
+        ":sbp",
+        "@my-googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "sbp-string-test",
+    srcs = [
+        "test/string/test_double_null_terminated.cc",
+        "test/string/test_multipart.cc",
+        "test/string/test_null_terminated.cc",
+        "test/string/test_unterminated.cc",
+    ],
+    includes = [
+        "src/include",
+    ],
+    deps = [
+        ":sbp",
+        "@my-googletest//:gtest_main",
+    ],
+)
+
+SBP_CPP_LEGACY_SOURCES = glob(["test/legacy/cpp/auto*.cc"])
+
+cc_test(
+    name = "sbp-cpp-legacy-test",
+    srcs = [
+        "test/legacy/cpp/test_sbp_stdio.cc",
+    ] + SBP_CPP_LEGACY_SOURCES,
+    data = [
+        "test/legacy/cpp/sbp_data/gnss_data.sbp",
+    ],
+    deps = [
+        ":sbp",
+        "@my-googletest//:gtest_main",
+    ],
+)
