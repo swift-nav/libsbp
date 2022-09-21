@@ -5,6 +5,8 @@ SBP_INCLUDE = glob(["include/**/*.h"])
 
 SBP_INCLUDE_INTERNAL = glob(["src/**/*.h"])
 
+print(SBP_INCLUDE_INTERNAL)
+
 refresh_compile_commands(
     name = "refresh_compile_commands",
 )
@@ -47,7 +49,7 @@ cc_library(
         "src/v4/vehicle.c",
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
-    copts = ["-Ic/src/include"],
+    copts = ["-Ic/src/include", "-Iexternal/my-sbp/c/src/include"],
     includes = [
         "include",
     ],
