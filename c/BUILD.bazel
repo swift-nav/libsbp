@@ -47,10 +47,13 @@ cc_library(
         "src/v4/vehicle.c",
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
+    copts = [
+        "-Ic/src/include",
+        "-Iexternal/libsbp/c/src/include",
+    ],
     includes = [
         "include",
-        "src/include",
-    ], # exposing src/include for now to fix upstream builds.
+    ],
     visibility = ["//visibility:public"],
 )
 
