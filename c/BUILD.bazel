@@ -47,7 +47,10 @@ cc_library(
         "src/v4/vehicle.c",
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
-    copts = ["-Ic/src/include"],
+    copts = [
+        "-Ic/src/include",
+        "-Iexternal/libsbp/c/src/include",
+    ],
     includes = [
         "include",
     ],
