@@ -190,19 +190,10 @@ pub use messages::Sbp;
 pub use crate::messages::SbpMessage;
 
 #[doc(inline)]
-pub use crate::de::Decoder;
-
-#[doc(inline)]
-pub use crate::de::Framer;
-
-#[doc(inline)]
-pub use crate::de::Frame;
-
-#[doc(inline)]
 pub use ser::{to_vec, to_writer, Error as SerializeError, SbpEncoder};
 
 #[doc(inline)]
-pub use de::{iter_messages, iter_messages_with_timeout, Error as DeserializeError};
+pub use de::{Error as DeserializeError, *};
 
 #[cfg(feature = "async")]
 #[doc(inline)]
