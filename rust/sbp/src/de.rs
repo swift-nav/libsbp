@@ -342,11 +342,14 @@ impl<R: io::Read> Iterator for TimeoutDecoder<R> {
 impl<R: futures::AsyncRead + Unpin> futures::Stream for TimeoutDecoder<R> {
     type Item = Result<Sbp, Error>;
 
-    fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
+    fn poll_next(
+        self: std::pin::Pin<&mut Self>,
+        cx: &mut std::task::Context<'_>,
+    ) -> std::task::Poll<Option<Self::Item>> {
         match futures::ready!(Pin::new(&mut self.0).poll_next(cx)) {
-            Some(Ok(frame)) => Poll::Ready(Some(frame.to_sbp())),
-            Some(Err(e)) => Poll::Ready(Some(Err(e.into()))),
-            None => Poll::Ready(None),
+            Some(Ok(frame)) => std::task::Poll::Ready(Some(frame.to_sbp())),
+            Some(Err(e)) => std::task::Poll::Ready(Some(Err(e.into()))),
+            None => std::task::Poll::Ready(None),
         }
     }
 }
