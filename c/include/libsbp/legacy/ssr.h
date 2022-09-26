@@ -142,8 +142,8 @@ typedef struct SBP_ATTR_PACKED {
   s16 hydro; /**< Hydrostatic vertical delay. Add 2.3 m to get actual
                   value. [4 mm] */
   s8 wet;    /**< Wet vertical delay. Add 0.252 m to get actual value. [4 mm] */
-  u8 stddev; /**< Modified DF389 scale. Class is upper 3 bits, value is
-                  lower 5. stddev <= (3^class * (1 + value/16) - 1) mm [mm] */
+  u8 stddev; /**< Modified DF389. class 3 MSB, value 5 LSB. stddev =
+                  (3^class * (1 + value/16) - 1) [mm] */
 } tropospheric_delay_correction_t;
 
 /** None
@@ -165,9 +165,8 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id; /**< space vehicle identifier */
   s16 residual;  /**< STEC residual [0.04 TECU] */
-  u8 stddev;     /**< Modified DF389 scale. Class is upper 3 bits, value is
-                      lower 5. stddev <= (3^class * (1 + value/16) - 1) * 10
-                      TECU */
+  u8 stddev;     /**< Modified DF389. class 3 MSB, value 5 LSB. stddev =
+                      (3^class * (1 + value/16) - 1) * 10 */
 } stec_residual_t;
 
 /** Precise orbit and clock correction

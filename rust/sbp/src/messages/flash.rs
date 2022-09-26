@@ -153,7 +153,7 @@ pub mod msg_flash_done {
 
     impl TryFrom<u8> for ResponseCode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(ResponseCode::FlashOk),
                 1 => Ok(ResponseCode::FlashInvalidFlash),
@@ -282,7 +282,7 @@ pub mod msg_flash_erase {
 
     impl TryFrom<u8> for FlashTargetToRead {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FlashTargetToRead::FlashStm),
                 1 => Ok(FlashTargetToRead::FlashM25),
@@ -424,7 +424,7 @@ pub mod msg_flash_program {
 
     impl TryFrom<u8> for FlashTargetToRead {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FlashTargetToRead::FlashStm),
                 1 => Ok(FlashTargetToRead::FlashM25),
@@ -560,7 +560,7 @@ pub mod msg_flash_read_req {
 
     impl TryFrom<u8> for FlashTargetToRead {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FlashTargetToRead::FlashStm),
                 1 => Ok(FlashTargetToRead::FlashM25),
@@ -696,7 +696,7 @@ pub mod msg_flash_read_resp {
 
     impl TryFrom<u8> for FlashTargetToRead {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FlashTargetToRead::FlashStm),
                 1 => Ok(FlashTargetToRead::FlashM25),

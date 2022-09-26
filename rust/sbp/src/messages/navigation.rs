@@ -380,7 +380,7 @@ pub mod msg_baseline_ecef {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 2 => Ok(FixMode::DifferentialGnss),
@@ -583,7 +583,7 @@ pub mod msg_baseline_ecef_dep_a {
 
     impl TryFrom<u8> for RaimRepairFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
@@ -617,7 +617,7 @@ pub mod msg_baseline_ecef_dep_a {
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
@@ -647,7 +647,7 @@ pub mod msg_baseline_ecef_dep_a {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::FloatRtk),
                 1 => Ok(FixMode::FixedRtk),
@@ -826,7 +826,7 @@ pub mod msg_baseline_heading_dep_a {
 
     impl TryFrom<u8> for RaimRepairFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
@@ -860,7 +860,7 @@ pub mod msg_baseline_heading_dep_a {
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
@@ -890,7 +890,7 @@ pub mod msg_baseline_heading_dep_a {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::FloatRtk),
                 1 => Ok(FixMode::FixedRtk),
@@ -1078,7 +1078,7 @@ pub mod msg_baseline_ned {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 2 => Ok(FixMode::DifferentialGnss),
@@ -1290,7 +1290,7 @@ pub mod msg_baseline_ned_dep_a {
 
     impl TryFrom<u8> for RaimRepairFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
@@ -1324,7 +1324,7 @@ pub mod msg_baseline_ned_dep_a {
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
@@ -1354,7 +1354,7 @@ pub mod msg_baseline_ned_dep_a {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::FloatRtk),
                 1 => Ok(FixMode::FixedRtk),
@@ -1555,7 +1555,7 @@ pub mod msg_dops {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -1843,7 +1843,7 @@ pub mod msg_gps_time {
 
     impl TryFrom<u8> for TimeSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
@@ -2128,7 +2128,7 @@ pub mod msg_gps_time_gnss {
 
     impl TryFrom<u8> for TimeSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
@@ -2334,7 +2334,7 @@ pub mod msg_pos_ecef {
 
     impl TryFrom<u8> for TowType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TowType::TimeOfMeasurement),
                 1 => Ok(TowType::Other),
@@ -2364,7 +2364,7 @@ pub mod msg_pos_ecef {
 
     impl TryFrom<u8> for InertialNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
@@ -2414,7 +2414,7 @@ pub mod msg_pos_ecef {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -2660,7 +2660,7 @@ pub mod msg_pos_ecef_cov {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -2690,7 +2690,7 @@ pub mod msg_pos_ecef_cov {
 
     impl TryFrom<u8> for InertialNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
@@ -2740,7 +2740,7 @@ pub mod msg_pos_ecef_cov {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -2971,7 +2971,7 @@ pub mod msg_pos_ecef_cov_gnss {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -3179,7 +3179,7 @@ pub mod msg_pos_ecef_dep_a {
 
     impl TryFrom<u8> for RaimRepairFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
@@ -3213,7 +3213,7 @@ pub mod msg_pos_ecef_dep_a {
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
@@ -3247,7 +3247,7 @@ pub mod msg_pos_ecef_dep_a {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::SinglePointPositioning),
                 1 => Ok(FixMode::FixedRtk),
@@ -3438,7 +3438,7 @@ pub mod msg_pos_ecef_gnss {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -3654,7 +3654,7 @@ pub mod msg_pos_llh {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -3684,7 +3684,7 @@ pub mod msg_pos_llh {
 
     impl TryFrom<u8> for InertialNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
@@ -3734,7 +3734,7 @@ pub mod msg_pos_llh {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -4036,7 +4036,7 @@ pub mod msg_pos_llh_acc {
 
     impl TryFrom<u8> for GeoidModel {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(GeoidModel::NoModel),
                 1 => Ok(GeoidModel::EGM96),
@@ -4071,7 +4071,7 @@ pub mod msg_pos_llh_acc {
 
     impl TryFrom<u8> for ConfidenceLevel {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 1 => Ok(ConfidenceLevel::_3935),
                 2 => Ok(ConfidenceLevel::_6827),
@@ -4102,7 +4102,7 @@ pub mod msg_pos_llh_acc {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -4132,7 +4132,7 @@ pub mod msg_pos_llh_acc {
 
     impl TryFrom<u8> for InertialNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
@@ -4182,7 +4182,7 @@ pub mod msg_pos_llh_acc {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -4428,7 +4428,7 @@ pub mod msg_pos_llh_cov {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -4458,7 +4458,7 @@ pub mod msg_pos_llh_cov {
 
     impl TryFrom<u8> for InertialNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
@@ -4508,7 +4508,7 @@ pub mod msg_pos_llh_cov {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -4743,7 +4743,7 @@ pub mod msg_pos_llh_cov_gnss {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -4973,7 +4973,7 @@ pub mod msg_pos_llh_dep_a {
 
     impl TryFrom<u8> for RaimRepairFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimRepairFlag::NoRepair),
                 1 => Ok(RaimRepairFlag::SolutionCameFromRaimRepair),
@@ -5007,7 +5007,7 @@ pub mod msg_pos_llh_dep_a {
 
     impl TryFrom<u8> for RaimAvailabilityFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimAvailabilityFlag::RaimCheckWasExplicitlyDisabledOrUnavailable),
                 1 => Ok(RaimAvailabilityFlag::RaimCheckWasAvailable),
@@ -5039,7 +5039,7 @@ pub mod msg_pos_llh_dep_a {
 
     impl TryFrom<u8> for HeightMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(HeightMode::HeightAboveWgs84Ellipsoid),
                 1 => Ok(HeightMode::HeightAboveMeanSeaLevel),
@@ -5073,7 +5073,7 @@ pub mod msg_pos_llh_dep_a {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::SinglePointPositioning),
                 1 => Ok(FixMode::FixedRtk),
@@ -5271,7 +5271,7 @@ pub mod msg_pos_llh_gnss {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -5728,7 +5728,7 @@ pub mod msg_protection_level {
 
     impl TryFrom<u8> for FixMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FixMode::Invalid),
                 1 => Ok(FixMode::SinglePointPosition),
@@ -5763,7 +5763,7 @@ pub mod msg_protection_level {
 
     impl TryFrom<u8> for InertialNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InertialNavigationMode::None),
                 1 => Ok(InertialNavigationMode::InsUsed),
@@ -5793,7 +5793,7 @@ pub mod msg_protection_level {
 
     impl TryFrom<u8> for TimeStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeStatus::GnssTimeOfValidity),
                 1 => Ok(TimeStatus::Other),
@@ -5982,7 +5982,7 @@ pub mod msg_protection_level_dep_a {
 
     impl TryFrom<u8> for TargetIntegrityRiskTirLevel {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
             0 => Ok( TargetIntegrityRiskTirLevel :: SafeStateProtectionLevelShallNotBeUsedForSafetyCriticalApplication ),
             1 => Ok( TargetIntegrityRiskTirLevel :: TirLevel1 ),
@@ -6516,7 +6516,7 @@ pub mod msg_utc_time {
 
     impl TryFrom<u8> for UtcOffsetSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UtcOffsetSource::FactoryDefault),
                 1 => Ok(UtcOffsetSource::NonVolatileMemory),
@@ -6551,7 +6551,7 @@ pub mod msg_utc_time {
 
     impl TryFrom<u8> for TimeSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
@@ -6754,7 +6754,7 @@ pub mod msg_utc_time_gnss {
 
     impl TryFrom<u8> for UtcOffsetSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(UtcOffsetSource::FactoryDefault),
                 1 => Ok(UtcOffsetSource::NonVolatileMemory),
@@ -6789,7 +6789,7 @@ pub mod msg_utc_time_gnss {
 
     impl TryFrom<u8> for TimeSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
@@ -7015,7 +7015,7 @@ pub mod msg_vel_body {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
@@ -7053,7 +7053,7 @@ pub mod msg_vel_body {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -7327,7 +7327,7 @@ pub mod msg_vel_cog {
 
     impl TryFrom<u8> for CogFrozen {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(CogFrozen::NotFrozen),
                 1 => Ok(CogFrozen::Frozen),
@@ -7359,7 +7359,7 @@ pub mod msg_vel_cog {
 
     impl TryFrom<u8> for VerticalVelocityValidity {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VerticalVelocityValidity::Invalid),
                 1 => Ok(VerticalVelocityValidity::VerticalVelocityValid),
@@ -7389,7 +7389,7 @@ pub mod msg_vel_cog {
 
     impl TryFrom<u8> for SogValidity {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SogValidity::Invalid),
                 1 => Ok(SogValidity::SogValid),
@@ -7419,7 +7419,7 @@ pub mod msg_vel_cog {
 
     impl TryFrom<u8> for CogValidity {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(CogValidity::Invalid),
                 1 => Ok(CogValidity::CogValid),
@@ -7449,7 +7449,7 @@ pub mod msg_vel_cog {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -7479,7 +7479,7 @@ pub mod msg_vel_cog {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
@@ -7517,7 +7517,7 @@ pub mod msg_vel_cog {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -7717,7 +7717,7 @@ pub mod msg_vel_ecef {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -7747,7 +7747,7 @@ pub mod msg_vel_ecef {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
@@ -7785,7 +7785,7 @@ pub mod msg_vel_ecef {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -8020,7 +8020,7 @@ pub mod msg_vel_ecef_cov {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -8050,7 +8050,7 @@ pub mod msg_vel_ecef_cov {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
@@ -8088,7 +8088,7 @@ pub mod msg_vel_ecef_cov {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -8299,7 +8299,7 @@ pub mod msg_vel_ecef_cov_gnss {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -8598,7 +8598,7 @@ pub mod msg_vel_ecef_gnss {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -8805,7 +8805,7 @@ pub mod msg_vel_ned {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -8835,7 +8835,7 @@ pub mod msg_vel_ned {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
@@ -8873,7 +8873,7 @@ pub mod msg_vel_ned {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -9111,7 +9111,7 @@ pub mod msg_vel_ned_cov {
 
     impl TryFrom<u8> for TypeOfReportedTow {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfReportedTow::TimeOfMeasurement),
                 1 => Ok(TypeOfReportedTow::Other),
@@ -9141,7 +9141,7 @@ pub mod msg_vel_ned_cov {
 
     impl TryFrom<u8> for InsNavigationMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsNavigationMode::None),
                 1 => Ok(InsNavigationMode::InsUsed),
@@ -9179,7 +9179,7 @@ pub mod msg_vel_ned_cov {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -9393,7 +9393,7 @@ pub mod msg_vel_ned_cov_gnss {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
@@ -9708,7 +9708,7 @@ pub mod msg_vel_ned_gnss {
 
     impl TryFrom<u8> for VelocityMode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocityMode::Invalid),
                 1 => Ok(VelocityMode::MeasuredDopplerDerived),
