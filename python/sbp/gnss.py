@@ -30,8 +30,8 @@ class GnssSignal(object):
   Parameters
   ----------
   sat : int
-    Constellation-specific satellite identifier. This field for Glonass can
-    either be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
+    Constellation-specific satellite id. For GLO can either be (100+FCN) where
+    FCN is in [-7,+6] or the Slot ID in [1,28].
   code : int
     Signal constellation, band and code
 
@@ -68,7 +68,8 @@ class SvId(object):
   Parameters
   ----------
   satId : int
-    ID of the space vehicle within its constellation
+    Constellation-specific satellite id. For GLO can either be (100+FCN) where
+    FCN is in [-7,+6] or the Slot ID in [1,28].
   constellation : int
     Constellation ID to which the SV belongs
 

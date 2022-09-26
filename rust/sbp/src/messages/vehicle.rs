@@ -192,7 +192,7 @@ pub mod msg_odometry {
 
     impl TryFrom<u8> for VehicleMetadata {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VehicleMetadata::Unavailable),
                 1 => Ok(VehicleMetadata::Forward),
@@ -232,7 +232,7 @@ pub mod msg_odometry {
 
     impl TryFrom<u8> for VelocitySource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VelocitySource::Source0),
                 1 => Ok(VelocitySource::Source1),
@@ -268,7 +268,7 @@ pub mod msg_odometry {
 
     impl TryFrom<u8> for TimeSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GpsSolution),
@@ -457,7 +457,7 @@ pub mod msg_wheeltick {
 
     impl TryFrom<u8> for VehicleMetadata {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(VehicleMetadata::Unavailable),
                 1 => Ok(VehicleMetadata::Forward),
@@ -499,7 +499,7 @@ pub mod msg_wheeltick {
 
     impl TryFrom<u8> for SynchronizationType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SynchronizationType::MicrosecondsSinceLastPps),
                 1 => Ok(SynchronizationType::MicrosecondsInGpsWeek),

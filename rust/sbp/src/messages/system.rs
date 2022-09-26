@@ -308,7 +308,7 @@ pub mod msg_dgnss_status {
         CodeDifference = 1,
 
         /// RTK
-        RTK = 2,
+        Rtk = 2,
     }
 
     impl std::fmt::Display for DifferentialType {
@@ -316,18 +316,18 @@ pub mod msg_dgnss_status {
             match self {
                 DifferentialType::Invalid => f.write_str("Invalid"),
                 DifferentialType::CodeDifference => f.write_str("Code Difference"),
-                DifferentialType::RTK => f.write_str("RTK"),
+                DifferentialType::Rtk => f.write_str("RTK"),
             }
         }
     }
 
     impl TryFrom<u8> for DifferentialType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(DifferentialType::Invalid),
                 1 => Ok(DifferentialType::CodeDifference),
-                2 => Ok(DifferentialType::RTK),
+                2 => Ok(DifferentialType::Rtk),
                 i => Err(i),
             }
         }
@@ -548,7 +548,7 @@ pub mod msg_group_meta {
         GnssOnly = 1,
 
         /// GNSS+INS (Fuzed)
-        GnssINS = 2,
+        Gnssins = 2,
     }
 
     impl std::fmt::Display for SolutionGroupType {
@@ -556,18 +556,18 @@ pub mod msg_group_meta {
             match self {
                 SolutionGroupType::None => f.write_str("None (invalid)"),
                 SolutionGroupType::GnssOnly => f.write_str("GNSS only"),
-                SolutionGroupType::GnssINS => f.write_str("GNSS+INS (Fuzed)"),
+                SolutionGroupType::Gnssins => f.write_str("GNSS+INS (Fuzed)"),
             }
         }
     }
 
     impl TryFrom<u8> for SolutionGroupType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SolutionGroupType::None),
                 1 => Ok(SolutionGroupType::GnssOnly),
-                2 => Ok(SolutionGroupType::GnssINS),
+                2 => Ok(SolutionGroupType::Gnssins),
                 i => Err(i),
             }
         }
@@ -792,7 +792,7 @@ pub mod msg_heartbeat {
 
     impl TryFrom<u8> for ExternalAntennaPresent {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(ExternalAntennaPresent::NoExternalAntennaDetected),
                 1 => Ok(ExternalAntennaPresent::ExternalAntennaIsPresent),
@@ -822,7 +822,7 @@ pub mod msg_heartbeat {
 
     impl TryFrom<u8> for ExternalAntennaShort {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(ExternalAntennaShort::NoShortDetected),
                 1 => Ok(ExternalAntennaShort::ShortDetected),
@@ -854,7 +854,7 @@ pub mod msg_heartbeat {
 
     impl TryFrom<u8> for SwiftNapError {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SwiftNapError::SystemHealthy),
                 1 => Ok(SwiftNapError::AnErrorHasOccurredInTheSwiftNap),
@@ -884,7 +884,7 @@ pub mod msg_heartbeat {
 
     impl TryFrom<u8> for IoError {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(IoError::SystemHealthy),
                 1 => Ok(IoError::AnIoErrorHasOccurred),
@@ -914,7 +914,7 @@ pub mod msg_heartbeat {
 
     impl TryFrom<u8> for SystemErrorFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SystemErrorFlag::SystemHealthy),
                 1 => Ok(SystemErrorFlag::AnErrorHasOccurred),
@@ -1116,7 +1116,7 @@ pub mod msg_ins_status {
 
     impl TryFrom<u8> for InsType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InsType::SmoothposeLooselyCoupled),
                 1 => Ok(InsType::Starling),
@@ -1154,7 +1154,7 @@ pub mod msg_ins_status {
 
     impl TryFrom<u8> for MotionState {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(MotionState::UnknownOrInit),
                 1 => Ok(MotionState::ArbitraryMotion),
@@ -1190,7 +1190,7 @@ pub mod msg_ins_status {
 
     impl TryFrom<u8> for OdometrySynch {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(OdometrySynch::OdometryTimestampNominal),
                 1 => Ok(OdometrySynch::OdometryTimestampOutOfBounds),
@@ -1228,7 +1228,7 @@ pub mod msg_ins_status {
 
     impl TryFrom<u8> for OdometryStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(OdometryStatus::NoOdometry),
                 1 => Ok(OdometryStatus::OdometryReceivedWithinLastSecond),
@@ -1263,7 +1263,7 @@ pub mod msg_ins_status {
 
     impl TryFrom<u8> for InsError {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 1 => Ok(InsError::ImuDataError),
                 2 => Ok(InsError::InsLicenseError),
@@ -1294,7 +1294,7 @@ pub mod msg_ins_status {
 
     impl TryFrom<u8> for GnssFix {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(GnssFix::NoGnssFixAvailable),
                 1 => Ok(GnssFix::GnssFix),
@@ -1348,7 +1348,7 @@ pub mod msg_ins_status {
 
     impl TryFrom<u8> for Mode {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Mode::AwaitingInitialization),
                 1 => Ok(Mode::DynamicallyAligning),
@@ -1870,7 +1870,7 @@ pub mod msg_pps_time {
 
     impl TryFrom<u8> for TimeUncertainty {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeUncertainty::Unknown),
                 1 => Ok(TimeUncertainty::_10Milliseconds),
@@ -2065,7 +2065,7 @@ pub mod msg_sensor_aid_event {
 
     impl TryFrom<u8> for TypeIdentifier {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeIdentifier::GnssPosition),
                 1 => Ok(TypeIdentifier::GnssAverageVelocity),
@@ -2221,7 +2221,7 @@ pub mod msg_startup {
 
     impl TryFrom<u8> for CauseOfStartup {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(CauseOfStartup::PowerOn),
                 1 => Ok(CauseOfStartup::SoftwareReset),
@@ -2255,7 +2255,7 @@ pub mod msg_startup {
 
     impl TryFrom<u8> for StartupType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(StartupType::ColdStart),
                 1 => Ok(StartupType::WarmStart),
@@ -2445,7 +2445,7 @@ pub mod msg_status_journal {
 
     impl TryFrom<u16> for System {
         type Error = u16;
-        fn try_from(i: u16) -> Result<Self, Self::Error> {
+        fn try_from(i: u16) -> Result<Self, u16> {
             match i {
                 0 => Ok(System::Starling),
                 1 => Ok(System::PrecisionGnssModule),
@@ -2637,7 +2637,7 @@ pub mod msg_status_report {
 
     impl TryFrom<u16> for System {
         type Error = u16;
-        fn try_from(i: u16) -> Result<Self, Self::Error> {
+        fn try_from(i: u16) -> Result<Self, u16> {
             match i {
                 0 => Ok(System::Starling),
                 1 => Ok(System::PrecisionGnssModule),
@@ -2782,7 +2782,7 @@ pub mod sub_system_report {
         DifferentialGnssEngine = 3,
 
         /// CAN
-        CAN = 4,
+        Can = 4,
 
         /// Wheel Odometry
         WheelOdometry = 5,
@@ -2798,7 +2798,7 @@ pub mod sub_system_report {
                 Subsystem::MeasurementEngine => f.write_str("Measurement Engine"),
                 Subsystem::CorrectionsClient => f.write_str("Corrections Client"),
                 Subsystem::DifferentialGnssEngine => f.write_str("Differential GNSS Engine"),
-                Subsystem::CAN => f.write_str("CAN"),
+                Subsystem::Can => f.write_str("CAN"),
                 Subsystem::WheelOdometry => f.write_str("Wheel Odometry"),
                 Subsystem::SensorFusionEngine => f.write_str("Sensor Fusion Engine"),
             }
@@ -2807,13 +2807,13 @@ pub mod sub_system_report {
 
     impl TryFrom<u16> for Subsystem {
         type Error = u16;
-        fn try_from(i: u16) -> Result<Self, Self::Error> {
+        fn try_from(i: u16) -> Result<Self, u16> {
             match i {
                 0 => Ok(Subsystem::PrimaryGnssAntenna),
                 1 => Ok(Subsystem::MeasurementEngine),
                 2 => Ok(Subsystem::CorrectionsClient),
                 3 => Ok(Subsystem::DifferentialGnssEngine),
-                4 => Ok(Subsystem::CAN),
+                4 => Ok(Subsystem::Can),
                 5 => Ok(Subsystem::WheelOdometry),
                 6 => Ok(Subsystem::SensorFusionEngine),
                 i => Err(i),
@@ -2854,7 +2854,7 @@ pub mod sub_system_report {
 
     impl TryFrom<u8> for Generic {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Generic::OKNominal),
                 1 => Ok(Generic::Initializing),

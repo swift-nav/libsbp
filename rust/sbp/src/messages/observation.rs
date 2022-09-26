@@ -6483,7 +6483,7 @@ pub mod packed_obs_content {
 
     impl TryFrom<u8> for RaimExclusion {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RaimExclusion::NoExclusion),
                 1 => Ok(RaimExclusion::MeasurementWasExcludedBySppRaimUseWithCare),
@@ -6515,7 +6515,7 @@ pub mod packed_obs_content {
 
     impl TryFrom<u8> for DopplerValid {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(DopplerValid::InvalidDopplerMeasurement),
                 1 => Ok(DopplerValid::ValidDopplerMeasurement),
@@ -6549,7 +6549,7 @@ pub mod packed_obs_content {
 
     impl TryFrom<u8> for HalfCycleAmbiguity {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityUnresolved),
                 1 => Ok(HalfCycleAmbiguity::HalfCyclePhaseAmbiguityResolved),
@@ -6583,7 +6583,7 @@ pub mod packed_obs_content {
 
     impl TryFrom<u8> for CarrierPhaseValid {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(CarrierPhaseValid::InvalidCarrierPhaseMeasurement),
                 1 => Ok(CarrierPhaseValid::ValidCarrierPhaseMeasurement),
@@ -6617,7 +6617,7 @@ pub mod packed_obs_content {
 
     impl TryFrom<u8> for PseudorangeValid {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(PseudorangeValid::InvalidPseudorangeMeasurement),
                 1 => Ok(PseudorangeValid::ValidPseudorangeMeasurementAndCoarseTowDecoded),
@@ -7016,7 +7016,7 @@ pub mod packed_osr_content {
 
     impl TryFrom<u8> for InvalidPhaseCorrections {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InvalidPhaseCorrections::ValidPhaseCorrections),
                 1 => Ok(InvalidPhaseCorrections::DoNotUsePhaseCorrections),
@@ -7050,7 +7050,7 @@ pub mod packed_osr_content {
 
     impl TryFrom<u8> for InvalidCodeCorrections {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(InvalidCodeCorrections::ValidCodeCorrections),
                 1 => Ok(InvalidCodeCorrections::DoNotUseCodeCorrections),
@@ -7080,7 +7080,7 @@ pub mod packed_osr_content {
 
     impl TryFrom<u8> for FullFixingFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FullFixingFlag::FullFixingUnavailable),
                 1 => Ok(FullFixingFlag::FullFixingAvailable),
@@ -7114,7 +7114,7 @@ pub mod packed_osr_content {
 
     impl TryFrom<u8> for PartialFixingFlag {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(PartialFixingFlag::PartialFixingUnavailable),
                 1 => Ok(PartialFixingFlag::PartialFixingAvailable),
@@ -7144,7 +7144,7 @@ pub mod packed_osr_content {
 
     impl TryFrom<u8> for CorrectionValidity {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(CorrectionValidity::DoNotUseSignal),
                 1 => Ok(CorrectionValidity::ValidSignal),

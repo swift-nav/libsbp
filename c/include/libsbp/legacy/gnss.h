@@ -35,9 +35,8 @@ SBP_PACK_START
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 sat;  /**< Constellation-specific satellite identifier. This field for
-                Glonass can either be (100+FCN) where FCN is in [-7,+6] or
-                the Slot ID in [1,28]. */
+  u8 sat;  /**< Constellation-specific satellite id. For GLO can either be
+                (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28]. */
   u8 code; /**< Signal constellation, band and code */
 } sbp_gnss_signal_t;
 
@@ -48,7 +47,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 satId;         /**< ID of the space vehicle within its constellation */
+  u8 satId;         /**< Constellation-specific satellite id. For GLO can
+                         either be (100+FCN) where FCN is in [-7,+6] or the
+                         Slot ID in [1,28]. */
   u8 constellation; /**< Constellation ID to which the SV belongs */
 } sv_id_t;
 

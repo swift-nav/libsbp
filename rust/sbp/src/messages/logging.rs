@@ -207,57 +207,57 @@ pub mod msg_log {
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum LoggingLevel {
         /// EMERG
-        EMERG = 0,
+        Emerg = 0,
 
         /// ALERT
-        ALERT = 1,
+        Alert = 1,
 
         /// CRIT
-        CRIT = 2,
+        Crit = 2,
 
         /// ERROR
-        ERROR = 3,
+        Error = 3,
 
         /// WARN
-        WARN = 4,
+        Warn = 4,
 
         /// NOTICE
-        NOTICE = 5,
+        Notice = 5,
 
         /// INFO
-        INFO = 6,
+        Info = 6,
 
         /// DEBUG
-        DEBUG = 7,
+        Debug = 7,
     }
 
     impl std::fmt::Display for LoggingLevel {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                LoggingLevel::EMERG => f.write_str("EMERG"),
-                LoggingLevel::ALERT => f.write_str("ALERT"),
-                LoggingLevel::CRIT => f.write_str("CRIT"),
-                LoggingLevel::ERROR => f.write_str("ERROR"),
-                LoggingLevel::WARN => f.write_str("WARN"),
-                LoggingLevel::NOTICE => f.write_str("NOTICE"),
-                LoggingLevel::INFO => f.write_str("INFO"),
-                LoggingLevel::DEBUG => f.write_str("DEBUG"),
+                LoggingLevel::Emerg => f.write_str("EMERG"),
+                LoggingLevel::Alert => f.write_str("ALERT"),
+                LoggingLevel::Crit => f.write_str("CRIT"),
+                LoggingLevel::Error => f.write_str("ERROR"),
+                LoggingLevel::Warn => f.write_str("WARN"),
+                LoggingLevel::Notice => f.write_str("NOTICE"),
+                LoggingLevel::Info => f.write_str("INFO"),
+                LoggingLevel::Debug => f.write_str("DEBUG"),
             }
         }
     }
 
     impl TryFrom<u8> for LoggingLevel {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(LoggingLevel::EMERG),
-                1 => Ok(LoggingLevel::ALERT),
-                2 => Ok(LoggingLevel::CRIT),
-                3 => Ok(LoggingLevel::ERROR),
-                4 => Ok(LoggingLevel::WARN),
-                5 => Ok(LoggingLevel::NOTICE),
-                6 => Ok(LoggingLevel::INFO),
-                7 => Ok(LoggingLevel::DEBUG),
+                0 => Ok(LoggingLevel::Emerg),
+                1 => Ok(LoggingLevel::Alert),
+                2 => Ok(LoggingLevel::Crit),
+                3 => Ok(LoggingLevel::Error),
+                4 => Ok(LoggingLevel::Warn),
+                5 => Ok(LoggingLevel::Notice),
+                6 => Ok(LoggingLevel::Info),
+                7 => Ok(LoggingLevel::Debug),
                 i => Err(i),
             }
         }

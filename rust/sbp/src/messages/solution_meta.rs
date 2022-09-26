@@ -101,7 +101,7 @@ pub mod gnss_input_type {
 
     impl TryFrom<u8> for TypeOfGnssMeasurement {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TypeOfGnssMeasurement::GnssPosition),
                 1 => Ok(TypeOfGnssMeasurement::GnssVelocityDoppler),
@@ -224,7 +224,7 @@ pub mod imu_input_type {
 
     impl TryFrom<u8> for TimeStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeStatus::ReferenceEpochIsStartOfCurrentGpsWeek),
                 1 => Ok(TimeStatus::ReferenceEpochIsTimeOfSystemStartup),
@@ -264,7 +264,7 @@ pub mod imu_input_type {
 
     impl TryFrom<u8> for ImuGrade {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(ImuGrade::ConsumerGrade),
                 1 => Ok(ImuGrade::TacticalGrade),
@@ -296,7 +296,7 @@ pub mod imu_input_type {
 
     impl TryFrom<u8> for ImuArchitecture {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(ImuArchitecture::_6AxisMems),
                 1 => Ok(ImuArchitecture::OtherType),
@@ -504,7 +504,7 @@ pub mod msg_soln_meta {
 
     impl TryFrom<u8> for TimeStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeStatus::AgeCanNotBeUsedToRetrieveTom),
                 1 => Ok(TimeStatus::AgeCanBeUsedToRetrieveTom),
@@ -711,7 +711,7 @@ pub mod msg_soln_meta_dep_a {
 
     impl TryFrom<u8> for AlignmentStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(AlignmentStatus::UnknownReasonOrAlreadyAligned),
                 1 => Ok(AlignmentStatus::SeedValuesLoadedAndAlignmentInProgress),
@@ -826,7 +826,7 @@ pub mod odo_input_type {
 
     impl TryFrom<u8> for Rate {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Rate::FixedIncomingRate),
                 1 => Ok(Rate::TriggeredByMinimumDistanceOrSpeed),
@@ -860,7 +860,7 @@ pub mod odo_input_type {
 
     impl TryFrom<u8> for OdometerGrade {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(OdometerGrade::LowGrade),
                 1 => Ok(OdometerGrade::MediumGrade),
@@ -899,7 +899,7 @@ pub mod odo_input_type {
 
     impl TryFrom<u8> for OdometerClass {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(OdometerClass::SingleOrAveragedTicks),
                 1 => Ok(OdometerClass::SingleOrAveragedSpeed),
@@ -1010,7 +1010,7 @@ pub mod solution_input_type {
 
     impl TryFrom<u8> for SensorUsage {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SensorUsage::Unknown),
                 1 => Ok(SensorUsage::ReceivedAndUsed),
@@ -1065,7 +1065,7 @@ pub mod solution_input_type {
 
     impl TryFrom<u8> for SensorType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(SensorType::Invalid),
                 1 => Ok(SensorType::GnssPosition),

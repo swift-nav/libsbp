@@ -175,7 +175,7 @@ pub mod msg_linux_cpu_state {
 
     impl TryFrom<u8> for TimestampType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimestampType::SystemTimeInSeconds),
                 1 => Ok(TimestampType::GpsTowInMilliseconds),
@@ -435,7 +435,7 @@ pub mod msg_linux_mem_state {
 
     impl TryFrom<u8> for TimestampType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimestampType::SystemTimeInSeconds),
                 1 => Ok(TimestampType::GpsTowInMilliseconds),
@@ -1206,7 +1206,7 @@ pub mod msg_linux_sys_state {
 
     impl TryFrom<u8> for TimestampType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimestampType::SystemTimeInSeconds),
                 1 => Ok(TimestampType::GpsTowInMilliseconds),
