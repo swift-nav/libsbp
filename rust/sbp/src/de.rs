@@ -165,11 +165,10 @@ impl<R: io::Read> Iterator for Decoder<R> {
     type Item = Result<Sbp, Error>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let sbp = match self.0.next()? {
+        self.0.next().map(|f| match f {
             Ok(frame) => frame.to_sbp(),
-            Err(err) => return Some(Err(err)),
-        };
-        Some(sbp)
+            Err(err) => Err(err),
+        })
     }
 }
 
@@ -330,11 +329,10 @@ impl<R: io::Read> Iterator for TimeoutDecoder<R> {
     type Item = Result<Sbp, Error>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let sbp = match self.0.next()? {
+        self.0.next().map(|f| match f {
             Ok(frame) => frame.to_sbp(),
-            Err(err) => return Some(Err(err)),
-        };
-        Some(sbp)
+            Err(err) => Err(err),
+        })
     }
 }
 
