@@ -1,9 +1,6 @@
-use std::borrow::Cow;
+use std::borrow::{Borrow, Cow};
 use std::fmt;
-use std::fmt::Formatter;
-use std::io::{BufRead, Read};
 use std::marker::PhantomData;
-use std::slice::Split;
 
 use bytes::{Buf, BufMut};
 #[cfg(feature = "serde")]
@@ -88,11 +85,19 @@ impl SbpString<Vec<u8>, Multipart> {
 
     /// Unchecked from parts builder to construct Multipart SbpString
     pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
-        // let intersperse = parts
-        //     .into_iter()
-        //     .flat_map(|c| [c, [0u8]]);
-        // SbpString::multipart(intersperse).unwrap()
-        todo!()
+        // let intersperse = parts.into_iter().flat_map(|c| [c, 0u8] as [u8; 2]);
+        // let a = parts.;
+        // let a = SbpString::<_, DoubleNullTerminated>::from_parts(["a","a","b"]);
+
+        let mut data = vec![];
+        for i in parts {
+            data.push(i);
+            data.push([0u8].borrow());
+        }
+        data.pop();
+        // parts.iter().flat_map(|a| [a, &b"0"]);
+        // parts.into_iter().collect();
+        SbpString::multipart(data).unwrap()
     }
 
     pub fn parts(&self) -> Vec<Cow<str>> {
@@ -117,10 +122,8 @@ impl SbpString<Vec<u8>, DoubleNullTerminated> {
     }
 
     pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
-        // let intersperse = parts
-        //     .into_iter()
-        //     .flat_map(|c| [c, [0u8]]);
-        // SbpString::multipart(intersperse).unwrap()
+        // let intersperse = parts.into_iter().flat_map(|c| [c, 0u8]).collect();
+        // SbpString::double_null_terminated(intersperse).unwrap()
         todo!()
     }
 
