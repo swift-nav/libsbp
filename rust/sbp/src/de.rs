@@ -50,7 +50,7 @@ pub fn iter_messages_with_timeout<R: io::Read>(
     input: R,
     timeout_duration: Duration,
 ) -> impl Iterator<Item = Result<Sbp, Error>> {
-    TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
+    TimeoutDecoder::new(input, timeout_duration)
 }
 
 /// Deserialize the async IO stream into an stream of messages.
@@ -66,7 +66,7 @@ pub fn stream_messages_with_timeout<R: futures::AsyncRead + Unpin>(
     input: R,
     timeout_duration: Duration,
 ) -> impl futures::Stream<Item = Result<Sbp, Error>> {
-    TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
+    TimeoutDecoder::new(input, timeout_duration)
 }
 
 /// All errors that can occur while reading messages.
@@ -128,7 +128,7 @@ impl std::error::Error for CrcError {}
 
 pub struct Framer<R>(FramedRead<R, FramerImpl>);
 
-impl<R: io::Read> Framer<R> {
+impl<R> Framer<R> {
     pub fn new(reader: R) -> Self {
         Self(FramedRead::new(reader, FramerImpl))
     }
@@ -139,6 +139,17 @@ impl<R: io::Read> Iterator for Framer<R> {
 
     fn next(&mut self) -> Option<Self::Item> {
         self.0.next()
+    }
+}
+
+#[cfg(feature = "async")]
+impl<R: futures::AsyncRead + Unpin> futures::Stream for Framer<R> {
+    type Item = Result<Frame, Error>;
+    fn poll_next(
+        mut self: std::pin::Pin<&mut Self>,
+        cx: &mut std::task::Context<'_>,
+    ) -> std::task::Poll<Option<Self::Item>> {
+        std::pin::Pin::new(&mut self.0).poll_next(cx)
     }
 }
 
@@ -272,42 +283,71 @@ impl Frame {
     }
 }
 
-struct TimeoutSbpDecoder {
+struct TimeoutDecoderImpl<D> {
     timeout_duration: Duration,
     last_msg_received: Instant,
+    inner: D,
 }
 
-impl TimeoutSbpDecoder {
-    fn new(timeout_duration: Duration) -> Self {
+impl<D> TimeoutDecoderImpl<D> {
+    fn new(inner: D, timeout_duration: Duration) -> Self {
         Self {
+            inner,
             timeout_duration,
             last_msg_received: Instant::now(),
         }
     }
-    fn framed_with_timeout<W>(
-        writer: W,
-        timeout_duration: Duration,
-    ) -> FramedRead<W, TimeoutSbpDecoder> {
-        FramedRead::new(writer, Self::new(timeout_duration))
-    }
 }
 
-impl dencode::Decoder for TimeoutSbpDecoder {
-    type Item = Sbp;
-    type Error = Error;
+impl<D: dencode::Decoder> dencode::Decoder for TimeoutDecoderImpl<D> {
+    type Item = D::Item;
+    type Error = D::Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         if self.last_msg_received.elapsed() > self.timeout_duration {
-            return Err(std::io::Error::new(std::io::ErrorKind::TimedOut, "timeout").into());
+            return Err(io::Error::new(io::ErrorKind::TimedOut, "timeout").into());
         }
-        let next = match FramerImpl.decode(src)? {
-            Some(frame) => frame.to_sbp().map(Some),
-            None => return Ok(None),
-        };
-        if let Ok(Some(_)) = next {
+        let next = self.inner.decode(src)?;
+        if next.is_some() {
             self.last_msg_received = Instant::now();
         }
-        next
+        Ok(next)
+    }
+}
+
+struct TimeoutDecoder<R>(FramedRead<R, TimeoutDecoderImpl<FramerImpl>>);
+
+impl<R> TimeoutDecoder<R> {
+    pub fn new(reader: R, timeout: Duration) -> Self {
+        Self(FramedRead::new(
+            reader,
+            TimeoutDecoderImpl::new(FramerImpl, timeout),
+        ))
+    }
+}
+
+impl<R: io::Read> Iterator for TimeoutDecoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let sbp = match self.0.next()? {
+            Ok(frame) => frame.to_sbp(),
+            Err(err) => return Some(Err(err)),
+        };
+        Some(sbp)
+    }
+}
+
+#[cfg(feature = "async")]
+impl<R: futures::AsyncRead + Unpin> futures::Stream for TimeoutDecoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
+        match futures::ready!(Pin::new(&mut self.0).poll_next(cx)) {
+            Some(Ok(frame)) => Poll::Ready(Some(frame.to_sbp())),
+            Some(Err(e)) => Poll::Ready(Some(Err(e.into()))),
+            None => Poll::Ready(None),
+        }
     }
 }
 
