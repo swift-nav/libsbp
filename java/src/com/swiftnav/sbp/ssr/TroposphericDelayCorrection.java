@@ -28,10 +28,7 @@ public class TroposphericDelayCorrection extends SBPStruct {
     /** Wet vertical delay. Add 0.252 m to get actual value. */
     public int wet;
 
-    /**
-     * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev {@literal <}= (3^class
-     * * (1 + value/16) - 1) mm
-     */
+    /** Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 + value/16) - 1) */
     public int stddev;
 
     public TroposphericDelayCorrection() {}

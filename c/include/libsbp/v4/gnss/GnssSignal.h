@@ -44,8 +44,8 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Constellation-specific satellite identifier. This field for Glonass can
-   * either be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
+   * Constellation-specific satellite id. For GLO can either be (100+FCN) where
+   * FCN is in [-7,+6] or the Slot ID in [1,28].
    */
   u8 sat;
 

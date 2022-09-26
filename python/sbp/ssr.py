@@ -341,8 +341,8 @@ class TroposphericDelayCorrection(object):
   wet : int
     Wet vertical delay. Add 0.252 m to get actual value.
   stddev : int
-    Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
-    (3^class * (1 + value/16) - 1) mm
+    Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+    value/16) - 1)
 
   """
   _parser = construct.Struct(
@@ -420,8 +420,8 @@ class STECResidual(object):
   residual : int
     STEC residual
   stddev : int
-    Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
-    (3^class * (1 + value/16) - 1) * 10 TECU
+    Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+    value/16) - 1) * 10
 
   """
   _parser = construct.Struct(

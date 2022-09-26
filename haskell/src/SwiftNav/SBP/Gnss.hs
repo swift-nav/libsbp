@@ -40,8 +40,8 @@ import SwiftNav.SBP.Types
 -- Signal identifier containing constellation, band, and satellite identifier.
 data GnssSignal = GnssSignal
   { _gnssSignal_sat :: !Word8
-    -- ^ Constellation-specific satellite identifier. This field for Glonass can
-    -- either be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
+    -- ^ Constellation-specific satellite id. For GLO can either be (100+FCN)
+    -- where FCN is in [-7,+6] or the Slot ID in [1,28].
   , _gnssSignal_code :: !Word8
     -- ^ Signal constellation, band and code
   } deriving ( Show, Read, Eq )
@@ -65,7 +65,8 @@ $(makeLenses ''GnssSignal)
 -- vehicle.
 data SvId = SvId
   { _svId_satId       :: !Word8
-    -- ^ ID of the space vehicle within its constellation
+    -- ^ Constellation-specific satellite id. For GLO can either be (100+FCN)
+    -- where FCN is in [-7,+6] or the Slot ID in [1,28].
   , _svId_constellation :: !Word8
     -- ^ Constellation ID to which the SV belongs
   } deriving ( Show, Read, Eq )

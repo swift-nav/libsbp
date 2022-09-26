@@ -639,7 +639,7 @@ pub mod msg_settings_register_resp {
 
     impl TryFrom<u8> for RegisterStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(RegisterStatus::AcceptedRequestedDefaultValueReturned),
                 1 => Ok(
@@ -945,7 +945,7 @@ pub mod msg_settings_write_resp {
 
     impl TryFrom<u8> for WriteStatus {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(WriteStatus::AcceptedValueUpdated),
                 1 => Ok(WriteStatus::RejectedValueUnparsableOrOutOfRange),

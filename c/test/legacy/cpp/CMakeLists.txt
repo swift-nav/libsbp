@@ -13,4 +13,4 @@ swift_add_test(test-libsbp-cpp-legacy
 swift_set_language_standards(test-libsbp-cpp-legacy)
 swift_set_compile_options(test-libsbp-cpp-legacy ADD -Wno-error=array-bounds)
 
-file(COPY sbp_data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY sbp_data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/c/test/legacy/cpp/sbp_data/)

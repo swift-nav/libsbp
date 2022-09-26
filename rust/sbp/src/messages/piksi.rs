@@ -1080,7 +1080,7 @@ pub mod msg_mask_satellite {
 
     impl TryFrom<u8> for TrackingChannels {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TrackingChannels::Enabled),
                 1 => Ok(TrackingChannels::DropThisPrnIfCurrentlyTracking),
@@ -1112,7 +1112,7 @@ pub mod msg_mask_satellite {
 
     impl TryFrom<u8> for AcquisitionChannel {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(AcquisitionChannel::Enabled),
                 1 => Ok(AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
@@ -1251,7 +1251,7 @@ pub mod msg_mask_satellite_dep {
 
     impl TryFrom<u8> for TrackingChannels {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TrackingChannels::Enabled),
                 1 => Ok(TrackingChannels::DropThisPrnIfCurrentlyTracking),
@@ -1283,7 +1283,7 @@ pub mod msg_mask_satellite_dep {
 
     impl TryFrom<u8> for AcquisitionChannel {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(AcquisitionChannel::Enabled),
                 1 => Ok(AcquisitionChannel::SkipThisSatelliteOnFutureAcquisitions),
@@ -1866,7 +1866,7 @@ pub mod msg_reset {
 
     impl TryFrom<u8> for DefaultSettings {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(DefaultSettings::PreserveExistingSettings),
                 1 => Ok(DefaultSettings::ResoreDefaultSettings),
@@ -2056,7 +2056,7 @@ pub mod msg_reset_filters {
 
     impl TryFrom<u8> for FilterOrProcessToReset {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(FilterOrProcessToReset::DgnssFilter),
                 1 => Ok(FilterOrProcessToReset::IarProcess),
