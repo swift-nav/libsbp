@@ -92,11 +92,13 @@ impl SbpString<Vec<u8>, Multipart> {
         let mut data = vec![];
         for i in parts {
             data.push(i);
-            data.push([0u8].borrow());
+            data.push(&b"0"[..]);
         }
         data.pop();
+
         // parts.iter().flat_map(|a| [a, &b"0"]);
         // parts.into_iter().collect();
+
         SbpString::multipart(data).unwrap()
     }
 
