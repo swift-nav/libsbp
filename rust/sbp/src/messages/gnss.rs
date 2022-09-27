@@ -207,8 +207,8 @@ pub mod gnss_signal {
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssSignal {
-        /// Constellation-specific satellite identifier. This field for Glonass can
-        /// either be (100+FCN) where FCN is in \[-7,+6\] or the Slot ID in \[1,28\].
+        /// Constellation-specific satellite id. For GLO can either be (100+FCN)
+        /// where FCN is in \[-7,+6\] or the Slot ID in \[1,28\].
         #[cfg_attr(feature = "serde", serde(rename = "sat"))]
         pub sat: u8,
         /// Signal constellation, band and code
@@ -309,7 +309,7 @@ pub mod gnss_signal {
 
     impl TryFrom<u8> for Code {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Code::GpsL1Ca),
                 1 => Ok(Code::GpsL2Cm),
@@ -435,7 +435,7 @@ pub mod gnss_signal_dep {
 
     impl TryFrom<u8> for Code {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(Code::GpsL1Ca),
                 1 => Ok(Code::GpsL2Cm),
@@ -464,12 +464,29 @@ pub mod sv_id {
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SvId {
-        /// ID of the space vehicle within its constellation
+        /// Constellation-specific satellite id. For GLO can either be (100+FCN)
+        /// where FCN is in \[-7,+6\] or the Slot ID in \[1,28\].
         #[cfg_attr(feature = "serde", serde(rename = "satId"))]
         pub sat_id: u8,
         /// Constellation ID to which the SV belongs
         #[cfg_attr(feature = "serde", serde(rename = "constellation"))]
         pub constellation: u8,
+    }
+
+    impl SvId {
+        /// Gets the [Constellation][self::Constellation] stored in the `constellation` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Constellation` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Constellation` were added.
+        pub fn constellation(&self) -> Result<Constellation, u8> {
+            get_bit_range!(self.constellation, u8, u8, 7, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Constellation][Constellation] of the `constellation` bitfield.
+        pub fn set_constellation(&mut self, constellation: Constellation) {
+            set_bit_range!(&mut self.constellation, constellation, u8, u8, 7, 0);
+        }
     }
 
     impl WireFormat for SvId {
@@ -485,6 +502,40 @@ pub mod sv_id {
             SvId {
                 sat_id: WireFormat::parse_unchecked(buf),
                 constellation: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Constellation {
+        /// GPS
+        Gps = 0,
+
+        /// BDS
+        Bds = 3,
+
+        /// GAL
+        Gal = 5,
+    }
+
+    impl std::fmt::Display for Constellation {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Constellation::Gps => f.write_str("GPS"),
+                Constellation::Bds => f.write_str("BDS"),
+                Constellation::Gal => f.write_str("GAL"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Constellation {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Constellation::Gps),
+                3 => Ok(Constellation::Bds),
+                5 => Ok(Constellation::Gal),
+                i => Err(i),
             }
         }
     }

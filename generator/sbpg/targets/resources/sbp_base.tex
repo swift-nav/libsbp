@@ -1,5 +1,6 @@
 \documentclass[9pt]{extarticle}
 
+\usepackage[table]{xcolor}
 \usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{bytefield}
@@ -19,7 +20,6 @@
 \usepackage{soul}
 \usepackage{hyperref}
 \usepackage{ltxtable}
-\usepackage{caption}
 
 \hypersetup{bookmarks,bookmarksopen,bookmarksdepth=4}
 
@@ -50,6 +50,7 @@
 \renewcommand{\cftsubsecafterpnum}{\hspace*{7.5em}}
 \renewcommand\tableofcontents{\@starttoc{toc}}
 
+\newcolumntype{Z}{>{\hsize=.15\hsize}X}
 \newcolumntype{a}{>{\hsize=.2\hsize}X}
 \newcolumntype{b}{>{\hsize=.22\hsize}X}
 \newcolumntype{c}{>{\hsize=.3\hsize}X}
@@ -58,6 +59,7 @@
 \newcolumntype{f}{>{\hsize=.16\hsize}X}
 \newcolumntype{g}{>{\hsize=.77\hsize}X}
 \newcolumntype{h}{>{\hsize=.6\hsize}X}
+\newcolumntype{N}{>{\hsize=.77\hsize}X}
 
 % Shell out to git to get the most recent tag and pass it to the LateX
 % job name. Hopefully this doesn't screw with things.

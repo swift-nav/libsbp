@@ -183,7 +183,7 @@ pub mod msg_ext_event {
 
     impl TryFrom<u8> for TimeQuality {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(TimeQuality::UnknownDontHaveNavSolution),
                 1 => Ok(TimeQuality::Good),
@@ -213,7 +213,7 @@ pub mod msg_ext_event {
 
     impl TryFrom<u8> for NewLevelOfPin {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(NewLevelOfPin::Low),
                 1 => Ok(NewLevelOfPin::High),

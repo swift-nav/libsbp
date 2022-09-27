@@ -29,8 +29,8 @@ let UInt64 = require('cuint').UINT64;
  * Signal identifier containing constellation, band, and satellite identifier.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite identifier. This field for Glonass can either
- *   be (100+FCN) where FCN is in [-7,+6] or the Slot ID in [1,28].
+ * @field sat number (unsigned 8-bit int, 1 byte) Constellation-specific satellite id. For GLO can either be (100+FCN) where FCN
+ *   is in [-7,+6] or the Slot ID in [1,28].
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -60,7 +60,8 @@ GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
  * vehicle.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field satId number (unsigned 8-bit int, 1 byte) ID of the space vehicle within its constellation
+ * @field satId number (unsigned 8-bit int, 1 byte) Constellation-specific satellite id. For GLO can either be (100+FCN) where FCN
+ *   is in [-7,+6] or the Slot ID in [1,28].
  * @field constellation number (unsigned 8-bit int, 1 byte) Constellation ID to which the SV belongs
  *
  * @param sbp An SBP object with a payload to be decoded.

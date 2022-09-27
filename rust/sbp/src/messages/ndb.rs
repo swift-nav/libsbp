@@ -204,37 +204,37 @@ pub mod msg_ndb_event {
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EventType {
         /// UNKNOWN
-        UNKNOWN = 0,
+        Unknown = 0,
 
         /// STORE
-        STORE = 1,
+        Store = 1,
 
         /// FETCH
-        FETCH = 2,
+        Fetch = 2,
 
         /// ERASE
-        ERASE = 3,
+        Erase = 3,
     }
 
     impl std::fmt::Display for EventType {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                EventType::UNKNOWN => f.write_str("UNKNOWN"),
-                EventType::STORE => f.write_str("STORE"),
-                EventType::FETCH => f.write_str("FETCH"),
-                EventType::ERASE => f.write_str("ERASE"),
+                EventType::Unknown => f.write_str("UNKNOWN"),
+                EventType::Store => f.write_str("STORE"),
+                EventType::Fetch => f.write_str("FETCH"),
+                EventType::Erase => f.write_str("ERASE"),
             }
         }
     }
 
     impl TryFrom<u8> for EventType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(EventType::UNKNOWN),
-                1 => Ok(EventType::STORE),
-                2 => Ok(EventType::FETCH),
-                3 => Ok(EventType::ERASE),
+                0 => Ok(EventType::Unknown),
+                1 => Ok(EventType::Store),
+                2 => Ok(EventType::Fetch),
+                3 => Ok(EventType::Erase),
                 i => Err(i),
             }
         }
@@ -244,52 +244,52 @@ pub mod msg_ndb_event {
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     pub enum EventObjectType {
         /// UNKNOWN
-        UNKNOWN = 0,
+        Unknown = 0,
 
         /// EPHEMERIS
-        EPHEMERIS = 1,
+        Ephemeris = 1,
 
         /// ALMANAC
-        ALMANAC = 2,
+        Almanac = 2,
 
         /// ALMANAC_WN
         AlmanacWn = 3,
 
         /// IONO
-        IoNO = 4,
+        Iono = 4,
 
         /// L2C_CAP
         L2CCap = 5,
 
         /// LGF
-        LGF = 6,
+        Lgf = 6,
     }
 
     impl std::fmt::Display for EventObjectType {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                EventObjectType::UNKNOWN => f.write_str("UNKNOWN"),
-                EventObjectType::EPHEMERIS => f.write_str("EPHEMERIS"),
-                EventObjectType::ALMANAC => f.write_str("ALMANAC"),
+                EventObjectType::Unknown => f.write_str("UNKNOWN"),
+                EventObjectType::Ephemeris => f.write_str("EPHEMERIS"),
+                EventObjectType::Almanac => f.write_str("ALMANAC"),
                 EventObjectType::AlmanacWn => f.write_str("ALMANAC_WN"),
-                EventObjectType::IoNO => f.write_str("IONO"),
+                EventObjectType::Iono => f.write_str("IONO"),
                 EventObjectType::L2CCap => f.write_str("L2C_CAP"),
-                EventObjectType::LGF => f.write_str("LGF"),
+                EventObjectType::Lgf => f.write_str("LGF"),
             }
         }
     }
 
     impl TryFrom<u8> for EventObjectType {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(EventObjectType::UNKNOWN),
-                1 => Ok(EventObjectType::EPHEMERIS),
-                2 => Ok(EventObjectType::ALMANAC),
+                0 => Ok(EventObjectType::Unknown),
+                1 => Ok(EventObjectType::Ephemeris),
+                2 => Ok(EventObjectType::Almanac),
                 3 => Ok(EventObjectType::AlmanacWn),
-                4 => Ok(EventObjectType::IoNO),
+                4 => Ok(EventObjectType::Iono),
                 5 => Ok(EventObjectType::L2CCap),
-                6 => Ok(EventObjectType::LGF),
+                6 => Ok(EventObjectType::Lgf),
                 i => Err(i),
             }
         }
@@ -352,7 +352,7 @@ pub mod msg_ndb_event {
 
     impl TryFrom<u8> for EventResult {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(EventResult::NdbErrNone),
                 1 => Ok(EventResult::NdbErrMissingIe),
@@ -399,7 +399,7 @@ pub mod msg_ndb_event {
 
     impl TryFrom<u8> for DataSource {
         type Error = u8;
-        fn try_from(i: u8) -> Result<Self, Self::Error> {
+        fn try_from(i: u8) -> Result<Self, u8> {
             match i {
                 0 => Ok(DataSource::NdbDsUndefined),
                 1 => Ok(DataSource::NdbDsInit),

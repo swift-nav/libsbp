@@ -27,7 +27,7 @@ clap = { version = "3.1.15", features = ["derive"] }
 mimalloc = { version = "0.1", default-features = false }
 
 [build-dependencies]
-vergen = { version = "7", default-features = false, features = ["git"] }
+vergen = "3"
 
 [dependencies.dencode]
 version = "0.3.0"

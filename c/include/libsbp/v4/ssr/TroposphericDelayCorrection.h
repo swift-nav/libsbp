@@ -54,8 +54,8 @@ typedef struct {
   s8 wet;
 
   /**
-   * Modified DF389 scale. Class is upper 3 bits, value is lower 5. stddev <=
-   * (3^class * (1 + value/16) - 1) mm [mm]
+   * Modified DF389. class 3 MSB, value 5 LSB. stddev = (3^class * (1 +
+   * value/16) - 1) [mm]
    */
   u8 stddev;
 } sbp_tropospheric_delay_correction_t;
