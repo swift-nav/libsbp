@@ -70,6 +70,27 @@ impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
     }
 }
 
+/// Helper function to alternate null bytes
+/// Used in [`SbpString::from_parts`]
+///
+/// Ex. [a, b, c] => [a, 0, b, 0, c, 0]
+///
+/// Returns null terminated vector
+fn alt_null<R, I>(parts: I) -> Vec<u8>
+where
+    R: AsRef<[u8]>,
+    I: IntoIterator<Item = R>,
+{
+    let mut data = vec![];
+    for i in parts {
+        for j in i.as_ref() {
+            data.push(*j)
+        }
+        data.push(0);
+    }
+    data
+}
+
 // pub type Parts<'a> = std::slice::Split<'a, u8, fn(&u8) -> bool>;
 
 impl SbpString<Vec<u8>, Multipart> {
@@ -85,21 +106,7 @@ impl SbpString<Vec<u8>, Multipart> {
 
     /// Unchecked from parts builder to construct Multipart SbpString
     pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
-        // let intersperse = parts.into_iter().flat_map(|c| [c, 0u8] as [u8; 2]);
-        // let a = parts.;
-        // let a = SbpString::<_, DoubleNullTerminated>::from_parts(["a","a","b"]);
-
-        let mut data = vec![];
-        for i in parts {
-            data.push(i);
-            data.push(&b"0"[..]);
-        }
-        data.pop();
-
-        // parts.iter().flat_map(|a| [a, &b"0"]);
-        // parts.into_iter().collect();
-
-        SbpString::multipart(data).unwrap()
+        SbpString::multipart(alt_null(parts)).unwrap()
     }
 
     pub fn parts(&self) -> Vec<Cow<str>> {
@@ -124,9 +131,9 @@ impl SbpString<Vec<u8>, DoubleNullTerminated> {
     }
 
     pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
-        // let intersperse = parts.into_iter().flat_map(|c| [c, 0u8]).collect();
-        // SbpString::double_null_terminated(intersperse).unwrap()
-        todo!()
+        let mut alt = alt_null(parts);
+        alt.push(0);
+        SbpString::double_null_terminated(alt).unwrap()
     }
 
     pub fn parts(&self) -> Vec<Cow<str>> {
