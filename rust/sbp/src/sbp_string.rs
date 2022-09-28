@@ -1,4 +1,4 @@
-use std::borrow::{Borrow, Cow};
+use std::borrow::Cow;
 use std::fmt;
 use std::marker::PhantomData;
 
@@ -43,14 +43,8 @@ impl<T: AsRef<[u8]>> SbpString<T, Unterminated> {
     /// Checked unterminated SbpString builder, verify last byte is non null
     pub fn unterminated(data: T) -> Result<Self, UnterminatedError> {
         match data.as_ref().last() {
-            Some(l) => {
-                if l != &0 {
-                    Ok(Self::new(data))
-                } else {
-                    Err(UnterminatedError)
-                }
-            }
-            None => Err(UnterminatedError),
+            Some(l) if l != &0 => Ok(Self::new(data)),
+            _ => Err(UnterminatedError),
         }
     }
 }
@@ -58,14 +52,8 @@ impl<T: AsRef<[u8]>> SbpString<T, Unterminated> {
 impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
     pub fn null_terminated(data: T) -> Result<Self, NullTerminatedError> {
         match data.as_ref().last() {
-            Some(l) => {
-                if l == &0 {
-                    Ok(Self::new(data))
-                } else {
-                    Err(NullTerminatedError)
-                }
-            }
-            None => Err(NullTerminatedError),
+            Some(l) if l == &0 => Ok(Self::new(data)),
+            _ => Err(NullTerminatedError),
         }
     }
 }
@@ -95,13 +83,11 @@ where
 
 impl SbpString<Vec<u8>, Multipart> {
     pub fn multipart(data: impl Into<Vec<u8>>) -> Result<Self, MultipartError> {
-        let vec = data.into();
-        if let [.., one] = vec.as_slice() {
-            if one == &0 {
-                return Ok(SbpString::new(vec));
-            }
-        };
-        Err(MultipartError)
+        let data = data.into();
+        match data.last() {
+            Some(l) if l == &0 => Ok(Self::new(data)),
+            _ => Err(MultipartError),
+        }
     }
 
     /// Unchecked from parts builder to construct Multipart SbpString
@@ -110,7 +96,8 @@ impl SbpString<Vec<u8>, Multipart> {
     }
 
     pub fn parts(&self) -> Vec<Cow<str>> {
-        self.data
+        let slice = self.data.as_slice();
+        slice[0..slice.len() - 1]
             .split(|a| a == &0)
             .map(String::from_utf8_lossy)
             .collect()
@@ -123,7 +110,7 @@ impl SbpString<Vec<u8>, DoubleNullTerminated> {
     ) -> Result<Self, DoubleNullTerminatedError> {
         let vec = data.into();
         if let [.., two, one] = vec.as_slice() {
-            if one == &0 && two == &0 {
+            if two == &0 && one == &0 {
                 return Ok(SbpString::new(vec));
             }
         };
@@ -327,13 +314,13 @@ macro_rules! forward_payload_vec {
     };
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct UnterminatedError;
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct MultipartError;
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct NullTerminatedError;
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct DoubleNullTerminatedError;
 
 /// Handles encoding and decoding of unterminated strings.
@@ -455,5 +442,89 @@ mod tests {
         // The last 0xb6 get's transformed into 3 UTF-8 bytes (� aka U+FFFD REPLACEMENT CHARACTER)
         assert_eq!(sbp_string.to_string().len(), 69 + 3);
         assert_eq!(sbp_string.to_vec().len(), 70);
+    }
+
+    #[test]
+    fn test_unterminated_sbp_string_builder() {
+        let null = SbpString::unterminated([0x1, 0x0]);
+        assert!(null.is_err());
+
+        let data = &[0x1, 0x1][..];
+        let nonnull = SbpString::unterminated(data);
+        assert!(nonnull.is_ok());
+        assert_eq!(nonnull.unwrap().data, data);
+    }
+
+    #[test]
+    fn test_null_terminated_sbp_string_builder() {
+        let nonnull = SbpString::null_terminated([0x1, 0x1]);
+        assert!(nonnull.is_err());
+
+        let data = &[0x1, 0x0][..];
+        let null = SbpString::null_terminated(data);
+        assert!(null.is_ok());
+        assert_eq!(null.unwrap().data, data);
+    }
+
+    #[test]
+    fn test_multipart_sbp_string_builder() {
+        // Direct byte construction section
+        // -----
+        // representation of [a, 0, b, 0, c] as u8's delimited by 0
+        // non null termination should fail multipart validation
+        let nonnull: [u8; 5] = [0x61, 0, 0x62, 0, 0x63];
+        let fail = SbpString::multipart(nonnull);
+        assert!(fail.is_err());
+
+        // null terminated should pass multipart validation
+        let null: [u8; 6] = [0x61, 0, 0x62, 0, 0x63, 0];
+        let pass = SbpString::multipart(null);
+        assert!(pass.is_ok());
+        assert_eq!(pass.unwrap().data, null);
+
+        // Auto generate alternating bytes [`from_parts`] section
+        // -----
+        let parts = ["a", "b", "c"];
+        let multipart = SbpString::<_, Multipart>::from_parts(&parts);
+        assert_eq!(multipart.data, null);
+
+        // Test [`parts`] section
+        // -----
+        let a = multipart.parts();
+        assert_eq!(a, parts);
+    }
+
+    #[test]
+    fn test_double_null_terminated_sbp_string_builder() {
+        // Direct byte construction section
+        // -----
+        // representation of [a, 0, b, 0, c] as u8's delimited by 0
+        // non null termination should fail double null validation
+        let nonnull: [u8; 5] = [0x61, 0, 0x62, 0, 0x63];
+        let fail = SbpString::double_null_terminated(nonnull);
+        assert!(fail.is_err());
+
+        // representation of [a, 0, b, 0, c, 0] as u8's delimited by 0
+        // single null termination should fail double null validation
+        let single_null: [u8; 6] = [0x61, 0, 0x62, 0, 0x63, 0];
+        let fail = SbpString::double_null_terminated(nonnull);
+        assert!(fail.is_err());
+
+        // double null terminated should pass multipart validation
+        let data: [u8; 7] = [0x61, 0, 0x62, 0, 0x63, 0, 0];
+        let pass = SbpString::multipart(data);
+        assert!(pass.is_ok());
+        assert_eq!(pass.unwrap().data, data);
+
+        // Auto generate alternating bytes [`from_parts`] section
+        // -----
+        let parts = ["a", "b", "c"];
+        let double_null = SbpString::<_, DoubleNullTerminated>::from_parts(&parts);
+        assert_eq!(double_null.data, data);
+
+        // Test [`parts`] section
+        // -----
+        let actual_parts = double_null.parts();
+        assert_eq!(actual_parts, parts);
     }
 }
