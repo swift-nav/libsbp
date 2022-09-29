@@ -1,5 +1,20 @@
 # Changelog
 
+## [v4.8.0](https://github.com/swift-nav/libsbp/tree/v4.8.0) (2020-09-29)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.7.0...HEAD)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Add find module for Auk \(\#135\) [\#1229](https://github.com/swift-nav/libsbp/pull/1229) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Fix Include Paths in Bazel Build [\#1228](https://github.com/swift-nav/libsbp/pull/1228) ([isaactorz](https://github.com/isaactorz))
+- Add bazel build for libsbp c library [\#1224](https://github.com/swift-nav/libsbp/pull/1224) ([isaactorz](https://github.com/isaactorz))
+- Auto submodule update: cmake - Fix compile\_commands.json generation in newer cmake versions \[BUILD-286\] \(\#132\) [\#1222](https://github.com/swift-nav/libsbp/pull/1222) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Additional documentation for MSG-1534 \[OTA-284\] [\#1220](https://github.com/swift-nav/libsbp/pull/1220) ([fpezzinosn](https://github.com/fpezzinosn))
+- Auto submodule update: cmake - Ability to Enable Extra Clang-Tidy Flags \[BUILD-293\] \(\#131\) [\#1219](https://github.com/swift-nav/libsbp/pull/1219) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- rust: pin vergen [\#1217](https://github.com/swift-nav/libsbp/pull/1217) ([silverjam](https://github.com/silverjam))
+- Add fuzz testing for libsbp - Add CRC bypass \[ESD-2473\] [\#1212](https://github.com/swift-nav/libsbp/pull/1212) ([lucasle-sn](https://github.com/lucasle-sn))
+
 ## [v4.7.0](https://github.com/swift-nav/libsbp/tree/v4.7.0) (2022-08-31)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.6.0...v4.7.0)
