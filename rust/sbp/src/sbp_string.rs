@@ -1,4 +1,3 @@
-use std::borrow::Cow;
 use std::fmt;
 use std::marker::PhantomData;
 
@@ -79,7 +78,7 @@ where
     data
 }
 
-// pub type Parts<'a> = std::slice::Split<'a, u8, fn(&u8) -> bool>;
+pub type Parts<'a> = std::slice::Split<'a, u8, fn(&u8) -> bool>;
 
 impl SbpString<Vec<u8>, Multipart> {
     pub fn multipart(data: impl Into<Vec<u8>>) -> Result<Self, MultipartError> {
@@ -95,12 +94,9 @@ impl SbpString<Vec<u8>, Multipart> {
         SbpString::multipart(alt_null(parts)).unwrap()
     }
 
-    pub fn parts(&self) -> Vec<Cow<str>> {
+    pub fn parts(&self) -> Parts<'_> {
         let slice = self.data.as_slice();
-        slice[0..slice.len() - 1]
-            .split(|a| a == &0)
-            .map(String::from_utf8_lossy)
-            .collect()
+        slice[0..slice.len() - 1].split(|a| a == &0)
     }
 }
 
@@ -123,13 +119,9 @@ impl SbpString<Vec<u8>, DoubleNullTerminated> {
         SbpString::double_null_terminated(alt).unwrap()
     }
 
-    pub fn parts(&self) -> Vec<Cow<str>> {
+    pub fn parts(&self) -> Parts<'_> {
         let slice = self.data.as_slice();
-        // skip last 2 bytes
-        slice[0..slice.len() - 2]
-            .split(|a| a == &0)
-            .map(String::from_utf8_lossy)
-            .collect()
+        slice[0..slice.len() - 2].split(|a| a == &0)
     }
 }
 
@@ -490,8 +482,12 @@ mod tests {
 
         // Test [`parts`] section
         // -----
-        let a = multipart.parts();
-        assert_eq!(a, parts);
+        let actual = multipart
+            .parts()
+            .map(String::from_utf8_lossy)
+            .map(|c| c.to_string())
+            .collect::<Vec<String>>();
+        assert_eq!(actual, parts);
     }
 
     #[test]
@@ -507,7 +503,7 @@ mod tests {
         // representation of [a, 0, b, 0, c, 0] as u8's delimited by 0
         // single null termination should fail double null validation
         let single_null: [u8; 6] = [0x61, 0, 0x62, 0, 0x63, 0];
-        let fail = SbpString::double_null_terminated(nonnull);
+        let fail = SbpString::double_null_terminated(single_null);
         assert!(fail.is_err());
 
         // double null terminated should pass multipart validation
@@ -524,7 +520,11 @@ mod tests {
 
         // Test [`parts`] section
         // -----
-        let actual_parts = double_null.parts();
+        let actual_parts = double_null
+            .parts()
+            .map(String::from_utf8_lossy)
+            .map(|c| c.to_string())
+            .collect::<Vec<String>>();
         assert_eq!(actual_parts, parts);
     }
 }
