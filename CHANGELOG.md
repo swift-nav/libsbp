@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.8.0](https://github.com/swift-nav/libsbp/tree/v4.8.0)
+## [v4.8.0](https://github.com/swift-nav/libsbp/tree/v4.8.0) (2020-09-29)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.7.0...HEAD)
 
