@@ -68,14 +68,15 @@ where
     R: AsRef<[u8]>,
     I: IntoIterator<Item = R>,
 {
-    let mut data = vec![];
-    for i in parts {
-        for j in i.as_ref() {
-            data.push(*j)
-        }
-        data.push(0);
-    }
-    data
+    parts
+        .into_iter()
+        .flat_map(|r| {
+            r.as_ref()
+                .iter()
+                .flat_map(|i| vec![*i, 0])
+                .collect::<Vec<_>>()
+        })
+        .collect()
 }
 
 pub type Parts<'a> = std::slice::Split<'a, u8, fn(&u8) -> bool>;
