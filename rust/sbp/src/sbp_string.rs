@@ -1,4 +1,5 @@
 use std::fmt;
+use std::fmt::{Formatter, Pointer};
 use std::marker::PhantomData;
 
 use bytes::{Buf, BufMut};
@@ -57,6 +58,12 @@ impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
     }
 }
 
+impl<const LEN: usize> SbpString<[u8; LEN], NullTerminated> {
+    pub fn null_terminated(data: T) -> Result<Self, NullTerminatedError> {
+        SbpString::null_terminated()
+    }
+}
+
 /// Helper function to alternate null bytes
 /// Used in [`SbpString::from_parts`]
 ///
@@ -68,15 +75,11 @@ where
     R: AsRef<[u8]>,
     I: IntoIterator<Item = R>,
 {
-    parts
-        .into_iter()
-        .flat_map(|r| {
-            r.as_ref()
-                .iter()
-                .flat_map(|i| vec![*i, 0])
-                .collect::<Vec<_>>()
-        })
-        .collect()
+    parts.into_iter().fold(Vec::new(), |mut acc, part| {
+        acc.extend_from_slice(part.as_ref());
+        acc.push(0);
+        acc
+    })
 }
 
 pub type Parts<'a> = std::slice::Split<'a, u8, fn(&u8) -> bool>;
@@ -92,7 +95,7 @@ impl SbpString<Vec<u8>, Multipart> {
 
     /// Unchecked from parts builder to construct Multipart SbpString
     pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
-        SbpString::multipart(alt_null(parts)).unwrap()
+        SbpString::new(alt_null(parts))
     }
 
     pub fn parts(&self) -> Parts<'_> {
@@ -100,6 +103,26 @@ impl SbpString<Vec<u8>, Multipart> {
         slice[0..slice.len() - 1].split(|a| a == &0)
     }
 }
+
+// impl<const LEN: usize> SbpString<[u8; LEN], Multipart> {
+//     pub fn multipart(data: [u8; LEN]) -> Result<Self, MultipartError> {
+//         if LEN != 0 && data[LEN - 1] == &0 {
+//             Ok(Self::new(data))
+//         } else {
+//             Err(MultipartError)
+//         }
+//     }
+//
+//     /// Unchecked from parts builder to construct Multipart SbpString
+//     pub fn from_parts(parts: [u8; LEN]) -> Self {
+//         SbpString::new(alt_null(parts))
+//     }
+//
+//     pub fn parts(&self) -> Parts<'_> {
+//         let slice = self.data.as_slice();
+//         slice[0..slice.len() - 1].split(|a| a == &0)
+//     }
+// }
 
 impl SbpString<Vec<u8>, DoubleNullTerminated> {
     pub fn double_null_terminated(
@@ -117,7 +140,7 @@ impl SbpString<Vec<u8>, DoubleNullTerminated> {
     pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
         let mut alt = alt_null(parts);
         alt.push(0);
-        SbpString::double_null_terminated(alt).unwrap()
+        SbpString::new(alt)
     }
 
     pub fn parts(&self) -> Parts<'_> {
@@ -307,14 +330,46 @@ macro_rules! forward_payload_vec {
     };
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct UnterminatedError;
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct MultipartError;
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct NullTerminatedError;
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clo)]
 pub struct DoubleNullTerminatedError;
+
+impl std::fmt::Display for UnterminatedError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        writeln!(f, "failed unterminated string validation")
+    }
+}
+
+impl std::error::Error for UnterminatedError {}
+
+impl std::fmt::Display for MultipartError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        writeln!(f, "failed multipart string validation")
+    }
+}
+
+impl std::error::Error for MultipartError {}
+
+impl std::fmt::Display for NullTerminatedError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        writeln!(f, "failed null terminated string validation")
+    }
+}
+
+impl std::error::Error for NullTerminatedError {}
+
+impl std::fmt::Display for DoubleNullTerminatedError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        writeln!(f, "failed double null terminated string validation")
+    }
+}
+
+impl std::error::Error for DoubleNullTerminatedError {}
 
 /// Handles encoding and decoding of unterminated strings.
 ///
