@@ -6,7 +6,6 @@ use serde::de::DeserializeOwned;
 use serde_json::Deserializer;
 
 use crate::{
-    de::Frame,
     json::{Json2JsonInput, JsonError, JsonInput},
     messages::Sbp,
     BUFLEN,
@@ -62,11 +61,11 @@ impl JsonDecoder {
         let data = input.into_inner();
         self.payload_buf.clear();
         base64::decode_config_buf(data.payload, base64::STANDARD, &mut self.payload_buf)?;
-        let msg = Sbp::from_frame(Frame {
-            msg_type: data.msg_type,
-            sender_id: data.sender,
-            payload: BytesMut::from(&self.payload_buf[..]),
-        })?;
+        let msg = Sbp::from_parts(
+            data.msg_type,
+            data.sender,
+            BytesMut::from(&self.payload_buf[..]),
+        )?;
         Ok(msg)
     }
 }
@@ -106,7 +105,7 @@ fn decode_one<T>(buf: &mut BytesMut) -> Result<Option<T>, serde_json::Error>
 where
     T: DeserializeOwned,
 {
-    let mut de = Deserializer::from_slice(&buf).into_iter::<T>();
+    let mut de = Deserializer::from_slice(buf).into_iter::<T>();
     let value = de.next();
     let bytes_read = de.byte_offset();
     buf.advance(bytes_read);
