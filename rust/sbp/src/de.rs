@@ -4,9 +4,9 @@ use std::{
 };
 
 use bytes::{Buf, BytesMut};
-use dencode::{Decoder, FramedRead};
+use dencode::FramedRead;
 
-use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
+use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE};
 
 /// Deserialize the IO stream into an iterator of messages.
 ///
@@ -41,7 +41,7 @@ use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PREAMBLE};
 /// }
 /// ```
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, Error>> {
-    SbpDecoder::framed(input)
+    Decoder::new(input)
 }
 
 /// Deserialize the IO stream into an iterator of messages. Provide a timeout
@@ -50,7 +50,7 @@ pub fn iter_messages_with_timeout<R: io::Read>(
     input: R,
     timeout_duration: Duration,
 ) -> impl Iterator<Item = Result<Sbp, Error>> {
-    TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
+    TimeoutDecoder::new(input, timeout_duration)
 }
 
 /// Deserialize the async IO stream into an stream of messages.
@@ -58,7 +58,7 @@ pub fn iter_messages_with_timeout<R: io::Read>(
 pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     input: R,
 ) -> impl futures::Stream<Item = Result<Sbp, Error>> {
-    SbpDecoder::framed(input)
+    Decoder::new(input)
 }
 
 #[cfg(feature = "async")]
@@ -66,55 +66,7 @@ pub fn stream_messages_with_timeout<R: futures::AsyncRead + Unpin>(
     input: R,
     timeout_duration: Duration,
 ) -> impl futures::Stream<Item = Result<Sbp, Error>> {
-    TimeoutSbpDecoder::framed_with_timeout(input, timeout_duration)
-}
-
-pub fn parse_frame(buf: &mut BytesMut) -> Option<Result<Frame<BytesMut>, CrcError>> {
-    if buf.len() < HEADER_LEN {
-        return None;
-    }
-    // use a separate slice to parse the header so we don't advance the buffer
-    // until we know we have enough bytes to parse the payload + crc
-    let mut slice = &buf[1..];
-    let msg_type = slice.get_u16_le();
-    let sender_id = slice.get_u16_le();
-    let payload_len = slice.get_u8() as usize;
-    if slice.len() < payload_len + CRC_LEN {
-        return None;
-    }
-    buf.advance(HEADER_LEN);
-    let payload = buf.split_to(payload_len);
-    let crc = buf.get_u16_le();
-    if check_crc(msg_type, sender_id, &payload, crc) {
-        Some(Ok(Frame {
-            msg_type,
-            sender_id,
-            payload,
-        }))
-    } else {
-        Some(Err(CrcError {
-            msg_type,
-            sender_id,
-            crc,
-        }))
-    }
-}
-
-fn check_crc(msg_type: u16, sender_id: u16, payload: &[u8], crc_in: u16) -> bool {
-    let mut crc = crc16::State::<crc16::XMODEM>::new();
-    crc.update(&msg_type.to_le_bytes());
-    crc.update(&sender_id.to_le_bytes());
-    crc.update(&[payload.len() as u8]);
-    crc.update(payload);
-    crc.get() == crc_in
-}
-
-/// The wire representation of an SBP message.
-#[derive(Debug)]
-pub struct Frame<B> {
-    pub msg_type: u16,
-    pub sender_id: u16,
-    pub payload: B,
+    TimeoutDecoder::new(input, timeout_duration)
 }
 
 /// All errors that can occur while reading messages.
@@ -174,17 +126,74 @@ impl std::fmt::Display for CrcError {
 
 impl std::error::Error for CrcError {}
 
-#[derive(Debug, Clone, Default)]
-struct SbpDecoder;
+pub struct Framer<R>(FramedRead<R, FramerImpl>);
 
-impl SbpDecoder {
-    fn framed<W>(writer: W) -> FramedRead<W, SbpDecoder> {
-        FramedRead::new(writer, SbpDecoder)
+impl<R> Framer<R> {
+    pub fn new(reader: R) -> Self {
+        Self(FramedRead::new(reader, FramerImpl))
     }
 }
 
-impl Decoder for SbpDecoder {
-    type Item = Sbp;
+impl<R: io::Read> Iterator for Framer<R> {
+    type Item = Result<Frame, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.next()
+    }
+}
+
+#[cfg(feature = "async")]
+impl<R: futures::AsyncRead + Unpin> futures::Stream for Framer<R> {
+    type Item = Result<Frame, Error>;
+    fn poll_next(
+        mut self: std::pin::Pin<&mut Self>,
+        cx: &mut std::task::Context<'_>,
+    ) -> std::task::Poll<Option<Self::Item>> {
+        std::pin::Pin::new(&mut self.0).poll_next(cx)
+    }
+}
+
+pub struct Decoder<R>(FramedRead<R, FramerImpl>);
+
+impl<R> Decoder<R> {
+    pub fn new(reader: R) -> Self {
+        Decoder(FramedRead::new(reader, FramerImpl))
+    }
+}
+
+impl<R: io::Read> Iterator for Decoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.next().map(|f| match f {
+            Ok(frame) => frame.to_sbp(),
+            Err(err) => Err(err),
+        })
+    }
+}
+
+#[cfg(feature = "async")]
+impl<R: futures::AsyncRead + Unpin> futures::Stream for Decoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn poll_next(
+        mut self: std::pin::Pin<&mut Self>,
+        cx: &mut std::task::Context<'_>,
+    ) -> std::task::Poll<Option<Self::Item>> {
+        let frame = match futures::ready!(std::pin::Pin::new(&mut self.0).poll_next(cx)) {
+            Some(Ok(frame)) => frame,
+            Some(Err(e)) => return std::task::Poll::Ready(Some(Err(e.into()))),
+            None => return std::task::Poll::Ready(None),
+        };
+        std::task::Poll::Ready(Some(frame.to_sbp()))
+    }
+}
+
+#[derive(Debug, Clone, Default)]
+struct FramerImpl;
+
+impl dencode::Decoder for FramerImpl {
+    type Item = Frame;
     type Error = Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
@@ -196,76 +205,161 @@ impl Decoder for SbpDecoder {
             }
         };
         src.advance(start);
-        match parse_frame(src) {
-            Some(Ok(frame)) => Ok(Some(Sbp::from_frame(frame)?)),
-            Some(Err(err)) => Err(err.into()),
-            None => {
-                src.reserve(MAX_FRAME_LEN);
-                Ok(None)
-            }
+        if src.len() < HEADER_LEN {
+            src.reserve(MAX_FRAME_LEN);
+            return Ok(None);
+        }
+        let end = HEADER_LEN + src[PAYLOAD_INDEX] as usize + CRC_LEN;
+        if src.len() < end {
+            src.reserve(MAX_FRAME_LEN);
+            return Ok(None);
+        }
+        Ok(Some(Frame(src.split_to(end))))
+    }
+}
+
+/// The wire representation of an SBP message.
+#[derive(Debug)]
+pub struct Frame(BytesMut);
+
+impl Frame {
+    pub fn msg_type(&self) -> u16 {
+        let mut slice = &self.0.chunk()[1..];
+        slice.get_u16_le()
+    }
+
+    pub fn sender_id(&self) -> u16 {
+        let mut slice = &self.0.chunk()[3..];
+        slice.get_u16_le()
+    }
+
+    pub fn payload_len(&self) -> usize {
+        self.0.chunk()[PAYLOAD_INDEX] as usize
+    }
+
+    pub fn payload(&self) -> &[u8] {
+        &self.0.chunk()[HEADER_LEN..HEADER_LEN + self.payload_len()]
+    }
+
+    pub fn crc(&self) -> u16 {
+        let mut slice = &self.0.chunk()[HEADER_LEN + self.payload_len()..];
+        slice.get_u16_le()
+    }
+
+    pub fn check_crc(&self) -> Result<u16, CrcError> {
+        let actual = self.crc();
+        let data = &self.0.chunk()[1..HEADER_LEN + self.payload_len()];
+        if actual == crc16::State::<crc16::XMODEM>::calculate(data) {
+            Ok(actual)
+        } else {
+            Err(CrcError {
+                msg_type: self.msg_type(),
+                sender_id: self.sender_id(),
+                crc: actual,
+            })
         }
     }
 
-    fn decode_eof(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        let res = match self.decode(buf) {
-            Ok(Some(frame)) => Ok(Some(frame)),
-            _ => Ok(None),
-        };
-        buf.clear();
-        res
+    pub fn len(&self) -> usize {
+        self.0.chunk().len()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
+
+    pub fn to_sbp(&self) -> Result<Sbp, Error> {
+        self.check_crc()?;
+        Ok(Sbp::from_parts(
+            self.msg_type(),
+            self.sender_id(),
+            self.payload(),
+        )?)
+    }
+
+    pub fn as_bytes(&self) -> &[u8] {
+        self.0.chunk()
     }
 }
 
-struct TimeoutSbpDecoder {
-    decoder: SbpDecoder,
+struct TimeoutDecoderImpl<D> {
     timeout_duration: Duration,
     last_msg_received: Instant,
+    inner: D,
 }
 
-impl TimeoutSbpDecoder {
-    fn new(timeout_duration: Duration) -> Self {
+impl<D> TimeoutDecoderImpl<D> {
+    fn new(inner: D, timeout_duration: Duration) -> Self {
         Self {
-            decoder: SbpDecoder,
+            inner,
             timeout_duration,
             last_msg_received: Instant::now(),
         }
     }
-    fn framed_with_timeout<W>(
-        writer: W,
-        timeout_duration: Duration,
-    ) -> FramedRead<W, TimeoutSbpDecoder> {
-        FramedRead::new(writer, Self::new(timeout_duration))
-    }
 }
 
-impl Decoder for TimeoutSbpDecoder {
-    type Item = Sbp;
-    type Error = Error;
+impl<D: dencode::Decoder> dencode::Decoder for TimeoutDecoderImpl<D> {
+    type Item = D::Item;
+    type Error = D::Error;
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         if self.last_msg_received.elapsed() > self.timeout_duration {
-            return Err(std::io::Error::new(std::io::ErrorKind::TimedOut, "timeout").into());
+            return Err(io::Error::new(io::ErrorKind::TimedOut, "timeout").into());
         }
-        let res = self.decoder.decode(src);
-        if let Ok(Some(_)) = res {
+        let next = self.inner.decode(src)?;
+        if next.is_some() {
             self.last_msg_received = Instant::now();
         }
-        res
+        Ok(next)
     }
+}
 
-    fn decode_eof(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
-        self.decoder.decode_eof(buf)
+struct TimeoutDecoder<R>(FramedRead<R, TimeoutDecoderImpl<FramerImpl>>);
+
+impl<R> TimeoutDecoder<R> {
+    pub fn new(reader: R, timeout: Duration) -> Self {
+        Self(FramedRead::new(
+            reader,
+            TimeoutDecoderImpl::new(FramerImpl, timeout),
+        ))
+    }
+}
+
+impl<R: io::Read> Iterator for TimeoutDecoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.next().map(|f| match f {
+            Ok(frame) => frame.to_sbp(),
+            Err(err) => Err(err),
+        })
+    }
+}
+
+#[cfg(feature = "async")]
+impl<R: futures::AsyncRead + Unpin> futures::Stream for TimeoutDecoder<R> {
+    type Item = Result<Sbp, Error>;
+
+    fn poll_next(
+        mut self: std::pin::Pin<&mut Self>,
+        cx: &mut std::task::Context<'_>,
+    ) -> std::task::Poll<Option<Self::Item>> {
+        match futures::ready!(std::pin::Pin::new(&mut self.0).poll_next(cx)) {
+            Some(Ok(frame)) => std::task::Poll::Ready(Some(frame.to_sbp())),
+            Some(Err(e)) => std::task::Poll::Ready(Some(Err(e.into()))),
+            None => std::task::Poll::Ready(None),
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use bytes::BufMut;
+    use dencode::Decoder;
     use std::{
         convert::TryInto,
         io::{Cursor, Write},
     };
-
-    use bytes::BufMut;
 
     use crate::{messages::navigation::MsgBaselineEcef, wire_format::WireFormat};
 
@@ -304,17 +398,17 @@ mod tests {
         let missing_byte = 0xbf;
         let mut buf = BytesMut::from(&packet[..]);
 
-        let res = parse_frame(&mut buf);
+        let res = FramerImpl.decode(&mut buf).unwrap();
         assert!(res.is_none());
         assert_eq!(buf.len(), packet.len());
 
         buf.put_u8(missing_byte);
 
-        let res = parse_frame(&mut buf).unwrap().unwrap();
-        assert_eq!(res.msg_type, 523); // 0x020B
-        assert_eq!(res.sender_id, 35027); // 0x88D3
+        let res = FramerImpl.decode(&mut buf).unwrap().unwrap();
+        assert_eq!(res.msg_type(), 523); // 0x020B
+        assert_eq!(res.sender_id(), 35027); // 0x88D3
         assert_eq!(
-            res.payload,
+            res.payload(),
             BytesMut::from(&packet[HEADER_LEN..packet.len() - 1])
         );
         assert!(buf.is_empty());
@@ -325,18 +419,19 @@ mod tests {
         let data = vec![0u8; 1000];
         let mut bytes = BytesMut::from(&data[..]);
         assert_eq!(bytes.len(), 1000);
-        assert!(matches!(SbpDecoder.decode(&mut bytes), Ok(None)));
-        assert!(bytes.is_empty());
+        assert!(matches!(FramerImpl.decode(&mut bytes).unwrap(), None));
     }
 
     #[test]
     fn test_parse_bad_message() {
         // Properly framed data but the payload isn't right given the message type
         let data: Vec<u8> = vec![0x55, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x65, 0x8D];
-        let mut bytes = BytesMut::from(&data[..]);
-        let actual = SbpDecoder.decode(&mut bytes);
-        assert!(matches!(actual, Err(Error::PayloadParseError(_))));
-        assert!(bytes.is_empty());
+        let bytes = BytesMut::from(&data[..]);
+        let mut actual = crate::de::Decoder::new(bytes.reader());
+        assert!(matches!(
+            actual.next().unwrap(),
+            Err(Error::PayloadParseError(_))
+        ));
     }
 
     #[test]
@@ -396,7 +491,7 @@ mod tests {
 
     #[test]
     fn test_decode_sbp() {
-        let mut packet = BytesMut::from(
+        let packet = BytesMut::from(
             &[
                 0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee,
                 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb,
@@ -414,8 +509,10 @@ mod tests {
             z: 631798,
         };
 
-        let msg = SbpDecoder.decode(&mut packet).unwrap().unwrap();
-        assert!(packet.is_empty());
+        let msg = crate::de::Decoder::new(packet.reader())
+            .next()
+            .unwrap()
+            .unwrap();
 
         let msg: MsgBaselineEcef = msg.try_into().unwrap();
         assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
