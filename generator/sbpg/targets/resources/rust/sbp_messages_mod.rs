@@ -144,7 +144,7 @@ impl<'de> serde::Deserialize<'de> for Sbp {
 }
 
 impl Sbp {
-    /// Parse a message from a [Frame](crate::Frame).
+    /// Parse a message from given fields.
     ///
     /// # Example
     ///
@@ -152,35 +152,33 @@ impl Sbp {
     /// use std::convert::TryInto;
     ///
     /// use sbp::messages::logging::MsgLog;
-    /// use sbp::{Frame, Sbp};
+    /// use sbp::Sbp;
     ///
     /// fn main() -> Result<(), Box<dyn std::error::Error>> {
     ///     // log level 1 and with "hello" as the message
+    ///     let msg_type = 1025;
+    ///     let sender_id = 1;
     ///     let payload: &[u8] = &[1, 104, 101, 108, 108, 111];
-    ///     let frame = Frame {
-    ///         msg_type: 1025,
-    ///         sender_id: 1,
-    ///         payload,
-    ///     };
-    ///     let msg: MsgLog = Sbp::from_frame(frame)?.try_into()?;
+    ///
+    ///     let msg: MsgLog = Sbp::from_parts(msg_type, sender_id, payload)?.try_into()?;
     ///     assert_eq!(msg.sender_id, Some(1));
     ///     assert_eq!(msg.level, 1);
     ///     assert_eq!(msg.text.as_bytes(), "hello".as_bytes());
     ///     Ok(())
     /// }
     /// ```
-    pub fn from_frame<B: Buf>(mut frame: crate::Frame<B>) -> Result<Sbp, PayloadParseError> {
-        match frame.msg_type {
+    pub fn from_parts<B: Buf>(msg_type: u16, sender_id: u16, mut payload: B) -> Result<Sbp, PayloadParseError> {
+        match msg_type {
             ((*- for m in msgs *))
             (((m.msg_name)))::MESSAGE_TYPE => {
-                let mut msg = (((m.msg_name)))::parse(&mut frame.payload)?;
-                msg.set_sender_id(frame.sender_id);
+                let mut msg = (((m.msg_name)))::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
                 Ok(Sbp::(((m.msg_name)))(msg))
             },
             ((*- endfor *))
             _ => {
-                let mut msg = Unknown::parse(&mut frame.payload)?;
-                msg.set_sender_id(frame.sender_id);
+                let mut msg = Unknown::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
                 Ok(Sbp::Unknown(msg))
             }
         }

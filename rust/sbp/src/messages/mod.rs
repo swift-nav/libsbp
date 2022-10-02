@@ -1531,7 +1531,7 @@ impl Sbp {
     ///     Ok(())
     /// }
     /// ```
-    pub fn from_parts<B: bytes::Buf>(
+    pub fn from_parts<B: Buf>(
         msg_type: u16,
         sender_id: u16,
         mut payload: B,
