@@ -8,7 +8,6 @@ use serde_json::{ser::Formatter, Serializer};
 use super::{JsonError, JsonOutput};
 
 use crate::{
-    de::Frame,
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
     SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, PREAMBLE,
@@ -194,11 +193,11 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
     fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<(), Self::Error> {
         let formatter = self.formatter.clone();
         let payload = base64::decode(input.data.payload)?;
-        let msg = Sbp::from_frame(Frame {
-            msg_type: input.data.msg_type,
-            sender_id: input.data.sender,
-            payload: BytesMut::from(&payload[..]),
-        })?;
+        let msg = Sbp::from_parts(
+            input.data.msg_type,
+            input.data.sender,
+            BytesMut::from(&payload[..]),
+        )?;
         let output = Json2JsonOutput {
             data: JsonOutput {
                 common: get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?,
@@ -215,13 +214,13 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
 
 fn get_common_fields<'a, M: SbpMessage>(
     payload_buf: &'a mut String,
-    mut frame_buf: &'a mut BytesMut,
+    frame_buf: &'a mut BytesMut,
     msg: &M,
 ) -> Result<CommonJson<'a>, JsonError> {
     payload_buf.clear();
     frame_buf.clear();
     let size = msg.len();
-    crate::ser::to_buffer(&mut frame_buf, msg)?;
+    crate::ser::to_buffer(frame_buf, msg)?;
     let crc = {
         let crc_b0 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][0] as u16;
         let crc_b1 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][1] as u16;
