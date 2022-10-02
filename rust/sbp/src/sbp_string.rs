@@ -1,5 +1,5 @@
 use std::fmt;
-use std::fmt::{Formatter, Pointer};
+use std::fmt::Formatter;
 use std::marker::PhantomData;
 
 use bytes::{Buf, BufMut};
@@ -55,12 +55,6 @@ impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
             Some(l) if l == &0 => Ok(Self::new(data)),
             _ => Err(NullTerminatedError),
         }
-    }
-}
-
-impl<const LEN: usize> SbpString<[u8; LEN], NullTerminated> {
-    pub fn null_terminated(data: T) -> Result<Self, NullTerminatedError> {
-        SbpString::null_terminated()
     }
 }
 
@@ -336,7 +330,7 @@ pub struct UnterminatedError;
 pub struct MultipartError;
 #[derive(Debug, PartialEq, Clone)]
 pub struct NullTerminatedError;
-#[derive(Debug, PartialEq, Clo)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct DoubleNullTerminatedError;
 
 impl std::fmt::Display for UnterminatedError {
