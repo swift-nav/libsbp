@@ -167,7 +167,7 @@ impl Sbp {
     ///     Ok(())
     /// }
     /// ```
-    pub fn from_parts<B: Buf>(msg_type: u16, sender_id: u16, mut payload: B) -> Result<Sbp, PayloadParseError> {
+    pub fn from_parts<B: bytes::Buf>(msg_type: u16, sender_id: u16, mut payload: B) -> Result<Sbp, PayloadParseError> {
         match msg_type {
             ((*- for m in msgs *))
             (((m.msg_name)))::MESSAGE_TYPE => {
