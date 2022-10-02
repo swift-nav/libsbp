@@ -1,4 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//bazel:swift_cc_defs.bzl", "UNIT", "swift_cc_library", "swift_cc_test")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
@@ -9,7 +9,7 @@ refresh_compile_commands(
     name = "refresh_compile_commands",
 )
 
-cc_library(
+swift_cc_library(
     name = "sbp",
     srcs = [
         "src/edc.c",
@@ -59,8 +59,9 @@ cc_library(
 
 SBP_LEGACY_C_SOURCES = glob(["test/legacy/auto*.c"])
 
-cc_test(
+swift_cc_test(
     name = "sbp-legacy-test",
+    type = UNIT,
     srcs = [
         "test/check_main_legacy.c",
         "test/check_edc.c",
@@ -79,8 +80,9 @@ cc_test(
 
 SBP_V4_C_SOURCES = glob(["test/auto*.c"])
 
-cc_test(
+swift_cc_test(
     name = "sbp-v4-test",
+    type = UNIT,
     srcs = [
         "test/check_main.c",
         "test/check_edc.c",
@@ -97,8 +99,9 @@ cc_test(
 
 SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
 
-cc_test(
+swift_cc_test(
     name = "sbp-cpp-v4-test",
+    type = UNIT,
     srcs = SBP_CPP_V4_C_SOURCES,
     deps = [
         ":sbp",
@@ -106,8 +109,9 @@ cc_test(
     ],
 )
 
-cc_test(
+swift_cc_test(
     name = "sbp-string-test",
+    type = UNIT,
     srcs = [
         "test/string/test_double_null_terminated.cc",
         "test/string/test_multipart.cc",
@@ -125,8 +129,9 @@ cc_test(
 
 SBP_CPP_LEGACY_SOURCES = glob(["test/legacy/cpp/auto*.cc"])
 
-cc_test(
+swift_cc_test(
     name = "sbp-cpp-legacy-test",
+    type = UNIT,
     srcs = [
         "test/legacy/cpp/test_sbp_stdio.cc",
     ] + SBP_CPP_LEGACY_SOURCES,
