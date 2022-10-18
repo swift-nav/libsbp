@@ -40,12 +40,9 @@ where
 }
 
 impl<T: AsRef<[u8]>> SbpString<T, Unterminated> {
-    /// Checked unterminated SbpString builder, verify last byte is non null
-    pub fn unterminated(data: T) -> Result<Self, UnterminatedError> {
-        match data.as_ref().last() {
-            Some(l) if l != &0 => Ok(Self::new(data)),
-            _ => Err(UnterminatedError),
-        }
+    /// Checked unterminated SbpString builder,
+    pub fn unterminated(data: T) -> Self {
+        SbpString::new(data)
     }
 }
 
@@ -92,31 +89,12 @@ impl SbpString<Vec<u8>, Multipart> {
         SbpString::new(alt_null(parts))
     }
 
+    /// Returns an iterator over the parts of the string.
     pub fn parts(&self) -> Parts<'_> {
         let slice = self.data.as_slice();
         slice[0..slice.len() - 1].split(|a| a == &0)
     }
 }
-
-// impl<const LEN: usize> SbpString<[u8; LEN], Multipart> {
-//     pub fn multipart(data: [u8; LEN]) -> Result<Self, MultipartError> {
-//         if LEN != 0 && data[LEN - 1] == &0 {
-//             Ok(Self::new(data))
-//         } else {
-//             Err(MultipartError)
-//         }
-//     }
-//
-//     /// Unchecked from parts builder to construct Multipart SbpString
-//     pub fn from_parts(parts: [u8; LEN]) -> Self {
-//         SbpString::new(alt_null(parts))
-//     }
-//
-//     pub fn parts(&self) -> Parts<'_> {
-//         let slice = self.data.as_slice();
-//         slice[0..slice.len() - 1].split(|a| a == &0)
-//     }
-// }
 
 impl SbpString<Vec<u8>, DoubleNullTerminated> {
     pub fn double_null_terminated(
@@ -137,6 +115,7 @@ impl SbpString<Vec<u8>, DoubleNullTerminated> {
         SbpString::new(alt)
     }
 
+    /// Returns an iterator over the parts of the string.
     pub fn parts(&self) -> Parts<'_> {
         let slice = self.data.as_slice();
         slice[0..slice.len() - 2].split(|a| a == &0)
@@ -325,21 +304,9 @@ macro_rules! forward_payload_vec {
 }
 
 #[derive(Debug, PartialEq, Clone)]
-pub struct UnterminatedError;
-#[derive(Debug, PartialEq, Clone)]
 pub struct MultipartError;
-#[derive(Debug, PartialEq, Clone)]
-pub struct NullTerminatedError;
-#[derive(Debug, PartialEq, Clone)]
-pub struct DoubleNullTerminatedError;
 
-impl std::fmt::Display for UnterminatedError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        writeln!(f, "failed unterminated string validation")
-    }
-}
-
-impl std::error::Error for UnterminatedError {}
+impl std::error::Error for MultipartError {}
 
 impl std::fmt::Display for MultipartError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -347,7 +314,10 @@ impl std::fmt::Display for MultipartError {
     }
 }
 
-impl std::error::Error for MultipartError {}
+#[derive(Debug, PartialEq, Clone)]
+pub struct NullTerminatedError;
+
+impl std::error::Error for NullTerminatedError {}
 
 impl std::fmt::Display for NullTerminatedError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -355,15 +325,16 @@ impl std::fmt::Display for NullTerminatedError {
     }
 }
 
-impl std::error::Error for NullTerminatedError {}
+#[derive(Debug, PartialEq, Clone)]
+pub struct DoubleNullTerminatedError;
+
+impl std::error::Error for DoubleNullTerminatedError {}
 
 impl std::fmt::Display for DoubleNullTerminatedError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         writeln!(f, "failed double null terminated string validation")
     }
 }
-
-impl std::error::Error for DoubleNullTerminatedError {}
 
 /// Handles encoding and decoding of unterminated strings.
 ///
