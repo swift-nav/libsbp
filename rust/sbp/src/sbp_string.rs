@@ -458,17 +458,6 @@ mod tests {
     }
 
     #[test]
-    fn test_unterminated_sbp_string_builder() {
-        let null = SbpString::unterminated([0x1, 0x0]);
-        assert!(null.is_err());
-
-        let data = &[0x1, 0x1][..];
-        let nonnull = SbpString::unterminated(data);
-        assert!(nonnull.is_ok());
-        assert_eq!(nonnull.unwrap().data, data);
-    }
-
-    #[test]
     fn test_null_terminated_sbp_string_builder() {
         let nonnull = SbpString::null_terminated([0x1, 0x1]);
         assert!(nonnull.is_err());
