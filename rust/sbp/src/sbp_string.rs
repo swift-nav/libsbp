@@ -1,4 +1,5 @@
 use std::fmt;
+use std::fmt::Formatter;
 use std::marker::PhantomData;
 
 use bytes::{Buf, BufMut};
@@ -18,7 +19,8 @@ impl<T, E> SbpString<T, E>
 where
     T: AsRef<[u8]>,
 {
-    /// Creates a new SbpString.
+    /// Creates a new SbpString with a given encoding.
+    /// Does not check validity of data with encoding.
     pub fn new(data: T) -> Self {
         Self {
             data,
@@ -34,6 +36,89 @@ where
     /// Returns a byte vector of this SbpString's contents.
     pub fn to_vec(&self) -> Vec<u8> {
         self.data.as_ref().to_vec()
+    }
+}
+
+impl<T: AsRef<[u8]>> SbpString<T, Unterminated> {
+    /// Checked unterminated SbpString builder,
+    pub fn unterminated(data: T) -> Self {
+        SbpString::new(data)
+    }
+}
+
+impl<T: AsRef<[u8]>> SbpString<T, NullTerminated> {
+    pub fn null_terminated(data: T) -> Result<Self, NullTerminatedError> {
+        match data.as_ref().last() {
+            Some(l) if l == &0 => Ok(Self::new(data)),
+            _ => Err(NullTerminatedError),
+        }
+    }
+}
+
+/// Helper function to alternate null bytes
+/// Used in [`SbpString::from_parts`]
+///
+/// Ex. [a, b, c] => [a, 0, b, 0, c, 0]
+///
+/// Returns null terminated vector
+fn alt_null<R, I>(parts: I) -> Vec<u8>
+where
+    R: AsRef<[u8]>,
+    I: IntoIterator<Item = R>,
+{
+    parts.into_iter().fold(Vec::new(), |mut acc, part| {
+        acc.extend_from_slice(part.as_ref());
+        acc.push(0);
+        acc
+    })
+}
+
+pub type Parts<'a> = std::slice::Split<'a, u8, fn(&u8) -> bool>;
+
+impl SbpString<Vec<u8>, Multipart> {
+    pub fn multipart(data: impl Into<Vec<u8>>) -> Result<Self, MultipartError> {
+        let data = data.into();
+        match data.last() {
+            Some(l) if l == &0 => Ok(Self::new(data)),
+            _ => Err(MultipartError),
+        }
+    }
+
+    /// Unchecked from parts builder to construct Multipart SbpString
+    pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
+        SbpString::new(alt_null(parts))
+    }
+
+    /// Returns an iterator over the parts of the string.
+    pub fn parts(&self) -> Parts<'_> {
+        let slice = self.data.as_slice();
+        slice[0..slice.len() - 1].split(|a| a == &0)
+    }
+}
+
+impl SbpString<Vec<u8>, DoubleNullTerminated> {
+    pub fn double_null_terminated(
+        data: impl Into<Vec<u8>>,
+    ) -> Result<Self, DoubleNullTerminatedError> {
+        let vec = data.into();
+        if let [.., two, one] = vec.as_slice() {
+            if two == &0 && one == &0 {
+                return Ok(SbpString::new(vec));
+            }
+        };
+        Err(DoubleNullTerminatedError)
+    }
+
+    pub fn from_parts(parts: impl IntoIterator<Item = impl AsRef<[u8]>>) -> Self {
+        let mut alt = alt_null(parts);
+        alt.push(0);
+        SbpString::new(alt)
+    }
+
+    /// Returns an iterator over the parts of the string.
+    pub fn parts(&self) -> Parts<'_> {
+        let slice = self.data.as_slice();
+        slice[0..slice.len() - 2].split(|a| a == &0)
     }
 }
 
@@ -218,6 +303,39 @@ macro_rules! forward_payload_vec {
     };
 }
 
+#[derive(Debug, PartialEq, Clone)]
+pub struct MultipartError;
+
+impl std::error::Error for MultipartError {}
+
+impl std::fmt::Display for MultipartError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        writeln!(f, "failed multipart string validation")
+    }
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct NullTerminatedError;
+
+impl std::error::Error for NullTerminatedError {}
+
+impl std::fmt::Display for NullTerminatedError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        writeln!(f, "failed null terminated string validation")
+    }
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct DoubleNullTerminatedError;
+
+impl std::error::Error for DoubleNullTerminatedError {}
+
+impl std::fmt::Display for DoubleNullTerminatedError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        writeln!(f, "failed double null terminated string validation")
+    }
+}
+
 /// Handles encoding and decoding of unterminated strings.
 ///
 /// In SBP an unterminated string is a sequence of characters without a NULL
@@ -337,5 +455,86 @@ mod tests {
         // The last 0xb6 get's transformed into 3 UTF-8 bytes (� aka U+FFFD REPLACEMENT CHARACTER)
         assert_eq!(sbp_string.to_string().len(), 69 + 3);
         assert_eq!(sbp_string.to_vec().len(), 70);
+    }
+
+    #[test]
+    fn test_null_terminated_sbp_string_builder() {
+        let nonnull = SbpString::null_terminated([0x1, 0x1]);
+        assert!(nonnull.is_err());
+
+        let data = &[0x1, 0x0][..];
+        let null = SbpString::null_terminated(data);
+        assert!(null.is_ok());
+        assert_eq!(null.unwrap().data, data);
+    }
+
+    #[test]
+    fn test_multipart_sbp_string_builder() {
+        // Direct byte construction section
+        // -----
+        // representation of [a, 0, b, 0, c] as u8's delimited by 0
+        // non null termination should fail multipart validation
+        let nonnull: [u8; 5] = [0x61, 0, 0x62, 0, 0x63];
+        let fail = SbpString::multipart(nonnull);
+        assert!(fail.is_err());
+
+        // null terminated should pass multipart validation
+        let null: [u8; 6] = [0x61, 0, 0x62, 0, 0x63, 0];
+        let pass = SbpString::multipart(null);
+        assert!(pass.is_ok());
+        assert_eq!(pass.unwrap().data, null);
+
+        // Auto generate alternating bytes [`from_parts`] section
+        // -----
+        let parts = ["a", "b", "c"];
+        let multipart = SbpString::<_, Multipart>::from_parts(&parts);
+        assert_eq!(multipart.data, null);
+
+        // Test [`parts`] section
+        // -----
+        let actual = multipart
+            .parts()
+            .map(String::from_utf8_lossy)
+            .map(|c| c.to_string())
+            .collect::<Vec<String>>();
+        assert_eq!(actual, parts);
+    }
+
+    #[test]
+    fn test_double_null_terminated_sbp_string_builder() {
+        // Direct byte construction section
+        // -----
+        // representation of [a, 0, b, 0, c] as u8's delimited by 0
+        // non null termination should fail double null validation
+        let nonnull: [u8; 5] = [0x61, 0, 0x62, 0, 0x63];
+        let fail = SbpString::double_null_terminated(nonnull);
+        assert!(fail.is_err());
+
+        // representation of [a, 0, b, 0, c, 0] as u8's delimited by 0
+        // single null termination should fail double null validation
+        let single_null: [u8; 6] = [0x61, 0, 0x62, 0, 0x63, 0];
+        let fail = SbpString::double_null_terminated(single_null);
+        assert!(fail.is_err());
+
+        // double null terminated should pass multipart validation
+        let data: [u8; 7] = [0x61, 0, 0x62, 0, 0x63, 0, 0];
+        let pass = SbpString::multipart(data);
+        assert!(pass.is_ok());
+        assert_eq!(pass.unwrap().data, data);
+
+        // Auto generate alternating bytes [`from_parts`] section
+        // -----
+        let parts = ["a", "b", "c"];
+        let double_null = SbpString::<_, DoubleNullTerminated>::from_parts(&parts);
+        assert_eq!(double_null.data, data);
+
+        // Test [`parts`] section
+        // -----
+        let actual_parts = double_null
+            .parts()
+            .map(String::from_utf8_lossy)
+            .map(|c| c.to_string())
+            .collect::<Vec<String>>();
+        assert_eq!(actual_parts, parts);
     }
 }
