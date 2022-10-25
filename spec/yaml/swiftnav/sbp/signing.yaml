@@ -17,7 +17,7 @@ include:
   - gnss.yaml
 definitions:
   - MSG_ED25519_SIGNATURE:
-      id: 0x0C01
+      id: 0x0C03
       short_desc: ED25519 signature for groups of RTCM messages
       fields:
         - stream_counter:

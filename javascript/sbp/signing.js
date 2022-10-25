@@ -31,7 +31,7 @@ let GPSTimeSec = require("./gnss").GPSTimeSec;
 let SvId = require("./gnss").SvId;
 
 /**
- * SBP class for message MSG_ED25519_SIGNATURE (0x0C01).
+ * SBP class for message MSG_ED25519_SIGNATURE (0x0C03).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
@@ -56,7 +56,7 @@ let MsgEd25519Signature = function (sbp, fields) {
 };
 MsgEd25519Signature.prototype = Object.create(SBP.prototype);
 MsgEd25519Signature.prototype.messageType = "MSG_ED25519_SIGNATURE";
-MsgEd25519Signature.prototype.msg_type = 0x0C01;
+MsgEd25519Signature.prototype.msg_type = 0x0C03;
 MsgEd25519Signature.prototype.constructor = MsgEd25519Signature;
 MsgEd25519Signature.prototype.parser = new Parser()
   .endianess('little')
@@ -106,7 +106,7 @@ MsgEd25519Certificate.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUI
 MsgEd25519Certificate.prototype.fieldSpec.push(['certificate_bytes', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
-  0x0C01: MsgEd25519Signature,
+  0x0C03: MsgEd25519Signature,
   MsgEd25519Signature: MsgEd25519Signature,
   0x0C02: MsgEd25519Certificate,
   MsgEd25519Certificate: MsgEd25519Certificate,

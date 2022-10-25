@@ -219,7 +219,7 @@ public class auto_check_sbp_signing_MsgEd25519SignatureTest {
                     (byte) 0,
                     (byte) 0,
                 };
-        SBPMessage sbp = new SBPMessage(0x42, 0xC01, payload);
+        SBPMessage sbp = new SBPMessage(0x42, 0xC03, payload);
         MsgEd25519Signature msg = new MsgEd25519Signature(sbp);
         JSONObject json = msg.toJSON();
         Number value;

@@ -37,7 +37,7 @@ import SwiftNav.SBP.Gnss
 
 
 msgEd25519Signature :: Word16
-msgEd25519Signature = 0x0C01
+msgEd25519Signature = 0x0C03
 
 data MsgEd25519Signature = MsgEd25519Signature
   { _msgEd25519Signature_stream_counter  :: !Word8

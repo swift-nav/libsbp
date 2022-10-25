@@ -25,9 +25,9 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
-SBP_MSG_ED25519_SIGNATURE = 0x0C01
+SBP_MSG_ED25519_SIGNATURE = 0x0C03
 class MsgEd25519Signature(SBP):
-  """SBP class for message MSG_ED25519_SIGNATURE (0x0C01).
+  """SBP class for message MSG_ED25519_SIGNATURE (0x0C03).
 
   You can have MSG_ED25519_SIGNATURE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -240,6 +240,6 @@ class MsgEd25519Certificate(SBP):
     
 
 msg_classes = {
-  0x0C01: MsgEd25519Signature,
+  0x0C03: MsgEd25519Signature,
   0x0C02: MsgEd25519Certificate,
 }

@@ -18,7 +18,7 @@
 #ifndef LIBSBP_SIGNING_MACROS_H
 #define LIBSBP_SIGNING_MACROS_H
 
-#define SBP_MSG_ED25519_SIGNATURE 0x0C01
+#define SBP_MSG_ED25519_SIGNATURE 0x0C03
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ed25519_signature_t::signature (V4 API) or

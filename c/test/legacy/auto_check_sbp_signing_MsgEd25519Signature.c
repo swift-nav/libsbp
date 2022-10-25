@@ -116,13 +116,13 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
 
     logging_reset();
 
-    sbp_payload_callback_register(&sbp_state, 0xC01, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xC03, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_frame_callback_register(&sbp_state, 0xC01, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xC03, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85,  1,   12,  66,  0,   186, 1,   0,   0,   1,   2,   3,   4,   5,
+        85,  3,   12,  66,  0,   186, 1,   0,   0,   1,   2,   3,   4,   5,
         6,   7,   8,   9,   10,  11,  12,  13,  14,  15,  16,  17,  18,  19,
         20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,  32,  33,
         34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
@@ -135,7 +135,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
         128, 30,  0,   0,   106, 31,  0,   0,   84,  32,  0,   0,   62,  33,
         0,   0,   40,  34,  0,   0,   18,  35,  0,   0,   252, 35,  0,   0,
         230, 36,  0,   0,   208, 37,  0,   0,   186, 38,  0,   0,   164, 39,
-        0,   0,   142, 40,  0,   0,   120, 41,  0,   0,   38,  223,
+        0,   0,   142, 40,  0,   0,   120, 41,  0,   0,   238, 145,
     };
 
     dummy_reset();
@@ -693,7 +693,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
     }
     test_msg->signed_messages[24] = 10616;
     test_msg->stream_counter = 1;
-    sbp_payload_send(&sbp_state, 0xC01, 66, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xC03, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -727,7 +727,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
                   "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 66,
                   "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xC01,
+    ck_assert_msg(last_frame.msg_type == 0xC03,
                   "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
                   "frame_callback: msg_len decoded incorrectly");

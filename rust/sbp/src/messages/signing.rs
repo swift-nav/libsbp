@@ -136,7 +136,7 @@ pub mod msg_ed25519_signature {
     }
 
     impl ConcreteMessage for MsgEd25519Signature {
-        const MESSAGE_TYPE: u16 = 3073;
+        const MESSAGE_TYPE: u16 = 3075;
         const MESSAGE_NAME: &'static str = "MSG_ED25519_SIGNATURE";
     }
 
