@@ -40,6 +40,20 @@ extern "C" {
  *****************************************************************************/
 typedef struct {
   /**
+   * Signature message counter. Zero indexed and incremented with each signature
+   * message. The counter will not increment if this message was in response to
+   * an on demand request. The counter will roll over after 256 messages.
+   */
+  u8 stream_counter;
+
+  /**
+   * On demand message counter. Zero indexed and incremented with each signature
+   * message sent in response to an on demand message. The counter will roll
+   * over after 256 messages.
+   */
+  u8 on_demand_counter;
+
+  /**
    * ED25519 signature for messages.
    */
   u8 signature[SBP_MSG_ED25519_SIGNATURE_SIGNATURE_MAX];

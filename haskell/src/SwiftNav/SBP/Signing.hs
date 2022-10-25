@@ -40,9 +40,18 @@ msgEd25519Signature :: Word16
 msgEd25519Signature = 0x0C01
 
 data MsgEd25519Signature = MsgEd25519Signature
-  { _msgEd25519Signature_signature     :: ![Word8]
+  { _msgEd25519Signature_stream_counter  :: !Word8
+    -- ^ Signature message counter. Zero indexed and incremented with each
+    -- signature message. The counter will not increment if this message was
+    -- in response to an on demand request. The counter will roll over after
+    -- 256 messages.
+  , _msgEd25519Signature_on_demand_counter :: !Word8
+    -- ^ On demand message counter. Zero indexed and incremented with each
+    -- signature message sent in response to an on demand message. The counter
+    -- will roll over after 256 messages.
+  , _msgEd25519Signature_signature       :: ![Word8]
     -- ^ ED25519 signature for messages.
-  , _msgEd25519Signature_fingerprint   :: ![Word8]
+  , _msgEd25519Signature_fingerprint     :: ![Word8]
     -- ^ SHA-1 fingerprint of the associated certificate.
   , _msgEd25519Signature_signed_messages :: ![Word32]
     -- ^ CRCs of signed messages.
@@ -50,12 +59,16 @@ data MsgEd25519Signature = MsgEd25519Signature
 
 instance Binary MsgEd25519Signature where
   get = do
+    _msgEd25519Signature_stream_counter <- getWord8
+    _msgEd25519Signature_on_demand_counter <- getWord8
     _msgEd25519Signature_signature <- replicateM 64 getWord8
     _msgEd25519Signature_fingerprint <- replicateM 20 getWord8
     _msgEd25519Signature_signed_messages <- whileM (not <$> isEmpty) getWord32le
     pure MsgEd25519Signature {..}
 
   put MsgEd25519Signature {..} = do
+    putWord8 _msgEd25519Signature_stream_counter
+    putWord8 _msgEd25519Signature_on_demand_counter
     mapM_ putWord8 _msgEd25519Signature_signature
     mapM_ putWord8 _msgEd25519Signature_fingerprint
     mapM_ putWord32le _msgEd25519Signature_signed_messages

@@ -39,6 +39,15 @@ class MsgEd25519Signature(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  stream_counter : int
+    Signature message counter. Zero indexed and incremented with each
+    signature message. The counter will not increment if this message was in
+    response to an on demand request. The counter will roll over after 256
+    messages.
+  on_demand_counter : int
+    On demand message counter. Zero indexed and incremented with each
+    signature message sent in response to an on demand message. The counter
+    will roll over after 256 messages.
   signature : array
     ED25519 signature for messages.
   fingerprint : array
@@ -50,10 +59,14 @@ class MsgEd25519Signature(SBP):
 
   """
   _parser = construct.Struct(
+                   'stream_counter' / construct.Int8ul,
+                   'on_demand_counter' / construct.Int8ul,
                    'signature' / construct.Array(64, construct.Int8ul),
                    'fingerprint' / construct.Array(20, construct.Int8ul),
                    'signed_messages' / construct.GreedyRange(construct.Int32ul),)
   __slots__ = [
+               'stream_counter',
+               'on_demand_counter',
                'signature',
                'fingerprint',
                'signed_messages',
@@ -69,6 +82,8 @@ class MsgEd25519Signature(SBP):
       super( MsgEd25519Signature, self).__init__()
       self.msg_type = SBP_MSG_ED25519_SIGNATURE
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.stream_counter = kwargs.pop('stream_counter')
+      self.on_demand_counter = kwargs.pop('on_demand_counter')
       self.signature = kwargs.pop('signature')
       self.fingerprint = kwargs.pop('fingerprint')
       self.signed_messages = kwargs.pop('signed_messages')

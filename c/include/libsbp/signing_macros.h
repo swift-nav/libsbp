@@ -56,7 +56,7 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD 84u
+#define SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD 86u
 
 #define SBP_MSG_ED25519_CERTIFICATE 0x0C02
 /**

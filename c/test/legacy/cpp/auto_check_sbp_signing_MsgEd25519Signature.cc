@@ -79,19 +79,19 @@ class Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0
 
 TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
   uint8_t encoded_frame[] = {
-      85,  1,   12,  148, 38,  184, 0,   1,   2,   3,   4,   5,   6,   7,   8,
-      9,   10,  11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,
-      24,  25,  26,  27,  28,  29,  30,  31,  32,  33,  34,  35,  36,  37,  38,
-      39,  40,  41,  42,  43,  44,  45,  46,  47,  48,  49,  50,  51,  52,  53,
-      54,  55,  56,  57,  58,  59,  60,  61,  62,  63,  100, 101, 102, 103, 104,
-      105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119,
-      136, 19,  0,   0,   114, 20,  0,   0,   92,  21,  0,   0,   70,  22,  0,
-      0,   48,  23,  0,   0,   26,  24,  0,   0,   4,   25,  0,   0,   238, 25,
-      0,   0,   216, 26,  0,   0,   194, 27,  0,   0,   172, 28,  0,   0,   150,
-      29,  0,   0,   128, 30,  0,   0,   106, 31,  0,   0,   84,  32,  0,   0,
-      62,  33,  0,   0,   40,  34,  0,   0,   18,  35,  0,   0,   252, 35,  0,
-      0,   230, 36,  0,   0,   208, 37,  0,   0,   186, 38,  0,   0,   164, 39,
-      0,   0,   142, 40,  0,   0,   120, 41,  0,   0,   188, 56,
+      85,  1,   12,  66,  0,   186, 1,   0,   0,   1,   2,   3,   4,   5,   6,
+      7,   8,   9,   10,  11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,
+      22,  23,  24,  25,  26,  27,  28,  29,  30,  31,  32,  33,  34,  35,  36,
+      37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,  48,  49,  50,  51,
+      52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,  100, 101, 102,
+      103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
+      118, 119, 136, 19,  0,   0,   114, 20,  0,   0,   92,  21,  0,   0,   70,
+      22,  0,   0,   48,  23,  0,   0,   26,  24,  0,   0,   4,   25,  0,   0,
+      238, 25,  0,   0,   216, 26,  0,   0,   194, 27,  0,   0,   172, 28,  0,
+      0,   150, 29,  0,   0,   128, 30,  0,   0,   106, 31,  0,   0,   84,  32,
+      0,   0,   62,  33,  0,   0,   40,  34,  0,   0,   18,  35,  0,   0,   252,
+      35,  0,   0,   230, 36,  0,   0,   208, 37,  0,   0,   186, 38,  0,   0,
+      164, 39,  0,   0,   142, 40,  0,   0,   120, 41,  0,   0,   38,  223,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -199,6 +199,7 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->fingerprint[0]));
   }
   test_msg->fingerprint[19] = 119;
+  test_msg->on_demand_counter = 0;
   if (sizeof(test_msg->signature) == 0) {
     // Cope with variable length arrays
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->signature[0]));
@@ -669,8 +670,9 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
         (uint8_t)(test_msg_len + sizeof(test_msg->signed_messages[0]));
   }
   test_msg->signed_messages[24] = 10616;
+  test_msg->stream_counter = 1;
 
-  EXPECT_EQ(send_message(0xC01, 9876, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(0xC01, 66, test_msg_len, test_msg_storage), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -680,7 +682,7 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
   }
 
   EXPECT_EQ(n_callbacks_logged_, 1);
-  EXPECT_EQ(last_sender_id_, 9876);
+  EXPECT_EQ(last_sender_id_, 66);
   EXPECT_EQ(last_msg_len_, test_msg_len);
   EXPECT_EQ(last_msg_->fingerprint[0], 100)
       << "incorrect value for fingerprint[0], expected 100, is "
@@ -742,6 +744,9 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
   EXPECT_EQ(last_msg_->fingerprint[19], 119)
       << "incorrect value for fingerprint[19], expected 119, is "
       << last_msg_->fingerprint[19];
+  EXPECT_EQ(last_msg_->on_demand_counter, 0)
+      << "incorrect value for on_demand_counter, expected 0, is "
+      << last_msg_->on_demand_counter;
   EXPECT_EQ(last_msg_->signature[0], 0)
       << "incorrect value for signature[0], expected 0, is "
       << last_msg_->signature[0];
@@ -1009,4 +1014,7 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
   EXPECT_EQ(last_msg_->signed_messages[24], 10616)
       << "incorrect value for signed_messages[24], expected 10616, is "
       << last_msg_->signed_messages[24];
+  EXPECT_EQ(last_msg_->stream_counter, 1)
+      << "incorrect value for stream_counter, expected 1, is "
+      << last_msg_->stream_counter;
 }

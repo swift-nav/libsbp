@@ -113,6 +113,17 @@ pub mod msg_ed25519_signature {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
+        /// Signature message counter. Zero indexed and incremented with each
+        /// signature message. The counter will not increment if this message was in
+        /// response to an on demand request. The counter will roll over after 256
+        /// messages.
+        #[cfg_attr(feature = "serde", serde(rename = "stream_counter"))]
+        pub stream_counter: u8,
+        /// On demand message counter. Zero indexed and incremented with each
+        /// signature message sent in response to an on demand message. The counter
+        /// will roll over after 256 messages.
+        #[cfg_attr(feature = "serde", serde(rename = "on_demand_counter"))]
+        pub on_demand_counter: u8,
         /// ED25519 signature for messages.
         #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
         pub signature: [u8; 64],
@@ -158,15 +169,21 @@ pub mod msg_ed25519_signature {
     }
 
     impl WireFormat for MsgEd25519Signature {
-        const MIN_LEN: usize = <[u8; 64] as WireFormat>::MIN_LEN
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <[u8; 64] as WireFormat>::MIN_LEN
             + <[u8; 20] as WireFormat>::MIN_LEN
             + <Vec<u32> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.signature)
+            WireFormat::len(&self.stream_counter)
+                + WireFormat::len(&self.on_demand_counter)
+                + WireFormat::len(&self.signature)
                 + WireFormat::len(&self.fingerprint)
                 + WireFormat::len(&self.signed_messages)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.stream_counter, buf);
+            WireFormat::write(&self.on_demand_counter, buf);
             WireFormat::write(&self.signature, buf);
             WireFormat::write(&self.fingerprint, buf);
             WireFormat::write(&self.signed_messages, buf);
@@ -174,6 +191,8 @@ pub mod msg_ed25519_signature {
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgEd25519Signature {
                 sender_id: None,
+                stream_counter: WireFormat::parse_unchecked(buf),
+                on_demand_counter: WireFormat::parse_unchecked(buf),
                 signature: WireFormat::parse_unchecked(buf),
                 fingerprint: WireFormat::parse_unchecked(buf),
                 signed_messages: WireFormat::parse_unchecked(buf),

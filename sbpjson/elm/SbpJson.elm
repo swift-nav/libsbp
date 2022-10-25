@@ -1224,8 +1224,10 @@ type alias MsgEd25519Certificate =
 
 type alias MsgEd25519Signature =
     { fingerprint : Array Int
+    , onDemandCounter : Int
     , signature : Array Int
     , signedMessages : Array Int
+    , streamCounter : Int
     }
 
 {-| The ephemeris message returns a set of satellite orbit parameters that is used to
@@ -4521,15 +4523,19 @@ msgEd25519Signature : Jdec.Decoder MsgEd25519Signature
 msgEd25519Signature =
     Jpipe.decode MsgEd25519Signature
         |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
+        |> Jpipe.required "on_demand_counter" Jdec.int
         |> Jpipe.required "signature" (Jdec.array Jdec.int)
         |> Jpipe.required "signed_messages" (Jdec.array Jdec.int)
+        |> Jpipe.required "stream_counter" Jdec.int
 
 encodeMsgEd25519Signature : MsgEd25519Signature -> Jenc.Value
 encodeMsgEd25519Signature x =
     Jenc.object
         [ ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
+        , ("on_demand_counter", Jenc.int x.onDemandCounter)
         , ("signature", makeArrayEncoder Jenc.int x.signature)
         , ("signed_messages", makeArrayEncoder Jenc.int x.signedMessages)
+        , ("stream_counter", Jenc.int x.streamCounter)
         ]
 
 msgEphemerisBds : Jdec.Decoder MsgEphemerisBds

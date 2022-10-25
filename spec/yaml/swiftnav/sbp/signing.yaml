@@ -20,6 +20,17 @@ definitions:
       id: 0x0C01
       short_desc: ED25519 signature for groups of RTCM messages
       fields:
+        - stream_counter:
+            type: u8
+            desc: >
+              Signature message counter. Zero indexed and incremented with each signature message.
+              The counter will not increment if this message was in response to an on demand request.
+              The counter will roll over after 256 messages.
+        - on_demand_counter:
+            type: u8
+            desc: >
+              On demand message counter. Zero indexed and incremented with each signature message sent
+              in response to an on demand message. The counter will roll over after 256 messages.
         - signature:
             type: array
             fill: u8

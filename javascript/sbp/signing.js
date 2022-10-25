@@ -35,6 +35,12 @@ let SvId = require("./gnss").SvId;
  *
  
  * Fields in the SBP payload (`sbp.payload`):
+ * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
+ *   message. The counter will not increment if this message was in response to an on
+ *   demand request. The counter will roll over after 256 messages.
+ * @field on_demand_counter number (unsigned 8-bit int, 1 byte) On demand message counter. Zero indexed and incremented with each signature
+ *   message sent in response to an on demand message. The counter will roll over
+ *   after 256 messages.
  * @field signature array ED25519 signature for messages.
  * @field fingerprint array SHA-1 fingerprint of the associated certificate.
  * @field signed_messages array CRCs of signed messages.
@@ -54,10 +60,14 @@ MsgEd25519Signature.prototype.msg_type = 0x0C01;
 MsgEd25519Signature.prototype.constructor = MsgEd25519Signature;
 MsgEd25519Signature.prototype.parser = new Parser()
   .endianess('little')
+  .uint8('stream_counter')
+  .uint8('on_demand_counter')
   .array('signature', { length: 64, type: 'uint8' })
   .array('fingerprint', { length: 20, type: 'uint8' })
   .array('signed_messages', { type: 'uint32le', readUntil: 'eof' });
 MsgEd25519Signature.prototype.fieldSpec = [];
+MsgEd25519Signature.prototype.fieldSpec.push(['stream_counter', 'writeUInt8', 1]);
+MsgEd25519Signature.prototype.fieldSpec.push(['on_demand_counter', 'writeUInt8', 1]);
 MsgEd25519Signature.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
 MsgEd25519Signature.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
 MsgEd25519Signature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt32LE', function () { return 4; }, null]);

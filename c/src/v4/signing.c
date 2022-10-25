@@ -18,6 +18,12 @@
 
 bool sbp_msg_ed25519_signature_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ed25519_signature_t *msg) {
+  if (!sbp_u8_encode(ctx, &msg->stream_counter)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->on_demand_counter)) {
+    return false;
+  }
   for (size_t i = 0; i < SBP_MSG_ED25519_SIGNATURE_SIGNATURE_MAX; i++) {
     if (!sbp_u8_encode(ctx, &msg->signature[i])) {
       return false;
@@ -54,6 +60,12 @@ s8 sbp_msg_ed25519_signature_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_ed25519_signature_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ed25519_signature_t *msg) {
+  if (!sbp_u8_decode(ctx, &msg->stream_counter)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->on_demand_counter)) {
+    return false;
+  }
   for (uint8_t i = 0; i < SBP_MSG_ED25519_SIGNATURE_SIGNATURE_MAX; i++) {
     if (!sbp_u8_decode(ctx, &msg->signature[i])) {
       return false;
@@ -107,6 +119,16 @@ s8 sbp_msg_ed25519_signature_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_ed25519_signature_cmp(const sbp_msg_ed25519_signature_t *a,
                                   const sbp_msg_ed25519_signature_t *b) {
   int ret = 0;
+
+  ret = sbp_u8_cmp(&a->stream_counter, &b->stream_counter);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->on_demand_counter, &b->on_demand_counter);
+  if (ret != 0) {
+    return ret;
+  }
 
   for (uint8_t i = 0; ret == 0 && i < SBP_MSG_ED25519_SIGNATURE_SIGNATURE_MAX;
        i++) {
