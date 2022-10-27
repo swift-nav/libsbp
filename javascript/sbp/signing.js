@@ -31,46 +31,36 @@ let GPSTimeSec = require("./gnss").GPSTimeSec;
 let SvId = require("./gnss").SvId;
 
 /**
- * SBP class for message MSG_ED25519_SIGNATURE (0x0C03).
+ * SBP class for message MSG_ED25519_SIGNATURE_DEP (0x0C01).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
- *   message. The counter will not increment if this message was in response to an on
- *   demand request. The counter will roll over after 256 messages.
- * @field on_demand_counter number (unsigned 8-bit int, 1 byte) On demand message counter. Zero indexed and incremented with each signature
- *   message sent in response to an on demand message. The counter will roll over
- *   after 256 messages.
  * @field signature array ED25519 signature for messages.
  * @field fingerprint array SHA-1 fingerprint of the associated certificate.
  * @field signed_messages array CRCs of signed messages.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-let MsgEd25519Signature = function (sbp, fields) {
+let MsgEd25519SignatureDep = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_ED25519_SIGNATURE";
+  this.messageType = "MSG_ED25519_SIGNATURE_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgEd25519Signature.prototype = Object.create(SBP.prototype);
-MsgEd25519Signature.prototype.messageType = "MSG_ED25519_SIGNATURE";
-MsgEd25519Signature.prototype.msg_type = 0x0C03;
-MsgEd25519Signature.prototype.constructor = MsgEd25519Signature;
-MsgEd25519Signature.prototype.parser = new Parser()
+MsgEd25519SignatureDep.prototype = Object.create(SBP.prototype);
+MsgEd25519SignatureDep.prototype.messageType = "MSG_ED25519_SIGNATURE_DEP";
+MsgEd25519SignatureDep.prototype.msg_type = 0x0C01;
+MsgEd25519SignatureDep.prototype.constructor = MsgEd25519SignatureDep;
+MsgEd25519SignatureDep.prototype.parser = new Parser()
   .endianess('little')
-  .uint8('stream_counter')
-  .uint8('on_demand_counter')
   .array('signature', { length: 64, type: 'uint8' })
   .array('fingerprint', { length: 20, type: 'uint8' })
   .array('signed_messages', { type: 'uint32le', readUntil: 'eof' });
-MsgEd25519Signature.prototype.fieldSpec = [];
-MsgEd25519Signature.prototype.fieldSpec.push(['stream_counter', 'writeUInt8', 1]);
-MsgEd25519Signature.prototype.fieldSpec.push(['on_demand_counter', 'writeUInt8', 1]);
-MsgEd25519Signature.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
-MsgEd25519Signature.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
-MsgEd25519Signature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt32LE', function () { return 4; }, null]);
+MsgEd25519SignatureDep.prototype.fieldSpec = [];
+MsgEd25519SignatureDep.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
+MsgEd25519SignatureDep.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
+MsgEd25519SignatureDep.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt32LE', function () { return 4; }, null]);
 
 /**
  * SBP class for message MSG_ED25519_CERTIFICATE (0x0C02).
@@ -105,9 +95,55 @@ MsgEd25519Certificate.prototype.fieldSpec.push(['n_msg', 'writeUInt8', 1]);
 MsgEd25519Certificate.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
 MsgEd25519Certificate.prototype.fieldSpec.push(['certificate_bytes', 'array', 'writeUInt8', function () { return 1; }, null]);
 
+/**
+ * SBP class for message MSG_ED25519_SIGNATURE (0x0C03).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
+ *   message. The counter will not increment if this message was in response to an on
+ *   demand request. The counter will roll over after 256 messages. Upon connection,
+ *   the value of the counter may not initially be zero.
+ * @field on_demand_counter number (unsigned 8-bit int, 1 byte) On demand message counter. Zero indexed and incremented with each signature
+ *   message sent in response to an on demand message. The counter will roll over
+ *   after 256 messages. Upon connection, the value of the counter may not initially
+ *   be zero.
+ * @field signature array ED25519 signature for messages.
+ * @field fingerprint array SHA-1 fingerprint of the associated certificate.
+ * @field signed_messages array CRCs of signed messages.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgEd25519Signature = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ED25519_SIGNATURE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEd25519Signature.prototype = Object.create(SBP.prototype);
+MsgEd25519Signature.prototype.messageType = "MSG_ED25519_SIGNATURE";
+MsgEd25519Signature.prototype.msg_type = 0x0C03;
+MsgEd25519Signature.prototype.constructor = MsgEd25519Signature;
+MsgEd25519Signature.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('stream_counter')
+  .uint8('on_demand_counter')
+  .array('signature', { length: 64, type: 'uint8' })
+  .array('fingerprint', { length: 20, type: 'uint8' })
+  .array('signed_messages', { type: 'uint32le', readUntil: 'eof' });
+MsgEd25519Signature.prototype.fieldSpec = [];
+MsgEd25519Signature.prototype.fieldSpec.push(['stream_counter', 'writeUInt8', 1]);
+MsgEd25519Signature.prototype.fieldSpec.push(['on_demand_counter', 'writeUInt8', 1]);
+MsgEd25519Signature.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
+MsgEd25519Signature.prototype.fieldSpec.push(['fingerprint', 'array', 'writeUInt8', function () { return 1; }, 20]);
+MsgEd25519Signature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt32LE', function () { return 4; }, null]);
+
 module.exports = {
-  0x0C03: MsgEd25519Signature,
-  MsgEd25519Signature: MsgEd25519Signature,
+  0x0C01: MsgEd25519SignatureDep,
+  MsgEd25519SignatureDep: MsgEd25519SignatureDep,
   0x0C02: MsgEd25519Certificate,
   MsgEd25519Certificate: MsgEd25519Certificate,
+  0x0C03: MsgEd25519Signature,
+  MsgEd25519Signature: MsgEd25519Signature,
 }

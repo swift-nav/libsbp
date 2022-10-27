@@ -35,8 +35,8 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ed25519_signature_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_ed25519_signature_t *msg);
+bool sbp_msg_ed25519_signature_dep_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ed25519_signature_dep_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -45,8 +45,8 @@ bool sbp_msg_ed25519_signature_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ed25519_signature_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_ed25519_signature_t *msg);
+bool sbp_msg_ed25519_signature_dep_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ed25519_signature_dep_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer
@@ -67,6 +67,26 @@ bool sbp_msg_ed25519_certificate_encode_internal(
  */
 bool sbp_msg_ed25519_certificate_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ed25519_certificate_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ed25519_signature_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ed25519_signature_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ed25519_signature_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ed25519_signature_t *msg);
 
 #ifdef __cplusplus
 }

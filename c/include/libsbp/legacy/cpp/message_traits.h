@@ -1131,6 +1131,12 @@ struct MessageTraits<msg_ssr_flag_iono_grid_point_sat_los_t> {
 
 
 template<>
+struct MessageTraits<msg_ed25519_signature_dep_t> {
+  static constexpr u16 id = 3073;
+};
+
+
+template<>
 struct MessageTraits<msg_ed25519_certificate_t> {
   static constexpr u16 id = 3074;
 };

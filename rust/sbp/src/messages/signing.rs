@@ -15,6 +15,7 @@
 //! Messages relating to signatures
 pub use msg_ed25519_certificate::MsgEd25519Certificate;
 pub use msg_ed25519_signature::MsgEd25519Signature;
+pub use msg_ed25519_signature_dep::MsgEd25519SignatureDep;
 
 pub mod msg_ed25519_certificate {
     #![allow(unused_imports)]
@@ -116,12 +117,14 @@ pub mod msg_ed25519_signature {
         /// Signature message counter. Zero indexed and incremented with each
         /// signature message. The counter will not increment if this message was in
         /// response to an on demand request. The counter will roll over after 256
-        /// messages.
+        /// messages. Upon connection, the value of the counter may not initially be
+        /// zero.
         #[cfg_attr(feature = "serde", serde(rename = "stream_counter"))]
         pub stream_counter: u8,
         /// On demand message counter. Zero indexed and incremented with each
         /// signature message sent in response to an on demand message. The counter
-        /// will roll over after 256 messages.
+        /// will roll over after 256 messages. Upon connection, the value of the
+        /// counter may not initially be zero.
         #[cfg_attr(feature = "serde", serde(rename = "on_demand_counter"))]
         pub on_demand_counter: u8,
         /// ED25519 signature for messages.
@@ -193,6 +196,88 @@ pub mod msg_ed25519_signature {
                 sender_id: None,
                 stream_counter: WireFormat::parse_unchecked(buf),
                 on_demand_counter: WireFormat::parse_unchecked(buf),
+                signature: WireFormat::parse_unchecked(buf),
+                fingerprint: WireFormat::parse_unchecked(buf),
+                signed_messages: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ed25519_signature_dep {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Deprecated
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgEd25519SignatureDep {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// ED25519 signature for messages.
+        #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
+        pub signature: [u8; 64],
+        /// SHA-1 fingerprint of the associated certificate.
+        #[cfg_attr(feature = "serde", serde(rename = "fingerprint"))]
+        pub fingerprint: [u8; 20],
+        /// CRCs of signed messages.
+        #[cfg_attr(feature = "serde", serde(rename = "signed_messages"))]
+        pub signed_messages: Vec<u32>,
+    }
+
+    impl ConcreteMessage for MsgEd25519SignatureDep {
+        const MESSAGE_TYPE: u16 = 3073;
+        const MESSAGE_NAME: &'static str = "MSG_ED25519_SIGNATURE_DEP";
+    }
+
+    impl SbpMessage for MsgEd25519SignatureDep {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgEd25519SignatureDep {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgEd25519SignatureDep(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgEd25519SignatureDep {
+        const MIN_LEN: usize = <[u8; 64] as WireFormat>::MIN_LEN
+            + <[u8; 20] as WireFormat>::MIN_LEN
+            + <Vec<u32> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.signature)
+                + WireFormat::len(&self.fingerprint)
+                + WireFormat::len(&self.signed_messages)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.signature, buf);
+            WireFormat::write(&self.fingerprint, buf);
+            WireFormat::write(&self.signed_messages, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgEd25519SignatureDep {
+                sender_id: None,
                 signature: WireFormat::parse_unchecked(buf),
                 fingerprint: WireFormat::parse_unchecked(buf),
                 signed_messages: WireFormat::parse_unchecked(buf),
