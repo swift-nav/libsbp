@@ -1,5 +1,17 @@
 # Changelog
 
+## [v4.9.0](https://github.com/swift-nav/libsbp/tree/v4.9.0) (2022-10-28)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.8.0...v4.9.0)
+
+**Merged pull requests:**
+
+- from\_parts generated methods [\#1232](https://github.com/swift-nav/libsbp/pull/1232) ([adrian-kong](https://github.com/adrian-kong))
+- bazel: add swift\_cc\* wrappers \[BUILD-339\] [\#1231](https://github.com/swift-nav/libsbp/pull/1231) ([isaactorz](https://github.com/isaactorz))
+- pre-release v4.8.1-alpha [\#1230](https://github.com/swift-nav/libsbp/pull/1230) ([adrian-kong](https://github.com/adrian-kong))
+- Sbp Raw Decoder [\#1218](https://github.com/swift-nav/libsbp/pull/1218) ([adrian-kong](https://github.com/adrian-kong))
+- SbpString helpers [\#1216](https://github.com/swift-nav/libsbp/pull/1216) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.8.0](https://github.com/swift-nav/libsbp/tree/v4.8.0) (2020-09-29)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.7.0...HEAD)
