@@ -18,7 +18,79 @@
 #ifndef LIBSBP_SIGNING_MACROS_H
 #define LIBSBP_SIGNING_MACROS_H
 
-#define SBP_MSG_ED25519_SIGNATURE 0x0C01
+#define SBP_MSG_ED25519_SIGNATURE_DEP 0x0C01
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_signature_dep_t::signature (V4 API) or
+ * msg_ed25519_signature_dep_t::signature (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_ED25519_SIGNATURE_DEP_SIGNATURE_MAX 64u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_signature_dep_t::fingerprint (V4 API) or
+ * msg_ed25519_signature_dep_t::fingerprint (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_ED25519_SIGNATURE_DEP_FINGERPRINT_MAX 20u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_signature_dep_t::signed_messages (V4 API) or
+ * msg_ed25519_signature_dep_t::signed_messages (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_ED25519_SIGNATURE_DEP_SIGNED_MESSAGES_MAX 42u
+
+/**
+ * Encoded length of sbp_msg_ed25519_signature_dep_t (V4 API) and
+ * msg_ed25519_signature_dep_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ed25519_signature_dep_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_ED25519_SIGNATURE_DEP_ENCODED_OVERHEAD 84u
+
+#define SBP_MSG_ED25519_CERTIFICATE 0x0C02
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_certificate_t::fingerprint (V4 API) or
+ * msg_ed25519_certificate_t::fingerprint (legacy API) before the maximum SBP
+ * message size is exceeded
+ */
+#define SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX 20u
+
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ed25519_certificate_t::certificate_bytes (V4 API) or
+ * msg_ed25519_certificate_t::certificate_bytes (legacy API) before the maximum
+ * SBP message size is exceeded
+ */
+#define SBP_MSG_ED25519_CERTIFICATE_CERTIFICATE_BYTES_MAX 234u
+
+/**
+ * Encoded length of sbp_msg_ed25519_certificate_t (V4 API) and
+ * msg_ed25519_certificate_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ed25519_certificate_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_ED25519_CERTIFICATE_ENCODED_OVERHEAD 21u
+
+#define SBP_MSG_ED25519_SIGNATURE 0x0C03
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ed25519_signature_t::signature (V4 API) or
@@ -56,38 +128,6 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD 84u
-
-#define SBP_MSG_ED25519_CERTIFICATE 0x0C02
-/**
- * The maximum number of items that can be stored in
- * sbp_msg_ed25519_certificate_t::fingerprint (V4 API) or
- * msg_ed25519_certificate_t::fingerprint (legacy API) before the maximum SBP
- * message size is exceeded
- */
-#define SBP_MSG_ED25519_CERTIFICATE_FINGERPRINT_MAX 20u
-
-/**
- * The maximum number of items that can be stored in
- * sbp_msg_ed25519_certificate_t::certificate_bytes (V4 API) or
- * msg_ed25519_certificate_t::certificate_bytes (legacy API) before the maximum
- * SBP message size is exceeded
- */
-#define SBP_MSG_ED25519_CERTIFICATE_CERTIFICATE_BYTES_MAX 234u
-
-/**
- * Encoded length of sbp_msg_ed25519_certificate_t (V4 API) and
- * msg_ed25519_certificate_t (legacy API)
- *
- * This type is not fixed size and an instance of this message may be longer
- * than the value indicated by this symbol. Users of the V4 API should call
- * #sbp_msg_ed25519_certificate_encoded_len to determine the actual size of an
- * instance of this message. Users of the legacy API are required to track the
- * encoded message length when interacting with the legacy type.
- *
- * See the documentation for libsbp for more details regarding the message
- * structure and its variable length component(s)
- */
-#define SBP_MSG_ED25519_CERTIFICATE_ENCODED_OVERHEAD 21u
+#define SBP_MSG_ED25519_SIGNATURE_ENCODED_OVERHEAD 86u
 
 #endif /* LIBSBP_SIGNING_MACROS_H */

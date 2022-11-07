@@ -11,29 +11,29 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519Signature.yaml by
+// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519SignatureDep.yaml by
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
 #include <libsbp/cpp/state.h>
 #include <libsbp/legacy/cpp/message_traits.h>
 #include <libsbp/legacy/cpp/payload_handler.h>
-class Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0
+class Test_legacy_auto_check_sbp_signing_MsgEd25519SignatureDep0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::PayloadHandler<msg_ed25519_signature_t> {
+      sbp::PayloadHandler<msg_ed25519_signature_dep_t> {
  public:
-  Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0()
+  Test_legacy_auto_check_sbp_signing_MsgEd25519SignatureDep0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::PayloadHandler<msg_ed25519_signature_t>(this),
+        sbp::PayloadHandler<msg_ed25519_signature_dep_t>(this),
         last_msg_storage_(),
         last_msg_(
-            reinterpret_cast<msg_ed25519_signature_t *>(last_msg_storage_)),
+            reinterpret_cast<msg_ed25519_signature_dep_t *>(last_msg_storage_)),
         last_msg_len_(),
         last_sender_id_(),
         n_callbacks_logged_(),
@@ -60,7 +60,7 @@ class Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0
 
  protected:
   void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_ed25519_signature_t &msg) override {
+                      const msg_ed25519_signature_dep_t &msg) override {
     memcpy(last_msg_storage_, &msg, message_length);
     last_msg_len_ = message_length;
     last_sender_id_ = sender_id;
@@ -68,7 +68,7 @@ class Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0
   }
 
   uint8_t last_msg_storage_[SBP_MAX_PAYLOAD_LEN];
-  msg_ed25519_signature_t *last_msg_;
+  msg_ed25519_signature_dep_t *last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -77,27 +77,27 @@ class Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
+TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519SignatureDep0, Test) {
   uint8_t encoded_frame[] = {
-      85,  3,   12,  66,  0,   186, 1,   0,   0,   1,   2,   3,   4,   5,   6,
-      7,   8,   9,   10,  11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,
-      22,  23,  24,  25,  26,  27,  28,  29,  30,  31,  32,  33,  34,  35,  36,
-      37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,  48,  49,  50,  51,
-      52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,  100, 101, 102,
-      103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
-      118, 119, 136, 19,  0,   0,   114, 20,  0,   0,   92,  21,  0,   0,   70,
-      22,  0,   0,   48,  23,  0,   0,   26,  24,  0,   0,   4,   25,  0,   0,
-      238, 25,  0,   0,   216, 26,  0,   0,   194, 27,  0,   0,   172, 28,  0,
-      0,   150, 29,  0,   0,   128, 30,  0,   0,   106, 31,  0,   0,   84,  32,
-      0,   0,   62,  33,  0,   0,   40,  34,  0,   0,   18,  35,  0,   0,   252,
-      35,  0,   0,   230, 36,  0,   0,   208, 37,  0,   0,   186, 38,  0,   0,
-      164, 39,  0,   0,   142, 40,  0,   0,   120, 41,  0,   0,   238, 145,
+      85,  1,   12,  66,  0,   184, 0,   1,   2,   3,   4,   5,   6,   7,   8,
+      9,   10,  11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,
+      24,  25,  26,  27,  28,  29,  30,  31,  32,  33,  34,  35,  36,  37,  38,
+      39,  40,  41,  42,  43,  44,  45,  46,  47,  48,  49,  50,  51,  52,  53,
+      54,  55,  56,  57,  58,  59,  60,  61,  62,  63,  100, 101, 102, 103, 104,
+      105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119,
+      136, 19,  0,   0,   114, 20,  0,   0,   92,  21,  0,   0,   70,  22,  0,
+      0,   48,  23,  0,   0,   26,  24,  0,   0,   4,   25,  0,   0,   238, 25,
+      0,   0,   216, 26,  0,   0,   194, 27,  0,   0,   172, 28,  0,   0,   150,
+      29,  0,   0,   128, 30,  0,   0,   106, 31,  0,   0,   84,  32,  0,   0,
+      62,  33,  0,   0,   40,  34,  0,   0,   18,  35,  0,   0,   252, 35,  0,
+      0,   230, 36,  0,   0,   208, 37,  0,   0,   186, 38,  0,   0,   164, 39,
+      0,   0,   142, 40,  0,   0,   120, 41,  0,   0,   169, 111,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
   uint8_t test_msg_len = 0;
-  msg_ed25519_signature_t *test_msg =
-      (msg_ed25519_signature_t *)test_msg_storage;
+  msg_ed25519_signature_dep_t *test_msg =
+      (msg_ed25519_signature_dep_t *)test_msg_storage;
   test_msg_len = (uint8_t)sizeof(*test_msg);
   if (sizeof(test_msg->fingerprint) == 0) {
     // Cope with variable length arrays
@@ -199,7 +199,6 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->fingerprint[0]));
   }
   test_msg->fingerprint[19] = 119;
-  test_msg->on_demand_counter = 0;
   if (sizeof(test_msg->signature) == 0) {
     // Cope with variable length arrays
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->signature[0]));
@@ -670,9 +669,8 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
         (uint8_t)(test_msg_len + sizeof(test_msg->signed_messages[0]));
   }
   test_msg->signed_messages[24] = 10616;
-  test_msg->stream_counter = 1;
 
-  EXPECT_EQ(send_message(0xC03, 66, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(0xC01, 66, test_msg_len, test_msg_storage), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -744,9 +742,6 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
   EXPECT_EQ(last_msg_->fingerprint[19], 119)
       << "incorrect value for fingerprint[19], expected 119, is "
       << last_msg_->fingerprint[19];
-  EXPECT_EQ(last_msg_->on_demand_counter, 0)
-      << "incorrect value for on_demand_counter, expected 0, is "
-      << last_msg_->on_demand_counter;
   EXPECT_EQ(last_msg_->signature[0], 0)
       << "incorrect value for signature[0], expected 0, is "
       << last_msg_->signature[0];
@@ -1014,7 +1009,4 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEd25519Signature0, Test) {
   EXPECT_EQ(last_msg_->signed_messages[24], 10616)
       << "incorrect value for signed_messages[24], expected 10616, is "
       << last_msg_->signed_messages[24];
-  EXPECT_EQ(last_msg_->stream_counter, 1)
-      << "incorrect value for stream_counter, expected 1, is "
-      << last_msg_->stream_counter;
 }

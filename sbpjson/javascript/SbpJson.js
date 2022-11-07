@@ -2218,8 +2218,10 @@ const typeMap = {
     ], "any"),
     "MsgEd25519Signature": o([
         { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "on_demand_counter", js: "on_demand_counter", typ: 0 },
         { json: "signature", js: "signature", typ: a(0) },
         { json: "signed_messages", js: "signed_messages", typ: a(0) },
+        { json: "stream_counter", js: "stream_counter", typ: 0 },
     ], "any"),
     "MsgEphemerisBds": o([
         { json: "af0", js: "af0", typ: 3.14 },

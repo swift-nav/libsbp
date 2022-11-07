@@ -34,7 +34,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 signature[64];   /**< ED25519 signature for messages. */
   u8 fingerprint[20]; /**< SHA-1 fingerprint of the associated certificate. */
   u32 signed_messages[0]; /**< CRCs of signed messages. */
-} msg_ed25519_signature_t;
+} msg_ed25519_signature_dep_t;
 
 typedef struct SBP_ATTR_PACKED {
   u8 n_msg;                /**< Total number messages that make up the
@@ -45,6 +45,26 @@ typedef struct SBP_ATTR_PACKED {
                                 certificate. */
   u8 certificate_bytes[0]; /**< ED25519 certificate bytes. */
 } msg_ed25519_certificate_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 stream_counter;      /**< Signature message counter. Zero indexed and
+                               incremented with each signature message. The
+                               counter will not increment if this message was
+                               in response to an on demand request. The
+                               counter will roll over after 256 messages.
+                               Upon connection, the value of the counter may
+                               not initially be zero. */
+  u8 on_demand_counter;   /**< On demand message counter. Zero indexed and
+                               incremented with each signature message sent
+                               in response to an on demand message. The
+                               counter will roll over after 256 messages.
+                               Upon connection, the value of the counter may
+                               not initially be zero. */
+  u8 signature[64];       /**< ED25519 signature for messages. */
+  u8 fingerprint[20];     /**< SHA-1 fingerprint of the associated
+                               certificate. */
+  u32 signed_messages[0]; /**< CRCs of signed messages. */
+} msg_ed25519_signature_t;
 
 /** \} */
 

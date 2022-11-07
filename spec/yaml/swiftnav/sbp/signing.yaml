@@ -16,9 +16,11 @@ include:
   - types.yaml
   - gnss.yaml
 definitions:
-  - MSG_ED25519_SIGNATURE:
+  - MSG_ED25519_SIGNATURE_DEP:
       id: 0x0C01
-      short_desc: ED25519 signature for groups of RTCM messages
+      replaced_by:
+        - MSG_ED25519_SIGNATURE
+      short_desc: Deprecated
       fields:
         - signature:
             type: array
@@ -54,3 +56,35 @@ definitions:
             type: array
             fill: u8
             desc: ED25519 certificate bytes.
+
+  - MSG_ED25519_SIGNATURE:
+      id: 0x0C03
+      short_desc: ED25519 signature for groups of RTCM messages
+      fields:
+        - stream_counter:
+            type: u8
+            desc: >
+              Signature message counter. Zero indexed and incremented with each signature message.
+              The counter will not increment if this message was in response to an on demand request.
+              The counter will roll over after 256 messages. Upon connection, the value of the counter
+              may not initially be zero.
+        - on_demand_counter:
+            type: u8
+            desc: >
+              On demand message counter. Zero indexed and incremented with each signature message sent
+              in response to an on demand message. The counter will roll over after 256 messages.
+              Upon connection, the value of the counter may not initially be zero.
+        - signature:
+            type: array
+            fill: u8
+            size: 64
+            desc: ED25519 signature for messages.
+        - fingerprint:
+            type: array
+            fill: u8
+            size: 20
+            desc: SHA-1 fingerprint of the associated certificate.
+        - signed_messages:
+            type: array
+            fill: u32
+            desc: CRCs of signed messages.

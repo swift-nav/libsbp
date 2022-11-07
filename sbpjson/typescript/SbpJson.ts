@@ -608,9 +608,11 @@ export interface MsgEd25519Certificate {
 }
 
 export interface MsgEd25519Signature {
-    fingerprint:     number[];
-    signature:       number[];
-    signed_messages: number[];
+    fingerprint:       number[];
+    on_demand_counter: number;
+    signature:         number[];
+    signed_messages:   number[];
+    stream_counter:    number;
 }
 
 /**
@@ -4832,8 +4834,10 @@ const typeMap: any = {
     ], "any"),
     "MsgEd25519Signature": o([
         { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "on_demand_counter", js: "on_demand_counter", typ: 0 },
         { json: "signature", js: "signature", typ: a(0) },
         { json: "signed_messages", js: "signed_messages", typ: a(0) },
+        { json: "stream_counter", js: "stream_counter", typ: 0 },
     ], "any"),
     "MsgEphemerisBds": o([
         { json: "af0", js: "af0", typ: 3.14 },

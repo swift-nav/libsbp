@@ -20,23 +20,8 @@ import com.swiftnav.sbp.gnss.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class MsgEd25519Signature extends SBPMessage {
-    public static final int TYPE = 0x0C03;
-
-    /**
-     * Signature message counter. Zero indexed and incremented with each signature message. The
-     * counter will not increment if this message was in response to an on demand request. The
-     * counter will roll over after 256 messages. Upon connection, the value of the counter may not
-     * initially be zero.
-     */
-    public int stream_counter;
-
-    /**
-     * On demand message counter. Zero indexed and incremented with each signature message sent in
-     * response to an on demand message. The counter will roll over after 256 messages. Upon
-     * connection, the value of the counter may not initially be zero.
-     */
-    public int on_demand_counter;
+public class MsgEd25519SignatureDep extends SBPMessage {
+    public static final int TYPE = 0x0C01;
 
     /** ED25519 signature for messages. */
     public int[] signature;
@@ -47,15 +32,15 @@ public class MsgEd25519Signature extends SBPMessage {
     /** CRCs of signed messages. */
     public long[] signed_messages;
 
-    public MsgEd25519Signature(int sender) {
+    public MsgEd25519SignatureDep(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgEd25519Signature() {
+    public MsgEd25519SignatureDep() {
         super(TYPE);
     }
 
-    public MsgEd25519Signature(SBPMessage msg) throws SBPBinaryException {
+    public MsgEd25519SignatureDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type == TYPE;
     }
@@ -63,8 +48,6 @@ public class MsgEd25519Signature extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        stream_counter = parser.getU8();
-        on_demand_counter = parser.getU8();
         signature = parser.getArrayofU8(64);
         fingerprint = parser.getArrayofU8(20);
         signed_messages = parser.getArrayofU32();
@@ -72,8 +55,6 @@ public class MsgEd25519Signature extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        builder.putU8(stream_counter);
-        builder.putU8(on_demand_counter);
         builder.putArrayofU8(signature, 64);
         builder.putArrayofU8(fingerprint, 20);
         builder.putArrayofU32(signed_messages);
@@ -82,8 +63,6 @@ public class MsgEd25519Signature extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("stream_counter", stream_counter);
-        obj.put("on_demand_counter", on_demand_counter);
         obj.put("signature", new JSONArray(signature));
         obj.put("fingerprint", new JSONArray(fingerprint));
         obj.put("signed_messages", new JSONArray(signed_messages));

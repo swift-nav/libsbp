@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519Signature.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519SignatureDep.yaml by generate.py. Do not modify by hand!
 
 use crate::*;
 
@@ -19,18 +19,18 @@ use crate::*;
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
-fn test_auto_check_sbp_signing_msg_ed25519_signature() {
+fn test_auto_check_sbp_signing_msg_ed25519_signature_dep() {
     {
         let mut payload = Cursor::new(vec![
-            85, 3, 12, 66, 0, 186, 1, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-            17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
-            39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-            61, 62, 63, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114,
-            115, 116, 117, 118, 119, 136, 19, 0, 0, 114, 20, 0, 0, 92, 21, 0, 0, 70, 22, 0, 0, 48,
-            23, 0, 0, 26, 24, 0, 0, 4, 25, 0, 0, 238, 25, 0, 0, 216, 26, 0, 0, 194, 27, 0, 0, 172,
-            28, 0, 0, 150, 29, 0, 0, 128, 30, 0, 0, 106, 31, 0, 0, 84, 32, 0, 0, 62, 33, 0, 0, 40,
-            34, 0, 0, 18, 35, 0, 0, 252, 35, 0, 0, 230, 36, 0, 0, 208, 37, 0, 0, 186, 38, 0, 0,
-            164, 39, 0, 0, 142, 40, 0, 0, 120, 41, 0, 0, 238, 145,
+            85, 1, 12, 66, 0, 184, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+            40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
+            62, 63, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115,
+            116, 117, 118, 119, 136, 19, 0, 0, 114, 20, 0, 0, 92, 21, 0, 0, 70, 22, 0, 0, 48, 23,
+            0, 0, 26, 24, 0, 0, 4, 25, 0, 0, 238, 25, 0, 0, 216, 26, 0, 0, 194, 27, 0, 0, 172, 28,
+            0, 0, 150, 29, 0, 0, 128, 30, 0, 0, 106, 31, 0, 0, 84, 32, 0, 0, 62, 33, 0, 0, 40, 34,
+            0, 0, 18, 35, 0, 0, 252, 35, 0, 0, 230, 36, 0, 0, 208, 37, 0, 0, 186, 38, 0, 0, 164,
+            39, 0, 0, 142, 40, 0, 0, 120, 41, 0, 0, 169, 111,
         ]);
 
         // Test the round trip payload parsing
@@ -41,11 +41,11 @@ fn test_auto_check_sbp_signing_msg_ed25519_signature() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgEd25519Signature(msg) => {
+            sbp::messages::Sbp::MsgEd25519SignatureDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xC03,
-                    "Incorrect message type, expected 0xC03, is {}",
+                    0xC01,
+                    "Incorrect message type, expected 0xC01, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -153,11 +153,6 @@ fn test_auto_check_sbp_signing_msg_ed25519_signature() {
                     msg.fingerprint[19], 119,
                     "incorrect value for fingerprint[19], expected 119, is {}",
                     msg.fingerprint[19]
-                );
-                assert_eq!(
-                    msg.on_demand_counter, 0,
-                    "incorrect value for on_demand_counter, expected 0, is {}",
-                    msg.on_demand_counter
                 );
                 assert_eq!(
                     msg.signature[0], 0,
@@ -604,13 +599,8 @@ fn test_auto_check_sbp_signing_msg_ed25519_signature() {
                     "incorrect value for signed_messages[24], expected 10616, is {}",
                     msg.signed_messages[24]
                 );
-                assert_eq!(
-                    msg.stream_counter, 1,
-                    "incorrect value for stream_counter, expected 1, is {}",
-                    msg.stream_counter
-                );
             }
-            _ => panic!("Invalid message type! Expected a MsgEd25519Signature"),
+            _ => panic!("Invalid message type! Expected a MsgEd25519SignatureDep"),
         };
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
@@ -626,9 +616,9 @@ fn test_auto_check_sbp_signing_msg_ed25519_signature() {
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_json2sbp_auto_check_sbp_signing_msg_ed25519_signature() {
+fn test_json2sbp_auto_check_sbp_signing_msg_ed25519_signature_dep() {
     {
-        let json_input = r#"{"preamble": 85, "msg_type": 3075, "sender": 66, "length": 186, "payload": "AQAAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT4/ZGVmZ2hpamtsbW5vcHFyc3R1dneIEwAAchQAAFwVAABGFgAAMBcAABoYAAAEGQAA7hkAANgaAADCGwAArBwAAJYdAACAHgAAah8AAFQgAAA+IQAAKCIAABIjAAD8IwAA5iQAANAlAAC6JgAApCcAAI4oAAB4KQAA", "crc": 37358, "stream_counter": 1, "on_demand_counter": 0, "signature": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63], "fingerprint": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119], "signed_messages": [5000, 5234, 5468, 5702, 5936, 6170, 6404, 6638, 6872, 7106, 7340, 7574, 7808, 8042, 8276, 8510, 8744, 8978, 9212, 9446, 9680, 9914, 10148, 10382, 10616]}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 3073, "sender": 66, "length": 184, "payload": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P2RlZmdoaWprbG1ub3BxcnN0dXZ3iBMAAHIUAABcFQAARhYAADAXAAAaGAAABBkAAO4ZAADYGgAAwhsAAKwcAACWHQAAgB4AAGofAABUIAAAPiEAACgiAAASIwAA/CMAAOYkAADQJQAAuiYAAKQnAACOKAAAeCkAAA==", "crc": 28585, "signature": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63], "fingerprint": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119], "signed_messages": [5000, 5234, 5468, 5702, 5936, 6170, 6404, 6638, 6872, 7106, 7340, 7574, 7808, 8042, 8276, 8510, 8744, 8978, 9212, 9446, 9680, 9914, 10148, 10382, 10616]}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -649,11 +639,11 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ed25519_signature() {
             from_fields
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgEd25519Signature(msg) => {
+            sbp::messages::Sbp::MsgEd25519SignatureDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xC03,
-                    "Incorrect message type, expected 0xC03, is {}",
+                    0xC01,
+                    "Incorrect message type, expected 0xC01, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -761,11 +751,6 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ed25519_signature() {
                     msg.fingerprint[19], 119,
                     "incorrect value for fingerprint[19], expected 119, is {}",
                     msg.fingerprint[19]
-                );
-                assert_eq!(
-                    msg.on_demand_counter, 0,
-                    "incorrect value for on_demand_counter, expected 0, is {}",
-                    msg.on_demand_counter
                 );
                 assert_eq!(
                     msg.signature[0], 0,
@@ -1212,13 +1197,8 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ed25519_signature() {
                     "incorrect value for signed_messages[24], expected 10616, is {}",
                     msg.signed_messages[24]
                 );
-                assert_eq!(
-                    msg.stream_counter, 1,
-                    "incorrect value for stream_counter, expected 1, is {}",
-                    msg.stream_counter
-                );
             }
-            _ => panic!("Invalid message type! Expected a MsgEd25519Signature"),
+            _ => panic!("Invalid message type! Expected a MsgEd25519SignatureDep"),
         };
     }
 }
@@ -1226,25 +1206,25 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ed25519_signature() {
 /// Tests [`sbp::json::JsonEncoder`] for roundtrip SBP message -> JSON
 ///
 /// Assumes:
-/// -   [`self::test_auto_check_sbp_signing_msg_ed25519_signature`] passes
+/// -   [`self::test_auto_check_sbp_signing_msg_ed25519_signature_dep`] passes
 ///
 /// Asserts:
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_sbp2json_auto_check_sbp_signing_msg_ed25519_signature() {
+fn test_sbp2json_auto_check_sbp_signing_msg_ed25519_signature_dep() {
     {
         let mut payload = Cursor::new(vec![
-            85, 3, 12, 66, 0, 186, 1, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-            17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
-            39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-            61, 62, 63, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114,
-            115, 116, 117, 118, 119, 136, 19, 0, 0, 114, 20, 0, 0, 92, 21, 0, 0, 70, 22, 0, 0, 48,
-            23, 0, 0, 26, 24, 0, 0, 4, 25, 0, 0, 238, 25, 0, 0, 216, 26, 0, 0, 194, 27, 0, 0, 172,
-            28, 0, 0, 150, 29, 0, 0, 128, 30, 0, 0, 106, 31, 0, 0, 84, 32, 0, 0, 62, 33, 0, 0, 40,
-            34, 0, 0, 18, 35, 0, 0, 252, 35, 0, 0, 230, 36, 0, 0, 208, 37, 0, 0, 186, 38, 0, 0,
-            164, 39, 0, 0, 142, 40, 0, 0, 120, 41, 0, 0, 238, 145,
+            85, 1, 12, 66, 0, 184, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+            18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+            40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
+            62, 63, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115,
+            116, 117, 118, 119, 136, 19, 0, 0, 114, 20, 0, 0, 92, 21, 0, 0, 70, 22, 0, 0, 48, 23,
+            0, 0, 26, 24, 0, 0, 4, 25, 0, 0, 238, 25, 0, 0, 216, 26, 0, 0, 194, 27, 0, 0, 172, 28,
+            0, 0, 150, 29, 0, 0, 128, 30, 0, 0, 106, 31, 0, 0, 84, 32, 0, 0, 62, 33, 0, 0, 40, 34,
+            0, 0, 18, 35, 0, 0, 252, 35, 0, 0, 230, 36, 0, 0, 208, 37, 0, 0, 186, 38, 0, 0, 164,
+            39, 0, 0, 142, 40, 0, 0, 120, 41, 0, 0, 169, 111,
         ]);
 
         // Construct sbp message
@@ -1262,7 +1242,7 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ed25519_signature() {
             .unwrap();
 
         // Reconstruct Sbp message from json fields, roundtrip
-        let sbp_msg = sbp::messages::Sbp::MsgEd25519Signature(
+        let sbp_msg = sbp::messages::Sbp::MsgEd25519SignatureDep(
             serde_json::from_str(
                 std::str::from_utf8(json_buffer.as_slice())
                     .unwrap()
@@ -1272,11 +1252,11 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ed25519_signature() {
             .unwrap(),
         );
         match &sbp_msg {
-            sbp::messages::Sbp::MsgEd25519Signature(msg) => {
+            sbp::messages::Sbp::MsgEd25519SignatureDep(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xC03,
-                    "Incorrect message type, expected 0xC03, is {}",
+                    0xC01,
+                    "Incorrect message type, expected 0xC01, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -1384,11 +1364,6 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ed25519_signature() {
                     msg.fingerprint[19], 119,
                     "incorrect value for fingerprint[19], expected 119, is {}",
                     msg.fingerprint[19]
-                );
-                assert_eq!(
-                    msg.on_demand_counter, 0,
-                    "incorrect value for on_demand_counter, expected 0, is {}",
-                    msg.on_demand_counter
                 );
                 assert_eq!(
                     msg.signature[0], 0,
@@ -1835,13 +1810,8 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ed25519_signature() {
                     "incorrect value for signed_messages[24], expected 10616, is {}",
                     msg.signed_messages[24]
                 );
-                assert_eq!(
-                    msg.stream_counter, 1,
-                    "incorrect value for stream_counter, expected 1, is {}",
-                    msg.stream_counter
-                );
             }
-            _ => panic!("Invalid message type! Expected a MsgEd25519Signature"),
+            _ => panic!("Invalid message type! Expected a MsgEd25519SignatureDep"),
         };
 
         // Check payload is still identical

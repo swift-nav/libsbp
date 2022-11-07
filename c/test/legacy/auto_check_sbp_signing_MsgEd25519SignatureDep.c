@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519Signature.yaml by
+// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519SignatureDep.yaml by
 // generate.py. Do not modify by hand!
 
 #include <check.h>
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
+START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519SignatureDep) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -116,26 +116,26 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
 
     logging_reset();
 
-    sbp_payload_callback_register(&sbp_state, 0xC03, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xC01, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_frame_callback_register(&sbp_state, 0xC03, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xC01, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85,  3,   12,  66,  0,   186, 1,   0,   0,   1,   2,   3,   4,   5,
-        6,   7,   8,   9,   10,  11,  12,  13,  14,  15,  16,  17,  18,  19,
-        20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,  32,  33,
-        34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
-        48,  49,  50,  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,
-        62,  63,  100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
-        112, 113, 114, 115, 116, 117, 118, 119, 136, 19,  0,   0,   114, 20,
-        0,   0,   92,  21,  0,   0,   70,  22,  0,   0,   48,  23,  0,   0,
-        26,  24,  0,   0,   4,   25,  0,   0,   238, 25,  0,   0,   216, 26,
-        0,   0,   194, 27,  0,   0,   172, 28,  0,   0,   150, 29,  0,   0,
-        128, 30,  0,   0,   106, 31,  0,   0,   84,  32,  0,   0,   62,  33,
-        0,   0,   40,  34,  0,   0,   18,  35,  0,   0,   252, 35,  0,   0,
-        230, 36,  0,   0,   208, 37,  0,   0,   186, 38,  0,   0,   164, 39,
-        0,   0,   142, 40,  0,   0,   120, 41,  0,   0,   238, 145,
+        85,  1,   12,  66,  0,   184, 0,   1,   2,   3,   4,   5,   6,   7,
+        8,   9,   10,  11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,
+        22,  23,  24,  25,  26,  27,  28,  29,  30,  31,  32,  33,  34,  35,
+        36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,  48,  49,
+        50,  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,
+        100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
+        114, 115, 116, 117, 118, 119, 136, 19,  0,   0,   114, 20,  0,   0,
+        92,  21,  0,   0,   70,  22,  0,   0,   48,  23,  0,   0,   26,  24,
+        0,   0,   4,   25,  0,   0,   238, 25,  0,   0,   216, 26,  0,   0,
+        194, 27,  0,   0,   172, 28,  0,   0,   150, 29,  0,   0,   128, 30,
+        0,   0,   106, 31,  0,   0,   84,  32,  0,   0,   62,  33,  0,   0,
+        40,  34,  0,   0,   18,  35,  0,   0,   252, 35,  0,   0,   230, 36,
+        0,   0,   208, 37,  0,   0,   186, 38,  0,   0,   164, 39,  0,   0,
+        142, 40,  0,   0,   120, 41,  0,   0,   169, 111,
     };
 
     dummy_reset();
@@ -143,8 +143,8 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_ed25519_signature_t *test_msg =
-        (msg_ed25519_signature_t *)test_msg_storage;
+    msg_ed25519_signature_dep_t *test_msg =
+        (msg_ed25519_signature_dep_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     if (sizeof(test_msg->fingerprint) == 0) {
       // Cope with variable length arrays
@@ -246,7 +246,6 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
       test_msg_len += sizeof(test_msg->fingerprint[0]);
     }
     test_msg->fingerprint[19] = 119;
-    test_msg->on_demand_counter = 0;
     if (sizeof(test_msg->signature) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->signature[0]);
@@ -692,8 +691,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
       test_msg_len += sizeof(test_msg->signed_messages[0]);
     }
     test_msg->signed_messages[24] = 10616;
-    test_msg->stream_counter = 1;
-    sbp_payload_send(&sbp_state, 0xC03, 66, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xC01, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -727,7 +725,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
                   "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 66,
                   "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xC03,
+    ck_assert_msg(last_frame.msg_type == 0xC01,
                   "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
                   "frame_callback: msg_len decoded incorrectly");
@@ -744,8 +742,8 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_ed25519_signature_t *check_msg =
-        (msg_ed25519_signature_t *)((void *)last_msg.msg);
+    msg_ed25519_signature_dep_t *check_msg =
+        (msg_ed25519_signature_dep_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->fingerprint[0] == 100,
@@ -808,9 +806,6 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
     ck_assert_msg(check_msg->fingerprint[19] == 119,
                   "incorrect value for fingerprint[19], expected 119, is %d",
                   check_msg->fingerprint[19]);
-    ck_assert_msg(check_msg->on_demand_counter == 0,
-                  "incorrect value for on_demand_counter, expected 0, is %d",
-                  check_msg->on_demand_counter);
     ck_assert_msg(check_msg->signature[0] == 0,
                   "incorrect value for signature[0], expected 0, is %d",
                   check_msg->signature[0]);
@@ -1103,21 +1098,18 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEd25519Signature) {
         check_msg->signed_messages[24] == 10616,
         "incorrect value for signed_messages[24], expected 10616, is %d",
         check_msg->signed_messages[24]);
-    ck_assert_msg(check_msg->stream_counter == 1,
-                  "incorrect value for stream_counter, expected 1, is %d",
-                  check_msg->stream_counter);
   }
 }
 END_TEST
 
-Suite *legacy_auto_check_sbp_signing_MsgEd25519Signature_suite(void) {
+Suite *legacy_auto_check_sbp_signing_MsgEd25519SignatureDep_suite(void) {
   Suite *s = suite_create(
       "SBP generated test suite: "
-      "legacy_auto_check_sbp_signing_MsgEd25519Signature");
+      "legacy_auto_check_sbp_signing_MsgEd25519SignatureDep");
   TCase *tc_acq = tcase_create(
-      "Automated_Suite_legacy_auto_check_sbp_signing_MsgEd25519Signature");
+      "Automated_Suite_legacy_auto_check_sbp_signing_MsgEd25519SignatureDep");
   tcase_add_test(tc_acq,
-                 test_legacy_auto_check_sbp_signing_MsgEd25519Signature);
+                 test_legacy_auto_check_sbp_signing_MsgEd25519SignatureDep);
   suite_add_tcase(s, tc_acq);
   return s;
 }

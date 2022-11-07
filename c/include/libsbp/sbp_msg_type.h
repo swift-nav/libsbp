@@ -90,6 +90,7 @@ typedef enum {
   SbpMsgDopsDepA = SBP_MSG_DOPS_DEP_A,
   SbpMsgDops = SBP_MSG_DOPS,
   SbpMsgEd25519Certificate = SBP_MSG_ED25519_CERTIFICATE,
+  SbpMsgEd25519SignatureDep = SBP_MSG_ED25519_SIGNATURE_DEP,
   SbpMsgEd25519Signature = SBP_MSG_ED25519_SIGNATURE,
   SbpMsgEphemerisBds = SBP_MSG_EPHEMERIS_BDS,
   SbpMsgEphemerisDepA = SBP_MSG_EPHEMERIS_DEP_A,

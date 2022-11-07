@@ -19,5 +19,6 @@
 #define LIBSBP_V4_SIGNING_MESSAGES_H
 #include <libsbp/v4/signing/MSG_ED25519_CERTIFICATE.h>
 #include <libsbp/v4/signing/MSG_ED25519_SIGNATURE.h>
+#include <libsbp/v4/signing/MSG_ED25519_SIGNATURE_DEP.h>
 
 #endif /* LIBSBP_V4_SIGNING_MESSAGES_H */

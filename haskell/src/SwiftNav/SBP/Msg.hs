@@ -96,6 +96,7 @@ data SBPMsg =
    | SBPMsgDopsDepA MsgDopsDepA Msg
    | SBPMsgEd25519Certificate MsgEd25519Certificate Msg
    | SBPMsgEd25519Signature MsgEd25519Signature Msg
+   | SBPMsgEd25519SignatureDep MsgEd25519SignatureDep Msg
    | SBPMsgEphemerisBds MsgEphemerisBds Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
@@ -330,6 +331,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519Certificate = SBPMsgEd25519Certificate (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519Signature = SBPMsgEd25519Signature (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEd25519SignatureDep = SBPMsgEd25519SignatureDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisBds = SBPMsgEphemerisBds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -556,6 +558,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgDopsDepA _ m) = put m
       encoder (SBPMsgEd25519Certificate _ m) = put m
       encoder (SBPMsgEd25519Signature _ m) = put m
+      encoder (SBPMsgEd25519SignatureDep _ m) = put m
       encoder (SBPMsgEphemerisBds _ m) = put m
       encoder (SBPMsgEphemerisDepA _ m) = put m
       encoder (SBPMsgEphemerisDepB _ m) = put m
@@ -786,6 +789,7 @@ instance FromJSON SBPMsg where
         | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519Certificate = SBPMsgEd25519Certificate <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519Signature = SBPMsgEd25519Signature <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEd25519SignatureDep = SBPMsgEd25519SignatureDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisBds = SBPMsgEphemerisBds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1017,6 +1021,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519Certificate n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519Signature n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEd25519SignatureDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisBds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n <<>> toJSON m
@@ -1242,6 +1247,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
   msg f (SBPMsgEd25519Certificate n m) = SBPMsgEd25519Certificate n <$> f m
   msg f (SBPMsgEd25519Signature n m) = SBPMsgEd25519Signature n <$> f m
+  msg f (SBPMsgEd25519SignatureDep n m) = SBPMsgEd25519SignatureDep n <$> f m
   msg f (SBPMsgEphemerisBds n m) = SBPMsgEphemerisBds n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m

@@ -11,17 +11,17 @@
 package com.swiftnav.sbp.test;
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519Signature.yaml by generate.py. Do not modify
-// by hand!
+// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEd25519SignatureDep.yaml by generate.py. Do not
+// modify by hand!
 
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.signing.MsgEd25519Signature;
+import com.swiftnav.sbp.signing.MsgEd25519SignatureDep;
 import java.math.BigInteger;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class auto_check_sbp_signing_MsgEd25519SignatureTest {
+public class auto_check_sbp_signing_MsgEd25519SignatureDepTest {
 
     public static boolean debug = false;
     private static final double DELTA = 1e-15;
@@ -29,11 +29,9 @@ public class auto_check_sbp_signing_MsgEd25519SignatureTest {
     @Test
     public void test1() throws Throwable {
         if (debug)
-            System.out.format("%n%s%n", "auto_check_sbp_signing_MsgEd25519SignatureTest.test1");
+            System.out.format("%n%s%n", "auto_check_sbp_signing_MsgEd25519SignatureDepTest.test1");
         byte[] payload =
                 new byte[] {
-                    (byte) 1,
-                    (byte) 0,
                     (byte) 0,
                     (byte) 1,
                     (byte) 2,
@@ -219,8 +217,8 @@ public class auto_check_sbp_signing_MsgEd25519SignatureTest {
                     (byte) 0,
                     (byte) 0,
                 };
-        SBPMessage sbp = new SBPMessage(0x42, 0xC03, payload);
-        MsgEd25519Signature msg = new MsgEd25519Signature(sbp);
+        SBPMessage sbp = new SBPMessage(0x42, 0xC01, payload);
+        MsgEd25519SignatureDep msg = new MsgEd25519SignatureDep(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
@@ -422,16 +420,6 @@ public class auto_check_sbp_signing_MsgEd25519SignatureTest {
         } else {
             value = value.longValue();
             expected = 119L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.on_demand_counter;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.on_demand_counter + "' != '" + 0 + "'",
-                    value.equals(BigInteger.valueOf(0L)));
-        } else {
-            value = value.longValue();
-            expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.signature[0];
@@ -1322,16 +1310,6 @@ public class auto_check_sbp_signing_MsgEd25519SignatureTest {
         } else {
             value = value.longValue();
             expected = 10616L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.stream_counter;
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.stream_counter + "' != '" + 1 + "'",
-                    value.equals(BigInteger.valueOf(1L)));
-        } else {
-            value = value.longValue();
-            expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
     }
