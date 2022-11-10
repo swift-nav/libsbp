@@ -7,6 +7,3 @@
 [submodule "c/third_party/googletest"]
 	path = c/third_party/googletest
 	url = https://github.com/google/googletest.git
-[submodule "bazel"]
-	path = bazel
-	url = https://github.com/swift-nav/swiftnav-bazel.git
