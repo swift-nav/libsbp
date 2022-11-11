@@ -1,4 +1,4 @@
-load("//bazel:swift_cc_defs.bzl", "UNIT", "swift_cc_library", "swift_cc_test")
+load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_cc_library", "swift_cc_test")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
@@ -75,7 +75,7 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@my-check//:check",
+        "@check//:check",
     ],
 )
 
@@ -94,7 +94,7 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@my-check//:check",
+        "@check//:check",
     ],
 )
 
@@ -106,7 +106,7 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@my-googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -124,7 +124,7 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@my-googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -141,6 +141,6 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@my-googletest//:gtest_main",
+        "@googletest//:gtest_main",
     ],
 )
