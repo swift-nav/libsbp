@@ -55,6 +55,7 @@ Suite* auto_check_sbp_navigation_MsgPosLLHCov_suite(void);
 Suite* auto_check_sbp_navigation_MsgPosLLHDepA_suite(void);
 Suite* auto_check_sbp_navigation_MsgPosLlhCovGnss_suite(void);
 Suite* auto_check_sbp_navigation_MsgPosLlhGnss_suite(void);
+Suite* auto_check_sbp_navigation_MsgPoseRelative_suite(void);
 Suite* auto_check_sbp_navigation_MsgProtectionLevel_suite(void);
 Suite* auto_check_sbp_navigation_MsgReferenceFrameParam_suite(void);
 Suite* auto_check_sbp_navigation_MsgUTCLeapSecond_suite(void);

@@ -85,6 +85,8 @@ int main(void) {
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_navigation_MsgPosLlhCovGnss_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_navigation_MsgPosLlhGnss_suite());
+  srunner_add_suite(sr,
+                    legacy_auto_check_sbp_navigation_MsgPoseRelative_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_navigation_MsgProtectionLevel_suite());
   srunner_add_suite(
