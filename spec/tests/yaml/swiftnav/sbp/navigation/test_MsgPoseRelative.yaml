@@ -1,0 +1,47 @@
+description: Unit tests for swiftnav.sbp.navigation MsgPoseRelative
+generated_on: '2022-11-16 08:58:47.874300'
+package: sbp.navigation
+tests:
+- msg:
+    fields:
+      cov_c_x_x: 2.0
+      cov_c_x_y: 0.0
+      cov_c_x_z: 0.0
+      cov_c_y_y: 2.0
+      cov_c_y_z: 0.0
+      cov_c_z_z: 2.0
+      cov_r_x_x: 1.0
+      cov_r_x_y: 0.0
+      cov_r_x_z: 0.0
+      cov_r_y_y: 1.0
+      cov_r_y_z: 0.0
+      cov_r_z_z: 1.0
+      flags: 5
+      timestamp_1: 1110
+      timestamp_2: 2220
+      trans:
+      - 1100
+      - 550
+      - 100
+      w: -859307164
+      x: -6444804
+      y: -1866844813
+      z: 622997694
+    module: sbp.navigation
+    name: MsgPoseRelative
+  msg_type: '0x245'
+  raw_json: '{"preamble": 85, "msg_type": 581, "sender": 66, "length": 85, "payload":
+    "VgQAAKwIAABMBAAAJgIAAGQAAABkA8jM/Kid/3M1upC+MCIlAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AAAAQAAAAAAAAAAAAAAAQAAAAAAAAABABQ==",
+    "crc": 22597, "timestamp_1": 1110, "timestamp_2": 2220, "trans": [1100, 550, 100],
+    "w": -859307164, "x": -6444804, "y": -1866844813, "z": 622997694, "cov_r_x_x":
+    1.0, "cov_r_x_y": 0.0, "cov_r_x_z": 0.0, "cov_r_y_y": 1.0, "cov_r_y_z": 0.0, "cov_r_z_z":
+    1.0, "cov_c_x_x": 2.0, "cov_c_x_y": 0.0, "cov_c_x_z": 0.0, "cov_c_y_y": 2.0, "cov_c_y_z":
+    0.0, "cov_c_z_z": 2.0, "flags": 5}'
+  raw_packet: VUUCQgBVVgQAAKwIAABMBAAAJgIAAGQAAABkA8jM/Kid/3M1upC+MCIlAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AAAAQAAAAAAAAAAAAAAAQAAAAAAAAABABUVY
+  sbp:
+    crc: '0x5845'
+    length: 85
+    msg_type: '0x245'
+    payload: VgQAAKwIAABMBAAAJgIAAGQAAABkA8jM/Kid/3M1upC+MCIlAACAPwAAAAAAAAAAAACAPwAAAAAAAIA/AAAAQAAAAAAAAAAAAAAAQAAAAAAAAABABQ==
+    preamble: '0x55'
+    sender: '0x42'
