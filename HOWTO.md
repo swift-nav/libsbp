@@ -155,13 +155,11 @@ Some thoughts to consider when adding a new message:
 It's highly recommended to use the docker container to run the release process,
 the docker container can be pulled from DockerHub and launched via this command:
 
-    docker run -e SBP_TOX_PARALLEL=auto -v $PWD:/mnt/workspace \
-      -i -t swiftnav/libsbp-build:2022-06-14
+    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14
 
 You can invoke individual stages like so:
 
-    docker run -e SBP_TOX_PARALLEL=auto -v $PWD:/mnt/workspace \
-      -i -t swiftnav/libsbp-build:2022-06-14 \
+    docker run -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2022-06-14 \
       /bin/bash -c "make python"
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
