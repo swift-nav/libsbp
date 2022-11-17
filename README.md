@@ -196,7 +196,7 @@ python setup.py
 
 Run the following command:
 ```sh
-pip install git+https://github.com/swift-nav/libsbp@<GIT_REVISION>#egg=sbp&subdirectory=python
+pip install "git+https://github.com/swift-nav/libsbp@<GIT_REVISION>#egg=sbp&subdirectory=python"
 ```
 
 Or add this to `requirements.txt`:
