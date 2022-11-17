@@ -43,10 +43,9 @@ extern "C" {
  * This solution message reports the relative pose of a sensor between two time
  * instances. The relative pose comprises of a rotation and a translation which
  * relates the sensor (e.g. camera) frame at a given time (first keyframe) to
- * the sensor frame at another time (second key frame). The relative
- * translations is a 3x1 vector described in the first keyframe.  Relative
- * rotation is described by a quaternion from second keyframe to the first
- * keyframe.
+ * the sensor frame at another time (second keyframe). The relative translations
+ * is a 3x1 vector described in the first keyframe.  Relative rotation is
+ * described by a quaternion from second keyframe to the first keyframe.
  */
 typedef struct {
   /**
