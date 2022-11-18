@@ -90,6 +90,7 @@ import com.swiftnav.sbp.navigation.MsgPosLLHCov;
 import com.swiftnav.sbp.navigation.MsgPosLLHCovGnss;
 import com.swiftnav.sbp.navigation.MsgPosLLHDepA;
 import com.swiftnav.sbp.navigation.MsgPosLLHGnss;
+import com.swiftnav.sbp.navigation.MsgPoseRelative;
 import com.swiftnav.sbp.navigation.MsgProtectionLevel;
 import com.swiftnav.sbp.navigation.MsgProtectionLevelDepA;
 import com.swiftnav.sbp.navigation.MsgReferenceFrameParam;
@@ -429,6 +430,8 @@ final class MessageTable {
                 return new MsgUtcLeapSecond(msg);
             case MsgReferenceFrameParam.TYPE:
                 return new MsgReferenceFrameParam(msg);
+            case MsgPoseRelative.TYPE:
+                return new MsgPoseRelative(msg);
             case MsgNdbEvent.TYPE:
                 return new MsgNdbEvent(msg);
             case MsgObs.TYPE:

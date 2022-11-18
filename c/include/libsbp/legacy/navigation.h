@@ -969,6 +969,47 @@ typedef struct SBP_ATTR_PACKED {
   s16 dot_scale; /**< Rate of change of scale correction. [0.0000002 ppm/yr] */
 } msg_reference_frame_param_t;
 
+/** Relative Pose
+ *
+ * This solution message reports the relative pose of a sensor between two
+ * time instances. The relative pose comprises of a rotation and a translation
+ * which relates the sensor (e.g. camera) frame at a given time (first
+ * keyframe) to the sensor frame at another time (second keyframe). The
+ * relative translations is a 3x1 vector described in the first keyframe.
+ * Relative rotation is described by a quaternion from second keyframe to the
+ * first keyframe.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;         /**< GPS Time of Week [ms] */
+  u8 sensor_id;    /**< ID of the sensor producing this message */
+  u32 timestamp_1; /**< Timestamp of first keyframe [ms] */
+  u32 timestamp_2; /**< Timestamp of second keyframe [ms] */
+  s32 trans[3];    /**< Relative translation [x,y,z] described in first
+                        keyframe [mm] */
+  s32 w;           /**< Real component of quaternion to describe relative
+                        rotation (second to first keyframe) [2^-31] */
+  s32 x;           /**< 1st imaginary component of quaternion to describe
+                        relative rotation (second to first keyframe) [2^-31] */
+  s32 y;           /**< 2nd imaginary component of quaternion to describe
+                        relative rotation (second to first keyframe) [2^-31] */
+  s32 z;           /**< 3rd imaginary component of quaternion to describe
+                        relative rotation (second to first keyframe) [2^-31] */
+  float cov_r_x_x; /**< Estimated variance of x (relative translation) [m^2] */
+  float cov_r_x_y; /**< Covariance of x and y (relative translation) [m^2] */
+  float cov_r_x_z; /**< Covariance of x and z (relative translation) [m^2] */
+  float cov_r_y_y; /**< Estimated variance of y (relative translation) [m^2] */
+  float cov_r_y_z; /**< Covariance of y and z (relative translation) [m^2] */
+  float cov_r_z_z; /**< Estimated variance of z (relative translation) [m^2] */
+  float cov_c_x_x; /**< Estimated variance of x (relative rotation) [rad^2] */
+  float cov_c_x_y; /**< Covariance of x and y (relative rotation) [rad^2] */
+  float cov_c_x_z; /**< Covariance of x and z (relative rotation) [rad^2] */
+  float cov_c_y_y; /**< Estimated variance of y (relative rotation) [rad^2] */
+  float cov_c_y_z; /**< Covariance of y and z (relative rotation) [rad^2] */
+  float cov_c_z_z; /**< Estimated variance of z (relative rotation) [rad^2] */
+  u8 flags;        /**< Status flags of relative translation and rotation */
+} msg_pose_relative_t;
+
 /** \} */
 
 SBP_PACK_END

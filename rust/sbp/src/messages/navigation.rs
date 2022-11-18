@@ -59,6 +59,7 @@ pub use msg_pos_llh_cov::MsgPosLlhCov;
 pub use msg_pos_llh_cov_gnss::MsgPosLlhCovGnss;
 pub use msg_pos_llh_dep_a::MsgPosLlhDepA;
 pub use msg_pos_llh_gnss::MsgPosLlhGnss;
+pub use msg_pose_relative::MsgPoseRelative;
 pub use msg_protection_level::MsgProtectionLevel;
 pub use msg_protection_level_dep_a::MsgProtectionLevelDepA;
 pub use msg_reference_frame_param::MsgReferenceFrameParam;
@@ -2133,6 +2134,388 @@ pub mod msg_gps_time_gnss {
                 0 => Ok(TimeSource::None),
                 1 => Ok(TimeSource::GnssSolution),
                 2 => Ok(TimeSource::Propagated),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_pose_relative {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Relative Pose
+    ///
+    /// This solution message reports the relative pose of a sensor between two
+    /// time instances. The relative pose comprises of a rotation and a
+    /// translation which relates the sensor (e.g. camera) frame at a given time
+    /// (first keyframe) to the sensor frame at another time (second keyframe).
+    /// The relative translations is a 3x1 vector described in the first keyframe.
+    /// Relative rotation is described by a quaternion from second keyframe to the
+    /// first keyframe.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgPoseRelative {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// GPS Time of Week
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
+        pub tow: u32,
+        /// ID of the sensor producing this message
+        #[cfg_attr(feature = "serde", serde(rename = "sensor_id"))]
+        pub sensor_id: u8,
+        /// Timestamp of first keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp_1"))]
+        pub timestamp_1: u32,
+        /// Timestamp of second keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp_2"))]
+        pub timestamp_2: u32,
+        /// Relative translation \[x,y,z\] described in first keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "trans"))]
+        pub trans: [i32; 3],
+        /// Real component of quaternion to describe relative rotation (second to
+        /// first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
+        pub w: i32,
+        /// 1st imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
+        pub x: i32,
+        /// 2nd imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
+        pub y: i32,
+        /// 3rd imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
+        pub z: i32,
+        /// Estimated variance of x (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_x"))]
+        pub cov_r_x_x: f32,
+        /// Covariance of x and y (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_y"))]
+        pub cov_r_x_y: f32,
+        /// Covariance of x and z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_z"))]
+        pub cov_r_x_z: f32,
+        /// Estimated variance of y (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_y_y"))]
+        pub cov_r_y_y: f32,
+        /// Covariance of y and z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_y_z"))]
+        pub cov_r_y_z: f32,
+        /// Estimated variance of z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_z_z"))]
+        pub cov_r_z_z: f32,
+        /// Estimated variance of x (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_x"))]
+        pub cov_c_x_x: f32,
+        /// Covariance of x and y (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_y"))]
+        pub cov_c_x_y: f32,
+        /// Covariance of x and z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_z"))]
+        pub cov_c_x_z: f32,
+        /// Estimated variance of y (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_y_y"))]
+        pub cov_c_y_y: f32,
+        /// Covariance of y and z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_y_z"))]
+        pub cov_c_y_z: f32,
+        /// Estimated variance of z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_z_z"))]
+        pub cov_c_z_z: f32,
+        /// Status flags of relative translation and rotation
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u8,
+    }
+
+    impl MsgPoseRelative {
+        /// Gets the [TimeSource][self::TimeSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeSource` were added.
+        pub fn time_source(&self) -> Result<TimeSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 4).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [TimeSource][TimeSource] of the `flags` bitfield.
+        pub fn set_time_source(&mut self, time_source: TimeSource) {
+            set_bit_range!(&mut self.flags, time_source, u8, u8, 5, 4);
+        }
+
+        /// Gets the [RelativeTranslationStatus][self::RelativeTranslationStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RelativeTranslationStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RelativeTranslationStatus` were added.
+        pub fn relative_translation_status(&self) -> Result<RelativeTranslationStatus, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [RelativeTranslationStatus][RelativeTranslationStatus] of the `flags` bitfield.
+        pub fn set_relative_translation_status(
+            &mut self,
+            relative_translation_status: RelativeTranslationStatus,
+        ) {
+            set_bit_range!(&mut self.flags, relative_translation_status, u8, u8, 3, 2);
+        }
+
+        /// Gets the [RelativeRotationStatus][self::RelativeRotationStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RelativeRotationStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RelativeRotationStatus` were added.
+        pub fn relative_rotation_status(&self) -> Result<RelativeRotationStatus, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [RelativeRotationStatus][RelativeRotationStatus] of the `flags` bitfield.
+        pub fn set_relative_rotation_status(
+            &mut self,
+            relative_rotation_status: RelativeRotationStatus,
+        ) {
+            set_bit_range!(&mut self.flags, relative_rotation_status, u8, u8, 1, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgPoseRelative {
+        const MESSAGE_TYPE: u16 = 581;
+        const MESSAGE_NAME: &'static str = "MSG_POSE_RELATIVE";
+    }
+
+    impl SbpMessage for MsgPoseRelative {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        #[cfg(feature = "swiftnav")]
+        fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            let tow_s = (self.tow as f64) / 1000.0;
+            let gps_time = match time::GpsTime::new(0, tow_s) {
+                Ok(gps_time) => gps_time.tow(),
+                Err(e) => return Some(Err(e.into())),
+            };
+            Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgPoseRelative {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgPoseRelative(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgPoseRelative {
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <[i32; 3] as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.tow)
+                + WireFormat::len(&self.sensor_id)
+                + WireFormat::len(&self.timestamp_1)
+                + WireFormat::len(&self.timestamp_2)
+                + WireFormat::len(&self.trans)
+                + WireFormat::len(&self.w)
+                + WireFormat::len(&self.x)
+                + WireFormat::len(&self.y)
+                + WireFormat::len(&self.z)
+                + WireFormat::len(&self.cov_r_x_x)
+                + WireFormat::len(&self.cov_r_x_y)
+                + WireFormat::len(&self.cov_r_x_z)
+                + WireFormat::len(&self.cov_r_y_y)
+                + WireFormat::len(&self.cov_r_y_z)
+                + WireFormat::len(&self.cov_r_z_z)
+                + WireFormat::len(&self.cov_c_x_x)
+                + WireFormat::len(&self.cov_c_x_y)
+                + WireFormat::len(&self.cov_c_x_z)
+                + WireFormat::len(&self.cov_c_y_y)
+                + WireFormat::len(&self.cov_c_y_z)
+                + WireFormat::len(&self.cov_c_z_z)
+                + WireFormat::len(&self.flags)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.tow, buf);
+            WireFormat::write(&self.sensor_id, buf);
+            WireFormat::write(&self.timestamp_1, buf);
+            WireFormat::write(&self.timestamp_2, buf);
+            WireFormat::write(&self.trans, buf);
+            WireFormat::write(&self.w, buf);
+            WireFormat::write(&self.x, buf);
+            WireFormat::write(&self.y, buf);
+            WireFormat::write(&self.z, buf);
+            WireFormat::write(&self.cov_r_x_x, buf);
+            WireFormat::write(&self.cov_r_x_y, buf);
+            WireFormat::write(&self.cov_r_x_z, buf);
+            WireFormat::write(&self.cov_r_y_y, buf);
+            WireFormat::write(&self.cov_r_y_z, buf);
+            WireFormat::write(&self.cov_r_z_z, buf);
+            WireFormat::write(&self.cov_c_x_x, buf);
+            WireFormat::write(&self.cov_c_x_y, buf);
+            WireFormat::write(&self.cov_c_x_z, buf);
+            WireFormat::write(&self.cov_c_y_y, buf);
+            WireFormat::write(&self.cov_c_y_z, buf);
+            WireFormat::write(&self.cov_c_z_z, buf);
+            WireFormat::write(&self.flags, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgPoseRelative {
+                sender_id: None,
+                tow: WireFormat::parse_unchecked(buf),
+                sensor_id: WireFormat::parse_unchecked(buf),
+                timestamp_1: WireFormat::parse_unchecked(buf),
+                timestamp_2: WireFormat::parse_unchecked(buf),
+                trans: WireFormat::parse_unchecked(buf),
+                w: WireFormat::parse_unchecked(buf),
+                x: WireFormat::parse_unchecked(buf),
+                y: WireFormat::parse_unchecked(buf),
+                z: WireFormat::parse_unchecked(buf),
+                cov_r_x_x: WireFormat::parse_unchecked(buf),
+                cov_r_x_y: WireFormat::parse_unchecked(buf),
+                cov_r_x_z: WireFormat::parse_unchecked(buf),
+                cov_r_y_y: WireFormat::parse_unchecked(buf),
+                cov_r_y_z: WireFormat::parse_unchecked(buf),
+                cov_r_z_z: WireFormat::parse_unchecked(buf),
+                cov_c_x_x: WireFormat::parse_unchecked(buf),
+                cov_c_x_y: WireFormat::parse_unchecked(buf),
+                cov_c_x_z: WireFormat::parse_unchecked(buf),
+                cov_c_y_y: WireFormat::parse_unchecked(buf),
+                cov_c_y_z: WireFormat::parse_unchecked(buf),
+                cov_c_z_z: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Time source
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum TimeSource {
+        /// None (invalid)
+        None = 0,
+
+        /// GNSS Solution (ms in week)
+        GnssSolution = 1,
+
+        /// Local CPU Time (ms)
+        LocalCpuTime = 2,
+    }
+
+    impl std::fmt::Display for TimeSource {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                TimeSource::None => f.write_str("None (invalid)"),
+                TimeSource::GnssSolution => f.write_str("GNSS Solution (ms in week)"),
+                TimeSource::LocalCpuTime => f.write_str("Local CPU Time (ms)"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimeSource {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(TimeSource::None),
+                1 => Ok(TimeSource::GnssSolution),
+                2 => Ok(TimeSource::LocalCpuTime),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Relative translation status
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum RelativeTranslationStatus {
+        /// Invalid
+        Invalid = 0,
+
+        /// Valid
+        Valid = 1,
+    }
+
+    impl std::fmt::Display for RelativeTranslationStatus {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                RelativeTranslationStatus::Invalid => f.write_str("Invalid"),
+                RelativeTranslationStatus::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for RelativeTranslationStatus {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(RelativeTranslationStatus::Invalid),
+                1 => Ok(RelativeTranslationStatus::Valid),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Relative rotation status
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum RelativeRotationStatus {
+        /// Invalid
+        Invalid = 0,
+
+        /// Valid
+        Valid = 1,
+    }
+
+    impl std::fmt::Display for RelativeRotationStatus {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                RelativeRotationStatus::Invalid => f.write_str("Invalid"),
+                RelativeRotationStatus::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for RelativeRotationStatus {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(RelativeRotationStatus::Invalid),
+                1 => Ok(RelativeRotationStatus::Valid),
                 i => Err(i),
             }
         }
