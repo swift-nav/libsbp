@@ -99,12 +99,9 @@ where
     I: Iterator<Item = std::result::Result<M, E>> + 'a,
     E: std::error::Error + 'a,
 {
-    let log_err = move |e| {
-        if fatal_errors {
-            panic!("{:?}", e)
-        } else {
-            eprintln!("{e:?}")
-        }
-    };
-    Box::new(messages.filter_map(move |m| m.map_err(log_err).ok()))
+    if fatal_errors {
+        Box::new(messages.take_while(|m| m.is_ok()).map(|m| m.unwrap()))
+    } else {
+        Box::new(messages.filter_map(|m| m.map_err(|e| eprintln!("{e:?}")).ok()))
+    }
 }
