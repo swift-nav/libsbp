@@ -234,6 +234,7 @@ fn get_common_fields<'a, M: SbpMessage>(
     Ok(CommonJson {
         preamble: PREAMBLE,
         sender: msg.sender_id().unwrap_or(0),
+        msg_name: msg.message_name(),
         msg_type: msg.message_type(),
         length: size as u8,
         payload: payload_buf,
