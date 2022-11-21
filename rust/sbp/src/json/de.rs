@@ -77,7 +77,7 @@ impl Decoder for JsonDecoder {
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         let ret = decode_one::<JsonInput>(src);
-        if ret.is_err(){
+        if ret.is_err() {
             return Ok(None);
         }
         let value = match ret? {
