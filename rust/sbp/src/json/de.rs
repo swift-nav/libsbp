@@ -10,7 +10,6 @@ use crate::{
     messages::Sbp,
     BUFLEN,
 };
-use crate::messages::logging::MsgLog;
 
 /// Deserialize the IO stream into an iterator of messages.
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, JsonError>> {
@@ -77,7 +76,7 @@ impl Decoder for JsonDecoder {
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         let ret = decode_one::<JsonInput>(src);
-        if ret.is_err(){
+        if ret.is_err() {
             return Ok(None);
         }
         let value = match ret? {
