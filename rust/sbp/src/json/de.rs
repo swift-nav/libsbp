@@ -76,9 +76,6 @@ impl Decoder for JsonDecoder {
 
     fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>, Self::Error> {
         let ret = decode_one::<JsonInput>(src);
-        if ret.is_err() {
-            return Ok(None);
-        }
         let value = match ret? {
             Some(v) => v,
             None => return Ok(None),
@@ -115,7 +112,20 @@ where
     buf.advance(bytes_read);
     match value.transpose() {
         Ok(v) => Ok(v),
-        Err(e) if e.is_eof() => Ok(None),
-        Err(e) => Err(e), // returns error, on json errors
+        // For semantic errors, we need to dump the invalid JSON object
+        Err(e) if e.is_data() => {
+            let mut de = Deserializer::from_slice(buf).into_iter::<serde_json::Value>();
+            let _ = de.next();
+            let bytes_read = de.byte_offset();
+            buf.advance(bytes_read);
+            Err(e)
+        }
+        // For syntax (and EOF errors) we dump the whole buffer so the stream
+        // will terminate.
+        Err(e) if e.is_syntax() || e.is_eof() => {
+            buf.advance(buf.len());
+            Err(e)
+        }
+        Err(e) => Err(e),
     }
 }
