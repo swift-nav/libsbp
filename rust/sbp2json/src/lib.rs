@@ -102,13 +102,7 @@ where
     if fatal_errors {
         Box::new(
             messages
-                .take_while(|m| match &m {
-                    Ok(_) => true,
-                    Err(e) => {
-                        eprintln!("{e:?}");
-                        false
-                    }
-                })
+                .take_while(|m| m.as_ref().map_err(|e| eprintln!("{e:?}")).is_ok())
                 .map(|m| m.unwrap()),
         )
     } else {
