@@ -25,6 +25,7 @@ pub mod msg_ed25519_certificate {
     use crate::messages::lib::*;
     /// ED25519 certificate, split over multiple messages
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEd25519Certificate {
         /// The message sender_id
@@ -109,6 +110,7 @@ pub mod msg_ed25519_signature {
     use crate::messages::lib::*;
     /// ED25519 signature for groups of RTCM messages
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEd25519Signature {
         /// The message sender_id
@@ -212,6 +214,7 @@ pub mod msg_ed25519_signature_dep {
     use crate::messages::lib::*;
     /// Deprecated
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEd25519SignatureDep {
         /// The message sender_id

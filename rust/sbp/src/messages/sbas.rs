@@ -28,6 +28,7 @@ pub mod msg_sbas_raw {
     /// parity of the data block and sends only blocks that pass the check.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSbasRaw {
         /// The message sender_id

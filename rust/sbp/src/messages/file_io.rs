@@ -44,6 +44,7 @@ pub mod msg_fileio_config_req {
     /// operations.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioConfigReq {
         /// The message sender_id
@@ -119,6 +120,7 @@ pub mod msg_fileio_config_resp {
     /// operations.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioConfigResp {
         /// The message sender_id
@@ -219,6 +221,7 @@ pub mod msg_fileio_read_dir_req {
     /// ID 0x42.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadDirReq {
         /// The message sender_id
@@ -308,6 +311,7 @@ pub mod msg_fileio_read_dir_resp {
     /// sequence number in the response is preserved from the request.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadDirResp {
         /// The message sender_id
@@ -390,6 +394,7 @@ pub mod msg_fileio_read_req {
     /// message when it is received from sender ID 0x42.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadReq {
         /// The message sender_id
@@ -485,6 +490,7 @@ pub mod msg_fileio_read_resp {
     /// sequence number in the response is preserved from the request.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioReadResp {
         /// The message sender_id
@@ -564,6 +570,7 @@ pub mod msg_fileio_remove {
     /// received from sender ID 0x42.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioRemove {
         /// The message sender_id
@@ -641,6 +648,7 @@ pub mod msg_fileio_write_req {
     /// received from sender ID 0x42.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioWriteReq {
         /// The message sender_id
@@ -736,6 +744,7 @@ pub mod msg_fileio_write_resp {
     /// number in the response is preserved from the request.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFileioWriteResp {
         /// The message sender_id

@@ -35,6 +35,7 @@ pub mod msg_fwd {
     /// are implementation defined.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFwd {
         /// The message sender_id
@@ -122,6 +123,7 @@ pub mod msg_log {
     /// DEBUG, INFO logging levels.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgLog {
         /// The message sender_id
@@ -275,6 +277,7 @@ pub mod msg_print_dep {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPrintDep {
         /// The message sender_id

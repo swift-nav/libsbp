@@ -28,6 +28,7 @@ pub mod msg_ext_event {
     /// pin it was and whether it was rising or falling.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgExtEvent {
         /// The message sender_id

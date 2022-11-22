@@ -28,6 +28,7 @@ pub mod msg_ndb_event {
     /// message could also be sent out when fetching an object from NDB.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNdbEvent {
         /// The message sender_id
