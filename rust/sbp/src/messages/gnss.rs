@@ -34,6 +34,7 @@ pub mod carrier_phase {
     /// fractional cycles. This phase has the same sign as the pseudorange.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct CarrierPhase {
         /// Carrier phase whole cycles
@@ -75,6 +76,7 @@ pub mod gps_time {
     /// observations are epoch aligned so ns field will be 0.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GpsTime {
         /// Milliseconds since start of GPS week
@@ -125,6 +127,7 @@ pub mod gps_time_dep {
     /// beginning of the week on the Saturday/Sunday transition.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GpsTimeDep {
         /// Milliseconds since start of GPS week
@@ -165,6 +168,7 @@ pub mod gps_time_sec {
     /// on the Saturday/Sunday transition.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GpsTimeSec {
         /// Seconds since start of GPS week
@@ -205,6 +209,7 @@ pub mod gnss_signal {
     /// identifier.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssSignal {
         /// Constellation-specific satellite id. For GLO can either be (100+FCN)
@@ -340,6 +345,7 @@ pub mod gnss_signal_dep {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssSignalDep {
         /// Constellation-specific satellite identifier.
@@ -462,6 +468,7 @@ pub mod sv_id {
     /// vehicle.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SvId {
         /// Constellation-specific satellite id. For GLO can either be (100+FCN)

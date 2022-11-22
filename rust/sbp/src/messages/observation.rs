@@ -78,6 +78,7 @@ pub mod almanac_common_content {
     use crate::messages::lib::*;
     /// Common fields for every almanac message
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct AlmanacCommonContent {
         /// GNSS signal identifier
@@ -157,6 +158,7 @@ pub mod almanac_common_content_dep {
     use crate::messages::lib::*;
     /// Common fields for every almanac message
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct AlmanacCommonContentDep {
         /// GNSS signal identifier
@@ -243,6 +245,7 @@ pub mod carrier_phase_dep_a {
     /// GPS receiver and the phase has the opposite sign as the pseudorange.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct CarrierPhaseDepA {
         /// Carrier phase whole cycles
@@ -285,6 +288,7 @@ pub mod doppler {
     /// doppler. This doppler is defined as positive for approaching satellites.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Doppler {
         /// Doppler whole Hz
@@ -321,6 +325,7 @@ pub mod ephemeris_common_content {
     use crate::messages::lib::*;
     /// Common fields for every ephemeris message
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContent {
         /// GNSS signal identifier (16 bit)
@@ -390,6 +395,7 @@ pub mod ephemeris_common_content_dep_a {
     use crate::messages::lib::*;
     /// Common fields for every ephemeris message
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContentDepA {
         /// GNSS signal identifier
@@ -459,6 +465,7 @@ pub mod ephemeris_common_content_dep_b {
     use crate::messages::lib::*;
     /// Common fields for every ephemeris message
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EphemerisCommonContentDepB {
         /// GNSS signal identifier (16 bit)
@@ -527,6 +534,7 @@ pub mod gnss_capb {
     use crate::messages::lib::*;
     /// GNSS capabilities masks
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssCapb {
         /// GPS SV active mask
@@ -665,6 +673,7 @@ pub mod msg_almanac_glo {
     /// almanac" for details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGlo {
         /// The message sender_id
@@ -790,6 +799,7 @@ pub mod msg_almanac_glo_dep {
     /// almanac" for details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGloDep {
         /// The message sender_id
@@ -915,6 +925,7 @@ pub mod msg_almanac_gps {
     /// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGps {
         /// The message sender_id
@@ -1053,6 +1064,7 @@ pub mod msg_almanac_gps_dep {
     /// GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanacGpsDep {
         /// The message sender_id
@@ -1192,6 +1204,7 @@ pub mod msg_base_pos_ecef {
     /// in an error in the pseudo-absolute position output.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBasePosEcef {
         /// The message sender_id
@@ -1279,6 +1292,7 @@ pub mod msg_base_pos_llh {
     /// error here will result in an error in the pseudo-absolute position output.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBasePosLlh {
         /// The message sender_id
@@ -1366,6 +1380,7 @@ pub mod msg_ephemeris_bds {
     /// Table 5-9 for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisBds {
         /// The message sender_id
@@ -1607,6 +1622,7 @@ pub mod msg_ephemeris_dep_a {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepA {
         /// The message sender_id
@@ -1858,6 +1874,7 @@ pub mod msg_ephemeris_dep_b {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepB {
         /// The message sender_id
@@ -2119,6 +2136,7 @@ pub mod msg_ephemeris_dep_c {
     /// GPS-200, Table 20-III) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepC {
         /// The message sender_id
@@ -2394,6 +2412,7 @@ pub mod msg_ephemeris_dep_d {
     /// GPS-200, Table 20-III) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisDepD {
         /// The message sender_id
@@ -2669,6 +2688,7 @@ pub mod msg_ephemeris_gal {
     /// for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGal {
         /// The message sender_id
@@ -2914,6 +2934,7 @@ pub mod msg_ephemeris_gal_dep_a {
     /// message with explicit source of NAV data.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGalDepA {
         /// The message sender_id
@@ -3154,6 +3175,7 @@ pub mod msg_ephemeris_glo {
     /// immediate information (ephemeris parameters)" for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGlo {
         /// The message sender_id
@@ -3285,6 +3307,7 @@ pub mod msg_ephemeris_glo_dep_a {
     /// immediate information (ephemeris parameters)" for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepA {
         /// The message sender_id
@@ -3395,6 +3418,7 @@ pub mod msg_ephemeris_glo_dep_b {
     /// immediate information (ephemeris parameters)" for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepB {
         /// The message sender_id
@@ -3505,6 +3529,7 @@ pub mod msg_ephemeris_glo_dep_c {
     /// immediate information (ephemeris parameters)" for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepC {
         /// The message sender_id
@@ -3627,6 +3652,7 @@ pub mod msg_ephemeris_glo_dep_d {
     /// using floats for size reduction.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGloDepD {
         /// The message sender_id
@@ -3758,6 +3784,7 @@ pub mod msg_ephemeris_gps {
     /// GPS-200, Table 20-III) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGps {
         /// The message sender_id
@@ -3991,6 +4018,7 @@ pub mod msg_ephemeris_gps_dep_e {
     /// GPS-200, Table 20-III) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGpsDepE {
         /// The message sender_id
@@ -4222,6 +4250,7 @@ pub mod msg_ephemeris_gps_dep_f {
     /// using floats for size reduction.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisGpsDepF {
         /// The message sender_id
@@ -4453,6 +4482,7 @@ pub mod msg_ephemeris_qzss {
     /// used to calculate QZSS satellite position, velocity, and clock offset.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisQzss {
         /// The message sender_id
@@ -4679,6 +4709,7 @@ pub mod msg_ephemeris_sbas {
     use crate::messages::lib::*;
     /// Satellite broadcast ephemeris for SBAS
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbas {
         /// The message sender_id
@@ -4782,6 +4813,7 @@ pub mod msg_ephemeris_sbas_dep_a {
     use crate::messages::lib::*;
     /// Satellite broadcast ephemeris for SBAS
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbasDepA {
         /// The message sender_id
@@ -4890,6 +4922,7 @@ pub mod msg_ephemeris_sbas_dep_b {
     /// using floats for size reduction.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgEphemerisSbasDepB {
         /// The message sender_id
@@ -4999,6 +5032,7 @@ pub mod msg_glo_biases {
     /// receiver of different manufacturers).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGloBiases {
         /// The message sender_id
@@ -5095,6 +5129,7 @@ pub mod msg_gnss_capb {
     use crate::messages::lib::*;
     /// GNSS capabilities
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGnssCapb {
         /// The message sender_id
@@ -5173,6 +5208,7 @@ pub mod msg_group_delay {
     /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelay {
         /// The message sender_id
@@ -5278,6 +5314,7 @@ pub mod msg_group_delay_dep_a {
     /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelayDepA {
         /// The message sender_id
@@ -5383,6 +5420,7 @@ pub mod msg_group_delay_dep_b {
     /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupDelayDepB {
         /// The message sender_id
@@ -5490,6 +5528,7 @@ pub mod msg_iono {
     /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgIono {
         /// The message sender_id
@@ -5615,6 +5654,7 @@ pub mod msg_obs {
     /// and conform with typical RTCMv3 GNSS observations.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObs {
         /// The message sender_id
@@ -5706,6 +5746,7 @@ pub mod msg_obs_dep_a {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepA {
         /// The message sender_id
@@ -5800,6 +5841,7 @@ pub mod msg_obs_dep_b {
     /// 3rd party GNSS receivers or typical RTCMv3 observations.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepB {
         /// The message sender_id
@@ -5896,6 +5938,7 @@ pub mod msg_obs_dep_c {
     /// conform with typical RTCMv3 GNSS observations.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgObsDepC {
         /// The message sender_id
@@ -5988,6 +6031,7 @@ pub mod msg_osr {
     /// format.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgOsr {
         /// The message sender_id
@@ -6080,6 +6124,7 @@ pub mod msg_sv_az_el {
     /// does have ephemeris or almanac for.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSvAzEl {
         /// The message sender_id
@@ -6152,6 +6197,7 @@ pub mod msg_sv_configuration_gps_dep {
     /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSvConfigurationGpsDep {
         /// The message sender_id
@@ -6229,6 +6275,7 @@ pub mod observation_header {
     /// Header of a GNSS observation message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct ObservationHeader {
         /// GNSS time of this observation
@@ -6270,6 +6317,7 @@ pub mod observation_header_dep {
     /// Header of a GPS observation message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct ObservationHeaderDep {
         /// GPS time of this observation
@@ -6317,6 +6365,7 @@ pub mod packed_obs_content {
     /// currently performed.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContent {
         /// Pseudorange observation
@@ -6639,6 +6688,7 @@ pub mod packed_obs_content_dep_a {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepA {
         /// Pseudorange observation
@@ -6705,6 +6755,7 @@ pub mod packed_obs_content_dep_b {
     /// Pseudoranges are referenced to a nominal pseudorange.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepB {
         /// Pseudorange observation
@@ -6772,6 +6823,7 @@ pub mod packed_obs_content_dep_c {
     /// with typical RTCMv3 GNSS observations.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedObsContentDepC {
         /// Pseudorange observation
@@ -6837,6 +6889,7 @@ pub mod packed_osr_content {
     /// Pseudorange and carrier phase network corrections for a satellite signal.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct PackedOsrContent {
         /// Pseudorange observation
@@ -7166,6 +7219,7 @@ pub mod sv_az_el {
     /// Satellite azimuth and elevation.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SvAzEl {
         /// GNSS signal identifier
