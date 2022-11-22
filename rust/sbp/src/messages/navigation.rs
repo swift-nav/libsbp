@@ -1417,6 +1417,7 @@ pub mod msg_dops {
 
     impl MsgDops {
         /// Gets the `raim_repair_flag` flag.
+        #[allow(clippy::identity_op)]
         pub fn raim_repair_flag(&self) -> bool {
             ((self.flags >> 7) & 1) == 1
         }
@@ -5842,6 +5843,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `velocity_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn velocity_valid(&self) -> bool {
             ((self.flags >> 21) & 1) == 1
         }
@@ -5852,6 +5854,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `attitude_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn attitude_valid(&self) -> bool {
             ((self.flags >> 22) & 1) == 1
         }
@@ -5862,6 +5865,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_hpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_hpl(&self) -> bool {
             ((self.flags >> 23) & 1) == 1
         }
@@ -5872,6 +5876,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_vpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_vpl(&self) -> bool {
             ((self.flags >> 24) & 1) == 1
         }
@@ -5882,6 +5887,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_atpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_atpl(&self) -> bool {
             ((self.flags >> 25) & 1) == 1
         }
@@ -5892,6 +5898,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_ctpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_ctpl(&self) -> bool {
             ((self.flags >> 26) & 1) == 1
         }
@@ -5902,6 +5909,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_hvpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_hvpl(&self) -> bool {
             ((self.flags >> 27) & 1) == 1
         }
@@ -5912,6 +5920,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_vvpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_vvpl(&self) -> bool {
             ((self.flags >> 28) & 1) == 1
         }
@@ -5922,6 +5931,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_hopl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_hopl(&self) -> bool {
             ((self.flags >> 29) & 1) == 1
         }
@@ -5932,6 +5942,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_popl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_popl(&self) -> bool {
             ((self.flags >> 30) & 1) == 1
         }
@@ -5942,6 +5953,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_ropl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_ropl(&self) -> bool {
             ((self.flags >> 31) & 1) == 1
         }

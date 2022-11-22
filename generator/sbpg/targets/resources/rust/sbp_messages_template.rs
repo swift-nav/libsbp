@@ -87,6 +87,7 @@ impl (((m.msg_name))) {
     }
 ((* elif b.type == "bool" *))
     /// Gets the `(((b.bitrange_name)))` flag.
+    #[allow(clippy::identity_op)]
     pub fn (((b.bitrange_name))) (&self) -> bool {
         ( ( self.(((b.field))) >> (((b.msb))) ) & 1) == 1
     }

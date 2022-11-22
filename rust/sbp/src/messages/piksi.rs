@@ -1493,6 +1493,7 @@ pub mod msg_network_state_resp {
 
     impl MsgNetworkStateResp {
         /// Gets the `iff_multicast_supports_multicast` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_multicast_supports_multicast(&self) -> bool {
             ((self.flags >> 15) & 1) == 1
         }
@@ -1506,6 +1507,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_link2_per_link_layer_defined_bit` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_link2_per_link_layer_defined_bit(&self) -> bool {
             ((self.flags >> 14) & 1) == 1
         }
@@ -1519,6 +1521,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_link1_per_link_layer_defined_bit` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_link1_per_link_layer_defined_bit(&self) -> bool {
             ((self.flags >> 13) & 1) == 1
         }
@@ -1532,6 +1535,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_link0_per_link_layer_defined_bit` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_link0_per_link_layer_defined_bit(&self) -> bool {
             ((self.flags >> 12) & 1) == 1
         }
@@ -1545,6 +1549,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_simplex_cant_hear_own_transmissions` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_simplex_cant_hear_own_transmissions(&self) -> bool {
             ((self.flags >> 11) & 1) == 1
         }
@@ -1558,6 +1563,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_oactive_transmission_in_progress` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_oactive_transmission_in_progress(&self) -> bool {
             ((self.flags >> 10) & 1) == 1
         }
@@ -1571,6 +1577,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_allmulti_receive_all_multicast_packets` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_allmulti_receive_all_multicast_packets(&self) -> bool {
             ((self.flags >> 9) & 1) == 1
         }
@@ -1584,6 +1591,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_promisc_receive_all_packets` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_promisc_receive_all_packets(&self) -> bool {
             ((self.flags >> 8) & 1) == 1
         }
@@ -1597,6 +1605,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_noarp_no_address_resolution_protocol` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_noarp_no_address_resolution_protocol(&self) -> bool {
             ((self.flags >> 7) & 1) == 1
         }
@@ -1610,6 +1619,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_running_resources_allocated` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_running_resources_allocated(&self) -> bool {
             ((self.flags >> 6) & 1) == 1
         }
@@ -1623,6 +1633,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_notrailers_avoid_use_of_trailers` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_notrailers_avoid_use_of_trailers(&self) -> bool {
             ((self.flags >> 5) & 1) == 1
         }
@@ -1636,6 +1647,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_pointopoint_interface_is_pointtopoint_link` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_pointopoint_interface_is_pointtopoint_link(&self) -> bool {
             ((self.flags >> 4) & 1) == 1
         }
@@ -1649,6 +1661,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_loopback_is_a_loopback_net` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_loopback_is_a_loopback_net(&self) -> bool {
             ((self.flags >> 3) & 1) == 1
         }
@@ -1659,6 +1672,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_debug_broadcast_address_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_debug_broadcast_address_valid(&self) -> bool {
             ((self.flags >> 2) & 1) == 1
         }
@@ -1672,6 +1686,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_broadcast_broadcast_address_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_broadcast_broadcast_address_valid(&self) -> bool {
             ((self.flags >> 1) & 1) == 1
         }
@@ -1685,6 +1700,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_up_interface_is_up` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_up_interface_is_up(&self) -> bool {
             ((self.flags >> 0) & 1) == 1
         }
