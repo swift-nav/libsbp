@@ -60,6 +60,7 @@ pub mod latency {
     /// measurement of the end-to-end communication latency in the system.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Latency {
         /// Average latency
@@ -117,6 +118,7 @@ pub mod msg_almanac {
     /// the Piksi's flash memory from the host.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAlmanac {
         /// The message sender_id
@@ -183,6 +185,7 @@ pub mod msg_cell_modem_status {
     /// parameters.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCellModemStatus {
         /// The message sender_id
@@ -271,6 +274,7 @@ pub mod msg_command_output {
     /// the correct command.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandOutput {
         /// The message sender_id
@@ -351,6 +355,7 @@ pub mod msg_command_req {
     /// MSG_COMMAND_RESP.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandReq {
         /// The message sender_id
@@ -430,6 +435,7 @@ pub mod msg_command_resp {
     /// return code of zero indicates success.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCommandResp {
         /// The message sender_id
@@ -509,6 +515,7 @@ pub mod msg_cw_results {
     /// future release.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCwResults {
         /// The message sender_id
@@ -575,6 +582,7 @@ pub mod msg_cw_start {
     /// future release.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCwStart {
         /// The message sender_id
@@ -641,6 +649,7 @@ pub mod msg_device_monitor {
     /// available.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDeviceMonitor {
         /// The message sender_id
@@ -747,6 +756,7 @@ pub mod msg_front_end_gain {
     /// an error for the particular gain stage as reported by the frontend.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFrontEndGain {
         /// The message sender_id
@@ -826,6 +836,7 @@ pub mod msg_iar_state {
     /// differenced carrier-phase measurements from satellite observations.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgIarState {
         /// The message sender_id
@@ -898,6 +909,7 @@ pub mod msg_init_base_dep {
     /// Deprecated
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInitBaseDep {
         /// The message sender_id
@@ -963,6 +975,7 @@ pub mod msg_mask_satellite {
     /// being used in various Piksi subsystems.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMaskSatellite {
         /// The message sender_id
@@ -1134,6 +1147,7 @@ pub mod msg_mask_satellite_dep {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgMaskSatelliteDep {
         /// The message sender_id
@@ -1305,6 +1319,7 @@ pub mod msg_network_bandwidth_usage {
     /// The bandwidth usage, a list of usage by interface.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkBandwidthUsage {
         /// The message sender_id
@@ -1378,6 +1393,7 @@ pub mod msg_network_state_req {
     /// MSG_NETWORK_STATE_RESP messages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkStateReq {
         /// The message sender_id
@@ -1443,6 +1459,7 @@ pub mod msg_network_state_resp {
     /// output of ifaddrs struct returned by getifaddrs in c.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNetworkStateResp {
         /// The message sender_id
@@ -1476,6 +1493,7 @@ pub mod msg_network_state_resp {
 
     impl MsgNetworkStateResp {
         /// Gets the `iff_multicast_supports_multicast` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_multicast_supports_multicast(&self) -> bool {
             ((self.flags >> 15) & 1) == 1
         }
@@ -1489,6 +1507,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_link2_per_link_layer_defined_bit` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_link2_per_link_layer_defined_bit(&self) -> bool {
             ((self.flags >> 14) & 1) == 1
         }
@@ -1502,6 +1521,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_link1_per_link_layer_defined_bit` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_link1_per_link_layer_defined_bit(&self) -> bool {
             ((self.flags >> 13) & 1) == 1
         }
@@ -1515,6 +1535,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_link0_per_link_layer_defined_bit` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_link0_per_link_layer_defined_bit(&self) -> bool {
             ((self.flags >> 12) & 1) == 1
         }
@@ -1528,6 +1549,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_simplex_cant_hear_own_transmissions` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_simplex_cant_hear_own_transmissions(&self) -> bool {
             ((self.flags >> 11) & 1) == 1
         }
@@ -1541,6 +1563,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_oactive_transmission_in_progress` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_oactive_transmission_in_progress(&self) -> bool {
             ((self.flags >> 10) & 1) == 1
         }
@@ -1554,6 +1577,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_allmulti_receive_all_multicast_packets` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_allmulti_receive_all_multicast_packets(&self) -> bool {
             ((self.flags >> 9) & 1) == 1
         }
@@ -1567,6 +1591,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_promisc_receive_all_packets` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_promisc_receive_all_packets(&self) -> bool {
             ((self.flags >> 8) & 1) == 1
         }
@@ -1580,6 +1605,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_noarp_no_address_resolution_protocol` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_noarp_no_address_resolution_protocol(&self) -> bool {
             ((self.flags >> 7) & 1) == 1
         }
@@ -1593,6 +1619,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_running_resources_allocated` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_running_resources_allocated(&self) -> bool {
             ((self.flags >> 6) & 1) == 1
         }
@@ -1606,6 +1633,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_notrailers_avoid_use_of_trailers` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_notrailers_avoid_use_of_trailers(&self) -> bool {
             ((self.flags >> 5) & 1) == 1
         }
@@ -1619,6 +1647,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_pointopoint_interface_is_pointtopoint_link` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_pointopoint_interface_is_pointtopoint_link(&self) -> bool {
             ((self.flags >> 4) & 1) == 1
         }
@@ -1632,6 +1661,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_loopback_is_a_loopback_net` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_loopback_is_a_loopback_net(&self) -> bool {
             ((self.flags >> 3) & 1) == 1
         }
@@ -1642,6 +1672,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_debug_broadcast_address_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_debug_broadcast_address_valid(&self) -> bool {
             ((self.flags >> 2) & 1) == 1
         }
@@ -1655,6 +1686,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_broadcast_broadcast_address_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_broadcast_broadcast_address_valid(&self) -> bool {
             ((self.flags >> 1) & 1) == 1
         }
@@ -1668,6 +1700,7 @@ pub mod msg_network_state_resp {
         }
 
         /// Gets the `iff_up_interface_is_up` flag.
+        #[allow(clippy::identity_op)]
         pub fn iff_up_interface_is_up(&self) -> bool {
             ((self.flags >> 0) & 1) == 1
         }
@@ -1768,6 +1801,7 @@ pub mod msg_reset {
     /// This message from the host resets the Piksi back into the bootloader.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReset {
         /// The message sender_id
@@ -1888,6 +1922,7 @@ pub mod msg_reset_dep {
     /// This message from the host resets the Piksi back into the bootloader.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgResetDep {
         /// The message sender_id
@@ -1953,6 +1988,7 @@ pub mod msg_reset_filters {
     /// Resolution (IAR) process.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgResetFilters {
         /// The message sender_id
@@ -2080,6 +2116,7 @@ pub mod msg_set_time {
     /// sent by the host.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSetTime {
         /// The message sender_id
@@ -2144,6 +2181,7 @@ pub mod msg_specan {
     /// Spectrum analyzer packet.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSpecan {
         /// The message sender_id
@@ -2258,6 +2296,7 @@ pub mod msg_specan_dep {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSpecanDep {
         /// The message sender_id
@@ -2374,6 +2413,7 @@ pub mod msg_thread_state {
     /// percentage values must be normalized.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgThreadState {
         /// The message sender_id
@@ -2468,6 +2508,7 @@ pub mod msg_uart_state {
     /// likelihood of transmission.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUartState {
         /// The message sender_id
@@ -2568,6 +2609,7 @@ pub mod msg_uart_state_depa {
     /// Deprecated
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUartStateDepa {
         /// The message sender_id
@@ -2665,6 +2707,7 @@ pub mod network_usage {
     /// necessarily be populated with a value.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct NetworkUsage {
         /// Duration over which the measurement was collected
@@ -2733,6 +2776,7 @@ pub mod period {
     /// outages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct Period {
         /// Average period
@@ -2790,6 +2834,7 @@ pub mod uart_channel {
     /// UART channel. The reported percentage values must be normalized.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct UARTChannel {
         /// UART transmit throughput

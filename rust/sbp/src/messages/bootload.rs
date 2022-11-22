@@ -35,6 +35,7 @@ pub mod msg_bootloader_handshake_dep_a {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderHandshakeDepA {
         /// The message sender_id
@@ -108,6 +109,7 @@ pub mod msg_bootloader_handshake_req {
     /// is MSG_BOOTLOADER_HANDSHAKE_RESP.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderHandshakeReq {
         /// The message sender_id
@@ -174,6 +176,7 @@ pub mod msg_bootloader_handshake_resp {
     /// number and the SBP protocol version number.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderHandshakeResp {
         /// The message sender_id
@@ -293,6 +296,7 @@ pub mod msg_bootloader_jump_to_app {
     /// The host initiates the bootloader to jump to the application.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBootloaderJumpToApp {
         /// The message sender_id
@@ -369,6 +373,7 @@ pub mod msg_nap_device_dna_req {
     /// number.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNapDeviceDnaReq {
         /// The message sender_id
@@ -437,6 +442,7 @@ pub mod msg_nap_device_dna_resp {
     /// number.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgNapDeviceDnaResp {
         /// The message sender_id

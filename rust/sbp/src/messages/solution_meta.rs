@@ -33,6 +33,7 @@ pub mod gnss_input_type {
     /// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct GnssInputType {
         /// flags that store all relevant info specific to this sensor type.
@@ -125,6 +126,7 @@ pub mod imu_input_type {
     /// through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct ImuInputType {
         /// Instrument time, grade, and architecture for a sensor.
@@ -325,6 +327,7 @@ pub mod msg_soln_meta {
     /// valid GNSS solution and its tow is not a TOM.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMeta {
         /// The message sender_id
@@ -529,6 +532,7 @@ pub mod msg_soln_meta_dep_a {
     /// GNSS metadata.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSolnMetaDepA {
         /// The message sender_id
@@ -737,6 +741,7 @@ pub mod odo_input_type {
     /// Accessible through sol_in\[N\].flags in a MSG_SOLN_META.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct OdoInputType {
         /// Instrument ODO rate, grade, and quality.
@@ -928,6 +933,7 @@ pub mod solution_input_type {
     /// this section.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SolutionInputType {
         /// The type of sensor
