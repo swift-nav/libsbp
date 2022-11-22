@@ -33,15 +33,11 @@ fn test_stop_on_error() {
 fn test_continue_on_error() {
     let root = find_project_root().unwrap();
     let root = root.as_path();
-    let input_path = root.join(format!("test_data/{}", "short.sbp"));
+    let input_path = root.join(format!("test_data/{}", "short.sbp.json"));
 
-    let source = File::open(input_path).unwrap();
-    let mut sink = Cursor::new(vec![]);
+    let mut source = File::open(input_path).unwrap();
 
-    let _ = converters::sbp2json(source, &mut sink, CompactFormatter {}, false, false);
-
-    sink.set_position(0);
-    assert_eq!(sbp::iter_messages(&mut sink).count(), 355);
+    assert_eq!(sbp::iter_messages(&mut source).count(), 355);
 }
 
 #[test]
