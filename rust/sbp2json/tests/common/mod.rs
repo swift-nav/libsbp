@@ -65,7 +65,7 @@ pub fn find_project_root() -> Option<PathBuf> {
             break;
         }
     }
-    return None;
+    None
 }
 
 pub struct DeleteTestOutput {
