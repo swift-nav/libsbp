@@ -23,6 +23,7 @@ assert_eq!(msg.(((prefix|snake_case))).to_string(), (((value|str_escape))), "inc
 ((*- elif value is float_type *))((=
     Note: the ("%.17e"|format(value)) filter is intended to preserve float
     literal precision accross all value ranges. =))
+#[allow(clippy::excessive_precision)]
 assert!(msg.(((prefix|snake_case))).almost_eq( ((("%.17e"|format(value)))) ), "incorrect value for (((prefix|snake_case))), expected ((("%.17e"|format(value)))), is {:e}", msg.(((prefix|snake_case))));
 ((*- else *))
 assert_eq!(msg.(((prefix|snake_case))), (((value))), "incorrect value for (((prefix|snake_case))), expected (((value))), is {}", msg.(((prefix|snake_case))));
