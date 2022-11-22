@@ -42,6 +42,7 @@ use crate::messages::(((i)))::*;
 /// (((m.short_desc)))
 ((*- endif *))
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Debug, PartialEq, Clone)]
 pub struct (((m.msg_name))) {
     ((*- if m.is_real_message *))

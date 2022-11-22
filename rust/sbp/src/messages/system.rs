@@ -42,6 +42,7 @@ pub mod msg_csac_telemetry {
     /// It is intended to be a low rate message for status purposes.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCsacTelemetry {
         /// The message sender_id
@@ -122,6 +123,7 @@ pub mod msg_csac_telemetry_labels {
     /// lower rate than the MSG_CSAC_TELEMETRY.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgCsacTelemetryLabels {
         /// The message sender_id
@@ -202,6 +204,7 @@ pub mod msg_dgnss_status {
     /// corrections packet.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDgnssStatus {
         /// The message sender_id
@@ -347,6 +350,7 @@ pub mod msg_gnss_time_offset {
     /// messages) to GNSS time for the sender producing this message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGnssTimeOffset {
         /// The message sender_id
@@ -441,6 +445,7 @@ pub mod msg_group_meta {
     /// Solution Group.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGroupMeta {
         /// The message sender_id
@@ -593,6 +598,7 @@ pub mod msg_heartbeat {
     /// flags should be inspected.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgHeartbeat {
         /// The message sender_id
@@ -936,6 +942,7 @@ pub mod msg_ins_status {
     /// initialization of the inertial navigation system.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInsStatus {
         /// The message sender_id
@@ -1376,6 +1383,7 @@ pub mod msg_ins_updates {
     /// future as new types of measurements are being added.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgInsUpdates {
         /// The message sender_id
@@ -1751,6 +1759,7 @@ pub mod msg_pps_time {
     /// should match the sender ID of the respective sensor data.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPpsTime {
         /// The message sender_id
@@ -1896,6 +1905,7 @@ pub mod msg_sensor_aid_event {
     /// anytime a sensor update is being processed.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgSensorAidEvent {
         /// The message sender_id
@@ -2093,6 +2103,7 @@ pub mod msg_startup {
     /// ready to respond to commands or configuration requests.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStartup {
         /// The message sender_id
@@ -2279,6 +2290,7 @@ pub mod msg_status_journal {
     /// purposes.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStatusJournal {
         /// The message sender_id
@@ -2473,6 +2485,7 @@ pub mod msg_status_report {
     /// Refer to product documentation for details.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStatusReport {
         /// The message sender_id
@@ -2660,6 +2673,7 @@ pub mod status_journal_item {
     /// specific state should be ignored.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct StatusJournalItem {
         /// Milliseconds since system startup
@@ -2700,6 +2714,7 @@ pub mod sub_system_report {
     /// state is reported as initializing, the specific state should be ignored.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct SubSystemReport {
         /// Identity of reporting subsystem
