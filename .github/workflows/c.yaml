@@ -57,7 +57,7 @@ jobs:
             -DCMAKE_C_COMPILER=${{ matrix.compiler.c }} \
             -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cxx }} \
             -DBUILD_SHARED_LIBS=${{ matrix.build_shared_libraries }} \
-            -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/install" \
+            -DCMAKE_INSTALL_PREFIX="$PWD/install" \
             -DINSTALL_GTEST=false \
             -DBUILD_EXAMPLES=true
 
@@ -75,7 +75,7 @@ jobs:
 
       - name: Test Package
         run: |
-          cmake -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="${{ github.workspace }}/install"
+          cmake -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="$PWD/install"
           cmake --build c/test_package/build
 
   macos:
