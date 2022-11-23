@@ -40,6 +40,8 @@ jobs:
           apt-get -qq update
           apt-get -qq install software-properties-common
           add-apt-repository -y ppa:git-core/ppa
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ bionic-rc main' \
+            | tee -a /etc/apt/sources.list.d/kitware.list >/dev/null
           apt-get -qq update
           apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
 
