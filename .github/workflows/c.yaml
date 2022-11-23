@@ -40,7 +40,7 @@ jobs:
           apt-get -qq update
           apt-get -qq install software-properties-common gpg wget
           add-apt-repository -y ppa:git-core/ppa
-          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
           echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ bionic-rc main' \
             | tee -a /etc/apt/sources.list.d/kitware.list >/dev/null
           apt-get -qq update
