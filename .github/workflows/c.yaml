@@ -12,33 +12,9 @@ on:
       - "c/**"
       - .github/workflows/c.yaml
 jobs:
-  coverage:
-    name: Code Coverage
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
-      - name: Setup
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install lcov libeigen3-dev libserialport-dev
-
-      - name: Run tests
-        run: make test-c
-        env:
-          CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLES=true
-
-      - name: Build examples
-        run: make -C c/build examples
-
-#      - name: Upload coverage to codecov.io
-#        run: |
-#          bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
 
   ubuntu-lts:
+
     strategy:
       matrix:
         build_type: [ "Debug", "Release" ]
@@ -50,16 +26,22 @@ jobs:
         exclude: [
           { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
+
     name: "Ubuntu 20.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+
     runs-on: ubuntu-latest
     container:
       image: ubuntu:18.04
+
     steps:
 
       - name: Setup
         run: |
-          apt-get -qq update
-          apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
+          apt-get update
+          apt-get install software-properties-common
+          add-apt-repository ppa:git-core/ppa
+          apt-get update
+          apt-get install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
 
       - uses: actions/checkout@v2
         with:
