@@ -1,12 +1,12 @@
 load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_cc_library", "swift_cc_test")
-load("@rules_swiftnav//tools:workspace_root.bzl", "workspace_root")
+load("@rules_swiftnav//cc:local_include_prefix.bzl", "local_include_prefix")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
 
 SBP_INCLUDE_INTERNAL = glob(["src/**/*.h"])
 
-WORKSPACE_ROOT = workspace_root()
+LOCAL_INCLUDE_PREFIX = local_include_prefix()
 
 refresh_compile_commands(
     name = "refresh_compile_commands",
@@ -51,7 +51,7 @@ swift_cc_library(
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
     copts = [
-        "-I" + WORKSPACE_ROOT + "/c/src/include",
+        "-I" + LOCAL_INCLUDE_PREFIX + "c/src/include",
     ],
     includes = [
         "include",
