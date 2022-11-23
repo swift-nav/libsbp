@@ -63,9 +63,9 @@ fn test_auto_check_sbp_system_msg_dgnss_status() {
                 );
                 assert_eq!(
                     msg.source.to_string(),
-                    "Skylark".to_string(),
+                    "Skylark",
                     "incorrect value for msg.source, expected string '{}', is '{}'",
-                    "Skylark".to_string(),
+                    "Skylark",
                     msg.source
                 );
             }
@@ -138,9 +138,9 @@ fn test_json2sbp_auto_check_sbp_system_msg_dgnss_status() {
                 );
                 assert_eq!(
                     msg.source.to_string(),
-                    "Skylark".to_string(),
+                    "Skylark",
                     "incorrect value for msg.source, expected string '{}', is '{}'",
-                    "Skylark".to_string(),
+                    "Skylark",
                     msg.source
                 );
             }
@@ -220,9 +220,9 @@ fn test_sbp2json_auto_check_sbp_system_msg_dgnss_status() {
                 );
                 assert_eq!(
                     msg.source.to_string(),
-                    "Skylark".to_string(),
+                    "Skylark",
                     "incorrect value for msg.source, expected string '{}', is '{}'",
-                    "Skylark".to_string(),
+                    "Skylark",
                     msg.source
                 );
             }
