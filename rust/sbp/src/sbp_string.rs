@@ -487,7 +487,7 @@ mod tests {
         // Auto generate alternating bytes [`from_parts`] section
         // -----
         let parts = ["a", "b", "c"];
-        let multipart = SbpString::<_, Multipart>::from_parts(&parts);
+        let multipart = SbpString::<_, Multipart>::from_parts(parts);
         assert_eq!(multipart.data, null);
 
         // Test [`parts`] section
@@ -525,7 +525,7 @@ mod tests {
         // Auto generate alternating bytes [`from_parts`] section
         // -----
         let parts = ["a", "b", "c"];
-        let double_null = SbpString::<_, DoubleNullTerminated>::from_parts(&parts);
+        let double_null = SbpString::<_, DoubleNullTerminated>::from_parts(parts);
         assert_eq!(double_null.data, data);
 
         // Test [`parts`] section
