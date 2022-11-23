@@ -55,16 +55,14 @@ jobs:
     container:
       image: ubuntu:18.04
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          fetch-depth: 0
-
       - name: Setup
         run: |
           sudo apt-get -qq update
           sudo apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
-
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
       - name: Configure
         run: |
           cmake -S c -B build \
