@@ -79,7 +79,6 @@ RUN \
       imagemagick \
       enchant \
       clang-format-6.0 \
-      python3.6 python3.6-dev python3.6-distutils \
       python3.7 python3.7-dev python3.7-distutils \
       python3 python3-dev python3-distutils \
       python3.9 python3.9-dev python3.9-distutils \

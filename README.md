@@ -224,7 +224,7 @@ are both valid. To see a list of all valid targets, run `make help`.
    as `make all`) run tests on all Python versions officially supported by *the
    libsbp Python bindings*, currently **3.6-3.9**, skipping any versions not
    installed. To run tests on just specific Python version(s), specify the
-   `TOXENV` environment variable, e.g., `TOXENV=py36 make python`. Travis runs
+   `TOXENV` environment variable, e.g., `TOXENV=py37 make python`. Travis runs
    Python tests on all supported versions.
 2. By default *the code generators* are run on the system's (or virtual env's)
    default Python interpreter. Currently Python versions **2.7, 3.5, and 3.7**
