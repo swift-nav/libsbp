@@ -142,6 +142,7 @@ struct LinkInner<'link, S> {
 }
 
 /// A message handler and the message ids it responds to.
+#[allow(clippy::type_complexity)]
 pub struct Handler<'link, S> {
     func: Box<dyn FnMut(&S, Sbp) + Send + 'link>,
     msg_types: Cow<'static, [u16]>,

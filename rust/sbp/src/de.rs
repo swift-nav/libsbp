@@ -381,10 +381,7 @@ mod tests {
         let timeout_duration = Duration::from_secs(2);
         let now = Instant::now();
         let mut messages = iter_messages_with_timeout(rdr, timeout_duration);
-        for msg in &mut messages {
-            assert!(matches!(msg, Err(Error::IoError(_))));
-            break;
-        }
+        assert!(matches!(messages.next().unwrap(), Err(Error::IoError(_))));
         assert!(now.elapsed() >= timeout_duration);
     }
 

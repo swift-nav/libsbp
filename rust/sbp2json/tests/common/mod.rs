@@ -91,8 +91,8 @@ impl DeleteTestOutput {
     pub fn new() -> DeleteTestOutput {
         DeleteTestOutput { files: vec![] }
     }
-    pub fn add_test_output(&mut self, file_path: &PathBuf) {
-        self.files.push(file_path.clone());
+    pub fn add_test_output(&mut self, file_path: &Path) {
+        self.files.push(file_path.to_path_buf());
     }
 }
 
