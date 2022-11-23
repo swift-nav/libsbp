@@ -68,15 +68,15 @@ jobs:
         run: cmake --build build --parallel --target examples
 
       - name: Test
-        run: cmake --build build --parallel --target do-all-tests
+        run: cmake --build build --target do-all-tests
 
       - name: Install
-        run: cmake --build build --parallel --target install
+        run: cmake --build build --target install
 
       - name: Test Package
         run: |
           cmake -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="$PWD/install"
-          cmake --parallel --build c/test_package/build
+          cmake --build c/test_package/build
 
   macos:
     name: macOS
