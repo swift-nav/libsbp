@@ -72,6 +72,7 @@ struct CommonJson<'a> {
     crc: u16,
     length: u8,
     msg_type: u16,
+    msg_name: &'a str,
     payload: &'a str,
     preamble: u8,
     sender: u16,

@@ -33,21 +33,17 @@ fn test_stop_on_error() {
 fn test_continue_on_error() {
     let root = find_project_root().unwrap();
     let root = root.as_path();
-    let input_path = root.join(format!("test_data/{}", "short.sbp"));
+    let input_path = root.join(format!("test_data/{}", "short.sbp.json"));
 
-    let source = File::open(input_path).unwrap();
-    let mut sink = Cursor::new(vec![]);
+    let mut source = File::open(input_path).unwrap();
 
-    let _ = converters::sbp2json(source, &mut sink, CompactFormatter {}, false, false);
-
-    sink.set_position(0);
-    assert_eq!(sbp::iter_messages(&mut sink).count(), 355);
+    assert_eq!(sbp::iter_messages(&mut source).count(), 355);
 }
 
 #[test]
 fn test_sbp2json() {
     let tranform1 = |reader, writer| run_sbp2json(reader, writer, true);
-    let tranform2 = |reader, writer| run_json2sbp(reader, writer);
+    let tranform2 = run_json2sbp;
 
     test_round_trip(
         tranform1,
@@ -61,7 +57,7 @@ fn test_sbp2json() {
 
 #[test]
 fn test_json2sbp() {
-    let tranform1 = |reader, writer| run_json2sbp(reader, writer);
+    let tranform1 = run_json2sbp;
     let tranform2 = |reader, writer| run_sbp2json(reader, writer, true);
 
     test_round_trip(
@@ -76,7 +72,7 @@ fn test_json2sbp() {
 
 #[test]
 fn test_jsonfields2sbp() {
-    let tranform1 = |reader, writer| run_jsonfields2sbp(reader, writer);
+    let tranform1 = run_jsonfields2sbp;
     let tranform2 = |reader, writer| run_sbp2json(reader, writer, false);
 
     test_round_trip(
@@ -91,8 +87,8 @@ fn test_jsonfields2sbp() {
 
 #[test]
 fn test_json2json() {
-    let tranform1 = |reader, writer| run_json2json(reader, writer);
-    let tranform2 = |reader, writer| run_json2sbp(reader, writer);
+    let tranform1 = run_json2json;
+    let tranform2 = run_json2sbp;
 
     let third_transform = ThirdTransform {
         transform: |reader, writer| run_sbp2json(reader, writer, true),

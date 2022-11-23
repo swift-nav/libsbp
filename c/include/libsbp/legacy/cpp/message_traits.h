@@ -927,6 +927,12 @@ struct MessageTraits<msg_reference_frame_param_t> {
 
 
 template<>
+struct MessageTraits<msg_pose_relative_t> {
+  static constexpr u16 id = 581;
+};
+
+
+template<>
 struct MessageTraits<msg_ndb_event_t> {
   static constexpr u16 id = 1024;
 };

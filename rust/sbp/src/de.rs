@@ -182,7 +182,7 @@ impl<R: futures::AsyncRead + Unpin> futures::Stream for Decoder<R> {
     ) -> std::task::Poll<Option<Self::Item>> {
         let frame = match futures::ready!(std::pin::Pin::new(&mut self.0).poll_next(cx)) {
             Some(Ok(frame)) => frame,
-            Some(Err(e)) => return std::task::Poll::Ready(Some(Err(e.into()))),
+            Some(Err(e)) => return std::task::Poll::Ready(Some(Err(e))),
             None => return std::task::Poll::Ready(None),
         };
         std::task::Poll::Ready(Some(frame.to_sbp()))
@@ -346,7 +346,7 @@ impl<R: futures::AsyncRead + Unpin> futures::Stream for TimeoutDecoder<R> {
     ) -> std::task::Poll<Option<Self::Item>> {
         match futures::ready!(std::pin::Pin::new(&mut self.0).poll_next(cx)) {
             Some(Ok(frame)) => std::task::Poll::Ready(Some(frame.to_sbp())),
-            Some(Err(e)) => std::task::Poll::Ready(Some(Err(e.into()))),
+            Some(Err(e)) => std::task::Poll::Ready(Some(Err(e))),
             None => std::task::Poll::Ready(None),
         }
     }
@@ -381,10 +381,7 @@ mod tests {
         let timeout_duration = Duration::from_secs(2);
         let now = Instant::now();
         let mut messages = iter_messages_with_timeout(rdr, timeout_duration);
-        for msg in &mut messages {
-            assert!(matches!(msg, Err(Error::IoError(_))));
-            break;
-        }
+        assert!(matches!(messages.next().unwrap(), Err(Error::IoError(_))));
         assert!(now.elapsed() >= timeout_duration);
     }
 

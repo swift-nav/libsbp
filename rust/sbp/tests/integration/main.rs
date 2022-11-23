@@ -10,6 +10,8 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 // This file was auto-generated. Do not modify by hand!
+
+#![allow(clippy::excessive_precision)]
 mod auto_check_sbp_acquisition_msg_acq_result_dep_a;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_b;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_c;
@@ -47,6 +49,7 @@ mod auto_check_sbp_navigation_msg_pos_llh_cov;
 mod auto_check_sbp_navigation_msg_pos_llh_cov_gnss;
 mod auto_check_sbp_navigation_msg_pos_llh_dep_a;
 mod auto_check_sbp_navigation_msg_pos_llh_gnss;
+mod auto_check_sbp_navigation_msg_pose_relative;
 mod auto_check_sbp_navigation_msg_protection_level;
 mod auto_check_sbp_navigation_msg_reference_frame_param;
 mod auto_check_sbp_navigation_msg_utc_leap_second;

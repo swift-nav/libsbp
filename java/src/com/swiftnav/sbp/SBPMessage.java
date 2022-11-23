@@ -199,6 +199,16 @@ public class SBPMessage {
             return ret;
         }
 
+        public int[] getArrayofS32() {
+            return getArrayofS32(buf.remaining() / 4);
+        }
+
+        public int[] getArrayofS32(int n) {
+            int[] ret = new int[n];
+            for (int i = 0; i < n; i++) ret[i] = getS32();
+            return ret;
+        }
+
         public float[] getArrayofFloat() {
             return getArrayofFloat(buf.remaining() / Float.BYTES);
         }
@@ -358,6 +368,15 @@ public class SBPMessage {
         public void putArrayofU32(long[] data, int n) {
             assert (n == data.length);
             putArrayofU32(data);
+        }
+
+        public void putArrayofS32(int[] data) {
+            for (int x : data) buf.putInt(x);
+        }
+
+        public void putArrayofS32(int[] data, int n) {
+            assert (n == data.length);
+            putArrayofS32(data);
         }
 
         public void putArrayofDouble(double[] data) {

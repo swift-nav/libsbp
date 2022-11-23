@@ -41,6 +41,7 @@ pub mod msg_flash_done {
     /// this message on failure.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashDone {
         /// The message sender_id
@@ -181,6 +182,7 @@ pub mod msg_flash_erase {
     /// FLASH_INVALID_FLASH (1) if the flash specified is invalid.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashErase {
         /// The message sender_id
@@ -307,6 +309,7 @@ pub mod msg_flash_program {
     /// addresses must be erased before addresses can be programmed.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashProgram {
         /// The message sender_id
@@ -450,6 +453,7 @@ pub mod msg_flash_read_req {
     /// allowed range.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashReadReq {
         /// The message sender_id
@@ -586,6 +590,7 @@ pub mod msg_flash_read_resp {
     /// allowed range.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgFlashReadResp {
         /// The message sender_id
@@ -718,6 +723,7 @@ pub mod msg_m25_flash_write_status {
     /// The device replies with a MSG_FLASH_DONE message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgM25FlashWriteStatus {
         /// The message sender_id
@@ -790,6 +796,7 @@ pub mod msg_stm_flash_lock_sector {
     /// replies with a MSG_FLASH_DONE message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmFlashLockSector {
         /// The message sender_id
@@ -862,6 +869,7 @@ pub mod msg_stm_flash_unlock_sector {
     /// device replies with a MSG_FLASH_DONE message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmFlashUnlockSector {
         /// The message sender_id
@@ -936,6 +944,7 @@ pub mod msg_stm_unique_id_req {
     /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmUniqueIdReq {
         /// The message sender_id
@@ -1002,6 +1011,7 @@ pub mod msg_stm_unique_id_resp {
     /// MSG_STM_UNIQUE_ID_RESP with the 12-byte unique ID in the payload.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgStmUniqueIdResp {
         /// The message sender_id

@@ -59,6 +59,7 @@ pub use msg_pos_llh_cov::MsgPosLlhCov;
 pub use msg_pos_llh_cov_gnss::MsgPosLlhCovGnss;
 pub use msg_pos_llh_dep_a::MsgPosLlhDepA;
 pub use msg_pos_llh_gnss::MsgPosLlhGnss;
+pub use msg_pose_relative::MsgPoseRelative;
 pub use msg_protection_level::MsgProtectionLevel;
 pub use msg_protection_level_dep_a::MsgProtectionLevelDepA;
 pub use msg_reference_frame_param::MsgReferenceFrameParam;
@@ -85,6 +86,7 @@ pub mod estimated_horizontal_error_ellipse {
     use crate::messages::lib::*;
     /// Horizontal estimated error ellipse
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct EstimatedHorizontalErrorEllipse {
         /// The semi major axis of the estimated horizontal error ellipse at the
@@ -137,6 +139,7 @@ pub mod msg_age_corrections {
     /// Differential solution.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAgeCorrections {
         /// The message sender_id
@@ -225,6 +228,7 @@ pub mod msg_baseline_ecef {
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcef {
         /// The message sender_id
@@ -406,6 +410,7 @@ pub mod msg_baseline_ecef_dep_a {
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineEcefDepA {
         /// The message sender_id
@@ -670,6 +675,7 @@ pub mod msg_baseline_heading_dep_a {
     /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineHeadingDepA {
         /// The message sender_id
@@ -916,6 +922,7 @@ pub mod msg_baseline_ned {
     /// week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNed {
         /// The message sender_id
@@ -1106,6 +1113,7 @@ pub mod msg_baseline_ned_dep_a {
     /// week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgBaselineNedDepA {
         /// The message sender_id
@@ -1378,6 +1386,7 @@ pub mod msg_dops {
     /// or SPP solution.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDops {
         /// The message sender_id
@@ -1408,6 +1417,7 @@ pub mod msg_dops {
 
     impl MsgDops {
         /// Gets the `raim_repair_flag` flag.
+        #[allow(clippy::identity_op)]
         pub fn raim_repair_flag(&self) -> bool {
             ((self.flags >> 7) & 1) == 1
         }
@@ -1582,6 +1592,7 @@ pub mod msg_dops_dep_a {
     /// navigation satellite geometry on positional measurement precision.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgDopsDepA {
         /// The message sender_id
@@ -1707,6 +1718,7 @@ pub mod msg_gps_time {
     /// these messages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTime {
         /// The message sender_id
@@ -1875,6 +1887,7 @@ pub mod msg_gps_time_dep_a {
     /// these messages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeDepA {
         /// The message sender_id
@@ -1992,6 +2005,7 @@ pub mod msg_gps_time_gnss {
     /// these messages.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgGpsTimeGnss {
         /// The message sender_id
@@ -2139,6 +2153,389 @@ pub mod msg_gps_time_gnss {
     }
 }
 
+pub mod msg_pose_relative {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// Relative Pose
+    ///
+    /// This solution message reports the relative pose of a sensor between two
+    /// time instances. The relative pose comprises of a rotation and a
+    /// translation which relates the sensor (e.g. camera) frame at a given time
+    /// (first keyframe) to the sensor frame at another time (second keyframe).
+    /// The relative translations is a 3x1 vector described in the first keyframe.
+    /// Relative rotation is described by a quaternion from second keyframe to the
+    /// first keyframe.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgPoseRelative {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// GPS Time of Week
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
+        pub tow: u32,
+        /// ID of the sensor producing this message
+        #[cfg_attr(feature = "serde", serde(rename = "sensor_id"))]
+        pub sensor_id: u8,
+        /// Timestamp of first keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp_1"))]
+        pub timestamp_1: u32,
+        /// Timestamp of second keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "timestamp_2"))]
+        pub timestamp_2: u32,
+        /// Relative translation \[x,y,z\] described in first keyframe
+        #[cfg_attr(feature = "serde", serde(rename = "trans"))]
+        pub trans: [i32; 3],
+        /// Real component of quaternion to describe relative rotation (second to
+        /// first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "w"))]
+        pub w: i32,
+        /// 1st imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "x"))]
+        pub x: i32,
+        /// 2nd imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "y"))]
+        pub y: i32,
+        /// 3rd imaginary component of quaternion to describe relative rotation
+        /// (second to first keyframe)
+        #[cfg_attr(feature = "serde", serde(rename = "z"))]
+        pub z: i32,
+        /// Estimated variance of x (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_x"))]
+        pub cov_r_x_x: f32,
+        /// Covariance of x and y (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_y"))]
+        pub cov_r_x_y: f32,
+        /// Covariance of x and z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_x_z"))]
+        pub cov_r_x_z: f32,
+        /// Estimated variance of y (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_y_y"))]
+        pub cov_r_y_y: f32,
+        /// Covariance of y and z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_y_z"))]
+        pub cov_r_y_z: f32,
+        /// Estimated variance of z (relative translation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_r_z_z"))]
+        pub cov_r_z_z: f32,
+        /// Estimated variance of x (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_x"))]
+        pub cov_c_x_x: f32,
+        /// Covariance of x and y (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_y"))]
+        pub cov_c_x_y: f32,
+        /// Covariance of x and z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_x_z"))]
+        pub cov_c_x_z: f32,
+        /// Estimated variance of y (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_y_y"))]
+        pub cov_c_y_y: f32,
+        /// Covariance of y and z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_y_z"))]
+        pub cov_c_y_z: f32,
+        /// Estimated variance of z (relative rotation)
+        #[cfg_attr(feature = "serde", serde(rename = "cov_c_z_z"))]
+        pub cov_c_z_z: f32,
+        /// Status flags of relative translation and rotation
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u8,
+    }
+
+    impl MsgPoseRelative {
+        /// Gets the [TimeSource][self::TimeSource] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `TimeSource` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `TimeSource` were added.
+        pub fn time_source(&self) -> Result<TimeSource, u8> {
+            get_bit_range!(self.flags, u8, u8, 5, 4).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [TimeSource][TimeSource] of the `flags` bitfield.
+        pub fn set_time_source(&mut self, time_source: TimeSource) {
+            set_bit_range!(&mut self.flags, time_source, u8, u8, 5, 4);
+        }
+
+        /// Gets the [RelativeTranslationStatus][self::RelativeTranslationStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RelativeTranslationStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RelativeTranslationStatus` were added.
+        pub fn relative_translation_status(&self) -> Result<RelativeTranslationStatus, u8> {
+            get_bit_range!(self.flags, u8, u8, 3, 2).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [RelativeTranslationStatus][RelativeTranslationStatus] of the `flags` bitfield.
+        pub fn set_relative_translation_status(
+            &mut self,
+            relative_translation_status: RelativeTranslationStatus,
+        ) {
+            set_bit_range!(&mut self.flags, relative_translation_status, u8, u8, 3, 2);
+        }
+
+        /// Gets the [RelativeRotationStatus][self::RelativeRotationStatus] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `RelativeRotationStatus` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `RelativeRotationStatus` were added.
+        pub fn relative_rotation_status(&self) -> Result<RelativeRotationStatus, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [RelativeRotationStatus][RelativeRotationStatus] of the `flags` bitfield.
+        pub fn set_relative_rotation_status(
+            &mut self,
+            relative_rotation_status: RelativeRotationStatus,
+        ) {
+            set_bit_range!(&mut self.flags, relative_rotation_status, u8, u8, 1, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgPoseRelative {
+        const MESSAGE_TYPE: u16 = 581;
+        const MESSAGE_NAME: &'static str = "MSG_POSE_RELATIVE";
+    }
+
+    impl SbpMessage for MsgPoseRelative {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+        #[cfg(feature = "swiftnav")]
+        fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            let tow_s = (self.tow as f64) / 1000.0;
+            let gps_time = match time::GpsTime::new(0, tow_s) {
+                Ok(gps_time) => gps_time.tow(),
+                Err(e) => return Some(Err(e.into())),
+            };
+            Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgPoseRelative {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgPoseRelative(m) => Ok(m),
+                _ => Err(TryFromSbpError),
+            }
+        }
+    }
+
+    impl WireFormat for MsgPoseRelative {
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
+            + <[i32; 3] as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <i32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <f32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.tow)
+                + WireFormat::len(&self.sensor_id)
+                + WireFormat::len(&self.timestamp_1)
+                + WireFormat::len(&self.timestamp_2)
+                + WireFormat::len(&self.trans)
+                + WireFormat::len(&self.w)
+                + WireFormat::len(&self.x)
+                + WireFormat::len(&self.y)
+                + WireFormat::len(&self.z)
+                + WireFormat::len(&self.cov_r_x_x)
+                + WireFormat::len(&self.cov_r_x_y)
+                + WireFormat::len(&self.cov_r_x_z)
+                + WireFormat::len(&self.cov_r_y_y)
+                + WireFormat::len(&self.cov_r_y_z)
+                + WireFormat::len(&self.cov_r_z_z)
+                + WireFormat::len(&self.cov_c_x_x)
+                + WireFormat::len(&self.cov_c_x_y)
+                + WireFormat::len(&self.cov_c_x_z)
+                + WireFormat::len(&self.cov_c_y_y)
+                + WireFormat::len(&self.cov_c_y_z)
+                + WireFormat::len(&self.cov_c_z_z)
+                + WireFormat::len(&self.flags)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.tow, buf);
+            WireFormat::write(&self.sensor_id, buf);
+            WireFormat::write(&self.timestamp_1, buf);
+            WireFormat::write(&self.timestamp_2, buf);
+            WireFormat::write(&self.trans, buf);
+            WireFormat::write(&self.w, buf);
+            WireFormat::write(&self.x, buf);
+            WireFormat::write(&self.y, buf);
+            WireFormat::write(&self.z, buf);
+            WireFormat::write(&self.cov_r_x_x, buf);
+            WireFormat::write(&self.cov_r_x_y, buf);
+            WireFormat::write(&self.cov_r_x_z, buf);
+            WireFormat::write(&self.cov_r_y_y, buf);
+            WireFormat::write(&self.cov_r_y_z, buf);
+            WireFormat::write(&self.cov_r_z_z, buf);
+            WireFormat::write(&self.cov_c_x_x, buf);
+            WireFormat::write(&self.cov_c_x_y, buf);
+            WireFormat::write(&self.cov_c_x_z, buf);
+            WireFormat::write(&self.cov_c_y_y, buf);
+            WireFormat::write(&self.cov_c_y_z, buf);
+            WireFormat::write(&self.cov_c_z_z, buf);
+            WireFormat::write(&self.flags, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgPoseRelative {
+                sender_id: None,
+                tow: WireFormat::parse_unchecked(buf),
+                sensor_id: WireFormat::parse_unchecked(buf),
+                timestamp_1: WireFormat::parse_unchecked(buf),
+                timestamp_2: WireFormat::parse_unchecked(buf),
+                trans: WireFormat::parse_unchecked(buf),
+                w: WireFormat::parse_unchecked(buf),
+                x: WireFormat::parse_unchecked(buf),
+                y: WireFormat::parse_unchecked(buf),
+                z: WireFormat::parse_unchecked(buf),
+                cov_r_x_x: WireFormat::parse_unchecked(buf),
+                cov_r_x_y: WireFormat::parse_unchecked(buf),
+                cov_r_x_z: WireFormat::parse_unchecked(buf),
+                cov_r_y_y: WireFormat::parse_unchecked(buf),
+                cov_r_y_z: WireFormat::parse_unchecked(buf),
+                cov_r_z_z: WireFormat::parse_unchecked(buf),
+                cov_c_x_x: WireFormat::parse_unchecked(buf),
+                cov_c_x_y: WireFormat::parse_unchecked(buf),
+                cov_c_x_z: WireFormat::parse_unchecked(buf),
+                cov_c_y_y: WireFormat::parse_unchecked(buf),
+                cov_c_y_z: WireFormat::parse_unchecked(buf),
+                cov_c_z_z: WireFormat::parse_unchecked(buf),
+                flags: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Time source
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum TimeSource {
+        /// None (invalid)
+        None = 0,
+
+        /// GNSS Solution (ms in week)
+        GnssSolution = 1,
+
+        /// Local CPU Time (ms)
+        LocalCpuTime = 2,
+    }
+
+    impl std::fmt::Display for TimeSource {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                TimeSource::None => f.write_str("None (invalid)"),
+                TimeSource::GnssSolution => f.write_str("GNSS Solution (ms in week)"),
+                TimeSource::LocalCpuTime => f.write_str("Local CPU Time (ms)"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for TimeSource {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(TimeSource::None),
+                1 => Ok(TimeSource::GnssSolution),
+                2 => Ok(TimeSource::LocalCpuTime),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Relative translation status
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum RelativeTranslationStatus {
+        /// Invalid
+        Invalid = 0,
+
+        /// Valid
+        Valid = 1,
+    }
+
+    impl std::fmt::Display for RelativeTranslationStatus {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                RelativeTranslationStatus::Invalid => f.write_str("Invalid"),
+                RelativeTranslationStatus::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for RelativeTranslationStatus {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(RelativeTranslationStatus::Invalid),
+                1 => Ok(RelativeTranslationStatus::Valid),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Relative rotation status
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum RelativeRotationStatus {
+        /// Invalid
+        Invalid = 0,
+
+        /// Valid
+        Valid = 1,
+    }
+
+    impl std::fmt::Display for RelativeRotationStatus {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                RelativeRotationStatus::Invalid => f.write_str("Invalid"),
+                RelativeRotationStatus::Valid => f.write_str("Valid"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for RelativeRotationStatus {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(RelativeRotationStatus::Invalid),
+                1 => Ok(RelativeRotationStatus::Valid),
+                i => Err(i),
+            }
+        }
+    }
+}
+
 pub mod msg_pos_ecef {
     #![allow(unused_imports)]
 
@@ -2156,6 +2553,7 @@ pub mod msg_pos_ecef {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcef {
         /// The message sender_id
@@ -2447,6 +2845,7 @@ pub mod msg_pos_ecef_cov {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCov {
         /// The message sender_id
@@ -2773,6 +3172,7 @@ pub mod msg_pos_ecef_cov_gnss {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefCovGnss {
         /// The message sender_id
@@ -3002,6 +3402,7 @@ pub mod msg_pos_ecef_dep_a {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefDepA {
         /// The message sender_id
@@ -3275,6 +3676,7 @@ pub mod msg_pos_ecef_gnss {
     /// MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosEcefGnss {
         /// The message sender_id
@@ -3469,6 +3871,7 @@ pub mod msg_pos_llh {
     /// matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlh {
         /// The message sender_id
@@ -3769,6 +4172,7 @@ pub mod msg_pos_llh_acc {
     /// The user-configured percentile is encoded in the percentile field.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhAcc {
         /// The message sender_id
@@ -4215,6 +4619,7 @@ pub mod msg_pos_llh_cov {
     /// with the sign convention.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCov {
         /// The message sender_id
@@ -4541,6 +4946,7 @@ pub mod msg_pos_llh_cov_gnss {
     /// should be taken with the sign convention.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhCovGnss {
         /// The message sender_id
@@ -4775,6 +5181,7 @@ pub mod msg_pos_llh_dep_a {
     /// matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhDepA {
         /// The message sender_id
@@ -5101,6 +5508,7 @@ pub mod msg_pos_llh_gnss {
     /// matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgPosLlhGnss {
         /// The message sender_id
@@ -5298,6 +5706,7 @@ pub mod msg_protection_level {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevel {
         /// The message sender_id
@@ -5434,6 +5843,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `velocity_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn velocity_valid(&self) -> bool {
             ((self.flags >> 21) & 1) == 1
         }
@@ -5444,6 +5854,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `attitude_valid` flag.
+        #[allow(clippy::identity_op)]
         pub fn attitude_valid(&self) -> bool {
             ((self.flags >> 22) & 1) == 1
         }
@@ -5454,6 +5865,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_hpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_hpl(&self) -> bool {
             ((self.flags >> 23) & 1) == 1
         }
@@ -5464,6 +5876,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_vpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_vpl(&self) -> bool {
             ((self.flags >> 24) & 1) == 1
         }
@@ -5474,6 +5887,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_atpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_atpl(&self) -> bool {
             ((self.flags >> 25) & 1) == 1
         }
@@ -5484,6 +5898,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_ctpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_ctpl(&self) -> bool {
             ((self.flags >> 26) & 1) == 1
         }
@@ -5494,6 +5909,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_hvpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_hvpl(&self) -> bool {
             ((self.flags >> 27) & 1) == 1
         }
@@ -5504,6 +5920,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_vvpl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_vvpl(&self) -> bool {
             ((self.flags >> 28) & 1) == 1
         }
@@ -5514,6 +5931,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_hopl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_hopl(&self) -> bool {
             ((self.flags >> 29) & 1) == 1
         }
@@ -5524,6 +5942,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_popl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_popl(&self) -> bool {
             ((self.flags >> 30) & 1) == 1
         }
@@ -5534,6 +5953,7 @@ pub mod msg_protection_level {
         }
 
         /// Gets the `safe_state_ropl` flag.
+        #[allow(clippy::identity_op)]
         pub fn safe_state_ropl(&self) -> bool {
             ((self.flags >> 31) & 1) == 1
         }
@@ -5816,6 +6236,7 @@ pub mod msg_protection_level_dep_a {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgProtectionLevelDepA {
         /// The message sender_id
@@ -6001,6 +6422,7 @@ pub mod msg_reference_frame_param {
     use crate::messages::lib::*;
     /// Reference Frame Transformation Parameters
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgReferenceFrameParam {
         /// The message sender_id
@@ -6208,6 +6630,7 @@ pub mod msg_utc_leap_second {
     /// for announced insertions) UTC leap second insertion.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcLeapSecond {
         /// The message sender_id
@@ -6337,6 +6760,7 @@ pub mod msg_utc_time {
     /// fix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTime {
         /// The message sender_id
@@ -6575,6 +6999,7 @@ pub mod msg_utc_time_gnss {
     /// fix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUtcTimeGnss {
         /// The message sender_id
@@ -6819,6 +7244,7 @@ pub mod msg_vel_body {
     /// products and is not available from Piksi Multi or Duro.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelBody {
         /// The message sender_id
@@ -7086,6 +7512,7 @@ pub mod msg_vel_cog {
     /// but not necessarily the device heading.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelCog {
         /// The message sender_id
@@ -7542,6 +7969,7 @@ pub mod msg_vel_ecef {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcef {
         /// The message sender_id
@@ -7810,6 +8238,7 @@ pub mod msg_vel_ecef_cov {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCov {
         /// The message sender_id
@@ -8113,6 +8542,7 @@ pub mod msg_vel_ecef_cov_gnss {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefCovGnss {
         /// The message sender_id
@@ -8323,6 +8753,7 @@ pub mod msg_vel_ecef_dep_a {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefDepA {
         /// The message sender_id
@@ -8447,6 +8878,7 @@ pub mod msg_vel_ecef_gnss {
     /// the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelEcefGnss {
         /// The message sender_id
@@ -8623,6 +9055,7 @@ pub mod msg_vel_ned {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNed {
         /// The message sender_id
@@ -8901,6 +9334,7 @@ pub mod msg_vel_ned_cov {
     /// triangular portion of the 3x3 covariance matrix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCov {
         /// The message sender_id
@@ -9207,6 +9641,7 @@ pub mod msg_vel_ned_cov_gnss {
     /// triangular portion of the 3x3 covariance matrix.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedCovGnss {
         /// The message sender_id
@@ -9418,6 +9853,7 @@ pub mod msg_vel_ned_dep_a {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedDepA {
         /// The message sender_id
@@ -9550,6 +9986,7 @@ pub mod msg_vel_ned_gnss {
     /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgVelNedGnss {
         /// The message sender_id

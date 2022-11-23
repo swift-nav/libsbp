@@ -2268,6 +2268,105 @@ MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_02', 'writeInt32LE',
 MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_theta_03', 'writeInt32LE', 4]);
 MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]);
 
+/**
+ * SBP class for message MSG_POSE_RELATIVE (0x0245).
+ *
+ * This solution message reports the relative pose of a sensor between two time
+ * instances. The relative pose comprises of a rotation and a translation which
+ * relates the sensor (e.g. camera) frame at a given time (first keyframe) to the
+ * sensor frame at another time (second key frame). The relative translations is a
+ * 3x1 vector described in the first keyframe.  Relative rotation is described by a
+ * quaternion from second keyframe to the first keyframe.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field sensor_id number (unsigned 8-bit int, 1 byte) ID of the sensor producing this message
+ * @field timestamp_1 number (unsigned 32-bit int, 4 bytes) Timestamp of first keyframe
+ * @field timestamp_2 number (unsigned 32-bit int, 4 bytes) Timestamp of second keyframe
+ * @field trans array Relative translation [x,y,z] described in first keyframe
+ * @field w number (signed 32-bit int, 4 bytes) Real component of quaternion to describe relative rotation (second to first
+ *   keyframe)
+ * @field x number (signed 32-bit int, 4 bytes) 1st imaginary component of quaternion to describe relative rotation (second to
+ *   first keyframe)
+ * @field y number (signed 32-bit int, 4 bytes) 2nd imaginary component of quaternion to describe relative rotation (second to
+ *   first keyframe)
+ * @field z number (signed 32-bit int, 4 bytes) 3rd imaginary component of quaternion to describe relative rotation (second to
+ *   first keyframe)
+ * @field cov_r_x_x number (float, 4 bytes) Estimated variance of x (relative translation)
+ * @field cov_r_x_y number (float, 4 bytes) Covariance of x and y (relative translation)
+ * @field cov_r_x_z number (float, 4 bytes) Covariance of x and z (relative translation)
+ * @field cov_r_y_y number (float, 4 bytes) Estimated variance of y (relative translation)
+ * @field cov_r_y_z number (float, 4 bytes) Covariance of y and z (relative translation)
+ * @field cov_r_z_z number (float, 4 bytes) Estimated variance of z (relative translation)
+ * @field cov_c_x_x number (float, 4 bytes) Estimated variance of x (relative rotation)
+ * @field cov_c_x_y number (float, 4 bytes) Covariance of x and y (relative rotation)
+ * @field cov_c_x_z number (float, 4 bytes) Covariance of x and z (relative rotation)
+ * @field cov_c_y_y number (float, 4 bytes) Estimated variance of y (relative rotation)
+ * @field cov_c_y_z number (float, 4 bytes) Covariance of y and z (relative rotation)
+ * @field cov_c_z_z number (float, 4 bytes) Estimated variance of z (relative rotation)
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags of relative translation and rotation
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgPoseRelative = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_POSE_RELATIVE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgPoseRelative.prototype = Object.create(SBP.prototype);
+MsgPoseRelative.prototype.messageType = "MSG_POSE_RELATIVE";
+MsgPoseRelative.prototype.msg_type = 0x0245;
+MsgPoseRelative.prototype.constructor = MsgPoseRelative;
+MsgPoseRelative.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint8('sensor_id')
+  .uint32('timestamp_1')
+  .uint32('timestamp_2')
+  .array('trans', { length: 3, type: 'int32le' })
+  .int32('w')
+  .int32('x')
+  .int32('y')
+  .int32('z')
+  .floatle('cov_r_x_x')
+  .floatle('cov_r_x_y')
+  .floatle('cov_r_x_z')
+  .floatle('cov_r_y_y')
+  .floatle('cov_r_y_z')
+  .floatle('cov_r_z_z')
+  .floatle('cov_c_x_x')
+  .floatle('cov_c_x_y')
+  .floatle('cov_c_x_z')
+  .floatle('cov_c_y_y')
+  .floatle('cov_c_y_z')
+  .floatle('cov_c_z_z')
+  .uint8('flags');
+MsgPoseRelative.prototype.fieldSpec = [];
+MsgPoseRelative.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['sensor_id', 'writeUInt8', 1]);
+MsgPoseRelative.prototype.fieldSpec.push(['timestamp_1', 'writeUInt32LE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['timestamp_2', 'writeUInt32LE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['trans', 'array', 'writeInt32LE', function () { return 4; }, 3]);
+MsgPoseRelative.prototype.fieldSpec.push(['w', 'writeInt32LE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['x', 'writeInt32LE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['y', 'writeInt32LE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['z', 'writeInt32LE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_r_x_x', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_r_x_y', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_r_x_z', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_r_y_y', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_r_y_z', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_r_z_z', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_c_x_x', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_c_x_y', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_c_x_z', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_c_y_y', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_c_y_z', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['cov_c_z_z', 'writeFloatLE', 4]);
+MsgPoseRelative.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
 module.exports = {
   0x0102: MsgGpsTime,
   MsgGpsTime: MsgGpsTime,
@@ -2350,4 +2449,6 @@ module.exports = {
   MsgUtcLeapSecond: MsgUtcLeapSecond,
   0x0244: MsgReferenceFrameParam,
   MsgReferenceFrameParam: MsgReferenceFrameParam,
+  0x0245: MsgPoseRelative,
+  MsgPoseRelative: MsgPoseRelative,
 }

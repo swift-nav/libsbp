@@ -36,6 +36,7 @@ pub mod acq_sv_profile {
     /// the performance.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct AcqSvProfile {
         /// SV search job type (deep, fallback, etc)
@@ -148,6 +149,7 @@ pub mod acq_sv_profile_dep {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct AcqSvProfileDep {
         /// SV search job type (deep, fallback, etc)
@@ -263,6 +265,7 @@ pub mod msg_acq_result {
     /// space with the best carrier-to-noise (CN/0) ratio.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResult {
         /// The message sender_id
@@ -356,6 +359,7 @@ pub mod msg_acq_result_dep_a {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResultDepA {
         /// The message sender_id
@@ -451,6 +455,7 @@ pub mod msg_acq_result_dep_b {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResultDepB {
         /// The message sender_id
@@ -545,6 +550,7 @@ pub mod msg_acq_result_dep_c {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqResultDepC {
         /// The message sender_id
@@ -639,6 +645,7 @@ pub mod msg_acq_sv_profile {
     /// is used to debug and measure the performance.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqSvProfile {
         /// The message sender_id
@@ -711,6 +718,7 @@ pub mod msg_acq_sv_profile_dep {
     /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgAcqSvProfileDep {
         /// The message sender_id

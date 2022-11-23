@@ -100,8 +100,12 @@ where
     E: std::error::Error + 'a,
 {
     if fatal_errors {
-        Box::new(messages.take_while(|m| m.is_ok()).map(|m| m.unwrap()))
+        Box::new(
+            messages
+                .take_while(|m| m.as_ref().map_err(|e| eprintln!("{e}")).is_ok())
+                .map(|m| m.unwrap()),
+        )
     } else {
-        Box::new(messages.filter_map(|m| m.ok()))
+        Box::new(messages.filter_map(|m| m.map_err(|e| eprintln!("{e}")).ok()))
     }
 }

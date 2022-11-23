@@ -27,6 +27,7 @@ pub mod msg_user_data {
     /// maximum length of 255 bytes per message.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgUserData {
         /// The message sender_id

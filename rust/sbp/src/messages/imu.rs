@@ -29,6 +29,7 @@ pub mod msg_imu_aux {
     /// depends on the value of `imu_type`.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgImuAux {
         /// The message sender_id
@@ -284,6 +285,7 @@ pub mod msg_imu_raw {
     /// The time-tagging mode should not change throughout a run.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
     pub struct MsgImuRaw {
         /// The message sender_id

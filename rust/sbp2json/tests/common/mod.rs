@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::{
     env,
     fs::{self, File},
@@ -65,7 +67,7 @@ pub fn find_project_root() -> Option<PathBuf> {
             break;
         }
     }
-    return None;
+    None
 }
 
 pub struct DeleteTestOutput {
@@ -91,8 +93,8 @@ impl DeleteTestOutput {
     pub fn new() -> DeleteTestOutput {
         DeleteTestOutput { files: vec![] }
     }
-    pub fn add_test_output(&mut self, file_path: &PathBuf) {
-        self.files.push(file_path.clone());
+    pub fn add_test_output(&mut self, file_path: &Path) {
+        self.files.push(file_path.to_path_buf());
     }
 }
 
@@ -194,8 +196,8 @@ fn file_equals<P: AsRef<Path>>(input: P, output: P, json: bool) -> bool {
 
     eprintln!("input: {:?}, output: {:?}", &input_path, &output_path);
 
-    let input_file = File::open(&input_path).unwrap();
-    let output_file = File::open(&output_path).unwrap();
+    let input_file = File::open(input_path).unwrap();
+    let output_file = File::open(output_path).unwrap();
 
     if json {
         json_file_equals(input_file, output_file)
@@ -256,4 +258,11 @@ fn json_file_equals(a: File, b: File) -> bool {
     } else {
         true
     }
+}
+
+/// Returns relative data path
+pub fn data_path(relative_path: &str) -> PathBuf {
+    let root = find_project_root().unwrap();
+    let root = root.as_path();
+    root.join(relative_path)
 }

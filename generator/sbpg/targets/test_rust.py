@@ -23,7 +23,7 @@ TEST_TEMPLATE_NAME = "rust/test/sbp_tests_template.rs"
 TEST_MAIN_TEMPLATE_NAME = "rust/test/sbp_tests_main_template.rs"
 
 def str_escape(value):
-    return "\"{}\".to_string()".format(value)
+    return "\"{}\"".format(value)
 
 def mod_name(value):
     return value.split('.')[1]

@@ -54,12 +54,10 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 assert_eq!(
                     msg.version.to_string(),
                     "v1.2
-"
-                    .to_string(),
+",
                     "incorrect value for msg.version, expected string '{}', is '{}'",
                     "v1.2
-"
-                    .to_string(),
+",
                     msg.version
                 );
             }
@@ -173,12 +171,10 @@ fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 assert_eq!(
                     msg.version.to_string(),
                     "v1.2
-"
-                    .to_string(),
+",
                     "incorrect value for msg.version, expected string '{}', is '{}'",
                     "v1.2
-"
-                    .to_string(),
+",
                     msg.version
                 );
             }
@@ -308,12 +304,10 @@ fn test_sbp2json_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 assert_eq!(
                     msg.version.to_string(),
                     "v1.2
-"
-                    .to_string(),
+",
                     "incorrect value for msg.version, expected string '{}', is '{}'",
                     "v1.2
-"
-                    .to_string(),
+",
                     msg.version
                 );
             }
