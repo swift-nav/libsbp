@@ -51,7 +51,7 @@ swift_cc_library(
     ],
     hdrs = SBP_INCLUDE + SBP_INCLUDE_INTERNAL,
     copts = [
-        "-I" + LOCAL_INCLUDE_PREFIX + "c/src/include",
+        "-I" + LOCAL_INCLUDE_PREFIX + "src/include",
     ],
     includes = [
         "include",
