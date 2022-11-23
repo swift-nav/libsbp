@@ -27,11 +27,10 @@ jobs:
           { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
 
-    name: "Ubuntu 20.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
+    name: "Ubuntu 18.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
 
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:18.04
+    container: ubuntu:18.04
 
     steps:
 
@@ -63,21 +62,21 @@ jobs:
             -DBUILD_EXAMPLES=true
 
       - name: Build
-        run: cmake --build build
+        run: cmake --build build --parallel 
 
       - name: Example
-        run: cmake --build build --target examples
+        run: cmake --build build --parallel --target examples
 
       - name: Test
-        run: cmake --build build --target do-all-tests
+        run: cmake --build build --parallel --target do-all-tests
 
       - name: Install
-        run: cmake --build build --target install
+        run: cmake --build build --parallel --target install
 
       - name: Test Package
         run: |
           cmake -S c/test_package -B c/test_package/build -DCMAKE_PREFIX_PATH="$PWD/install"
-          cmake --build c/test_package/build
+          cmake --parallel --build c/test_package/build
 
   macos:
     name: macOS
