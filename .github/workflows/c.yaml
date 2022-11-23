@@ -63,7 +63,7 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq install libeigen3-dev libserialport-dev cmake build-essential ${{ matrix.compiler.package }}
+          sudo apt-get -qq install libeigen3-dev libserialport-dev git cmake build-essential ${{ matrix.compiler.package }}
 
       - name: Configure
         run: |
