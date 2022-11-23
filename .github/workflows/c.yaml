@@ -38,7 +38,6 @@ jobs:
 #        run: |
 #          bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
 
-
   ubuntu-lts:
     strategy:
       matrix:
@@ -52,7 +51,9 @@ jobs:
           { build_type: "Debug", compiler: { c: "gcc-6", cxx: "g++-6" }, build_shared_libraries: false }
         ]
     name: "Ubuntu 20.04 (Build: ${{ matrix.build_type }}, Compilers: ${{ matrix.compiler.c }}/${{ matrix.compiler.cxx }}, Shared Library: ${{ matrix.build_shared_libraries }})"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:18.04
     steps:
       - uses: actions/checkout@v2
         with:
@@ -62,7 +63,7 @@ jobs:
       - name: Setup
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq install libeigen3-dev libserialport-dev ${{ matrix.compiler.package }}
+          sudo apt-get -qq install libeigen3-dev libserialport-dev cmake build-essential ${{ matrix.compiler.package }}
 
       - name: Configure
         run: |
