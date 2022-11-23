@@ -232,17 +232,17 @@ mod tests {
 
         let mut with_time = iter_messages(data).ignore_errors().with_rover_time();
 
-        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
+        let gps_time = with_time.next().and_then(|(_, t)| t).unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
         assert!((gps_time.tow() - 2567.8).abs() < f64::EPSILON);
 
-        assert!(with_time.next().map(|(_, t)| t).flatten().is_none());
+        assert!(with_time.next().and_then(|(_, t)| t).is_none());
 
-        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
+        let gps_time = with_time.next().and_then(|(_, t)| t).unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
         assert!((gps_time.tow() - 2567.9).abs() < f64::EPSILON);
 
-        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
+        let gps_time = with_time.next().and_then(|(_, t)| t).unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
         assert!((gps_time.tow() - 2568.).abs() < f64::EPSILON);
     }

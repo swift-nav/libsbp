@@ -1,7 +1,6 @@
 mod common;
 
-use crate::common::{data_path, find_project_root};
-use assert_cmd::cargo::CommandCargoExt;
+use crate::common::data_path;
 use assert_cmd::Command;
 
 /// Asserts termination of json decoder on broken inputs

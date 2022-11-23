@@ -10,6 +10,8 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 // This file was auto-generated. Do not modify by hand!
+
+#![allow(clippy::excessive_precision)]
 mod auto_check_sbp_acquisition_msg_acq_result_dep_a;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_b;
 mod auto_check_sbp_acquisition_msg_acq_result_dep_c;

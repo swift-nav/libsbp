@@ -55,9 +55,9 @@ fn test_auto_check_sbp_logging_msg_log() {
                 );
                 assert_eq!(
                     msg.text.to_string(),
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    "Filtered all obs from 2314 at tow 83.539019",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    "Filtered all obs from 2314 at tow 83.539019",
                     msg.text
                 );
             }
@@ -120,9 +120,9 @@ fn test_json2sbp_auto_check_sbp_logging_msg_log() {
                 );
                 assert_eq!(
                     msg.text.to_string(),
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    "Filtered all obs from 2314 at tow 83.539019",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    "Filtered all obs from 2314 at tow 83.539019",
                     msg.text
                 );
             }
@@ -194,9 +194,9 @@ fn test_sbp2json_auto_check_sbp_logging_msg_log() {
                 );
                 assert_eq!(
                     msg.text.to_string(),
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    "Filtered all obs from 2314 at tow 83.539019",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "Filtered all obs from 2314 at tow 83.539019".to_string(),
+                    "Filtered all obs from 2314 at tow 83.539019",
                     msg.text
                 );
             }

@@ -11,6 +11,8 @@
 
 // This file was auto-generated. Do not modify by hand!
 
+#![allow(clippy::excessive_precision)]
+
 ((*- for test_name in test_names *))
 mod (((test_name)));
 ((*- endfor *))

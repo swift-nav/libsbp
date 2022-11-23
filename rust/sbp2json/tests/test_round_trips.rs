@@ -43,7 +43,7 @@ fn test_continue_on_error() {
 #[test]
 fn test_sbp2json() {
     let tranform1 = |reader, writer| run_sbp2json(reader, writer, true);
-    let tranform2 = |reader, writer| run_json2sbp(reader, writer);
+    let tranform2 = run_json2sbp;
 
     test_round_trip(
         tranform1,
@@ -57,7 +57,7 @@ fn test_sbp2json() {
 
 #[test]
 fn test_json2sbp() {
-    let tranform1 = |reader, writer| run_json2sbp(reader, writer);
+    let tranform1 = run_json2sbp;
     let tranform2 = |reader, writer| run_sbp2json(reader, writer, true);
 
     test_round_trip(
@@ -72,7 +72,7 @@ fn test_json2sbp() {
 
 #[test]
 fn test_jsonfields2sbp() {
-    let tranform1 = |reader, writer| run_jsonfields2sbp(reader, writer);
+    let tranform1 = run_jsonfields2sbp;
     let tranform2 = |reader, writer| run_sbp2json(reader, writer, false);
 
     test_round_trip(
@@ -87,8 +87,8 @@ fn test_jsonfields2sbp() {
 
 #[test]
 fn test_json2json() {
-    let tranform1 = |reader, writer| run_json2json(reader, writer);
-    let tranform2 = |reader, writer| run_json2sbp(reader, writer);
+    let tranform1 = run_json2json;
+    let tranform2 = run_json2sbp;
 
     let third_transform = ThirdTransform {
         transform: |reader, writer| run_sbp2json(reader, writer, true),

@@ -51,12 +51,10 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -96,12 +94,10 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -141,12 +137,10 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: Disabling channel 0 (PRN 11)
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: Disabling channel 0 (PRN 11)
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -186,12 +180,10 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -231,12 +223,10 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -276,12 +266,10 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: Disabling channel 1 (PRN 15)
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: Disabling channel 1 (PRN 15)
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -340,12 +328,10 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -390,12 +376,10 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -440,12 +424,10 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: Disabling channel 0 (PRN 11)
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: Disabling channel 0 (PRN 11)
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -490,12 +472,10 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -540,12 +520,10 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -590,12 +568,10 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: Disabling channel 1 (PRN 15)
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: Disabling channel 1 (PRN 15)
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -663,12 +639,10 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -727,12 +701,10 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -791,12 +763,10 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: Disabling channel 0 (PRN 11)
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: Disabling channel 0 (PRN 11)
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -855,12 +825,10 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -919,12 +887,10 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }
@@ -983,12 +949,10 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 assert_eq!(
                     msg.text.to_string(),
                     "INFO: Disabling channel 1 (PRN 15)
-"
-                    .to_string(),
+",
                     "incorrect value for msg.text, expected string '{}', is '{}'",
                     "INFO: Disabling channel 1 (PRN 15)
-"
-                    .to_string(),
+",
                     msg.text
                 );
             }

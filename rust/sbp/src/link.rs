@@ -49,7 +49,7 @@ where
         {
             let mut handlers = self.link.inner.handlers.lock().unwrap();
             for handler in handlers.values_mut() {
-                if handler.can_run(&msg) {
+                if handler.can_run(msg) {
                     handler.run(state, msg.clone());
                     sent = true;
                 }
@@ -58,7 +58,7 @@ where
         {
             let mut handlers = self.stateless_link.inner.handlers.lock().unwrap();
             for handler in handlers.values_mut() {
-                if handler.can_run(&msg) {
+                if handler.can_run(msg) {
                     handler.run(&(), msg.clone());
                     sent = true;
                 }
@@ -142,6 +142,7 @@ struct LinkInner<'link, S> {
 }
 
 /// A message handler and the message ids it responds to.
+#[allow(clippy::type_complexity)]
 pub struct Handler<'link, S> {
     func: Box<dyn FnMut(&S, Sbp) + Send + 'link>,
     msg_types: Cow<'static, [u16]>,
@@ -225,7 +226,7 @@ slotmap::new_key_type! {
 }
 
 /// Returned when registering a callback. Can be used to unregister the callback.
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Key {
     key: KeyInner,
 }
