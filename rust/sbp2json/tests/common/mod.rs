@@ -257,3 +257,10 @@ fn json_file_equals(a: File, b: File) -> bool {
         true
     }
 }
+
+/// Returns relative data path
+pub fn data_path(relative_path: &str) -> PathBuf {
+    let root = find_project_root().unwrap();
+    let root = root.as_path();
+    root.join(relative_path)
+}
