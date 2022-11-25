@@ -190,7 +190,7 @@ impl<R: futures::AsyncRead + Unpin> futures::Stream for Decoder<R> {
 }
 
 #[derive(Debug, Clone, Default)]
-pub struct FramerImpl;
+struct FramerImpl;
 
 impl dencode::Decoder for FramerImpl {
     type Item = Frame;
