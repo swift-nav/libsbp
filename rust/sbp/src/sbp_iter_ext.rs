@@ -119,11 +119,7 @@ where
 mod swiftnav_impl {
     use swiftnav::time::GpsTime;
 
-    use crate::{
-        messages::SbpMessage,
-        time::{GpsTimeError, MessageTime, RoverTime},
-        Sbp,
-    };
+    use crate::{messages::SbpMessage, time::{GpsTimeError, MessageTime, RoverTime}, Sbp, Frame};
 
     /// See [SbpIterExt::with_rover_time] for more information.
     pub struct RoverTimeIter<I: Iterator> {
@@ -202,6 +198,12 @@ mod swiftnav_impl {
                 Ok(m) => m.gps_time(),
                 Err(_) => None,
             }
+        }
+    }
+
+    impl HasTime for Frame {
+        fn time(&self) -> Option<Result<MessageTime, GpsTimeError>> {
+            self.to_sbp().time()
         }
     }
 }
