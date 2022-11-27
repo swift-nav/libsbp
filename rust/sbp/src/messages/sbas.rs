@@ -90,6 +90,19 @@ pub mod msg_sbas_raw {
         }
     }
 
+    impl FriendlyName for MsgSbasRaw {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSbasRaw {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSbasRaw {
         const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN

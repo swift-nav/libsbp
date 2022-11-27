@@ -79,6 +79,19 @@ pub mod msg_bootloader_handshake_dep_a {
         }
     }
 
+    impl FriendlyName for MsgBootloaderHandshakeDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBootloaderHandshakeDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgBootloaderHandshakeDepA {
         const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -147,6 +160,19 @@ pub mod msg_bootloader_handshake_req {
                 Sbp::MsgBootloaderHandshakeReq(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgBootloaderHandshakeReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBootloaderHandshakeReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -265,6 +291,19 @@ pub mod msg_bootloader_handshake_resp {
         }
     }
 
+    impl FriendlyName for MsgBootloaderHandshakeResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBootloaderHandshakeResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgBootloaderHandshakeResp {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
@@ -337,6 +376,19 @@ pub mod msg_bootloader_jump_to_app {
                 Sbp::MsgBootloaderJumpToApp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgBootloaderJumpToApp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBootloaderJumpToApp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -414,6 +466,19 @@ pub mod msg_nap_device_dna_req {
         }
     }
 
+    impl FriendlyName for MsgNapDeviceDnaReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgNapDeviceDnaReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgNapDeviceDnaReq {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -483,6 +548,19 @@ pub mod msg_nap_device_dna_resp {
                 Sbp::MsgNapDeviceDnaResp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgNapDeviceDnaResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgNapDeviceDnaResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

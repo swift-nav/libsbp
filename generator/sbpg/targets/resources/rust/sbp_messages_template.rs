@@ -149,6 +149,19 @@ impl TryFrom<Sbp> for (((m.msg_name))) {
         }
     }
 }
+
+impl FriendlyName for (((m.msg_name))) {
+    fn friendly_name() -> &'static str {
+        "(((m.friendly_name)))"
+    }
+}
+
+impl MessageDisplay for (((m.msg_name))) {
+    #[allow(clippy::useless_format)]
+    fn message_display(&self) -> String {
+        format!("(((m.message_display)))")
+    }
+}
 ((* endif *))
 
 impl WireFormat for (((m.msg_name))) {

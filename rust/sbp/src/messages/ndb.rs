@@ -157,6 +157,19 @@ pub mod msg_ndb_event {
         }
     }
 
+    impl FriendlyName for MsgNdbEvent {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgNdbEvent {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgNdbEvent {
         const MIN_LEN: usize = <u64 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN

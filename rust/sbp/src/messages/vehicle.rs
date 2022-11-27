@@ -140,6 +140,19 @@ pub mod msg_odometry {
         }
     }
 
+    impl FriendlyName for MsgOdometry {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgOdometry {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgOdometry {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -399,6 +412,19 @@ pub mod msg_wheeltick {
                 Sbp::MsgWheeltick(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgWheeltick {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgWheeltick {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

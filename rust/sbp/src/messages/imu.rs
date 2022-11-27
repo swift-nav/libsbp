@@ -123,6 +123,19 @@ pub mod msg_imu_aux {
         }
     }
 
+    impl FriendlyName for MsgImuAux {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgImuAux {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgImuAux {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -396,6 +409,19 @@ pub mod msg_imu_raw {
                 Sbp::MsgImuRaw(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgImuRaw {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgImuRaw {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

@@ -318,6 +318,19 @@ pub mod msg_acq_result {
         }
     }
 
+    impl FriendlyName for MsgAcqResult {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAcqResult {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAcqResult {
         const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN
@@ -411,6 +424,19 @@ pub mod msg_acq_result_dep_a {
                 Sbp::MsgAcqResultDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgAcqResultDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAcqResultDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -509,6 +535,19 @@ pub mod msg_acq_result_dep_b {
         }
     }
 
+    impl FriendlyName for MsgAcqResultDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAcqResultDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAcqResultDepB {
         const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN
@@ -603,6 +642,19 @@ pub mod msg_acq_result_dep_c {
         }
     }
 
+    impl FriendlyName for MsgAcqResultDepC {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAcqResultDepC {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAcqResultDepC {
         const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN
@@ -689,6 +741,19 @@ pub mod msg_acq_sv_profile {
         }
     }
 
+    impl FriendlyName for MsgAcqSvProfile {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAcqSvProfile {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAcqSvProfile {
         const MIN_LEN: usize = <Vec<AcqSvProfile> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -759,6 +824,19 @@ pub mod msg_acq_sv_profile_dep {
                 Sbp::MsgAcqSvProfileDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgAcqSvProfileDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAcqSvProfileDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

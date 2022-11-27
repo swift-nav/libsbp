@@ -195,6 +195,19 @@ pub mod msg_age_corrections {
         }
     }
 
+    impl FriendlyName for MsgAgeCorrections {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAgeCorrections {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAgeCorrections {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <u16 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -312,6 +325,19 @@ pub mod msg_baseline_ecef {
                 Sbp::MsgBaselineEcef(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgBaselineEcef {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBaselineEcef {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -522,6 +548,19 @@ pub mod msg_baseline_ecef_dep_a {
                 Sbp::MsgBaselineEcefDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgBaselineEcefDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBaselineEcefDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -781,6 +820,19 @@ pub mod msg_baseline_heading_dep_a {
         }
     }
 
+    impl FriendlyName for MsgBaselineHeadingDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBaselineHeadingDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgBaselineHeadingDepA {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN
@@ -1012,6 +1064,19 @@ pub mod msg_baseline_ned {
         }
     }
 
+    impl FriendlyName for MsgBaselineNed {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBaselineNed {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgBaselineNed {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -1228,6 +1293,19 @@ pub mod msg_baseline_ned_dep_a {
                 Sbp::MsgBaselineNedDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgBaselineNedDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBaselineNedDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1484,6 +1562,19 @@ pub mod msg_dops {
         }
     }
 
+    impl FriendlyName for MsgDops {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgDops {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgDops {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -1660,6 +1751,19 @@ pub mod msg_dops_dep_a {
         }
     }
 
+    impl FriendlyName for MsgDopsDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgDopsDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgDopsDepA {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -1799,6 +1903,19 @@ pub mod msg_gps_time {
                 Sbp::MsgGpsTime(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgGpsTime {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGpsTime {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1955,6 +2072,19 @@ pub mod msg_gps_time_dep_a {
         }
     }
 
+    impl FriendlyName for MsgGpsTimeDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGpsTimeDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgGpsTimeDepA {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN
@@ -2086,6 +2216,19 @@ pub mod msg_gps_time_gnss {
                 Sbp::MsgGpsTimeGnss(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgGpsTimeGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGpsTimeGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2337,6 +2480,19 @@ pub mod msg_pose_relative {
                 Sbp::MsgPoseRelative(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPoseRelative {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPoseRelative {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2671,6 +2827,19 @@ pub mod msg_pos_ecef {
         }
     }
 
+    impl FriendlyName for MsgPosEcef {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosEcef {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgPosEcef {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -2978,6 +3147,19 @@ pub mod msg_pos_ecef_cov {
         }
     }
 
+    impl FriendlyName for MsgPosEcefCov {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosEcefCov {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgPosEcefCov {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -3274,6 +3456,19 @@ pub mod msg_pos_ecef_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgPosEcefCovGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosEcefCovGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgPosEcefCovGnss {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -3514,6 +3709,19 @@ pub mod msg_pos_ecef_dep_a {
                 Sbp::MsgPosEcefDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPosEcefDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosEcefDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -3763,6 +3971,19 @@ pub mod msg_pos_ecef_gnss {
         }
     }
 
+    impl FriendlyName for MsgPosEcefGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosEcefGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgPosEcefGnss {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -3989,6 +4210,19 @@ pub mod msg_pos_llh {
                 Sbp::MsgPosLlh(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPosLlh {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosLlh {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -4348,6 +4582,19 @@ pub mod msg_pos_llh_acc {
                 Sbp::MsgPosLlhAcc(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPosLlhAcc {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosLlhAcc {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -4752,6 +4999,19 @@ pub mod msg_pos_llh_cov {
         }
     }
 
+    impl FriendlyName for MsgPosLlhCov {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosLlhCov {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgPosLlhCov {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -5048,6 +5308,19 @@ pub mod msg_pos_llh_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgPosLlhCovGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosLlhCovGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgPosLlhCovGnss {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -5310,6 +5583,19 @@ pub mod msg_pos_llh_dep_a {
                 Sbp::MsgPosLlhDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPosLlhDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosLlhDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -5595,6 +5881,19 @@ pub mod msg_pos_llh_gnss {
                 Sbp::MsgPosLlhGnss(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPosLlhGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPosLlhGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -6011,6 +6310,19 @@ pub mod msg_protection_level {
         }
     }
 
+    impl FriendlyName for MsgProtectionLevel {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgProtectionLevel {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgProtectionLevel {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -6333,6 +6645,19 @@ pub mod msg_protection_level_dep_a {
         }
     }
 
+    impl FriendlyName for MsgProtectionLevelDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgProtectionLevelDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgProtectionLevelDepA {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -6524,6 +6849,19 @@ pub mod msg_reference_frame_param {
         }
     }
 
+    impl FriendlyName for MsgReferenceFrameParam {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgReferenceFrameParam {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgReferenceFrameParam {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <SbpString<[u8; 32], NullTerminated> as WireFormat>::MIN_LEN
@@ -6698,6 +7036,19 @@ pub mod msg_utc_leap_second {
         }
     }
 
+    impl FriendlyName for MsgUtcLeapSecond {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgUtcLeapSecond {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgUtcLeapSecond {
         const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -6864,6 +7215,19 @@ pub mod msg_utc_time {
                 Sbp::MsgUtcTime(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgUtcTime {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgUtcTime {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -7103,6 +7467,19 @@ pub mod msg_utc_time_gnss {
                 Sbp::MsgUtcTimeGnss(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgUtcTimeGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgUtcTimeGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -7357,6 +7734,19 @@ pub mod msg_vel_body {
                 Sbp::MsgVelBody(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgVelBody {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelBody {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -7686,6 +8076,19 @@ pub mod msg_vel_cog {
                 Sbp::MsgVelCog(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgVelCog {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelCog {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -8084,6 +8487,19 @@ pub mod msg_vel_ecef {
         }
     }
 
+    impl FriendlyName for MsgVelEcef {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelEcef {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgVelEcef {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -8368,6 +8784,19 @@ pub mod msg_vel_ecef_cov {
         }
     }
 
+    impl FriendlyName for MsgVelEcefCov {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelEcefCov {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgVelEcefCov {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -8644,6 +9073,19 @@ pub mod msg_vel_ecef_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgVelEcefCovGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelEcefCovGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgVelEcefCovGnss {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -8824,6 +9266,19 @@ pub mod msg_vel_ecef_dep_a {
         }
     }
 
+    impl FriendlyName for MsgVelEcefDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelEcefDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgVelEcefDepA {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -8962,6 +9417,19 @@ pub mod msg_vel_ecef_gnss {
                 Sbp::MsgVelEcefGnss(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgVelEcefGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelEcefGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -9170,6 +9638,19 @@ pub mod msg_vel_ned {
                 Sbp::MsgVelNed(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgVelNed {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelNed {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -9464,6 +9945,19 @@ pub mod msg_vel_ned_cov {
         }
     }
 
+    impl FriendlyName for MsgVelNedCov {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelNedCov {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgVelNedCov {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -9743,6 +10237,19 @@ pub mod msg_vel_ned_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgVelNedCovGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelNedCovGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgVelNedCovGnss {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -9927,6 +10434,19 @@ pub mod msg_vel_ned_dep_a {
         }
     }
 
+    impl FriendlyName for MsgVelNedDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelNedDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgVelNedDepA {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -10073,6 +10593,19 @@ pub mod msg_vel_ned_gnss {
                 Sbp::MsgVelNedGnss(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgVelNedGnss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgVelNedGnss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

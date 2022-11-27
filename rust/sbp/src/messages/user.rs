@@ -71,6 +71,19 @@ pub mod msg_user_data {
         }
     }
 
+    impl FriendlyName for MsgUserData {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgUserData {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgUserData {
         const MIN_LEN: usize = <Vec<u8> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {

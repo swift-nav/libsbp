@@ -92,6 +92,19 @@ pub mod msg_mag_raw {
         }
     }
 
+    impl FriendlyName for MsgMagRaw {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgMagRaw {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgMagRaw {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN

@@ -530,6 +530,19 @@ pub mod msg_ssr_code_biases {
         }
     }
 
+    impl FriendlyName for MsgSsrCodeBiases {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrCodeBiases {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrCodeBiases {
         const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
             + <GnssSignal as WireFormat>::MIN_LEN
@@ -624,6 +637,19 @@ pub mod msg_ssr_code_phase_biases_bounds {
                 Sbp::MsgSsrCodePhaseBiasesBounds(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrCodePhaseBiasesBounds {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrCodePhaseBiasesBounds {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -724,6 +750,19 @@ pub mod msg_ssr_gridded_correction {
                 Sbp::MsgSsrGriddedCorrection(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrGriddedCorrection {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrGriddedCorrection {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -847,6 +886,19 @@ pub mod msg_ssr_gridded_correction_bounds {
                 Sbp::MsgSsrGriddedCorrectionBounds(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrGriddedCorrectionBounds {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrGriddedCorrectionBounds {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -976,6 +1028,19 @@ pub mod msg_ssr_gridded_correction_dep_a {
         }
     }
 
+    impl FriendlyName for MsgSsrGriddedCorrectionDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrGriddedCorrectionDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrGriddedCorrectionDepA {
         const MIN_LEN: usize = <GriddedCorrectionHeaderDepA as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -1066,6 +1131,19 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
         }
     }
 
+    impl FriendlyName for MsgSsrGriddedCorrectionNoStdDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrGriddedCorrectionNoStdDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrGriddedCorrectionNoStdDepA {
         const MIN_LEN: usize = <GriddedCorrectionHeaderDepA as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -1150,6 +1228,19 @@ pub mod msg_ssr_grid_definition_dep_a {
                 Sbp::MsgSsrGridDefinitionDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrGridDefinitionDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrGridDefinitionDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1269,6 +1360,19 @@ pub mod msg_ssr_orbit_clock {
                 Sbp::MsgSsrOrbitClock(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrOrbitClock {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrOrbitClock {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1413,6 +1517,19 @@ pub mod msg_ssr_orbit_clock_bounds {
         }
     }
 
+    impl FriendlyName for MsgSsrOrbitClockBounds {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrOrbitClockBounds {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrOrbitClockBounds {
         const MIN_LEN: usize = <BoundsHeader as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -1509,6 +1626,19 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
                 Sbp::MsgSsrOrbitClockBoundsDegradation(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrOrbitClockBoundsDegradation {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrOrbitClockBoundsDegradation {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1635,6 +1765,19 @@ pub mod msg_ssr_orbit_clock_dep_a {
                 Sbp::MsgSsrOrbitClockDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrOrbitClockDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrOrbitClockDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1793,6 +1936,19 @@ pub mod msg_ssr_phase_biases {
         }
     }
 
+    impl FriendlyName for MsgSsrPhaseBiases {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrPhaseBiases {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrPhaseBiases {
         const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
             + <GnssSignal as WireFormat>::MIN_LEN
@@ -1894,6 +2050,19 @@ pub mod msg_ssr_satellite_apc {
         }
     }
 
+    impl FriendlyName for MsgSsrSatelliteApc {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrSatelliteApc {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrSatelliteApc {
         const MIN_LEN: usize = <Vec<SatelliteAPC> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -1975,6 +2144,19 @@ pub mod msg_ssr_stec_correction {
                 Sbp::MsgSsrStecCorrection(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrStecCorrection {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrStecCorrection {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2079,6 +2261,19 @@ pub mod msg_ssr_stec_correction_dep {
         }
     }
 
+    impl FriendlyName for MsgSsrStecCorrectionDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrStecCorrectionDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrStecCorrectionDep {
         const MIN_LEN: usize =
             <STECHeader as WireFormat>::MIN_LEN + <Vec<STECSatElement> as WireFormat>::MIN_LEN;
@@ -2151,6 +2346,19 @@ pub mod msg_ssr_stec_correction_dep_a {
                 Sbp::MsgSsrStecCorrectionDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrStecCorrectionDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrStecCorrectionDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2298,6 +2506,19 @@ pub mod msg_ssr_tile_definition {
                 Sbp::MsgSsrTileDefinition(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrTileDefinition {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrTileDefinition {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2475,6 +2696,19 @@ pub mod msg_ssr_tile_definition_dep {
                 Sbp::MsgSsrTileDefinitionDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrTileDefinitionDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrTileDefinitionDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

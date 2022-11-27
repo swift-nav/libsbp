@@ -442,6 +442,19 @@ pub mod msg_soln_meta {
         }
     }
 
+    impl FriendlyName for MsgSolnMeta {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSolnMeta {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSolnMeta {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -621,6 +634,19 @@ pub mod msg_soln_meta_dep_a {
                 Sbp::MsgSolnMetaDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSolnMetaDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSolnMetaDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

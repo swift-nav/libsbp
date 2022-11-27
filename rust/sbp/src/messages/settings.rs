@@ -101,6 +101,19 @@ pub mod msg_settings_read_by_index_done {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadByIndexDone {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsReadByIndexDone {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSettingsReadByIndexDone {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -167,6 +180,19 @@ pub mod msg_settings_read_by_index_req {
                 Sbp::MsgSettingsReadByIndexReq(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSettingsReadByIndexReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsReadByIndexReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -256,6 +282,19 @@ pub mod msg_settings_read_by_index_resp {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadByIndexResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsReadByIndexResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSettingsReadByIndexResp {
         const MIN_LEN: usize =
             <u16 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
@@ -339,6 +378,19 @@ pub mod msg_settings_read_req {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsReadReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSettingsReadReq {
         const MIN_LEN: usize = <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -417,6 +469,19 @@ pub mod msg_settings_read_resp {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsReadResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSettingsReadResp {
         const MIN_LEN: usize = <SbpString<Vec<u8>, Multipart> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -489,6 +554,19 @@ pub mod msg_settings_register {
                 Sbp::MsgSettingsRegister(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSettingsRegister {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsRegister {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -585,6 +663,19 @@ pub mod msg_settings_register_resp {
                 Sbp::MsgSettingsRegisterResp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSettingsRegisterResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsRegisterResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -713,6 +804,19 @@ pub mod msg_settings_save {
         }
     }
 
+    impl FriendlyName for MsgSettingsSave {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsSave {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSettingsSave {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -784,6 +888,19 @@ pub mod msg_settings_write {
                 Sbp::MsgSettingsWrite(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSettingsWrite {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsWrite {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -882,6 +999,19 @@ pub mod msg_settings_write_resp {
                 Sbp::MsgSettingsWriteResp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSettingsWriteResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSettingsWriteResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

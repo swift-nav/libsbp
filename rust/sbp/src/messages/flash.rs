@@ -101,6 +101,19 @@ pub mod msg_flash_done {
         }
     }
 
+    impl FriendlyName for MsgFlashDone {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFlashDone {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFlashDone {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -245,6 +258,19 @@ pub mod msg_flash_erase {
         }
     }
 
+    impl FriendlyName for MsgFlashErase {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFlashErase {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFlashErase {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <u32 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -375,6 +401,19 @@ pub mod msg_flash_program {
                 Sbp::MsgFlashProgram(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgFlashProgram {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFlashProgram {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -519,6 +558,19 @@ pub mod msg_flash_read_req {
         }
     }
 
+    impl FriendlyName for MsgFlashReadReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFlashReadReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFlashReadReq {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <[u8; 3] as WireFormat>::MIN_LEN
@@ -656,6 +708,19 @@ pub mod msg_flash_read_resp {
         }
     }
 
+    impl FriendlyName for MsgFlashReadResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFlashReadResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFlashReadResp {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <[u8; 3] as WireFormat>::MIN_LEN
@@ -767,6 +832,19 @@ pub mod msg_m25_flash_write_status {
         }
     }
 
+    impl FriendlyName for MsgM25FlashWriteStatus {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgM25FlashWriteStatus {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgM25FlashWriteStatus {
         const MIN_LEN: usize = <[u8; 1] as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -837,6 +915,19 @@ pub mod msg_stm_flash_lock_sector {
                 Sbp::MsgStmFlashLockSector(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgStmFlashLockSector {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgStmFlashLockSector {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -913,6 +1004,19 @@ pub mod msg_stm_flash_unlock_sector {
         }
     }
 
+    impl FriendlyName for MsgStmFlashUnlockSector {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgStmFlashUnlockSector {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgStmFlashUnlockSector {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -985,6 +1089,19 @@ pub mod msg_stm_unique_id_req {
         }
     }
 
+    impl FriendlyName for MsgStmUniqueIdReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgStmUniqueIdReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgStmUniqueIdReq {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -1052,6 +1169,19 @@ pub mod msg_stm_unique_id_resp {
                 Sbp::MsgStmUniqueIdResp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgStmUniqueIdResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgStmUniqueIdResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

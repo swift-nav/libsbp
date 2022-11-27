@@ -370,6 +370,8 @@ class MsgItem(object):
             if len(field.bitfield) > 0:
                 self.has_bitfield = True
         self.gps_time_fn = gps_time_fn(self)
+        self.message_display = getattr(msg, "message_display", "")
+        self.friendly_name = getattr(msg, "friendly_name", "")
 
 
 class PackageItem(object):

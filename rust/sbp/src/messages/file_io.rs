@@ -88,6 +88,19 @@ pub mod msg_fileio_config_req {
         }
     }
 
+    impl FriendlyName for MsgFileioConfigReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioConfigReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFileioConfigReq {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -170,6 +183,19 @@ pub mod msg_fileio_config_resp {
                 Sbp::MsgFileioConfigResp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgFileioConfigResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioConfigResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -271,6 +297,19 @@ pub mod msg_fileio_read_dir_req {
         }
     }
 
+    impl FriendlyName for MsgFileioReadDirReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioReadDirReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFileioReadDirReq {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN
@@ -355,6 +394,19 @@ pub mod msg_fileio_read_dir_resp {
                 Sbp::MsgFileioReadDirResp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgFileioReadDirResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioReadDirResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -444,6 +496,19 @@ pub mod msg_fileio_read_req {
                 Sbp::MsgFileioReadReq(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgFileioReadReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioReadReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -537,6 +602,19 @@ pub mod msg_fileio_read_resp {
         }
     }
 
+    impl FriendlyName for MsgFileioReadResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioReadResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFileioReadResp {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <Vec<u8> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -611,6 +689,19 @@ pub mod msg_fileio_remove {
                 Sbp::MsgFileioRemove(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgFileioRemove {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioRemove {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -701,6 +792,19 @@ pub mod msg_fileio_write_req {
         }
     }
 
+    impl FriendlyName for MsgFileioWriteReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioWriteReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFileioWriteReq {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN
@@ -785,6 +889,19 @@ pub mod msg_fileio_write_resp {
                 Sbp::MsgFileioWriteResp(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgFileioWriteResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFileioWriteResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

@@ -115,6 +115,19 @@ pub mod msg_linux_cpu_state {
         }
     }
 
+    impl FriendlyName for MsgLinuxCpuState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxCpuState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgLinuxCpuState {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -254,6 +267,19 @@ pub mod msg_linux_cpu_state_dep_a {
         }
     }
 
+    impl FriendlyName for MsgLinuxCpuStateDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxCpuStateDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgLinuxCpuStateDepA {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -374,6 +400,19 @@ pub mod msg_linux_mem_state {
                 Sbp::MsgLinuxMemState(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgLinuxMemState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxMemState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -516,6 +555,19 @@ pub mod msg_linux_mem_state_dep_a {
         }
     }
 
+    impl FriendlyName for MsgLinuxMemStateDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxMemStateDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgLinuxMemStateDepA {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -613,6 +665,19 @@ pub mod msg_linux_process_fd_count {
         }
     }
 
+    impl FriendlyName for MsgLinuxProcessFdCount {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxProcessFdCount {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgLinuxProcessFdCount {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -701,6 +766,19 @@ pub mod msg_linux_process_fd_summary {
                 Sbp::MsgLinuxProcessFdSummary(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgLinuxProcessFdSummary {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxProcessFdSummary {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -795,6 +873,19 @@ pub mod msg_linux_process_socket_counts {
                 Sbp::MsgLinuxProcessSocketCounts(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgLinuxProcessSocketCounts {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxProcessSocketCounts {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -916,6 +1007,19 @@ pub mod msg_linux_process_socket_queues {
         }
     }
 
+    impl FriendlyName for MsgLinuxProcessSocketQueues {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxProcessSocketQueues {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgLinuxProcessSocketQueues {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -1026,6 +1130,19 @@ pub mod msg_linux_socket_usage {
                 Sbp::MsgLinuxSocketUsage(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgLinuxSocketUsage {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxSocketUsage {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1148,6 +1265,19 @@ pub mod msg_linux_sys_state {
                 Sbp::MsgLinuxSysState(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgLinuxSysState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxSysState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1293,6 +1423,19 @@ pub mod msg_linux_sys_state_dep_a {
                 Sbp::MsgLinuxSysStateDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgLinuxSysStateDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLinuxSysStateDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

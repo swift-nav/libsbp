@@ -350,6 +350,19 @@ pub mod msg_ssr_flag_high_level {
         }
     }
 
+    impl FriendlyName for MsgSsrFlagHighLevel {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrFlagHighLevel {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrFlagHighLevel {
         const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
             + <GpsTimeSec as WireFormat>::MIN_LEN
@@ -757,6 +770,19 @@ pub mod msg_ssr_flag_iono_grid_points {
         }
     }
 
+    impl FriendlyName for MsgSsrFlagIonoGridPoints {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrFlagIonoGridPoints {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSsrFlagIonoGridPoints {
         const MIN_LEN: usize = <IntegritySSRHeader as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -840,6 +866,19 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
                 Sbp::MsgSsrFlagIonoGridPointSatLos(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagIonoGridPointSatLos {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrFlagIonoGridPointSatLos {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -927,6 +966,19 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
                 Sbp::MsgSsrFlagIonoTileSatLos(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagIonoTileSatLos {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrFlagIonoTileSatLos {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1025,6 +1077,19 @@ pub mod msg_ssr_flag_satellites {
                 Sbp::MsgSsrFlagSatellites(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagSatellites {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrFlagSatellites {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1128,6 +1193,19 @@ pub mod msg_ssr_flag_tropo_grid_points {
                 Sbp::MsgSsrFlagTropoGridPoints(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagTropoGridPoints {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSsrFlagTropoGridPoints {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

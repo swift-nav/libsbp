@@ -77,6 +77,19 @@ pub mod msg_ed25519_certificate {
         }
     }
 
+    impl FriendlyName for MsgEd25519Certificate {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEd25519Certificate {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEd25519Certificate {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <[u8; 20] as WireFormat>::MIN_LEN
@@ -173,6 +186,19 @@ pub mod msg_ed25519_signature {
         }
     }
 
+    impl FriendlyName for MsgEd25519Signature {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEd25519Signature {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEd25519Signature {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -261,6 +287,19 @@ pub mod msg_ed25519_signature_dep {
                 Sbp::MsgEd25519SignatureDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEd25519SignatureDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEd25519SignatureDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

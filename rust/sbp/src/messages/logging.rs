@@ -85,6 +85,19 @@ pub mod msg_fwd {
         }
     }
 
+    impl FriendlyName for MsgFwd {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFwd {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFwd {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -183,6 +196,19 @@ pub mod msg_log {
                 Sbp::MsgLog(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgLog {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgLog {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -318,6 +344,19 @@ pub mod msg_print_dep {
                 Sbp::MsgPrintDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPrintDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPrintDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

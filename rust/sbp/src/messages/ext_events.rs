@@ -129,6 +129,19 @@ pub mod msg_ext_event {
         }
     }
 
+    impl FriendlyName for MsgExtEvent {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgExtEvent {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgExtEvent {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <u32 as WireFormat>::MIN_LEN

@@ -118,6 +118,19 @@ pub mod msg_angular_rate {
         }
     }
 
+    impl FriendlyName for MsgAngularRate {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAngularRate {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAngularRate {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -271,6 +284,19 @@ pub mod msg_baseline_heading {
                 Sbp::MsgBaselineHeading(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgBaselineHeading {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBaselineHeading {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -446,6 +472,19 @@ pub mod msg_orient_euler {
                 Sbp::MsgOrientEuler(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgOrientEuler {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgOrientEuler {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -633,6 +672,19 @@ pub mod msg_orient_quat {
                 Sbp::MsgOrientQuat(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgOrientQuat {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgOrientQuat {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

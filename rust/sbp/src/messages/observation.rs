@@ -739,6 +739,19 @@ pub mod msg_almanac_glo {
         }
     }
 
+    impl FriendlyName for MsgAlmanacGlo {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAlmanacGlo {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAlmanacGlo {
         const MIN_LEN: usize = <AlmanacCommonContent as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -862,6 +875,19 @@ pub mod msg_almanac_glo_dep {
                 Sbp::MsgAlmanacGloDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgAlmanacGloDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAlmanacGloDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -993,6 +1019,19 @@ pub mod msg_almanac_gps {
                 Sbp::MsgAlmanacGps(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgAlmanacGps {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAlmanacGps {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1135,6 +1174,19 @@ pub mod msg_almanac_gps_dep {
         }
     }
 
+    impl FriendlyName for MsgAlmanacGpsDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAlmanacGpsDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAlmanacGpsDep {
         const MIN_LEN: usize = <AlmanacCommonContentDep as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -1254,6 +1306,19 @@ pub mod msg_base_pos_ecef {
         }
     }
 
+    impl FriendlyName for MsgBasePosEcef {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBasePosEcef {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgBasePosEcef {
         const MIN_LEN: usize = <f64 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -1339,6 +1404,19 @@ pub mod msg_base_pos_llh {
                 Sbp::MsgBasePosLlh(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgBasePosLlh {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgBasePosLlh {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1498,6 +1576,19 @@ pub mod msg_ephemeris_bds {
                 Sbp::MsgEphemerisBds(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisBds {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisBds {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1742,6 +1833,19 @@ pub mod msg_ephemeris_dep_a {
                 Sbp::MsgEphemerisDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1997,6 +2101,19 @@ pub mod msg_ephemeris_dep_b {
                 Sbp::MsgEphemerisDepB(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2265,6 +2382,19 @@ pub mod msg_ephemeris_dep_c {
                 Sbp::MsgEphemerisDepC(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisDepC {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisDepC {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2544,6 +2674,19 @@ pub mod msg_ephemeris_dep_d {
         }
     }
 
+    impl FriendlyName for MsgEphemerisDepD {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisDepD {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisDepD {
         const MIN_LEN: usize = <f64 as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -2808,6 +2951,19 @@ pub mod msg_ephemeris_gal {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGal {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGal {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisGal {
         const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN
@@ -3051,6 +3207,19 @@ pub mod msg_ephemeris_gal_dep_a {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGalDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGalDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisGalDepA {
         const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN
@@ -3243,6 +3412,19 @@ pub mod msg_ephemeris_glo {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGlo {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGlo {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisGlo {
         const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN
@@ -3366,6 +3548,19 @@ pub mod msg_ephemeris_glo_dep_a {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGloDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGloDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisGloDepA {
         const MIN_LEN: usize = <EphemerisCommonContentDepA as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -3474,6 +3669,19 @@ pub mod msg_ephemeris_glo_dep_b {
                 Sbp::MsgEphemerisGloDepB(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGloDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGloDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -3591,6 +3799,19 @@ pub mod msg_ephemeris_glo_dep_c {
                 Sbp::MsgEphemerisGloDepC(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGloDepC {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGloDepC {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -3717,6 +3938,19 @@ pub mod msg_ephemeris_glo_dep_d {
                 Sbp::MsgEphemerisGloDepD(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGloDepD {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGloDepD {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -3895,6 +4129,19 @@ pub mod msg_ephemeris_gps {
                 Sbp::MsgEphemerisGps(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGps {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGps {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -4132,6 +4379,19 @@ pub mod msg_ephemeris_gps_dep_e {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGpsDepE {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGpsDepE {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisGpsDepE {
         const MIN_LEN: usize = <EphemerisCommonContentDepA as WireFormat>::MIN_LEN
             + <f64 as WireFormat>::MIN_LEN
@@ -4361,6 +4621,19 @@ pub mod msg_ephemeris_gps_dep_f {
                 Sbp::MsgEphemerisGpsDepF(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGpsDepF {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisGpsDepF {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -4596,6 +4869,19 @@ pub mod msg_ephemeris_qzss {
         }
     }
 
+    impl FriendlyName for MsgEphemerisQzss {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisQzss {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisQzss {
         const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN
@@ -4768,6 +5054,19 @@ pub mod msg_ephemeris_sbas {
         }
     }
 
+    impl FriendlyName for MsgEphemerisSbas {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisSbas {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisSbas {
         const MIN_LEN: usize = <EphemerisCommonContent as WireFormat>::MIN_LEN
             + <[f64; 3] as WireFormat>::MIN_LEN
@@ -4869,6 +5168,19 @@ pub mod msg_ephemeris_sbas_dep_a {
                 Sbp::MsgEphemerisSbasDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisSbasDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisSbasDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -4981,6 +5293,19 @@ pub mod msg_ephemeris_sbas_dep_b {
         }
     }
 
+    impl FriendlyName for MsgEphemerisSbasDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgEphemerisSbasDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgEphemerisSbasDepB {
         const MIN_LEN: usize = <EphemerisCommonContentDepB as WireFormat>::MIN_LEN
             + <[f64; 3] as WireFormat>::MIN_LEN
@@ -5088,6 +5413,19 @@ pub mod msg_glo_biases {
         }
     }
 
+    impl FriendlyName for MsgGloBiases {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGloBiases {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgGloBiases {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -5173,6 +5511,19 @@ pub mod msg_gnss_capb {
                 Sbp::MsgGnssCapb(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgGnssCapb {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGnssCapb {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -5262,6 +5613,19 @@ pub mod msg_group_delay {
                 Sbp::MsgGroupDelay(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgGroupDelay {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGroupDelay {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -5371,6 +5735,19 @@ pub mod msg_group_delay_dep_a {
         }
     }
 
+    impl FriendlyName for MsgGroupDelayDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGroupDelayDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgGroupDelayDepA {
         const MIN_LEN: usize = <GpsTimeDep as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -5474,6 +5851,19 @@ pub mod msg_group_delay_dep_b {
                 Sbp::MsgGroupDelayDepB(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgGroupDelayDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGroupDelayDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -5585,6 +5975,19 @@ pub mod msg_iono {
                 Sbp::MsgIono(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgIono {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgIono {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -5714,6 +6117,19 @@ pub mod msg_obs {
         }
     }
 
+    impl FriendlyName for MsgObs {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgObs {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgObs {
         const MIN_LEN: usize = <ObservationHeader as WireFormat>::MIN_LEN
             + <Vec<PackedObsContent> as WireFormat>::MIN_LEN;
@@ -5803,6 +6219,19 @@ pub mod msg_obs_dep_a {
                 Sbp::MsgObsDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgObsDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgObsDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -5898,6 +6327,19 @@ pub mod msg_obs_dep_b {
                 Sbp::MsgObsDepB(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgObsDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgObsDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -5998,6 +6440,19 @@ pub mod msg_obs_dep_c {
         }
     }
 
+    impl FriendlyName for MsgObsDepC {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgObsDepC {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgObsDepC {
         const MIN_LEN: usize = <ObservationHeaderDep as WireFormat>::MIN_LEN
             + <Vec<PackedObsContentDepC> as WireFormat>::MIN_LEN;
@@ -6091,6 +6546,19 @@ pub mod msg_osr {
         }
     }
 
+    impl FriendlyName for MsgOsr {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgOsr {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgOsr {
         const MIN_LEN: usize = <ObservationHeader as WireFormat>::MIN_LEN
             + <Vec<PackedOsrContent> as WireFormat>::MIN_LEN;
@@ -6168,6 +6636,19 @@ pub mod msg_sv_az_el {
         }
     }
 
+    impl FriendlyName for MsgSvAzEl {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSvAzEl {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSvAzEl {
         const MIN_LEN: usize = <Vec<SvAzEl> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -6241,6 +6722,19 @@ pub mod msg_sv_configuration_gps_dep {
                 Sbp::MsgSvConfigurationGpsDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSvConfigurationGpsDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSvConfigurationGpsDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

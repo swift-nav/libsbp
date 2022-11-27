@@ -159,6 +159,19 @@ pub mod msg_almanac {
         }
     }
 
+    impl FriendlyName for MsgAlmanac {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgAlmanac {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgAlmanac {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -232,6 +245,19 @@ pub mod msg_cell_modem_status {
                 Sbp::MsgCellModemStatus(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgCellModemStatus {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCellModemStatus {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -321,6 +347,19 @@ pub mod msg_command_output {
         }
     }
 
+    impl FriendlyName for MsgCommandOutput {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCommandOutput {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgCommandOutput {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
@@ -399,6 +438,19 @@ pub mod msg_command_req {
                 Sbp::MsgCommandReq(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgCommandReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCommandReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -482,6 +534,19 @@ pub mod msg_command_resp {
         }
     }
 
+    impl FriendlyName for MsgCommandResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCommandResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgCommandResp {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <i32 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -556,6 +621,19 @@ pub mod msg_cw_results {
         }
     }
 
+    impl FriendlyName for MsgCwResults {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCwResults {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgCwResults {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -620,6 +698,19 @@ pub mod msg_cw_start {
                 Sbp::MsgCwStart(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgCwStart {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCwStart {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -702,6 +793,19 @@ pub mod msg_device_monitor {
                 Sbp::MsgDeviceMonitor(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgDeviceMonitor {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgDeviceMonitor {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -803,6 +907,19 @@ pub mod msg_front_end_gain {
         }
     }
 
+    impl FriendlyName for MsgFrontEndGain {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgFrontEndGain {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgFrontEndGain {
         const MIN_LEN: usize = <[i8; 8] as WireFormat>::MIN_LEN + <[i8; 8] as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -880,6 +997,19 @@ pub mod msg_iar_state {
         }
     }
 
+    impl FriendlyName for MsgIarState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgIarState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgIarState {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -947,6 +1077,19 @@ pub mod msg_init_base_dep {
                 Sbp::MsgInitBaseDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgInitBaseDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgInitBaseDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1049,6 +1192,19 @@ pub mod msg_mask_satellite {
                 Sbp::MsgMaskSatellite(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgMaskSatellite {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgMaskSatellite {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1224,6 +1380,19 @@ pub mod msg_mask_satellite_dep {
         }
     }
 
+    impl FriendlyName for MsgMaskSatelliteDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgMaskSatelliteDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgMaskSatelliteDep {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <GnssSignalDep as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -1363,6 +1532,19 @@ pub mod msg_network_bandwidth_usage {
         }
     }
 
+    impl FriendlyName for MsgNetworkBandwidthUsage {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgNetworkBandwidthUsage {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgNetworkBandwidthUsage {
         const MIN_LEN: usize = <Vec<NetworkUsage> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -1431,6 +1613,19 @@ pub mod msg_network_state_req {
                 Sbp::MsgNetworkStateReq(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgNetworkStateReq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgNetworkStateReq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1744,6 +1939,19 @@ pub mod msg_network_state_resp {
         }
     }
 
+    impl FriendlyName for MsgNetworkStateResp {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgNetworkStateResp {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgNetworkStateResp {
         const MIN_LEN: usize = <[u8; 4] as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -1861,6 +2069,19 @@ pub mod msg_reset {
         }
     }
 
+    impl FriendlyName for MsgReset {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgReset {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgReset {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -1963,6 +2184,19 @@ pub mod msg_reset_dep {
         }
     }
 
+    impl FriendlyName for MsgResetDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgResetDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgResetDep {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -2048,6 +2282,19 @@ pub mod msg_reset_filters {
                 Sbp::MsgResetFilters(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgResetFilters {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgResetFilters {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2157,6 +2404,19 @@ pub mod msg_set_time {
         }
     }
 
+    impl FriendlyName for MsgSetTime {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSetTime {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSetTime {
         const MIN_LEN: usize = 0;
         fn len(&self) -> usize {
@@ -2240,6 +2500,19 @@ pub mod msg_specan {
                 Sbp::MsgSpecan(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSpecan {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSpecan {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2358,6 +2631,19 @@ pub mod msg_specan_dep {
         }
     }
 
+    impl FriendlyName for MsgSpecanDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSpecanDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgSpecanDep {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <GpsTimeDep as WireFormat>::MIN_LEN
@@ -2464,6 +2750,19 @@ pub mod msg_thread_state {
         }
     }
 
+    impl FriendlyName for MsgThreadState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgThreadState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgThreadState {
         const MIN_LEN: usize = <SbpString<[u8; 20], NullTerminated> as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -2564,6 +2863,19 @@ pub mod msg_uart_state {
         }
     }
 
+    impl FriendlyName for MsgUartState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgUartState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgUartState {
         const MIN_LEN: usize = <UARTChannel as WireFormat>::MIN_LEN
             + <UARTChannel as WireFormat>::MIN_LEN
@@ -2659,6 +2971,19 @@ pub mod msg_uart_state_depa {
                 Sbp::MsgUartStateDepa(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgUartStateDepa {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgUartStateDepa {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

@@ -87,6 +87,19 @@ pub mod msg_measurement_state {
         }
     }
 
+    impl FriendlyName for MsgMeasurementState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgMeasurementState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgMeasurementState {
         const MIN_LEN: usize = <Vec<MeasurementState> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -164,6 +177,19 @@ pub mod msg_tracking_iq {
                 Sbp::MsgTrackingIq(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgTrackingIq {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingIq {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -251,6 +277,19 @@ pub mod msg_tracking_iq_dep_a {
                 Sbp::MsgTrackingIqDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgTrackingIqDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingIqDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -342,6 +381,19 @@ pub mod msg_tracking_iq_dep_b {
         }
     }
 
+    impl FriendlyName for MsgTrackingIqDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingIqDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgTrackingIqDepB {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <GnssSignal as WireFormat>::MIN_LEN
@@ -425,6 +477,19 @@ pub mod msg_tracking_state {
         }
     }
 
+    impl FriendlyName for MsgTrackingState {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingState {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgTrackingState {
         const MIN_LEN: usize = <Vec<TrackingChannelState> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -498,6 +563,19 @@ pub mod msg_tracking_state_dep_a {
         }
     }
 
+    impl FriendlyName for MsgTrackingStateDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingStateDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgTrackingStateDepA {
         const MIN_LEN: usize = <Vec<TrackingChannelStateDepA> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -568,6 +646,19 @@ pub mod msg_tracking_state_dep_b {
                 Sbp::MsgTrackingStateDepB(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgTrackingStateDepB {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingStateDepB {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -987,6 +1078,19 @@ pub mod msg_tracking_state_detailed_dep {
                 Sbp::MsgTrackingStateDetailedDep(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgTrackingStateDetailedDep {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingStateDetailedDep {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2005,6 +2109,19 @@ pub mod msg_tracking_state_detailed_dep_a {
                 Sbp::MsgTrackingStateDetailedDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgTrackingStateDetailedDepA {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgTrackingStateDetailedDepA {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 

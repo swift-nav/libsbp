@@ -90,6 +90,19 @@ pub mod msg_csac_telemetry {
         }
     }
 
+    impl FriendlyName for MsgCsacTelemetry {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCsacTelemetry {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgCsacTelemetry {
         const MIN_LEN: usize =
             <u8 as WireFormat>::MIN_LEN + <SbpString<Vec<u8>, Unterminated> as WireFormat>::MIN_LEN;
@@ -168,6 +181,19 @@ pub mod msg_csac_telemetry_labels {
                 Sbp::MsgCsacTelemetryLabels(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgCsacTelemetryLabels {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgCsacTelemetryLabels {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -270,6 +296,19 @@ pub mod msg_dgnss_status {
                 Sbp::MsgDgnssStatus(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgDgnssStatus {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgDgnssStatus {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -403,6 +442,19 @@ pub mod msg_gnss_time_offset {
         }
     }
 
+    impl FriendlyName for MsgGnssTimeOffset {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGnssTimeOffset {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgGnssTimeOffset {
         const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -512,6 +564,19 @@ pub mod msg_group_meta {
                 Sbp::MsgGroupMeta(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgGroupMeta {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgGroupMeta {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -754,6 +819,19 @@ pub mod msg_heartbeat {
                 Sbp::MsgHeartbeat(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgHeartbeat {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgHeartbeat {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1083,6 +1161,19 @@ pub mod msg_ins_status {
                 Sbp::MsgInsStatus(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgInsStatus {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgInsStatus {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1696,6 +1787,19 @@ pub mod msg_ins_updates {
         }
     }
 
+    impl FriendlyName for MsgInsUpdates {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgInsUpdates {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgInsUpdates {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -1829,6 +1933,19 @@ pub mod msg_pps_time {
                 Sbp::MsgPpsTime(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgPpsTime {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgPpsTime {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -1983,6 +2100,19 @@ pub mod msg_sensor_aid_event {
                 Sbp::MsgSensorAidEvent(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgSensorAidEvent {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgSensorAidEvent {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2180,6 +2310,19 @@ pub mod msg_startup {
                 Sbp::MsgStartup(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgStartup {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgStartup {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
@@ -2404,6 +2547,19 @@ pub mod msg_status_journal {
         }
     }
 
+    impl FriendlyName for MsgStatusJournal {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgStatusJournal {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
+        }
+    }
+
     impl WireFormat for MsgStatusJournal {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -2594,6 +2750,19 @@ pub mod msg_status_report {
                 Sbp::MsgStatusReport(m) => Ok(m),
                 _ => Err(TryFromSbpError),
             }
+        }
+    }
+
+    impl FriendlyName for MsgStatusReport {
+        fn friendly_name() -> &'static str {
+            ""
+        }
+    }
+
+    impl MessageDisplay for MsgStatusReport {
+        #[allow(clippy::useless_format)]
+        fn message_display(&self) -> String {
+            format!("")
         }
     }
 
