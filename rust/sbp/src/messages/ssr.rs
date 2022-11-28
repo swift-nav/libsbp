@@ -1938,7 +1938,7 @@ pub mod msg_ssr_phase_biases {
 
     impl FriendlyName for MsgSsrPhaseBiases {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR PHASE BIASES"
         }
     }
 

@@ -273,6 +273,9 @@ def mk_definition(defn):
     assert not short_desc.endswith("."), f"{identifier}: Remove . from: `{short_desc}`"
     assert all(x in string.printable for x in short_desc), f"Unprintable: {short_desc}"
     assert len(short_desc.splitlines()) == 1, f"Multi-line short_desc: {short_desc}"
+
+  friendly_name = contents.get("friendly_name", "")
+  message_display = contents.get("message_display", "")
   return sbp.resolve_type(sbp.Definition(identifier=identifier,
                                          sbp_id=contents.get('id', None),
                                          short_desc=short_desc,
@@ -281,6 +284,8 @@ def mk_definition(defn):
                                          fields=fs,
                                          public=contents.get('public', True),
                                          embedded_type=contents.get('embedded_type', False),
+                                         friendly_name=friendly_name,
+                                         message_display=message_display
                                          ))
 
 def mk_field(field):

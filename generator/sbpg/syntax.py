@@ -73,7 +73,8 @@ class Dependency(object):
 class Definition(object):
   def __init__(self, identifier=None,
                sbp_id=None, short_desc=None, desc=None, type_id=None,
-               fields=None, public=False, embedded_type=False):
+               fields=None, public=False, embedded_type=False,
+               friendly_name="", message_display=""):
     self.identifier = identifier
     self.sbp_id = sbp_id
     self.short_desc = short_desc
@@ -83,6 +84,8 @@ class Definition(object):
     self.fields = fields or []
     self.public = public
     self.static = True
+    self.friendly_name = friendly_name
+    self.message_display = message_display
 
   @property
   def max_type_len(self):

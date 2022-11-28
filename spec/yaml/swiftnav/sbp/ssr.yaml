@@ -314,6 +314,7 @@ definitions:
 
  - MSG_SSR_PHASE_BIASES:
     id: 0x05E6
+    friendly_name: SSR PHASE BIASES
     short_desc: Precise phase biases correction
     desc: >
       The precise phase biases message contains the biases
