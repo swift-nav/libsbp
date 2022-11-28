@@ -73,14 +73,13 @@ pub mod msg_user_data {
 
     impl FriendlyName for MsgUserData {
         fn friendly_name() -> &'static str {
-            ""
+            "USER DATA"
         }
     }
 
     impl MessageDisplay for MsgUserData {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

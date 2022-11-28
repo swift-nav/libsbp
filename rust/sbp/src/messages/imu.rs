@@ -125,14 +125,13 @@ pub mod msg_imu_aux {
 
     impl FriendlyName for MsgImuAux {
         fn friendly_name() -> &'static str {
-            ""
+            "IMU AUX"
         }
     }
 
     impl MessageDisplay for MsgImuAux {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -414,14 +413,13 @@ pub mod msg_imu_raw {
 
     impl FriendlyName for MsgImuRaw {
         fn friendly_name() -> &'static str {
-            ""
+            "IMU RAW"
         }
     }
 
     impl MessageDisplay for MsgImuRaw {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

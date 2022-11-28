@@ -117,14 +117,13 @@ pub mod msg_linux_cpu_state {
 
     impl FriendlyName for MsgLinuxCpuState {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX CPU STATE"
         }
     }
 
     impl MessageDisplay for MsgLinuxCpuState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -269,14 +268,13 @@ pub mod msg_linux_cpu_state_dep_a {
 
     impl FriendlyName for MsgLinuxCpuStateDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX CPU STATE DEP A"
         }
     }
 
     impl MessageDisplay for MsgLinuxCpuStateDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -405,14 +403,13 @@ pub mod msg_linux_mem_state {
 
     impl FriendlyName for MsgLinuxMemState {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX MEM STATE"
         }
     }
 
     impl MessageDisplay for MsgLinuxMemState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -557,14 +554,13 @@ pub mod msg_linux_mem_state_dep_a {
 
     impl FriendlyName for MsgLinuxMemStateDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX MEM STATE DEP A"
         }
     }
 
     impl MessageDisplay for MsgLinuxMemStateDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -667,14 +663,13 @@ pub mod msg_linux_process_fd_count {
 
     impl FriendlyName for MsgLinuxProcessFdCount {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX PROCESS FD COUNT"
         }
     }
 
     impl MessageDisplay for MsgLinuxProcessFdCount {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -771,14 +766,13 @@ pub mod msg_linux_process_fd_summary {
 
     impl FriendlyName for MsgLinuxProcessFdSummary {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX PROCESS FD SUMMARY"
         }
     }
 
     impl MessageDisplay for MsgLinuxProcessFdSummary {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -878,14 +872,13 @@ pub mod msg_linux_process_socket_counts {
 
     impl FriendlyName for MsgLinuxProcessSocketCounts {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX PROCESS SOCKET COUNTS"
         }
     }
 
     impl MessageDisplay for MsgLinuxProcessSocketCounts {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1009,14 +1002,13 @@ pub mod msg_linux_process_socket_queues {
 
     impl FriendlyName for MsgLinuxProcessSocketQueues {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX PROCESS SOCKET QUEUES"
         }
     }
 
     impl MessageDisplay for MsgLinuxProcessSocketQueues {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1135,14 +1127,13 @@ pub mod msg_linux_socket_usage {
 
     impl FriendlyName for MsgLinuxSocketUsage {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX SOCKET USAGE"
         }
     }
 
     impl MessageDisplay for MsgLinuxSocketUsage {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1270,14 +1261,13 @@ pub mod msg_linux_sys_state {
 
     impl FriendlyName for MsgLinuxSysState {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX SYS STATE"
         }
     }
 
     impl MessageDisplay for MsgLinuxSysState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1428,14 +1418,13 @@ pub mod msg_linux_sys_state_dep_a {
 
     impl FriendlyName for MsgLinuxSysStateDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "LINUX SYS STATE DEP A"
         }
     }
 
     impl MessageDisplay for MsgLinuxSysStateDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

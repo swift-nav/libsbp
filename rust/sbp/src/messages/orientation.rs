@@ -120,14 +120,13 @@ pub mod msg_angular_rate {
 
     impl FriendlyName for MsgAngularRate {
         fn friendly_name() -> &'static str {
-            ""
+            "ANGULAR RATE"
         }
     }
 
     impl MessageDisplay for MsgAngularRate {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -289,14 +288,13 @@ pub mod msg_baseline_heading {
 
     impl FriendlyName for MsgBaselineHeading {
         fn friendly_name() -> &'static str {
-            ""
+            "BASELINE HEADING"
         }
     }
 
     impl MessageDisplay for MsgBaselineHeading {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -477,14 +475,13 @@ pub mod msg_orient_euler {
 
     impl FriendlyName for MsgOrientEuler {
         fn friendly_name() -> &'static str {
-            ""
+            "ORIENT EULER"
         }
     }
 
     impl MessageDisplay for MsgOrientEuler {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -677,14 +674,13 @@ pub mod msg_orient_quat {
 
     impl FriendlyName for MsgOrientQuat {
         fn friendly_name() -> &'static str {
-            ""
+            "ORIENT QUAT"
         }
     }
 
     impl MessageDisplay for MsgOrientQuat {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

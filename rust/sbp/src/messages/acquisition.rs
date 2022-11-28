@@ -320,14 +320,13 @@ pub mod msg_acq_result {
 
     impl FriendlyName for MsgAcqResult {
         fn friendly_name() -> &'static str {
-            ""
+            "ACQ RESULT"
         }
     }
 
     impl MessageDisplay for MsgAcqResult {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -429,14 +428,13 @@ pub mod msg_acq_result_dep_a {
 
     impl FriendlyName for MsgAcqResultDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "ACQ RESULT DEP A"
         }
     }
 
     impl MessageDisplay for MsgAcqResultDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -537,14 +535,13 @@ pub mod msg_acq_result_dep_b {
 
     impl FriendlyName for MsgAcqResultDepB {
         fn friendly_name() -> &'static str {
-            ""
+            "ACQ RESULT DEP B"
         }
     }
 
     impl MessageDisplay for MsgAcqResultDepB {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -644,14 +641,13 @@ pub mod msg_acq_result_dep_c {
 
     impl FriendlyName for MsgAcqResultDepC {
         fn friendly_name() -> &'static str {
-            ""
+            "ACQ RESULT DEP C"
         }
     }
 
     impl MessageDisplay for MsgAcqResultDepC {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -743,14 +739,13 @@ pub mod msg_acq_sv_profile {
 
     impl FriendlyName for MsgAcqSvProfile {
         fn friendly_name() -> &'static str {
-            ""
+            "ACQ SV PROFILE"
         }
     }
 
     impl MessageDisplay for MsgAcqSvProfile {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -829,14 +824,13 @@ pub mod msg_acq_sv_profile_dep {
 
     impl FriendlyName for MsgAcqSvProfileDep {
         fn friendly_name() -> &'static str {
-            ""
+            "ACQ SV PROFILE DEP"
         }
     }
 
     impl MessageDisplay for MsgAcqSvProfileDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

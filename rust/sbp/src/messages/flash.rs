@@ -103,14 +103,13 @@ pub mod msg_flash_done {
 
     impl FriendlyName for MsgFlashDone {
         fn friendly_name() -> &'static str {
-            ""
+            "FLASH DONE"
         }
     }
 
     impl MessageDisplay for MsgFlashDone {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -260,14 +259,13 @@ pub mod msg_flash_erase {
 
     impl FriendlyName for MsgFlashErase {
         fn friendly_name() -> &'static str {
-            ""
+            "FLASH ERASE"
         }
     }
 
     impl MessageDisplay for MsgFlashErase {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -406,14 +404,13 @@ pub mod msg_flash_program {
 
     impl FriendlyName for MsgFlashProgram {
         fn friendly_name() -> &'static str {
-            ""
+            "FLASH PROGRAM"
         }
     }
 
     impl MessageDisplay for MsgFlashProgram {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -560,14 +557,13 @@ pub mod msg_flash_read_req {
 
     impl FriendlyName for MsgFlashReadReq {
         fn friendly_name() -> &'static str {
-            ""
+            "FLASH READ REQ"
         }
     }
 
     impl MessageDisplay for MsgFlashReadReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -710,14 +706,13 @@ pub mod msg_flash_read_resp {
 
     impl FriendlyName for MsgFlashReadResp {
         fn friendly_name() -> &'static str {
-            ""
+            "FLASH READ RESP"
         }
     }
 
     impl MessageDisplay for MsgFlashReadResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -834,14 +829,13 @@ pub mod msg_m25_flash_write_status {
 
     impl FriendlyName for MsgM25FlashWriteStatus {
         fn friendly_name() -> &'static str {
-            ""
+            "M25 FLASH WRITE STATUS"
         }
     }
 
     impl MessageDisplay for MsgM25FlashWriteStatus {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -920,14 +914,13 @@ pub mod msg_stm_flash_lock_sector {
 
     impl FriendlyName for MsgStmFlashLockSector {
         fn friendly_name() -> &'static str {
-            ""
+            "STM FLASH LOCK SECTOR"
         }
     }
 
     impl MessageDisplay for MsgStmFlashLockSector {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1006,14 +999,13 @@ pub mod msg_stm_flash_unlock_sector {
 
     impl FriendlyName for MsgStmFlashUnlockSector {
         fn friendly_name() -> &'static str {
-            ""
+            "STM FLASH UNLOCK SECTOR"
         }
     }
 
     impl MessageDisplay for MsgStmFlashUnlockSector {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1091,14 +1083,13 @@ pub mod msg_stm_unique_id_req {
 
     impl FriendlyName for MsgStmUniqueIdReq {
         fn friendly_name() -> &'static str {
-            ""
+            "STM UNIQUE ID REQ"
         }
     }
 
     impl MessageDisplay for MsgStmUniqueIdReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1174,14 +1165,13 @@ pub mod msg_stm_unique_id_resp {
 
     impl FriendlyName for MsgStmUniqueIdResp {
         fn friendly_name() -> &'static str {
-            ""
+            "STM UNIQUE ID RESP"
         }
     }
 
     impl MessageDisplay for MsgStmUniqueIdResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

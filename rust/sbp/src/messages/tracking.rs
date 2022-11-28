@@ -89,14 +89,13 @@ pub mod msg_measurement_state {
 
     impl FriendlyName for MsgMeasurementState {
         fn friendly_name() -> &'static str {
-            ""
+            "MEAS STATE"
         }
     }
 
     impl MessageDisplay for MsgMeasurementState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -182,14 +181,13 @@ pub mod msg_tracking_iq {
 
     impl FriendlyName for MsgTrackingIq {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK IQ"
         }
     }
 
     impl MessageDisplay for MsgTrackingIq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -282,14 +280,13 @@ pub mod msg_tracking_iq_dep_a {
 
     impl FriendlyName for MsgTrackingIqDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK IQ DEP A"
         }
     }
 
     impl MessageDisplay for MsgTrackingIqDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -383,14 +380,13 @@ pub mod msg_tracking_iq_dep_b {
 
     impl FriendlyName for MsgTrackingIqDepB {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK IQ DEP B"
         }
     }
 
     impl MessageDisplay for MsgTrackingIqDepB {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -479,14 +475,13 @@ pub mod msg_tracking_state {
 
     impl FriendlyName for MsgTrackingState {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK STATE"
         }
     }
 
     impl MessageDisplay for MsgTrackingState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -565,14 +560,13 @@ pub mod msg_tracking_state_dep_a {
 
     impl FriendlyName for MsgTrackingStateDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK STATE DEP A"
         }
     }
 
     impl MessageDisplay for MsgTrackingStateDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -651,14 +645,13 @@ pub mod msg_tracking_state_dep_b {
 
     impl FriendlyName for MsgTrackingStateDepB {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK STATE DEP B"
         }
     }
 
     impl MessageDisplay for MsgTrackingStateDepB {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1083,14 +1076,13 @@ pub mod msg_tracking_state_detailed_dep {
 
     impl FriendlyName for MsgTrackingStateDetailedDep {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK STATE DETAILED DEP"
         }
     }
 
     impl MessageDisplay for MsgTrackingStateDetailedDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2114,14 +2106,13 @@ pub mod msg_tracking_state_detailed_dep_a {
 
     impl FriendlyName for MsgTrackingStateDetailedDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "TRK STATE DETAILED DEP A"
         }
     }
 
     impl MessageDisplay for MsgTrackingStateDetailedDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

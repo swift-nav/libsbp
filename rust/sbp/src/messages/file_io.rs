@@ -90,14 +90,13 @@ pub mod msg_fileio_config_req {
 
     impl FriendlyName for MsgFileioConfigReq {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO CONFIG REQ"
         }
     }
 
     impl MessageDisplay for MsgFileioConfigReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -188,14 +187,13 @@ pub mod msg_fileio_config_resp {
 
     impl FriendlyName for MsgFileioConfigResp {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO CONFIG RESP"
         }
     }
 
     impl MessageDisplay for MsgFileioConfigResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -299,14 +297,13 @@ pub mod msg_fileio_read_dir_req {
 
     impl FriendlyName for MsgFileioReadDirReq {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO READ DIR REQ"
         }
     }
 
     impl MessageDisplay for MsgFileioReadDirReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -399,14 +396,13 @@ pub mod msg_fileio_read_dir_resp {
 
     impl FriendlyName for MsgFileioReadDirResp {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO READ DIR RESP"
         }
     }
 
     impl MessageDisplay for MsgFileioReadDirResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -501,14 +497,13 @@ pub mod msg_fileio_read_req {
 
     impl FriendlyName for MsgFileioReadReq {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO READ REQ"
         }
     }
 
     impl MessageDisplay for MsgFileioReadReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -604,14 +599,13 @@ pub mod msg_fileio_read_resp {
 
     impl FriendlyName for MsgFileioReadResp {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO READ RESP"
         }
     }
 
     impl MessageDisplay for MsgFileioReadResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -694,14 +688,13 @@ pub mod msg_fileio_remove {
 
     impl FriendlyName for MsgFileioRemove {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO REMOVE"
         }
     }
 
     impl MessageDisplay for MsgFileioRemove {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -794,14 +787,13 @@ pub mod msg_fileio_write_req {
 
     impl FriendlyName for MsgFileioWriteReq {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO WRITE REQ"
         }
     }
 
     impl MessageDisplay for MsgFileioWriteReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -894,14 +886,13 @@ pub mod msg_fileio_write_resp {
 
     impl FriendlyName for MsgFileioWriteResp {
         fn friendly_name() -> &'static str {
-            ""
+            "FILEIO WRITE RESP"
         }
     }
 
     impl MessageDisplay for MsgFileioWriteResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

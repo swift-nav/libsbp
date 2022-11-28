@@ -92,14 +92,13 @@ pub mod msg_csac_telemetry {
 
     impl FriendlyName for MsgCsacTelemetry {
         fn friendly_name() -> &'static str {
-            ""
+            "CSAC TELEMETRY"
         }
     }
 
     impl MessageDisplay for MsgCsacTelemetry {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -186,14 +185,13 @@ pub mod msg_csac_telemetry_labels {
 
     impl FriendlyName for MsgCsacTelemetryLabels {
         fn friendly_name() -> &'static str {
-            ""
+            "CSAC TELEMETRY LABELS"
         }
     }
 
     impl MessageDisplay for MsgCsacTelemetryLabels {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -301,14 +299,13 @@ pub mod msg_dgnss_status {
 
     impl FriendlyName for MsgDgnssStatus {
         fn friendly_name() -> &'static str {
-            ""
+            "DGNSS STATUS"
         }
     }
 
     impl MessageDisplay for MsgDgnssStatus {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -444,14 +441,13 @@ pub mod msg_gnss_time_offset {
 
     impl FriendlyName for MsgGnssTimeOffset {
         fn friendly_name() -> &'static str {
-            ""
+            "GNSS TIME OFFSET"
         }
     }
 
     impl MessageDisplay for MsgGnssTimeOffset {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -569,14 +565,13 @@ pub mod msg_group_meta {
 
     impl FriendlyName for MsgGroupMeta {
         fn friendly_name() -> &'static str {
-            ""
+            "GROUP META"
         }
     }
 
     impl MessageDisplay for MsgGroupMeta {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -824,14 +819,13 @@ pub mod msg_heartbeat {
 
     impl FriendlyName for MsgHeartbeat {
         fn friendly_name() -> &'static str {
-            ""
+            "HEARTBEAT"
         }
     }
 
     impl MessageDisplay for MsgHeartbeat {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1166,14 +1160,13 @@ pub mod msg_ins_status {
 
     impl FriendlyName for MsgInsStatus {
         fn friendly_name() -> &'static str {
-            ""
+            "INS STATUS"
         }
     }
 
     impl MessageDisplay for MsgInsStatus {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1789,14 +1782,13 @@ pub mod msg_ins_updates {
 
     impl FriendlyName for MsgInsUpdates {
         fn friendly_name() -> &'static str {
-            ""
+            "INS UPDATES"
         }
     }
 
     impl MessageDisplay for MsgInsUpdates {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1938,14 +1930,13 @@ pub mod msg_pps_time {
 
     impl FriendlyName for MsgPpsTime {
         fn friendly_name() -> &'static str {
-            ""
+            "PPS TIME"
         }
     }
 
     impl MessageDisplay for MsgPpsTime {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2105,14 +2096,13 @@ pub mod msg_sensor_aid_event {
 
     impl FriendlyName for MsgSensorAidEvent {
         fn friendly_name() -> &'static str {
-            ""
+            "SENSOR AID EVENT"
         }
     }
 
     impl MessageDisplay for MsgSensorAidEvent {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2315,14 +2305,13 @@ pub mod msg_startup {
 
     impl FriendlyName for MsgStartup {
         fn friendly_name() -> &'static str {
-            ""
+            "STARTUP"
         }
     }
 
     impl MessageDisplay for MsgStartup {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2549,14 +2538,13 @@ pub mod msg_status_journal {
 
     impl FriendlyName for MsgStatusJournal {
         fn friendly_name() -> &'static str {
-            ""
+            "STATUS JOURNAL"
         }
     }
 
     impl MessageDisplay for MsgStatusJournal {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2755,14 +2743,13 @@ pub mod msg_status_report {
 
     impl FriendlyName for MsgStatusReport {
         fn friendly_name() -> &'static str {
-            ""
+            "STATUS REPORT"
         }
     }
 
     impl MessageDisplay for MsgStatusReport {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

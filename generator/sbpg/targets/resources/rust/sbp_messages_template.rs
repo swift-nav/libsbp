@@ -157,9 +157,12 @@ impl FriendlyName for (((m.msg_name))) {
 }
 
 impl MessageDisplay for (((m.msg_name))) {
-    #[allow(clippy::useless_format)]
     fn message_display(&self) -> String {
+        ((* if m.message_display_fields *))
         format!("(((m.message_display)))")
+        ((* else *))
+        "(((m.message_display)))".to_string()
+        ((* endif *))
     }
 }
 ((* endif *))

@@ -532,14 +532,13 @@ pub mod msg_ssr_code_biases {
 
     impl FriendlyName for MsgSsrCodeBiases {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR CODE BIASES"
         }
     }
 
     impl MessageDisplay for MsgSsrCodeBiases {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -642,14 +641,13 @@ pub mod msg_ssr_code_phase_biases_bounds {
 
     impl FriendlyName for MsgSsrCodePhaseBiasesBounds {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR CODE PHASE BIASES BOUNDS"
         }
     }
 
     impl MessageDisplay for MsgSsrCodePhaseBiasesBounds {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -755,14 +753,13 @@ pub mod msg_ssr_gridded_correction {
 
     impl FriendlyName for MsgSsrGriddedCorrection {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR GRIDDED CORRECTION"
         }
     }
 
     impl MessageDisplay for MsgSsrGriddedCorrection {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -891,14 +888,13 @@ pub mod msg_ssr_gridded_correction_bounds {
 
     impl FriendlyName for MsgSsrGriddedCorrectionBounds {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR GRIDDED CORRECTION BOUNDS"
         }
     }
 
     impl MessageDisplay for MsgSsrGriddedCorrectionBounds {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1030,14 +1026,13 @@ pub mod msg_ssr_gridded_correction_dep_a {
 
     impl FriendlyName for MsgSsrGriddedCorrectionDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR GRIDDED CORRECTION DEP A"
         }
     }
 
     impl MessageDisplay for MsgSsrGriddedCorrectionDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1133,14 +1128,13 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
 
     impl FriendlyName for MsgSsrGriddedCorrectionNoStdDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR GRIDDED CORRECTION NO STD DEP A"
         }
     }
 
     impl MessageDisplay for MsgSsrGriddedCorrectionNoStdDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1233,14 +1227,13 @@ pub mod msg_ssr_grid_definition_dep_a {
 
     impl FriendlyName for MsgSsrGridDefinitionDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR GRID DEFINITION DEP A"
         }
     }
 
     impl MessageDisplay for MsgSsrGridDefinitionDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1365,14 +1358,13 @@ pub mod msg_ssr_orbit_clock {
 
     impl FriendlyName for MsgSsrOrbitClock {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR ORBIT CLOCK"
         }
     }
 
     impl MessageDisplay for MsgSsrOrbitClock {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1519,14 +1511,13 @@ pub mod msg_ssr_orbit_clock_bounds {
 
     impl FriendlyName for MsgSsrOrbitClockBounds {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR ORBIT CLOCK BOUNDS"
         }
     }
 
     impl MessageDisplay for MsgSsrOrbitClockBounds {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1631,14 +1622,13 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
 
     impl FriendlyName for MsgSsrOrbitClockBoundsDegradation {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR ORBIT CLOCK BOUNDS DEGRADATION"
         }
     }
 
     impl MessageDisplay for MsgSsrOrbitClockBoundsDegradation {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1770,14 +1760,13 @@ pub mod msg_ssr_orbit_clock_dep_a {
 
     impl FriendlyName for MsgSsrOrbitClockDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR ORBIT CLOCK DEP A"
         }
     }
 
     impl MessageDisplay for MsgSsrOrbitClockDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1943,9 +1932,8 @@ pub mod msg_ssr_phase_biases {
     }
 
     impl MessageDisplay for MsgSsrPhaseBiases {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            format!("Msg {{field_X}} of {{field_Y}}",)
         }
     }
 
@@ -2052,14 +2040,13 @@ pub mod msg_ssr_satellite_apc {
 
     impl FriendlyName for MsgSsrSatelliteApc {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR SATELLITE APC"
         }
     }
 
     impl MessageDisplay for MsgSsrSatelliteApc {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2149,14 +2136,13 @@ pub mod msg_ssr_stec_correction {
 
     impl FriendlyName for MsgSsrStecCorrection {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR STEC CORRECTION"
         }
     }
 
     impl MessageDisplay for MsgSsrStecCorrection {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2263,14 +2249,13 @@ pub mod msg_ssr_stec_correction_dep {
 
     impl FriendlyName for MsgSsrStecCorrectionDep {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR STEC CORRECTION DEP"
         }
     }
 
     impl MessageDisplay for MsgSsrStecCorrectionDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2351,14 +2336,13 @@ pub mod msg_ssr_stec_correction_dep_a {
 
     impl FriendlyName for MsgSsrStecCorrectionDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR STEC CORRECTION DEP A"
         }
     }
 
     impl MessageDisplay for MsgSsrStecCorrectionDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2511,14 +2495,13 @@ pub mod msg_ssr_tile_definition {
 
     impl FriendlyName for MsgSsrTileDefinition {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR TILE DEFINITION"
         }
     }
 
     impl MessageDisplay for MsgSsrTileDefinition {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2701,14 +2684,13 @@ pub mod msg_ssr_tile_definition_dep {
 
     impl FriendlyName for MsgSsrTileDefinitionDep {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR TILE DEFINITION DEP"
         }
     }
 
     impl MessageDisplay for MsgSsrTileDefinitionDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

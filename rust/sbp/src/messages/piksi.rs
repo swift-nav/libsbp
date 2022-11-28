@@ -161,14 +161,13 @@ pub mod msg_almanac {
 
     impl FriendlyName for MsgAlmanac {
         fn friendly_name() -> &'static str {
-            ""
+            "ALMANAC"
         }
     }
 
     impl MessageDisplay for MsgAlmanac {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -250,14 +249,13 @@ pub mod msg_cell_modem_status {
 
     impl FriendlyName for MsgCellModemStatus {
         fn friendly_name() -> &'static str {
-            ""
+            "CELL MODEM STATUS"
         }
     }
 
     impl MessageDisplay for MsgCellModemStatus {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -349,14 +347,13 @@ pub mod msg_command_output {
 
     impl FriendlyName for MsgCommandOutput {
         fn friendly_name() -> &'static str {
-            ""
+            "COMMAND OUTPUT"
         }
     }
 
     impl MessageDisplay for MsgCommandOutput {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -443,14 +440,13 @@ pub mod msg_command_req {
 
     impl FriendlyName for MsgCommandReq {
         fn friendly_name() -> &'static str {
-            ""
+            "COMMAND REQ"
         }
     }
 
     impl MessageDisplay for MsgCommandReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -536,14 +532,13 @@ pub mod msg_command_resp {
 
     impl FriendlyName for MsgCommandResp {
         fn friendly_name() -> &'static str {
-            ""
+            "COMMAND RESP"
         }
     }
 
     impl MessageDisplay for MsgCommandResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -623,14 +618,13 @@ pub mod msg_cw_results {
 
     impl FriendlyName for MsgCwResults {
         fn friendly_name() -> &'static str {
-            ""
+            "CW RESULTS"
         }
     }
 
     impl MessageDisplay for MsgCwResults {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -703,14 +697,13 @@ pub mod msg_cw_start {
 
     impl FriendlyName for MsgCwStart {
         fn friendly_name() -> &'static str {
-            ""
+            "CW START"
         }
     }
 
     impl MessageDisplay for MsgCwStart {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -798,14 +791,13 @@ pub mod msg_device_monitor {
 
     impl FriendlyName for MsgDeviceMonitor {
         fn friendly_name() -> &'static str {
-            ""
+            "DEVICE MONITOR"
         }
     }
 
     impl MessageDisplay for MsgDeviceMonitor {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -909,14 +901,13 @@ pub mod msg_front_end_gain {
 
     impl FriendlyName for MsgFrontEndGain {
         fn friendly_name() -> &'static str {
-            ""
+            "FRONT END GAIN"
         }
     }
 
     impl MessageDisplay for MsgFrontEndGain {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -999,14 +990,13 @@ pub mod msg_iar_state {
 
     impl FriendlyName for MsgIarState {
         fn friendly_name() -> &'static str {
-            ""
+            "IAR STATE"
         }
     }
 
     impl MessageDisplay for MsgIarState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1082,14 +1072,13 @@ pub mod msg_init_base_dep {
 
     impl FriendlyName for MsgInitBaseDep {
         fn friendly_name() -> &'static str {
-            ""
+            "INIT BASE DEP"
         }
     }
 
     impl MessageDisplay for MsgInitBaseDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1197,14 +1186,13 @@ pub mod msg_mask_satellite {
 
     impl FriendlyName for MsgMaskSatellite {
         fn friendly_name() -> &'static str {
-            ""
+            "MASK SATELLITE"
         }
     }
 
     impl MessageDisplay for MsgMaskSatellite {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1382,14 +1370,13 @@ pub mod msg_mask_satellite_dep {
 
     impl FriendlyName for MsgMaskSatelliteDep {
         fn friendly_name() -> &'static str {
-            ""
+            "MASK SATELLITE DEP"
         }
     }
 
     impl MessageDisplay for MsgMaskSatelliteDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1534,14 +1521,13 @@ pub mod msg_network_bandwidth_usage {
 
     impl FriendlyName for MsgNetworkBandwidthUsage {
         fn friendly_name() -> &'static str {
-            ""
+            "NET BANDWIDTH USAGE"
         }
     }
 
     impl MessageDisplay for MsgNetworkBandwidthUsage {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1618,14 +1604,13 @@ pub mod msg_network_state_req {
 
     impl FriendlyName for MsgNetworkStateReq {
         fn friendly_name() -> &'static str {
-            ""
+            "NET STATE REQ"
         }
     }
 
     impl MessageDisplay for MsgNetworkStateReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1941,14 +1926,13 @@ pub mod msg_network_state_resp {
 
     impl FriendlyName for MsgNetworkStateResp {
         fn friendly_name() -> &'static str {
-            ""
+            "NET STATE RESP"
         }
     }
 
     impl MessageDisplay for MsgNetworkStateResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2071,14 +2055,13 @@ pub mod msg_reset {
 
     impl FriendlyName for MsgReset {
         fn friendly_name() -> &'static str {
-            ""
+            "RESET"
         }
     }
 
     impl MessageDisplay for MsgReset {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2186,14 +2169,13 @@ pub mod msg_reset_dep {
 
     impl FriendlyName for MsgResetDep {
         fn friendly_name() -> &'static str {
-            ""
+            "RESET DEP"
         }
     }
 
     impl MessageDisplay for MsgResetDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2287,14 +2269,13 @@ pub mod msg_reset_filters {
 
     impl FriendlyName for MsgResetFilters {
         fn friendly_name() -> &'static str {
-            ""
+            "RESET FILTERS"
         }
     }
 
     impl MessageDisplay for MsgResetFilters {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2406,14 +2387,13 @@ pub mod msg_set_time {
 
     impl FriendlyName for MsgSetTime {
         fn friendly_name() -> &'static str {
-            ""
+            "SET TIME"
         }
     }
 
     impl MessageDisplay for MsgSetTime {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2505,14 +2485,13 @@ pub mod msg_specan {
 
     impl FriendlyName for MsgSpecan {
         fn friendly_name() -> &'static str {
-            ""
+            "SPECTRUM ANALYZER"
         }
     }
 
     impl MessageDisplay for MsgSpecan {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2633,14 +2612,13 @@ pub mod msg_specan_dep {
 
     impl FriendlyName for MsgSpecanDep {
         fn friendly_name() -> &'static str {
-            ""
+            "SPECAN DEP"
         }
     }
 
     impl MessageDisplay for MsgSpecanDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2752,14 +2730,13 @@ pub mod msg_thread_state {
 
     impl FriendlyName for MsgThreadState {
         fn friendly_name() -> &'static str {
-            ""
+            "THREAD STATE"
         }
     }
 
     impl MessageDisplay for MsgThreadState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2865,14 +2842,13 @@ pub mod msg_uart_state {
 
     impl FriendlyName for MsgUartState {
         fn friendly_name() -> &'static str {
-            ""
+            "UART STATE"
         }
     }
 
     impl MessageDisplay for MsgUartState {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2976,14 +2952,13 @@ pub mod msg_uart_state_depa {
 
     impl FriendlyName for MsgUartStateDepa {
         fn friendly_name() -> &'static str {
-            ""
+            "UART STATE DEPA"
         }
     }
 
     impl MessageDisplay for MsgUartStateDepa {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

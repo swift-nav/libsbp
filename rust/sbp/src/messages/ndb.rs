@@ -159,14 +159,13 @@ pub mod msg_ndb_event {
 
     impl FriendlyName for MsgNdbEvent {
         fn friendly_name() -> &'static str {
-            ""
+            "NDB EVENT"
         }
     }
 
     impl MessageDisplay for MsgNdbEvent {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

@@ -352,14 +352,13 @@ pub mod msg_ssr_flag_high_level {
 
     impl FriendlyName for MsgSsrFlagHighLevel {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR FLAG HIGH LEVEL"
         }
     }
 
     impl MessageDisplay for MsgSsrFlagHighLevel {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -772,14 +771,13 @@ pub mod msg_ssr_flag_iono_grid_points {
 
     impl FriendlyName for MsgSsrFlagIonoGridPoints {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR FLAG IONO GRID POINTS"
         }
     }
 
     impl MessageDisplay for MsgSsrFlagIonoGridPoints {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -871,14 +869,13 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
 
     impl FriendlyName for MsgSsrFlagIonoGridPointSatLos {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR FLAG IONO GRID POINT SAT LOS"
         }
     }
 
     impl MessageDisplay for MsgSsrFlagIonoGridPointSatLos {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -971,14 +968,13 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
 
     impl FriendlyName for MsgSsrFlagIonoTileSatLos {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR FLAG IONO TILE SAT LOS"
         }
     }
 
     impl MessageDisplay for MsgSsrFlagIonoTileSatLos {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1082,14 +1078,13 @@ pub mod msg_ssr_flag_satellites {
 
     impl FriendlyName for MsgSsrFlagSatellites {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR FLAG SATELLITES"
         }
     }
 
     impl MessageDisplay for MsgSsrFlagSatellites {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1198,14 +1193,13 @@ pub mod msg_ssr_flag_tropo_grid_points {
 
     impl FriendlyName for MsgSsrFlagTropoGridPoints {
         fn friendly_name() -> &'static str {
-            ""
+            "SSR FLAG TROPO GRID POINTS"
         }
     }
 
     impl MessageDisplay for MsgSsrFlagTropoGridPoints {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

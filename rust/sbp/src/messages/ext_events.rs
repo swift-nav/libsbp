@@ -131,14 +131,13 @@ pub mod msg_ext_event {
 
     impl FriendlyName for MsgExtEvent {
         fn friendly_name() -> &'static str {
-            ""
+            "EXT EVENT"
         }
     }
 
     impl MessageDisplay for MsgExtEvent {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

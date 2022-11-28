@@ -13,6 +13,8 @@
 Generator for rust target.
 """
 
+import re
+
 from jinja2.environment import Environment
 from jinja2.utils import pass_environment
 
@@ -330,6 +332,29 @@ def get_bitfield(field):
     return items
 
 
+def get_friendly_name(msg):
+    if msg.friendly_name:
+        return msg.friendly_name
+    shorten_keyword = {
+        "TRACKING": "TRK",
+        "MEASUREMENT": "MEAS",
+        "INDEX": "IDX",
+        "NETWORK": "NET",
+        "EPHEMERIS": "EPH",
+        "_": " "
+    }
+    f_name = msg.identifier
+    if f_name.endswith("_GNSS"):
+        f_name = f_name[:-5] + " GNSS-only"
+
+    # replace MSG_
+    f_name = f_name[4:]
+
+    for key in shorten_keyword.keys():
+        f_name = f_name.replace(key, shorten_keyword[key])
+    return f_name
+
+
 class FieldItem(object):
     def __init__(self, msg, package_specs, field):
         self.identifier = field.identifier
@@ -370,8 +395,11 @@ class MsgItem(object):
             if len(field.bitfield) > 0:
                 self.has_bitfield = True
         self.gps_time_fn = gps_time_fn(self)
-        self.message_display = getattr(msg, "message_display", "")
-        self.friendly_name = getattr(msg, "friendly_name", "")
+        self.friendly_name = get_friendly_name(msg)
+        self.message_display = msg.message_display
+        if self.message_display:
+            # match regex, capture all {{field}} enclosed by two brackets
+            self.message_display_fields = re.findall("{{([^}]+)}}[.]*", self.message_display)
 
 
 class PackageItem(object):

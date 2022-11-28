@@ -79,14 +79,13 @@ pub mod msg_ed25519_certificate {
 
     impl FriendlyName for MsgEd25519Certificate {
         fn friendly_name() -> &'static str {
-            ""
+            "ED25519 CERTIFICATE"
         }
     }
 
     impl MessageDisplay for MsgEd25519Certificate {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -188,14 +187,13 @@ pub mod msg_ed25519_signature {
 
     impl FriendlyName for MsgEd25519Signature {
         fn friendly_name() -> &'static str {
-            ""
+            "ED25519 SIGNATURE"
         }
     }
 
     impl MessageDisplay for MsgEd25519Signature {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -292,14 +290,13 @@ pub mod msg_ed25519_signature_dep {
 
     impl FriendlyName for MsgEd25519SignatureDep {
         fn friendly_name() -> &'static str {
-            ""
+            "ED25519 SIGNATURE DEP"
         }
     }
 
     impl MessageDisplay for MsgEd25519SignatureDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

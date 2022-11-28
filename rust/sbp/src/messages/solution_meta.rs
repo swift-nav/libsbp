@@ -444,14 +444,13 @@ pub mod msg_soln_meta {
 
     impl FriendlyName for MsgSolnMeta {
         fn friendly_name() -> &'static str {
-            ""
+            "SOLN META"
         }
     }
 
     impl MessageDisplay for MsgSolnMeta {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -639,14 +638,13 @@ pub mod msg_soln_meta_dep_a {
 
     impl FriendlyName for MsgSolnMetaDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "SOLN META DEP A"
         }
     }
 
     impl MessageDisplay for MsgSolnMetaDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

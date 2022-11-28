@@ -87,14 +87,13 @@ pub mod msg_fwd {
 
     impl FriendlyName for MsgFwd {
         fn friendly_name() -> &'static str {
-            ""
+            "FWD"
         }
     }
 
     impl MessageDisplay for MsgFwd {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -201,14 +200,13 @@ pub mod msg_log {
 
     impl FriendlyName for MsgLog {
         fn friendly_name() -> &'static str {
-            ""
+            "LOG"
         }
     }
 
     impl MessageDisplay for MsgLog {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -349,14 +347,13 @@ pub mod msg_print_dep {
 
     impl FriendlyName for MsgPrintDep {
         fn friendly_name() -> &'static str {
-            ""
+            "PRINT DEP"
         }
     }
 
     impl MessageDisplay for MsgPrintDep {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

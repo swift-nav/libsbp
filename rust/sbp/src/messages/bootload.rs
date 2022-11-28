@@ -81,14 +81,13 @@ pub mod msg_bootloader_handshake_dep_a {
 
     impl FriendlyName for MsgBootloaderHandshakeDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "BOOTLOADER HANDSHAKE DEP A"
         }
     }
 
     impl MessageDisplay for MsgBootloaderHandshakeDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -165,14 +164,13 @@ pub mod msg_bootloader_handshake_req {
 
     impl FriendlyName for MsgBootloaderHandshakeReq {
         fn friendly_name() -> &'static str {
-            ""
+            "BOOTLOADER HANDSHAKE REQ"
         }
     }
 
     impl MessageDisplay for MsgBootloaderHandshakeReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -293,14 +291,13 @@ pub mod msg_bootloader_handshake_resp {
 
     impl FriendlyName for MsgBootloaderHandshakeResp {
         fn friendly_name() -> &'static str {
-            ""
+            "BOOTLOADER HANDSHAKE RESP"
         }
     }
 
     impl MessageDisplay for MsgBootloaderHandshakeResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -381,14 +378,13 @@ pub mod msg_bootloader_jump_to_app {
 
     impl FriendlyName for MsgBootloaderJumpToApp {
         fn friendly_name() -> &'static str {
-            ""
+            "BOOTLOADER JUMP TO APP"
         }
     }
 
     impl MessageDisplay for MsgBootloaderJumpToApp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -468,14 +464,13 @@ pub mod msg_nap_device_dna_req {
 
     impl FriendlyName for MsgNapDeviceDnaReq {
         fn friendly_name() -> &'static str {
-            ""
+            "NAP DEVICE DNA REQ"
         }
     }
 
     impl MessageDisplay for MsgNapDeviceDnaReq {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -553,14 +548,13 @@ pub mod msg_nap_device_dna_resp {
 
     impl FriendlyName for MsgNapDeviceDnaResp {
         fn friendly_name() -> &'static str {
-            ""
+            "NAP DEVICE DNA RESP"
         }
     }
 
     impl MessageDisplay for MsgNapDeviceDnaResp {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

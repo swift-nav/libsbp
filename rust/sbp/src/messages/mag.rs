@@ -94,14 +94,13 @@ pub mod msg_mag_raw {
 
     impl FriendlyName for MsgMagRaw {
         fn friendly_name() -> &'static str {
-            ""
+            "MAG RAW"
         }
     }
 
     impl MessageDisplay for MsgMagRaw {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

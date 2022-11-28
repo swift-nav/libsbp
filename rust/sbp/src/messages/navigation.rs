@@ -197,14 +197,13 @@ pub mod msg_age_corrections {
 
     impl FriendlyName for MsgAgeCorrections {
         fn friendly_name() -> &'static str {
-            ""
+            "AGE CORRECTIONS"
         }
     }
 
     impl MessageDisplay for MsgAgeCorrections {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -330,14 +329,13 @@ pub mod msg_baseline_ecef {
 
     impl FriendlyName for MsgBaselineEcef {
         fn friendly_name() -> &'static str {
-            ""
+            "BASELINE ECEF"
         }
     }
 
     impl MessageDisplay for MsgBaselineEcef {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -553,14 +551,13 @@ pub mod msg_baseline_ecef_dep_a {
 
     impl FriendlyName for MsgBaselineEcefDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "BASELINE ECEF DEP A"
         }
     }
 
     impl MessageDisplay for MsgBaselineEcefDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -822,14 +819,13 @@ pub mod msg_baseline_heading_dep_a {
 
     impl FriendlyName for MsgBaselineHeadingDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "BASELINE HEADING DEP A"
         }
     }
 
     impl MessageDisplay for MsgBaselineHeadingDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1066,14 +1062,13 @@ pub mod msg_baseline_ned {
 
     impl FriendlyName for MsgBaselineNed {
         fn friendly_name() -> &'static str {
-            ""
+            "BASELINE NED"
         }
     }
 
     impl MessageDisplay for MsgBaselineNed {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1298,14 +1293,13 @@ pub mod msg_baseline_ned_dep_a {
 
     impl FriendlyName for MsgBaselineNedDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "BASELINE NED DEP A"
         }
     }
 
     impl MessageDisplay for MsgBaselineNedDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1564,14 +1558,13 @@ pub mod msg_dops {
 
     impl FriendlyName for MsgDops {
         fn friendly_name() -> &'static str {
-            ""
+            "DOPS"
         }
     }
 
     impl MessageDisplay for MsgDops {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1753,14 +1746,13 @@ pub mod msg_dops_dep_a {
 
     impl FriendlyName for MsgDopsDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "DOPS DEP A"
         }
     }
 
     impl MessageDisplay for MsgDopsDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -1908,14 +1900,13 @@ pub mod msg_gps_time {
 
     impl FriendlyName for MsgGpsTime {
         fn friendly_name() -> &'static str {
-            ""
+            "GPS TIME"
         }
     }
 
     impl MessageDisplay for MsgGpsTime {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2074,14 +2065,13 @@ pub mod msg_gps_time_dep_a {
 
     impl FriendlyName for MsgGpsTimeDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "GPS TIME DEP A"
         }
     }
 
     impl MessageDisplay for MsgGpsTimeDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2221,14 +2211,13 @@ pub mod msg_gps_time_gnss {
 
     impl FriendlyName for MsgGpsTimeGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "GPS TIME GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgGpsTimeGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2485,14 +2474,13 @@ pub mod msg_pose_relative {
 
     impl FriendlyName for MsgPoseRelative {
         fn friendly_name() -> &'static str {
-            ""
+            "POSE RELATIVE"
         }
     }
 
     impl MessageDisplay for MsgPoseRelative {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -2829,14 +2817,13 @@ pub mod msg_pos_ecef {
 
     impl FriendlyName for MsgPosEcef {
         fn friendly_name() -> &'static str {
-            ""
+            "POS ECEF"
         }
     }
 
     impl MessageDisplay for MsgPosEcef {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -3149,14 +3136,13 @@ pub mod msg_pos_ecef_cov {
 
     impl FriendlyName for MsgPosEcefCov {
         fn friendly_name() -> &'static str {
-            ""
+            "POS ECEF COV"
         }
     }
 
     impl MessageDisplay for MsgPosEcefCov {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -3458,14 +3444,13 @@ pub mod msg_pos_ecef_cov_gnss {
 
     impl FriendlyName for MsgPosEcefCovGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "POS ECEF COV GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgPosEcefCovGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -3714,14 +3699,13 @@ pub mod msg_pos_ecef_dep_a {
 
     impl FriendlyName for MsgPosEcefDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "POS ECEF DEP A"
         }
     }
 
     impl MessageDisplay for MsgPosEcefDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -3973,14 +3957,13 @@ pub mod msg_pos_ecef_gnss {
 
     impl FriendlyName for MsgPosEcefGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "POS ECEF GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgPosEcefGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -4215,14 +4198,13 @@ pub mod msg_pos_llh {
 
     impl FriendlyName for MsgPosLlh {
         fn friendly_name() -> &'static str {
-            ""
+            "POS LLH"
         }
     }
 
     impl MessageDisplay for MsgPosLlh {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -4587,14 +4569,13 @@ pub mod msg_pos_llh_acc {
 
     impl FriendlyName for MsgPosLlhAcc {
         fn friendly_name() -> &'static str {
-            ""
+            "POS LLH ACC"
         }
     }
 
     impl MessageDisplay for MsgPosLlhAcc {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -5001,14 +4982,13 @@ pub mod msg_pos_llh_cov {
 
     impl FriendlyName for MsgPosLlhCov {
         fn friendly_name() -> &'static str {
-            ""
+            "POS LLH COV"
         }
     }
 
     impl MessageDisplay for MsgPosLlhCov {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -5310,14 +5290,13 @@ pub mod msg_pos_llh_cov_gnss {
 
     impl FriendlyName for MsgPosLlhCovGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "POS LLH COV GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgPosLlhCovGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -5588,14 +5567,13 @@ pub mod msg_pos_llh_dep_a {
 
     impl FriendlyName for MsgPosLlhDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "POS LLH DEP A"
         }
     }
 
     impl MessageDisplay for MsgPosLlhDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -5886,14 +5864,13 @@ pub mod msg_pos_llh_gnss {
 
     impl FriendlyName for MsgPosLlhGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "POS LLH GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgPosLlhGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -6312,14 +6289,13 @@ pub mod msg_protection_level {
 
     impl FriendlyName for MsgProtectionLevel {
         fn friendly_name() -> &'static str {
-            ""
+            "PROTECTION LEVEL"
         }
     }
 
     impl MessageDisplay for MsgProtectionLevel {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -6647,14 +6623,13 @@ pub mod msg_protection_level_dep_a {
 
     impl FriendlyName for MsgProtectionLevelDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "PROTECTION LEVEL DEP A"
         }
     }
 
     impl MessageDisplay for MsgProtectionLevelDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -6851,14 +6826,13 @@ pub mod msg_reference_frame_param {
 
     impl FriendlyName for MsgReferenceFrameParam {
         fn friendly_name() -> &'static str {
-            ""
+            "REFERENCE FRAME PARAM"
         }
     }
 
     impl MessageDisplay for MsgReferenceFrameParam {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -7038,14 +7012,13 @@ pub mod msg_utc_leap_second {
 
     impl FriendlyName for MsgUtcLeapSecond {
         fn friendly_name() -> &'static str {
-            ""
+            "UTC LEAP SECOND"
         }
     }
 
     impl MessageDisplay for MsgUtcLeapSecond {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -7220,14 +7193,13 @@ pub mod msg_utc_time {
 
     impl FriendlyName for MsgUtcTime {
         fn friendly_name() -> &'static str {
-            ""
+            "UTC TIME"
         }
     }
 
     impl MessageDisplay for MsgUtcTime {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -7472,14 +7444,13 @@ pub mod msg_utc_time_gnss {
 
     impl FriendlyName for MsgUtcTimeGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "UTC TIME GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgUtcTimeGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -7739,14 +7710,13 @@ pub mod msg_vel_body {
 
     impl FriendlyName for MsgVelBody {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL BODY"
         }
     }
 
     impl MessageDisplay for MsgVelBody {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -8081,14 +8051,13 @@ pub mod msg_vel_cog {
 
     impl FriendlyName for MsgVelCog {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL COG"
         }
     }
 
     impl MessageDisplay for MsgVelCog {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -8489,14 +8458,13 @@ pub mod msg_vel_ecef {
 
     impl FriendlyName for MsgVelEcef {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL ECEF"
         }
     }
 
     impl MessageDisplay for MsgVelEcef {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -8786,14 +8754,13 @@ pub mod msg_vel_ecef_cov {
 
     impl FriendlyName for MsgVelEcefCov {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL ECEF COV"
         }
     }
 
     impl MessageDisplay for MsgVelEcefCov {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -9075,14 +9042,13 @@ pub mod msg_vel_ecef_cov_gnss {
 
     impl FriendlyName for MsgVelEcefCovGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL ECEF COV GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgVelEcefCovGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -9268,14 +9234,13 @@ pub mod msg_vel_ecef_dep_a {
 
     impl FriendlyName for MsgVelEcefDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL ECEF DEP A"
         }
     }
 
     impl MessageDisplay for MsgVelEcefDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -9422,14 +9387,13 @@ pub mod msg_vel_ecef_gnss {
 
     impl FriendlyName for MsgVelEcefGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL ECEF GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgVelEcefGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -9643,14 +9607,13 @@ pub mod msg_vel_ned {
 
     impl FriendlyName for MsgVelNed {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL NED"
         }
     }
 
     impl MessageDisplay for MsgVelNed {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -9947,14 +9910,13 @@ pub mod msg_vel_ned_cov {
 
     impl FriendlyName for MsgVelNedCov {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL NED COV"
         }
     }
 
     impl MessageDisplay for MsgVelNedCov {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -10239,14 +10201,13 @@ pub mod msg_vel_ned_cov_gnss {
 
     impl FriendlyName for MsgVelNedCovGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL NED COV GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgVelNedCovGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -10436,14 +10397,13 @@ pub mod msg_vel_ned_dep_a {
 
     impl FriendlyName for MsgVelNedDepA {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL NED DEP A"
         }
     }
 
     impl MessageDisplay for MsgVelNedDepA {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -10598,14 +10558,13 @@ pub mod msg_vel_ned_gnss {
 
     impl FriendlyName for MsgVelNedGnss {
         fn friendly_name() -> &'static str {
-            ""
+            "VEL NED GNSS-only"
         }
     }
 
     impl MessageDisplay for MsgVelNedGnss {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 

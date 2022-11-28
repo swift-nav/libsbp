@@ -142,14 +142,13 @@ pub mod msg_odometry {
 
     impl FriendlyName for MsgOdometry {
         fn friendly_name() -> &'static str {
-            ""
+            "ODOMETRY"
         }
     }
 
     impl MessageDisplay for MsgOdometry {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
@@ -417,14 +416,13 @@ pub mod msg_wheeltick {
 
     impl FriendlyName for MsgWheeltick {
         fn friendly_name() -> &'static str {
-            ""
+            "WHEELTICK"
         }
     }
 
     impl MessageDisplay for MsgWheeltick {
-        #[allow(clippy::useless_format)]
         fn message_display(&self) -> String {
-            format!("")
+            "".to_string()
         }
     }
 
