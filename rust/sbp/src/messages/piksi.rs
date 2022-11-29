@@ -255,7 +255,10 @@ pub mod msg_cell_modem_status {
 
     impl MessageDisplay for MsgCellModemStatus {
         fn message_display(&self) -> String {
-            "".to_string()
+            format!(
+                "{} dBm | {} %",
+                self.signal_strength, self.signal_error_rate
+            )
         }
     }
 
@@ -797,7 +800,10 @@ pub mod msg_device_monitor {
 
     impl MessageDisplay for MsgDeviceMonitor {
         fn message_display(&self) -> String {
-            "".to_string()
+            format!(
+                "Vin: {} V | Tcpu: {} C | Trf: {} C",
+                self.dev_vin, self.cpu_temperature, self.fe_temperature
+            )
         }
     }
 
@@ -2736,7 +2742,7 @@ pub mod msg_thread_state {
 
     impl MessageDisplay for MsgThreadState {
         fn message_display(&self) -> String {
-            "".to_string()
+            format!("{} | {} | {} B", self.name, self.cpu, self.stack_free)
         }
     }
 

@@ -1933,7 +1933,7 @@ pub mod msg_ssr_phase_biases {
 
     impl MessageDisplay for MsgSsrPhaseBiases {
         fn message_display(&self) -> String {
-            format!("Msg {{field_X}} of {{field_Y}}",)
+            "".to_string()
         }
     }
 

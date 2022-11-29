@@ -158,8 +158,8 @@ impl FriendlyName for (((m.msg_name))) {
 
 impl MessageDisplay for (((m.msg_name))) {
     fn message_display(&self) -> String {
-        ((* if m.message_display_fields *))
-        format!("(((m.message_display)))")
+        ((* if m.enrich_fields *))
+        format!("(((m.enrich_display)))", (((m.enrich_fields))) )
         ((* else *))
         "(((m.message_display)))".to_string()
         ((* endif *))

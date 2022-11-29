@@ -104,6 +104,7 @@ definitions:
 
  - MSG_THREAD_STATE:
     id: 0x0017
+    message_display: "{{@ name @}} | {{@ cpu @}} | {{@ stack_free @}} B"
     short_desc: State of an RTOS thread
     desc: >
       The thread usage message from the device reports real-time
@@ -328,6 +329,7 @@ definitions:
 
  - MSG_DEVICE_MONITOR:
     id: 0x00B5
+    message_display: "Vin: {{@ dev_vin @}} V | Tcpu: {{@ cpu_temperature @}} C | Trf: {{@ fe_temperature @}} C"
     short_desc: Device temperature and voltage levels
     desc: >
       This message contains temperature and voltage level measurements from the
@@ -521,6 +523,7 @@ definitions:
 
  - MSG_CELL_MODEM_STATUS:
     id: 0x00BE
+    message_display: "{{@ signal_strength @}} dBm | {{@ signal_error_rate @}} %"
     short_desc: Cell modem information update message
     desc: >
       If a cell modem is present on a piksi device, this message

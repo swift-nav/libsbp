@@ -376,6 +376,20 @@ class FieldItem(object):
         if self.options.get("fields", False):
             self.bitfield = get_bitfield(self)
 
+# pattern to capture {{groups}} for enriched message display
+ENRICH_PAT = re.compile("{{([^}]+)}}[.]*", re.S)
+ENRICH_FIELD_PAT = re.compile("@ ([^@]+) @[^\@]*", re.S)
+
+
+# for enriched field display
+def extract_self_field(match_obj):
+    if match_obj is not None and match_obj.group(1) is not None:
+        return f"self.{match_obj.group(1)}"
+
+
+def map_to_fields(f):
+    return re.sub(ENRICH_FIELD_PAT, extract_self_field, f)
+
 
 class MsgItem(object):
     def __init__(self, msg, package, package_specs):
@@ -399,8 +413,9 @@ class MsgItem(object):
         self.message_display = msg.message_display
         if self.message_display:
             # match regex, capture all {{field}} enclosed by two brackets
-            self.message_display_fields = re.findall("{{([^}]+)}}[.]*", self.message_display)
-
+            enrich_fields = re.findall(ENRICH_PAT, self.message_display)
+            self.enrich_fields = ', '.join(map(map_to_fields, enrich_fields))
+            self.enrich_display = re.sub(ENRICH_PAT, "{}", self.message_display)
 
 class PackageItem(object):
     def __init__(self, package, package_specs):
