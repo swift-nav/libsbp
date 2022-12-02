@@ -350,8 +350,8 @@ def get_friendly_name(msg):
     # replace MSG_
     f_name = f_name[4:]
 
-    for key in shorten_keyword.keys():
-        f_name = f_name.replace(key, shorten_keyword[key])
+    for key, item in shorten_keyword.items():
+        f_name = f_name.replace(key, item)
     return f_name
 
 
@@ -377,8 +377,9 @@ class FieldItem(object):
             self.bitfield = get_bitfield(self)
 
 # pattern to capture {{groups}} for enriched message display
-ENRICH_PAT = re.compile("{{([^}]+)}}[.]*", re.S)
-ENRICH_FIELD_PAT = re.compile("@ ([^@]+) @[^\@]*", re.S)
+ENRICH_PAT = re.compile("{{([^}]+)}}")
+# pattern to capture @field
+ENRICH_FIELD_PAT = re.compile("@([a-zA-Z0-9_]+)")
 
 
 # for enriched field display
