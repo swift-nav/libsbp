@@ -149,6 +149,7 @@ impl TryFrom<Sbp> for (((m.msg_name))) {
         }
     }
 }
+((* endif *))
 
 impl FriendlyName for (((m.msg_name))) {
     fn friendly_name() -> &'static str {
@@ -165,7 +166,6 @@ impl MessageDisplay for (((m.msg_name))) {
         ((* endif *))
     }
 }
-((* endif *))
 
 impl WireFormat for (((m.msg_name))) {
     const MIN_LEN: usize =

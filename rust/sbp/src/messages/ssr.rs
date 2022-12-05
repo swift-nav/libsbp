@@ -78,6 +78,18 @@ pub mod bounds_header {
         pub sol_id: u8,
     }
 
+    impl FriendlyName for BoundsHeader {
+        fn friendly_name() -> &'static str {
+            "BoundsHeader"
+        }
+    }
+
+    impl MessageDisplay for BoundsHeader {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for BoundsHeader {
         const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -135,6 +147,18 @@ pub mod code_biases_content {
         pub value: i16,
     }
 
+    impl FriendlyName for CodeBiasesContent {
+        fn friendly_name() -> &'static str {
+            "CodeBiasesContent"
+        }
+    }
+
+    impl MessageDisplay for CodeBiasesContent {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for CodeBiasesContent {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <i16 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -184,6 +208,18 @@ pub mod code_phase_biases_sat_sig {
         /// Phase Bias Standard Deviation.  Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename = "phase_bias_bound_sig"))]
         pub phase_bias_bound_sig: u8,
+    }
+
+    impl FriendlyName for CodePhaseBiasesSatSig {
+        fn friendly_name() -> &'static str {
+            "CodePhaseBiasesSatSig"
+        }
+    }
+
+    impl MessageDisplay for CodePhaseBiasesSatSig {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for CodePhaseBiasesSatSig {
@@ -258,6 +294,18 @@ pub mod grid_definition_header_dep_a {
         /// Position of this message in the dataset
         #[cfg_attr(feature = "serde", serde(rename = "seq_num"))]
         pub seq_num: u8,
+    }
+
+    impl FriendlyName for GridDefinitionHeaderDepA {
+        fn friendly_name() -> &'static str {
+            "GridDefinitionHeaderDepA"
+        }
+    }
+
+    impl MessageDisplay for GridDefinitionHeaderDepA {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for GridDefinitionHeaderDepA {
@@ -340,6 +388,18 @@ pub mod gridded_correction_header {
         pub tropo_quality_indicator: u8,
     }
 
+    impl FriendlyName for GriddedCorrectionHeader {
+        fn friendly_name() -> &'static str {
+            "GriddedCorrectionHeader"
+        }
+    }
+
+    impl MessageDisplay for GriddedCorrectionHeader {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for GriddedCorrectionHeader {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
@@ -420,6 +480,18 @@ pub mod gridded_correction_header_dep_a {
         /// specification in units of m.
         #[cfg_attr(feature = "serde", serde(rename = "tropo_quality_indicator"))]
         pub tropo_quality_indicator: u8,
+    }
+
+    impl FriendlyName for GriddedCorrectionHeaderDepA {
+        fn friendly_name() -> &'static str {
+            "GriddedCorrectionHeaderDepA"
+        }
+    }
+
+    impl MessageDisplay for GriddedCorrectionHeaderDepA {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for GriddedCorrectionHeaderDepA {
@@ -2788,6 +2860,18 @@ pub mod orbit_clock_bound {
         pub clock_bound_sig: u8,
     }
 
+    impl FriendlyName for OrbitClockBound {
+        fn friendly_name() -> &'static str {
+            "OrbitClockBound"
+        }
+    }
+
+    impl MessageDisplay for OrbitClockBound {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for OrbitClockBound {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -2880,6 +2964,18 @@ pub mod orbit_clock_bound_degradation {
         pub clock_bound_sig_dot: u8,
     }
 
+    impl FriendlyName for OrbitClockBoundDegradation {
+        fn friendly_name() -> &'static str {
+            "OrbitClockBoundDegradation"
+        }
+    }
+
+    impl MessageDisplay for OrbitClockBoundDegradation {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for OrbitClockBoundDegradation {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -2958,6 +3054,18 @@ pub mod phase_biases_content {
         pub bias: i32,
     }
 
+    impl FriendlyName for PhaseBiasesContent {
+        fn friendly_name() -> &'static str {
+            "PhaseBiasesContent"
+        }
+    }
+
+    impl MessageDisplay for PhaseBiasesContent {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for PhaseBiasesContent {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -3029,6 +3137,18 @@ pub mod stec_header {
         /// IOD of the SSR atmospheric correction
         #[cfg_attr(feature = "serde", serde(rename = "iod_atmo"))]
         pub iod_atmo: u8,
+    }
+
+    impl FriendlyName for STECHeader {
+        fn friendly_name() -> &'static str {
+            "STECHeader"
+        }
+    }
+
+    impl MessageDisplay for STECHeader {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for STECHeader {
@@ -3106,6 +3226,18 @@ pub mod stec_header_dep_a {
         pub iod_atmo: u8,
     }
 
+    impl FriendlyName for STECHeaderDepA {
+        fn friendly_name() -> &'static str {
+            "STECHeaderDepA"
+        }
+    }
+
+    impl MessageDisplay for STECHeaderDepA {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for STECHeaderDepA {
         const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -3166,6 +3298,18 @@ pub mod stec_residual {
         pub stddev: u8,
     }
 
+    impl FriendlyName for STECResidual {
+        fn friendly_name() -> &'static str {
+            "STECResidual"
+        }
+    }
+
+    impl MessageDisplay for STECResidual {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for STECResidual {
         const MIN_LEN: usize = <SvId as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -3213,6 +3357,18 @@ pub mod stec_residual_no_std {
         pub residual: i16,
     }
 
+    impl FriendlyName for STECResidualNoStd {
+        fn friendly_name() -> &'static str {
+            "STECResidualNoStd"
+        }
+    }
+
+    impl MessageDisplay for STECResidualNoStd {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for STECResidualNoStd {
         const MIN_LEN: usize = <SvId as WireFormat>::MIN_LEN + <i16 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -3257,6 +3413,18 @@ pub mod stec_sat_element {
         /// C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
         #[cfg_attr(feature = "serde", serde(rename = "stec_coeff"))]
         pub stec_coeff: [i16; 4],
+    }
+
+    impl FriendlyName for STECSatElement {
+        fn friendly_name() -> &'static str {
+            "STECSatElement"
+        }
+    }
+
+    impl MessageDisplay for STECSatElement {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for STECSatElement {
@@ -3313,6 +3481,18 @@ pub mod stec_sat_element_integrity {
         /// Error Bound StDev First derivative.
         #[cfg_attr(feature = "serde", serde(rename = "stec_bound_sig_dot"))]
         pub stec_bound_sig_dot: u8,
+    }
+
+    impl FriendlyName for STECSatElementIntegrity {
+        fn friendly_name() -> &'static str {
+            "STECSatElementIntegrity"
+        }
+    }
+
+    impl MessageDisplay for STECSatElementIntegrity {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for STECSatElementIntegrity {
@@ -3396,6 +3576,18 @@ pub mod satellite_apc {
         /// Set the bitrange corresponding to the [SatelliteType][SatelliteType] of the `sat_info` bitfield.
         pub fn set_satellite_type(&mut self, satellite_type: SatelliteType) {
             set_bit_range!(&mut self.sat_info, satellite_type, u8, u8, 4, 0);
+        }
+    }
+
+    impl FriendlyName for SatelliteAPC {
+        fn friendly_name() -> &'static str {
+            "SatelliteAPC"
+        }
+    }
+
+    impl MessageDisplay for SatelliteAPC {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 
@@ -3579,6 +3771,18 @@ pub mod tropospheric_delay_correction {
         pub stddev: u8,
     }
 
+    impl FriendlyName for TroposphericDelayCorrection {
+        fn friendly_name() -> &'static str {
+            "TroposphericDelayCorrection"
+        }
+    }
+
+    impl MessageDisplay for TroposphericDelayCorrection {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for TroposphericDelayCorrection {
         const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN
             + <i8 as WireFormat>::MIN_LEN
@@ -3624,6 +3828,18 @@ pub mod tropospheric_delay_correction_no_std {
         /// Wet vertical delay
         #[cfg_attr(feature = "serde", serde(rename = "wet"))]
         pub wet: i8,
+    }
+
+    impl FriendlyName for TroposphericDelayCorrectionNoStd {
+        fn friendly_name() -> &'static str {
+            "TroposphericDelayCorrectionNoStd"
+        }
+    }
+
+    impl MessageDisplay for TroposphericDelayCorrectionNoStd {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for TroposphericDelayCorrectionNoStd {

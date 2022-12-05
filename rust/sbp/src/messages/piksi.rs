@@ -77,6 +77,21 @@ pub mod latency {
         pub current: i32,
     }
 
+    impl FriendlyName for Latency {
+        fn friendly_name() -> &'static str {
+            "Latency"
+        }
+    }
+
+    impl MessageDisplay for Latency {
+        fn message_display(&self) -> String {
+            format!(
+                "{:1} {:1} {:1} {:1}",
+                self.avg, self.lmin, self.lmax, self.current
+            )
+        }
+    }
+
     impl WireFormat for Latency {
         const MIN_LEN: usize = <i32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -256,7 +271,7 @@ pub mod msg_cell_modem_status {
     impl MessageDisplay for MsgCellModemStatus {
         fn message_display(&self) -> String {
             format!(
-                "{} dBm | {} %",
+                "{} dBm | {:1} %",
                 self.signal_strength, self.signal_error_rate
             )
         }
@@ -801,7 +816,7 @@ pub mod msg_device_monitor {
     impl MessageDisplay for MsgDeviceMonitor {
         fn message_display(&self) -> String {
             format!(
-                "Vin: {} V | Tcpu: {} C | Trf: {} C",
+                "Vin: {:2} V | Tcpu: {:1} C | Trf: {:1} C",
                 self.dev_vin, self.cpu_temperature, self.fe_temperature
             )
         }
@@ -2742,7 +2757,7 @@ pub mod msg_thread_state {
 
     impl MessageDisplay for MsgThreadState {
         fn message_display(&self) -> String {
-            format!("{} | {} | {} B", self.name, self.cpu, self.stack_free)
+            format!("{} | {:1} | {} B", self.name, self.cpu, self.stack_free)
         }
     }
 
@@ -2854,7 +2869,14 @@ pub mod msg_uart_state {
 
     impl MessageDisplay for MsgUartState {
         fn message_display(&self) -> String {
-            "".to_string()
+            format!(
+                "{} | {} | {} | {} | {}",
+                self.uart_a.message_display(),
+                self.uart_b.message_display(),
+                self.uart_ftdi.message_display(),
+                self.latency.message_display(),
+                self.obs_period.message_display()
+            )
         }
     }
 
@@ -3033,6 +3055,18 @@ pub mod network_usage {
         pub interface_name: SbpString<[u8; 16], Unterminated>,
     }
 
+    impl FriendlyName for NetworkUsage {
+        fn friendly_name() -> &'static str {
+            "NetworkUsage"
+        }
+    }
+
+    impl MessageDisplay for NetworkUsage {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for NetworkUsage {
         const MIN_LEN: usize = <u64 as WireFormat>::MIN_LEN
             + <u64 as WireFormat>::MIN_LEN
@@ -3099,6 +3133,21 @@ pub mod period {
         pub current: i32,
     }
 
+    impl FriendlyName for Period {
+        fn friendly_name() -> &'static str {
+            "Period"
+        }
+    }
+
+    impl MessageDisplay for Period {
+        fn message_display(&self) -> String {
+            format!(
+                "{:1} {:1} {:1} {:1}",
+                self.avg, self.pmin, self.pmax, self.current
+            )
+        }
+    }
+
     impl WireFormat for Period {
         const MIN_LEN: usize = <i32 as WireFormat>::MIN_LEN
             + <i32 as WireFormat>::MIN_LEN
@@ -3161,6 +3210,26 @@ pub mod uart_channel {
         /// UART receive buffer percentage utilization (ranges from 0 to 255)
         #[cfg_attr(feature = "serde", serde(rename = "rx_buffer_level"))]
         pub rx_buffer_level: u8,
+    }
+
+    impl FriendlyName for UARTChannel {
+        fn friendly_name() -> &'static str {
+            "UARTChannel"
+        }
+    }
+
+    impl MessageDisplay for UARTChannel {
+        fn message_display(&self) -> String {
+            format!(
+                "{:1} {:1} {} {} {:1} {:1}",
+                self.tx_throughput,
+                self.rx_throughput,
+                self.crc_error_count,
+                self.io_error_count,
+                self.tx_buffer_level,
+                self.rx_buffer_level
+            )
+        }
     }
 
     impl WireFormat for UARTChannel {

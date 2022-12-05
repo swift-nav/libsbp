@@ -348,7 +348,8 @@ def get_friendly_name(msg):
         f_name = f_name[:-5] + " GNSS-only"
 
     # replace MSG_
-    f_name = f_name[4:]
+    if f_name.startswith("MSG_"):
+        f_name = f_name[4:]
 
     for key, item in shorten_keyword.items():
         f_name = f_name.replace(key, item)
@@ -377,19 +378,22 @@ class FieldItem(object):
             self.bitfield = get_bitfield(self)
 
 # pattern to capture {{groups}} for enriched message display
-ENRICH_PAT = re.compile("{{([^}]+)}}")
-# pattern to capture @field
-ENRICH_FIELD_PAT = re.compile("@([a-zA-Z0-9_]+)")
-
+# optional {{group}:1} to denote format!("{:1}", field) roundings
+ENRICH_PAT = re.compile("{{([^}]+)}(:\\d+)?}")
+# pattern to capture field to represent self.@field or self.#field.message_display()
+ENRICH_FIELD_PAT = re.compile("([@#]\\w+)")
 
 # for enriched field display
 def extract_self_field(match_obj):
-    if match_obj is not None and match_obj.group(1) is not None:
-        return f"self.{match_obj.group(1)}"
+    match = match_obj.group()
+    assert match[0] == '#' or match[0] == '@'
+    if match[0] == '#':
+        return f"self.{match[1:]}.message_display()"
+    return f"self.{match[1:]}"
 
 
 def map_to_fields(f):
-    return re.sub(ENRICH_FIELD_PAT, extract_self_field, f)
+    return re.sub(ENRICH_FIELD_PAT, extract_self_field, f[0])
 
 
 class MsgItem(object):
@@ -416,7 +420,7 @@ class MsgItem(object):
             # match regex, capture all {{field}} enclosed by two brackets
             enrich_fields = re.findall(ENRICH_PAT, self.message_display)
             self.enrich_fields = ', '.join(map(map_to_fields, enrich_fields))
-            self.enrich_display = re.sub(ENRICH_PAT, "{}", self.message_display)
+            self.enrich_display = re.sub(ENRICH_PAT, "{\\2}", self.message_display)
 
 class PackageItem(object):
     def __init__(self, package, package_specs):

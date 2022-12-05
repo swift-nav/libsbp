@@ -60,6 +60,18 @@ pub mod gnss_input_type {
         }
     }
 
+    impl FriendlyName for GnssInputType {
+        fn friendly_name() -> &'static str {
+            "GNSSInputType"
+        }
+    }
+
+    impl MessageDisplay for GnssInputType {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for GnssInputType {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -175,6 +187,18 @@ pub mod imu_input_type {
         /// Set the bitrange corresponding to the [ImuArchitecture][ImuArchitecture] of the `flags` bitfield.
         pub fn set_imu_architecture(&mut self, imu_architecture: ImuArchitecture) {
             set_bit_range!(&mut self.flags, imu_architecture, u8, u8, 1, 0);
+        }
+    }
+
+    impl FriendlyName for ImuInputType {
+        fn friendly_name() -> &'static str {
+            "IMUInputType"
+        }
+    }
+
+    impl MessageDisplay for ImuInputType {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 
@@ -817,6 +841,18 @@ pub mod odo_input_type {
         }
     }
 
+    impl FriendlyName for OdoInputType {
+        fn friendly_name() -> &'static str {
+            "OdoInputType"
+        }
+    }
+
+    impl MessageDisplay for OdoInputType {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for OdoInputType {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -995,6 +1031,18 @@ pub mod solution_input_type {
         /// Set the bitrange corresponding to the [SensorType][SensorType] of the `sensor_type` bitfield.
         pub fn set_sensor_type(&mut self, sensor_type: SensorType) {
             set_bit_range!(&mut self.sensor_type, sensor_type, u8, u8, 2, 0);
+        }
+    }
+
+    impl FriendlyName for SolutionInputType {
+        fn friendly_name() -> &'static str {
+            "SolutionInputType"
+        }
+    }
+
+    impl MessageDisplay for SolutionInputType {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 

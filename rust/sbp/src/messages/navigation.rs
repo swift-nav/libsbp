@@ -103,6 +103,18 @@ pub mod estimated_horizontal_error_ellipse {
         pub orientation: f32,
     }
 
+    impl FriendlyName for EstimatedHorizontalErrorEllipse {
+        fn friendly_name() -> &'static str {
+            "EstimatedHorizontalErrorEllipse"
+        }
+    }
+
+    impl MessageDisplay for EstimatedHorizontalErrorEllipse {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for EstimatedHorizontalErrorEllipse {
         const MIN_LEN: usize = <f32 as WireFormat>::MIN_LEN
             + <f32 as WireFormat>::MIN_LEN

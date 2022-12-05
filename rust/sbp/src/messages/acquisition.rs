@@ -77,6 +77,18 @@ pub mod acq_sv_profile {
         pub cp: u32,
     }
 
+    impl FriendlyName for AcqSvProfile {
+        fn friendly_name() -> &'static str {
+            "AcqSvProfile"
+        }
+    }
+
+    impl MessageDisplay for AcqSvProfile {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for AcqSvProfile {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -188,6 +200,18 @@ pub mod acq_sv_profile_dep {
         /// Codephase of detected peak. Only valid if status is '1'
         #[cfg_attr(feature = "serde", serde(rename = "cp"))]
         pub cp: u32,
+    }
+
+    impl FriendlyName for AcqSvProfileDep {
+        fn friendly_name() -> &'static str {
+            "AcqSvProfileDep"
+        }
+    }
+
+    impl MessageDisplay for AcqSvProfileDep {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for AcqSvProfileDep {

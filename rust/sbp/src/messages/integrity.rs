@@ -55,6 +55,18 @@ pub mod integrity_ssr_header {
         pub chain_id: u8,
     }
 
+    impl FriendlyName for IntegritySSRHeader {
+        fn friendly_name() -> &'static str {
+            "IntegritySSRHeader"
+        }
+    }
+
+    impl MessageDisplay for IntegritySSRHeader {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for IntegritySSRHeader {
         const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN

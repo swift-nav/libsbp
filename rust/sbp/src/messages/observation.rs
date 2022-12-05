@@ -114,6 +114,18 @@ pub mod almanac_common_content {
         pub health_bits: u8,
     }
 
+    impl FriendlyName for AlmanacCommonContent {
+        fn friendly_name() -> &'static str {
+            "AlmanacCommonContent"
+        }
+    }
+
+    impl MessageDisplay for AlmanacCommonContent {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for AlmanacCommonContent {
         const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN
             + <GpsTimeSec as WireFormat>::MIN_LEN
@@ -194,6 +206,18 @@ pub mod almanac_common_content_dep {
         pub health_bits: u8,
     }
 
+    impl FriendlyName for AlmanacCommonContentDep {
+        fn friendly_name() -> &'static str {
+            "AlmanacCommonContentDep"
+        }
+    }
+
+    impl MessageDisplay for AlmanacCommonContentDep {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for AlmanacCommonContentDep {
         const MIN_LEN: usize = <GnssSignalDep as WireFormat>::MIN_LEN
             + <GpsTimeSec as WireFormat>::MIN_LEN
@@ -256,6 +280,18 @@ pub mod carrier_phase_dep_a {
         pub f: u8,
     }
 
+    impl FriendlyName for CarrierPhaseDepA {
+        fn friendly_name() -> &'static str {
+            "CarrierPhaseDepA"
+        }
+    }
+
+    impl MessageDisplay for CarrierPhaseDepA {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for CarrierPhaseDepA {
         const MIN_LEN: usize = <i32 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -297,6 +333,18 @@ pub mod doppler {
         /// Doppler fractional part
         #[cfg_attr(feature = "serde", serde(rename = "f"))]
         pub f: u8,
+    }
+
+    impl FriendlyName for Doppler {
+        fn friendly_name() -> &'static str {
+            "Doppler"
+        }
+    }
+
+    impl MessageDisplay for Doppler {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for Doppler {
@@ -349,6 +397,18 @@ pub mod ephemeris_common_content {
         /// GLO: 0 = valid, non-zero = invalid
         #[cfg_attr(feature = "serde", serde(rename = "health_bits"))]
         pub health_bits: u8,
+    }
+
+    impl FriendlyName for EphemerisCommonContent {
+        fn friendly_name() -> &'static str {
+            "EphemerisCommonContent"
+        }
+    }
+
+    impl MessageDisplay for EphemerisCommonContent {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for EphemerisCommonContent {
@@ -421,6 +481,18 @@ pub mod ephemeris_common_content_dep_a {
         pub health_bits: u8,
     }
 
+    impl FriendlyName for EphemerisCommonContentDepA {
+        fn friendly_name() -> &'static str {
+            "EphemerisCommonContentDepA"
+        }
+    }
+
+    impl MessageDisplay for EphemerisCommonContentDepA {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for EphemerisCommonContentDepA {
         const MIN_LEN: usize = <GnssSignalDep as WireFormat>::MIN_LEN
             + <GpsTimeDep as WireFormat>::MIN_LEN
@@ -488,6 +560,18 @@ pub mod ephemeris_common_content_dep_b {
         /// Others: 0 = valid, non-zero = invalid
         #[cfg_attr(feature = "serde", serde(rename = "health_bits"))]
         pub health_bits: u8,
+    }
+
+    impl FriendlyName for EphemerisCommonContentDepB {
+        fn friendly_name() -> &'static str {
+            "EphemerisCommonContentDepB"
+        }
+    }
+
+    impl MessageDisplay for EphemerisCommonContentDepB {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for EphemerisCommonContentDepB {
@@ -584,6 +668,18 @@ pub mod gnss_capb {
         /// GAL E5 active mask
         #[cfg_attr(feature = "serde", serde(rename = "gal_e5"))]
         pub gal_e5: u64,
+    }
+
+    impl FriendlyName for GnssCapb {
+        fn friendly_name() -> &'static str {
+            "GnssCapb"
+        }
+    }
+
+    impl MessageDisplay for GnssCapb {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for GnssCapb {
@@ -6743,6 +6839,18 @@ pub mod observation_header {
         pub n_obs: u8,
     }
 
+    impl FriendlyName for ObservationHeader {
+        fn friendly_name() -> &'static str {
+            "ObservationHeader"
+        }
+    }
+
+    impl MessageDisplay for ObservationHeader {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for ObservationHeader {
         const MIN_LEN: usize = <GpsTime as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -6783,6 +6891,18 @@ pub mod observation_header_dep {
         /// (n), second nibble is the zero-indexed counter (ith packet of n)
         #[cfg_attr(feature = "serde", serde(rename = "n_obs"))]
         pub n_obs: u8,
+    }
+
+    impl FriendlyName for ObservationHeaderDep {
+        fn friendly_name() -> &'static str {
+            "ObservationHeaderDep"
+        }
+    }
+
+    impl MessageDisplay for ObservationHeaderDep {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for ObservationHeaderDep {
@@ -6923,6 +7043,18 @@ pub mod packed_obs_content {
         /// Set the bitrange corresponding to the [PseudorangeValid][PseudorangeValid] of the `flags` bitfield.
         pub fn set_pseudorange_valid(&mut self, pseudorange_valid: PseudorangeValid) {
             set_bit_range!(&mut self.flags, pseudorange_valid, u8, u8, 0, 0);
+        }
+    }
+
+    impl FriendlyName for PackedObsContent {
+        fn friendly_name() -> &'static str {
+            "PackedObsContent"
+        }
+    }
+
+    impl MessageDisplay for PackedObsContent {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 
@@ -7166,6 +7298,18 @@ pub mod packed_obs_content_dep_a {
         pub prn: u8,
     }
 
+    impl FriendlyName for PackedObsContentDepA {
+        fn friendly_name() -> &'static str {
+            "PackedObsContentDepA"
+        }
+    }
+
+    impl MessageDisplay for PackedObsContentDepA {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for PackedObsContentDepA {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
             + <CarrierPhaseDepA as WireFormat>::MIN_LEN
@@ -7231,6 +7375,18 @@ pub mod packed_obs_content_dep_b {
         /// GNSS signal identifier
         #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
+    }
+
+    impl FriendlyName for PackedObsContentDepB {
+        fn friendly_name() -> &'static str {
+            "PackedObsContentDepB"
+        }
+    }
+
+    impl MessageDisplay for PackedObsContentDepB {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for PackedObsContentDepB {
@@ -7299,6 +7455,18 @@ pub mod packed_obs_content_dep_c {
         /// GNSS signal identifier
         #[cfg_attr(feature = "serde", serde(rename = "sid"))]
         pub sid: GnssSignalDep,
+    }
+
+    impl FriendlyName for PackedObsContentDepC {
+        fn friendly_name() -> &'static str {
+            "PackedObsContentDepC"
+        }
+    }
+
+    impl MessageDisplay for PackedObsContentDepC {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for PackedObsContentDepC {
@@ -7454,6 +7622,18 @@ pub mod packed_osr_content {
         /// Set the bitrange corresponding to the [CorrectionValidity][CorrectionValidity] of the `flags` bitfield.
         pub fn set_correction_validity(&mut self, correction_validity: CorrectionValidity) {
             set_bit_range!(&mut self.flags, correction_validity, u8, u8, 0, 0);
+        }
+    }
+
+    impl FriendlyName for PackedOsrContent {
+        fn friendly_name() -> &'static str {
+            "PackedOsrContent"
+        }
+    }
+
+    impl MessageDisplay for PackedOsrContent {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 
@@ -7687,6 +7867,18 @@ pub mod sv_az_el {
         /// Elevation angle (range -90..90)
         #[cfg_attr(feature = "serde", serde(rename = "el"))]
         pub el: i8,
+    }
+
+    impl FriendlyName for SvAzEl {
+        fn friendly_name() -> &'static str {
+            "SvAzEl"
+        }
+    }
+
+    impl MessageDisplay for SvAzEl {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for SvAzEl {

@@ -104,7 +104,7 @@ definitions:
 
  - MSG_THREAD_STATE:
     id: 0x0017
-    message_display: "{{@name}} | {{@cpu}} | {{@stack_free}} B"
+    message_display: "{{@name}} | {{@cpu}:1} | {{@stack_free}} B"
     short_desc: State of an RTOS thread
     desc: >
       The thread usage message from the device reports real-time
@@ -128,6 +128,7 @@ definitions:
 
  - UARTChannel:
     short_desc: State of the UART channel
+    message_display: "{{@tx_throughput}:1} {{@rx_throughput}:1} {{@crc_error_count}} {{@io_error_count}} {{@tx_buffer_level}:1} {{@rx_buffer_level}:1}"
     desc: >
       Throughput, utilization, and error counts on the RX/TX buffers
       of this UART channel. The reported percentage values must
@@ -159,6 +160,7 @@ definitions:
               0 to 255)
  - Period:
     short_desc: base station observation message receipt period
+    message_display: "{{@avg}:1} {{@pmin}:1} {{@pmax}:1} {{@current}:1}"
     desc: >
       Statistics on the period of observations received from the base
       station. As complete observation sets are received, their time
@@ -186,6 +188,7 @@ definitions:
 
  - Latency:
     short_desc: Receiver-to-base station latency
+    message_display: "{{@avg}:1} {{@lmin}:1} {{@lmax}:1} {{@current}:1}"
     desc: >
       Statistics on the latency of observations received from the base
       station. As observation packets are received their GPS time is
@@ -213,6 +216,7 @@ definitions:
  - MSG_UART_STATE:
     id: 0x001D
     short_desc: State of the UART channels
+    message_display: "{{#uart_a}} | {{#uart_b}} | {{#uart_ftdi}} | {{#latency}} | {{#obs_period}}"
     desc: >
       The UART message reports data latency and throughput of the UART
       channels providing SBP I/O. On the default Piksi configuration,
@@ -329,7 +333,7 @@ definitions:
 
  - MSG_DEVICE_MONITOR:
     id: 0x00B5
-    message_display: "Vin: {{@dev_vin}} V | Tcpu: {{@cpu_temperature}} C | Trf: {{@fe_temperature}} C"
+    message_display: "Vin: {{@dev_vin}:2} V | Tcpu: {{@cpu_temperature}:1} C | Trf: {{@fe_temperature}:1} C"
     short_desc: Device temperature and voltage levels
     desc: >
       This message contains temperature and voltage level measurements from the
@@ -523,7 +527,7 @@ definitions:
 
  - MSG_CELL_MODEM_STATUS:
     id: 0x00BE
-    message_display: "{{@signal_strength}} dBm | {{@signal_error_rate}} %"
+    message_display: "{{@signal_strength}} dBm | {{@signal_error_rate}:1} %"
     short_desc: Cell modem information update message
     desc: >
       If a cell modem is present on a piksi device, this message

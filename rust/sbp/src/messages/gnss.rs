@@ -45,6 +45,18 @@ pub mod carrier_phase {
         pub f: u8,
     }
 
+    impl FriendlyName for CarrierPhase {
+        fn friendly_name() -> &'static str {
+            "CarrierPhase"
+        }
+    }
+
+    impl MessageDisplay for CarrierPhase {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for CarrierPhase {
         const MIN_LEN: usize = <i32 as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -89,6 +101,18 @@ pub mod gps_time {
         /// GPS week number
         #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
+    }
+
+    impl FriendlyName for GpsTime {
+        fn friendly_name() -> &'static str {
+            "GPSTime"
+        }
+    }
+
+    impl MessageDisplay for GpsTime {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for GpsTime {
@@ -138,6 +162,18 @@ pub mod gps_time_dep {
         pub wn: u16,
     }
 
+    impl FriendlyName for GpsTimeDep {
+        fn friendly_name() -> &'static str {
+            "GPSTimeDep"
+        }
+    }
+
+    impl MessageDisplay for GpsTimeDep {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for GpsTimeDep {
         const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN + <u16 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -177,6 +213,18 @@ pub mod gps_time_sec {
         /// GPS week number
         #[cfg_attr(feature = "serde", serde(rename = "wn"))]
         pub wn: u16,
+    }
+
+    impl FriendlyName for GpsTimeSec {
+        fn friendly_name() -> &'static str {
+            "GPSTimeSec"
+        }
+    }
+
+    impl MessageDisplay for GpsTimeSec {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for GpsTimeSec {
@@ -234,6 +282,18 @@ pub mod gnss_signal {
         /// Set the bitrange corresponding to the [Code][Code] of the `code` bitfield.
         pub fn set_code(&mut self, code: Code) {
             set_bit_range!(&mut self.code, code, u8, u8, 7, 0);
+        }
+    }
+
+    impl FriendlyName for GnssSignal {
+        fn friendly_name() -> &'static str {
+            "GnssSignal"
+        }
+    }
+
+    impl MessageDisplay for GnssSignal {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 
@@ -378,6 +438,18 @@ pub mod gnss_signal_dep {
         }
     }
 
+    impl FriendlyName for GnssSignalDep {
+        fn friendly_name() -> &'static str {
+            "GnssSignalDep"
+        }
+    }
+
+    impl MessageDisplay for GnssSignalDep {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for GnssSignalDep {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -493,6 +565,18 @@ pub mod sv_id {
         /// Set the bitrange corresponding to the [Constellation][Constellation] of the `constellation` bitfield.
         pub fn set_constellation(&mut self, constellation: Constellation) {
             set_bit_range!(&mut self.constellation, constellation, u8, u8, 7, 0);
+        }
+    }
+
+    impl FriendlyName for SvId {
+        fn friendly_name() -> &'static str {
+            "SvId"
+        }
+    }
+
+    impl MessageDisplay for SvId {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 

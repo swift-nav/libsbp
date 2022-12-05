@@ -2839,6 +2839,18 @@ pub mod status_journal_item {
         pub report: SubSystemReport,
     }
 
+    impl FriendlyName for StatusJournalItem {
+        fn friendly_name() -> &'static str {
+            "StatusJournalItem"
+        }
+    }
+
+    impl MessageDisplay for StatusJournalItem {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for StatusJournalItem {
         const MIN_LEN: usize =
             <u32 as WireFormat>::MIN_LEN + <SubSystemReport as WireFormat>::MIN_LEN;
@@ -2911,6 +2923,18 @@ pub mod sub_system_report {
         /// Set the bitrange corresponding to the [Generic][Generic] of the `generic` bitfield.
         pub fn set_generic(&mut self, generic: Generic) {
             set_bit_range!(&mut self.generic, generic, u8, u8, 7, 0);
+        }
+    }
+
+    impl FriendlyName for SubSystemReport {
+        fn friendly_name() -> &'static str {
+            "SubSystemReport"
+        }
+    }
+
+    impl MessageDisplay for SubSystemReport {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 

@@ -2758,6 +2758,18 @@ pub mod measurement_state {
         pub cn0: u8,
     }
 
+    impl FriendlyName for MeasurementState {
+        fn friendly_name() -> &'static str {
+            "MeasurementState"
+        }
+    }
+
+    impl MessageDisplay for MeasurementState {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for MeasurementState {
         const MIN_LEN: usize = <GnssSignal as WireFormat>::MIN_LEN + <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -2799,6 +2811,18 @@ pub mod tracking_channel_correlation {
         pub q: i16,
     }
 
+    impl FriendlyName for TrackingChannelCorrelation {
+        fn friendly_name() -> &'static str {
+            "TrackingChannelCorrelation"
+        }
+    }
+
+    impl MessageDisplay for TrackingChannelCorrelation {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
+    }
+
     impl WireFormat for TrackingChannelCorrelation {
         const MIN_LEN: usize = <i16 as WireFormat>::MIN_LEN + <i16 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
@@ -2838,6 +2862,18 @@ pub mod tracking_channel_correlation_dep {
         /// Quadrature correlation
         #[cfg_attr(feature = "serde", serde(rename = "Q"))]
         pub q: i32,
+    }
+
+    impl FriendlyName for TrackingChannelCorrelationDep {
+        fn friendly_name() -> &'static str {
+            "TrackingChannelCorrelationDep"
+        }
+    }
+
+    impl MessageDisplay for TrackingChannelCorrelationDep {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for TrackingChannelCorrelationDep {
@@ -2883,6 +2919,18 @@ pub mod tracking_channel_state {
         /// Carrier-to-Noise density.  Zero implies invalid cn0.
         #[cfg_attr(feature = "serde", serde(rename = "cn0"))]
         pub cn0: u8,
+    }
+
+    impl FriendlyName for TrackingChannelState {
+        fn friendly_name() -> &'static str {
+            "TrackingChannelState"
+        }
+    }
+
+    impl MessageDisplay for TrackingChannelState {
+        fn message_display(&self) -> String {
+            "".to_string()
+        }
     }
 
     impl WireFormat for TrackingChannelState {
@@ -2946,6 +2994,18 @@ pub mod tracking_channel_state_dep_a {
         /// Set the bitrange corresponding to the [TrackingMode][TrackingMode] of the `state` bitfield.
         pub fn set_tracking_mode(&mut self, tracking_mode: TrackingMode) {
             set_bit_range!(&mut self.state, tracking_mode, u8, u8, 1, 0);
+        }
+    }
+
+    impl FriendlyName for TrackingChannelStateDepA {
+        fn friendly_name() -> &'static str {
+            "TrackingChannelStateDepA"
+        }
+    }
+
+    impl MessageDisplay for TrackingChannelStateDepA {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 
@@ -3040,6 +3100,18 @@ pub mod tracking_channel_state_dep_b {
         /// Set the bitrange corresponding to the [TrackingMode][TrackingMode] of the `state` bitfield.
         pub fn set_tracking_mode(&mut self, tracking_mode: TrackingMode) {
             set_bit_range!(&mut self.state, tracking_mode, u8, u8, 1, 0);
+        }
+    }
+
+    impl FriendlyName for TrackingChannelStateDepB {
+        fn friendly_name() -> &'static str {
+            "TrackingChannelStateDepB"
+        }
+    }
+
+    impl MessageDisplay for TrackingChannelStateDepB {
+        fn message_display(&self) -> String {
+            "".to_string()
         }
     }
 
