@@ -75,7 +75,7 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@check//:check",
+        "@check",
     ],
 )
 
@@ -94,7 +94,7 @@ swift_cc_test(
     type = UNIT,
     deps = [
         ":sbp",
-        "@check//:check",
+        "@check",
     ],
 )
 
