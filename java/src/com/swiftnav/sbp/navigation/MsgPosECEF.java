@@ -65,7 +65,9 @@ public class MsgPosECEF extends SBPMessage {
 
     public MsgPosECEF(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPosECEF, expected 521, actual " + msg.type);
     }
 
     @Override

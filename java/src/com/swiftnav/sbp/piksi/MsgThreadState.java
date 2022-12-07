@@ -53,7 +53,9 @@ public class MsgThreadState extends SBPMessage {
 
     public MsgThreadState(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgThreadState, expected 23, actual " + msg.type);
     }
 
     @Override

@@ -62,7 +62,9 @@ public class MsgBaselineECEF extends SBPMessage {
 
     public MsgBaselineECEF(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgBaselineECEF, expected 523, actual " + msg.type);
     }
 
     @Override

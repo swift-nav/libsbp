@@ -58,7 +58,9 @@ public class MsgLinuxSocketUsage extends SBPMessage {
 
     public MsgLinuxSocketUsage(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgLinuxSocketUsage, expected 32517, actual " + msg.type);
     }
 
     @Override

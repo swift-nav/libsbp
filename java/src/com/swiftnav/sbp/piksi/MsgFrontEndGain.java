@@ -52,7 +52,9 @@ public class MsgFrontEndGain extends SBPMessage {
 
     public MsgFrontEndGain(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgFrontEndGain, expected 191, actual " + msg.type);
     }
 
     @Override

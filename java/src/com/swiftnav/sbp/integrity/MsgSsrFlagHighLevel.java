@@ -106,7 +106,9 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
 
     public MsgSsrFlagHighLevel(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrFlagHighLevel, expected 3001, actual " + msg.type);
     }
 
     @Override

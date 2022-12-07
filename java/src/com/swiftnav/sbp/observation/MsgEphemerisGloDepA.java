@@ -61,7 +61,9 @@ public class MsgEphemerisGloDepA extends SBPMessage {
 
     public MsgEphemerisGloDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEphemerisGloDepA, expected 131, actual " + msg.type);
     }
 
     @Override

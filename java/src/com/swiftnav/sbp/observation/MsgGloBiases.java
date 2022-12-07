@@ -56,7 +56,9 @@ public class MsgGloBiases extends SBPMessage {
 
     public MsgGloBiases(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgGloBiases, expected 117, actual " + msg.type);
     }
 
     @Override

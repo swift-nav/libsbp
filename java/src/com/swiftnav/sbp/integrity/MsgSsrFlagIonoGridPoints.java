@@ -42,7 +42,10 @@ public class MsgSsrFlagIonoGridPoints extends SBPMessage {
 
     public MsgSsrFlagIonoGridPoints(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrFlagIonoGridPoints, expected 3015, actual "
+                            + msg.type);
     }
 
     @Override

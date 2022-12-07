@@ -72,7 +72,9 @@ public class MsgOrientQuat extends SBPMessage {
 
     public MsgOrientQuat(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgOrientQuat, expected 544, actual " + msg.type);
     }
 
     @Override

@@ -47,7 +47,9 @@ public class MsgCommandResp extends SBPMessage {
 
     public MsgCommandResp(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgCommandResp, expected 185, actual " + msg.type);
     }
 
     @Override

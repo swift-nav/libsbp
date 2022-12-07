@@ -38,7 +38,9 @@ public class MsgGnssCapb extends SBPMessage {
 
     public MsgGnssCapb(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgGnssCapb, expected 150, actual " + msg.type);
     }
 
     @Override

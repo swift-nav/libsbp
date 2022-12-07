@@ -51,7 +51,9 @@ public class MsgObsDepC extends SBPMessage {
 
     public MsgObsDepC(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgObsDepC, expected 73, actual " + msg.type);
     }
 
     @Override

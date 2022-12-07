@@ -40,7 +40,9 @@ public class MsgInitBaseDep extends SBPMessage {
 
     public MsgInitBaseDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgInitBaseDep, expected 35, actual " + msg.type);
     }
 
     @Override

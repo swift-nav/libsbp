@@ -65,7 +65,9 @@ public class MsgSensorAidEvent extends SBPMessage {
 
     public MsgSensorAidEvent(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSensorAidEvent, expected 65289, actual " + msg.type);
     }
 
     @Override

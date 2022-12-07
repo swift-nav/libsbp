@@ -55,7 +55,9 @@ public class MsgLinuxMemStateDepA extends SBPMessage {
 
     public MsgLinuxMemStateDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgLinuxMemStateDepA, expected 32513, actual " + msg.type);
     }
 
     @Override

@@ -47,7 +47,9 @@ public class MsgCommandReq extends SBPMessage {
 
     public MsgCommandReq(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgCommandReq, expected 184, actual " + msg.type);
     }
 
     @Override

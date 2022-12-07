@@ -80,7 +80,9 @@ public class MsgPosECEFCov extends SBPMessage {
 
     public MsgPosECEFCov(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPosECEFCov, expected 532, actual " + msg.type);
     }
 
     @Override

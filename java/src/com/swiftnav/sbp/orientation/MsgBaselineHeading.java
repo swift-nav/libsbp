@@ -54,7 +54,9 @@ public class MsgBaselineHeading extends SBPMessage {
 
     public MsgBaselineHeading(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgBaselineHeading, expected 527, actual " + msg.type);
     }
 
     @Override

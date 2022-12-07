@@ -62,7 +62,9 @@ public class MsgDops extends SBPMessage {
 
     public MsgDops(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgDops, expected 520, actual " + msg.type);
     }
 
     @Override

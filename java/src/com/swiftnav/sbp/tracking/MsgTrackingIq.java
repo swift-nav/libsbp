@@ -50,7 +50,9 @@ public class MsgTrackingIq extends SBPMessage {
 
     public MsgTrackingIq(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgTrackingIq, expected 45, actual " + msg.type);
     }
 
     @Override

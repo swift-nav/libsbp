@@ -48,7 +48,9 @@ public class MsgHeartbeat extends SBPMessage {
 
     public MsgHeartbeat(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgHeartbeat, expected 65535, actual " + msg.type);
     }
 
     @Override

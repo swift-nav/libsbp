@@ -61,7 +61,9 @@ public class MsgLinuxCpuState extends SBPMessage {
 
     public MsgLinuxCpuState(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgLinuxCpuState, expected 32520, actual " + msg.type);
     }
 
     @Override

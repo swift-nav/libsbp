@@ -43,7 +43,9 @@ public class MsgSettingsRegister extends SBPMessage {
 
     public MsgSettingsRegister(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSettingsRegister, expected 174, actual " + msg.type);
     }
 
     @Override

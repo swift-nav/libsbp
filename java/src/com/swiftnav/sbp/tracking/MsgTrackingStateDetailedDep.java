@@ -118,7 +118,10 @@ public class MsgTrackingStateDetailedDep extends SBPMessage {
 
     public MsgTrackingStateDetailedDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgTrackingStateDetailedDep, expected 17, actual "
+                            + msg.type);
     }
 
     @Override

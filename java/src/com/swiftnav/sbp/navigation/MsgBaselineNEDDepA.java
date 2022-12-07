@@ -66,7 +66,9 @@ public class MsgBaselineNEDDepA extends SBPMessage {
 
     public MsgBaselineNEDDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgBaselineNEDDepA, expected 515, actual " + msg.type);
     }
 
     @Override

@@ -42,7 +42,9 @@ public class MsgEd25519SignatureDep extends SBPMessage {
 
     public MsgEd25519SignatureDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEd25519SignatureDep, expected 3073, actual " + msg.type);
     }
 
     @Override

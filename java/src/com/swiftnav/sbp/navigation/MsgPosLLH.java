@@ -67,7 +67,9 @@ public class MsgPosLLH extends SBPMessage {
 
     public MsgPosLLH(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPosLLH, expected 522, actual " + msg.type);
     }
 
     @Override

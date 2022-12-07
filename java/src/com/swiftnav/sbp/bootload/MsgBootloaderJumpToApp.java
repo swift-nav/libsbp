@@ -42,7 +42,9 @@ public class MsgBootloaderJumpToApp extends SBPMessage {
 
     public MsgBootloaderJumpToApp(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgBootloaderJumpToApp, expected 177, actual " + msg.type);
     }
 
     @Override

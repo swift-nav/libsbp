@@ -42,7 +42,9 @@ public class MsgPrintDep extends SBPMessage {
 
     public MsgPrintDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPrintDep, expected 16, actual " + msg.type);
     }
 
     @Override

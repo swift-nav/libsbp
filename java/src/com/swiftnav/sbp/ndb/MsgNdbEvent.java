@@ -77,7 +77,9 @@ public class MsgNdbEvent extends SBPMessage {
 
     public MsgNdbEvent(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgNdbEvent, expected 1024, actual " + msg.type);
     }
 
     @Override

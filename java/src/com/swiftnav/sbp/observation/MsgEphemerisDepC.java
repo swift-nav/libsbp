@@ -129,7 +129,9 @@ public class MsgEphemerisDepC extends SBPMessage {
 
     public MsgEphemerisDepC(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEphemerisDepC, expected 71, actual " + msg.type);
     }
 
     @Override

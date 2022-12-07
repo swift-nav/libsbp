@@ -36,7 +36,9 @@ public class MsgSsrSatelliteApc extends SBPMessage {
 
     public MsgSsrSatelliteApc(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrSatelliteApc, expected 1540, actual " + msg.type);
     }
 
     @Override

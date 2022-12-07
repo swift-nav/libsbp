@@ -44,7 +44,9 @@ public class MsgFileioConfigReq extends SBPMessage {
 
     public MsgFileioConfigReq(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgFileioConfigReq, expected 4097, actual " + msg.type);
     }
 
     @Override

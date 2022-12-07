@@ -124,7 +124,9 @@ public class MsgSsrTileDefinition extends SBPMessage {
 
     public MsgSsrTileDefinition(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrTileDefinition, expected 1527, actual " + msg.type);
     }
 
     @Override

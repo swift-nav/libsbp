@@ -51,7 +51,9 @@ public class MsgEphemerisSbas extends SBPMessage {
 
     public MsgEphemerisSbas(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEphemerisSbas, expected 140, actual " + msg.type);
     }
 
     @Override

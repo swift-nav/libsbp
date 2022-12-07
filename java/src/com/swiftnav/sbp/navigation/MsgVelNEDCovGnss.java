@@ -79,7 +79,9 @@ public class MsgVelNEDCovGnss extends SBPMessage {
 
     public MsgVelNEDCovGnss(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgVelNEDCovGnss, expected 562, actual " + msg.type);
     }
 
     @Override

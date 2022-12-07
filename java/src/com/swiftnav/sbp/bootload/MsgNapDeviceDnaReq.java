@@ -42,7 +42,9 @@ public class MsgNapDeviceDnaReq extends SBPMessage {
 
     public MsgNapDeviceDnaReq(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgNapDeviceDnaReq, expected 222, actual " + msg.type);
     }
 
     @Override

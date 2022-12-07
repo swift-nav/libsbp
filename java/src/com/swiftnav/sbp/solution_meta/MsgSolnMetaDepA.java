@@ -87,7 +87,9 @@ public class MsgSolnMetaDepA extends SBPMessage {
 
     public MsgSolnMetaDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSolnMetaDepA, expected 65295, actual " + msg.type);
     }
 
     @Override

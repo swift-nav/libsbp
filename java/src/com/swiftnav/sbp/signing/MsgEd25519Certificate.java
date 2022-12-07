@@ -45,7 +45,9 @@ public class MsgEd25519Certificate extends SBPMessage {
 
     public MsgEd25519Certificate(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEd25519Certificate, expected 3074, actual " + msg.type);
     }
 
     @Override

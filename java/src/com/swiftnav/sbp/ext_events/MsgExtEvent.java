@@ -55,7 +55,9 @@ public class MsgExtEvent extends SBPMessage {
 
     public MsgExtEvent(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgExtEvent, expected 257, actual " + msg.type);
     }
 
     @Override

@@ -55,7 +55,9 @@ public class MsgFwd extends SBPMessage {
 
     public MsgFwd(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgFwd, expected 1026, actual " + msg.type);
     }
 
     @Override

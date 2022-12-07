@@ -62,7 +62,9 @@ public class MsgProtectionLevelDepA extends SBPMessage {
 
     public MsgProtectionLevelDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgProtectionLevelDepA, expected 534, actual " + msg.type);
     }
 
     @Override

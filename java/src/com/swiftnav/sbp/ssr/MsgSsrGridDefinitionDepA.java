@@ -43,7 +43,10 @@ public class MsgSsrGridDefinitionDepA extends SBPMessage {
 
     public MsgSsrGridDefinitionDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrGridDefinitionDepA, expected 1525, actual "
+                            + msg.type);
     }
 
     @Override

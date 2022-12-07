@@ -51,7 +51,10 @@ public class MsgSsrOrbitClockBoundsDegradation extends SBPMessage {
 
     public MsgSsrOrbitClockBoundsDegradation(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrOrbitClockBoundsDegradation, expected 1503, actual "
+                            + msg.type);
     }
 
     @Override
