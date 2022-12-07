@@ -117,7 +117,9 @@ public class MsgEphemerisGal extends SBPMessage {
 
     public MsgEphemerisGal(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEphemerisGal, expected 141, actual " + msg.type);
     }
 
     @Override

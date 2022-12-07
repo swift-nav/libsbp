@@ -119,7 +119,9 @@ public class MsgPoseRelative extends SBPMessage {
 
     public MsgPoseRelative(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPoseRelative, expected 581, actual " + msg.type);
     }
 
     @Override

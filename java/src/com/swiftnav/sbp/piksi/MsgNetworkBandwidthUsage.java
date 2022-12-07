@@ -44,7 +44,9 @@ public class MsgNetworkBandwidthUsage extends SBPMessage {
 
     public MsgNetworkBandwidthUsage(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgNetworkBandwidthUsage, expected 189, actual " + msg.type);
     }
 
     @Override

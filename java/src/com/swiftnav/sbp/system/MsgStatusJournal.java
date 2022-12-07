@@ -59,7 +59,9 @@ public class MsgStatusJournal extends SBPMessage {
 
     public MsgStatusJournal(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgStatusJournal, expected 65533, actual " + msg.type);
     }
 
     @Override

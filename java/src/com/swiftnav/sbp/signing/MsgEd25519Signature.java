@@ -57,7 +57,9 @@ public class MsgEd25519Signature extends SBPMessage {
 
     public MsgEd25519Signature(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEd25519Signature, expected 3075, actual " + msg.type);
     }
 
     @Override

@@ -47,7 +47,9 @@ public class MsgMaskSatellite extends SBPMessage {
 
     public MsgMaskSatellite(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgMaskSatellite, expected 43, actual " + msg.type);
     }
 
     @Override

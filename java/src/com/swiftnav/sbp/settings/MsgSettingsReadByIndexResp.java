@@ -55,7 +55,10 @@ public class MsgSettingsReadByIndexResp extends SBPMessage {
 
     public MsgSettingsReadByIndexResp(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSettingsReadByIndexResp, expected 167, actual "
+                            + msg.type);
     }
 
     @Override

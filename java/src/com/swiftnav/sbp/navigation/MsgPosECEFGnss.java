@@ -65,7 +65,9 @@ public class MsgPosECEFGnss extends SBPMessage {
 
     public MsgPosECEFGnss(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPosECEFGnss, expected 553, actual " + msg.type);
     }
 
     @Override

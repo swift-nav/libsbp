@@ -68,7 +68,9 @@ public class MsgWheeltick extends SBPMessage {
 
     public MsgWheeltick(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgWheeltick, expected 2308, actual " + msg.type);
     }
 
     @Override

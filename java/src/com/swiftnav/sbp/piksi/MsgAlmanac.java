@@ -41,7 +41,9 @@ public class MsgAlmanac extends SBPMessage {
 
     public MsgAlmanac(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgAlmanac, expected 105, actual " + msg.type);
     }
 
     @Override

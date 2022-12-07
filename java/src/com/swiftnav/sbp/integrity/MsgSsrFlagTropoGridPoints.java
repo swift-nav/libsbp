@@ -42,7 +42,10 @@ public class MsgSsrFlagTropoGridPoints extends SBPMessage {
 
     public MsgSsrFlagTropoGridPoints(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrFlagTropoGridPoints, expected 3011, actual "
+                            + msg.type);
     }
 
     @Override

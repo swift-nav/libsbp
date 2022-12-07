@@ -79,7 +79,9 @@ public class MsgVelNEDCov extends SBPMessage {
 
     public MsgVelNEDCov(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgVelNEDCov, expected 530, actual " + msg.type);
     }
 
     @Override

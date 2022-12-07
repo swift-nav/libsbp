@@ -44,7 +44,9 @@ public class MsgUserData extends SBPMessage {
 
     public MsgUserData(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgUserData, expected 2048, actual " + msg.type);
     }
 
     @Override

@@ -70,7 +70,9 @@ public class MsgVelCog extends SBPMessage {
 
     public MsgVelCog(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgVelCog, expected 540, actual " + msg.type);
     }
 
     @Override

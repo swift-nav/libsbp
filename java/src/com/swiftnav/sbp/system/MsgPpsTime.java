@@ -55,7 +55,9 @@ public class MsgPpsTime extends SBPMessage {
 
     public MsgPpsTime(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPpsTime, expected 65288, actual " + msg.type);
     }
 
     @Override

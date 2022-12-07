@@ -45,7 +45,10 @@ public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
 
     public MsgSsrFlagIonoGridPointSatLos(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrFlagIonoGridPointSatLos, expected 3025, actual "
+                            + msg.type);
     }
 
     @Override

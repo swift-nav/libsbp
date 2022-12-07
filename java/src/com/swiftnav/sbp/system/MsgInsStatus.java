@@ -43,7 +43,9 @@ public class MsgInsStatus extends SBPMessage {
 
     public MsgInsStatus(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgInsStatus, expected 65283, actual " + msg.type);
     }
 
     @Override

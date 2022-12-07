@@ -118,7 +118,9 @@ public class MsgEphemerisDepA extends SBPMessage {
 
     public MsgEphemerisDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgEphemerisDepA, expected 26, actual " + msg.type);
     }
 
     @Override

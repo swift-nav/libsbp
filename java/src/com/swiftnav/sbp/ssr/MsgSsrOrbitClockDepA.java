@@ -79,7 +79,9 @@ public class MsgSsrOrbitClockDepA extends SBPMessage {
 
     public MsgSsrOrbitClockDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrOrbitClockDepA, expected 1500, actual " + msg.type);
     }
 
     @Override

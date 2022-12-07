@@ -81,7 +81,10 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
 
     public MsgSsrGriddedCorrectionBounds(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrGriddedCorrectionBounds, expected 1534, actual "
+                            + msg.type);
     }
 
     @Override

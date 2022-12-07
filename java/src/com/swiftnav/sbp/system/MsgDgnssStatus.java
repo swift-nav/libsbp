@@ -52,7 +52,9 @@ public class MsgDgnssStatus extends SBPMessage {
 
     public MsgDgnssStatus(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgDgnssStatus, expected 65282, actual " + msg.type);
     }
 
     @Override

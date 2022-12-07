@@ -59,7 +59,9 @@ public class MsgGPSTimeGnss extends SBPMessage {
 
     public MsgGPSTimeGnss(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgGPSTimeGnss, expected 260, actual " + msg.type);
     }
 
     @Override

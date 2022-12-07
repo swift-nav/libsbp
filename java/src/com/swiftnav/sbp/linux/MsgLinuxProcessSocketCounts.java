@@ -64,7 +64,10 @@ public class MsgLinuxProcessSocketCounts extends SBPMessage {
 
     public MsgLinuxProcessSocketCounts(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgLinuxProcessSocketCounts, expected 32515, actual "
+                            + msg.type);
     }
 
     @Override

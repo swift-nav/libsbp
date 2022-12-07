@@ -80,7 +80,9 @@ public class MsgPosLLHCov extends SBPMessage {
 
     public MsgPosLLHCov(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPosLLHCov, expected 529, actual " + msg.type);
     }
 
     @Override

@@ -51,7 +51,9 @@ public class MsgSsrStecCorrectionDep extends SBPMessage {
 
     public MsgSsrStecCorrectionDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrStecCorrectionDep, expected 1531, actual " + msg.type);
     }
 
     @Override

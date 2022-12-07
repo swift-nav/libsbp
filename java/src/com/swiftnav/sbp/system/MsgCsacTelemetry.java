@@ -47,7 +47,9 @@ public class MsgCsacTelemetry extends SBPMessage {
 
     public MsgCsacTelemetry(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgCsacTelemetry, expected 65284, actual " + msg.type);
     }
 
     @Override

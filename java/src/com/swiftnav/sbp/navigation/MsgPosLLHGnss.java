@@ -67,7 +67,9 @@ public class MsgPosLLHGnss extends SBPMessage {
 
     public MsgPosLLHGnss(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPosLLHGnss, expected 554, actual " + msg.type);
     }
 
     @Override

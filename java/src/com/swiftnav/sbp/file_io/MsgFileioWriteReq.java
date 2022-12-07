@@ -56,7 +56,9 @@ public class MsgFileioWriteReq extends SBPMessage {
 
     public MsgFileioWriteReq(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgFileioWriteReq, expected 173, actual " + msg.type);
     }
 
     @Override

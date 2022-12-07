@@ -48,7 +48,9 @@ public class MsgSettingsReadResp extends SBPMessage {
 
     public MsgSettingsReadResp(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSettingsReadResp, expected 165, actual " + msg.type);
     }
 
     @Override

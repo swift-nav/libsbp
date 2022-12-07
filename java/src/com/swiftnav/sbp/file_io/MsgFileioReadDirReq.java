@@ -54,7 +54,9 @@ public class MsgFileioReadDirReq extends SBPMessage {
 
     public MsgFileioReadDirReq(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgFileioReadDirReq, expected 169, actual " + msg.type);
     }
 
     @Override

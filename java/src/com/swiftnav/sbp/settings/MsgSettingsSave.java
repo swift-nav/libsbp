@@ -40,7 +40,9 @@ public class MsgSettingsSave extends SBPMessage {
 
     public MsgSettingsSave(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSettingsSave, expected 161, actual " + msg.type);
     }
 
     @Override

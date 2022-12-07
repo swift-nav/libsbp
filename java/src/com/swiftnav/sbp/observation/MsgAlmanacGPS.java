@@ -73,7 +73,9 @@ public class MsgAlmanacGPS extends SBPMessage {
 
     public MsgAlmanacGPS(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgAlmanacGPS, expected 114, actual " + msg.type);
     }
 
     @Override

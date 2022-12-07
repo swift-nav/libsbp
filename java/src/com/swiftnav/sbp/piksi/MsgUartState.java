@@ -60,7 +60,9 @@ public class MsgUartState extends SBPMessage {
 
     public MsgUartState(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgUartState, expected 29, actual " + msg.type);
     }
 
     @Override

@@ -67,7 +67,9 @@ public class MsgUtcTimeGnss extends SBPMessage {
 
     public MsgUtcTimeGnss(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgUtcTimeGnss, expected 261, actual " + msg.type);
     }
 
     @Override

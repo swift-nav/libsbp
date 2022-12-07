@@ -42,7 +42,10 @@ public class MsgSsrFlagIonoTileSatLos extends SBPMessage {
 
     public MsgSsrFlagIonoTileSatLos(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgSsrFlagIonoTileSatLos, expected 3021, actual "
+                            + msg.type);
     }
 
     @Override

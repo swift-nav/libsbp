@@ -95,7 +95,9 @@ public class MsgPosLLHAcc extends SBPMessage {
 
     public MsgPosLLHAcc(SBPMessage msg) throws SBPBinaryException {
         super(msg);
-        assert msg.type == TYPE;
+        if (msg.type != TYPE)
+            throw new SBPBinaryException(
+                    "Type mismatch for MsgPosLLHAcc, expected 536, actual " + msg.type);
     }
 
     @Override
