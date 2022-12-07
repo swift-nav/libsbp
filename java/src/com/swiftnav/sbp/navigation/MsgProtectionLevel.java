@@ -166,6 +166,11 @@ public class MsgProtectionLevel extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "PROTECTION LEVEL";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

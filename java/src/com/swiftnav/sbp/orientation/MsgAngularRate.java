@@ -85,6 +85,11 @@ public class MsgAngularRate extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ANGULAR RATE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

@@ -60,6 +60,11 @@ public class MsgStmFlashUnlockSector extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "STM FLASH UNLOCK SECTOR";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sector", sector);

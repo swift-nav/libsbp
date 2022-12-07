@@ -115,6 +115,11 @@ public class MsgVelECEFCov extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "VEL ECEF COV";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

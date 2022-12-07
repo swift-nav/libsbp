@@ -66,6 +66,11 @@ public class MsgFlashErase extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "FLASH ERASE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("target", target);

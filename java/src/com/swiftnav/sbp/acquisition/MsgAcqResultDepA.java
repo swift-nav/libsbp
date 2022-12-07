@@ -78,6 +78,11 @@ public class MsgAcqResultDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ACQ RESULT DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("snr", snr);

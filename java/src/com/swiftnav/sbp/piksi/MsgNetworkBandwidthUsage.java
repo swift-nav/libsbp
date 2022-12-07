@@ -61,6 +61,11 @@ public class MsgNetworkBandwidthUsage extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "NET BANDWIDTH USAGE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("interfaces", SBPStruct.toJSONArray(interfaces));

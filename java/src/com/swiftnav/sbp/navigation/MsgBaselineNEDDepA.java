@@ -97,6 +97,11 @@ public class MsgBaselineNEDDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "BASELINE NED DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

@@ -65,6 +65,11 @@ public class MsgMaskSatelliteDep extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "MASK SATELLITE DEP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("mask", mask);

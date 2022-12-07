@@ -67,6 +67,11 @@ public class MsgBootloaderHandshakeResp extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "BOOTLOADER HANDSHAKE RESP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("flags", flags);

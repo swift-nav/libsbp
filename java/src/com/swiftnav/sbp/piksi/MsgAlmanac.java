@@ -57,6 +57,11 @@ public class MsgAlmanac extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ALMANAC";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;

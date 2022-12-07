@@ -81,6 +81,11 @@ public class MsgGloBiases extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "GLO BIASES";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("mask", mask);

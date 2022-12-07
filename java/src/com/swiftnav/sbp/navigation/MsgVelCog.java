@@ -101,6 +101,11 @@ public class MsgVelCog extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "VEL COG";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

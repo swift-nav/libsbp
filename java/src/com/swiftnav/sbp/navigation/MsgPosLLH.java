@@ -98,6 +98,11 @@ public class MsgPosLLH extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "POS LLH";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

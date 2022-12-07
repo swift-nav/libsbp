@@ -176,6 +176,11 @@ public class MsgTrackingStateDetailedDep extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "TRK STATE DETAILED DEP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("recv_time", recv_time);

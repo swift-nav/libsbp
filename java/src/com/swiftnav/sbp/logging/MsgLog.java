@@ -65,6 +65,11 @@ public class MsgLog extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "LOG";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("level", level);

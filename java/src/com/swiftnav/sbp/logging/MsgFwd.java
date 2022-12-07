@@ -76,6 +76,11 @@ public class MsgFwd extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "FWD";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("source", source);

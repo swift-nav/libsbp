@@ -90,6 +90,11 @@ public class MsgVelECEFDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "VEL ECEF DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

@@ -91,6 +91,11 @@ public class MsgBaselineECEFDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "BASELINE ECEF DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

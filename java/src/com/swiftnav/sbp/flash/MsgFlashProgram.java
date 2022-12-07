@@ -78,6 +78,11 @@ public class MsgFlashProgram extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "FLASH PROGRAM";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("target", target);

@@ -63,6 +63,11 @@ public class MsgNapDeviceDnaResp extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "NAP DEVICE DNA RESP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("dna", new JSONArray(dna));

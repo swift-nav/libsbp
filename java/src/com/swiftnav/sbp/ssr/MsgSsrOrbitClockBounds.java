@@ -85,6 +85,11 @@ public class MsgSsrOrbitClockBounds extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SSR ORBIT CLOCK BOUNDS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());

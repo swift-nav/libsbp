@@ -94,6 +94,11 @@ public class MsgPosECEFDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "POS ECEF DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

@@ -94,6 +94,11 @@ public class MsgLinuxSysState extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "LINUX SYS STATE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("mem_total", mem_total);

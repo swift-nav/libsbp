@@ -78,6 +78,11 @@ public class MsgSsrGriddedCorrection extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SSR GRIDDED CORRECTION";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());

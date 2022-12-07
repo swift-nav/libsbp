@@ -81,6 +81,11 @@ public class MsgDeviceMonitor extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "DEVICE MONITOR";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("dev_vin", dev_vin);

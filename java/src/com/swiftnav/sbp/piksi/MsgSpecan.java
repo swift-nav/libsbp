@@ -91,6 +91,11 @@ public class MsgSpecan extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SPECAN";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("channel_tag", channel_tag);

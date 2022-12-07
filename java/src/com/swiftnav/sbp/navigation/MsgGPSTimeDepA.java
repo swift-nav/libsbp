@@ -82,6 +82,11 @@ public class MsgGPSTimeDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "GPS TIME DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("wn", wn);

@@ -119,6 +119,11 @@ public class MsgPosECEFCovGnss extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "POS ECEF COV GNSS-only";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

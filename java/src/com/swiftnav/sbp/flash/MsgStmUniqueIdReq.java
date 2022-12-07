@@ -57,6 +57,11 @@ public class MsgStmUniqueIdReq extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "STM UNIQUE ID REQ";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;

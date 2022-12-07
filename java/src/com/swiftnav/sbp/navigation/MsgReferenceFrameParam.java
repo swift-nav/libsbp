@@ -149,6 +149,11 @@ public class MsgReferenceFrameParam extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "REFERENCE FRAME PARAM";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("ssr_iod", ssr_iod);

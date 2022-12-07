@@ -108,6 +108,11 @@ public class MsgNdbEvent extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "NDB EVENT";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("recv_time", recv_time);

@@ -178,6 +178,11 @@ public class MsgPoseRelative extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "POSE RELATIVE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

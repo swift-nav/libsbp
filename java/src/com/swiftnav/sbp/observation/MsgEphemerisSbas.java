@@ -78,6 +78,11 @@ public class MsgEphemerisSbas extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "EPH SBAS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());

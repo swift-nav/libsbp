@@ -69,6 +69,11 @@ public class MsgSettingsRegisterResp extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SETTINGS REGISTER RESP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("status", status);

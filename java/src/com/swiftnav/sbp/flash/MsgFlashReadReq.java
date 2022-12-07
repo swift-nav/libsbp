@@ -73,6 +73,11 @@ public class MsgFlashReadReq extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "FLASH READ REQ";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("target", target);

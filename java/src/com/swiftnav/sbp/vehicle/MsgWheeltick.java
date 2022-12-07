@@ -91,6 +91,11 @@ public class MsgWheeltick extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "WHEELTICK";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time);

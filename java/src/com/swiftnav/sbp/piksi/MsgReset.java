@@ -60,6 +60,11 @@ public class MsgReset extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "RESET";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("flags", flags);

@@ -172,6 +172,11 @@ public class MsgEphemerisGPS extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "EPH GPS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());

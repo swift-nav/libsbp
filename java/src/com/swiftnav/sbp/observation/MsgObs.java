@@ -70,6 +70,11 @@ public class MsgObs extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "OBS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());

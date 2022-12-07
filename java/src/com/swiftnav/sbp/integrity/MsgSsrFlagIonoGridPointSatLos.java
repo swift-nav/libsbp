@@ -69,6 +69,11 @@ public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SSR FLAG IONO GRID POINT SAT LOS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());

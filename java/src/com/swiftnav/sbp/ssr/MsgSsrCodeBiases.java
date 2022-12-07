@@ -87,6 +87,11 @@ public class MsgSsrCodeBiases extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SSR CODE BIASES";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time.toJSON());

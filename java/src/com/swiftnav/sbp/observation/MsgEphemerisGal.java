@@ -182,6 +182,11 @@ public class MsgEphemerisGal extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "EPH GAL";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());

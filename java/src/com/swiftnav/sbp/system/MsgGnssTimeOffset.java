@@ -76,6 +76,11 @@ public class MsgGnssTimeOffset extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "GNSS TIME OFFSET";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("weeks", weeks);

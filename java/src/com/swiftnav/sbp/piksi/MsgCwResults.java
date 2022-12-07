@@ -57,6 +57,11 @@ public class MsgCwResults extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "CW RESULTS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;

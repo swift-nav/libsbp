@@ -74,6 +74,11 @@ public class MsgSsrCodePhaseBiasesBounds extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SSR CODE PHASE BIASES BOUNDS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());

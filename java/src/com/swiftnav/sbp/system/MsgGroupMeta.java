@@ -78,6 +78,11 @@ public class MsgGroupMeta extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "GROUP META";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("group_id", group_id);

@@ -74,6 +74,11 @@ public class MsgLinuxProcessFdCount extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "LINUX PROCESS FD COUNT";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("index", index);

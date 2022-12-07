@@ -71,6 +71,11 @@ public class MsgStartup extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "STARTUP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("cause", cause);

@@ -59,6 +59,11 @@ public class MsgBootloaderJumpToApp extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "BOOTLOADER JUMP TO APP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("jump", jump);

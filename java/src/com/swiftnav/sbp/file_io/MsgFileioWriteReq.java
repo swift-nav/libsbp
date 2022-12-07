@@ -79,6 +79,11 @@ public class MsgFileioWriteReq extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "FILEIO WRITE REQ";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sequence", sequence);

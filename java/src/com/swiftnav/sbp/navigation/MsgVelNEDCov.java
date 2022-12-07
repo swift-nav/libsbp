@@ -118,6 +118,11 @@ public class MsgVelNEDCov extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "VEL NED COV";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

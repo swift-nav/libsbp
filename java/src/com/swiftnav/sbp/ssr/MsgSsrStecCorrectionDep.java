@@ -70,6 +70,11 @@ public class MsgSsrStecCorrectionDep extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SSR STEC CORRECTION DEP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());

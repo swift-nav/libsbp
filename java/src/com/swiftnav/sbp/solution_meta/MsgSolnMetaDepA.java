@@ -120,6 +120,11 @@ public class MsgSolnMetaDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SOLN META DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("pdop", pdop);

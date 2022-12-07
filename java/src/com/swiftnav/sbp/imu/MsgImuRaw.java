@@ -101,6 +101,11 @@ public class MsgImuRaw extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "IMU RAW";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

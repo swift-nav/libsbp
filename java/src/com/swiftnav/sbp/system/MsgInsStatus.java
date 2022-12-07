@@ -60,6 +60,11 @@ public class MsgInsStatus extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "INS STATUS";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("flags", flags);

@@ -75,6 +75,11 @@ public class MsgUartStateDepa extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "UART STATE DEPA";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("uart_a", uart_a.toJSON());

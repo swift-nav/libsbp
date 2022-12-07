@@ -61,6 +61,11 @@ public class MsgFileioConfigReq extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "FILEIO CONFIG REQ";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sequence", sequence);

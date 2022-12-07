@@ -80,6 +80,11 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "(((m.friendly_name)))";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         ((*- if m.fields *)) ((*- for f in m.fields *))

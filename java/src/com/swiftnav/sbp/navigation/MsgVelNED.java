@@ -96,6 +96,11 @@ public class MsgVelNED extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "VEL NED";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

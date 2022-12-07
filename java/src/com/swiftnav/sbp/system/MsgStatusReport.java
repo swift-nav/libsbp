@@ -85,6 +85,11 @@ public class MsgStatusReport extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "STATUS REPORT";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("reporting_system", reporting_system);

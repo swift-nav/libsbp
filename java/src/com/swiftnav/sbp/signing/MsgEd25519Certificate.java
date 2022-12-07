@@ -66,6 +66,11 @@ public class MsgEd25519Certificate extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ED25519 CERTIFICATE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("n_msg", n_msg);

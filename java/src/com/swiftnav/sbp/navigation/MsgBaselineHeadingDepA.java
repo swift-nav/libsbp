@@ -76,6 +76,11 @@ public class MsgBaselineHeadingDepA extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "BASELINE HEADING DEP A";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);

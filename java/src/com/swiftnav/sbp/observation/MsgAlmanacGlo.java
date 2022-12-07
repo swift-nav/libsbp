@@ -97,6 +97,11 @@ public class MsgAlmanacGlo extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ALMANAC GLO";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());

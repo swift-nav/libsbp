@@ -73,6 +73,11 @@ public class MsgBasePosLLH extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "BASE POS LLH";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("lat", lat);

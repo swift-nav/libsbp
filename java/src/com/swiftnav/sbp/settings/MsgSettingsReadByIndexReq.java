@@ -61,6 +61,11 @@ public class MsgSettingsReadByIndexReq extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SETTINGS READ BY IDX REQ";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("index", index);

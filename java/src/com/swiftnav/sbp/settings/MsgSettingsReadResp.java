@@ -65,6 +65,11 @@ public class MsgSettingsReadResp extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SETTINGS READ RESP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("setting", setting);

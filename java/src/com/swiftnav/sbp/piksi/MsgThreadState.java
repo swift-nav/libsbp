@@ -74,6 +74,11 @@ public class MsgThreadState extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "THREAD STATE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("name", name);

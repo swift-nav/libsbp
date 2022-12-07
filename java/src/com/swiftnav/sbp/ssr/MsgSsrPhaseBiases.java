@@ -109,6 +109,11 @@ public class MsgSsrPhaseBiases extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SSR PHASE BIASES";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time.toJSON());

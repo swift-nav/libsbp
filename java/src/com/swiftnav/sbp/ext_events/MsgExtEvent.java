@@ -80,6 +80,11 @@ public class MsgExtEvent extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "EXT EVENT";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("wn", wn);

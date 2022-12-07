@@ -62,6 +62,11 @@ public class MsgIarState extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "IAR STATE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("num_hyps", num_hyps);

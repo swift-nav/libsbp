@@ -100,6 +100,11 @@ public class MsgUtcTimeGnss extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "UTC TIME GNSS-only";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("flags", flags);

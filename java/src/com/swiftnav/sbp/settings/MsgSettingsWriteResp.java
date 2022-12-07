@@ -68,6 +68,11 @@ public class MsgSettingsWriteResp extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SETTINGS WRITE RESP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("status", status);

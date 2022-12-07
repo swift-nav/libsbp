@@ -73,6 +73,11 @@ public class MsgBasePosECEF extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "BASE POS ECEF";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("x", x);

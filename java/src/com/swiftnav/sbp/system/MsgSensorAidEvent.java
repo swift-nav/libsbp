@@ -96,6 +96,11 @@ public class MsgSensorAidEvent extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "SENSOR AID EVENT";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time);

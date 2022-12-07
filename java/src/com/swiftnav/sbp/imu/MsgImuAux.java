@@ -70,6 +70,11 @@ public class MsgImuAux extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "IMU AUX";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("imu_type", imu_type);

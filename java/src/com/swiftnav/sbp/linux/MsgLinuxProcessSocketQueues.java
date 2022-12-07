@@ -105,6 +105,11 @@ public class MsgLinuxProcessSocketQueues extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "LINUX PROCESS SOCKET QUEUES";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("index", index);

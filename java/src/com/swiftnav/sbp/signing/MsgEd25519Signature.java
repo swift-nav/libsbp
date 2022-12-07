@@ -82,6 +82,11 @@ public class MsgEd25519Signature extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ED25519 SIGNATURE";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("stream_counter", stream_counter);

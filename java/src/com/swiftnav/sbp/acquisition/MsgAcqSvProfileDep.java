@@ -61,6 +61,11 @@ public class MsgAcqSvProfileDep extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ACQ SV PROFILE DEP";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("acq_sv_profile", SBPStruct.toJSONArray(acq_sv_profile));

@@ -107,6 +107,11 @@ public class MsgOrientQuat extends SBPMessage {
     }
 
     @Override
+    public String getFriendlyName() {
+        return "ORIENT QUAT";
+    }
+
+    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
