@@ -75,6 +75,12 @@ pub mod msg_fwd {
         }
     }
 
+    impl FriendlyName for MsgFwd {
+        fn friendly_name() -> &'static str {
+            "FWD"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFwd {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -173,6 +179,12 @@ pub mod msg_log {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgLog {
+        fn friendly_name() -> &'static str {
+            "LOG"
         }
     }
 
@@ -308,6 +320,12 @@ pub mod msg_print_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgPrintDep {
+        fn friendly_name() -> &'static str {
+            "PRINT DEP"
         }
     }
 

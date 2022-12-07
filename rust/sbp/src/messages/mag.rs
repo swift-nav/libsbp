@@ -82,6 +82,12 @@ pub mod msg_mag_raw {
         }
     }
 
+    impl FriendlyName for MsgMagRaw {
+        fn friendly_name() -> &'static str {
+            "MAG RAW"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgMagRaw {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {

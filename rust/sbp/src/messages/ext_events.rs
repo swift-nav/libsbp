@@ -119,6 +119,12 @@ pub mod msg_ext_event {
         }
     }
 
+    impl FriendlyName for MsgExtEvent {
+        fn friendly_name() -> &'static str {
+            "EXT EVENT"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgExtEvent {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {

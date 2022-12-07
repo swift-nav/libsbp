@@ -432,6 +432,12 @@ pub mod msg_soln_meta {
         }
     }
 
+    impl FriendlyName for MsgSolnMeta {
+        fn friendly_name() -> &'static str {
+            "SOLN META"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSolnMeta {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -611,6 +617,12 @@ pub mod msg_soln_meta_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSolnMetaDepA {
+        fn friendly_name() -> &'static str {
+            "SOLN META DEP A"
         }
     }
 

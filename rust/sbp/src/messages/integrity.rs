@@ -340,6 +340,12 @@ pub mod msg_ssr_flag_high_level {
         }
     }
 
+    impl FriendlyName for MsgSsrFlagHighLevel {
+        fn friendly_name() -> &'static str {
+            "SSR FLAG HIGH LEVEL"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrFlagHighLevel {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -747,6 +753,12 @@ pub mod msg_ssr_flag_iono_grid_points {
         }
     }
 
+    impl FriendlyName for MsgSsrFlagIonoGridPoints {
+        fn friendly_name() -> &'static str {
+            "SSR FLAG IONO GRID POINTS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrFlagIonoGridPoints {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -830,6 +842,12 @@ pub mod msg_ssr_flag_iono_grid_point_sat_los {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagIonoGridPointSatLos {
+        fn friendly_name() -> &'static str {
+            "SSR FLAG IONO GRID POINT SAT LOS"
         }
     }
 
@@ -917,6 +935,12 @@ pub mod msg_ssr_flag_iono_tile_sat_los {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagIonoTileSatLos {
+        fn friendly_name() -> &'static str {
+            "SSR FLAG IONO TILE SAT LOS"
         }
     }
 
@@ -1015,6 +1039,12 @@ pub mod msg_ssr_flag_satellites {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagSatellites {
+        fn friendly_name() -> &'static str {
+            "SSR FLAG SATELLITES"
         }
     }
 
@@ -1118,6 +1148,12 @@ pub mod msg_ssr_flag_tropo_grid_points {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrFlagTropoGridPoints {
+        fn friendly_name() -> &'static str {
+            "SSR FLAG TROPO GRID POINTS"
         }
     }
 

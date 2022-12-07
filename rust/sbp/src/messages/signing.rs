@@ -67,6 +67,12 @@ pub mod msg_ed25519_certificate {
         }
     }
 
+    impl FriendlyName for MsgEd25519Certificate {
+        fn friendly_name() -> &'static str {
+            "ED25519 CERTIFICATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEd25519Certificate {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -163,6 +169,12 @@ pub mod msg_ed25519_signature {
         }
     }
 
+    impl FriendlyName for MsgEd25519Signature {
+        fn friendly_name() -> &'static str {
+            "ED25519 SIGNATURE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEd25519Signature {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -251,6 +263,12 @@ pub mod msg_ed25519_signature_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEd25519SignatureDep {
+        fn friendly_name() -> &'static str {
+            "ED25519 SIGNATURE DEP"
         }
     }
 

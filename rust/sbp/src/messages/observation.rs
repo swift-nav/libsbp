@@ -729,6 +729,12 @@ pub mod msg_almanac_glo {
         }
     }
 
+    impl FriendlyName for MsgAlmanacGlo {
+        fn friendly_name() -> &'static str {
+            "ALMANAC GLO"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAlmanacGlo {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -852,6 +858,12 @@ pub mod msg_almanac_glo_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgAlmanacGloDep {
+        fn friendly_name() -> &'static str {
+            "ALMANAC GLO DEP"
         }
     }
 
@@ -983,6 +995,12 @@ pub mod msg_almanac_gps {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgAlmanacGps {
+        fn friendly_name() -> &'static str {
+            "ALMANAC GPS"
         }
     }
 
@@ -1125,6 +1143,12 @@ pub mod msg_almanac_gps_dep {
         }
     }
 
+    impl FriendlyName for MsgAlmanacGpsDep {
+        fn friendly_name() -> &'static str {
+            "ALMANAC GPS DEP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAlmanacGpsDep {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1244,6 +1268,12 @@ pub mod msg_base_pos_ecef {
         }
     }
 
+    impl FriendlyName for MsgBasePosEcef {
+        fn friendly_name() -> &'static str {
+            "BASE POS ECEF"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgBasePosEcef {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1329,6 +1359,12 @@ pub mod msg_base_pos_llh {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgBasePosLlh {
+        fn friendly_name() -> &'static str {
+            "BASE POS LLH"
         }
     }
 
@@ -1488,6 +1524,12 @@ pub mod msg_ephemeris_bds {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisBds {
+        fn friendly_name() -> &'static str {
+            "EPH BDS"
         }
     }
 
@@ -1732,6 +1774,12 @@ pub mod msg_ephemeris_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisDepA {
+        fn friendly_name() -> &'static str {
+            "EPH DEP A"
         }
     }
 
@@ -1987,6 +2035,12 @@ pub mod msg_ephemeris_dep_b {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisDepB {
+        fn friendly_name() -> &'static str {
+            "EPH DEP B"
         }
     }
 
@@ -2255,6 +2309,12 @@ pub mod msg_ephemeris_dep_c {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisDepC {
+        fn friendly_name() -> &'static str {
+            "EPH DEP C"
         }
     }
 
@@ -2534,6 +2594,12 @@ pub mod msg_ephemeris_dep_d {
         }
     }
 
+    impl FriendlyName for MsgEphemerisDepD {
+        fn friendly_name() -> &'static str {
+            "EPH DEP D"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisDepD {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2798,6 +2864,12 @@ pub mod msg_ephemeris_gal {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGal {
+        fn friendly_name() -> &'static str {
+            "EPH GAL"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisGal {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -3041,6 +3113,12 @@ pub mod msg_ephemeris_gal_dep_a {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGalDepA {
+        fn friendly_name() -> &'static str {
+            "EPH GAL DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisGalDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -3233,6 +3311,12 @@ pub mod msg_ephemeris_glo {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGlo {
+        fn friendly_name() -> &'static str {
+            "EPH GLO"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisGlo {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -3356,6 +3440,12 @@ pub mod msg_ephemeris_glo_dep_a {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGloDepA {
+        fn friendly_name() -> &'static str {
+            "EPH GLO DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisGloDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -3464,6 +3554,12 @@ pub mod msg_ephemeris_glo_dep_b {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGloDepB {
+        fn friendly_name() -> &'static str {
+            "EPH GLO DEP B"
         }
     }
 
@@ -3581,6 +3677,12 @@ pub mod msg_ephemeris_glo_dep_c {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGloDepC {
+        fn friendly_name() -> &'static str {
+            "EPH GLO DEP C"
         }
     }
 
@@ -3707,6 +3809,12 @@ pub mod msg_ephemeris_glo_dep_d {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGloDepD {
+        fn friendly_name() -> &'static str {
+            "EPH GLO DEP D"
         }
     }
 
@@ -3885,6 +3993,12 @@ pub mod msg_ephemeris_gps {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGps {
+        fn friendly_name() -> &'static str {
+            "EPH GPS"
         }
     }
 
@@ -4122,6 +4236,12 @@ pub mod msg_ephemeris_gps_dep_e {
         }
     }
 
+    impl FriendlyName for MsgEphemerisGpsDepE {
+        fn friendly_name() -> &'static str {
+            "EPH GPS DEP E"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisGpsDepE {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -4351,6 +4471,12 @@ pub mod msg_ephemeris_gps_dep_f {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisGpsDepF {
+        fn friendly_name() -> &'static str {
+            "EPH GPS DEP F"
         }
     }
 
@@ -4586,6 +4712,12 @@ pub mod msg_ephemeris_qzss {
         }
     }
 
+    impl FriendlyName for MsgEphemerisQzss {
+        fn friendly_name() -> &'static str {
+            "EPH QZSS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisQzss {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -4758,6 +4890,12 @@ pub mod msg_ephemeris_sbas {
         }
     }
 
+    impl FriendlyName for MsgEphemerisSbas {
+        fn friendly_name() -> &'static str {
+            "EPH SBAS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisSbas {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -4859,6 +4997,12 @@ pub mod msg_ephemeris_sbas_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEphemerisSbasDepA {
+        fn friendly_name() -> &'static str {
+            "EPH SBAS DEP A"
         }
     }
 
@@ -4971,6 +5115,12 @@ pub mod msg_ephemeris_sbas_dep_b {
         }
     }
 
+    impl FriendlyName for MsgEphemerisSbasDepB {
+        fn friendly_name() -> &'static str {
+            "EPH SBAS DEP B"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgEphemerisSbasDepB {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -5078,6 +5228,12 @@ pub mod msg_glo_biases {
         }
     }
 
+    impl FriendlyName for MsgGloBiases {
+        fn friendly_name() -> &'static str {
+            "GLO BIASES"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgGloBiases {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -5163,6 +5319,12 @@ pub mod msg_gnss_capb {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgGnssCapb {
+        fn friendly_name() -> &'static str {
+            "GNSS CAPB"
         }
     }
 
@@ -5252,6 +5414,12 @@ pub mod msg_group_delay {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgGroupDelay {
+        fn friendly_name() -> &'static str {
+            "GROUP DELAY"
         }
     }
 
@@ -5361,6 +5529,12 @@ pub mod msg_group_delay_dep_a {
         }
     }
 
+    impl FriendlyName for MsgGroupDelayDepA {
+        fn friendly_name() -> &'static str {
+            "GROUP DELAY DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgGroupDelayDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -5464,6 +5638,12 @@ pub mod msg_group_delay_dep_b {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgGroupDelayDepB {
+        fn friendly_name() -> &'static str {
+            "GROUP DELAY DEP B"
         }
     }
 
@@ -5575,6 +5755,12 @@ pub mod msg_iono {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgIono {
+        fn friendly_name() -> &'static str {
+            "IONO"
         }
     }
 
@@ -5704,6 +5890,12 @@ pub mod msg_obs {
         }
     }
 
+    impl FriendlyName for MsgObs {
+        fn friendly_name() -> &'static str {
+            "OBS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgObs {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -5793,6 +5985,12 @@ pub mod msg_obs_dep_a {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgObsDepA {
+        fn friendly_name() -> &'static str {
+            "OBS DEP A"
         }
     }
 
@@ -5888,6 +6086,12 @@ pub mod msg_obs_dep_b {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgObsDepB {
+        fn friendly_name() -> &'static str {
+            "OBS DEP B"
         }
     }
 
@@ -5988,6 +6192,12 @@ pub mod msg_obs_dep_c {
         }
     }
 
+    impl FriendlyName for MsgObsDepC {
+        fn friendly_name() -> &'static str {
+            "OBS DEP C"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgObsDepC {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -6081,6 +6291,12 @@ pub mod msg_osr {
         }
     }
 
+    impl FriendlyName for MsgOsr {
+        fn friendly_name() -> &'static str {
+            "OSR"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgOsr {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -6158,6 +6374,12 @@ pub mod msg_sv_az_el {
         }
     }
 
+    impl FriendlyName for MsgSvAzEl {
+        fn friendly_name() -> &'static str {
+            "SV AZ EL"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSvAzEl {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -6231,6 +6453,12 @@ pub mod msg_sv_configuration_gps_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSvConfigurationGpsDep {
+        fn friendly_name() -> &'static str {
+            "SV CONFIGURATION GPS DEP"
         }
     }
 

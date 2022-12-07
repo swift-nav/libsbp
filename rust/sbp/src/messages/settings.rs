@@ -91,6 +91,12 @@ pub mod msg_settings_read_by_index_done {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadByIndexDone {
+        fn friendly_name() -> &'static str {
+            "SETTINGS READ BY IDX DONE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSettingsReadByIndexDone {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -157,6 +163,12 @@ pub mod msg_settings_read_by_index_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSettingsReadByIndexReq {
+        fn friendly_name() -> &'static str {
+            "SETTINGS READ BY IDX REQ"
         }
     }
 
@@ -246,6 +258,12 @@ pub mod msg_settings_read_by_index_resp {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadByIndexResp {
+        fn friendly_name() -> &'static str {
+            "SETTINGS READ BY IDX RESP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSettingsReadByIndexResp {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -329,6 +347,12 @@ pub mod msg_settings_read_req {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadReq {
+        fn friendly_name() -> &'static str {
+            "SETTINGS READ REQ"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSettingsReadReq {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -407,6 +431,12 @@ pub mod msg_settings_read_resp {
         }
     }
 
+    impl FriendlyName for MsgSettingsReadResp {
+        fn friendly_name() -> &'static str {
+            "SETTINGS READ RESP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSettingsReadResp {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -479,6 +509,12 @@ pub mod msg_settings_register {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSettingsRegister {
+        fn friendly_name() -> &'static str {
+            "SETTINGS REGISTER"
         }
     }
 
@@ -575,6 +611,12 @@ pub mod msg_settings_register_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSettingsRegisterResp {
+        fn friendly_name() -> &'static str {
+            "SETTINGS REGISTER RESP"
         }
     }
 
@@ -703,6 +745,12 @@ pub mod msg_settings_save {
         }
     }
 
+    impl FriendlyName for MsgSettingsSave {
+        fn friendly_name() -> &'static str {
+            "SETTINGS SAVE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSettingsSave {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -774,6 +822,12 @@ pub mod msg_settings_write {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSettingsWrite {
+        fn friendly_name() -> &'static str {
+            "SETTINGS WRITE"
         }
     }
 
@@ -872,6 +926,12 @@ pub mod msg_settings_write_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSettingsWriteResp {
+        fn friendly_name() -> &'static str {
+            "SETTINGS WRITE RESP"
         }
     }
 

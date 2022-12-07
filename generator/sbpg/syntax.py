@@ -73,7 +73,8 @@ class Dependency(object):
 class Definition(object):
   def __init__(self, identifier=None,
                sbp_id=None, short_desc=None, desc=None, type_id=None,
-               fields=None, public=False, embedded_type=False):
+               fields=None, public=False, embedded_type=False,
+               friendly_name=""):
     self.identifier = identifier
     self.sbp_id = sbp_id
     self.short_desc = short_desc
@@ -83,6 +84,7 @@ class Definition(object):
     self.fields = fields or []
     self.public = public
     self.static = True
+    self.friendly_name = friendly_name or get_friendly_name(identifier)
 
   @property
   def max_type_len(self):
@@ -214,6 +216,27 @@ class Literal(Field):
 
 ##############################################################################
 #
+
+def get_friendly_name(identifier):
+    shorten_keyword = {
+        "TRACKING": "TRK",
+        "MEASUREMENT": "MEAS",
+        "INDEX": "IDX",
+        "NETWORK": "NET",
+        "EPHEMERIS": "EPH",
+        "_": " "
+    }
+    f_name = identifier
+    if f_name.endswith("_GNSS"):
+        f_name = f_name[:-5] + " GNSS-only"
+
+    # replace MSG_
+    if f_name.startswith("MSG_"):
+        f_name = f_name[4:]
+
+    for key, item in shorten_keyword.items():
+        f_name = f_name.replace(key, item)
+    return f_name
 
 def is_message(obj):
   return isinstance(obj, Definition) and getattr(obj, 'sbp_id', None)

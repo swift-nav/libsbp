@@ -69,6 +69,12 @@ pub mod msg_bootloader_handshake_dep_a {
         }
     }
 
+    impl FriendlyName for MsgBootloaderHandshakeDepA {
+        fn friendly_name() -> &'static str {
+            "BOOTLOADER HANDSHAKE DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgBootloaderHandshakeDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -137,6 +143,12 @@ pub mod msg_bootloader_handshake_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgBootloaderHandshakeReq {
+        fn friendly_name() -> &'static str {
+            "BOOTLOADER HANDSHAKE REQ"
         }
     }
 
@@ -255,6 +267,12 @@ pub mod msg_bootloader_handshake_resp {
         }
     }
 
+    impl FriendlyName for MsgBootloaderHandshakeResp {
+        fn friendly_name() -> &'static str {
+            "BOOTLOADER HANDSHAKE RESP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgBootloaderHandshakeResp {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -327,6 +345,12 @@ pub mod msg_bootloader_jump_to_app {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgBootloaderJumpToApp {
+        fn friendly_name() -> &'static str {
+            "BOOTLOADER JUMP TO APP"
         }
     }
 
@@ -404,6 +428,12 @@ pub mod msg_nap_device_dna_req {
         }
     }
 
+    impl FriendlyName for MsgNapDeviceDnaReq {
+        fn friendly_name() -> &'static str {
+            "NAP DEVICE DNA REQ"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgNapDeviceDnaReq {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -473,6 +503,12 @@ pub mod msg_nap_device_dna_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgNapDeviceDnaResp {
+        fn friendly_name() -> &'static str {
+            "NAP DEVICE DNA RESP"
         }
     }
 

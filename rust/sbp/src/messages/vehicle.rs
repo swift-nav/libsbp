@@ -130,6 +130,12 @@ pub mod msg_odometry {
         }
     }
 
+    impl FriendlyName for MsgOdometry {
+        fn friendly_name() -> &'static str {
+            "ODOMETRY"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgOdometry {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -389,6 +395,12 @@ pub mod msg_wheeltick {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgWheeltick {
+        fn friendly_name() -> &'static str {
+            "WHEELTICK"
         }
     }
 

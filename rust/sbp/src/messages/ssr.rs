@@ -520,6 +520,12 @@ pub mod msg_ssr_code_biases {
         }
     }
 
+    impl FriendlyName for MsgSsrCodeBiases {
+        fn friendly_name() -> &'static str {
+            "SSR CODE BIASES"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrCodeBiases {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -614,6 +620,12 @@ pub mod msg_ssr_code_phase_biases_bounds {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrCodePhaseBiasesBounds {
+        fn friendly_name() -> &'static str {
+            "SSR CODE PHASE BIASES BOUNDS"
         }
     }
 
@@ -714,6 +726,12 @@ pub mod msg_ssr_gridded_correction {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrGriddedCorrection {
+        fn friendly_name() -> &'static str {
+            "SSR GRIDDED CORRECTION"
         }
     }
 
@@ -837,6 +855,12 @@ pub mod msg_ssr_gridded_correction_bounds {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrGriddedCorrectionBounds {
+        fn friendly_name() -> &'static str {
+            "SSR GRIDDED CORRECTION BOUNDS"
         }
     }
 
@@ -966,6 +990,12 @@ pub mod msg_ssr_gridded_correction_dep_a {
         }
     }
 
+    impl FriendlyName for MsgSsrGriddedCorrectionDepA {
+        fn friendly_name() -> &'static str {
+            "SSR GRIDDED CORRECTION DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrGriddedCorrectionDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1056,6 +1086,12 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
         }
     }
 
+    impl FriendlyName for MsgSsrGriddedCorrectionNoStdDepA {
+        fn friendly_name() -> &'static str {
+            "SSR GRIDDED CORRECTION NO STD DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrGriddedCorrectionNoStdDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1140,6 +1176,12 @@ pub mod msg_ssr_grid_definition_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrGridDefinitionDepA {
+        fn friendly_name() -> &'static str {
+            "SSR GRID DEFINITION DEP A"
         }
     }
 
@@ -1259,6 +1301,12 @@ pub mod msg_ssr_orbit_clock {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrOrbitClock {
+        fn friendly_name() -> &'static str {
+            "SSR ORBIT CLOCK"
         }
     }
 
@@ -1403,6 +1451,12 @@ pub mod msg_ssr_orbit_clock_bounds {
         }
     }
 
+    impl FriendlyName for MsgSsrOrbitClockBounds {
+        fn friendly_name() -> &'static str {
+            "SSR ORBIT CLOCK BOUNDS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrOrbitClockBounds {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1499,6 +1553,12 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrOrbitClockBoundsDegradation {
+        fn friendly_name() -> &'static str {
+            "SSR ORBIT CLOCK BOUNDS DEGRADATION"
         }
     }
 
@@ -1625,6 +1685,12 @@ pub mod msg_ssr_orbit_clock_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrOrbitClockDepA {
+        fn friendly_name() -> &'static str {
+            "SSR ORBIT CLOCK DEP A"
         }
     }
 
@@ -1783,6 +1849,12 @@ pub mod msg_ssr_phase_biases {
         }
     }
 
+    impl FriendlyName for MsgSsrPhaseBiases {
+        fn friendly_name() -> &'static str {
+            "SSR PHASE BIASES"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrPhaseBiases {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1884,6 +1956,12 @@ pub mod msg_ssr_satellite_apc {
         }
     }
 
+    impl FriendlyName for MsgSsrSatelliteApc {
+        fn friendly_name() -> &'static str {
+            "SSR SATELLITE APC"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrSatelliteApc {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1965,6 +2043,12 @@ pub mod msg_ssr_stec_correction {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrStecCorrection {
+        fn friendly_name() -> &'static str {
+            "SSR STEC CORRECTION"
         }
     }
 
@@ -2069,6 +2153,12 @@ pub mod msg_ssr_stec_correction_dep {
         }
     }
 
+    impl FriendlyName for MsgSsrStecCorrectionDep {
+        fn friendly_name() -> &'static str {
+            "SSR STEC CORRECTION DEP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSsrStecCorrectionDep {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2141,6 +2231,12 @@ pub mod msg_ssr_stec_correction_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrStecCorrectionDepA {
+        fn friendly_name() -> &'static str {
+            "SSR STEC CORRECTION DEP A"
         }
     }
 
@@ -2288,6 +2384,12 @@ pub mod msg_ssr_tile_definition {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrTileDefinition {
+        fn friendly_name() -> &'static str {
+            "SSR TILE DEFINITION"
         }
     }
 
@@ -2465,6 +2567,12 @@ pub mod msg_ssr_tile_definition_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrTileDefinitionDep {
+        fn friendly_name() -> &'static str {
+            "SSR TILE DEFINITION DEP"
         }
     }
 

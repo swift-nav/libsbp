@@ -271,7 +271,7 @@ mod lib {
     pub use crate::time;
     pub use crate::wire_format::{PayloadParseError, WireFormat};
 
-    pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError};
+    pub use super::{ConcreteMessage, FriendlyName, Sbp, SbpMessage, TryFromSbpError};
 
     pub use bytes::{Buf, BufMut};
 
@@ -332,6 +332,11 @@ pub trait ConcreteMessage: SbpMessage + TryFrom<Sbp, Error = TryFromSbpError> {
     const MESSAGE_TYPE: u16;
     /// The message name.
     const MESSAGE_NAME: &'static str;
+}
+
+/// Friendly name representation of Sbp message
+pub trait FriendlyName {
+    fn friendly_name() -> &'static str;
 }
 
 /// The error returned when using [TryFrom] to convert [Sbp] to the wrong message type.

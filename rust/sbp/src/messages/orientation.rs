@@ -108,6 +108,12 @@ pub mod msg_angular_rate {
         }
     }
 
+    impl FriendlyName for MsgAngularRate {
+        fn friendly_name() -> &'static str {
+            "ANGULAR RATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAngularRate {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -261,6 +267,12 @@ pub mod msg_baseline_heading {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgBaselineHeading {
+        fn friendly_name() -> &'static str {
+            "BASELINE HEADING"
         }
     }
 
@@ -436,6 +448,12 @@ pub mod msg_orient_euler {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgOrientEuler {
+        fn friendly_name() -> &'static str {
+            "ORIENT EULER"
         }
     }
 
@@ -623,6 +641,12 @@ pub mod msg_orient_quat {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgOrientQuat {
+        fn friendly_name() -> &'static str {
+            "ORIENT QUAT"
         }
     }
 

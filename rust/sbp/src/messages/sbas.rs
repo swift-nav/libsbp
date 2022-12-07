@@ -80,6 +80,12 @@ pub mod msg_sbas_raw {
         }
     }
 
+    impl FriendlyName for MsgSbasRaw {
+        fn friendly_name() -> &'static str {
+            "SBAS RAW"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSbasRaw {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {

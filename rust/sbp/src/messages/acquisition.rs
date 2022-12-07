@@ -308,6 +308,12 @@ pub mod msg_acq_result {
         }
     }
 
+    impl FriendlyName for MsgAcqResult {
+        fn friendly_name() -> &'static str {
+            "ACQ RESULT"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAcqResult {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -401,6 +407,12 @@ pub mod msg_acq_result_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgAcqResultDepA {
+        fn friendly_name() -> &'static str {
+            "ACQ RESULT DEP A"
         }
     }
 
@@ -499,6 +511,12 @@ pub mod msg_acq_result_dep_b {
         }
     }
 
+    impl FriendlyName for MsgAcqResultDepB {
+        fn friendly_name() -> &'static str {
+            "ACQ RESULT DEP B"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAcqResultDepB {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -593,6 +611,12 @@ pub mod msg_acq_result_dep_c {
         }
     }
 
+    impl FriendlyName for MsgAcqResultDepC {
+        fn friendly_name() -> &'static str {
+            "ACQ RESULT DEP C"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAcqResultDepC {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -679,6 +703,12 @@ pub mod msg_acq_sv_profile {
         }
     }
 
+    impl FriendlyName for MsgAcqSvProfile {
+        fn friendly_name() -> &'static str {
+            "ACQ SV PROFILE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAcqSvProfile {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -749,6 +779,12 @@ pub mod msg_acq_sv_profile_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgAcqSvProfileDep {
+        fn friendly_name() -> &'static str {
+            "ACQ SV PROFILE DEP"
         }
     }
 
