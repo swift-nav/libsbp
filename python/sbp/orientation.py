@@ -116,6 +116,12 @@ class MsgBaselineHeading(SBP):
     self.payload = MsgBaselineHeading._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASELINE HEADING"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -254,6 +260,12 @@ class MsgOrientQuat(SBP):
     self.payload = MsgOrientQuat._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ORIENT QUAT"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -383,6 +395,12 @@ class MsgOrientEuler(SBP):
     self.payload = MsgOrientEuler._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ORIENT EULER"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -499,6 +517,12 @@ class MsgAngularRate(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAngularRate._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ANGULAR RATE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

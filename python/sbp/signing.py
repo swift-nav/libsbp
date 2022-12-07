@@ -107,6 +107,12 @@ class MsgEd25519SignatureDep(SBP):
     self.payload = MsgEd25519SignatureDep._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ED25519 SIGNATURE DEP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -206,6 +212,12 @@ class MsgEd25519Certificate(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEd25519Certificate._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ED25519 CERTIFICATE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -321,6 +333,12 @@ class MsgEd25519Signature(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEd25519Signature._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ED25519 SIGNATURE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

@@ -156,6 +156,12 @@ class MsgBootloaderHandshakeResp(SBP):
     self.payload = MsgBootloaderHandshakeResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BOOTLOADER HANDSHAKE RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -244,6 +250,12 @@ class MsgBootloaderJumpToApp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderJumpToApp._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BOOTLOADER JUMP TO APP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -386,6 +398,12 @@ class MsgNapDeviceDnaResp(SBP):
     self.payload = MsgNapDeviceDnaResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "NAP DEVICE DNA RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -474,6 +492,12 @@ class MsgBootloaderHandshakeDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBootloaderHandshakeDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BOOTLOADER HANDSHAKE DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

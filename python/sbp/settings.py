@@ -172,6 +172,12 @@ class MsgSettingsWrite(SBP):
     self.payload = MsgSettingsWrite._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS WRITE"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -272,6 +278,12 @@ class MsgSettingsWriteResp(SBP):
     self.payload = MsgSettingsWriteResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS WRITE RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -368,6 +380,12 @@ class MsgSettingsReadReq(SBP):
     self.payload = MsgSettingsReadReq._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS READ REQ"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -463,6 +481,12 @@ class MsgSettingsReadResp(SBP):
     self.payload = MsgSettingsReadResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS READ RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -553,6 +577,12 @@ class MsgSettingsReadByIndexReq(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadByIndexReq._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS READ BY IDX REQ"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -658,6 +688,12 @@ class MsgSettingsReadByIndexResp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsReadByIndexResp._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS READ BY IDX RESP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -795,6 +831,12 @@ class MsgSettingsRegister(SBP):
     self.payload = MsgSettingsRegister._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS REGISTER"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -893,6 +935,12 @@ class MsgSettingsRegisterResp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSettingsRegisterResp._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SETTINGS REGISTER RESP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

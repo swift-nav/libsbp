@@ -1019,6 +1019,12 @@ class MsgObs(SBP):
     self.payload = MsgObs._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "OBS"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1120,6 +1126,12 @@ class MsgBasePosLLH(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBasePosLLH._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASE POS LLH"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1223,6 +1235,12 @@ class MsgBasePosECEF(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBasePosECEF._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASE POS ECEF"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1428,6 +1446,12 @@ class MsgEphemerisGPSDepE(SBP):
     self.payload = MsgEphemerisGPSDepE._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GPS DEP E"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1629,6 +1653,12 @@ class MsgEphemerisGPSDepF(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisGPSDepF._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GPS DEP F"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1834,6 +1864,12 @@ class MsgEphemerisGPS(SBP):
     self.payload = MsgEphemerisGPS._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GPS"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2035,6 +2071,12 @@ class MsgEphemerisQzss(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisQzss._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH QZSS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2249,6 +2291,12 @@ class MsgEphemerisBds(SBP):
     self.payload = MsgEphemerisBds._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH BDS"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2455,6 +2503,12 @@ class MsgEphemerisGalDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisGalDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GAL DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2670,6 +2724,12 @@ class MsgEphemerisGal(SBP):
     self.payload = MsgEphemerisGal._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GAL"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2782,6 +2842,12 @@ class MsgEphemerisSbasDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisSbasDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH SBAS DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2900,6 +2966,12 @@ class MsgEphemerisGloDepA(SBP):
     self.payload = MsgEphemerisGloDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GLO DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -3015,6 +3087,12 @@ class MsgEphemerisSbasDepB(SBP):
     self.payload = MsgEphemerisSbasDepB._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH SBAS DEP B"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -3127,6 +3205,12 @@ class MsgEphemerisSbas(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisSbas._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH SBAS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3244,6 +3328,12 @@ class MsgEphemerisGloDepB(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisGloDepB._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GLO DEP B"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3371,6 +3461,12 @@ class MsgEphemerisGloDepC(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisGloDepC._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GLO DEP C"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3501,6 +3597,12 @@ class MsgEphemerisGloDepD(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisGloDepD._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GLO DEP D"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3633,6 +3735,12 @@ class MsgEphemerisGlo(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisGlo._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH GLO"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3868,6 +3976,12 @@ class MsgEphemerisDepD(SBP):
     self.payload = MsgEphemerisDepD._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH DEP D"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -4083,6 +4197,12 @@ class MsgEphemerisDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4304,6 +4424,12 @@ class MsgEphemerisDepB(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgEphemerisDepB._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH DEP B"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4539,6 +4665,12 @@ class MsgEphemerisDepC(SBP):
     self.payload = MsgEphemerisDepC._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "EPH DEP C"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -4632,6 +4764,12 @@ class MsgObsDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgObsDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "OBS DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4729,6 +4867,12 @@ class MsgObsDepB(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgObsDepB._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "OBS DEP B"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4828,6 +4972,12 @@ class MsgObsDepC(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgObsDepC._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "OBS DEP C"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4952,6 +5102,12 @@ class MsgIono(SBP):
     self.payload = MsgIono._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "IONO"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -5046,6 +5202,12 @@ class MsgSvConfigurationGPSDep(SBP):
     self.payload = MsgSvConfigurationGPSDep._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SV CONFIGURATION GPS DEP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -5138,6 +5300,12 @@ class MsgGnssCapb(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgGnssCapb._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GNSS CAPB"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -5251,6 +5419,12 @@ class MsgGroupDelayDepA(SBP):
     self.payload = MsgGroupDelayDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GROUP DELAY DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -5363,6 +5537,12 @@ class MsgGroupDelayDepB(SBP):
     self.payload = MsgGroupDelayDepB._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GROUP DELAY DEP B"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -5474,6 +5654,12 @@ class MsgGroupDelay(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgGroupDelay._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GROUP DELAY"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -5612,6 +5798,12 @@ class MsgAlmanacGPSDep(SBP):
     self.payload = MsgAlmanacGPSDep._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ALMANAC GPS DEP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -5749,6 +5941,12 @@ class MsgAlmanacGPS(SBP):
     self.payload = MsgAlmanacGPS._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ALMANAC GPS"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -5876,6 +6074,12 @@ class MsgAlmanacGloDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAlmanacGloDep._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ALMANAC GLO DEP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -6005,6 +6209,12 @@ class MsgAlmanacGlo(SBP):
     self.payload = MsgAlmanacGlo._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ALMANAC GLO"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -6116,6 +6326,12 @@ class MsgGloBiases(SBP):
     self.payload = MsgGloBiases._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GLO BIASES"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -6205,6 +6421,12 @@ class MsgSvAzEl(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSvAzEl._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SV AZ EL"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -6299,6 +6521,12 @@ class MsgOsr(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgOsr._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "OSR"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

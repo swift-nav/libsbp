@@ -1116,6 +1116,12 @@ class MsgSsrOrbitClock(SBP):
     self.payload = MsgSsrOrbitClock._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR ORBIT CLOCK"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1228,6 +1234,12 @@ class MsgSsrCodeBiases(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrCodeBiases._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR CODE BIASES"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1364,6 +1376,12 @@ class MsgSsrPhaseBiases(SBP):
     self.payload = MsgSsrPhaseBiases._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR PHASE BIASES"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1462,6 +1480,12 @@ class MsgSsrStecCorrectionDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrStecCorrectionDep._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR STEC CORRECTION DEP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1576,6 +1600,12 @@ class MsgSsrStecCorrection(SBP):
     self.payload = MsgSsrStecCorrection._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR STEC CORRECTION"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1681,6 +1711,12 @@ class MsgSsrGriddedCorrection(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrGriddedCorrection._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR GRIDDED CORRECTION"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1832,6 +1868,12 @@ class MsgSsrGriddedCorrectionBounds(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrGriddedCorrectionBounds._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR GRIDDED CORRECTION BOUNDS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2004,6 +2046,12 @@ class MsgSsrTileDefinitionDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrTileDefinitionDep._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR TILE DEFINITION DEP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2182,6 +2230,12 @@ class MsgSsrTileDefinition(SBP):
     self.payload = MsgSsrTileDefinition._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR TILE DEFINITION"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2269,6 +2323,12 @@ class MsgSsrSatelliteApc(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrSatelliteApc._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR SATELLITE APC"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2425,6 +2485,12 @@ class MsgSsrOrbitClockDepA(SBP):
     self.payload = MsgSsrOrbitClockDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR ORBIT CLOCK DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2517,6 +2583,12 @@ class MsgSsrStecCorrectionDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrStecCorrectionDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR STEC CORRECTION DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2621,6 +2693,12 @@ class MsgSsrGriddedCorrectionNoStdDepA(SBP):
     self.payload = MsgSsrGriddedCorrectionNoStdDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR GRIDDED CORRECTION NO STD DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2724,6 +2802,12 @@ class MsgSsrGriddedCorrectionDepA(SBP):
     self.payload = MsgSsrGriddedCorrectionDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR GRIDDED CORRECTION DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2819,6 +2903,12 @@ class MsgSsrGridDefinitionDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrGridDefinitionDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR GRID DEFINITION DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2933,6 +3023,12 @@ class MsgSsrOrbitClockBounds(SBP):
     self.payload = MsgSsrOrbitClockBounds._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR ORBIT CLOCK BOUNDS"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -3040,6 +3136,12 @@ class MsgSsrCodePhaseBiasesBounds(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrCodePhaseBiasesBounds._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR CODE PHASE BIASES BOUNDS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3150,6 +3252,12 @@ class MsgSsrOrbitClockBoundsDegradation(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrOrbitClockBoundsDegradation._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR ORBIT CLOCK BOUNDS DEGRADATION"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

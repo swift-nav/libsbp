@@ -189,6 +189,12 @@ class MsgStartup(SBP):
     self.payload = MsgStartup._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "STARTUP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -295,6 +301,12 @@ class MsgDgnssStatus(SBP):
     self.payload = MsgDgnssStatus._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "DGNSS STATUS"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -391,6 +403,12 @@ class MsgHeartbeat(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgHeartbeat._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "HEARTBEAT"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -508,6 +526,12 @@ class MsgStatusReport(SBP):
     self.payload = MsgStatusReport._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "STATUS REPORT"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -621,6 +645,12 @@ class MsgStatusJournal(SBP):
     self.payload = MsgStatusJournal._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "STATUS JOURNAL"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -710,6 +740,12 @@ class MsgInsStatus(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgInsStatus._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "INS STATUS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -808,6 +844,12 @@ class MsgCsacTelemetry(SBP):
     self.payload = MsgCsacTelemetry._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "CSAC TELEMETRY"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -904,6 +946,12 @@ class MsgCsacTelemetryLabels(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgCsacTelemetryLabels._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "CSAC TELEMETRY LABELS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1026,6 +1074,12 @@ class MsgInsUpdates(SBP):
     self.payload = MsgInsUpdates._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "INS UPDATES"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1132,6 +1186,12 @@ class MsgGnssTimeOffset(SBP):
     self.payload = MsgGnssTimeOffset._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GNSS TIME OFFSET"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1235,6 +1295,12 @@ class MsgPpsTime(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPpsTime._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "PPS TIME"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1363,6 +1429,12 @@ class MsgSensorAidEvent(SBP):
     self.payload = MsgSensorAidEvent._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SENSOR AID EVENT"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1469,6 +1541,12 @@ class MsgGroupMeta(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgGroupMeta._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GROUP META"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

@@ -248,6 +248,12 @@ class MsgSsrFlagHighLevel(SBP):
     self.payload = MsgSsrFlagHighLevel._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR FLAG HIGH LEVEL"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -371,6 +377,12 @@ class MsgSsrFlagSatellites(SBP):
     self.payload = MsgSsrFlagSatellites._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR FLAG SATELLITES"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -468,6 +480,12 @@ class MsgSsrFlagTropoGridPoints(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrFlagTropoGridPoints._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR FLAG TROPO GRID POINTS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -567,6 +585,12 @@ class MsgSsrFlagIonoGridPoints(SBP):
     self.payload = MsgSsrFlagIonoGridPoints._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR FLAG IONO GRID POINTS"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -664,6 +688,12 @@ class MsgSsrFlagIonoTileSatLos(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrFlagIonoTileSatLos._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR FLAG IONO TILE SAT LOS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -767,6 +797,12 @@ class MsgSsrFlagIonoGridPointSatLos(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSsrFlagIonoGridPointSatLos._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR FLAG IONO GRID POINT SAT LOS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

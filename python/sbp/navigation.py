@@ -189,6 +189,12 @@ class MsgGPSTime(SBP):
     self.payload = MsgGPSTime._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GPS TIME"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -303,6 +309,12 @@ class MsgGPSTimeGnss(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgGPSTimeGnss._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GPS TIME GNSS-only"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -435,6 +447,12 @@ class MsgUtcTime(SBP):
     self.payload = MsgUtcTime._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "UTC TIME"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -566,6 +584,12 @@ class MsgUtcTimeGnss(SBP):
     self.payload = MsgUtcTimeGnss._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "UTC TIME GNSS-only"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -687,6 +711,12 @@ class MsgDops(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgDops._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "DOPS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -812,6 +842,12 @@ class MsgPosECEF(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPosECEF._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS ECEF"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -964,6 +1000,12 @@ class MsgPosECEFCov(SBP):
     self.payload = MsgPosECEFCov._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS ECEF COV"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1093,6 +1135,12 @@ class MsgPosLLH(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPosLLH._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS LLH"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1244,6 +1292,12 @@ class MsgPosLLHCov(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPosLLHCov._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS LLH COV"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1410,6 +1464,12 @@ class MsgPosLLHAcc(SBP):
     self.payload = MsgPosLLHAcc._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS LLH ACC"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1531,6 +1591,12 @@ class MsgBaselineECEF(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBaselineECEF._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASELINE ECEF"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1661,6 +1727,12 @@ class MsgBaselineNED(SBP):
     self.payload = MsgBaselineNED._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASELINE NED"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1781,6 +1853,12 @@ class MsgVelECEF(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgVelECEF._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL ECEF"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1928,6 +2006,12 @@ class MsgVelECEFCov(SBP):
     self.payload = MsgVelECEFCov._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL ECEF COV"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2054,6 +2138,12 @@ class MsgVelNED(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgVelNED._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL NED"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2204,6 +2294,12 @@ class MsgVelNEDCov(SBP):
     self.payload = MsgVelNEDCov._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL NED COV"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2328,6 +2424,12 @@ class MsgPosECEFGnss(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPosECEFGnss._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS ECEF GNSS-only"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2480,6 +2582,12 @@ class MsgPosECEFCovGnss(SBP):
     self.payload = MsgPosECEFCovGnss._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS ECEF COV GNSS-only"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2609,6 +2717,12 @@ class MsgPosLLHGnss(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPosLLHGnss._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS LLH GNSS-only"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -2761,6 +2875,12 @@ class MsgPosLLHCovGnss(SBP):
     self.payload = MsgPosLLHCovGnss._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS LLH COV GNSS-only"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -2881,6 +3001,12 @@ class MsgVelECEFGnss(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgVelECEFGnss._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL ECEF GNSS-only"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3028,6 +3154,12 @@ class MsgVelECEFCovGnss(SBP):
     self.payload = MsgVelECEFCovGnss._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL ECEF COV GNSS-only"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -3154,6 +3286,12 @@ class MsgVelNEDGnss(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgVelNEDGnss._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL NED GNSS-only"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3303,6 +3441,12 @@ class MsgVelNEDCovGnss(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgVelNEDCovGnss._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL NED COV GNSS-only"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3456,6 +3600,12 @@ class MsgVelBody(SBP):
     self.payload = MsgVelBody._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL BODY"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -3590,6 +3740,12 @@ class MsgVelCog(SBP):
     self.payload = MsgVelCog._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL COG"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -3684,6 +3840,12 @@ class MsgAgeCorrections(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAgeCorrections._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "AGE CORRECTIONS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -3800,6 +3962,12 @@ class MsgGPSTimeDepA(SBP):
     self.payload = MsgGPSTimeDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "GPS TIME DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -3914,6 +4082,12 @@ class MsgDopsDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgDopsDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "DOPS DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4039,6 +4213,12 @@ class MsgPosECEFDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPosECEFDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS ECEF DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4170,6 +4350,12 @@ class MsgPosLLHDepA(SBP):
     self.payload = MsgPosLLHDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POS LLH DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -4291,6 +4477,12 @@ class MsgBaselineECEFDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBaselineECEFDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASELINE ECEF DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4421,6 +4613,12 @@ class MsgBaselineNEDDepA(SBP):
     self.payload = MsgBaselineNEDDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASELINE NED DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -4541,6 +4739,12 @@ class MsgVelECEFDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgVelECEFDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL ECEF DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4669,6 +4873,12 @@ class MsgVelNEDDepA(SBP):
     self.payload = MsgVelNEDDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "VEL NED DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -4774,6 +4984,12 @@ class MsgBaselineHeadingDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgBaselineHeadingDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "BASELINE HEADING DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -4895,6 +5111,12 @@ class MsgProtectionLevelDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgProtectionLevelDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "PROTECTION LEVEL DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -5089,6 +5311,12 @@ class MsgProtectionLevel(SBP):
     self.payload = MsgProtectionLevel._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "PROTECTION LEVEL"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -5218,6 +5446,12 @@ class MsgUtcLeapSecond(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgUtcLeapSecond._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "UTC LEAP SECOND"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -5402,6 +5636,12 @@ class MsgReferenceFrameParam(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgReferenceFrameParam._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "REFERENCE FRAME PARAM"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -5606,6 +5846,12 @@ class MsgPoseRelative(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPoseRelative._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "POSE RELATIVE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

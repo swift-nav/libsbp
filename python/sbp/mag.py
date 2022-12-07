@@ -119,6 +119,12 @@ class MsgMagRaw(SBP):
     self.payload = MsgMagRaw._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "MAG RAW"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 

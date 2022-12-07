@@ -126,6 +126,12 @@ class MsgFileioReadReq(SBP):
     self.payload = MsgFileioReadReq._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO READ REQ"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -222,6 +228,12 @@ class MsgFileioReadResp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioReadResp._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO READ RESP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -329,6 +341,12 @@ class MsgFileioReadDirReq(SBP):
     self.payload = MsgFileioReadDirReq._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO READ DIR REQ"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -427,6 +445,12 @@ class MsgFileioReadDirResp(SBP):
     self.payload = MsgFileioReadDirResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO READ DIR RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -518,6 +542,12 @@ class MsgFileioRemove(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioRemove._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO REMOVE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -629,6 +659,12 @@ class MsgFileioWriteReq(SBP):
     self.payload = MsgFileioWriteReq._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO WRITE REQ"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -721,6 +757,12 @@ class MsgFileioWriteResp(SBP):
     self.payload = MsgFileioWriteResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO WRITE RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -811,6 +853,12 @@ class MsgFileioConfigReq(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioConfigReq._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO CONFIG REQ"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -917,6 +965,12 @@ class MsgFileioConfigResp(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgFileioConfigResp._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FILEIO CONFIG RESP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
