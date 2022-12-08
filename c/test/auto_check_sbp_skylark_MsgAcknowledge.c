@@ -94,7 +94,7 @@ START_TEST(test_auto_check_sbp_skylark_MsgAcknowledge) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85, 160, 15, 66, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 160, 221,
+        85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
     };
 
     dummy_reset();
@@ -114,7 +114,7 @@ START_TEST(test_auto_check_sbp_skylark_MsgAcknowledge) {
 
     test_msg.acknowledge.solution_id = 2;
 
-    sbp_message_send(&sbp_state, SbpMsgAcknowledge, 66, &test_msg,
+    sbp_message_send(&sbp_state, SbpMsgAcknowledge, 42, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -131,7 +131,7 @@ START_TEST(test_auto_check_sbp_skylark_MsgAcknowledge) {
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
                   "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 66,
+    ck_assert_msg(last_msg.sender_id == 42,
                   "msg_callback: sender_id decoded incorrectly");
 
     ck_assert_msg(

@@ -76,7 +76,7 @@ class Test_auto_check_sbp_skylark_MsgAcknowledge0
 
 TEST_F(Test_auto_check_sbp_skylark_MsgAcknowledge0, Test) {
   uint8_t encoded_frame[] = {
-      85, 160, 15, 66, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 160, 221,
+      85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
   };
 
   sbp_msg_acknowledge_t test_msg{};
@@ -87,7 +87,7 @@ TEST_F(Test_auto_check_sbp_skylark_MsgAcknowledge0, Test) {
   test_msg.response_code = 0;
   test_msg.solution_id = 2;
 
-  EXPECT_EQ(send_message(66, test_msg), SBP_OK);
+  EXPECT_EQ(send_message(42, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -97,7 +97,7 @@ TEST_F(Test_auto_check_sbp_skylark_MsgAcknowledge0, Test) {
   }
 
   EXPECT_EQ(n_callbacks_logged_, 1);
-  EXPECT_EQ(last_sender_id_, 66);
+  EXPECT_EQ(last_sender_id_, 42);
   EXPECT_EQ(last_msg_, test_msg);
   EXPECT_EQ(last_msg_.area_id, 123456)
       << "incorrect value for last_msg_.area_id, expected 123456, is "

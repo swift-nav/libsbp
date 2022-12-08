@@ -42,7 +42,7 @@ public class auto_check_sbp_skylark_MsgAcknowledgeTest {
                     (byte) 0,
                     (byte) 2,
                 };
-        SBPMessage sbp = new SBPMessage(0x42, 0xFA0, payload);
+        SBPMessage sbp = new SBPMessage(0x2A, 0xFA0, payload);
         MsgAcknowledge msg = new MsgAcknowledge(sbp);
         JSONObject json = msg.toJSON();
         Number value;

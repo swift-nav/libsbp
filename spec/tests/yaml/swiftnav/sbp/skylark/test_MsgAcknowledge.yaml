@@ -1,5 +1,5 @@
 description: Unit tests for swiftnav.sbp.skylark MsgAcknowledge
-generated_on: '2022-12-08 11:44:12.024217'
+generated_on: '2022-12-08 12:36:34.312402'
 package: sbp.skylark
 tests:
 - msg:
@@ -13,15 +13,15 @@ tests:
     module: sbp.skylark
     name: MsgAcknowledge
   msg_type: '0xFA0'
-  raw_json: '{"preamble": 85, "msg_type": 4000, "sender": 66, "length": 11, "payload":
-    "HkDiAQAAAQABAAI=", "crc": 56736, "request_counter": 30, "area_id": 123456, "response_code":
+  raw_json: '{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload":
+    "HkDiAQAAAQABAAI=", "crc": 32955, "request_counter": 30, "area_id": 123456, "response_code":
     0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id":
     2}'
-  raw_packet: VaAPQgALHkDiAQAAAQABAAKg3Q==
+  raw_packet: VaAPKgALHkDiAQAAAQABAAK7gA==
   sbp:
-    crc: '0xDDA0'
+    crc: '0x80BB'
     length: 11
     msg_type: '0xFA0'
     payload: HkDiAQAAAQABAAI=
     preamble: '0x55'
-    sender: '0x42'
+    sender: '0x2A'

@@ -22,7 +22,7 @@ use crate::*;
 fn test_auto_check_sbp_skylark_msg_acknowledge() {
     {
         let mut payload = Cursor::new(vec![
-            85, 160, 15, 66, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 160, 221,
+            85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
         ]);
 
         // Test the round trip payload parsing
@@ -42,8 +42,8 @@ fn test_auto_check_sbp_skylark_msg_acknowledge() {
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x42,
-                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id, 0x2A,
+                    "incorrect sender id, expected 0x2A, is {}",
                     sender_id
                 );
                 assert_eq!(
@@ -95,7 +95,7 @@ fn test_auto_check_sbp_skylark_msg_acknowledge() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_skylark_msg_acknowledge() {
     {
-        let json_input = r#"{"preamble": 85, "msg_type": 4000, "sender": 66, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 56736, "request_counter": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 32955, "request_counter": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -125,8 +125,8 @@ fn test_json2sbp_auto_check_sbp_skylark_msg_acknowledge() {
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x42,
-                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id, 0x2A,
+                    "incorrect sender id, expected 0x2A, is {}",
                     sender_id
                 );
                 assert_eq!(
@@ -178,7 +178,7 @@ fn test_json2sbp_auto_check_sbp_skylark_msg_acknowledge() {
 fn test_sbp2json_auto_check_sbp_skylark_msg_acknowledge() {
     {
         let mut payload = Cursor::new(vec![
-            85, 160, 15, 66, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 160, 221,
+            85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
         ]);
 
         // Construct sbp message
@@ -215,8 +215,8 @@ fn test_sbp2json_auto_check_sbp_skylark_msg_acknowledge() {
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x42,
-                    "incorrect sender id, expected 0x42, is {}",
+                    sender_id, 0x2A,
+                    "incorrect sender id, expected 0x2A, is {}",
                     sender_id
                 );
                 assert_eq!(
