@@ -117,6 +117,7 @@ int main(void) {
   srunner_add_suite(sr, auto_check_sbp_signing_MsgEd25519Certificate_suite());
   srunner_add_suite(sr, auto_check_sbp_signing_MsgEd25519Signature_suite());
   srunner_add_suite(sr, auto_check_sbp_signing_MsgEd25519SignatureDep_suite());
+  srunner_add_suite(sr, auto_check_sbp_skylark_MsgAcknowledge_suite());
   srunner_add_suite(sr, auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds_suite());
   srunner_add_suite(sr,
                     auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds_suite());

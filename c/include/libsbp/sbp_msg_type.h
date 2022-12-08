@@ -37,6 +37,7 @@
 #include <libsbp/sbas_macros.h>
 #include <libsbp/settings_macros.h>
 #include <libsbp/signing_macros.h>
+#include <libsbp/skylark_macros.h>
 #include <libsbp/solution_meta_macros.h>
 #include <libsbp/ssr_macros.h>
 #include <libsbp/system_macros.h>
@@ -52,6 +53,7 @@ extern "C" {
 #define SBP_MSG_ALL 0
 
 typedef enum {
+  SbpMsgAcknowledge = SBP_MSG_ACKNOWLEDGE,
   SbpMsgAcqResultDepA = SBP_MSG_ACQ_RESULT_DEP_A,
   SbpMsgAcqResultDepB = SBP_MSG_ACQ_RESULT_DEP_B,
   SbpMsgAcqResultDepC = SBP_MSG_ACQ_RESULT_DEP_C,

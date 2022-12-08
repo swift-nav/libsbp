@@ -44,6 +44,7 @@ library
                      , SwiftNav.SBP.Sbas
                      , SwiftNav.SBP.Settings
                      , SwiftNav.SBP.Signing
+                     , SwiftNav.SBP.Skylark
                      , SwiftNav.SBP.SolutionMeta
                      , SwiftNav.SBP.Ssr
                      , SwiftNav.SBP.System

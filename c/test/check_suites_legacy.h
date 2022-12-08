@@ -103,6 +103,7 @@ Suite* legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEd25519Certificate_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEd25519Signature_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEd25519SignatureDep_suite(void);
+Suite* legacy_auto_check_sbp_skylark_MsgAcknowledge_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds_suite(void);
