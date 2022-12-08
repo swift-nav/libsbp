@@ -107,6 +107,7 @@ var sbpImports = {
   sbas: require('./sbas.js'),
   settings: require('./settings.js'),
   signings: require('./signing.js'),
+  skylark: require('./skylark.js'),
   solution_meta: require('./solution_meta.js'),
   ssr: require('./ssr.js'),
   system: require('./system.js'),
