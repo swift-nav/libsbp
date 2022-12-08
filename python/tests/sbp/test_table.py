@@ -34,6 +34,7 @@ from sbp import sbas as sbas
 from sbp import ssr as ssr
 from sbp import solution_meta as solmeta
 from sbp import signing as signing
+from sbp import skylark as skylark
 
 import warnings
 
@@ -73,6 +74,7 @@ def test_table_unqiue_count():
                         + len(ssr.msg_classes)
                         + len(solmeta.msg_classes)
                         + len(signing.msg_classes)
+                        + len(skylark.msg_classes)
                          )
   assert len(_SBP_TABLE) == number_of_messages
 
