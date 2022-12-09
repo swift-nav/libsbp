@@ -58,13 +58,13 @@ public class MsgNapDeviceDnaReq extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "NAP DEVICE DNA REQ";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "NAP DEVICE DNA REQ";
     }
 }

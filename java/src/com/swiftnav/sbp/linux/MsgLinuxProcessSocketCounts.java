@@ -92,11 +92,6 @@ public class MsgLinuxProcessSocketCounts extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "LINUX PROCESS SOCKET COUNTS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("index", index);
@@ -106,5 +101,10 @@ public class MsgLinuxProcessSocketCounts extends SBPMessage {
         obj.put("socket_states", socket_states);
         obj.put("cmdline", cmdline);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX PROCESS SOCKET COUNTS";
     }
 }

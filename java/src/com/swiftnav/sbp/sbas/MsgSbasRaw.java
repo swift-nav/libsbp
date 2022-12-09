@@ -77,11 +77,6 @@ public class MsgSbasRaw extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SBAS RAW";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sid", sid.toJSON());
@@ -89,5 +84,10 @@ public class MsgSbasRaw extends SBPMessage {
         obj.put("message_type", message_type);
         obj.put("data", new JSONArray(data));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SBAS RAW";
     }
 }

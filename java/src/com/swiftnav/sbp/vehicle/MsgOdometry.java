@@ -79,16 +79,16 @@ public class MsgOdometry extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "ODOMETRY";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
         obj.put("velocity", velocity);
         obj.put("flags", flags);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "ODOMETRY";
     }
 }

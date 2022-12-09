@@ -61,14 +61,14 @@ public class MsgResetFilters extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "RESET FILTERS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("filter", filter);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "RESET FILTERS";
     }
 }

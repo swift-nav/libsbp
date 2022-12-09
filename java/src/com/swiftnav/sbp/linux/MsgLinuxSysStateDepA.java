@@ -84,11 +84,6 @@ public class MsgLinuxSysStateDepA extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "LINUX SYS STATE DEP A";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("mem_total", mem_total);
@@ -98,5 +93,10 @@ public class MsgLinuxSysStateDepA extends SBPMessage {
         obj.put("procs_stopping", procs_stopping);
         obj.put("pid_count", pid_count);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX SYS STATE DEP A";
     }
 }

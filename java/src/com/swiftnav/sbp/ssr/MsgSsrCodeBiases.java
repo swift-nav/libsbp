@@ -87,11 +87,6 @@ public class MsgSsrCodeBiases extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR CODE BIASES";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time.toJSON());
@@ -100,5 +95,10 @@ public class MsgSsrCodeBiases extends SBPMessage {
         obj.put("iod_ssr", iod_ssr);
         obj.put("biases", SBPStruct.toJSONArray(biases));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR CODE BIASES";
     }
 }

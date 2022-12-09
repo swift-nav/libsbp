@@ -108,11 +108,6 @@ public class MsgAlmanacGPS extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "ALMANAC GPS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());
@@ -126,5 +121,10 @@ public class MsgAlmanacGPS extends SBPMessage {
         obj.put("af0", af0);
         obj.put("af1", af1);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "ALMANAC GPS";
     }
 }

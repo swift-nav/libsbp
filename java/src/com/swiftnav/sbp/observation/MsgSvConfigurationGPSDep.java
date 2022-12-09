@@ -65,15 +65,15 @@ public class MsgSvConfigurationGPSDep extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SV CONFIGURATION GPS DEP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("t_nmct", t_nmct.toJSON());
         obj.put("l2c_mask", l2c_mask);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SV CONFIGURATION GPS DEP";
     }
 }

@@ -66,15 +66,15 @@ public class MsgCsacTelemetry extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "CSAC TELEMETRY";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("id", id);
         obj.put("telemetry", telemetry);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "CSAC TELEMETRY";
     }
 }

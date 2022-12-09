@@ -100,11 +100,6 @@ public class MsgUtcLeapSecond extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "UTC LEAP SECOND";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("reserved_0", reserved_0);
@@ -117,5 +112,10 @@ public class MsgUtcLeapSecond extends SBPMessage {
         obj.put("ref_dn", ref_dn);
         obj.put("count_after", count_after);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "UTC LEAP SECOND";
     }
 }

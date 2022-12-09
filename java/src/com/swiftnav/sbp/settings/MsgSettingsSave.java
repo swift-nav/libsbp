@@ -56,13 +56,13 @@ public class MsgSettingsSave extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SETTINGS SAVE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SETTINGS SAVE";
     }
 }

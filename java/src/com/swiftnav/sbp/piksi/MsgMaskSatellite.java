@@ -66,15 +66,15 @@ public class MsgMaskSatellite extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "MASK SATELLITE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("mask", mask);
         obj.put("sid", sid.toJSON());
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "MASK SATELLITE";
     }
 }

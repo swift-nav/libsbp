@@ -66,15 +66,15 @@ public class MsgOsr extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "OSR";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
         obj.put("obs", SBPStruct.toJSONArray(obs));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "OSR";
     }
 }

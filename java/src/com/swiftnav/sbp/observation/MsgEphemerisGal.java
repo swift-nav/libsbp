@@ -182,11 +182,6 @@ public class MsgEphemerisGal extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "EPH GAL";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());
@@ -215,5 +210,10 @@ public class MsgEphemerisGal extends SBPMessage {
         obj.put("iodc", iodc);
         obj.put("source", source);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH GAL";
     }
 }

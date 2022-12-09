@@ -91,11 +91,6 @@ public class MsgDops extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "DOPS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
@@ -106,5 +101,10 @@ public class MsgDops extends SBPMessage {
         obj.put("vdop", vdop);
         obj.put("flags", flags);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "DOPS";
     }
 }

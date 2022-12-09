@@ -64,16 +64,16 @@ public class MsgSsrFlagIonoTileSatLos extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR FLAG IONO TILE SAT LOS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
         obj.put("n_faulty_los", n_faulty_los);
         obj.put("faulty_los", SBPStruct.toJSONArray(faulty_los));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG IONO TILE SAT LOS";
     }
 }

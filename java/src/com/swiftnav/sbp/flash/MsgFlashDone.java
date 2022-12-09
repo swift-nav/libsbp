@@ -61,14 +61,14 @@ public class MsgFlashDone extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "FLASH DONE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("response", response);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "FLASH DONE";
     }
 }

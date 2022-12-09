@@ -70,15 +70,15 @@ public class MsgLinuxProcessFdSummary extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "LINUX PROCESS FD SUMMARY";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sys_fd_count", sys_fd_count);
         obj.put("most_opened", most_opened);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX PROCESS FD SUMMARY";
     }
 }

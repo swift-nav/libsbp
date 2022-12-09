@@ -74,16 +74,16 @@ public class MsgThreadState extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "THREAD STATE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("name", name);
         obj.put("cpu", cpu);
         obj.put("stack_free", stack_free);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "THREAD STATE";
     }
 }

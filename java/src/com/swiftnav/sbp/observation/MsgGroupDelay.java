@@ -85,11 +85,6 @@ public class MsgGroupDelay extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "GROUP DELAY";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("t_op", t_op.toJSON());
@@ -99,5 +94,10 @@ public class MsgGroupDelay extends SBPMessage {
         obj.put("isc_l1ca", isc_l1ca);
         obj.put("isc_l2c", isc_l2c);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "GROUP DELAY";
     }
 }

@@ -63,15 +63,15 @@ public class MsgSsrGridDefinitionDepA extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR GRID DEFINITION DEP A";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
         obj.put("rle_list", new JSONArray(rle_list));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR GRID DEFINITION DEP A";
     }
 }

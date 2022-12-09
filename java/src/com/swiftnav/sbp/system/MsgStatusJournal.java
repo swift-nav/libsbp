@@ -84,11 +84,6 @@ public class MsgStatusJournal extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "STATUS JOURNAL";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("reporting_system", reporting_system);
@@ -97,5 +92,10 @@ public class MsgStatusJournal extends SBPMessage {
         obj.put("sequence_descriptor", sequence_descriptor);
         obj.put("journal", SBPStruct.toJSONArray(journal));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "STATUS JOURNAL";
     }
 }

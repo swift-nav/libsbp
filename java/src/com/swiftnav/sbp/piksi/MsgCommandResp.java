@@ -66,15 +66,15 @@ public class MsgCommandResp extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "COMMAND RESP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sequence", sequence);
         obj.put("code", code);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "COMMAND RESP";
     }
 }

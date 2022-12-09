@@ -56,13 +56,13 @@ public class MsgSetTime extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SET TIME";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SET TIME";
     }
 }

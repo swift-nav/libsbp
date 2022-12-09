@@ -71,15 +71,15 @@ public class MsgFrontEndGain extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "FRONT END GAIN";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("rf_gain", new JSONArray(rf_gain));
         obj.put("if_gain", new JSONArray(if_gain));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "FRONT END GAIN";
     }
 }

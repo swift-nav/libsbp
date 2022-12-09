@@ -61,14 +61,14 @@ public class MsgBootloaderHandshakeDepA extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "BOOTLOADER HANDSHAKE DEP A";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("handshake", new JSONArray(handshake));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "BOOTLOADER HANDSHAKE DEP A";
     }
 }

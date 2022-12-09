@@ -64,15 +64,15 @@ public class MsgAgeCorrections extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "AGE CORRECTIONS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
         obj.put("age", age);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "AGE CORRECTIONS";
     }
 }

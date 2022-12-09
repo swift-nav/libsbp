@@ -81,11 +81,6 @@ public class MsgMagRaw extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "MAG RAW";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
@@ -94,5 +89,10 @@ public class MsgMagRaw extends SBPMessage {
         obj.put("mag_y", mag_y);
         obj.put("mag_z", mag_z);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "MAG RAW";
     }
 }

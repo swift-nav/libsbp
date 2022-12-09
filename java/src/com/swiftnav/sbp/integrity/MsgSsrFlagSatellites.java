@@ -88,11 +88,6 @@ public class MsgSsrFlagSatellites extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR FLAG SATELLITES";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("obs_time", obs_time.toJSON());
@@ -104,5 +99,10 @@ public class MsgSsrFlagSatellites extends SBPMessage {
         obj.put("n_faulty_sats", n_faulty_sats);
         obj.put("faulty_sats", new JSONArray(faulty_sats));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG SATELLITES";
     }
 }

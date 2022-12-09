@@ -190,11 +190,6 @@ public class MsgEphemerisDepB extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "EPH DEP B";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tgd", tgd);
@@ -225,5 +220,10 @@ public class MsgEphemerisDepB extends SBPMessage {
         obj.put("prn", prn);
         obj.put("iode", iode);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH DEP B";
     }
 }

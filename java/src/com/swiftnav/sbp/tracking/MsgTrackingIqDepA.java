@@ -71,16 +71,16 @@ public class MsgTrackingIqDepA extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "TRK IQ DEP A";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("channel", channel);
         obj.put("sid", sid.toJSON());
         obj.put("corrs", SBPStruct.toJSONArray(corrs));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "TRK IQ DEP A";
     }
 }

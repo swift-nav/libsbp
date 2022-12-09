@@ -56,13 +56,13 @@ public class MsgResetDep extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "RESET DEP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "RESET DEP";
     }
 }

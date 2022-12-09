@@ -91,11 +91,6 @@ public class MsgSpecanDep extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SPECAN DEP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("channel_tag", channel_tag);
@@ -106,5 +101,10 @@ public class MsgSpecanDep extends SBPMessage {
         obj.put("amplitude_unit", amplitude_unit);
         obj.put("amplitude_value", new JSONArray(amplitude_value));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SPECAN DEP";
     }
 }

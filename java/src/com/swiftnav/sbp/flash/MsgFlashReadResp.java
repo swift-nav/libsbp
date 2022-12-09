@@ -73,16 +73,16 @@ public class MsgFlashReadResp extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "FLASH READ RESP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("target", target);
         obj.put("addr_start", new JSONArray(addr_start));
         obj.put("addr_len", addr_len);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "FLASH READ RESP";
     }
 }

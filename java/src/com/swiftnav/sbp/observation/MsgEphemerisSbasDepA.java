@@ -78,11 +78,6 @@ public class MsgEphemerisSbasDepA extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "EPH SBAS DEP A";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("common", common.toJSON());
@@ -92,5 +87,10 @@ public class MsgEphemerisSbasDepA extends SBPMessage {
         obj.put("a_gf0", a_gf0);
         obj.put("a_gf1", a_gf1);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH SBAS DEP A";
     }
 }

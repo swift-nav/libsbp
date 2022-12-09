@@ -81,11 +81,6 @@ public class MsgLinuxSocketUsage extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "LINUX SOCKET USAGE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("avg_queue_depth", avg_queue_depth);
@@ -93,5 +88,10 @@ public class MsgLinuxSocketUsage extends SBPMessage {
         obj.put("socket_state_counts", new JSONArray(socket_state_counts));
         obj.put("socket_type_counts", new JSONArray(socket_type_counts));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX SOCKET USAGE";
     }
 }

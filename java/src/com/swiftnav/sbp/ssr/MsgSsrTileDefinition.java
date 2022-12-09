@@ -159,11 +159,6 @@ public class MsgSsrTileDefinition extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR TILE DEFINITION";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("ssr_sol_id", ssr_sol_id);
@@ -177,5 +172,10 @@ public class MsgSsrTileDefinition extends SBPMessage {
         obj.put("cols", cols);
         obj.put("bitmask", bitmask);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR TILE DEFINITION";
     }
 }

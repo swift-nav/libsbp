@@ -64,16 +64,16 @@ public class MsgSsrFlagTropoGridPoints extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR FLAG TROPO GRID POINTS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
         obj.put("n_faulty_points", n_faulty_points);
         obj.put("faulty_points", new JSONArray(faulty_points));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG TROPO GRID POINTS";
     }
 }

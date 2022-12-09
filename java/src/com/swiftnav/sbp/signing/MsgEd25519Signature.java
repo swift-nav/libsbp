@@ -82,11 +82,6 @@ public class MsgEd25519Signature extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "ED25519 SIGNATURE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("stream_counter", stream_counter);
@@ -95,5 +90,10 @@ public class MsgEd25519Signature extends SBPMessage {
         obj.put("fingerprint", new JSONArray(fingerprint));
         obj.put("signed_messages", new JSONArray(signed_messages));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "ED25519 SIGNATURE";
     }
 }

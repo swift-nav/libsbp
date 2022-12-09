@@ -76,11 +76,6 @@ public class MsgFileioConfigResp extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "FILEIO CONFIG RESP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("sequence", sequence);
@@ -88,5 +83,10 @@ public class MsgFileioConfigResp extends SBPMessage {
         obj.put("batch_size", batch_size);
         obj.put("fileio_version", fileio_version);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "FILEIO CONFIG RESP";
     }
 }

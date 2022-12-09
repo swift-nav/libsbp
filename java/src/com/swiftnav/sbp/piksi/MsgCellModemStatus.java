@@ -72,16 +72,16 @@ public class MsgCellModemStatus extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "CELL MODEM STATUS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("signal_strength", signal_strength);
         obj.put("signal_error_rate", signal_error_rate);
         obj.put("reserved", new JSONArray(reserved));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "CELL MODEM STATUS";
     }
 }

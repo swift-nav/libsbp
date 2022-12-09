@@ -57,13 +57,13 @@ public class MsgNetworkStateReq extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "NET STATE REQ";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "NET STATE REQ";
     }
 }

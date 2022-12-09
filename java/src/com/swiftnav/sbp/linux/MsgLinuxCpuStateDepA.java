@@ -80,11 +80,6 @@ public class MsgLinuxCpuStateDepA extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "LINUX CPU STATE DEP A";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("index", index);
@@ -93,5 +88,10 @@ public class MsgLinuxCpuStateDepA extends SBPMessage {
         obj.put("tname", tname);
         obj.put("cmdline", cmdline);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX CPU STATE DEP A";
     }
 }

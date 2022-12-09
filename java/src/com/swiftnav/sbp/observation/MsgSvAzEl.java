@@ -62,14 +62,14 @@ public class MsgSvAzEl extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SV AZ EL";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("azel", SBPStruct.toJSONArray(azel));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SV AZ EL";
     }
 }

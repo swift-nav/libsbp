@@ -61,14 +61,14 @@ public class MsgTrackingStateDepA extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "TRK STATE DEP A";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("states", SBPStruct.toJSONArray(states));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "TRK STATE DEP A";
     }
 }

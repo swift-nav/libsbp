@@ -85,11 +85,6 @@ public class MsgStatusReport extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "STATUS REPORT";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("reporting_system", reporting_system);
@@ -98,5 +93,10 @@ public class MsgStatusReport extends SBPMessage {
         obj.put("uptime", uptime);
         obj.put("status", SBPStruct.toJSONArray(status));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "STATUS REPORT";
     }
 }

@@ -59,14 +59,14 @@ public class MsgPrintDep extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "PRINT DEP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("text", text);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "PRINT DEP";
     }
 }

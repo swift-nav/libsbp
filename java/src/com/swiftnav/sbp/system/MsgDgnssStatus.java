@@ -75,11 +75,6 @@ public class MsgDgnssStatus extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "DGNSS STATUS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("flags", flags);
@@ -87,5 +82,10 @@ public class MsgDgnssStatus extends SBPMessage {
         obj.put("num_signals", num_signals);
         obj.put("source", source);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "DGNSS STATUS";
     }
 }

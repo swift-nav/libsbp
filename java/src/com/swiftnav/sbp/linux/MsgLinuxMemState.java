@@ -90,11 +90,6 @@ public class MsgLinuxMemState extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "LINUX MEM STATE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("index", index);
@@ -105,5 +100,10 @@ public class MsgLinuxMemState extends SBPMessage {
         obj.put("tname", tname);
         obj.put("cmdline", cmdline);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX MEM STATE";
     }
 }

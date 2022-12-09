@@ -131,11 +131,6 @@ public class MsgSsrOrbitClock extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR ORBIT CLOCK";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time.toJSON());
@@ -153,5 +148,10 @@ public class MsgSsrOrbitClock extends SBPMessage {
         obj.put("c1", c1);
         obj.put("c2", c2);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR ORBIT CLOCK";
     }
 }

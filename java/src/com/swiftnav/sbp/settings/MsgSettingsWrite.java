@@ -65,14 +65,14 @@ public class MsgSettingsWrite extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SETTINGS WRITE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("setting", setting);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SETTINGS WRITE";
     }
 }

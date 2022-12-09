@@ -91,11 +91,6 @@ public class MsgInsUpdates extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "INS UPDATES";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
@@ -106,5 +101,10 @@ public class MsgInsUpdates extends SBPMessage {
         obj.put("nhc", nhc);
         obj.put("zerovel", zerovel);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "INS UPDATES";
     }
 }

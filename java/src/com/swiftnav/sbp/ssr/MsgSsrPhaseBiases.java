@@ -109,11 +109,6 @@ public class MsgSsrPhaseBiases extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR PHASE BIASES";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time.toJSON());
@@ -126,5 +121,10 @@ public class MsgSsrPhaseBiases extends SBPMessage {
         obj.put("yaw_rate", yaw_rate);
         obj.put("biases", SBPStruct.toJSONArray(biases));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR PHASE BIASES";
     }
 }

@@ -74,15 +74,15 @@ public class MsgPpsTime extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "PPS TIME";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("time", time);
         obj.put("flags", flags);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "PPS TIME";
     }
 }

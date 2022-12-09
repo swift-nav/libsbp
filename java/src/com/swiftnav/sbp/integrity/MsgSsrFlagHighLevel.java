@@ -149,11 +149,6 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR FLAG HIGH LEVEL";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("obs_time", obs_time.toJSON());
@@ -171,5 +166,10 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
         obj.put("use_iono_tile_sat_los", use_iono_tile_sat_los);
         obj.put("use_iono_grid_point_sat_los", use_iono_grid_point_sat_los);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG HIGH LEVEL";
     }
 }

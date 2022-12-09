@@ -97,11 +97,6 @@ public class MsgOrientEuler extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "ORIENT EULER";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
@@ -113,5 +108,10 @@ public class MsgOrientEuler extends SBPMessage {
         obj.put("yaw_accuracy", yaw_accuracy);
         obj.put("flags", flags);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "ORIENT EULER";
     }
 }

@@ -53,14 +53,14 @@ public class MsgSsrSatelliteApc extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR SATELLITE APC";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("apc", SBPStruct.toJSONArray(apc));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR SATELLITE APC";
     }
 }

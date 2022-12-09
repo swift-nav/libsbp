@@ -97,11 +97,6 @@ public class MsgNetworkStateResp extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "NET STATE RESP";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("ipv4_address", new JSONArray(ipv4_address));
@@ -113,5 +108,10 @@ public class MsgNetworkStateResp extends SBPMessage {
         obj.put("interface_name", interface_name);
         obj.put("flags", flags);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "NET STATE RESP";
     }
 }

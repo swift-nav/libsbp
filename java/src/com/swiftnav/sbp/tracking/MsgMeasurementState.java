@@ -62,14 +62,14 @@ public class MsgMeasurementState extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "MEAS STATE";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("states", SBPStruct.toJSONArray(states));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "MEAS STATE";
     }
 }

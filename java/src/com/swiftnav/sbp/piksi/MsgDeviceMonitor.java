@@ -81,11 +81,6 @@ public class MsgDeviceMonitor extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "DEVICE MONITOR";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("dev_vin", dev_vin);
@@ -94,5 +89,10 @@ public class MsgDeviceMonitor extends SBPMessage {
         obj.put("cpu_temperature", cpu_temperature);
         obj.put("fe_temperature", fe_temperature);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "DEVICE MONITOR";
     }
 }

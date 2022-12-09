@@ -113,11 +113,6 @@ public class MsgSolnMeta extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SOLN META";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
@@ -128,5 +123,10 @@ public class MsgSolnMeta extends SBPMessage {
         obj.put("age_gnss", age_gnss);
         obj.put("sol_in", SBPStruct.toJSONArray(sol_in));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SOLN META";
     }
 }

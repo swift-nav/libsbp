@@ -123,11 +123,6 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "SSR GRIDDED CORRECTION BOUNDS";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
@@ -144,5 +139,10 @@ public class MsgSsrGriddedCorrectionBounds extends SBPMessage {
         obj.put("n_sats", n_sats);
         obj.put("stec_sat_list", SBPStruct.toJSONArray(stec_sat_list));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR GRIDDED CORRECTION BOUNDS";
     }
 }

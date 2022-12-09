@@ -61,14 +61,14 @@ public class MsgUserData extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "USER DATA";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("contents", new JSONArray(contents));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "USER DATA";
     }
 }

@@ -94,11 +94,6 @@ public class MsgIono extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "IONO";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("t_nmct", t_nmct.toJSON());
@@ -111,5 +106,10 @@ public class MsgIono extends SBPMessage {
         obj.put("b2", b2);
         obj.put("b3", b3);
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "IONO";
     }
 }

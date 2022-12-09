@@ -76,16 +76,16 @@ public class MsgFwd extends SBPMessage {
     }
 
     @Override
-    public String getFriendlyName() {
-        return "FWD";
-    }
-
-    @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("source", source);
         obj.put("protocol", protocol);
         obj.put("fwd_payload", new JSONArray(fwd_payload));
         return obj;
+    }
+
+    @Override
+    public String getFriendlyName() {
+        return "FWD";
     }
 }
