@@ -261,8 +261,7 @@ public class auto_check_sbp_piksi_MsgUartStateDepATest {
         }
         org.junit.Assert.assertEquals(msg.uart_ftdi.tx_throughput, 1.16000003814697266e+01, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -501,8 +500,7 @@ public class auto_check_sbp_piksi_MsgUartStateDepATest {
         }
         org.junit.Assert.assertEquals(msg.uart_ftdi.tx_throughput, 6.59999996423721313e-02, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -741,8 +739,7 @@ public class auto_check_sbp_piksi_MsgUartStateDepATest {
         }
         org.junit.Assert.assertEquals(msg.uart_ftdi.tx_throughput, 1.38999998569488525e-01, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -981,8 +978,7 @@ public class auto_check_sbp_piksi_MsgUartStateDepATest {
         }
         org.junit.Assert.assertEquals(msg.uart_ftdi.tx_throughput, 6.59999996423721313e-02, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -1172,8 +1168,7 @@ public class auto_check_sbp_piksi_MsgUartStateDepATest {
         }
         org.junit.Assert.assertEquals(msg.uart_ftdi.tx_throughput, 4.93999987840652466e-01, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -1363,7 +1358,6 @@ public class auto_check_sbp_piksi_MsgUartStateDepATest {
         }
         org.junit.Assert.assertEquals(msg.uart_ftdi.tx_throughput, 1.31500005722045898e+00, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

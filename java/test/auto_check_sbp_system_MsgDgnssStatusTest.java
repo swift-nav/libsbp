@@ -77,7 +77,6 @@ public class auto_check_sbp_system_MsgDgnssStatusTest {
         }
         org.junit.Assert.assertEquals(msg.source, "Skylark");
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

@@ -37,7 +37,6 @@ public class auto_check_sbp_settings_MsgSettingsReadByIndexDoneTest {
         Number value;
         Number expected;
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

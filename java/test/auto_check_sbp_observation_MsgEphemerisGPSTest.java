@@ -306,7 +306,6 @@ public class auto_check_sbp_observation_MsgEphemerisGPSTest {
         }
         org.junit.Assert.assertEquals(msg.w, -9.89303662959964747e-01, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

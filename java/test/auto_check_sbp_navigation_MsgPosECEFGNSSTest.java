@@ -85,7 +85,6 @@ public class auto_check_sbp_navigation_MsgPosECEFGNSSTest {
         org.junit.Assert.assertEquals(msg.y, -4.26407342734581698e+06, DELTA);
         org.junit.Assert.assertEquals(msg.z, 3.89065501318615815e+06, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

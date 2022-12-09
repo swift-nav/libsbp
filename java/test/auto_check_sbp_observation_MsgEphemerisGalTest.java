@@ -330,7 +330,6 @@ public class auto_check_sbp_observation_MsgEphemerisGalTest {
         }
         org.junit.Assert.assertEquals(msg.w, 1.22509120916626246e-01, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

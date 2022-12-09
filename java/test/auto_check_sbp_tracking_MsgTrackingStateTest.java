@@ -505,8 +505,7 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             org.junit.Assert.assertEquals(value, expected);
         }
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -988,8 +987,7 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             org.junit.Assert.assertEquals(value, expected);
         }
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -1471,8 +1469,7 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             org.junit.Assert.assertEquals(value, expected);
         }
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -1954,8 +1951,7 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             org.junit.Assert.assertEquals(value, expected);
         }
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -2437,7 +2433,6 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             org.junit.Assert.assertEquals(value, expected);
         }
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

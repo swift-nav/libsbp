@@ -127,7 +127,6 @@ public class auto_check_sbp_navigation_MsgPosECEFCovTest {
         org.junit.Assert.assertEquals(msg.y, 1.00000000000000000e+00, DELTA);
         org.junit.Assert.assertEquals(msg.z, 4.00000000000000000e+00, DELTA);
 
-        org.junit.Assert.assertNotNull(msg.getFriendlyName());
-        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }
