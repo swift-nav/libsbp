@@ -120,6 +120,9 @@ public class auto_check_sbp_navigation_MsgVelECEFTest {
             expected = 10L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -217,6 +220,9 @@ public class auto_check_sbp_navigation_MsgVelECEFTest {
             expected = 11L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -314,6 +320,9 @@ public class auto_check_sbp_navigation_MsgVelECEFTest {
             expected = 7L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -394,6 +403,9 @@ public class auto_check_sbp_navigation_MsgVelECEFTest {
             expected = 16L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -491,5 +503,8 @@ public class auto_check_sbp_navigation_MsgVelECEFTest {
             expected = 14L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

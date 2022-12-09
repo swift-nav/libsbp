@@ -64,5 +64,8 @@ public class auto_check_sbp_observation_MsgBasePosEcefTest {
         org.junit.Assert.assertEquals(msg.x, -2.72657591889999993e+06, DELTA);
         org.junit.Assert.assertEquals(msg.y, -4.31526727979999967e+06, DELTA);
         org.junit.Assert.assertEquals(msg.z, 3.81145596419999981e+06, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

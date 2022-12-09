@@ -267,5 +267,8 @@ public class auto_check_sbp_ssr_MsgSsrOrbitClockBoundsDegradationTest {
             expected = 15L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

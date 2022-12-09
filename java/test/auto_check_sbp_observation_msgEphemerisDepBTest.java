@@ -291,6 +291,9 @@ public class auto_check_sbp_observation_msgEphemerisDepBTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.w, 1.05250472004053020e+00, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -558,6 +561,9 @@ public class auto_check_sbp_observation_msgEphemerisDepBTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.w, -1.97360228379411651e+00, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -825,6 +831,9 @@ public class auto_check_sbp_observation_msgEphemerisDepBTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.w, 3.78735666146418570e-01, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -1092,6 +1101,9 @@ public class auto_check_sbp_observation_msgEphemerisDepBTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.w, -1.97360228379411651e+00, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -1359,6 +1371,9 @@ public class auto_check_sbp_observation_msgEphemerisDepBTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.w, -2.70212414526529354e+00, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -1626,5 +1641,8 @@ public class auto_check_sbp_observation_msgEphemerisDepBTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.w, -5.23790171608806143e-01, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

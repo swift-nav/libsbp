@@ -133,5 +133,8 @@ public class auto_check_sbp_navigation_MsgVelNedGnssTest {
             expected = 89L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

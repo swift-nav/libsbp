@@ -87,6 +87,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -150,6 +153,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -213,6 +219,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -276,6 +285,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -339,6 +351,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -402,6 +417,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -465,6 +483,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -528,6 +549,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -591,6 +615,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -654,6 +681,9 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -717,5 +747,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

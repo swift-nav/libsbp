@@ -76,6 +76,9 @@ public class (((s.suite_name)))Test {
         Number value;
         Number expected;
         ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
     ((*- endfor *))
 }

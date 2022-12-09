@@ -108,6 +108,9 @@ public class auto_check_sbp_navigation_MsgPosECEFTest {
         org.junit.Assert.assertEquals(msg.x, -2.68426903265729966e+06, DELTA);
         org.junit.Assert.assertEquals(msg.y, -4.31664675181599986e+06, DELTA);
         org.junit.Assert.assertEquals(msg.z, 3.83964670953504136e+06, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -193,6 +196,9 @@ public class auto_check_sbp_navigation_MsgPosECEFTest {
         org.junit.Assert.assertEquals(msg.x, -2.68426906425218610e+06, DELTA);
         org.junit.Assert.assertEquals(msg.y, -4.31664676226489246e+06, DELTA);
         org.junit.Assert.assertEquals(msg.z, 3.83964646391391195e+06, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -278,6 +284,9 @@ public class auto_check_sbp_navigation_MsgPosECEFTest {
         org.junit.Assert.assertEquals(msg.x, -2.68426942928163940e+06, DELTA);
         org.junit.Assert.assertEquals(msg.y, -4.31664711827194877e+06, DELTA);
         org.junit.Assert.assertEquals(msg.z, 3.83964612490973808e+06, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -363,5 +372,8 @@ public class auto_check_sbp_navigation_MsgPosECEFTest {
         org.junit.Assert.assertEquals(msg.x, -2.68426968374139909e+06, DELTA);
         org.junit.Assert.assertEquals(msg.y, -4.31664736238213349e+06, DELTA);
         org.junit.Assert.assertEquals(msg.z, 3.83964590179851977e+06, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

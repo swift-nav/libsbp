@@ -90,5 +90,8 @@ public class auto_check_sbp_logging_MsgLogTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.text, "Filtered all obs from 2314 at tow 83.539019");
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

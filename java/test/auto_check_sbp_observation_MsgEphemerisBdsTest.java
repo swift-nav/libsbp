@@ -314,5 +314,8 @@ public class auto_check_sbp_observation_MsgEphemerisBdsTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.w, -2.69860320573545787e+00, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

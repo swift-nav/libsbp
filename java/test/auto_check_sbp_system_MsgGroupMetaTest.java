@@ -103,6 +103,9 @@ public class auto_check_sbp_system_MsgGroupMetaTest {
             expected = 3L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -289,5 +292,8 @@ public class auto_check_sbp_system_MsgGroupMetaTest {
             expected = 14L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

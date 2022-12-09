@@ -47,5 +47,8 @@ public class auto_check_sbp_system_MsgInsStatusTest {
             expected = 536870921L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

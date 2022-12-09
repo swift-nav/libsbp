@@ -125,5 +125,8 @@ public class auto_check_sbp_navigation_MsgUTCTimeGNSSTest {
             expected = 2021L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

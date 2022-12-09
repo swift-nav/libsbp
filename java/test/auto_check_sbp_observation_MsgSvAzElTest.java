@@ -1375,5 +1375,8 @@ public class auto_check_sbp_observation_MsgSvAzElTest {
             expected = 36L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

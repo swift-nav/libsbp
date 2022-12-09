@@ -36,5 +36,8 @@ public class auto_check_sbp_settings_MsgSettingsReadByIndexDoneTest {
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

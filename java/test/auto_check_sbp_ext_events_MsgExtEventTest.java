@@ -95,5 +95,8 @@ public class auto_check_sbp_ext_events_MsgExtEventTest {
             expected = 1840L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

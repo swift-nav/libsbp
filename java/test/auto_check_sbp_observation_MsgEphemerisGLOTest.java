@@ -153,5 +153,8 @@ public class auto_check_sbp_observation_MsgEphemerisGLOTest {
         org.junit.Assert.assertEquals(msg.vel[0], -1.72650623321533203e+03, DELTA);
         org.junit.Assert.assertEquals(msg.vel[1], -2.54261493682861328e+03, DELTA);
         org.junit.Assert.assertEquals(msg.vel[2], 8.69817733764648438e+02, DELTA);
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

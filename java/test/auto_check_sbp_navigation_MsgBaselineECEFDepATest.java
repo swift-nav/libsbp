@@ -125,6 +125,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = -76840L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -226,6 +229,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = -76922L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -327,6 +333,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = -77004L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -428,6 +437,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = -77084L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -529,6 +541,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = -77163L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -628,6 +643,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = 7419L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -727,6 +745,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = 7420L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -826,6 +847,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = 13807L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -925,6 +949,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = 13810L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -1024,6 +1051,9 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = 15257L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -1123,5 +1153,8 @@ public class auto_check_sbp_navigation_MsgBaselineECEFDepATest {
             expected = 15257L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }

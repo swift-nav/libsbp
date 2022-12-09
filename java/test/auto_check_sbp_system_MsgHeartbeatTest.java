@@ -47,6 +47,9 @@ public class auto_check_sbp_system_MsgHeartbeatTest {
             expected = 12800L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 
     @Test
@@ -70,5 +73,8 @@ public class auto_check_sbp_system_MsgHeartbeatTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotNull(msg.getFriendlyName());
+        org.junit.Assert.assertFalse(msg.getFriendlyName().isEmpty());
     }
 }
