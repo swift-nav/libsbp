@@ -118,7 +118,7 @@ pub mod msg_imu_aux {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgImuAux(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -394,7 +394,7 @@ pub mod msg_imu_raw {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgImuRaw(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }

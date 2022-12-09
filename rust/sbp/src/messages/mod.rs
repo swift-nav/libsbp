@@ -336,7 +336,7 @@ pub trait ConcreteMessage: SbpMessage + TryFrom<Sbp, Error = TryFromSbpError> {
 
 /// The error returned when using [TryFrom] to convert [Sbp] to the wrong message type.
 #[derive(Debug, Clone)]
-pub struct TryFromSbpError;
+pub struct TryFromSbpError(pub Sbp);
 
 impl std::fmt::Display for TryFromSbpError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

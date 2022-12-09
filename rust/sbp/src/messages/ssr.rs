@@ -525,7 +525,7 @@ pub mod msg_ssr_code_biases {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrCodeBiases(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -622,7 +622,7 @@ pub mod msg_ssr_code_phase_biases_bounds {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrCodePhaseBiasesBounds(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -722,7 +722,7 @@ pub mod msg_ssr_gridded_correction {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrGriddedCorrection(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -845,7 +845,7 @@ pub mod msg_ssr_gridded_correction_bounds {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrGriddedCorrectionBounds(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -971,7 +971,7 @@ pub mod msg_ssr_gridded_correction_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrGriddedCorrectionDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1061,7 +1061,7 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrGriddedCorrectionNoStdDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1148,7 +1148,7 @@ pub mod msg_ssr_grid_definition_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrGridDefinitionDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1267,7 +1267,7 @@ pub mod msg_ssr_orbit_clock {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrOrbitClock(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1408,7 +1408,7 @@ pub mod msg_ssr_orbit_clock_bounds {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrOrbitClockBounds(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1507,7 +1507,7 @@ pub mod msg_ssr_orbit_clock_bounds_degradation {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrOrbitClockBoundsDegradation(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1633,7 +1633,7 @@ pub mod msg_ssr_orbit_clock_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrOrbitClockDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1788,7 +1788,7 @@ pub mod msg_ssr_phase_biases {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrPhaseBiases(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1889,7 +1889,7 @@ pub mod msg_ssr_satellite_apc {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrSatelliteApc(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1973,7 +1973,7 @@ pub mod msg_ssr_stec_correction {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrStecCorrection(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -2074,7 +2074,7 @@ pub mod msg_ssr_stec_correction_dep {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrStecCorrectionDep(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -2149,7 +2149,7 @@ pub mod msg_ssr_stec_correction_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrStecCorrectionDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -2296,7 +2296,7 @@ pub mod msg_ssr_tile_definition {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrTileDefinition(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -2473,7 +2473,7 @@ pub mod msg_ssr_tile_definition_dep {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSsrTileDefinitionDep(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }

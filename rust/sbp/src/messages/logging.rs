@@ -80,7 +80,7 @@ pub mod msg_fwd {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgFwd(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -181,7 +181,7 @@ pub mod msg_log {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgLog(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -316,7 +316,7 @@ pub mod msg_print_dep {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgPrintDep(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }

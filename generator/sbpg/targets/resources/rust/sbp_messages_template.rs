@@ -145,7 +145,7 @@ impl TryFrom<Sbp> for (((m.msg_name))) {
     fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
         match msg {
             Sbp::(((m.msg_name)))(m) => Ok(m),
-            _ => Err(TryFromSbpError),
+            _ => Err(TryFromSbpError(msg)),
         }
     }
 }

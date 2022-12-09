@@ -124,7 +124,7 @@ pub mod msg_ext_event {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgExtEvent(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
