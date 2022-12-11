@@ -86,7 +86,9 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
         None
     }
     /// Get friendly name associated with the message.
-    fn friendly_name(&self) -> &'static str;
+    fn friendly_name(&self) -> &'static str {
+        ""
+    }
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
