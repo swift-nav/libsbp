@@ -7,14 +7,14 @@ tests:
       area_id: 123456
       correction_mask_on_demand: 1
       correction_mask_stream: 1
-      request_counter: 30
+      request_id: 30
       response_code: 0
       solution_id: 2
     module: sbp.skylark
     name: MsgAcknowledge
   msg_type: '0xFA0'
   raw_json: '{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload":
-    "HkDiAQAAAQABAAI=", "crc": 32955, "request_counter": 30, "area_id": 123456, "response_code":
+    "HkDiAQAAAQABAAI=", "crc": 32955, "request_id": 30, "area_id": 123456, "response_code":
     0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id":
     2}'
   raw_packet: VaAPKgALHkDiAQAAAQABAAK7gA==

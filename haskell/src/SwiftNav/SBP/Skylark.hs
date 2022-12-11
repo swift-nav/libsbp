@@ -39,9 +39,9 @@ msgAcknowledge :: Word16
 msgAcknowledge = 0x0FA0
 
 data MsgAcknowledge = MsgAcknowledge
-  { _msgAcknowledge_request_counter         :: !Word8
-    -- ^ Echo of the request counter field from the corresponding CRA message,
-    -- or 255 if no request counter was provided.
+  { _msgAcknowledge_request_id              :: !Word8
+    -- ^ Echo of the request ID field from the corresponding CRA message, or 255
+    -- if no request ID was provided.
   , _msgAcknowledge_area_id                 :: !Word32
     -- ^ Echo of the Area ID field from the corresponding CRA message.
   , _msgAcknowledge_response_code           :: !Word8
@@ -58,7 +58,7 @@ data MsgAcknowledge = MsgAcknowledge
 
 instance Binary MsgAcknowledge where
   get = do
-    _msgAcknowledge_request_counter <- getWord8
+    _msgAcknowledge_request_id <- getWord8
     _msgAcknowledge_area_id <- getWord32le
     _msgAcknowledge_response_code <- getWord8
     _msgAcknowledge_correction_mask_on_demand <- getWord16le
@@ -67,7 +67,7 @@ instance Binary MsgAcknowledge where
     pure MsgAcknowledge {..}
 
   put MsgAcknowledge {..} = do
-    putWord8 _msgAcknowledge_request_counter
+    putWord8 _msgAcknowledge_request_id
     putWord32le _msgAcknowledge_area_id
     putWord8 _msgAcknowledge_response_code
     putWord16le _msgAcknowledge_correction_mask_on_demand

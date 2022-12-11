@@ -62,9 +62,9 @@ fn test_auto_check_sbp_skylark_msg_acknowledge() {
                     msg.correction_mask_stream
                 );
                 assert_eq!(
-                    msg.request_counter, 30,
-                    "incorrect value for request_counter, expected 30, is {}",
-                    msg.request_counter
+                    msg.request_id, 30,
+                    "incorrect value for request_id, expected 30, is {}",
+                    msg.request_id
                 );
                 assert_eq!(
                     msg.response_code, 0,
@@ -95,7 +95,7 @@ fn test_auto_check_sbp_skylark_msg_acknowledge() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_skylark_msg_acknowledge() {
     {
-        let json_input = r#"{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 32955, "request_counter": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 32955, "request_id": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -145,9 +145,9 @@ fn test_json2sbp_auto_check_sbp_skylark_msg_acknowledge() {
                     msg.correction_mask_stream
                 );
                 assert_eq!(
-                    msg.request_counter, 30,
-                    "incorrect value for request_counter, expected 30, is {}",
-                    msg.request_counter
+                    msg.request_id, 30,
+                    "incorrect value for request_id, expected 30, is {}",
+                    msg.request_id
                 );
                 assert_eq!(
                     msg.response_code, 0,
@@ -235,9 +235,9 @@ fn test_sbp2json_auto_check_sbp_skylark_msg_acknowledge() {
                     msg.correction_mask_stream
                 );
                 assert_eq!(
-                    msg.request_counter, 30,
-                    "incorrect value for request_counter, expected 30, is {}",
-                    msg.request_counter
+                    msg.request_id, 30,
+                    "incorrect value for request_id, expected 30, is {}",
+                    msg.request_id
                 );
                 assert_eq!(
                     msg.response_code, 0,

@@ -40,10 +40,10 @@ extern "C" {
  *****************************************************************************/
 typedef struct {
   /**
-   * Echo of the request counter field from the corresponding CRA message, or
-   * 255 if no request counter was provided.
+   * Echo of the request ID field from the corresponding CRA message, or 255 if
+   * no request ID was provided.
    */
-  u8 request_counter;
+  u8 request_id;
 
   /**
    * Echo of the Area ID field from the corresponding CRA message.

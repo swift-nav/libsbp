@@ -19,9 +19,9 @@ definitions:
       id: 0x0FA0
       short_desc: Acknowledgement message in response to a request for corrections
       fields:
-        - request_counter:
+        - request_id:
             type: u8
-            desc: Echo of the request counter field from the corresponding CRA message, or 255 if no request counter was provided.
+            desc: Echo of the request ID field from the corresponding CRA message, or 255 if no request ID was provided.
         - area_id:
             type: u32
             desc: Echo of the Area ID field from the corresponding CRA message.

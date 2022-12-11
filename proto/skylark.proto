@@ -25,7 +25,7 @@ package swiftnav.sbp.skylark;
 None
  */
 message MsgAcknowledge {
-    uint32 request_counter = 1;
+    uint32 request_id = 1;
     uint32 area_id = 2;
     uint32 response_code = 3;
     uint32 correction_mask_on_demand = 4;

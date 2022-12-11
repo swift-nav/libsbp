@@ -297,7 +297,7 @@ export interface MsgAcknowledge {
     area_id:                   number;
     correction_mask_on_demand: number;
     correction_mask_stream:    number;
-    request_counter:           number;
+    request_id:                number;
     response_code:             number;
     solution_id:               number;
 }
@@ -4731,7 +4731,7 @@ const typeMap: any = {
         { json: "area_id", js: "area_id", typ: 0 },
         { json: "correction_mask_on_demand", js: "correction_mask_on_demand", typ: 0 },
         { json: "correction_mask_stream", js: "correction_mask_stream", typ: 0 },
-        { json: "request_counter", js: "request_counter", typ: 0 },
+        { json: "request_id", js: "request_id", typ: 0 },
         { json: "response_code", js: "response_code", typ: 0 },
         { json: "solution_id", js: "solution_id", typ: 0 },
     ], "any"),

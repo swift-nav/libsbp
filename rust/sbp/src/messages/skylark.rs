@@ -28,10 +28,10 @@ pub mod msg_acknowledge {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// Echo of the request counter field from the corresponding CRA message, or
-        /// 255 if no request counter was provided.
-        #[cfg_attr(feature = "serde", serde(rename = "request_counter"))]
-        pub request_counter: u8,
+        /// Echo of the request ID field from the corresponding CRA message, or 255
+        /// if no request ID was provided.
+        #[cfg_attr(feature = "serde", serde(rename = "request_id"))]
+        pub request_id: u8,
         /// Echo of the Area ID field from the corresponding CRA message.
         #[cfg_attr(feature = "serde", serde(rename = "area_id"))]
         pub area_id: u32,
@@ -108,7 +108,7 @@ pub mod msg_acknowledge {
             + <u16 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.request_counter)
+            WireFormat::len(&self.request_id)
                 + WireFormat::len(&self.area_id)
                 + WireFormat::len(&self.response_code)
                 + WireFormat::len(&self.correction_mask_on_demand)
@@ -116,7 +116,7 @@ pub mod msg_acknowledge {
                 + WireFormat::len(&self.solution_id)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.request_counter, buf);
+            WireFormat::write(&self.request_id, buf);
             WireFormat::write(&self.area_id, buf);
             WireFormat::write(&self.response_code, buf);
             WireFormat::write(&self.correction_mask_on_demand, buf);
@@ -126,7 +126,7 @@ pub mod msg_acknowledge {
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgAcknowledge {
                 sender_id: None,
-                request_counter: WireFormat::parse_unchecked(buf),
+                request_id: WireFormat::parse_unchecked(buf),
                 area_id: WireFormat::parse_unchecked(buf),
                 response_code: WireFormat::parse_unchecked(buf),
                 correction_mask_on_demand: WireFormat::parse_unchecked(buf),

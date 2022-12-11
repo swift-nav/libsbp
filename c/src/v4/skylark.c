@@ -18,7 +18,7 @@
 
 bool sbp_msg_acknowledge_encode_internal(sbp_encode_ctx_t *ctx,
                                          const sbp_msg_acknowledge_t *msg) {
-  if (!sbp_u8_encode(ctx, &msg->request_counter)) {
+  if (!sbp_u8_encode(ctx, &msg->request_id)) {
     return false;
   }
   if (!sbp_u32_encode(ctx, &msg->area_id)) {
@@ -56,7 +56,7 @@ s8 sbp_msg_acknowledge_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_acknowledge_decode_internal(sbp_decode_ctx_t *ctx,
                                          sbp_msg_acknowledge_t *msg) {
-  if (!sbp_u8_decode(ctx, &msg->request_counter)) {
+  if (!sbp_u8_decode(ctx, &msg->request_id)) {
     return false;
   }
   if (!sbp_u32_decode(ctx, &msg->area_id)) {
@@ -110,7 +110,7 @@ int sbp_msg_acknowledge_cmp(const sbp_msg_acknowledge_t *a,
                             const sbp_msg_acknowledge_t *b) {
   int ret = 0;
 
-  ret = sbp_u8_cmp(&a->request_counter, &b->request_counter);
+  ret = sbp_u8_cmp(&a->request_id, &b->request_id);
   if (ret != 0) {
     return ret;
   }

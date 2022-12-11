@@ -16,7 +16,7 @@
   "description":"",
   "type": "object",
   "properties": {
-    "request_counter": {"type": "integer"},
+    "request_id": {"type": "integer"},
     "area_id": {"type": "integer"},
     "response_code": {"type": "integer"},
     "correction_mask_on_demand": {"type": "integer"},
@@ -24,7 +24,7 @@
     "solution_id": {"type": "integer"}
   },
   "required": [
-    "request_counter",
+    "request_id",
     "area_id",
     "response_code",
     "correction_mask_on_demand",

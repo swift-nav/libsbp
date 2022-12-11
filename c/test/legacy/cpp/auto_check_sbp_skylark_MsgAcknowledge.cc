@@ -88,7 +88,7 @@ TEST_F(Test_legacy_auto_check_sbp_skylark_MsgAcknowledge0, Test) {
   test_msg->area_id = 123456;
   test_msg->correction_mask_on_demand = 1;
   test_msg->correction_mask_stream = 1;
-  test_msg->request_counter = 30;
+  test_msg->request_id = 30;
   test_msg->response_code = 0;
   test_msg->solution_id = 2;
 
@@ -113,9 +113,9 @@ TEST_F(Test_legacy_auto_check_sbp_skylark_MsgAcknowledge0, Test) {
   EXPECT_EQ(last_msg_->correction_mask_stream, 1)
       << "incorrect value for correction_mask_stream, expected 1, is "
       << last_msg_->correction_mask_stream;
-  EXPECT_EQ(last_msg_->request_counter, 30)
-      << "incorrect value for request_counter, expected 30, is "
-      << last_msg_->request_counter;
+  EXPECT_EQ(last_msg_->request_id, 30)
+      << "incorrect value for request_id, expected 30, is "
+      << last_msg_->request_id;
   EXPECT_EQ(last_msg_->response_code, 0)
       << "incorrect value for response_code, expected 0, is "
       << last_msg_->response_code;

@@ -30,9 +30,9 @@
 SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
-  u8 request_counter;            /**< Echo of the request counter field from
-                                      the corresponding CRA message, or 255
-                                      if no request counter was provided. */
+  u8 request_id;                 /**< Echo of the request ID field from the
+                                      corresponding CRA message, or 255 if
+                                      no request ID was provided. */
   u32 area_id;                   /**< Echo of the Area ID field from the
                                       corresponding CRA message. */
   u8 response_code;              /**< Reported status of the request. */

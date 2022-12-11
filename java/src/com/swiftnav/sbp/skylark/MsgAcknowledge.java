@@ -22,10 +22,10 @@ public class MsgAcknowledge extends SBPMessage {
     public static final int TYPE = 0x0FA0;
 
     /**
-     * Echo of the request counter field from the corresponding CRA message, or 255 if no request
-     * counter was provided.
+     * Echo of the request ID field from the corresponding CRA message, or 255 if no request ID was
+     * provided.
      */
-    public int request_counter;
+    public int request_id;
 
     /** Echo of the Area ID field from the corresponding CRA message. */
     public long area_id;
@@ -63,7 +63,7 @@ public class MsgAcknowledge extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        request_counter = parser.getU8();
+        request_id = parser.getU8();
         area_id = parser.getU32();
         response_code = parser.getU8();
         correction_mask_on_demand = parser.getU16();
@@ -73,7 +73,7 @@ public class MsgAcknowledge extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        builder.putU8(request_counter);
+        builder.putU8(request_id);
         builder.putU32(area_id);
         builder.putU8(response_code);
         builder.putU16(correction_mask_on_demand);
@@ -84,7 +84,7 @@ public class MsgAcknowledge extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("request_counter", request_counter);
+        obj.put("request_id", request_id);
         obj.put("area_id", area_id);
         obj.put("response_code", response_code);
         obj.put("correction_mask_on_demand", correction_mask_on_demand);

@@ -39,9 +39,9 @@ class MsgAcknowledge(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  request_counter : int
-    Echo of the request counter field from the corresponding CRA message, or
-    255 if no request counter was provided.
+  request_id : int
+    Echo of the request ID field from the corresponding CRA message, or 255 if
+    no request ID was provided.
   area_id : int
     Echo of the Area ID field from the corresponding CRA message.
   response_code : int
@@ -59,14 +59,14 @@ class MsgAcknowledge(SBP):
 
   """
   _parser = construct.Struct(
-                   'request_counter' / construct.Int8ul,
+                   'request_id' / construct.Int8ul,
                    'area_id' / construct.Int32ul,
                    'response_code' / construct.Int8ul,
                    'correction_mask_on_demand' / construct.Int16ul,
                    'correction_mask_stream' / construct.Int16ul,
                    'solution_id' / construct.Int8ul,)
   __slots__ = [
-               'request_counter',
+               'request_id',
                'area_id',
                'response_code',
                'correction_mask_on_demand',
@@ -84,7 +84,7 @@ class MsgAcknowledge(SBP):
       super( MsgAcknowledge, self).__init__()
       self.msg_type = SBP_MSG_ACKNOWLEDGE
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.request_counter = kwargs.pop('request_counter')
+      self.request_id = kwargs.pop('request_id')
       self.area_id = kwargs.pop('area_id')
       self.response_code = kwargs.pop('response_code')
       self.correction_mask_on_demand = kwargs.pop('correction_mask_on_demand')

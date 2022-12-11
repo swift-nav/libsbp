@@ -135,7 +135,7 @@ START_TEST(test_legacy_auto_check_sbp_skylark_MsgAcknowledge) {
     test_msg->area_id = 123456;
     test_msg->correction_mask_on_demand = 1;
     test_msg->correction_mask_stream = 1;
-    test_msg->request_counter = 30;
+    test_msg->request_id = 30;
     test_msg->response_code = 0;
     test_msg->solution_id = 2;
     sbp_payload_send(&sbp_state, 0xFA0, 42, test_msg_len, test_msg_storage,
@@ -203,9 +203,9 @@ START_TEST(test_legacy_auto_check_sbp_skylark_MsgAcknowledge) {
         check_msg->correction_mask_stream == 1,
         "incorrect value for correction_mask_stream, expected 1, is %d",
         check_msg->correction_mask_stream);
-    ck_assert_msg(check_msg->request_counter == 30,
-                  "incorrect value for request_counter, expected 30, is %d",
-                  check_msg->request_counter);
+    ck_assert_msg(check_msg->request_id == 30,
+                  "incorrect value for request_id, expected 30, is %d",
+                  check_msg->request_id);
     ck_assert_msg(check_msg->response_code == 0,
                   "incorrect value for response_code, expected 0, is %d",
                   check_msg->response_code);

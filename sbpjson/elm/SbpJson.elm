@@ -945,7 +945,7 @@ type alias MsgAcknowledge =
     { areaID : Int
     , correctionMaskOnDemand : Int
     , correctionMaskStream : Int
-    , requestCounter : Int
+    , requestID : Int
     , responseCode : Int
     , solutionID : Int
     }
@@ -4115,7 +4115,7 @@ msgAcknowledge =
         |> Jpipe.required "area_id" Jdec.int
         |> Jpipe.required "correction_mask_on_demand" Jdec.int
         |> Jpipe.required "correction_mask_stream" Jdec.int
-        |> Jpipe.required "request_counter" Jdec.int
+        |> Jpipe.required "request_id" Jdec.int
         |> Jpipe.required "response_code" Jdec.int
         |> Jpipe.required "solution_id" Jdec.int
 
@@ -4125,7 +4125,7 @@ encodeMsgAcknowledge x =
         [ ("area_id", Jenc.int x.areaID)
         , ("correction_mask_on_demand", Jenc.int x.correctionMaskOnDemand)
         , ("correction_mask_stream", Jenc.int x.correctionMaskStream)
-        , ("request_counter", Jenc.int x.requestCounter)
+        , ("request_id", Jenc.int x.requestID)
         , ("response_code", Jenc.int x.responseCode)
         , ("solution_id", Jenc.int x.solutionID)
         ]

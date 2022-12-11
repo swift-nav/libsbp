@@ -108,7 +108,7 @@ START_TEST(test_auto_check_sbp_skylark_MsgAcknowledge) {
 
     test_msg.acknowledge.correction_mask_stream = 1;
 
-    test_msg.acknowledge.request_counter = 30;
+    test_msg.acknowledge.request_id = 30;
 
     test_msg.acknowledge.response_code = 0;
 
@@ -155,11 +155,10 @@ START_TEST(test_auto_check_sbp_skylark_MsgAcknowledge) {
         "expected 1, is %d",
         last_msg.msg.acknowledge.correction_mask_stream);
 
-    ck_assert_msg(
-        last_msg.msg.acknowledge.request_counter == 30,
-        "incorrect value for last_msg.msg.acknowledge.request_counter, "
-        "expected 30, is %d",
-        last_msg.msg.acknowledge.request_counter);
+    ck_assert_msg(last_msg.msg.acknowledge.request_id == 30,
+                  "incorrect value for last_msg.msg.acknowledge.request_id, "
+                  "expected 30, is %d",
+                  last_msg.msg.acknowledge.request_id);
 
     ck_assert_msg(last_msg.msg.acknowledge.response_code == 0,
                   "incorrect value for last_msg.msg.acknowledge.response_code, "

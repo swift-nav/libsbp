@@ -77,10 +77,10 @@ public class auto_check_sbp_skylark_MsgAcknowledgeTest {
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.request_counter;
+        value = msg.request_id;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.request_counter + "' != '" + 30 + "'",
+                    "'" + msg.request_id + "' != '" + 30 + "'",
                     value.equals(BigInteger.valueOf(30L)));
         } else {
             value = value.longValue();
