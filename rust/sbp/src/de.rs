@@ -5,6 +5,8 @@ use std::{
 
 use bytes::{Buf, BytesMut};
 use dencode::FramedRead;
+
+#[cfg(feature = "async")]
 use futures::StreamExt;
 
 use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE};
