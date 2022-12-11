@@ -44,12 +44,29 @@ pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, 
     Decoder::new(input)
 }
 
+/// Deserialize IO stream into iterator of raw frames
+pub fn iter_frames<R: io::Read>(input: R) -> impl Iterator<Item = Result<Frame, Error>> {
+    Framer::new(input)
+}
+
 /// Deserialize the IO stream into an iterator of messages. Provide a timeout
 /// for the maximum allowed duration without a successful message.
 pub fn iter_messages_with_timeout<R: io::Read>(
     input: R,
     timeout_duration: Duration,
 ) -> impl Iterator<Item = Result<Sbp, Error>> {
+    TimeoutDecoder::new(input, timeout_duration).map(|f| match f {
+        Ok(frame) => frame.to_sbp(),
+        Err(err) => Err(err),
+    })
+}
+
+/// Deserialize the IO stream into an iterator of frames. Provide a timeout
+/// for the maximum allowed duration without a successful message.
+pub fn iter_frames_with_timeout<R: io::Read>(
+    input: R,
+    timeout_duration: Duration,
+) -> impl Iterator<Item = Result<Frame, Error>> {
     TimeoutDecoder::new(input, timeout_duration)
 }
 
@@ -66,6 +83,25 @@ pub fn stream_messages_with_timeout<R: futures::AsyncRead + Unpin>(
     input: R,
     timeout_duration: Duration,
 ) -> impl futures::Stream<Item = Result<Sbp, Error>> {
+    TimeoutDecoder::new(input, timeout_duration).map(|f| match f {
+        Ok(frame) => frame.to_sbp(),
+        Err(err) => Err(err),
+    })
+}
+
+/// Deserialize the async IO stream into stream of frames
+#[cfg(feature = "async")]
+pub fn stream_frames<R: futures::AsyncRead + Unpin>(
+    input: R,
+) -> impl futures::Stream<Item = Result<Sbp, Error>> {
+    Framer::new(input)
+}
+
+#[cfg(feature = "async")]
+pub fn stream_frames_with_timeout<R: futures::AsyncRead + Unpin>(
+    input: R,
+    timeout_duration: Duration,
+) -> impl futures::Stream<Item = Result<Frame, Error>> {
     TimeoutDecoder::new(input, timeout_duration)
 }
 
@@ -326,13 +362,10 @@ impl<R> TimeoutDecoder<R> {
 }
 
 impl<R: io::Read> Iterator for TimeoutDecoder<R> {
-    type Item = Result<Sbp, Error>;
+    type Item = Result<Frame, Error>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.0.next().map(|f| match f {
-            Ok(frame) => frame.to_sbp(),
-            Err(err) => Err(err),
-        })
+        self.0.next()
     }
 }
 
