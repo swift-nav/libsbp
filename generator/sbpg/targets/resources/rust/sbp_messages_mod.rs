@@ -85,6 +85,8 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn gps_time(&self) -> Option<Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         None
     }
+    /// Get friendly name associated with the message.
+    fn friendly_name(&self) -> &'static str;
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -266,6 +268,19 @@ impl SbpMessage for Sbp {
             ((*- endfor *))
             Sbp::Unknown(msg) => {
                 msg.gps_time()
+            },
+        }
+    }
+
+    fn friendly_name(&self) -> &'static str {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.msg_name)))(msg) => {
+                msg.friendly_name()
+            },
+            ((*- endfor -*))
+            Sbp::Unknown(msg) => {
+                msg.friendly_name()
             },
         }
     }
