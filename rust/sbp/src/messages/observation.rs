@@ -734,7 +734,7 @@ pub mod msg_almanac_glo {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgAlmanacGlo(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -860,7 +860,7 @@ pub mod msg_almanac_glo_dep {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgAlmanacGloDep(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -991,7 +991,7 @@ pub mod msg_almanac_gps {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgAlmanacGps(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1130,7 +1130,7 @@ pub mod msg_almanac_gps_dep {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgAlmanacGpsDep(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1249,7 +1249,7 @@ pub mod msg_base_pos_ecef {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgBasePosEcef(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1337,7 +1337,7 @@ pub mod msg_base_pos_llh {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgBasePosLlh(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1496,7 +1496,7 @@ pub mod msg_ephemeris_bds {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisBds(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1740,7 +1740,7 @@ pub mod msg_ephemeris_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -1995,7 +1995,7 @@ pub mod msg_ephemeris_dep_b {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisDepB(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -2263,7 +2263,7 @@ pub mod msg_ephemeris_dep_c {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisDepC(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -2539,7 +2539,7 @@ pub mod msg_ephemeris_dep_d {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisDepD(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -2803,7 +2803,7 @@ pub mod msg_ephemeris_gal {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGal(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -3046,7 +3046,7 @@ pub mod msg_ephemeris_gal_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGalDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -3238,7 +3238,7 @@ pub mod msg_ephemeris_glo {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGlo(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -3361,7 +3361,7 @@ pub mod msg_ephemeris_glo_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGloDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -3472,7 +3472,7 @@ pub mod msg_ephemeris_glo_dep_b {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGloDepB(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -3589,7 +3589,7 @@ pub mod msg_ephemeris_glo_dep_c {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGloDepC(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -3715,7 +3715,7 @@ pub mod msg_ephemeris_glo_dep_d {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGloDepD(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -3893,7 +3893,7 @@ pub mod msg_ephemeris_gps {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGps(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -4127,7 +4127,7 @@ pub mod msg_ephemeris_gps_dep_e {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGpsDepE(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -4359,7 +4359,7 @@ pub mod msg_ephemeris_gps_dep_f {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisGpsDepF(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -4591,7 +4591,7 @@ pub mod msg_ephemeris_qzss {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisQzss(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -4763,7 +4763,7 @@ pub mod msg_ephemeris_sbas {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisSbas(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -4867,7 +4867,7 @@ pub mod msg_ephemeris_sbas_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisSbasDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -4976,7 +4976,7 @@ pub mod msg_ephemeris_sbas_dep_b {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgEphemerisSbasDepB(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5083,7 +5083,7 @@ pub mod msg_glo_biases {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgGloBiases(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5171,7 +5171,7 @@ pub mod msg_gnss_capb {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgGnssCapb(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5260,7 +5260,7 @@ pub mod msg_group_delay {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgGroupDelay(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5366,7 +5366,7 @@ pub mod msg_group_delay_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgGroupDelayDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5472,7 +5472,7 @@ pub mod msg_group_delay_dep_b {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgGroupDelayDepB(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5583,7 +5583,7 @@ pub mod msg_iono {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgIono(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5709,7 +5709,7 @@ pub mod msg_obs {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgObs(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5801,7 +5801,7 @@ pub mod msg_obs_dep_a {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgObsDepA(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5896,7 +5896,7 @@ pub mod msg_obs_dep_b {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgObsDepB(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -5993,7 +5993,7 @@ pub mod msg_obs_dep_c {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgObsDepC(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -6086,7 +6086,7 @@ pub mod msg_osr {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgOsr(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -6163,7 +6163,7 @@ pub mod msg_sv_az_el {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSvAzEl(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
@@ -6239,7 +6239,7 @@ pub mod msg_sv_configuration_gps_dep {
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
                 Sbp::MsgSvConfigurationGpsDep(m) => Ok(m),
-                _ => Err(TryFromSbpError),
+                _ => Err(TryFromSbpError(msg)),
             }
         }
     }
