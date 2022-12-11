@@ -140,6 +140,12 @@ impl SbpMessage for (((m.msg_name))) {
     (((m.gps_time_fn)))
 }
 
+impl FriendlyName for (((m.msg_name))) {
+    fn friendly_name() -> &'static str {
+        "(((m.friendly_name)))"
+    }
+}
+
 impl TryFrom<Sbp> for (((m.msg_name))) {
     type Error = TryFromSbpError;
     fn try_from(msg: Sbp) -> Result<Self, Self::Error> {

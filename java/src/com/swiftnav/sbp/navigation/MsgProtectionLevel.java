@@ -191,4 +191,9 @@ public class MsgProtectionLevel extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "PROTECTION LEVEL";
+    }
 }

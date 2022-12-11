@@ -66,4 +66,9 @@ public class MsgFileioConfigReq extends SBPMessage {
         obj.put("sequence", sequence);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FILEIO CONFIG REQ";
+    }
 }

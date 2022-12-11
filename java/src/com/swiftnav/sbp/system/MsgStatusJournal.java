@@ -93,4 +93,9 @@ public class MsgStatusJournal extends SBPMessage {
         obj.put("journal", SBPStruct.toJSONArray(journal));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "STATUS JOURNAL";
+    }
 }

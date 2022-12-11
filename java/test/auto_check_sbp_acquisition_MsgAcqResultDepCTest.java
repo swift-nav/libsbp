@@ -72,6 +72,8 @@ public class auto_check_sbp_acquisition_MsgAcqResultDepCTest {
             expected = 10L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -120,6 +122,8 @@ public class auto_check_sbp_acquisition_MsgAcqResultDepCTest {
             expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -168,6 +172,8 @@ public class auto_check_sbp_acquisition_MsgAcqResultDepCTest {
             expected = 13L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -216,6 +222,8 @@ public class auto_check_sbp_acquisition_MsgAcqResultDepCTest {
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -264,5 +272,7 @@ public class auto_check_sbp_acquisition_MsgAcqResultDepCTest {
             expected = 27L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

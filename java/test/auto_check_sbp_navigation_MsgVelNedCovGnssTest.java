@@ -141,5 +141,7 @@ public class auto_check_sbp_navigation_MsgVelNedCovGnssTest {
             expected = 501868200L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

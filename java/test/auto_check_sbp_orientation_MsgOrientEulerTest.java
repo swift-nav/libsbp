@@ -115,5 +115,7 @@ public class auto_check_sbp_orientation_MsgOrientEulerTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.yaw_accuracy, 7.00000000000000000e+00, DELTA);
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

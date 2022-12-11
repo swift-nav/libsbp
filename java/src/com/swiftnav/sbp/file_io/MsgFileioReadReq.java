@@ -87,4 +87,9 @@ public class MsgFileioReadReq extends SBPMessage {
         obj.put("filename", filename);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FILEIO READ REQ";
+    }
 }

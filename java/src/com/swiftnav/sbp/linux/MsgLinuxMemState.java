@@ -101,4 +101,9 @@ public class MsgLinuxMemState extends SBPMessage {
         obj.put("cmdline", cmdline);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX MEM STATE";
+    }
 }

@@ -109,4 +109,9 @@ public class MsgAlmanacGloDep extends SBPMessage {
         obj.put("omega", omega);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ALMANAC GLO DEP";
+    }
 }

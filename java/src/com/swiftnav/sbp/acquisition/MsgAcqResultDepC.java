@@ -83,4 +83,9 @@ public class MsgAcqResultDepC extends SBPMessage {
         obj.put("sid", sid.toJSON());
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ACQ RESULT DEP C";
+    }
 }

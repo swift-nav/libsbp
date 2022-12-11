@@ -80,4 +80,9 @@ public class MsgPpsTime extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "PPS TIME";
+    }
 }

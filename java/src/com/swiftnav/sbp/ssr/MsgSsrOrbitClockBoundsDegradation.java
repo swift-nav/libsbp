@@ -86,4 +86,9 @@ public class MsgSsrOrbitClockBoundsDegradation extends SBPMessage {
         obj.put("orbit_clock_bounds_degradation", orbit_clock_bounds_degradation.toJSON());
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR ORBIT CLOCK BOUNDS DEGRADATION";
+    }
 }

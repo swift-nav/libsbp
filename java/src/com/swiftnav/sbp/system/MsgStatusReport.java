@@ -94,4 +94,9 @@ public class MsgStatusReport extends SBPMessage {
         obj.put("status", SBPStruct.toJSONArray(status));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "STATUS REPORT";
+    }
 }

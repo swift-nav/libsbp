@@ -90,4 +90,9 @@ public class MsgDeviceMonitor extends SBPMessage {
         obj.put("fe_temperature", fe_temperature);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "DEVICE MONITOR";
+    }
 }

@@ -65,4 +65,9 @@ public class MsgSsrStecCorrectionDepA extends SBPMessage {
         obj.put("stec_sat_list", SBPStruct.toJSONArray(stec_sat_list));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR STEC CORRECTION DEP A";
+    }
 }

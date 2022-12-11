@@ -36,5 +36,7 @@ public class auto_check_sbp_settings_MsgSettingsReadByIndexDoneTest {
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

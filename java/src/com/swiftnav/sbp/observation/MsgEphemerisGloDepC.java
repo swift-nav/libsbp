@@ -110,4 +110,9 @@ public class MsgEphemerisGloDepC extends SBPMessage {
         obj.put("fcn", fcn);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH GLO DEP C";
+    }
 }

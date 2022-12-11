@@ -118,6 +118,12 @@ class MsgOdometry(SBP):
     self.payload = MsgOdometry._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ODOMETRY"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -236,6 +242,12 @@ class MsgWheeltick(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgWheeltick._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "WHEELTICK"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

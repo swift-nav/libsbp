@@ -138,5 +138,7 @@ public class auto_check_sbp_navigation_MsgVelECEFCovTest {
             expected = 6L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

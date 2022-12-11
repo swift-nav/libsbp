@@ -113,4 +113,9 @@ public class MsgUtcLeapSecond extends SBPMessage {
         obj.put("count_after", count_after);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "UTC LEAP SECOND";
+    }
 }

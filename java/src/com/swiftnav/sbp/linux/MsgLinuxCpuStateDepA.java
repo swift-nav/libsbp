@@ -89,4 +89,9 @@ public class MsgLinuxCpuStateDepA extends SBPMessage {
         obj.put("cmdline", cmdline);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX CPU STATE DEP A";
+    }
 }

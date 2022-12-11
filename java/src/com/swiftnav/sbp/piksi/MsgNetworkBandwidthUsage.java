@@ -66,4 +66,9 @@ public class MsgNetworkBandwidthUsage extends SBPMessage {
         obj.put("interfaces", SBPStruct.toJSONArray(interfaces));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "NET BANDWIDTH USAGE";
+    }
 }

@@ -119,6 +119,12 @@ class MsgLinuxCpuStateDepA(SBP):
     self.payload = MsgLinuxCpuStateDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX CPU STATE DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -228,6 +234,12 @@ class MsgLinuxMemStateDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxMemStateDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX MEM STATE DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -342,6 +354,12 @@ class MsgLinuxSysStateDepA(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxSysStateDepA._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX SYS STATE DEP A"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -460,6 +478,12 @@ class MsgLinuxProcessSocketCounts(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxProcessSocketCounts._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX PROCESS SOCKET COUNTS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -590,6 +614,12 @@ class MsgLinuxProcessSocketQueues(SBP):
     self.payload = MsgLinuxProcessSocketQueues._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX PROCESS SOCKET QUEUES"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -698,6 +728,12 @@ class MsgLinuxSocketUsage(SBP):
     self.payload = MsgLinuxSocketUsage._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX SOCKET USAGE"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -802,6 +838,12 @@ class MsgLinuxProcessFdCount(SBP):
     self.payload = MsgLinuxProcessFdCount._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX PROCESS FD COUNT"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -899,6 +941,12 @@ class MsgLinuxProcessFdSummary(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxProcessFdSummary._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX PROCESS FD SUMMARY"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1020,6 +1068,12 @@ class MsgLinuxCpuState(SBP):
     self.payload = MsgLinuxCpuState._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX CPU STATE"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1139,6 +1193,12 @@ class MsgLinuxMemState(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxMemState._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX MEM STATE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -1264,6 +1324,12 @@ class MsgLinuxSysState(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgLinuxSysState._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LINUX SYS STATE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

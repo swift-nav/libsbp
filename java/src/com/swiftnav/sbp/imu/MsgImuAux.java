@@ -77,4 +77,9 @@ public class MsgImuAux extends SBPMessage {
         obj.put("imu_conf", imu_conf);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "IMU AUX";
+    }
 }

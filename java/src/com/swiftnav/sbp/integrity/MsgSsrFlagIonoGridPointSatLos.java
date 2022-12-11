@@ -77,4 +77,9 @@ public class MsgSsrFlagIonoGridPointSatLos extends SBPMessage {
         obj.put("faulty_los", SBPStruct.toJSONArray(faulty_los));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG IONO GRID POINT SAT LOS";
+    }
 }

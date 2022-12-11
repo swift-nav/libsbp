@@ -83,4 +83,9 @@ public class MsgFwd extends SBPMessage {
         obj.put("fwd_payload", new JSONArray(fwd_payload));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FWD";
+    }
 }

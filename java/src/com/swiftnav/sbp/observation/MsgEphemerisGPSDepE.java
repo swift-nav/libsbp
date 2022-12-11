@@ -199,4 +199,9 @@ public class MsgEphemerisGPSDepE extends SBPMessage {
         obj.put("iodc", iodc);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH GPS DEP E";
+    }
 }

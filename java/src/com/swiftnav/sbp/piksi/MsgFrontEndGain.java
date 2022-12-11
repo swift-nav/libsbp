@@ -77,4 +77,9 @@ public class MsgFrontEndGain extends SBPMessage {
         obj.put("if_gain", new JSONArray(if_gain));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FRONT END GAIN";
+    }
 }

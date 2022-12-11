@@ -113,6 +113,12 @@ pub mod msg_imu_aux {
         }
     }
 
+    impl FriendlyName for MsgImuAux {
+        fn friendly_name() -> &'static str {
+            "IMU AUX"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgImuAux {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -386,6 +392,12 @@ pub mod msg_imu_raw {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgImuRaw {
+        fn friendly_name() -> &'static str {
+            "IMU RAW"
         }
     }
 

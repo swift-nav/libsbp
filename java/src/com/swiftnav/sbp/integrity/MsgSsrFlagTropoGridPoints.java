@@ -71,4 +71,9 @@ public class MsgSsrFlagTropoGridPoints extends SBPMessage {
         obj.put("faulty_points", new JSONArray(faulty_points));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG TROPO GRID POINTS";
+    }
 }

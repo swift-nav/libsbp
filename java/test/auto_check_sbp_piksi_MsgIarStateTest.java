@@ -46,6 +46,8 @@ public class auto_check_sbp_piksi_MsgIarStateTest {
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -69,6 +71,8 @@ public class auto_check_sbp_piksi_MsgIarStateTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -92,6 +96,8 @@ public class auto_check_sbp_piksi_MsgIarStateTest {
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -116,6 +122,8 @@ public class auto_check_sbp_piksi_MsgIarStateTest {
             expected = 729L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -140,6 +148,8 @@ public class auto_check_sbp_piksi_MsgIarStateTest {
             expected = 728L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -164,6 +174,8 @@ public class auto_check_sbp_piksi_MsgIarStateTest {
             expected = 727L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -188,5 +200,7 @@ public class auto_check_sbp_piksi_MsgIarStateTest {
             expected = 723L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

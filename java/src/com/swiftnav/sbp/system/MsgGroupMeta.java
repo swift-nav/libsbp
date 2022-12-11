@@ -86,4 +86,9 @@ public class MsgGroupMeta extends SBPMessage {
         obj.put("group_msgs", new JSONArray(group_msgs));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "GROUP META";
+    }
 }

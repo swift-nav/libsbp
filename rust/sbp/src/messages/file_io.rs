@@ -78,6 +78,12 @@ pub mod msg_fileio_config_req {
         }
     }
 
+    impl FriendlyName for MsgFileioConfigReq {
+        fn friendly_name() -> &'static str {
+            "FILEIO CONFIG REQ"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFileioConfigReq {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -160,6 +166,12 @@ pub mod msg_fileio_config_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgFileioConfigResp {
+        fn friendly_name() -> &'static str {
+            "FILEIO CONFIG RESP"
         }
     }
 
@@ -261,6 +273,12 @@ pub mod msg_fileio_read_dir_req {
         }
     }
 
+    impl FriendlyName for MsgFileioReadDirReq {
+        fn friendly_name() -> &'static str {
+            "FILEIO READ DIR REQ"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFileioReadDirReq {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -345,6 +363,12 @@ pub mod msg_fileio_read_dir_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgFileioReadDirResp {
+        fn friendly_name() -> &'static str {
+            "FILEIO READ DIR RESP"
         }
     }
 
@@ -434,6 +458,12 @@ pub mod msg_fileio_read_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgFileioReadReq {
+        fn friendly_name() -> &'static str {
+            "FILEIO READ REQ"
         }
     }
 
@@ -527,6 +557,12 @@ pub mod msg_fileio_read_resp {
         }
     }
 
+    impl FriendlyName for MsgFileioReadResp {
+        fn friendly_name() -> &'static str {
+            "FILEIO READ RESP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFileioReadResp {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -601,6 +637,12 @@ pub mod msg_fileio_remove {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgFileioRemove {
+        fn friendly_name() -> &'static str {
+            "FILEIO REMOVE"
         }
     }
 
@@ -691,6 +733,12 @@ pub mod msg_fileio_write_req {
         }
     }
 
+    impl FriendlyName for MsgFileioWriteReq {
+        fn friendly_name() -> &'static str {
+            "FILEIO WRITE REQ"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFileioWriteReq {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -775,6 +823,12 @@ pub mod msg_fileio_write_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgFileioWriteResp {
+        fn friendly_name() -> &'static str {
+            "FILEIO WRITE RESP"
         }
     }
 

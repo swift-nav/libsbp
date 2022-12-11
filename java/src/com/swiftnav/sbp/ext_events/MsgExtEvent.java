@@ -89,4 +89,9 @@ public class MsgExtEvent extends SBPMessage {
         obj.put("pin", pin);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EXT EVENT";
+    }
 }

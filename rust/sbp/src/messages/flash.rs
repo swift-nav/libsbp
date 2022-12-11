@@ -91,6 +91,12 @@ pub mod msg_flash_done {
         }
     }
 
+    impl FriendlyName for MsgFlashDone {
+        fn friendly_name() -> &'static str {
+            "FLASH DONE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFlashDone {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -235,6 +241,12 @@ pub mod msg_flash_erase {
         }
     }
 
+    impl FriendlyName for MsgFlashErase {
+        fn friendly_name() -> &'static str {
+            "FLASH ERASE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFlashErase {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -365,6 +377,12 @@ pub mod msg_flash_program {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgFlashProgram {
+        fn friendly_name() -> &'static str {
+            "FLASH PROGRAM"
         }
     }
 
@@ -509,6 +527,12 @@ pub mod msg_flash_read_req {
         }
     }
 
+    impl FriendlyName for MsgFlashReadReq {
+        fn friendly_name() -> &'static str {
+            "FLASH READ REQ"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFlashReadReq {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -646,6 +670,12 @@ pub mod msg_flash_read_resp {
         }
     }
 
+    impl FriendlyName for MsgFlashReadResp {
+        fn friendly_name() -> &'static str {
+            "FLASH READ RESP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFlashReadResp {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -757,6 +787,12 @@ pub mod msg_m25_flash_write_status {
         }
     }
 
+    impl FriendlyName for MsgM25FlashWriteStatus {
+        fn friendly_name() -> &'static str {
+            "M25 FLASH WRITE STATUS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgM25FlashWriteStatus {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -827,6 +863,12 @@ pub mod msg_stm_flash_lock_sector {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgStmFlashLockSector {
+        fn friendly_name() -> &'static str {
+            "STM FLASH LOCK SECTOR"
         }
     }
 
@@ -903,6 +945,12 @@ pub mod msg_stm_flash_unlock_sector {
         }
     }
 
+    impl FriendlyName for MsgStmFlashUnlockSector {
+        fn friendly_name() -> &'static str {
+            "STM FLASH UNLOCK SECTOR"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgStmFlashUnlockSector {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -975,6 +1023,12 @@ pub mod msg_stm_unique_id_req {
         }
     }
 
+    impl FriendlyName for MsgStmUniqueIdReq {
+        fn friendly_name() -> &'static str {
+            "STM UNIQUE ID REQ"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgStmUniqueIdReq {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1042,6 +1096,12 @@ pub mod msg_stm_unique_id_resp {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgStmUniqueIdResp {
+        fn friendly_name() -> &'static str {
+            "STM UNIQUE ID RESP"
         }
     }
 

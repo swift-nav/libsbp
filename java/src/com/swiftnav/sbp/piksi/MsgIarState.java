@@ -67,4 +67,9 @@ public class MsgIarState extends SBPMessage {
         obj.put("num_hyps", num_hyps);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "IAR STATE";
+    }
 }

@@ -66,4 +66,9 @@ public class MsgFileioWriteResp extends SBPMessage {
         obj.put("sequence", sequence);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FILEIO WRITE RESP";
+    }
 }

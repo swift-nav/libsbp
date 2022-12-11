@@ -84,4 +84,9 @@ public class MsgGnssTimeOffset extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "GNSS TIME OFFSET";
+    }
 }

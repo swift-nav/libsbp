@@ -72,4 +72,9 @@ public class MsgCommandResp extends SBPMessage {
         obj.put("code", code);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "COMMAND RESP";
+    }
 }

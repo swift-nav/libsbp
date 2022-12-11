@@ -105,6 +105,12 @@ class MsgLog(SBP):
     self.payload = MsgLog._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "LOG"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -211,6 +217,12 @@ class MsgFwd(SBP):
     self.payload = MsgFwd._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FWD"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -299,6 +311,12 @@ class MsgPrintDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgPrintDep._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "PRINT DEP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

@@ -83,4 +83,9 @@ public class MsgUartStateDepa extends SBPMessage {
         obj.put("latency", latency.toJSON());
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "UART STATE DEPA";
+    }
 }

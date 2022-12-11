@@ -80,4 +80,9 @@ public class MsgBasePosECEF extends SBPMessage {
         obj.put("z", z);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "BASE POS ECEF";
+    }
 }

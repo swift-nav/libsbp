@@ -66,5 +66,7 @@ public class auto_check_sbp_imu_MsgImuAuxTest {
             expected = 2804L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

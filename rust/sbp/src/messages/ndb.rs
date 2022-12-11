@@ -147,6 +147,12 @@ pub mod msg_ndb_event {
         }
     }
 
+    impl FriendlyName for MsgNdbEvent {
+        fn friendly_name() -> &'static str {
+            "NDB EVENT"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgNdbEvent {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {

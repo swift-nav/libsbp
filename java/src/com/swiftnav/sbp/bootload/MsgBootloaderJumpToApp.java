@@ -64,4 +64,9 @@ public class MsgBootloaderJumpToApp extends SBPMessage {
         obj.put("jump", jump);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "BOOTLOADER JUMP TO APP";
+    }
 }

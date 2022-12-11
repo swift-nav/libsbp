@@ -109,4 +109,9 @@ public class MsgOrientEuler extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ORIENT EULER";
+    }
 }

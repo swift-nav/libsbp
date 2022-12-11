@@ -102,4 +102,9 @@ public class MsgBaselineECEFDepA extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "BASELINE ECEF DEP A";
+    }
 }

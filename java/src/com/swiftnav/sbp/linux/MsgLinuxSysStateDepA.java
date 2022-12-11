@@ -94,4 +94,9 @@ public class MsgLinuxSysStateDepA extends SBPMessage {
         obj.put("pid_count", pid_count);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX SYS STATE DEP A";
+    }
 }

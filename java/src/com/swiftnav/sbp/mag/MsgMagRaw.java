@@ -90,4 +90,9 @@ public class MsgMagRaw extends SBPMessage {
         obj.put("mag_z", mag_z);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "MAG RAW";
+    }
 }

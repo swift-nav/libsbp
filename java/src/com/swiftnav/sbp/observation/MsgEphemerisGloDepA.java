@@ -98,4 +98,9 @@ public class MsgEphemerisGloDepA extends SBPMessage {
         obj.put("acc", new JSONArray(acc));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH GLO DEP A";
+    }
 }

@@ -43,6 +43,8 @@ public class auto_check_sbp_logging_MsgPrintDepTest {
         Number value;
         Number expected;
         org.junit.Assert.assertEquals(msg.text, "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR\n");
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -63,6 +65,8 @@ public class auto_check_sbp_logging_MsgPrintDepTest {
         Number value;
         Number expected;
         org.junit.Assert.assertEquals(msg.text, "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR\n");
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -112,6 +116,8 @@ public class auto_check_sbp_logging_MsgPrintDepTest {
         Number value;
         Number expected;
         org.junit.Assert.assertEquals(msg.text, "INFO: Disabling channel 0 (PRN 11)\n");
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -132,6 +138,8 @@ public class auto_check_sbp_logging_MsgPrintDepTest {
         Number value;
         Number expected;
         org.junit.Assert.assertEquals(msg.text, "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR\n");
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -152,6 +160,8 @@ public class auto_check_sbp_logging_MsgPrintDepTest {
         Number value;
         Number expected;
         org.junit.Assert.assertEquals(msg.text, "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR\n");
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -201,5 +211,7 @@ public class auto_check_sbp_logging_MsgPrintDepTest {
         Number value;
         Number expected;
         org.junit.Assert.assertEquals(msg.text, "INFO: Disabling channel 1 (PRN 15)\n");
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

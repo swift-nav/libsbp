@@ -73,4 +73,9 @@ public class MsgBootloaderHandshakeResp extends SBPMessage {
         obj.put("version", version);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "BOOTLOADER HANDSHAKE RESP";
+    }
 }

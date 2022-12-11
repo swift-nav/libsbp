@@ -1725,6 +1725,8 @@ public class auto_check_sbp_observation_MsgObsTest {
             expected = 18L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -1789,5 +1791,7 @@ public class auto_check_sbp_observation_MsgObsTest {
             expected = 2154L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

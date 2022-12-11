@@ -167,4 +167,9 @@ public class MsgSsrFlagHighLevel extends SBPMessage {
         obj.put("use_iono_grid_point_sat_los", use_iono_grid_point_sat_los);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG HIGH LEVEL";
+    }
 }

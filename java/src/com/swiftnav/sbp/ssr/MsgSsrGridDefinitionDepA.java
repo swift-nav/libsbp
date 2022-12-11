@@ -69,4 +69,9 @@ public class MsgSsrGridDefinitionDepA extends SBPMessage {
         obj.put("rle_list", new JSONArray(rle_list));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR GRID DEFINITION DEP A";
+    }
 }

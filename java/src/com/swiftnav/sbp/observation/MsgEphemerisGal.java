@@ -211,4 +211,9 @@ public class MsgEphemerisGal extends SBPMessage {
         obj.put("source", source);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH GAL";
+    }
 }

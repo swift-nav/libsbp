@@ -66,4 +66,9 @@ public class MsgUserData extends SBPMessage {
         obj.put("contents", new JSONArray(contents));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "USER DATA";
+    }
 }

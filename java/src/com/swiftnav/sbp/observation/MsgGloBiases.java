@@ -90,4 +90,9 @@ public class MsgGloBiases extends SBPMessage {
         obj.put("l2p_bias", l2p_bias);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "GLO BIASES";
+    }
 }

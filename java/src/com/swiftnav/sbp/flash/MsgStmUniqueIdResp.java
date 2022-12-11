@@ -67,4 +67,9 @@ public class MsgStmUniqueIdResp extends SBPMessage {
         obj.put("stm_id", new JSONArray(stm_id));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "STM UNIQUE ID RESP";
+    }
 }

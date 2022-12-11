@@ -84,4 +84,9 @@ public class MsgFileioConfigResp extends SBPMessage {
         obj.put("fileio_version", fileio_version);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FILEIO CONFIG RESP";
+    }
 }

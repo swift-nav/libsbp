@@ -66,4 +66,9 @@ public class MsgTrackingStateDepB extends SBPMessage {
         obj.put("states", SBPStruct.toJSONArray(states));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "TRK STATE DEP B";
+    }
 }

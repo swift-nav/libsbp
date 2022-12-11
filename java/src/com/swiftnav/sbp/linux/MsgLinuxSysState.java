@@ -106,4 +106,9 @@ public class MsgLinuxSysState extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX SYS STATE";
+    }
 }

@@ -58,4 +58,9 @@ public class MsgSsrSatelliteApc extends SBPMessage {
         obj.put("apc", SBPStruct.toJSONArray(apc));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR SATELLITE APC";
+    }
 }

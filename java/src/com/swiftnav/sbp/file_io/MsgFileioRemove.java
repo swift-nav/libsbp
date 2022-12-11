@@ -66,4 +66,9 @@ public class MsgFileioRemove extends SBPMessage {
         obj.put("filename", filename);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FILEIO REMOVE";
+    }
 }

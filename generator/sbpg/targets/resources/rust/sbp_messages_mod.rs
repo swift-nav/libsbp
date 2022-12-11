@@ -33,7 +33,7 @@ mod lib {
     pub use crate::time;
     pub use crate::wire_format::{PayloadParseError, WireFormat};
 
-    pub use super::{ConcreteMessage, Sbp, SbpMessage, TryFromSbpError};
+    pub use super::{ConcreteMessage, FriendlyName, Sbp, SbpMessage, TryFromSbpError};
 
     pub use bytes::{Buf, BufMut};
 
@@ -85,6 +85,10 @@ pub trait SbpMessage: WireFormat + Clone + Sized {
     fn gps_time(&self) -> Option<Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         None
     }
+    /// Get friendly name associated with the message.
+    fn friendly_name(&self) -> &'static str {
+        ""
+    }
 }
 
 /// Implemented by messages who's message name and type are known at compile time.
@@ -94,6 +98,11 @@ pub trait ConcreteMessage: SbpMessage + TryFrom<Sbp, Error = TryFromSbpError> {
     const MESSAGE_TYPE: u16;
     /// The message name.
     const MESSAGE_NAME: &'static str;
+}
+
+/// Friendly name representation of Sbp message
+pub trait FriendlyName {
+    fn friendly_name() -> &'static str;
 }
 
 /// The error returned when using [TryFrom] to convert [Sbp] to the wrong message type.
@@ -261,6 +270,19 @@ impl SbpMessage for Sbp {
             ((*- endfor *))
             Sbp::Unknown(msg) => {
                 msg.gps_time()
+            },
+        }
+    }
+
+    fn friendly_name(&self) -> &'static str {
+        match self {
+            ((*- for m in msgs *))
+            Sbp::(((m.msg_name)))(msg) => {
+                msg.friendly_name()
+            },
+            ((*- endfor -*))
+            Sbp::Unknown(msg) => {
+                msg.friendly_name()
             },
         }
     }

@@ -101,4 +101,9 @@ public class MsgVelECEFDepA extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "VEL ECEF DEP A";
+    }
 }

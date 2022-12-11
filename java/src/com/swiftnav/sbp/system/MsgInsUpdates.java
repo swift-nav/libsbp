@@ -102,4 +102,9 @@ public class MsgInsUpdates extends SBPMessage {
         obj.put("zerovel", zerovel);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "INS UPDATES";
+    }
 }

@@ -116,4 +116,9 @@ public class MsgEphemerisGlo extends SBPMessage {
         obj.put("iod", iod);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH GLO";
+    }
 }

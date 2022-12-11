@@ -81,4 +81,9 @@ public class MsgThreadState extends SBPMessage {
         obj.put("stack_free", stack_free);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "THREAD STATE";
+    }
 }

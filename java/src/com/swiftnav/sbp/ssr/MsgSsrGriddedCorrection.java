@@ -86,4 +86,9 @@ public class MsgSsrGriddedCorrection extends SBPMessage {
         obj.put("stec_residuals", SBPStruct.toJSONArray(stec_residuals));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR GRIDDED CORRECTION";
+    }
 }

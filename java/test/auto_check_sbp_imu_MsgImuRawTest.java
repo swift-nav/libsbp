@@ -114,5 +114,7 @@ public class auto_check_sbp_imu_MsgImuRawTest {
             expected = 206L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

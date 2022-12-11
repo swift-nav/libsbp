@@ -2645,5 +2645,7 @@ public class auto_check_sbp_tracking_MsgMeasurementStateTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

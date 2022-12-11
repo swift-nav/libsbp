@@ -182,6 +182,10 @@ class SBP(object):
     fmt = "<SBP (preamble=0x%X, msg_type=0x%X, sender=%s, length=%d, payload=%s, crc=0x%X)>"
     return fmt % p
 
+  def friendly_name(self):
+      """Produces friendly human-readable name for this message"""
+      return ""
+
   def to_binary(self):
     ret = _HEADER_PARSER.pack(SBP_PREAMBLE, self.msg_type, self.sender, len(self.payload))
     ret += self.payload

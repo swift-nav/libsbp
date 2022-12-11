@@ -73,4 +73,9 @@ public class MsgEd25519Certificate extends SBPMessage {
         obj.put("certificate_bytes", new JSONArray(certificate_bytes));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ED25519 CERTIFICATE";
+    }
 }

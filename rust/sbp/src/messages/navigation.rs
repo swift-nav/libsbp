@@ -185,6 +185,12 @@ pub mod msg_age_corrections {
         }
     }
 
+    impl FriendlyName for MsgAgeCorrections {
+        fn friendly_name() -> &'static str {
+            "AGE CORRECTIONS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAgeCorrections {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -302,6 +308,12 @@ pub mod msg_baseline_ecef {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgBaselineEcef {
+        fn friendly_name() -> &'static str {
+            "BASELINE ECEF"
         }
     }
 
@@ -512,6 +524,12 @@ pub mod msg_baseline_ecef_dep_a {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgBaselineEcefDepA {
+        fn friendly_name() -> &'static str {
+            "BASELINE ECEF DEP A"
         }
     }
 
@@ -771,6 +789,12 @@ pub mod msg_baseline_heading_dep_a {
         }
     }
 
+    impl FriendlyName for MsgBaselineHeadingDepA {
+        fn friendly_name() -> &'static str {
+            "BASELINE HEADING DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgBaselineHeadingDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1002,6 +1026,12 @@ pub mod msg_baseline_ned {
         }
     }
 
+    impl FriendlyName for MsgBaselineNed {
+        fn friendly_name() -> &'static str {
+            "BASELINE NED"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgBaselineNed {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1218,6 +1248,12 @@ pub mod msg_baseline_ned_dep_a {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgBaselineNedDepA {
+        fn friendly_name() -> &'static str {
+            "BASELINE NED DEP A"
         }
     }
 
@@ -1474,6 +1510,12 @@ pub mod msg_dops {
         }
     }
 
+    impl FriendlyName for MsgDops {
+        fn friendly_name() -> &'static str {
+            "DOPS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgDops {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1650,6 +1692,12 @@ pub mod msg_dops_dep_a {
         }
     }
 
+    impl FriendlyName for MsgDopsDepA {
+        fn friendly_name() -> &'static str {
+            "DOPS DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgDopsDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1789,6 +1837,12 @@ pub mod msg_gps_time {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgGpsTime {
+        fn friendly_name() -> &'static str {
+            "GPS TIME"
         }
     }
 
@@ -1945,6 +1999,12 @@ pub mod msg_gps_time_dep_a {
         }
     }
 
+    impl FriendlyName for MsgGpsTimeDepA {
+        fn friendly_name() -> &'static str {
+            "GPS TIME DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgGpsTimeDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2076,6 +2136,12 @@ pub mod msg_gps_time_gnss {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgGpsTimeGnss {
+        fn friendly_name() -> &'static str {
+            "GPS TIME GNSS-only"
         }
     }
 
@@ -2327,6 +2393,12 @@ pub mod msg_pose_relative {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgPoseRelative {
+        fn friendly_name() -> &'static str {
+            "POSE RELATIVE"
         }
     }
 
@@ -2661,6 +2733,12 @@ pub mod msg_pos_ecef {
         }
     }
 
+    impl FriendlyName for MsgPosEcef {
+        fn friendly_name() -> &'static str {
+            "POS ECEF"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgPosEcef {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2968,6 +3046,12 @@ pub mod msg_pos_ecef_cov {
         }
     }
 
+    impl FriendlyName for MsgPosEcefCov {
+        fn friendly_name() -> &'static str {
+            "POS ECEF COV"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgPosEcefCov {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -3264,6 +3348,12 @@ pub mod msg_pos_ecef_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgPosEcefCovGnss {
+        fn friendly_name() -> &'static str {
+            "POS ECEF COV GNSS-only"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgPosEcefCovGnss {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -3504,6 +3594,12 @@ pub mod msg_pos_ecef_dep_a {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgPosEcefDepA {
+        fn friendly_name() -> &'static str {
+            "POS ECEF DEP A"
         }
     }
 
@@ -3753,6 +3849,12 @@ pub mod msg_pos_ecef_gnss {
         }
     }
 
+    impl FriendlyName for MsgPosEcefGnss {
+        fn friendly_name() -> &'static str {
+            "POS ECEF GNSS-only"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgPosEcefGnss {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -3979,6 +4081,12 @@ pub mod msg_pos_llh {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgPosLlh {
+        fn friendly_name() -> &'static str {
+            "POS LLH"
         }
     }
 
@@ -4338,6 +4446,12 @@ pub mod msg_pos_llh_acc {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgPosLlhAcc {
+        fn friendly_name() -> &'static str {
+            "POS LLH ACC"
         }
     }
 
@@ -4742,6 +4856,12 @@ pub mod msg_pos_llh_cov {
         }
     }
 
+    impl FriendlyName for MsgPosLlhCov {
+        fn friendly_name() -> &'static str {
+            "POS LLH COV"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgPosLlhCov {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -5038,6 +5158,12 @@ pub mod msg_pos_llh_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgPosLlhCovGnss {
+        fn friendly_name() -> &'static str {
+            "POS LLH COV GNSS-only"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgPosLlhCovGnss {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -5300,6 +5426,12 @@ pub mod msg_pos_llh_dep_a {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgPosLlhDepA {
+        fn friendly_name() -> &'static str {
+            "POS LLH DEP A"
         }
     }
 
@@ -5585,6 +5717,12 @@ pub mod msg_pos_llh_gnss {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgPosLlhGnss {
+        fn friendly_name() -> &'static str {
+            "POS LLH GNSS-only"
         }
     }
 
@@ -6001,6 +6139,12 @@ pub mod msg_protection_level {
         }
     }
 
+    impl FriendlyName for MsgProtectionLevel {
+        fn friendly_name() -> &'static str {
+            "PROTECTION LEVEL"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgProtectionLevel {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -6323,6 +6467,12 @@ pub mod msg_protection_level_dep_a {
         }
     }
 
+    impl FriendlyName for MsgProtectionLevelDepA {
+        fn friendly_name() -> &'static str {
+            "PROTECTION LEVEL DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgProtectionLevelDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -6514,6 +6664,12 @@ pub mod msg_reference_frame_param {
         }
     }
 
+    impl FriendlyName for MsgReferenceFrameParam {
+        fn friendly_name() -> &'static str {
+            "REFERENCE FRAME PARAM"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgReferenceFrameParam {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -6688,6 +6844,12 @@ pub mod msg_utc_leap_second {
         }
     }
 
+    impl FriendlyName for MsgUtcLeapSecond {
+        fn friendly_name() -> &'static str {
+            "UTC LEAP SECOND"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgUtcLeapSecond {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -6854,6 +7016,12 @@ pub mod msg_utc_time {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgUtcTime {
+        fn friendly_name() -> &'static str {
+            "UTC TIME"
         }
     }
 
@@ -7093,6 +7261,12 @@ pub mod msg_utc_time_gnss {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgUtcTimeGnss {
+        fn friendly_name() -> &'static str {
+            "UTC TIME GNSS-only"
         }
     }
 
@@ -7347,6 +7521,12 @@ pub mod msg_vel_body {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgVelBody {
+        fn friendly_name() -> &'static str {
+            "VEL BODY"
         }
     }
 
@@ -7676,6 +7856,12 @@ pub mod msg_vel_cog {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgVelCog {
+        fn friendly_name() -> &'static str {
+            "VEL COG"
         }
     }
 
@@ -8074,6 +8260,12 @@ pub mod msg_vel_ecef {
         }
     }
 
+    impl FriendlyName for MsgVelEcef {
+        fn friendly_name() -> &'static str {
+            "VEL ECEF"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgVelEcef {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -8358,6 +8550,12 @@ pub mod msg_vel_ecef_cov {
         }
     }
 
+    impl FriendlyName for MsgVelEcefCov {
+        fn friendly_name() -> &'static str {
+            "VEL ECEF COV"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgVelEcefCov {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -8634,6 +8832,12 @@ pub mod msg_vel_ecef_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgVelEcefCovGnss {
+        fn friendly_name() -> &'static str {
+            "VEL ECEF COV GNSS-only"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgVelEcefCovGnss {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -8814,6 +9018,12 @@ pub mod msg_vel_ecef_dep_a {
         }
     }
 
+    impl FriendlyName for MsgVelEcefDepA {
+        fn friendly_name() -> &'static str {
+            "VEL ECEF DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgVelEcefDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -8952,6 +9162,12 @@ pub mod msg_vel_ecef_gnss {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgVelEcefGnss {
+        fn friendly_name() -> &'static str {
+            "VEL ECEF GNSS-only"
         }
     }
 
@@ -9160,6 +9376,12 @@ pub mod msg_vel_ned {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgVelNed {
+        fn friendly_name() -> &'static str {
+            "VEL NED"
         }
     }
 
@@ -9454,6 +9676,12 @@ pub mod msg_vel_ned_cov {
         }
     }
 
+    impl FriendlyName for MsgVelNedCov {
+        fn friendly_name() -> &'static str {
+            "VEL NED COV"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgVelNedCov {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -9733,6 +9961,12 @@ pub mod msg_vel_ned_cov_gnss {
         }
     }
 
+    impl FriendlyName for MsgVelNedCovGnss {
+        fn friendly_name() -> &'static str {
+            "VEL NED COV GNSS-only"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgVelNedCovGnss {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -9917,6 +10151,12 @@ pub mod msg_vel_ned_dep_a {
         }
     }
 
+    impl FriendlyName for MsgVelNedDepA {
+        fn friendly_name() -> &'static str {
+            "VEL NED DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgVelNedDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -10063,6 +10303,12 @@ pub mod msg_vel_ned_gnss {
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
+    }
+
+    impl FriendlyName for MsgVelNedGnss {
+        fn friendly_name() -> &'static str {
+            "VEL NED GNSS-only"
         }
     }
 

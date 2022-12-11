@@ -113,4 +113,9 @@ public class MsgImuRaw extends SBPMessage {
         obj.put("gyr_z", gyr_z);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "IMU RAW";
+    }
 }

@@ -133,4 +133,9 @@ public class MsgSolnMetaDepA extends SBPMessage {
         obj.put("sol_in", SBPStruct.toJSONArray(sol_in));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SOLN META DEP A";
+    }
 }

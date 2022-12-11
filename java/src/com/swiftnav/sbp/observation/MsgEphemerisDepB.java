@@ -221,4 +221,9 @@ public class MsgEphemerisDepB extends SBPMessage {
         obj.put("iode", iode);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH DEP B";
+    }
 }

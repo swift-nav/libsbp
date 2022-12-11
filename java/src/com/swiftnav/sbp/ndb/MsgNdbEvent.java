@@ -120,4 +120,9 @@ public class MsgNdbEvent extends SBPMessage {
         obj.put("original_sender", original_sender);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "NDB EVENT";
+    }
 }
