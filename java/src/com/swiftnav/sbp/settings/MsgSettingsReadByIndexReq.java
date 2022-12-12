@@ -66,4 +66,9 @@ public class MsgSettingsReadByIndexReq extends SBPMessage {
         obj.put("index", index);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SETTINGS READ BY IDX REQ";
+    }
 }

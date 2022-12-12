@@ -142,6 +142,12 @@ class MsgImuRaw(SBP):
     self.payload = MsgImuRaw._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "IMU RAW"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -242,6 +248,12 @@ class MsgImuAux(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgImuAux._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "IMU AUX"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

@@ -504,6 +504,8 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -984,6 +986,8 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -1464,6 +1468,8 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -1944,6 +1950,8 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -2424,5 +2432,7 @@ public class auto_check_sbp_tracking_MsgTrackingStateTest {
             expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

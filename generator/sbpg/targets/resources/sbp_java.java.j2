@@ -87,6 +87,11 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
         ((*- endfor *)) ((*- endif *))
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "(((m.friendly_name)))";
+    }
 }
 ((*- endif *))
 ((*- if not m.is_real_message *))

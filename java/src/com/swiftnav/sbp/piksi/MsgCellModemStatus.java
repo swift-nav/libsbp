@@ -79,4 +79,9 @@ public class MsgCellModemStatus extends SBPMessage {
         obj.put("reserved", new JSONArray(reserved));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "CELL MODEM STATUS";
+    }
 }

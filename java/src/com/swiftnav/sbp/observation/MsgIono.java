@@ -107,4 +107,9 @@ public class MsgIono extends SBPMessage {
         obj.put("b3", b3);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "IONO";
+    }
 }

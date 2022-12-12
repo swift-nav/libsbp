@@ -100,4 +100,9 @@ public class MsgSsrFlagSatellites extends SBPMessage {
         obj.put("faulty_sats", new JSONArray(faulty_sats));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR FLAG SATELLITES";
+    }
 }

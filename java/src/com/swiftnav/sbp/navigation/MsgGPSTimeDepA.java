@@ -90,4 +90,9 @@ public class MsgGPSTimeDepA extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "GPS TIME DEP A";
+    }
 }

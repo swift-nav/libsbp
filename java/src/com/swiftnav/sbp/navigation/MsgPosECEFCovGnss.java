@@ -135,4 +135,9 @@ public class MsgPosECEFCovGnss extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "POS ECEF COV GNSS-only";
+    }
 }

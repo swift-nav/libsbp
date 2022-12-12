@@ -72,4 +72,9 @@ public class MsgCsacTelemetryLabels extends SBPMessage {
         obj.put("telemetry_labels", telemetry_labels);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "CSAC TELEMETRY LABELS";
+    }
 }

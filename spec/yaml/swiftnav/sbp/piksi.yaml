@@ -581,6 +581,7 @@ definitions:
 
  - MSG_SPECAN:
     id: 0x0051
+    friendly_name: SPECTRUM ANALYZER
     short_desc: Spectrum analyzer
     desc: >
         Spectrum analyzer packet.

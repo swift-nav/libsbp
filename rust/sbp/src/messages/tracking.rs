@@ -77,6 +77,12 @@ pub mod msg_measurement_state {
         }
     }
 
+    impl FriendlyName for MsgMeasurementState {
+        fn friendly_name() -> &'static str {
+            "MEAS STATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgMeasurementState {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -154,6 +160,12 @@ pub mod msg_tracking_iq {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgTrackingIq {
+        fn friendly_name() -> &'static str {
+            "TRK IQ"
         }
     }
 
@@ -241,6 +253,12 @@ pub mod msg_tracking_iq_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgTrackingIqDepA {
+        fn friendly_name() -> &'static str {
+            "TRK IQ DEP A"
         }
     }
 
@@ -332,6 +350,12 @@ pub mod msg_tracking_iq_dep_b {
         }
     }
 
+    impl FriendlyName for MsgTrackingIqDepB {
+        fn friendly_name() -> &'static str {
+            "TRK IQ DEP B"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgTrackingIqDepB {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -415,6 +439,12 @@ pub mod msg_tracking_state {
         }
     }
 
+    impl FriendlyName for MsgTrackingState {
+        fn friendly_name() -> &'static str {
+            "TRK STATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgTrackingState {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -488,6 +518,12 @@ pub mod msg_tracking_state_dep_a {
         }
     }
 
+    impl FriendlyName for MsgTrackingStateDepA {
+        fn friendly_name() -> &'static str {
+            "TRK STATE DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgTrackingStateDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -558,6 +594,12 @@ pub mod msg_tracking_state_dep_b {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgTrackingStateDepB {
+        fn friendly_name() -> &'static str {
+            "TRK STATE DEP B"
         }
     }
 
@@ -977,6 +1019,12 @@ pub mod msg_tracking_state_detailed_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgTrackingStateDetailedDep {
+        fn friendly_name() -> &'static str {
+            "TRK STATE DETAILED DEP"
         }
     }
 
@@ -1995,6 +2043,12 @@ pub mod msg_tracking_state_detailed_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgTrackingStateDetailedDepA {
+        fn friendly_name() -> &'static str {
+            "TRK STATE DETAILED DEP A"
         }
     }
 

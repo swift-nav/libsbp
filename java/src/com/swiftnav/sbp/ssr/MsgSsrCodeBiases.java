@@ -96,4 +96,9 @@ public class MsgSsrCodeBiases extends SBPMessage {
         obj.put("biases", SBPStruct.toJSONArray(biases));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR CODE BIASES";
+    }
 }

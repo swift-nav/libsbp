@@ -60,4 +60,9 @@ public class MsgResetDep extends SBPMessage {
         JSONObject obj = super.toJSON();
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "RESET DEP";
+    }
 }

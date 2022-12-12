@@ -80,4 +80,9 @@ public class MsgBasePosLLH extends SBPMessage {
         obj.put("height", height);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "BASE POS LLH";
+    }
 }

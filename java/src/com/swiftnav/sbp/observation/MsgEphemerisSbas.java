@@ -88,4 +88,9 @@ public class MsgEphemerisSbas extends SBPMessage {
         obj.put("a_gf1", a_gf1);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH SBAS";
+    }
 }

@@ -95,4 +95,9 @@ public class MsgDopsDepA extends SBPMessage {
         obj.put("vdop", vdop);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "DOPS DEP A";
+    }
 }

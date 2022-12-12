@@ -257,5 +257,7 @@ public class auto_check_sbp_navigation_MsgPoseRelativeTest {
             expected = 622997694L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

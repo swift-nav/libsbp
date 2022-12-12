@@ -86,4 +86,9 @@ public class MsgAcqResultDepA extends SBPMessage {
         obj.put("prn", prn);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ACQ RESULT DEP A";
+    }
 }

@@ -72,4 +72,9 @@ public class MsgObsDepA extends SBPMessage {
         obj.put("obs", SBPStruct.toJSONArray(obs));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "OBS DEP A";
+    }
 }

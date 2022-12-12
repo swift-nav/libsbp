@@ -61,4 +61,9 @@ public class MsgCwStart extends SBPMessage {
         JSONObject obj = super.toJSON();
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "CW START";
+    }
 }

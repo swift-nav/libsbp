@@ -95,4 +95,9 @@ public class MsgGroupDelayDepA extends SBPMessage {
         obj.put("isc_l2c", isc_l2c);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "GROUP DELAY DEP A";
+    }
 }

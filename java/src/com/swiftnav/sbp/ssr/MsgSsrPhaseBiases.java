@@ -122,4 +122,9 @@ public class MsgSsrPhaseBiases extends SBPMessage {
         obj.put("biases", SBPStruct.toJSONArray(biases));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR PHASE BIASES";
+    }
 }

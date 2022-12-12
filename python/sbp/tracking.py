@@ -441,6 +441,12 @@ class MsgTrackingStateDetailedDepA(SBP):
     self.payload = MsgTrackingStateDetailedDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK STATE DETAILED DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -636,6 +642,12 @@ class MsgTrackingStateDetailedDep(SBP):
     self.payload = MsgTrackingStateDetailedDep._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK STATE DETAILED DEP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -727,6 +739,12 @@ class MsgTrackingState(SBP):
     self.payload = MsgTrackingState._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK STATE"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -817,6 +835,12 @@ class MsgMeasurementState(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgMeasurementState._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "MEAS STATE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -918,6 +942,12 @@ class MsgTrackingIq(SBP):
     self.payload = MsgTrackingIq._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK IQ"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1018,6 +1048,12 @@ class MsgTrackingIqDepB(SBP):
     self.payload = MsgTrackingIqDepB._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK IQ DEP B"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1117,6 +1153,12 @@ class MsgTrackingIqDepA(SBP):
     self.payload = MsgTrackingIqDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK IQ DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1206,6 +1248,12 @@ class MsgTrackingStateDepA(SBP):
     self.payload = MsgTrackingStateDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK STATE DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -1294,6 +1342,12 @@ class MsgTrackingStateDepB(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgTrackingStateDepB._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "TRK STATE DEP B"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

@@ -83,4 +83,9 @@ public class MsgSsrCodePhaseBiasesBounds extends SBPMessage {
         obj.put("satellites_signals", SBPStruct.toJSONArray(satellites_signals));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR CODE PHASE BIASES BOUNDS";
+    }
 }

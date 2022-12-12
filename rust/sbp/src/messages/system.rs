@@ -80,6 +80,12 @@ pub mod msg_csac_telemetry {
         }
     }
 
+    impl FriendlyName for MsgCsacTelemetry {
+        fn friendly_name() -> &'static str {
+            "CSAC TELEMETRY"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgCsacTelemetry {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -158,6 +164,12 @@ pub mod msg_csac_telemetry_labels {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgCsacTelemetryLabels {
+        fn friendly_name() -> &'static str {
+            "CSAC TELEMETRY LABELS"
         }
     }
 
@@ -260,6 +272,12 @@ pub mod msg_dgnss_status {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgDgnssStatus {
+        fn friendly_name() -> &'static str {
+            "DGNSS STATUS"
         }
     }
 
@@ -393,6 +411,12 @@ pub mod msg_gnss_time_offset {
         }
     }
 
+    impl FriendlyName for MsgGnssTimeOffset {
+        fn friendly_name() -> &'static str {
+            "GNSS TIME OFFSET"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgGnssTimeOffset {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -502,6 +526,12 @@ pub mod msg_group_meta {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgGroupMeta {
+        fn friendly_name() -> &'static str {
+            "GROUP META"
         }
     }
 
@@ -744,6 +774,12 @@ pub mod msg_heartbeat {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgHeartbeat {
+        fn friendly_name() -> &'static str {
+            "HEARTBEAT"
         }
     }
 
@@ -1073,6 +1109,12 @@ pub mod msg_ins_status {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgInsStatus {
+        fn friendly_name() -> &'static str {
+            "INS STATUS"
         }
     }
 
@@ -1686,6 +1728,12 @@ pub mod msg_ins_updates {
         }
     }
 
+    impl FriendlyName for MsgInsUpdates {
+        fn friendly_name() -> &'static str {
+            "INS UPDATES"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgInsUpdates {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1819,6 +1867,12 @@ pub mod msg_pps_time {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgPpsTime {
+        fn friendly_name() -> &'static str {
+            "PPS TIME"
         }
     }
 
@@ -1973,6 +2027,12 @@ pub mod msg_sensor_aid_event {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSensorAidEvent {
+        fn friendly_name() -> &'static str {
+            "SENSOR AID EVENT"
         }
     }
 
@@ -2170,6 +2230,12 @@ pub mod msg_startup {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgStartup {
+        fn friendly_name() -> &'static str {
+            "STARTUP"
         }
     }
 
@@ -2394,6 +2460,12 @@ pub mod msg_status_journal {
         }
     }
 
+    impl FriendlyName for MsgStatusJournal {
+        fn friendly_name() -> &'static str {
+            "STATUS JOURNAL"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgStatusJournal {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2584,6 +2656,12 @@ pub mod msg_status_report {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgStatusReport {
+        fn friendly_name() -> &'static str {
+            "STATUS REPORT"
         }
     }
 

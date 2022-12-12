@@ -149,6 +149,12 @@ pub mod msg_almanac {
         }
     }
 
+    impl FriendlyName for MsgAlmanac {
+        fn friendly_name() -> &'static str {
+            "ALMANAC"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAlmanac {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -222,6 +228,12 @@ pub mod msg_cell_modem_status {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgCellModemStatus {
+        fn friendly_name() -> &'static str {
+            "CELL MODEM STATUS"
         }
     }
 
@@ -311,6 +323,12 @@ pub mod msg_command_output {
         }
     }
 
+    impl FriendlyName for MsgCommandOutput {
+        fn friendly_name() -> &'static str {
+            "COMMAND OUTPUT"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgCommandOutput {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -389,6 +407,12 @@ pub mod msg_command_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgCommandReq {
+        fn friendly_name() -> &'static str {
+            "COMMAND REQ"
         }
     }
 
@@ -472,6 +496,12 @@ pub mod msg_command_resp {
         }
     }
 
+    impl FriendlyName for MsgCommandResp {
+        fn friendly_name() -> &'static str {
+            "COMMAND RESP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgCommandResp {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -546,6 +576,12 @@ pub mod msg_cw_results {
         }
     }
 
+    impl FriendlyName for MsgCwResults {
+        fn friendly_name() -> &'static str {
+            "CW RESULTS"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgCwResults {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -610,6 +646,12 @@ pub mod msg_cw_start {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgCwStart {
+        fn friendly_name() -> &'static str {
+            "CW START"
         }
     }
 
@@ -692,6 +734,12 @@ pub mod msg_device_monitor {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgDeviceMonitor {
+        fn friendly_name() -> &'static str {
+            "DEVICE MONITOR"
         }
     }
 
@@ -793,6 +841,12 @@ pub mod msg_front_end_gain {
         }
     }
 
+    impl FriendlyName for MsgFrontEndGain {
+        fn friendly_name() -> &'static str {
+            "FRONT END GAIN"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgFrontEndGain {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -870,6 +924,12 @@ pub mod msg_iar_state {
         }
     }
 
+    impl FriendlyName for MsgIarState {
+        fn friendly_name() -> &'static str {
+            "IAR STATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgIarState {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -937,6 +997,12 @@ pub mod msg_init_base_dep {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgInitBaseDep {
+        fn friendly_name() -> &'static str {
+            "INIT BASE DEP"
         }
     }
 
@@ -1039,6 +1105,12 @@ pub mod msg_mask_satellite {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgMaskSatellite {
+        fn friendly_name() -> &'static str {
+            "MASK SATELLITE"
         }
     }
 
@@ -1214,6 +1286,12 @@ pub mod msg_mask_satellite_dep {
         }
     }
 
+    impl FriendlyName for MsgMaskSatelliteDep {
+        fn friendly_name() -> &'static str {
+            "MASK SATELLITE DEP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgMaskSatelliteDep {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1353,6 +1431,12 @@ pub mod msg_network_bandwidth_usage {
         }
     }
 
+    impl FriendlyName for MsgNetworkBandwidthUsage {
+        fn friendly_name() -> &'static str {
+            "NET BANDWIDTH USAGE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgNetworkBandwidthUsage {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1421,6 +1505,12 @@ pub mod msg_network_state_req {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgNetworkStateReq {
+        fn friendly_name() -> &'static str {
+            "NET STATE REQ"
         }
     }
 
@@ -1734,6 +1824,12 @@ pub mod msg_network_state_resp {
         }
     }
 
+    impl FriendlyName for MsgNetworkStateResp {
+        fn friendly_name() -> &'static str {
+            "NET STATE RESP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgNetworkStateResp {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1851,6 +1947,12 @@ pub mod msg_reset {
         }
     }
 
+    impl FriendlyName for MsgReset {
+        fn friendly_name() -> &'static str {
+            "RESET"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgReset {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1953,6 +2055,12 @@ pub mod msg_reset_dep {
         }
     }
 
+    impl FriendlyName for MsgResetDep {
+        fn friendly_name() -> &'static str {
+            "RESET DEP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgResetDep {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2038,6 +2146,12 @@ pub mod msg_reset_filters {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgResetFilters {
+        fn friendly_name() -> &'static str {
+            "RESET FILTERS"
         }
     }
 
@@ -2147,6 +2261,12 @@ pub mod msg_set_time {
         }
     }
 
+    impl FriendlyName for MsgSetTime {
+        fn friendly_name() -> &'static str {
+            "SET TIME"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSetTime {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2230,6 +2350,12 @@ pub mod msg_specan {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSpecan {
+        fn friendly_name() -> &'static str {
+            "SPECAN"
         }
     }
 
@@ -2348,6 +2474,12 @@ pub mod msg_specan_dep {
         }
     }
 
+    impl FriendlyName for MsgSpecanDep {
+        fn friendly_name() -> &'static str {
+            "SPECAN DEP"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgSpecanDep {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2454,6 +2586,12 @@ pub mod msg_thread_state {
         }
     }
 
+    impl FriendlyName for MsgThreadState {
+        fn friendly_name() -> &'static str {
+            "THREAD STATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgThreadState {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2554,6 +2692,12 @@ pub mod msg_uart_state {
         }
     }
 
+    impl FriendlyName for MsgUartState {
+        fn friendly_name() -> &'static str {
+            "UART STATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgUartState {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -2649,6 +2793,12 @@ pub mod msg_uart_state_depa {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgUartStateDepa {
+        fn friendly_name() -> &'static str {
+            "UART STATE DEPA"
         }
     }
 

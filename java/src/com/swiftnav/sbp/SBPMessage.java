@@ -91,6 +91,10 @@ public class SBPMessage {
         assert false : "Subclass must override build()";
     }
 
+    public String getFriendlyName() {
+        return "";
+    }
+
     /** There is no exposed access to this class outside of libsbp. */
     @SuppressWarnings("unchecked")
     public class Parser {

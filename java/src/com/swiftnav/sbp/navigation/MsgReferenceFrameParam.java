@@ -173,4 +173,9 @@ public class MsgReferenceFrameParam extends SBPMessage {
         obj.put("dot_scale", dot_scale);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "REFERENCE FRAME PARAM";
+    }
 }

@@ -101,4 +101,9 @@ public class MsgVelECEFGnss extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "VEL ECEF GNSS-only";
+    }
 }

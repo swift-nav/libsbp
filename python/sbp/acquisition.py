@@ -291,6 +291,12 @@ class MsgAcqResult(SBP):
     self.payload = MsgAcqResult._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ACQ RESULT"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -394,6 +400,12 @@ class MsgAcqResultDepC(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAcqResultDepC._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ACQ RESULT DEP C"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -499,6 +511,12 @@ class MsgAcqResultDepB(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAcqResultDepB._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ACQ RESULT DEP B"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -606,6 +624,12 @@ class MsgAcqResultDepA(SBP):
     self.payload = MsgAcqResultDepA._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ACQ RESULT DEP A"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -696,6 +720,12 @@ class MsgAcqSvProfile(SBP):
     self.payload = MsgAcqSvProfile._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ACQ SV PROFILE"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -784,6 +814,12 @@ class MsgAcqSvProfileDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAcqSvProfileDep._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ACQ SV PROFILE DEP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

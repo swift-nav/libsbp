@@ -67,4 +67,9 @@ public class MsgAcqSvProfile extends SBPMessage {
         obj.put("acq_sv_profile", SBPStruct.toJSONArray(acq_sv_profile));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ACQ SV PROFILE";
+    }
 }

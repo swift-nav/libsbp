@@ -82,4 +82,9 @@ public class MsgFileioReadDirReq extends SBPMessage {
         obj.put("dirname", dirname);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FILEIO READ DIR REQ";
+    }
 }

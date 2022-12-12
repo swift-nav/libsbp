@@ -1334,5 +1334,7 @@ public class auto_check_sbp_signing_MsgEd25519SignatureTest {
             expected = 1L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

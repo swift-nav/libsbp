@@ -64,4 +64,9 @@ public class MsgPrintDep extends SBPMessage {
         obj.put("text", text);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "PRINT DEP";
+    }
 }

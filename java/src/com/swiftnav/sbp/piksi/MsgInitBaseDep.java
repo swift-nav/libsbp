@@ -60,4 +60,9 @@ public class MsgInitBaseDep extends SBPMessage {
         JSONObject obj = super.toJSON();
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "INIT BASE DEP";
+    }
 }

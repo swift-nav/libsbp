@@ -72,4 +72,9 @@ public class MsgFlashErase extends SBPMessage {
         obj.put("sector_num", sector_num);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FLASH ERASE";
+    }
 }

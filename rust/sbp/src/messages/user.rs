@@ -61,6 +61,12 @@ pub mod msg_user_data {
         }
     }
 
+    impl FriendlyName for MsgUserData {
+        fn friendly_name() -> &'static str {
+            "USER DATA"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgUserData {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {

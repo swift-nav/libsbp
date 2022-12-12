@@ -66,4 +66,9 @@ public class MsgResetFilters extends SBPMessage {
         obj.put("filter", filter);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "RESET FILTERS";
+    }
 }

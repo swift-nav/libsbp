@@ -108,4 +108,9 @@ public class MsgSensorAidEvent extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SENSOR AID EVENT";
+    }
 }

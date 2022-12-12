@@ -63,4 +63,9 @@ public class MsgGnssCapb extends SBPMessage {
         obj.put("gc", gc.toJSON());
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "GNSS CAPB";
+    }
 }

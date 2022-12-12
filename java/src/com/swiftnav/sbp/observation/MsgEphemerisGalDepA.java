@@ -204,4 +204,9 @@ public class MsgEphemerisGalDepA extends SBPMessage {
         obj.put("iodc", iodc);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "EPH GAL DEP A";
+    }
 }

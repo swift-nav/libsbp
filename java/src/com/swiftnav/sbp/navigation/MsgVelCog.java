@@ -113,4 +113,9 @@ public class MsgVelCog extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "VEL COG";
+    }
 }

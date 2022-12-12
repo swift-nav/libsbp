@@ -140,4 +140,9 @@ public class MsgSsrOrbitClockDepA extends SBPMessage {
         obj.put("c2", c2);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR ORBIT CLOCK DEP A";
+    }
 }

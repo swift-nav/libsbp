@@ -108,4 +108,9 @@ public class MsgVelNED extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "VEL NED";
+    }
 }

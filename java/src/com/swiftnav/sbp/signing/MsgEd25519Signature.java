@@ -91,4 +91,9 @@ public class MsgEd25519Signature extends SBPMessage {
         obj.put("signed_messages", new JSONArray(signed_messages));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ED25519 SIGNATURE";
+    }
 }

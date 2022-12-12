@@ -108,6 +108,8 @@ public class auto_check_sbp_navigation_MsgBaselineECEFTest {
             expected = 631798L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -192,6 +194,8 @@ public class auto_check_sbp_navigation_MsgBaselineECEFTest {
             expected = 631434L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -276,6 +280,8 @@ public class auto_check_sbp_navigation_MsgBaselineECEFTest {
             expected = 631188L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -377,6 +383,8 @@ public class auto_check_sbp_navigation_MsgBaselineECEFTest {
             expected = 630849L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -461,5 +469,7 @@ public class auto_check_sbp_navigation_MsgBaselineECEFTest {
             expected = 630626L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

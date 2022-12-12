@@ -82,4 +82,9 @@ public class MsgLinuxProcessFdCount extends SBPMessage {
         obj.put("cmdline", cmdline);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX PROCESS FD COUNT";
+    }
 }

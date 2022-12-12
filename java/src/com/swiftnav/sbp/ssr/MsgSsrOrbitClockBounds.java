@@ -94,4 +94,9 @@ public class MsgSsrOrbitClockBounds extends SBPMessage {
         obj.put("orbit_clock_bounds", SBPStruct.toJSONArray(orbit_clock_bounds));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR ORBIT CLOCK BOUNDS";
+    }
 }

@@ -99,4 +99,9 @@ public class MsgWheeltick extends SBPMessage {
         obj.put("ticks", ticks);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "WHEELTICK";
+    }
 }

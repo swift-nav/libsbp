@@ -110,4 +110,9 @@ public class MsgPosLLH extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "POS LLH";
+    }
 }

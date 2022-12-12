@@ -85,4 +85,9 @@ public class MsgSbasRaw extends SBPMessage {
         obj.put("data", new JSONArray(data));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SBAS RAW";
+    }
 }

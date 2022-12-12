@@ -70,4 +70,9 @@ public class MsgSettingsWrite extends SBPMessage {
         obj.put("setting", setting);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SETTINGS WRITE";
+    }
 }

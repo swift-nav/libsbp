@@ -66,4 +66,9 @@ public class MsgM25FlashWriteStatus extends SBPMessage {
         obj.put("status", new JSONArray(status));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "M25 FLASH WRITE STATUS";
+    }
 }

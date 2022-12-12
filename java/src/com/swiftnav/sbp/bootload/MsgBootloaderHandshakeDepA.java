@@ -66,4 +66,9 @@ public class MsgBootloaderHandshakeDepA extends SBPMessage {
         obj.put("handshake", new JSONArray(handshake));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "BOOTLOADER HANDSHAKE DEP A";
+    }
 }

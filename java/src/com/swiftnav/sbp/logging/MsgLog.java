@@ -71,4 +71,9 @@ public class MsgLog extends SBPMessage {
         obj.put("text", text);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LOG";
+    }
 }

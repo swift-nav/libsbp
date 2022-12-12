@@ -120,6 +120,12 @@ class MsgFlashProgram(SBP):
     self.payload = MsgFlashProgram._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FLASH PROGRAM"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -211,6 +217,12 @@ class MsgFlashDone(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgFlashDone._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FLASH DONE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -316,6 +328,12 @@ class MsgFlashReadReq(SBP):
     self.payload = MsgFlashReadReq._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FLASH READ REQ"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -420,6 +438,12 @@ class MsgFlashReadResp(SBP):
     self.payload = MsgFlashReadResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FLASH READ RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -517,6 +541,12 @@ class MsgFlashErase(SBP):
     self.payload = MsgFlashErase._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "FLASH ERASE"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -607,6 +637,12 @@ class MsgStmFlashLockSector(SBP):
     self.payload = MsgStmFlashLockSector._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "STM FLASH LOCK SECTOR"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -696,6 +732,12 @@ class MsgStmFlashUnlockSector(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgStmFlashUnlockSector._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "STM FLASH UNLOCK SECTOR"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
@@ -834,6 +876,12 @@ class MsgStmUniqueIdResp(SBP):
     self.payload = MsgStmUniqueIdResp._parser.build(c)
     return self.pack()
 
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "STM UNIQUE ID RESP"
+
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
@@ -923,6 +971,12 @@ class MsgM25FlashWriteStatus(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgM25FlashWriteStatus._parser.build(c)
     return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "M25 FLASH WRITE STATUS"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.

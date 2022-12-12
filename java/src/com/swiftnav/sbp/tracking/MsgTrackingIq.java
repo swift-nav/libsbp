@@ -78,4 +78,9 @@ public class MsgTrackingIq extends SBPMessage {
         obj.put("corrs", SBPStruct.toJSONArray(corrs));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "TRK IQ";
+    }
 }

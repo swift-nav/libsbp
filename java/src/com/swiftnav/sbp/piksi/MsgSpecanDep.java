@@ -102,4 +102,9 @@ public class MsgSpecanDep extends SBPMessage {
         obj.put("amplitude_value", new JSONArray(amplitude_value));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SPECAN DEP";
+    }
 }

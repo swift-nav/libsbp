@@ -113,4 +113,9 @@ public class MsgUtcTimeGnss extends SBPMessage {
         obj.put("ns", ns);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "UTC TIME GNSS-only";
+    }
 }

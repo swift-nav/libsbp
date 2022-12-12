@@ -109,4 +109,9 @@ public class MsgNetworkStateResp extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "NET STATE RESP";
+    }
 }

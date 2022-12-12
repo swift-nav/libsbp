@@ -49,5 +49,7 @@ public class auto_check_sbp_file_io_MsgFileioWriteRespTest {
             expected = 202L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

@@ -71,4 +71,9 @@ public class MsgSvConfigurationGPSDep extends SBPMessage {
         obj.put("l2c_mask", l2c_mask);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SV CONFIGURATION GPS DEP";
+    }
 }

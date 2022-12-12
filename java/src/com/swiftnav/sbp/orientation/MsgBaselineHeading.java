@@ -85,4 +85,9 @@ public class MsgBaselineHeading extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "BASELINE HEADING";
+    }
 }

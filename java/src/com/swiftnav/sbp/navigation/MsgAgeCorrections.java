@@ -70,4 +70,9 @@ public class MsgAgeCorrections extends SBPMessage {
         obj.put("age", age);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "AGE CORRECTIONS";
+    }
 }

@@ -76,4 +76,9 @@ public class MsgLinuxProcessFdSummary extends SBPMessage {
         obj.put("most_opened", most_opened);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX PROCESS FD SUMMARY";
+    }
 }

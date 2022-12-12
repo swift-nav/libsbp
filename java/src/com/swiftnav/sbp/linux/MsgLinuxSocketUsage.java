@@ -89,4 +89,9 @@ public class MsgLinuxSocketUsage extends SBPMessage {
         obj.put("socket_type_counts", new JSONArray(socket_type_counts));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX SOCKET USAGE";
+    }
 }

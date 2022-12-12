@@ -72,4 +72,9 @@ public class MsgCommandOutput extends SBPMessage {
         obj.put("line", line);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "COMMAND OUTPUT";
+    }
 }

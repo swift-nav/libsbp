@@ -122,4 +122,9 @@ public class MsgAlmanacGPSDep extends SBPMessage {
         obj.put("af1", af1);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ALMANAC GPS DEP";
+    }
 }

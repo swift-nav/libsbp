@@ -202,4 +202,9 @@ public class MsgTrackingStateDetailedDepA extends SBPMessage {
         obj.put("misc_flags", misc_flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "TRK STATE DETAILED DEP A";
+    }
 }

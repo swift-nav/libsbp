@@ -65,4 +65,9 @@ public class MsgStmFlashUnlockSector extends SBPMessage {
         obj.put("sector", sector);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "STM FLASH UNLOCK SECTOR";
+    }
 }

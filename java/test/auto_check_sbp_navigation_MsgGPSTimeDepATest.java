@@ -87,6 +87,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -150,6 +152,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -213,6 +217,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -276,6 +282,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -339,6 +347,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1787L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -402,6 +412,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -465,6 +477,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -528,6 +542,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -591,6 +607,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -654,6 +672,8 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -717,5 +737,7 @@ public class auto_check_sbp_navigation_MsgGPSTimeDepATest {
             expected = 1838L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

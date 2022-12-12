@@ -173,4 +173,9 @@ public class MsgSsrTileDefinition extends SBPMessage {
         obj.put("bitmask", bitmask);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "SSR TILE DEFINITION";
+    }
 }

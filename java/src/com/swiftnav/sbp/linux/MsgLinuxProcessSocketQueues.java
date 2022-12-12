@@ -117,4 +117,9 @@ public class MsgLinuxProcessSocketQueues extends SBPMessage {
         obj.put("cmdline", cmdline);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "LINUX PROCESS SOCKET QUEUES";
+    }
 }

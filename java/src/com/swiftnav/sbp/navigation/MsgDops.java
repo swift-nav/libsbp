@@ -102,4 +102,9 @@ public class MsgDops extends SBPMessage {
         obj.put("flags", flags);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "DOPS";
+    }
 }

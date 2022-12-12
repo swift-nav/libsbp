@@ -105,6 +105,12 @@ pub mod msg_linux_cpu_state {
         }
     }
 
+    impl FriendlyName for MsgLinuxCpuState {
+        fn friendly_name() -> &'static str {
+            "LINUX CPU STATE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgLinuxCpuState {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -244,6 +250,12 @@ pub mod msg_linux_cpu_state_dep_a {
         }
     }
 
+    impl FriendlyName for MsgLinuxCpuStateDepA {
+        fn friendly_name() -> &'static str {
+            "LINUX CPU STATE DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgLinuxCpuStateDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -364,6 +376,12 @@ pub mod msg_linux_mem_state {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgLinuxMemState {
+        fn friendly_name() -> &'static str {
+            "LINUX MEM STATE"
         }
     }
 
@@ -506,6 +524,12 @@ pub mod msg_linux_mem_state_dep_a {
         }
     }
 
+    impl FriendlyName for MsgLinuxMemStateDepA {
+        fn friendly_name() -> &'static str {
+            "LINUX MEM STATE DEP A"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgLinuxMemStateDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -603,6 +627,12 @@ pub mod msg_linux_process_fd_count {
         }
     }
 
+    impl FriendlyName for MsgLinuxProcessFdCount {
+        fn friendly_name() -> &'static str {
+            "LINUX PROCESS FD COUNT"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgLinuxProcessFdCount {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -691,6 +721,12 @@ pub mod msg_linux_process_fd_summary {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgLinuxProcessFdSummary {
+        fn friendly_name() -> &'static str {
+            "LINUX PROCESS FD SUMMARY"
         }
     }
 
@@ -785,6 +821,12 @@ pub mod msg_linux_process_socket_counts {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgLinuxProcessSocketCounts {
+        fn friendly_name() -> &'static str {
+            "LINUX PROCESS SOCKET COUNTS"
         }
     }
 
@@ -906,6 +948,12 @@ pub mod msg_linux_process_socket_queues {
         }
     }
 
+    impl FriendlyName for MsgLinuxProcessSocketQueues {
+        fn friendly_name() -> &'static str {
+            "LINUX PROCESS SOCKET QUEUES"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgLinuxProcessSocketQueues {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
@@ -1016,6 +1064,12 @@ pub mod msg_linux_socket_usage {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgLinuxSocketUsage {
+        fn friendly_name() -> &'static str {
+            "LINUX SOCKET USAGE"
         }
     }
 
@@ -1138,6 +1192,12 @@ pub mod msg_linux_sys_state {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgLinuxSysState {
+        fn friendly_name() -> &'static str {
+            "LINUX SYS STATE"
         }
     }
 
@@ -1283,6 +1343,12 @@ pub mod msg_linux_sys_state_dep_a {
         }
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgLinuxSysStateDepA {
+        fn friendly_name() -> &'static str {
+            "LINUX SYS STATE DEP A"
         }
     }
 

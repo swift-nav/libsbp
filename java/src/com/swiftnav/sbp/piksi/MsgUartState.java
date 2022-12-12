@@ -94,4 +94,9 @@ public class MsgUartState extends SBPMessage {
         obj.put("obs_period", obs_period.toJSON());
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "UART STATE";
+    }
 }

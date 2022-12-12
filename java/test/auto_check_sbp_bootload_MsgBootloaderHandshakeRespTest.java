@@ -59,6 +59,8 @@ public class auto_check_sbp_bootload_MsgBootloaderHandshakeRespTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.version, "v1.2\n");
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 
     @Test
@@ -115,5 +117,7 @@ public class auto_check_sbp_bootload_MsgBootloaderHandshakeRespTest {
             expected = 50L;
             org.junit.Assert.assertEquals(value, expected);
         }
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

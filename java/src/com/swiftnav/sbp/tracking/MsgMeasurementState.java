@@ -67,4 +67,9 @@ public class MsgMeasurementState extends SBPMessage {
         obj.put("states", SBPStruct.toJSONArray(states));
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "MEAS STATE";
+    }
 }

@@ -133,5 +133,7 @@ public class auto_check_sbp_orientation_MsgOrientQuatTest {
             org.junit.Assert.assertEquals(value, expected);
         }
         org.junit.Assert.assertEquals(msg.z_accuracy, 3.00000000000000000e+00, DELTA);
+
+        org.junit.Assert.assertNotEquals("", msg.getFriendlyName());
     }
 }

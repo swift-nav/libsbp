@@ -80,4 +80,9 @@ public class MsgFlashReadReq extends SBPMessage {
         obj.put("addr_len", addr_len);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "FLASH READ REQ";
+    }
 }
