@@ -93,4 +93,9 @@ public class MsgAcknowledge extends SBPMessage {
         obj.put("solution_id", solution_id);
         return obj;
     }
+
+    @Override
+    public String getFriendlyName() {
+        return "ACKNOWLEDGE";
+    }
 }
