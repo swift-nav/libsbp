@@ -294,4 +294,29 @@
  */
 #define SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS_ENCODED_OVERHEAD 17u
 
+#define SBP_MSG_ACKNOWLEDGE 0x0BD2
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK (0xffu)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT (0u)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT) & \
+        SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK))
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_SET(flags, val)                      \
+  do {                                                                     \
+    (flags) = (u8)((flags & (~(SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK          \
+                               << SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT))) | \
+                   (((val) & (SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK))         \
+                    << (SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_OK (0)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_OUT_OF_COVERAGE (1)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_FORBIDDEN (2)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_INVALID_REQUEST (3)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_INVALID_AREA_ID (4)
+/**
+ * Encoded length of sbp_msg_acknowledge_t (V4 API) and
+ * msg_acknowledge_t (legacy API)
+ */
+#define SBP_MSG_ACKNOWLEDGE_ENCODED_LEN 11u
+
 #endif /* LIBSBP_INTEGRITY_MACROS_H */

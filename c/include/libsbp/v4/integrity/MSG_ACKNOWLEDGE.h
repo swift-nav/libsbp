@@ -11,12 +11,12 @@
  */
 
 /*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/skylark.yaml
+ * Automatically generated from yaml/swiftnav/sbp/integrity.yaml
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SKYLARK_MSG_ACKNOWLEDGE_H
-#define LIBSBP_V4_SKYLARK_MSG_ACKNOWLEDGE_H
+#ifndef LIBSBP_V4_INTEGRITY_MSG_ACKNOWLEDGE_H
+#define LIBSBP_V4_INTEGRITY_MSG_ACKNOWLEDGE_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -26,7 +26,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/skylark_macros.h>
+#include <libsbp/integrity_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -199,4 +199,4 @@ static inline bool operator>=(const sbp_msg_acknowledge_t &lhs,
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SKYLARK_MSG_ACKNOWLEDGE_H */
+#endif /* LIBSBP_V4_INTEGRITY_MSG_ACKNOWLEDGE_H */

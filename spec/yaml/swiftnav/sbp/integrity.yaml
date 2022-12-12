@@ -277,3 +277,37 @@ definitions:
             fill: SvId
             size_fn: n_faulty_los
             desc: List of faulty LOS
+
+  - MSG_ACKNOWLEDGE:
+      id: 0x0BD2
+      short_desc: Acknowledgement message in response to a request for corrections
+      fields:
+        - request_id:
+            type: u8
+            desc: Echo of the request ID field from the corresponding CRA message, or 255 if no request ID was provided.
+        - area_id:
+            type: u32
+            desc: Echo of the Area ID field from the corresponding CRA message.
+        - response_code:
+            type: u8
+            desc: Reported status of the request.
+            fields:
+              - 0-7:
+                  desc: Response code
+                  values:
+                    - 0: Ok
+                    - 1: Out of coverage
+                    - 2: Forbidden
+                    - 3: Invalid request
+                    - 4: Invalid area id
+        - correction_mask_on_demand:
+            type: u16
+            desc: >
+              Contains the message group(s) that will be sent in response from the corresponding CRA correction mask.
+              An echo of the correction mask field from the corresponding CRA message.
+        - correction_mask_stream:
+            type: u16
+            desc: For future expansion. Always set to 0.
+        - solution_id:
+            type: u8
+            desc: The solution ID of the instance providing the corrections.

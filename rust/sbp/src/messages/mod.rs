@@ -27,7 +27,6 @@ pub mod piksi;
 pub mod sbas;
 pub mod settings;
 pub mod signing;
-pub mod skylark;
 pub mod solution_meta;
 pub mod ssr;
 pub mod system;
@@ -69,6 +68,7 @@ use self::flash::msg_stm_unique_id_req::MsgStmUniqueIdReq;
 use self::flash::msg_stm_unique_id_resp::MsgStmUniqueIdResp;
 use self::imu::msg_imu_aux::MsgImuAux;
 use self::imu::msg_imu_raw::MsgImuRaw;
+use self::integrity::msg_acknowledge::MsgAcknowledge;
 use self::integrity::msg_ssr_flag_high_level::MsgSsrFlagHighLevel;
 use self::integrity::msg_ssr_flag_iono_grid_point_sat_los::MsgSsrFlagIonoGridPointSatLos;
 use self::integrity::msg_ssr_flag_iono_grid_points::MsgSsrFlagIonoGridPoints;
@@ -213,7 +213,6 @@ use self::settings::msg_settings_write_resp::MsgSettingsWriteResp;
 use self::signing::msg_ed25519_certificate::MsgEd25519Certificate;
 use self::signing::msg_ed25519_signature::MsgEd25519Signature;
 use self::signing::msg_ed25519_signature_dep::MsgEd25519SignatureDep;
-use self::skylark::msg_acknowledge::MsgAcknowledge;
 use self::solution_meta::msg_soln_meta::MsgSolnMeta;
 use self::solution_meta::msg_soln_meta_dep_a::MsgSolnMetaDepA;
 use self::ssr::msg_ssr_code_biases::MsgSsrCodeBiases;
@@ -735,14 +734,14 @@ pub enum Sbp {
     MsgSsrFlagIonoTileSatLos(MsgSsrFlagIonoTileSatLos),
     /// List of all the grid points to satellite which are faulty
     MsgSsrFlagIonoGridPointSatLos(MsgSsrFlagIonoGridPointSatLos),
+    /// Acknowledgement message in response to a request for corrections
+    MsgAcknowledge(MsgAcknowledge),
     /// Deprecated
     MsgEd25519SignatureDep(MsgEd25519SignatureDep),
     /// ED25519 certificate, split over multiple messages
     MsgEd25519Certificate(MsgEd25519Certificate),
     /// ED25519 signature for groups of RTCM messages
     MsgEd25519Signature(MsgEd25519Signature),
-    /// Acknowledgement message in response to a request for corrections
-    MsgAcknowledge(MsgAcknowledge),
     /// Request advice on the optimal configuration for FileIO
     MsgFileioConfigReq(MsgFileioConfigReq),
     /// Response with advice on the optimal configuration for FileIO.
@@ -1415,6 +1414,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                 serde_json::from_value::<MsgSsrFlagIonoGridPointSatLos>(value)
                     .map(Sbp::MsgSsrFlagIonoGridPointSatLos)
             }
+            Some(MsgAcknowledge::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgAcknowledge>(value).map(Sbp::MsgAcknowledge)
+            }
             Some(MsgEd25519SignatureDep::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgEd25519SignatureDep>(value)
                     .map(Sbp::MsgEd25519SignatureDep)
@@ -1425,9 +1427,6 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             }
             Some(MsgEd25519Signature::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgEd25519Signature>(value).map(Sbp::MsgEd25519Signature)
-            }
-            Some(MsgAcknowledge::MESSAGE_TYPE) => {
-                serde_json::from_value::<MsgAcknowledge>(value).map(Sbp::MsgAcknowledge)
             }
             Some(MsgFileioConfigReq::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgFileioConfigReq>(value).map(Sbp::MsgFileioConfigReq)
@@ -2512,6 +2511,11 @@ impl Sbp {
                 msg.set_sender_id(sender_id);
                 Ok(Sbp::MsgSsrFlagIonoGridPointSatLos(msg))
             }
+            MsgAcknowledge::MESSAGE_TYPE => {
+                let mut msg = MsgAcknowledge::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgAcknowledge(msg))
+            }
             MsgEd25519SignatureDep::MESSAGE_TYPE => {
                 let mut msg = MsgEd25519SignatureDep::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
@@ -2526,11 +2530,6 @@ impl Sbp {
                 let mut msg = MsgEd25519Signature::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(Sbp::MsgEd25519Signature(msg))
-            }
-            MsgAcknowledge::MESSAGE_TYPE => {
-                let mut msg = MsgAcknowledge::parse(&mut payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgAcknowledge(msg))
             }
             MsgFileioConfigReq::MESSAGE_TYPE => {
                 let mut msg = MsgFileioConfigReq::parse(&mut payload)?;
@@ -2880,10 +2879,10 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.message_name(),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_name(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_name(),
+            Sbp::MsgAcknowledge(msg) => msg.message_name(),
             Sbp::MsgEd25519SignatureDep(msg) => msg.message_name(),
             Sbp::MsgEd25519Certificate(msg) => msg.message_name(),
             Sbp::MsgEd25519Signature(msg) => msg.message_name(),
-            Sbp::MsgAcknowledge(msg) => msg.message_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_name(),
             Sbp::MsgSbasRaw(msg) => msg.message_name(),
@@ -3110,10 +3109,10 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.message_type(),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_type(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_type(),
+            Sbp::MsgAcknowledge(msg) => msg.message_type(),
             Sbp::MsgEd25519SignatureDep(msg) => msg.message_type(),
             Sbp::MsgEd25519Certificate(msg) => msg.message_type(),
             Sbp::MsgEd25519Signature(msg) => msg.message_type(),
-            Sbp::MsgAcknowledge(msg) => msg.message_type(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_type(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_type(),
             Sbp::MsgSbasRaw(msg) => msg.message_type(),
@@ -3340,10 +3339,10 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.sender_id(),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.sender_id(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.sender_id(),
+            Sbp::MsgAcknowledge(msg) => msg.sender_id(),
             Sbp::MsgEd25519SignatureDep(msg) => msg.sender_id(),
             Sbp::MsgEd25519Certificate(msg) => msg.sender_id(),
             Sbp::MsgEd25519Signature(msg) => msg.sender_id(),
-            Sbp::MsgAcknowledge(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigReq(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigResp(msg) => msg.sender_id(),
             Sbp::MsgSbasRaw(msg) => msg.sender_id(),
@@ -3570,10 +3569,10 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgAcknowledge(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEd25519SignatureDep(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEd25519Certificate(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEd25519Signature(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgAcknowledge(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigReq(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigResp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSbasRaw(msg) => msg.set_sender_id(new_id),
@@ -3800,10 +3799,10 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.encoded_len(),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.encoded_len(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.encoded_len(),
+            Sbp::MsgAcknowledge(msg) => msg.encoded_len(),
             Sbp::MsgEd25519SignatureDep(msg) => msg.encoded_len(),
             Sbp::MsgEd25519Certificate(msg) => msg.encoded_len(),
             Sbp::MsgEd25519Signature(msg) => msg.encoded_len(),
-            Sbp::MsgAcknowledge(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigReq(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigResp(msg) => msg.encoded_len(),
             Sbp::MsgSbasRaw(msg) => msg.encoded_len(),
@@ -4033,10 +4032,10 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.gps_time(),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.gps_time(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.gps_time(),
+            Sbp::MsgAcknowledge(msg) => msg.gps_time(),
             Sbp::MsgEd25519SignatureDep(msg) => msg.gps_time(),
             Sbp::MsgEd25519Certificate(msg) => msg.gps_time(),
             Sbp::MsgEd25519Signature(msg) => msg.gps_time(),
-            Sbp::MsgAcknowledge(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigReq(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigResp(msg) => msg.gps_time(),
             Sbp::MsgSbasRaw(msg) => msg.gps_time(),
@@ -4271,10 +4270,10 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgAcknowledge(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEd25519SignatureDep(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEd25519Certificate(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEd25519Signature(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgAcknowledge(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSbasRaw(msg) => WireFormat::write(msg, buf),
@@ -4501,10 +4500,10 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => WireFormat::len(msg),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::len(msg),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::len(msg),
+            Sbp::MsgAcknowledge(msg) => WireFormat::len(msg),
             Sbp::MsgEd25519SignatureDep(msg) => WireFormat::len(msg),
             Sbp::MsgEd25519Certificate(msg) => WireFormat::len(msg),
             Sbp::MsgEd25519Signature(msg) => WireFormat::len(msg),
-            Sbp::MsgAcknowledge(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::len(msg),
             Sbp::MsgSbasRaw(msg) => WireFormat::len(msg),
@@ -5685,6 +5684,12 @@ impl From<MsgSsrFlagIonoGridPointSatLos> for Sbp {
     }
 }
 
+impl From<MsgAcknowledge> for Sbp {
+    fn from(msg: MsgAcknowledge) -> Self {
+        Sbp::MsgAcknowledge(msg)
+    }
+}
+
 impl From<MsgEd25519SignatureDep> for Sbp {
     fn from(msg: MsgEd25519SignatureDep) -> Self {
         Sbp::MsgEd25519SignatureDep(msg)
@@ -5700,12 +5705,6 @@ impl From<MsgEd25519Certificate> for Sbp {
 impl From<MsgEd25519Signature> for Sbp {
     fn from(msg: MsgEd25519Signature) -> Self {
         Sbp::MsgEd25519Signature(msg)
-    }
-}
-
-impl From<MsgAcknowledge> for Sbp {
-    fn from(msg: MsgAcknowledge) -> Self {
-        Sbp::MsgAcknowledge(msg)
     }
 }
 

@@ -31,7 +31,6 @@
 #include <libsbp/legacy/sbas.h>
 #include <libsbp/legacy/settings.h>
 #include <libsbp/legacy/signing.h>
-#include <libsbp/legacy/skylark.h>
 #include <libsbp/legacy/solution_meta.h>
 #include <libsbp/legacy/ssr.h>
 #include <libsbp/legacy/system.h>
@@ -1138,6 +1137,12 @@ struct MessageTraits<msg_ssr_flag_iono_grid_point_sat_los_t> {
 
 
 template<>
+struct MessageTraits<msg_acknowledge_t> {
+  static constexpr u16 id = 3026;
+};
+
+
+template<>
 struct MessageTraits<msg_ed25519_signature_dep_t> {
   static constexpr u16 id = 3073;
 };
@@ -1152,12 +1157,6 @@ struct MessageTraits<msg_ed25519_certificate_t> {
 template<>
 struct MessageTraits<msg_ed25519_signature_t> {
   static constexpr u16 id = 3075;
-};
-
-
-template<>
-struct MessageTraits<msg_acknowledge_t> {
-  static constexpr u16 id = 4000;
 };
 
 

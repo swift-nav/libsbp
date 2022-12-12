@@ -1,6 +1,6 @@
-description: Unit tests for swiftnav.sbp.skylark MsgAcknowledge
+description: Unit tests for swiftnav.sbp.integrity MsgAcknowledge
 generated_on: '2022-12-08 12:36:34.312402'
-package: sbp.skylark
+package: sbp.integrity
 tests:
 - msg:
     fields:
@@ -10,7 +10,7 @@ tests:
       request_id: 30
       response_code: 0
       solution_id: 2
-    module: sbp.skylark
+    module: sbp.integrity
     name: MsgAcknowledge
   msg_type: '0xFA0'
   raw_json: '{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload":

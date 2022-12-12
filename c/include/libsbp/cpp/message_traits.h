@@ -37,7 +37,6 @@
 #include <libsbp/v4/sbp_msg.h>
 #include <libsbp/v4/settings.h>
 #include <libsbp/v4/signing.h>
-#include <libsbp/v4/skylark.h>
 #include <libsbp/v4/solution_meta.h>
 #include <libsbp/v4/ssr.h>
 #include <libsbp/v4/system.h>

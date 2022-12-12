@@ -330,6 +330,50 @@ MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['grid_point_id', 'writeU
 MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['n_faulty_los', 'writeUInt8', 1]);
 MsgSsrFlagIonoGridPointSatLos.prototype.fieldSpec.push(['faulty_los', 'array', SvId.prototype.fieldSpec, function () { return this.fields.array.length; }, 'n_faulty_los']);
 
+/**
+ * SBP class for message MSG_ACKNOWLEDGE (0x0BD2).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field request_id number (unsigned 8-bit int, 1 byte) Echo of the request ID field from the corresponding CRA message, or 255 if no
+ *   request ID was provided.
+ * @field area_id number (unsigned 32-bit int, 4 bytes) Echo of the Area ID field from the corresponding CRA message.
+ * @field response_code number (unsigned 8-bit int, 1 byte) Reported status of the request.
+ * @field correction_mask_on_demand number (unsigned 16-bit int, 2 bytes) Contains the message group(s) that will be sent in response from the
+ *   corresponding CRA correction mask. An echo of the correction mask field from the
+ *   corresponding CRA message.
+ * @field correction_mask_stream number (unsigned 16-bit int, 2 bytes) For future expansion. Always set to 0.
+ * @field solution_id number (unsigned 8-bit int, 1 byte) The solution ID of the instance providing the corrections.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgAcknowledge = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ACKNOWLEDGE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgAcknowledge.prototype = Object.create(SBP.prototype);
+MsgAcknowledge.prototype.messageType = "MSG_ACKNOWLEDGE";
+MsgAcknowledge.prototype.msg_type = 0x0BD2;
+MsgAcknowledge.prototype.constructor = MsgAcknowledge;
+MsgAcknowledge.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('request_id')
+  .uint32('area_id')
+  .uint8('response_code')
+  .uint16('correction_mask_on_demand')
+  .uint16('correction_mask_stream')
+  .uint8('solution_id');
+MsgAcknowledge.prototype.fieldSpec = [];
+MsgAcknowledge.prototype.fieldSpec.push(['request_id', 'writeUInt8', 1]);
+MsgAcknowledge.prototype.fieldSpec.push(['area_id', 'writeUInt32LE', 4]);
+MsgAcknowledge.prototype.fieldSpec.push(['response_code', 'writeUInt8', 1]);
+MsgAcknowledge.prototype.fieldSpec.push(['correction_mask_on_demand', 'writeUInt16LE', 2]);
+MsgAcknowledge.prototype.fieldSpec.push(['correction_mask_stream', 'writeUInt16LE', 2]);
+MsgAcknowledge.prototype.fieldSpec.push(['solution_id', 'writeUInt8', 1]);
+
 module.exports = {
   IntegritySSRHeader: IntegritySSRHeader,
   0x0BB9: MsgSsrFlagHighLevel,
@@ -344,4 +388,6 @@ module.exports = {
   MsgSsrFlagIonoTileSatLos: MsgSsrFlagIonoTileSatLos,
   0x0BD1: MsgSsrFlagIonoGridPointSatLos,
   MsgSsrFlagIonoGridPointSatLos: MsgSsrFlagIonoGridPointSatLos,
+  0x0BD2: MsgAcknowledge,
+  MsgAcknowledge: MsgAcknowledge,
 }

@@ -43,7 +43,6 @@ import SwiftNav.SBP.Piksi
 import SwiftNav.SBP.Sbas
 import SwiftNav.SBP.Settings
 import SwiftNav.SBP.Signing
-import SwiftNav.SBP.Skylark
 import SwiftNav.SBP.SolutionMeta
 import SwiftNav.SBP.Ssr
 import SwiftNav.SBP.System

@@ -37,7 +37,6 @@
 #include <libsbp/sbas_macros.h>
 #include <libsbp/settings_macros.h>
 #include <libsbp/signing_macros.h>
-#include <libsbp/skylark_macros.h>
 #include <libsbp/solution_meta_macros.h>
 #include <libsbp/ssr_macros.h>
 #include <libsbp/system_macros.h>

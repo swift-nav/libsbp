@@ -34,7 +34,6 @@ from sbp import sbas as sbas
 from sbp import ssr as ssr
 from sbp import solution_meta as solmeta
 from sbp import signing as signing
-from sbp import skylark as skylark
 
 import warnings
 

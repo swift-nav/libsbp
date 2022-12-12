@@ -39,7 +39,6 @@ swift_cc_library(
         "src/v4/sbas.c",
         "src/v4/settings.c",
         "src/v4/signing.c",
-        "src/v4/skylark.c",
         "src/v4/solution_meta.c",
         "src/v4/ssr.c",
         "src/v4/system.c",

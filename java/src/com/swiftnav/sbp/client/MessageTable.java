@@ -47,6 +47,7 @@ import com.swiftnav.sbp.flash.MsgStmUniqueIdReq;
 import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
 import com.swiftnav.sbp.imu.MsgImuAux;
 import com.swiftnav.sbp.imu.MsgImuRaw;
+import com.swiftnav.sbp.integrity.MsgAcknowledge;
 import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevel;
 import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPointSatLos;
 import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPoints;
@@ -191,7 +192,6 @@ import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
 import com.swiftnav.sbp.signing.MsgEd25519Certificate;
 import com.swiftnav.sbp.signing.MsgEd25519Signature;
 import com.swiftnav.sbp.signing.MsgEd25519SignatureDep;
-import com.swiftnav.sbp.skylark.MsgAcknowledge;
 import com.swiftnav.sbp.solution_meta.MsgSolnMeta;
 import com.swiftnav.sbp.solution_meta.MsgSolnMetaDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
@@ -321,6 +321,8 @@ final class MessageTable {
                 return new MsgSsrFlagIonoTileSatLos(msg);
             case MsgSsrFlagIonoGridPointSatLos.TYPE:
                 return new MsgSsrFlagIonoGridPointSatLos(msg);
+            case MsgAcknowledge.TYPE:
+                return new MsgAcknowledge(msg);
             case MsgLinuxCpuStateDepA.TYPE:
                 return new MsgLinuxCpuStateDepA(msg);
             case MsgLinuxMemStateDepA.TYPE:
@@ -597,8 +599,6 @@ final class MessageTable {
                 return new MsgEd25519Certificate(msg);
             case MsgEd25519Signature.TYPE:
                 return new MsgEd25519Signature(msg);
-            case MsgAcknowledge.TYPE:
-                return new MsgAcknowledge(msg);
             case MsgSolnMetaDepA.TYPE:
                 return new MsgSolnMetaDepA(msg);
             case MsgSolnMeta.TYPE:

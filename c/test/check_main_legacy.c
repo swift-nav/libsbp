@@ -38,6 +38,7 @@ int main(void) {
                     legacy_auto_check_sbp_file_io_MsgFileioWriteResp_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_imu_MsgImuAux_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_imu_MsgImuRaw_suite());
+  srunner_add_suite(sr, legacy_auto_check_sbp_integrity_MsgAcknowledge_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite());
   srunner_add_suite(
@@ -157,7 +158,6 @@ int main(void) {
                     legacy_auto_check_sbp_signing_MsgEd25519Signature_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_signing_MsgEd25519SignatureDep_suite());
-  srunner_add_suite(sr, legacy_auto_check_sbp_skylark_MsgAcknowledge_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds_suite());
   srunner_add_suite(
