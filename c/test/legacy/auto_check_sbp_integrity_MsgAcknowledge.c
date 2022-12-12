@@ -116,13 +116,13 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgAcknowledge) {
 
     logging_reset();
 
-    sbp_payload_callback_register(&sbp_state, 0xFA0, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xBD2, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_frame_callback_register(&sbp_state, 0xFA0, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xBD2, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
+        85, 210, 11, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 86, 178,
     };
 
     dummy_reset();
@@ -138,7 +138,7 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgAcknowledge) {
     test_msg->request_id = 30;
     test_msg->response_code = 0;
     test_msg->solution_id = 2;
-    sbp_payload_send(&sbp_state, 0xFA0, 42, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xBD2, 42, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -172,7 +172,7 @@ START_TEST(test_legacy_auto_check_sbp_integrity_MsgAcknowledge) {
                   "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 42,
                   "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xFA0,
+    ck_assert_msg(last_frame.msg_type == 0xBD2,
                   "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
                   "frame_callback: msg_len decoded incorrectly");

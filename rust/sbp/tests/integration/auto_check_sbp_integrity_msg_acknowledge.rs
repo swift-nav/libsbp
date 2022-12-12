@@ -22,7 +22,7 @@ use crate::*;
 fn test_auto_check_sbp_integrity_msg_acknowledge() {
     {
         let mut payload = Cursor::new(vec![
-            85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
+            85, 210, 11, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 86, 178,
         ]);
 
         // Test the round trip payload parsing
@@ -36,8 +36,8 @@ fn test_auto_check_sbp_integrity_msg_acknowledge() {
             sbp::messages::Sbp::MsgAcknowledge(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xFA0,
-                    "Incorrect message type, expected 0xFA0, is {}",
+                    0xBD2,
+                    "Incorrect message type, expected 0xBD2, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -95,7 +95,7 @@ fn test_auto_check_sbp_integrity_msg_acknowledge() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_integrity_msg_acknowledge() {
     {
-        let json_input = r#"{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 32955, "request_id": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 3026, "sender": 42, "length": 11, "payload": "HkDiAQAAAQABAAI=", "crc": 45654, "request_id": 30, "area_id": 123456, "response_code": 0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id": 2}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -119,8 +119,8 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_acknowledge() {
             sbp::messages::Sbp::MsgAcknowledge(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xFA0,
-                    "Incorrect message type, expected 0xFA0, is {}",
+                    0xBD2,
+                    "Incorrect message type, expected 0xBD2, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -178,7 +178,7 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_acknowledge() {
 fn test_sbp2json_auto_check_sbp_integrity_msg_acknowledge() {
     {
         let mut payload = Cursor::new(vec![
-            85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
+            85, 210, 11, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 86, 178,
         ]);
 
         // Construct sbp message
@@ -209,8 +209,8 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_acknowledge() {
             sbp::messages::Sbp::MsgAcknowledge(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xFA0,
-                    "Incorrect message type, expected 0xFA0, is {}",
+                    0xBD2,
+                    "Incorrect message type, expected 0xBD2, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();

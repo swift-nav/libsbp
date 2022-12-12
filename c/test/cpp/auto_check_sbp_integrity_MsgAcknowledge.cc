@@ -76,7 +76,7 @@ class Test_auto_check_sbp_integrity_MsgAcknowledge0
 
 TEST_F(Test_auto_check_sbp_integrity_MsgAcknowledge0, Test) {
   uint8_t encoded_frame[] = {
-      85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
+      85, 210, 11, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 86, 178,
   };
 
   sbp_msg_acknowledge_t test_msg{};

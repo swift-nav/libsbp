@@ -39,7 +39,6 @@ from . import sbas as sbas
 from . import ssr as ssr
 from . import solution_meta as solmeta
 from . import signing as signing
-from . import skylark as skylark
 
 import warnings
 
@@ -67,7 +66,6 @@ _SBP_TABLE = dict(list(acq.msg_classes.items())
                   + list(ssr.msg_classes.items())
                   + list(solmeta.msg_classes.items())
                   + list(signing.msg_classes.items())
-                  + list(skylark.msg_classes.items())
                   )
 
 class InvalidSBPMessageType(NotImplementedError):

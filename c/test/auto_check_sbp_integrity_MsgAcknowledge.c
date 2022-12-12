@@ -90,11 +90,11 @@ START_TEST(test_auto_check_sbp_integrity_MsgAcknowledge) {
 
     logging_reset();
 
-    sbp_callback_register(&sbp_state, 0xFA0, &msg_callback,
+    sbp_callback_register(&sbp_state, 0xBD2, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
+        85, 210, 11, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 86, 178,
     };
 
     dummy_reset();

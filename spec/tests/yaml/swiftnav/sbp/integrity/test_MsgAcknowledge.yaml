@@ -1,5 +1,5 @@
 description: Unit tests for swiftnav.sbp.integrity MsgAcknowledge
-generated_on: '2022-12-08 12:36:34.312402'
+generated_on: '2022-12-11 19:10:30.191414'
 package: sbp.integrity
 tests:
 - msg:
@@ -12,16 +12,16 @@ tests:
       solution_id: 2
     module: sbp.integrity
     name: MsgAcknowledge
-  msg_type: '0xFA0'
-  raw_json: '{"preamble": 85, "msg_type": 4000, "sender": 42, "length": 11, "payload":
-    "HkDiAQAAAQABAAI=", "crc": 32955, "request_id": 30, "area_id": 123456, "response_code":
+  msg_type: '0xBD2'
+  raw_json: '{"preamble": 85, "msg_type": 3026, "sender": 42, "length": 11, "payload":
+    "HkDiAQAAAQABAAI=", "crc": 45654, "request_id": 30, "area_id": 123456, "response_code":
     0, "correction_mask_on_demand": 1, "correction_mask_stream": 1, "solution_id":
     2}'
-  raw_packet: VaAPKgALHkDiAQAAAQABAAK7gA==
+  raw_packet: VdILKgALHkDiAQAAAQABAAJWsg==
   sbp:
-    crc: '0x80BB'
+    crc: '0xB256'
     length: 11
-    msg_type: '0xFA0'
+    msg_type: '0xBD2'
     payload: HkDiAQAAAQABAAI=
     preamble: '0x55'
     sender: '0x2A'

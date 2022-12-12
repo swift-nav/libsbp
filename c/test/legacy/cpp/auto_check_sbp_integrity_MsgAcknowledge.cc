@@ -78,7 +78,7 @@ class Test_legacy_auto_check_sbp_integrity_MsgAcknowledge0
 
 TEST_F(Test_legacy_auto_check_sbp_integrity_MsgAcknowledge0, Test) {
   uint8_t encoded_frame[] = {
-      85, 160, 15, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 187, 128,
+      85, 210, 11, 42, 0, 11, 30, 64, 226, 1, 0, 0, 1, 0, 1, 0, 2, 86, 178,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -92,7 +92,7 @@ TEST_F(Test_legacy_auto_check_sbp_integrity_MsgAcknowledge0, Test) {
   test_msg->response_code = 0;
   test_msg->solution_id = 2;
 
-  EXPECT_EQ(send_message(0xFA0, 42, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(0xBD2, 42, test_msg_len, test_msg_storage), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
