@@ -210,6 +210,15 @@ mod swiftnav_impl {
             self.to_sbp().time()
         }
     }
+
+    impl<E> HasTime for Result<Frame, E> {
+        fn time(&self) -> Option<Result<MessageTime, GpsTimeError>> {
+            match self {
+                Ok(m) => m.time(),
+                Err(_) => None,
+            }
+        }
+    }
 }
 
 #[cfg(test)]
