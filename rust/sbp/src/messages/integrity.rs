@@ -147,6 +147,195 @@ pub mod msg_acknowledge {
         pub fn set_response_code(&mut self, response_code: ResponseCode) {
             set_bit_range!(&mut self.response_code, response_code, u8, u8, 7, 0);
         }
+
+        /// Gets the [PublicSigningKey][self::PublicSigningKey] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PublicSigningKey` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PublicSigningKey` were added.
+        pub fn public_signing_key(&self) -> Result<PublicSigningKey, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 0, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [PublicSigningKey][PublicSigningKey] of the `correction_mask_on_demand` bitfield.
+        pub fn set_public_signing_key(&mut self, public_signing_key: PublicSigningKey) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                public_signing_key,
+                u16,
+                u8,
+                0,
+                0
+            );
+        }
+
+        /// Gets the [LowRateMessages][self::LowRateMessages] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `LowRateMessages` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `LowRateMessages` were added.
+        pub fn low_rate_messages(&self) -> Result<LowRateMessages, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 1, 1).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [LowRateMessages][LowRateMessages] of the `correction_mask_on_demand` bitfield.
+        pub fn set_low_rate_messages(&mut self, low_rate_messages: LowRateMessages) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                low_rate_messages,
+                u16,
+                u8,
+                1,
+                1
+            );
+        }
+
+        /// Gets the [Ephemeris][self::Ephemeris] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Ephemeris` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Ephemeris` were added.
+        pub fn ephemeris(&self) -> Result<Ephemeris, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 2, 2).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Ephemeris][Ephemeris] of the `correction_mask_on_demand` bitfield.
+        pub fn set_ephemeris(&mut self, ephemeris: Ephemeris) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                ephemeris,
+                u16,
+                u8,
+                2,
+                2
+            );
+        }
+
+        /// Gets the [SatelliteClock][self::SatelliteClock] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SatelliteClock` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SatelliteClock` were added.
+        pub fn satellite_clock(&self) -> Result<SatelliteClock, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 3, 3).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [SatelliteClock][SatelliteClock] of the `correction_mask_on_demand` bitfield.
+        pub fn set_satellite_clock(&mut self, satellite_clock: SatelliteClock) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                satellite_clock,
+                u16,
+                u8,
+                3,
+                3
+            );
+        }
+
+        /// Gets the [SatelliteOrbit][self::SatelliteOrbit] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SatelliteOrbit` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SatelliteOrbit` were added.
+        pub fn satellite_orbit(&self) -> Result<SatelliteOrbit, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 4, 4).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [SatelliteOrbit][SatelliteOrbit] of the `correction_mask_on_demand` bitfield.
+        pub fn set_satellite_orbit(&mut self, satellite_orbit: SatelliteOrbit) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                satellite_orbit,
+                u16,
+                u8,
+                4,
+                4
+            );
+        }
+
+        /// Gets the [SatelliteCodeBias][self::SatelliteCodeBias] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SatelliteCodeBias` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SatelliteCodeBias` were added.
+        pub fn satellite_code_bias(&self) -> Result<SatelliteCodeBias, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 5, 5).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [SatelliteCodeBias][SatelliteCodeBias] of the `correction_mask_on_demand` bitfield.
+        pub fn set_satellite_code_bias(&mut self, satellite_code_bias: SatelliteCodeBias) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                satellite_code_bias,
+                u16,
+                u8,
+                5,
+                5
+            );
+        }
+
+        /// Gets the [SatellitePhaseBias][self::SatellitePhaseBias] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `SatellitePhaseBias` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `SatellitePhaseBias` were added.
+        pub fn satellite_phase_bias(&self) -> Result<SatellitePhaseBias, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 6, 6).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [SatellitePhaseBias][SatellitePhaseBias] of the `correction_mask_on_demand` bitfield.
+        pub fn set_satellite_phase_bias(&mut self, satellite_phase_bias: SatellitePhaseBias) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                satellite_phase_bias,
+                u16,
+                u8,
+                6,
+                6
+            );
+        }
+
+        /// Gets the [Atmospherics][self::Atmospherics] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Atmospherics` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Atmospherics` were added.
+        pub fn atmospherics(&self) -> Result<Atmospherics, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 7, 7).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Atmospherics][Atmospherics] of the `correction_mask_on_demand` bitfield.
+        pub fn set_atmospherics(&mut self, atmospherics: Atmospherics) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                atmospherics,
+                u16,
+                u8,
+                7,
+                7
+            );
+        }
+
+        /// Gets the [Integrity][self::Integrity] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `Integrity` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `Integrity` were added.
+        pub fn integrity(&self) -> Result<Integrity, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 8, 8).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [Integrity][Integrity] of the `correction_mask_on_demand` bitfield.
+        pub fn set_integrity(&mut self, integrity: Integrity) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                integrity,
+                u16,
+                u8,
+                8,
+                8
+            );
+        }
     }
 
     impl ConcreteMessage for MsgAcknowledge {
@@ -258,6 +447,276 @@ pub mod msg_acknowledge {
                 2 => Ok(ResponseCode::Forbidden),
                 3 => Ok(ResponseCode::InvalidRequest),
                 4 => Ok(ResponseCode::InvalidAreaId),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Public Signing Key
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum PublicSigningKey {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for PublicSigningKey {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                PublicSigningKey::NotRequested => f.write_str("Not requested"),
+                PublicSigningKey::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for PublicSigningKey {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(PublicSigningKey::NotRequested),
+                1 => Ok(PublicSigningKey::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Low rate messages
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum LowRateMessages {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for LowRateMessages {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                LowRateMessages::NotRequested => f.write_str("Not requested"),
+                LowRateMessages::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for LowRateMessages {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(LowRateMessages::NotRequested),
+                1 => Ok(LowRateMessages::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Ephemeris
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Ephemeris {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for Ephemeris {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Ephemeris::NotRequested => f.write_str("Not requested"),
+                Ephemeris::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Ephemeris {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Ephemeris::NotRequested),
+                1 => Ok(Ephemeris::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Satellite clock
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum SatelliteClock {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for SatelliteClock {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                SatelliteClock::NotRequested => f.write_str("Not requested"),
+                SatelliteClock::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for SatelliteClock {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(SatelliteClock::NotRequested),
+                1 => Ok(SatelliteClock::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Satellite orbit
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum SatelliteOrbit {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for SatelliteOrbit {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                SatelliteOrbit::NotRequested => f.write_str("Not requested"),
+                SatelliteOrbit::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for SatelliteOrbit {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(SatelliteOrbit::NotRequested),
+                1 => Ok(SatelliteOrbit::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Satellite code bias
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum SatelliteCodeBias {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for SatelliteCodeBias {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                SatelliteCodeBias::NotRequested => f.write_str("Not requested"),
+                SatelliteCodeBias::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for SatelliteCodeBias {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(SatelliteCodeBias::NotRequested),
+                1 => Ok(SatelliteCodeBias::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Satellite phase bias
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum SatellitePhaseBias {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for SatellitePhaseBias {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                SatellitePhaseBias::NotRequested => f.write_str("Not requested"),
+                SatellitePhaseBias::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for SatellitePhaseBias {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(SatellitePhaseBias::NotRequested),
+                1 => Ok(SatellitePhaseBias::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Atmospherics
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Atmospherics {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for Atmospherics {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Atmospherics::NotRequested => f.write_str("Not requested"),
+                Atmospherics::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Atmospherics {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Atmospherics::NotRequested),
+                1 => Ok(Atmospherics::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Integrity
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum Integrity {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for Integrity {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                Integrity::NotRequested => f.write_str("Not requested"),
+                Integrity::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for Integrity {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(Integrity::NotRequested),
+                1 => Ok(Integrity::Requested),
                 i => Err(i),
             }
         }

@@ -305,6 +305,55 @@ definitions:
             desc: >
               Contains the message group(s) that will be sent in response from the corresponding CRA correction mask.
               An echo of the correction mask field from the corresponding CRA message.
+            fields:
+              - 0:
+                  desc: Public Signing Key
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 1:
+                  desc: Low rate messages
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 2:
+                  desc: Ephemeris
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 3:
+                  desc: Satellite clock
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 4:
+                  desc: Satellite orbit
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 5:
+                  desc: Satellite code bias
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 6:
+                  desc: Satellite phase bias
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 7:
+                  desc: Atmospherics
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 8:
+                  desc: Integrity
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 9-15:
+                  desc: Reserved
+
         - correction_mask_stream:
             type: u16
             desc: For future expansion. Always set to 0.
