@@ -73,7 +73,6 @@ def test_table_unqiue_count():
                         + len(ssr.msg_classes)
                         + len(solmeta.msg_classes)
                         + len(signing.msg_classes)
-                        + len(skylark.msg_classes)
                          )
   assert len(_SBP_TABLE) == number_of_messages
 

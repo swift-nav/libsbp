@@ -4271,6 +4271,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoGridPoints(msg) => msg.friendly_name(),
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.friendly_name(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.friendly_name(),
+            Sbp::MsgAcknowledge(msg) => msg.friendly_name(),
             Sbp::MsgEd25519SignatureDep(msg) => msg.friendly_name(),
             Sbp::MsgEd25519Certificate(msg) => msg.friendly_name(),
             Sbp::MsgEd25519Signature(msg) => msg.friendly_name(),

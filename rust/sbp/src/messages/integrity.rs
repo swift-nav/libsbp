@@ -361,6 +361,12 @@ pub mod msg_acknowledge {
         }
     }
 
+    impl FriendlyName for MsgAcknowledge {
+        fn friendly_name() -> &'static str {
+            "ACKNOWLEDGE"
+        }
+    }
+
     impl TryFrom<Sbp> for MsgAcknowledge {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
