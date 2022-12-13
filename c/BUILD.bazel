@@ -69,13 +69,22 @@ swift_cc_test(
         "test/check_bitfield_macros.c",
         "test/check_suites_legacy.h",
     ] + SBP_LEGACY_C_SOURCES,
+    common_c_opts = True,
+    copts = ["-Wformat=0"],
     includes = [
         "include/libsbp",
+    ],
+    nocopts = [
+        "-Wconversion",
+        "-Wpointer-arith",
+        "-Wformat",
+        "-Wformat-security",
+        "-Wformat-y2k",
     ],
     type = UNIT,
     deps = [
         ":sbp",
-        "@check//:check",
+        "@check",
     ],
 )
 
@@ -90,11 +99,19 @@ swift_cc_test(
         "test/check_bitfield_macros.c",
         "test/check_suites.h",
     ] + SBP_V4_C_SOURCES,
+    common_c_opts = True,
+    copts = ["-Wformat=0"],
     includes = ["include/libsbp"],
+    nocopts = [
+        "-Wpointer-arith",
+        "-Wformat",
+        "-Wformat-security",
+        "-Wformat-y2k",
+    ],
     type = UNIT,
     deps = [
         ":sbp",
-        "@check//:check",
+        "@check",
     ],
 )
 
@@ -103,6 +120,7 @@ SBP_CPP_V4_C_SOURCES = glob(["test/cpp/auto*.cc"])
 swift_cc_test(
     name = "sbp-cpp-v4-test",
     srcs = SBP_CPP_V4_C_SOURCES,
+    common_c_opts = True,
     type = UNIT,
     deps = [
         ":sbp",
@@ -118,6 +136,7 @@ swift_cc_test(
         "test/string/test_null_terminated.cc",
         "test/string/test_unterminated.cc",
     ],
+    common_c_opts = True,
     includes = [
         "src/include",
     ],
@@ -135,8 +154,17 @@ swift_cc_test(
     srcs = [
         "test/legacy/cpp/test_sbp_stdio.cc",
     ] + SBP_CPP_LEGACY_SOURCES,
+    common_c_opts = True,
+    copts = ["-Wformat=0"],
     data = [
         "test/legacy/cpp/sbp_data/gnss_data.sbp",
+    ],
+    nocopts = [
+        "-Wconversion",
+        "-Wpointer-arith",
+        "-Wformat",
+        "-Wformat-security",
+        "-Wformat-y2k",
     ],
     type = UNIT,
     deps = [
