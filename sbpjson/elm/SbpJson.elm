@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEd25519Certificate, msgEd25519Signature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcknowledge, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEd25519Certificate, msgEd25519Signature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPoseRelative, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -30,6 +30,7 @@
 --     decodeString integritySSRHeader myJsonString
 --     decodeString latency myJsonString
 --     decodeString measurementState myJsonString
+--     decodeString msgAcknowledge myJsonString
 --     decodeString msgAcqResult myJsonString
 --     decodeString msgAcqSvProfile myJsonString
 --     decodeString msgAgeCorrections myJsonString
@@ -128,6 +129,7 @@
 --     decodeString msgPosLLHCov myJsonString
 --     decodeString msgPosLLHCovGnss myJsonString
 --     decodeString msgPosLLHGnss myJsonString
+--     decodeString msgPoseRelative myJsonString
 --     decodeString msgPpsTime myJsonString
 --     decodeString msgProtectionLevel myJsonString
 --     decodeString msgReferenceFrameParam myJsonString
@@ -282,6 +284,9 @@ module SbpJson exposing
     , MeasurementState
     , measurementStateToString
     , measurementState
+    , MsgAcknowledge
+    , msgAcknowledgeToString
+    , msgAcknowledge
     , MsgAcqResult
     , msgAcqResultToString
     , msgAcqResult
@@ -576,6 +581,9 @@ module SbpJson exposing
     , MsgPosLLHGnss
     , msgPosLLHGnssToString
     , msgPosLLHGnss
+    , MsgPoseRelative
+    , msgPoseRelativeToString
+    , msgPoseRelative
     , MsgPpsTime
     , msgPpsTimeToString
     , msgPpsTime
@@ -931,6 +939,15 @@ sol_in[N].flags in a MSG_SOLN_META.
 -}
 type alias IMUInputType =
     { flags : Int
+    }
+
+type alias MsgAcknowledge =
+    { areaID : Int
+    , correctionMaskOnDemand : Int
+    , correctionMaskStream : Int
+    , requestID : Int
+    , responseCode : Int
+    , solutionID : Int
     }
 
 {-| This message describes the results from an attempted GPS signal acquisition search for a
@@ -2275,6 +2292,38 @@ type alias MsgPosLLHGnss =
     , vAccuracy : Int
     }
 
+{-| This solution message reports the relative pose of a sensor between two time instances.
+The relative pose comprises of a rotation and a translation which relates the sensor
+(e.g. camera) frame at a given time (first keyframe) to the sensor frame at another time
+(second keyframe). The relative translations is a 3x1 vector described in the first
+keyframe.  Relative rotation is described by a quaternion from second keyframe to the
+first keyframe.
+-}
+type alias MsgPoseRelative =
+    { covCXX : Float
+    , covCXY : Float
+    , covCXZ : Float
+    , covCYY : Float
+    , covCYZ : Float
+    , covCZZ : Float
+    , covRXX : Float
+    , covRXY : Float
+    , covRXZ : Float
+    , covRYY : Float
+    , covRYZ : Float
+    , covRZZ : Float
+    , flags : Int
+    , sensorID : Int
+    , timestamp1 : Int
+    , timestamp2 : Int
+    , tow : Int
+    , trans : Array Int
+    , w : Int
+    , x : Int
+    , y : Int
+    , z : Int
+    }
+
 {-| The PPS time message contains the value of the sender's local time in microseconds at the
 moment a pulse is detected on the PPS input. This is to be used for syncronisation of
 sensor data sampled with a local timestamp (e.g. IMU or wheeltick messages) where GNSS
@@ -3342,6 +3391,9 @@ latencyToString r = Jenc.encode 0 (encodeLatency r)
 measurementStateToString : MeasurementState -> String
 measurementStateToString r = Jenc.encode 0 (encodeMeasurementState r)
 
+msgAcknowledgeToString : MsgAcknowledge -> String
+msgAcknowledgeToString r = Jenc.encode 0 (encodeMsgAcknowledge r)
+
 msgAcqResultToString : MsgAcqResult -> String
 msgAcqResultToString r = Jenc.encode 0 (encodeMsgAcqResult r)
 
@@ -3653,6 +3705,9 @@ msgPosLLHCovGnssToString r = Jenc.encode 0 (encodeMsgPosLLHCovGnss r)
 
 msgPosLLHGnssToString : MsgPosLLHGnss -> String
 msgPosLLHGnssToString r = Jenc.encode 0 (encodeMsgPosLLHGnss r)
+
+msgPoseRelativeToString : MsgPoseRelative -> String
+msgPoseRelativeToString r = Jenc.encode 0 (encodeMsgPoseRelative r)
 
 msgPpsTimeToString : MsgPpsTime -> String
 msgPpsTimeToString r = Jenc.encode 0 (encodeMsgPpsTime r)
@@ -4052,6 +4107,27 @@ encodeIMUInputType : IMUInputType -> Jenc.Value
 encodeIMUInputType x =
     Jenc.object
         [ ("flags", Jenc.int x.flags)
+        ]
+
+msgAcknowledge : Jdec.Decoder MsgAcknowledge
+msgAcknowledge =
+    Jpipe.decode MsgAcknowledge
+        |> Jpipe.required "area_id" Jdec.int
+        |> Jpipe.required "correction_mask_on_demand" Jdec.int
+        |> Jpipe.required "correction_mask_stream" Jdec.int
+        |> Jpipe.required "request_id" Jdec.int
+        |> Jpipe.required "response_code" Jdec.int
+        |> Jpipe.required "solution_id" Jdec.int
+
+encodeMsgAcknowledge : MsgAcknowledge -> Jenc.Value
+encodeMsgAcknowledge x =
+    Jenc.object
+        [ ("area_id", Jenc.int x.areaID)
+        , ("correction_mask_on_demand", Jenc.int x.correctionMaskOnDemand)
+        , ("correction_mask_stream", Jenc.int x.correctionMaskStream)
+        , ("request_id", Jenc.int x.requestID)
+        , ("response_code", Jenc.int x.responseCode)
+        , ("solution_id", Jenc.int x.solutionID)
         ]
 
 msgAcqResult : Jdec.Decoder MsgAcqResult
@@ -6167,6 +6243,59 @@ encodeMsgPosLLHGnss x =
         , ("n_sats", Jenc.int x.nSats)
         , ("tow", Jenc.int x.tow)
         , ("v_accuracy", Jenc.int x.vAccuracy)
+        ]
+
+msgPoseRelative : Jdec.Decoder MsgPoseRelative
+msgPoseRelative =
+    Jpipe.decode MsgPoseRelative
+        |> Jpipe.required "cov_c_x_x" Jdec.float
+        |> Jpipe.required "cov_c_x_y" Jdec.float
+        |> Jpipe.required "cov_c_x_z" Jdec.float
+        |> Jpipe.required "cov_c_y_y" Jdec.float
+        |> Jpipe.required "cov_c_y_z" Jdec.float
+        |> Jpipe.required "cov_c_z_z" Jdec.float
+        |> Jpipe.required "cov_r_x_x" Jdec.float
+        |> Jpipe.required "cov_r_x_y" Jdec.float
+        |> Jpipe.required "cov_r_x_z" Jdec.float
+        |> Jpipe.required "cov_r_y_y" Jdec.float
+        |> Jpipe.required "cov_r_y_z" Jdec.float
+        |> Jpipe.required "cov_r_z_z" Jdec.float
+        |> Jpipe.required "flags" Jdec.int
+        |> Jpipe.required "sensor_id" Jdec.int
+        |> Jpipe.required "timestamp_1" Jdec.int
+        |> Jpipe.required "timestamp_2" Jdec.int
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "trans" (Jdec.array Jdec.int)
+        |> Jpipe.required "w" Jdec.int
+        |> Jpipe.required "x" Jdec.int
+        |> Jpipe.required "y" Jdec.int
+        |> Jpipe.required "z" Jdec.int
+
+encodeMsgPoseRelative : MsgPoseRelative -> Jenc.Value
+encodeMsgPoseRelative x =
+    Jenc.object
+        [ ("cov_c_x_x", Jenc.float x.covCXX)
+        , ("cov_c_x_y", Jenc.float x.covCXY)
+        , ("cov_c_x_z", Jenc.float x.covCXZ)
+        , ("cov_c_y_y", Jenc.float x.covCYY)
+        , ("cov_c_y_z", Jenc.float x.covCYZ)
+        , ("cov_c_z_z", Jenc.float x.covCZZ)
+        , ("cov_r_x_x", Jenc.float x.covRXX)
+        , ("cov_r_x_y", Jenc.float x.covRXY)
+        , ("cov_r_x_z", Jenc.float x.covRXZ)
+        , ("cov_r_y_y", Jenc.float x.covRYY)
+        , ("cov_r_y_z", Jenc.float x.covRYZ)
+        , ("cov_r_z_z", Jenc.float x.covRZZ)
+        , ("flags", Jenc.int x.flags)
+        , ("sensor_id", Jenc.int x.sensorID)
+        , ("timestamp_1", Jenc.int x.timestamp1)
+        , ("timestamp_2", Jenc.int x.timestamp2)
+        , ("tow", Jenc.int x.tow)
+        , ("trans", makeArrayEncoder Jenc.int x.trans)
+        , ("w", Jenc.int x.w)
+        , ("x", Jenc.int x.x)
+        , ("y", Jenc.int x.y)
+        , ("z", Jenc.int x.z)
         ]
 
 msgPpsTime : Jdec.Decoder MsgPpsTime

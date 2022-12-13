@@ -20,6 +20,7 @@ mod auto_check_sbp_ext_events_msg_ext_event;
 mod auto_check_sbp_file_io_msg_fileio_write_resp;
 mod auto_check_sbp_imu_msg_imu_aux;
 mod auto_check_sbp_imu_msg_imu_raw;
+mod auto_check_sbp_integrity_msg_acknowledge;
 mod auto_check_sbp_integrity_msg_ssr_flag_high_level;
 mod auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los;
 mod auto_check_sbp_integrity_msg_ssr_flag_iono_grid_points;

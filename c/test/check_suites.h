@@ -26,6 +26,7 @@ Suite* auto_check_sbp_ext_events_MsgExtEvent_suite(void);
 Suite* auto_check_sbp_file_io_MsgFileioWriteResp_suite(void);
 Suite* auto_check_sbp_imu_MsgImuAux_suite(void);
 Suite* auto_check_sbp_imu_MsgImuRaw_suite(void);
+Suite* auto_check_sbp_integrity_MsgAcknowledge_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagHighLevel_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagIonoGridPointSatLos_suite(void);
 Suite* auto_check_sbp_integrity_MsgSsrFlagIonoGridPoints_suite(void);

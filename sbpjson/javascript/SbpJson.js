@@ -23,6 +23,7 @@
 //   const integritySSRHeader = Convert.toIntegritySSRHeader(json);
 //   const latency = Convert.toLatency(json);
 //   const measurementState = Convert.toMeasurementState(json);
+//   const msgAcknowledge = Convert.toMsgAcknowledge(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
 //   const msgAcqSvProfile = Convert.toMsgAcqSvProfile(json);
 //   const msgAgeCorrections = Convert.toMsgAgeCorrections(json);
@@ -121,6 +122,7 @@
 //   const msgPosLLHCov = Convert.toMsgPosLLHCov(json);
 //   const msgPosLLHCovGnss = Convert.toMsgPosLLHCovGnss(json);
 //   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
+//   const msgPoseRelative = Convert.toMsgPoseRelative(json);
 //   const msgPpsTime = Convert.toMsgPpsTime(json);
 //   const msgProtectionLevel = Convert.toMsgProtectionLevel(json);
 //   const msgReferenceFrameParam = Convert.toMsgReferenceFrameParam(json);
@@ -382,6 +384,14 @@ function toMeasurementState(json) {
 
 function measurementStateToJson(value) {
     return JSON.stringify(uncast(value, r("MeasurementState")), null, 2);
+}
+
+function toMsgAcknowledge(json) {
+    return cast(JSON.parse(json), r("MsgAcknowledge"));
+}
+
+function msgAcknowledgeToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgAcknowledge")), null, 2);
 }
 
 function toMsgAcqResult(json) {
@@ -1166,6 +1176,14 @@ function toMsgPosLLHGnss(json) {
 
 function msgPosLLHGnssToJson(value) {
     return JSON.stringify(uncast(value, r("MsgPosLLHGnss")), null, 2);
+}
+
+function toMsgPoseRelative(json) {
+    return cast(JSON.parse(json), r("MsgPoseRelative"));
+}
+
+function msgPoseRelativeToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgPoseRelative")), null, 2);
 }
 
 function toMsgPpsTime(json) {
@@ -2051,6 +2069,14 @@ const typeMap = {
     "IMUInputType": o([
         { json: "flags", js: "flags", typ: 0 },
     ], "any"),
+    "MsgAcknowledge": o([
+        { json: "area_id", js: "area_id", typ: 0 },
+        { json: "correction_mask_on_demand", js: "correction_mask_on_demand", typ: 0 },
+        { json: "correction_mask_stream", js: "correction_mask_stream", typ: 0 },
+        { json: "request_id", js: "request_id", typ: 0 },
+        { json: "response_code", js: "response_code", typ: 0 },
+        { json: "solution_id", js: "solution_id", typ: 0 },
+    ], "any"),
     "MsgAcqResult": o([
         { json: "cf", js: "cf", typ: 3.14 },
         { json: "cn0", js: "cn0", typ: 3.14 },
@@ -2841,6 +2867,30 @@ const typeMap = {
         { json: "tow", js: "tow", typ: 0 },
         { json: "v_accuracy", js: "v_accuracy", typ: 0 },
     ], "any"),
+    "MsgPoseRelative": o([
+        { json: "cov_c_x_x", js: "cov_c_x_x", typ: 3.14 },
+        { json: "cov_c_x_y", js: "cov_c_x_y", typ: 3.14 },
+        { json: "cov_c_x_z", js: "cov_c_x_z", typ: 3.14 },
+        { json: "cov_c_y_y", js: "cov_c_y_y", typ: 3.14 },
+        { json: "cov_c_y_z", js: "cov_c_y_z", typ: 3.14 },
+        { json: "cov_c_z_z", js: "cov_c_z_z", typ: 3.14 },
+        { json: "cov_r_x_x", js: "cov_r_x_x", typ: 3.14 },
+        { json: "cov_r_x_y", js: "cov_r_x_y", typ: 3.14 },
+        { json: "cov_r_x_z", js: "cov_r_x_z", typ: 3.14 },
+        { json: "cov_r_y_y", js: "cov_r_y_y", typ: 3.14 },
+        { json: "cov_r_y_z", js: "cov_r_y_z", typ: 3.14 },
+        { json: "cov_r_z_z", js: "cov_r_z_z", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "sensor_id", js: "sensor_id", typ: 0 },
+        { json: "timestamp_1", js: "timestamp_1", typ: 0 },
+        { json: "timestamp_2", js: "timestamp_2", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "trans", js: "trans", typ: a(0) },
+        { json: "w", js: "w", typ: 0 },
+        { json: "x", js: "x", typ: 0 },
+        { json: "y", js: "y", typ: 0 },
+        { json: "z", js: "z", typ: 0 },
+    ], "any"),
     "MsgPpsTime": o([
         { json: "flags", js: "flags", typ: 0 },
         { json: "time", js: "time", typ: 0 },
@@ -3496,6 +3546,8 @@ module.exports = {
     "toLatency": toLatency,
     "measurementStateToJson": measurementStateToJson,
     "toMeasurementState": toMeasurementState,
+    "msgAcknowledgeToJson": msgAcknowledgeToJson,
+    "toMsgAcknowledge": toMsgAcknowledge,
     "msgAcqResultToJson": msgAcqResultToJson,
     "toMsgAcqResult": toMsgAcqResult,
     "msgAcqSvProfileToJson": msgAcqSvProfileToJson,
@@ -3692,6 +3744,8 @@ module.exports = {
     "toMsgPosLLHCovGnss": toMsgPosLLHCovGnss,
     "msgPosLLHGnssToJson": msgPosLLHGnssToJson,
     "toMsgPosLLHGnss": toMsgPosLLHGnss,
+    "msgPoseRelativeToJson": msgPoseRelativeToJson,
+    "toMsgPoseRelative": toMsgPoseRelative,
     "msgPpsTimeToJson": msgPpsTimeToJson,
     "toMsgPpsTime": toMsgPpsTime,
     "msgProtectionLevelToJson": msgProtectionLevelToJson,

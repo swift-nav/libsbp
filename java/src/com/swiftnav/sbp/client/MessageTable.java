@@ -47,6 +47,7 @@ import com.swiftnav.sbp.flash.MsgStmUniqueIdReq;
 import com.swiftnav.sbp.flash.MsgStmUniqueIdResp;
 import com.swiftnav.sbp.imu.MsgImuAux;
 import com.swiftnav.sbp.imu.MsgImuRaw;
+import com.swiftnav.sbp.integrity.MsgAcknowledge;
 import com.swiftnav.sbp.integrity.MsgSsrFlagHighLevel;
 import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPointSatLos;
 import com.swiftnav.sbp.integrity.MsgSsrFlagIonoGridPoints;
@@ -320,6 +321,8 @@ final class MessageTable {
                 return new MsgSsrFlagIonoTileSatLos(msg);
             case MsgSsrFlagIonoGridPointSatLos.TYPE:
                 return new MsgSsrFlagIonoGridPointSatLos(msg);
+            case MsgAcknowledge.TYPE:
+                return new MsgAcknowledge(msg);
             case MsgLinuxCpuStateDepA.TYPE:
                 return new MsgLinuxCpuStateDepA(msg);
             case MsgLinuxMemStateDepA.TYPE:

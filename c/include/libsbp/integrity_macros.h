@@ -294,4 +294,168 @@
  */
 #define SBP_MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS_ENCODED_OVERHEAD 17u
 
+#define SBP_MSG_ACKNOWLEDGE 0x0BD2
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK (0xffu)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT (0u)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT) & \
+        SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK))
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_SET(flags, val)                      \
+  do {                                                                     \
+    (flags) = (u8)((flags & (~(SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK          \
+                               << SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT))) | \
+                   (((val) & (SBP_ACKNOWLEDGE_RESPONSE_CODE_MASK))         \
+                    << (SBP_ACKNOWLEDGE_RESPONSE_CODE_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_OK (0)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_OUT_OF_COVERAGE (1)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_FORBIDDEN (2)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_INVALID_REQUEST (3)
+#define SBP_ACKNOWLEDGE_RESPONSE_CODE_INVALID_AREA_ID (4)
+#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT (0u)
+#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT) & \
+         SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK))
+#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SET(flags, val)                 \
+  do {                                                                     \
+    (flags) =                                                              \
+        (u16)((flags & (~(SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK          \
+                          << SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT))) | \
+              (((val) & (SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK))         \
+               << (SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_SHIFT (1u)
+#define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_SHIFT) & \
+         SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_MASK))
+#define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_SET(flags, val)                 \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u16)((flags & (~(SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_MASK          \
+                          << SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_SHIFT))) | \
+              (((val) & (SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_MASK))         \
+               << (SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_EPHEMERIS_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_EPHEMERIS_SHIFT (2u)
+#define SBP_ACKNOWLEDGE_EPHEMERIS_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_EPHEMERIS_SHIFT) & \
+         SBP_ACKNOWLEDGE_EPHEMERIS_MASK))
+#define SBP_ACKNOWLEDGE_EPHEMERIS_SET(flags, val)                       \
+  do {                                                                  \
+    (flags) = (u16)((flags & (~(SBP_ACKNOWLEDGE_EPHEMERIS_MASK          \
+                                << SBP_ACKNOWLEDGE_EPHEMERIS_SHIFT))) | \
+                    (((val) & (SBP_ACKNOWLEDGE_EPHEMERIS_MASK))         \
+                     << (SBP_ACKNOWLEDGE_EPHEMERIS_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_EPHEMERIS_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_EPHEMERIS_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_SATELLITE_CLOCK_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_SATELLITE_CLOCK_SHIFT (3u)
+#define SBP_ACKNOWLEDGE_SATELLITE_CLOCK_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_SATELLITE_CLOCK_SHIFT) & \
+         SBP_ACKNOWLEDGE_SATELLITE_CLOCK_MASK))
+#define SBP_ACKNOWLEDGE_SATELLITE_CLOCK_SET(flags, val)                       \
+  do {                                                                        \
+    (flags) = (u16)((flags & (~(SBP_ACKNOWLEDGE_SATELLITE_CLOCK_MASK          \
+                                << SBP_ACKNOWLEDGE_SATELLITE_CLOCK_SHIFT))) | \
+                    (((val) & (SBP_ACKNOWLEDGE_SATELLITE_CLOCK_MASK))         \
+                     << (SBP_ACKNOWLEDGE_SATELLITE_CLOCK_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_SATELLITE_CLOCK_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_SATELLITE_CLOCK_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_SATELLITE_ORBIT_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_SATELLITE_ORBIT_SHIFT (4u)
+#define SBP_ACKNOWLEDGE_SATELLITE_ORBIT_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_SATELLITE_ORBIT_SHIFT) & \
+         SBP_ACKNOWLEDGE_SATELLITE_ORBIT_MASK))
+#define SBP_ACKNOWLEDGE_SATELLITE_ORBIT_SET(flags, val)                       \
+  do {                                                                        \
+    (flags) = (u16)((flags & (~(SBP_ACKNOWLEDGE_SATELLITE_ORBIT_MASK          \
+                                << SBP_ACKNOWLEDGE_SATELLITE_ORBIT_SHIFT))) | \
+                    (((val) & (SBP_ACKNOWLEDGE_SATELLITE_ORBIT_MASK))         \
+                     << (SBP_ACKNOWLEDGE_SATELLITE_ORBIT_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_SATELLITE_ORBIT_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_SATELLITE_ORBIT_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_SHIFT (5u)
+#define SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_SHIFT) & \
+         SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_MASK))
+#define SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_SET(flags, val)                 \
+  do {                                                                      \
+    (flags) =                                                               \
+        (u16)((flags & (~(SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_MASK          \
+                          << SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_SHIFT))) | \
+              (((val) & (SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_MASK))         \
+               << (SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_SATELLITE_CODE_BIAS_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_SHIFT (6u)
+#define SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_SHIFT) & \
+         SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_MASK))
+#define SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_SET(flags, val)                 \
+  do {                                                                       \
+    (flags) =                                                                \
+        (u16)((flags & (~(SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_MASK          \
+                          << SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_SHIFT))) | \
+              (((val) & (SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_MASK))         \
+               << (SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_SATELLITE_PHASE_BIAS_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_ATMOSPHERICS_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_ATMOSPHERICS_SHIFT (7u)
+#define SBP_ACKNOWLEDGE_ATMOSPHERICS_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_ATMOSPHERICS_SHIFT) & \
+         SBP_ACKNOWLEDGE_ATMOSPHERICS_MASK))
+#define SBP_ACKNOWLEDGE_ATMOSPHERICS_SET(flags, val)                       \
+  do {                                                                     \
+    (flags) = (u16)((flags & (~(SBP_ACKNOWLEDGE_ATMOSPHERICS_MASK          \
+                                << SBP_ACKNOWLEDGE_ATMOSPHERICS_SHIFT))) | \
+                    (((val) & (SBP_ACKNOWLEDGE_ATMOSPHERICS_MASK))         \
+                     << (SBP_ACKNOWLEDGE_ATMOSPHERICS_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_ATMOSPHERICS_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_ATMOSPHERICS_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_INTEGRITY_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_INTEGRITY_SHIFT (8u)
+#define SBP_ACKNOWLEDGE_INTEGRITY_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_INTEGRITY_SHIFT) & \
+         SBP_ACKNOWLEDGE_INTEGRITY_MASK))
+#define SBP_ACKNOWLEDGE_INTEGRITY_SET(flags, val)                       \
+  do {                                                                  \
+    (flags) = (u16)((flags & (~(SBP_ACKNOWLEDGE_INTEGRITY_MASK          \
+                                << SBP_ACKNOWLEDGE_INTEGRITY_SHIFT))) | \
+                    (((val) & (SBP_ACKNOWLEDGE_INTEGRITY_MASK))         \
+                     << (SBP_ACKNOWLEDGE_INTEGRITY_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_INTEGRITY_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_INTEGRITY_REQUESTED (1)
+/**
+ * Encoded length of sbp_msg_acknowledge_t (V4 API) and
+ * msg_acknowledge_t (legacy API)
+ */
+#define SBP_MSG_ACKNOWLEDGE_ENCODED_LEN 11u
+
 #endif /* LIBSBP_INTEGRITY_MACROS_H */

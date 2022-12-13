@@ -134,3 +134,16 @@ message MsgSsrFlagIonoGridPointSatLos {
     uint32 n_faulty_los = 3;
     repeated SvId faulty_los = 4;
 }
+
+/** Acknowledgement message in response to a request for corrections
+ *
+None
+ */
+message MsgAcknowledge {
+    uint32 request_id = 1;
+    uint32 area_id = 2;
+    uint32 response_code = 3;
+    uint32 correction_mask_on_demand = 4;
+    uint32 correction_mask_stream = 5;
+    uint32 solution_id = 6;
+}

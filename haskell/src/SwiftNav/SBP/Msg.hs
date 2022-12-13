@@ -57,7 +57,8 @@ import SwiftNav.SBP.Types
 -- Includes SBPMsgUnknown for valid SBP messages with undefined message
 -- types and SBPMsgBadCRC for SBP messages with invalid CRC checksums.
 data SBPMsg =
-     SBPMsgAcqResult MsgAcqResult Msg
+     SBPMsgAcknowledge MsgAcknowledge Msg
+   | SBPMsgAcqResult MsgAcqResult Msg
    | SBPMsgAcqResultDepA MsgAcqResultDepA Msg
    | SBPMsgAcqResultDepB MsgAcqResultDepB Msg
    | SBPMsgAcqResultDepC MsgAcqResultDepC Msg
@@ -293,6 +294,7 @@ instance Binary SBPMsg where
       decoder <$> get where
         decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
+          | _msgSBPType == msgAcknowledge = SBPMsgAcknowledge (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqResultDepB = SBPMsgAcqResultDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -521,6 +523,7 @@ instance Binary SBPMsg where
   put sm = do
     putWord8 msgSBPPreamble
     encoder sm where
+      encoder (SBPMsgAcknowledge _ m) = put m
       encoder (SBPMsgAcqResult _ m) = put m
       encoder (SBPMsgAcqResultDepA _ m) = put m
       encoder (SBPMsgAcqResultDepB _ m) = put m
@@ -753,6 +756,7 @@ instance FromJSON SBPMsg where
     payload <- o .: "payload"
     decoder msgType payload where
       decoder msgType payload
+        | msgType == msgAcknowledge = SBPMsgAcknowledge <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqResult = SBPMsgAcqResult <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -986,6 +990,7 @@ instance FromJSON SBPMsg where
   pure $ review _Object $ a' <> b'
 
 instance ToJSON SBPMsg where
+  toJSON (SBPMsgAcknowledge n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqResult n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqResultDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqResultDepB n m) = toJSON n <<>> toJSON m
@@ -1213,6 +1218,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgUnknown m) = toJSON m
 
 instance HasMsg SBPMsg where
+  msg f (SBPMsgAcknowledge n m) = SBPMsgAcknowledge n <$> f m
   msg f (SBPMsgAcqResult n m) = SBPMsgAcqResult n <$> f m
   msg f (SBPMsgAcqResultDepA n m) = SBPMsgAcqResultDepA n <$> f m
   msg f (SBPMsgAcqResultDepB n m) = SBPMsgAcqResultDepB n <$> f m

@@ -133,6 +133,24 @@ typedef struct SBP_ATTR_PACKED {
   sv_id_t faulty_los[0];         /**< List of faulty LOS */
 } msg_ssr_flag_iono_grid_point_sat_los_t;
 
+typedef struct SBP_ATTR_PACKED {
+  u8 request_id;                 /**< Echo of the request ID field from the
+                                      corresponding CRA message, or 255 if
+                                      no request ID was provided. */
+  u32 area_id;                   /**< Echo of the Area ID field from the
+                                      corresponding CRA message. */
+  u8 response_code;              /**< Reported status of the request. */
+  u16 correction_mask_on_demand; /**< Contains the message group(s) that
+                                      will be sent in response from the
+                                      corresponding CRA correction mask. An
+                                      echo of the correction mask field
+                                      from the corresponding CRA message. */
+  u16 correction_mask_stream;    /**< For future expansion. Always set to
+                                      0. */
+  u8 solution_id;                /**< The solution ID of the instance
+                                      providing the corrections. */
+} msg_acknowledge_t;
+
 /** \} */
 
 SBP_PACK_END

@@ -56,6 +56,38 @@ template <typename>
 struct MessageTraits;
 
 template <>
+struct MessageTraits<sbp_msg_acknowledge_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgAcknowledge;
+  static const sbp_msg_acknowledge_t &get(const sbp_msg_t &msg) {
+    return msg.acknowledge;
+  }
+  static sbp_msg_acknowledge_t &get(sbp_msg_t &msg) { return msg.acknowledge; }
+  static void to_sbp_msg(const sbp_msg_acknowledge_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->acknowledge = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_acknowledge_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.acknowledge = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id,
+                 const sbp_msg_acknowledge_t &msg, sbp_write_fn_t write) {
+    return sbp_msg_acknowledge_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_acknowledge_t &msg) {
+    return sbp_msg_acknowledge_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_acknowledge_t *msg) {
+    return sbp_msg_acknowledge_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_acknowledge_t &msg) {
+    return sbp_msg_acknowledge_encoded_len(&msg);
+  }
+};
+
+template <>
 struct MessageTraits<sbp_msg_acq_result_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcqResultDepA;
   static const sbp_msg_acq_result_dep_a_t &get(const sbp_msg_t &msg) {

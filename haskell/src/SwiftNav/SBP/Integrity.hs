@@ -338,3 +338,46 @@ instance Binary MsgSsrFlagIonoGridPointSatLos where
 $(makeSBP 'msgSsrFlagIonoGridPointSatLos ''MsgSsrFlagIonoGridPointSatLos)
 $(makeJSON "_msgSsrFlagIonoGridPointSatLos_" ''MsgSsrFlagIonoGridPointSatLos)
 $(makeLenses ''MsgSsrFlagIonoGridPointSatLos)
+
+msgAcknowledge :: Word16
+msgAcknowledge = 0x0BD2
+
+data MsgAcknowledge = MsgAcknowledge
+  { _msgAcknowledge_request_id              :: !Word8
+    -- ^ Echo of the request ID field from the corresponding CRA message, or 255
+    -- if no request ID was provided.
+  , _msgAcknowledge_area_id                 :: !Word32
+    -- ^ Echo of the Area ID field from the corresponding CRA message.
+  , _msgAcknowledge_response_code           :: !Word8
+    -- ^ Reported status of the request.
+  , _msgAcknowledge_correction_mask_on_demand :: !Word16
+    -- ^ Contains the message group(s) that will be sent in response from the
+    -- corresponding CRA correction mask. An echo of the correction mask field
+    -- from the corresponding CRA message.
+  , _msgAcknowledge_correction_mask_stream  :: !Word16
+    -- ^ For future expansion. Always set to 0.
+  , _msgAcknowledge_solution_id             :: !Word8
+    -- ^ The solution ID of the instance providing the corrections.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgAcknowledge where
+  get = do
+    _msgAcknowledge_request_id <- getWord8
+    _msgAcknowledge_area_id <- getWord32le
+    _msgAcknowledge_response_code <- getWord8
+    _msgAcknowledge_correction_mask_on_demand <- getWord16le
+    _msgAcknowledge_correction_mask_stream <- getWord16le
+    _msgAcknowledge_solution_id <- getWord8
+    pure MsgAcknowledge {..}
+
+  put MsgAcknowledge {..} = do
+    putWord8 _msgAcknowledge_request_id
+    putWord32le _msgAcknowledge_area_id
+    putWord8 _msgAcknowledge_response_code
+    putWord16le _msgAcknowledge_correction_mask_on_demand
+    putWord16le _msgAcknowledge_correction_mask_stream
+    putWord8 _msgAcknowledge_solution_id
+
+$(makeSBP 'msgAcknowledge ''MsgAcknowledge)
+$(makeJSON "_msgAcknowledge_" ''MsgAcknowledge)
+$(makeLenses ''MsgAcknowledge)
