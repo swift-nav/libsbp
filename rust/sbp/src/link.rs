@@ -6,6 +6,7 @@ use std::{
     sync::{Arc, Mutex},
 };
 
+use crate::{DeserializeError, Frame};
 use slotmap::DenseSlotMap;
 
 use crate::messages::{ConcreteMessage, Sbp, SbpMessage};
@@ -141,16 +142,30 @@ struct LinkInner<'link, S> {
     handlers: Mutex<DenseSlotMap<KeyInner, Handler<'link, S>>>,
 }
 
+enum MessageVariant {
+    Sbp(Sbp),
+    Frame(Frame),
+}
+
+impl MessageVariant {
+    fn to_event<E: Event>(self) -> E {
+        match self {
+            MessageVariant::Sbp(msg) => E::from_sbp(msg),
+            MessageVariant::Frame(frame) => E::from_frame(frame).unwrap(),
+        }
+    }
+}
+
 /// A message handler and the message ids it responds to.
 #[allow(clippy::type_complexity)]
 pub struct Handler<'link, S> {
-    func: Box<dyn FnMut(&S, Sbp) + Send + 'link>,
+    func: Box<dyn FnMut(&S, MessageVariant) + Send + 'link>,
     msg_types: Cow<'static, [u16]>,
 }
 
 impl<'link, S> Handler<'link, S> {
     fn run(&mut self, state: &S, msg: Sbp) {
-        (self.func)(state, msg);
+        (self.func)(state, MessageVariant::Sbp(msg));
     }
 
     fn can_run(&self, msg: &Sbp) -> bool {
@@ -173,8 +188,8 @@ where
 {
     fn into_handler(mut self) -> Handler<'link, S> {
         Handler {
-            func: Box::new(move |state, msg| {
-                let event = E::from_sbp(msg);
+            func: Box::new(move |state, variant| {
+                let event = variant.to_event();
                 self(state, event);
             }),
             msg_types: Cow::Borrowed(E::MESSAGE_TYPES),
@@ -183,8 +198,8 @@ where
 
     fn into_handler_with_ids(mut self, msg_types: &[u16]) -> Handler<'link, S> {
         Handler {
-            func: Box::new(move |state, msg| {
-                let event = E::from_sbp(msg);
+            func: Box::new(move |state, variant| {
+                let event = variant.to_event();
                 self(state, event);
             }),
             msg_types: Cow::Owned(msg_types.to_vec()),
@@ -202,8 +217,8 @@ where
 {
     fn into_handler(mut self) -> Handler<'link, S> {
         Handler {
-            func: Box::new(move |_state, msg| {
-                let event = E::from_sbp(msg);
+            func: Box::new(move |_state, variant| {
+                let event = variant.to_event();
                 self(event);
             }),
             msg_types: Cow::Borrowed(E::MESSAGE_TYPES),
@@ -212,8 +227,8 @@ where
 
     fn into_handler_with_ids(mut self, msg_types: &[u16]) -> Handler<'link, S> {
         Handler {
-            func: Box::new(move |_state, msg| {
-                let event = E::from_sbp(msg);
+            func: Box::new(move |_state, variant| {
+                let event = variant.to_event();
                 self(event);
             }),
             msg_types: Cow::Owned(msg_types.to_vec()),
@@ -239,6 +254,10 @@ pub trait Event {
     /// Create an instance of this event from an SBP message. This message will only be called
     /// if the message type is in `Event::MESSAGE_TYPES`.
     fn from_sbp(msg: Sbp) -> Self;
+
+    fn from_frame<E: Event>(frame: Frame) -> Result<E, DeserializeError> {
+        frame.to_sbp().map(|msg| E::from_sbp(msg))
+    }
 }
 
 impl Event for Sbp {
