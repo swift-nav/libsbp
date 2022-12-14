@@ -82,6 +82,17 @@ definitions:
 
  - UARTChannel:
     desc: State of the UART channel.
+
+     # Message display (also mentioned below in MSG_UART_STATE) creates
+     # an enriched display format for this struct.
+     # The syntax of {{field}:x} represents formatting '{:x}' or 'rounding'
+     #
+     # In this example, UARTChannel will create a rust implementation of
+     #
+     # format!("{:1} | {:2}", self.tx_throughput, self.crc_error_count)
+
+    message_display: "{{@tx_throughput}:1} | {{@crc_error_count}:2}"
+
     fields:
         - tx_throughput:
             type: float
@@ -103,6 +114,18 @@ definitions:
      # by shortening keywords in generator but can be manually specified here.
 
     friendly_name: UART STATE
+
+     # This field creates an enriched display format for the end-user.
+     # Available syntax:
+     # {{...}}
+     #   - enclosed in double braces represents input argument i.e. f"{args}" in python
+     #   - this syntax begins all the following possible patterns.
+     # @fieldX
+     #   - denotes some field from the current class, should be picked from one of
+     #     the defined fields below.
+     # #uart0
+     #   - to access fields that has type using message_display
+    message_display: "channel: {{#uart0}}"
 
     desc: Piksi message about the state of UART0.
     fields:

@@ -17,6 +17,7 @@ messages.
 
 from sbpg.utils import fmt_repr, rejig_bitfields
 import datetime
+import re
 
 ##############################################################################
 #
@@ -74,7 +75,7 @@ class Definition(object):
   def __init__(self, identifier=None,
                sbp_id=None, short_desc=None, desc=None, type_id=None,
                fields=None, public=False, embedded_type=False,
-               friendly_name=""):
+               friendly_name="", message_display=""):
     self.identifier = identifier
     self.sbp_id = sbp_id
     self.short_desc = short_desc
@@ -85,6 +86,12 @@ class Definition(object):
     self.public = public
     self.static = True
     self.friendly_name = friendly_name or get_friendly_name(identifier)
+    self.message_display = message_display
+    if self.message_display:
+        # match regex, capture all {{field}} enclosed by two brackets
+        enrich_fields = re.findall(ENRICH_PAT, self.message_display)
+        self.enrich_fields = ', '.join(map(map_to_fields, enrich_fields))
+        self.enrich_display = re.sub(ENRICH_PAT, "{\\2}", self.message_display)
 
   @property
   def max_type_len(self):
@@ -237,6 +244,24 @@ def get_friendly_name(identifier):
     for key, item in shorten_keyword.items():
         f_name = f_name.replace(key, item)
     return f_name
+
+
+# pattern to capture {{groups}} for enriched message display
+# optional {{group}:1} to denote format!("{:1}", field) roundings
+ENRICH_PAT = re.compile("{{([^}]+)}(:\\d+)?}")
+# pattern to capture field to represent self.@field or self.#field.message_display()
+ENRICH_FIELD_PAT = re.compile("([@#]\\w+)")
+
+# for enriched field display
+def extract_self_field(match_obj):
+    match = match_obj.group()
+    assert match[0] == '#' or match[0] == '@'
+    if match[0] == '#':
+        return f"self.{match[1:]}.message_display()"
+    return f"self.{match[1:]}"
+
+def map_to_fields(f):
+    return re.sub(ENRICH_FIELD_PAT, extract_self_field, f[0])
 
 def is_message(obj):
   return isinstance(obj, Definition) and getattr(obj, 'sbp_id', None)

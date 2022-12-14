@@ -50,6 +50,7 @@ field = Schema({identifier:
 definition = Schema({identifier:
                      {Optional('id'): sbp_identifier,
                       Optional('friendly_name'): description,
+                      Optional('message_display'): description,
                       Optional('short_desc'): description,
                       Optional('desc'): description,
                       Optional('replaced_by'): [identifier],
