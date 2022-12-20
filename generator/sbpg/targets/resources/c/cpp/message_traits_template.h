@@ -38,6 +38,7 @@ struct MessageTraits;
 template<>
 struct MessageTraits<(((m.type_name)))> {
   static constexpr sbp_msg_type_t id = (((m.v4_msg_type)));
+  static constexpr char *name = "(((m.name)))";
   static const (((m.type_name)))& get(const sbp_msg_t &msg) {
     return msg.(((m.union_member_name)));
   }
