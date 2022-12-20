@@ -148,12 +148,12 @@ impl TryFrom<messages::observation::MsgEphemerisGal> for swiftnav::ephemeris::Ep
                 eph.w,
                 eph.inc,
                 eph.inc_dot,
-                eph.af0 as f64,
-                eph.af1 as f64,
+                eph.af0,
+                eph.af1,
                 eph.af2 as f64,
                 eph.toc.try_into()?,
                 eph.iodc,
-                eph.iode as u16,
+                eph.iode,
             ),
         ))
     }

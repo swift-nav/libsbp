@@ -156,7 +156,7 @@ pub fn test_round_trip<F1, F2, F3>(
         del_test_output.add_test_output(&output_path);
 
         let input_file =
-            File::open(&input_path).expect("could not open second transform input file");
+            File::open(input_path).expect("could not open second transform input file");
         let output_file =
             File::create(&output_path).expect("could not create second transform output file");
 
