@@ -58,7 +58,7 @@ struct MessageTraits;
 template <>
 struct MessageTraits<sbp_msg_acknowledge_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcknowledge;
-  static constexpr char *name = "MSG_ACKNOWLEDGE";
+  static constexpr const char *name = "MSG_ACKNOWLEDGE";
   static const sbp_msg_acknowledge_t &get(const sbp_msg_t &msg) {
     return msg.acknowledge;
   }
@@ -91,7 +91,7 @@ struct MessageTraits<sbp_msg_acknowledge_t> {
 template <>
 struct MessageTraits<sbp_msg_acq_result_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcqResultDepA;
-  static constexpr char *name = "MSG_ACQ_RESULT_DEP_A";
+  static constexpr const char *name = "MSG_ACQ_RESULT_DEP_A";
   static const sbp_msg_acq_result_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.acq_result_dep_a;
   }
@@ -127,7 +127,7 @@ struct MessageTraits<sbp_msg_acq_result_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_acq_result_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcqResultDepB;
-  static constexpr char *name = "MSG_ACQ_RESULT_DEP_B";
+  static constexpr const char *name = "MSG_ACQ_RESULT_DEP_B";
   static const sbp_msg_acq_result_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.acq_result_dep_b;
   }
@@ -163,7 +163,7 @@ struct MessageTraits<sbp_msg_acq_result_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_acq_result_dep_c_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcqResultDepC;
-  static constexpr char *name = "MSG_ACQ_RESULT_DEP_C";
+  static constexpr const char *name = "MSG_ACQ_RESULT_DEP_C";
   static const sbp_msg_acq_result_dep_c_t &get(const sbp_msg_t &msg) {
     return msg.acq_result_dep_c;
   }
@@ -199,7 +199,7 @@ struct MessageTraits<sbp_msg_acq_result_dep_c_t> {
 template <>
 struct MessageTraits<sbp_msg_acq_result_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcqResult;
-  static constexpr char *name = "MSG_ACQ_RESULT";
+  static constexpr const char *name = "MSG_ACQ_RESULT";
   static const sbp_msg_acq_result_t &get(const sbp_msg_t &msg) {
     return msg.acq_result;
   }
@@ -232,7 +232,7 @@ struct MessageTraits<sbp_msg_acq_result_t> {
 template <>
 struct MessageTraits<sbp_msg_acq_sv_profile_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcqSvProfileDep;
-  static constexpr char *name = "MSG_ACQ_SV_PROFILE_DEP";
+  static constexpr const char *name = "MSG_ACQ_SV_PROFILE_DEP";
   static const sbp_msg_acq_sv_profile_dep_t &get(const sbp_msg_t &msg) {
     return msg.acq_sv_profile_dep;
   }
@@ -269,7 +269,7 @@ struct MessageTraits<sbp_msg_acq_sv_profile_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_acq_sv_profile_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAcqSvProfile;
-  static constexpr char *name = "MSG_ACQ_SV_PROFILE";
+  static constexpr const char *name = "MSG_ACQ_SV_PROFILE";
   static const sbp_msg_acq_sv_profile_t &get(const sbp_msg_t &msg) {
     return msg.acq_sv_profile;
   }
@@ -305,7 +305,7 @@ struct MessageTraits<sbp_msg_acq_sv_profile_t> {
 template <>
 struct MessageTraits<sbp_msg_age_corrections_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAgeCorrections;
-  static constexpr char *name = "MSG_AGE_CORRECTIONS";
+  static constexpr const char *name = "MSG_AGE_CORRECTIONS";
   static const sbp_msg_age_corrections_t &get(const sbp_msg_t &msg) {
     return msg.age_corrections;
   }
@@ -341,7 +341,7 @@ struct MessageTraits<sbp_msg_age_corrections_t> {
 template <>
 struct MessageTraits<sbp_msg_almanac_glo_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAlmanacGloDep;
-  static constexpr char *name = "MSG_ALMANAC_GLO_DEP";
+  static constexpr const char *name = "MSG_ALMANAC_GLO_DEP";
   static const sbp_msg_almanac_glo_dep_t &get(const sbp_msg_t &msg) {
     return msg.almanac_glo_dep;
   }
@@ -377,7 +377,7 @@ struct MessageTraits<sbp_msg_almanac_glo_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_almanac_glo_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAlmanacGlo;
-  static constexpr char *name = "MSG_ALMANAC_GLO";
+  static constexpr const char *name = "MSG_ALMANAC_GLO";
   static const sbp_msg_almanac_glo_t &get(const sbp_msg_t &msg) {
     return msg.almanac_glo;
   }
@@ -410,7 +410,7 @@ struct MessageTraits<sbp_msg_almanac_glo_t> {
 template <>
 struct MessageTraits<sbp_msg_almanac_gps_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAlmanacGpsDep;
-  static constexpr char *name = "MSG_ALMANAC_GPS_DEP";
+  static constexpr const char *name = "MSG_ALMANAC_GPS_DEP";
   static const sbp_msg_almanac_gps_dep_t &get(const sbp_msg_t &msg) {
     return msg.almanac_gps_dep;
   }
@@ -446,7 +446,7 @@ struct MessageTraits<sbp_msg_almanac_gps_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_almanac_gps_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAlmanacGps;
-  static constexpr char *name = "MSG_ALMANAC_GPS";
+  static constexpr const char *name = "MSG_ALMANAC_GPS";
   static const sbp_msg_almanac_gps_t &get(const sbp_msg_t &msg) {
     return msg.almanac_gps;
   }
@@ -479,7 +479,7 @@ struct MessageTraits<sbp_msg_almanac_gps_t> {
 template <>
 struct MessageTraits<sbp_msg_almanac_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAlmanac;
-  static constexpr char *name = "MSG_ALMANAC";
+  static constexpr const char *name = "MSG_ALMANAC";
   static const sbp_msg_almanac_t &get(const sbp_msg_t &msg) {
     return msg.almanac;
   }
@@ -512,7 +512,7 @@ struct MessageTraits<sbp_msg_almanac_t> {
 template <>
 struct MessageTraits<sbp_msg_angular_rate_t> {
   static constexpr sbp_msg_type_t id = SbpMsgAngularRate;
-  static constexpr char *name = "MSG_ANGULAR_RATE";
+  static constexpr const char *name = "MSG_ANGULAR_RATE";
   static const sbp_msg_angular_rate_t &get(const sbp_msg_t &msg) {
     return msg.angular_rate;
   }
@@ -548,7 +548,7 @@ struct MessageTraits<sbp_msg_angular_rate_t> {
 template <>
 struct MessageTraits<sbp_msg_base_pos_ecef_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBasePosEcef;
-  static constexpr char *name = "MSG_BASE_POS_ECEF";
+  static constexpr const char *name = "MSG_BASE_POS_ECEF";
   static const sbp_msg_base_pos_ecef_t &get(const sbp_msg_t &msg) {
     return msg.base_pos_ecef;
   }
@@ -584,7 +584,7 @@ struct MessageTraits<sbp_msg_base_pos_ecef_t> {
 template <>
 struct MessageTraits<sbp_msg_base_pos_llh_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBasePosLlh;
-  static constexpr char *name = "MSG_BASE_POS_LLH";
+  static constexpr const char *name = "MSG_BASE_POS_LLH";
   static const sbp_msg_base_pos_llh_t &get(const sbp_msg_t &msg) {
     return msg.base_pos_llh;
   }
@@ -620,7 +620,7 @@ struct MessageTraits<sbp_msg_base_pos_llh_t> {
 template <>
 struct MessageTraits<sbp_msg_baseline_ecef_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBaselineEcefDepA;
-  static constexpr char *name = "MSG_BASELINE_ECEF_DEP_A";
+  static constexpr const char *name = "MSG_BASELINE_ECEF_DEP_A";
   static const sbp_msg_baseline_ecef_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.baseline_ecef_dep_a;
   }
@@ -657,7 +657,7 @@ struct MessageTraits<sbp_msg_baseline_ecef_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_baseline_ecef_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBaselineEcef;
-  static constexpr char *name = "MSG_BASELINE_ECEF";
+  static constexpr const char *name = "MSG_BASELINE_ECEF";
   static const sbp_msg_baseline_ecef_t &get(const sbp_msg_t &msg) {
     return msg.baseline_ecef;
   }
@@ -693,7 +693,7 @@ struct MessageTraits<sbp_msg_baseline_ecef_t> {
 template <>
 struct MessageTraits<sbp_msg_baseline_heading_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBaselineHeadingDepA;
-  static constexpr char *name = "MSG_BASELINE_HEADING_DEP_A";
+  static constexpr const char *name = "MSG_BASELINE_HEADING_DEP_A";
   static const sbp_msg_baseline_heading_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.baseline_heading_dep_a;
   }
@@ -730,7 +730,7 @@ struct MessageTraits<sbp_msg_baseline_heading_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_baseline_heading_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBaselineHeading;
-  static constexpr char *name = "MSG_BASELINE_HEADING";
+  static constexpr const char *name = "MSG_BASELINE_HEADING";
   static const sbp_msg_baseline_heading_t &get(const sbp_msg_t &msg) {
     return msg.baseline_heading;
   }
@@ -766,7 +766,7 @@ struct MessageTraits<sbp_msg_baseline_heading_t> {
 template <>
 struct MessageTraits<sbp_msg_baseline_ned_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBaselineNedDepA;
-  static constexpr char *name = "MSG_BASELINE_NED_DEP_A";
+  static constexpr const char *name = "MSG_BASELINE_NED_DEP_A";
   static const sbp_msg_baseline_ned_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.baseline_ned_dep_a;
   }
@@ -803,7 +803,7 @@ struct MessageTraits<sbp_msg_baseline_ned_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_baseline_ned_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBaselineNed;
-  static constexpr char *name = "MSG_BASELINE_NED";
+  static constexpr const char *name = "MSG_BASELINE_NED";
   static const sbp_msg_baseline_ned_t &get(const sbp_msg_t &msg) {
     return msg.baseline_ned;
   }
@@ -839,7 +839,7 @@ struct MessageTraits<sbp_msg_baseline_ned_t> {
 template <>
 struct MessageTraits<sbp_msg_bootloader_handshake_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBootloaderHandshakeDepA;
-  static constexpr char *name = "MSG_BOOTLOADER_HANDSHAKE_DEP_A";
+  static constexpr const char *name = "MSG_BOOTLOADER_HANDSHAKE_DEP_A";
   static const sbp_msg_bootloader_handshake_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.bootloader_handshake_dep_a;
   }
@@ -877,7 +877,7 @@ struct MessageTraits<sbp_msg_bootloader_handshake_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_bootloader_handshake_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBootloaderHandshakeReq;
-  static constexpr char *name = "MSG_BOOTLOADER_HANDSHAKE_REQ";
+  static constexpr const char *name = "MSG_BOOTLOADER_HANDSHAKE_REQ";
   static const sbp_msg_bootloader_handshake_req_t &get(const sbp_msg_t &msg) {
     return msg.bootloader_handshake_req;
   }
@@ -914,7 +914,7 @@ struct MessageTraits<sbp_msg_bootloader_handshake_req_t> {
 template <>
 struct MessageTraits<sbp_msg_bootloader_handshake_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBootloaderHandshakeResp;
-  static constexpr char *name = "MSG_BOOTLOADER_HANDSHAKE_RESP";
+  static constexpr const char *name = "MSG_BOOTLOADER_HANDSHAKE_RESP";
   static const sbp_msg_bootloader_handshake_resp_t &get(const sbp_msg_t &msg) {
     return msg.bootloader_handshake_resp;
   }
@@ -952,7 +952,7 @@ struct MessageTraits<sbp_msg_bootloader_handshake_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_bootloader_jump_to_app_t> {
   static constexpr sbp_msg_type_t id = SbpMsgBootloaderJumpToApp;
-  static constexpr char *name = "MSG_BOOTLOADER_JUMP_TO_APP";
+  static constexpr const char *name = "MSG_BOOTLOADER_JUMP_TO_APP";
   static const sbp_msg_bootloader_jump_to_app_t &get(const sbp_msg_t &msg) {
     return msg.bootloader_jump_to_app;
   }
@@ -989,7 +989,7 @@ struct MessageTraits<sbp_msg_bootloader_jump_to_app_t> {
 template <>
 struct MessageTraits<sbp_msg_cell_modem_status_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCellModemStatus;
-  static constexpr char *name = "MSG_CELL_MODEM_STATUS";
+  static constexpr const char *name = "MSG_CELL_MODEM_STATUS";
   static const sbp_msg_cell_modem_status_t &get(const sbp_msg_t &msg) {
     return msg.cell_modem_status;
   }
@@ -1025,7 +1025,7 @@ struct MessageTraits<sbp_msg_cell_modem_status_t> {
 template <>
 struct MessageTraits<sbp_msg_command_output_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCommandOutput;
-  static constexpr char *name = "MSG_COMMAND_OUTPUT";
+  static constexpr const char *name = "MSG_COMMAND_OUTPUT";
   static const sbp_msg_command_output_t &get(const sbp_msg_t &msg) {
     return msg.command_output;
   }
@@ -1061,7 +1061,7 @@ struct MessageTraits<sbp_msg_command_output_t> {
 template <>
 struct MessageTraits<sbp_msg_command_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCommandReq;
-  static constexpr char *name = "MSG_COMMAND_REQ";
+  static constexpr const char *name = "MSG_COMMAND_REQ";
   static const sbp_msg_command_req_t &get(const sbp_msg_t &msg) {
     return msg.command_req;
   }
@@ -1094,7 +1094,7 @@ struct MessageTraits<sbp_msg_command_req_t> {
 template <>
 struct MessageTraits<sbp_msg_command_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCommandResp;
-  static constexpr char *name = "MSG_COMMAND_RESP";
+  static constexpr const char *name = "MSG_COMMAND_RESP";
   static const sbp_msg_command_resp_t &get(const sbp_msg_t &msg) {
     return msg.command_resp;
   }
@@ -1130,7 +1130,7 @@ struct MessageTraits<sbp_msg_command_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_csac_telemetry_labels_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCsacTelemetryLabels;
-  static constexpr char *name = "MSG_CSAC_TELEMETRY_LABELS";
+  static constexpr const char *name = "MSG_CSAC_TELEMETRY_LABELS";
   static const sbp_msg_csac_telemetry_labels_t &get(const sbp_msg_t &msg) {
     return msg.csac_telemetry_labels;
   }
@@ -1167,7 +1167,7 @@ struct MessageTraits<sbp_msg_csac_telemetry_labels_t> {
 template <>
 struct MessageTraits<sbp_msg_csac_telemetry_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCsacTelemetry;
-  static constexpr char *name = "MSG_CSAC_TELEMETRY";
+  static constexpr const char *name = "MSG_CSAC_TELEMETRY";
   static const sbp_msg_csac_telemetry_t &get(const sbp_msg_t &msg) {
     return msg.csac_telemetry;
   }
@@ -1203,7 +1203,7 @@ struct MessageTraits<sbp_msg_csac_telemetry_t> {
 template <>
 struct MessageTraits<sbp_msg_cw_results_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCwResults;
-  static constexpr char *name = "MSG_CW_RESULTS";
+  static constexpr const char *name = "MSG_CW_RESULTS";
   static const sbp_msg_cw_results_t &get(const sbp_msg_t &msg) {
     return msg.cw_results;
   }
@@ -1236,7 +1236,7 @@ struct MessageTraits<sbp_msg_cw_results_t> {
 template <>
 struct MessageTraits<sbp_msg_cw_start_t> {
   static constexpr sbp_msg_type_t id = SbpMsgCwStart;
-  static constexpr char *name = "MSG_CW_START";
+  static constexpr const char *name = "MSG_CW_START";
   static const sbp_msg_cw_start_t &get(const sbp_msg_t &msg) {
     return msg.cw_start;
   }
@@ -1269,7 +1269,7 @@ struct MessageTraits<sbp_msg_cw_start_t> {
 template <>
 struct MessageTraits<sbp_msg_device_monitor_t> {
   static constexpr sbp_msg_type_t id = SbpMsgDeviceMonitor;
-  static constexpr char *name = "MSG_DEVICE_MONITOR";
+  static constexpr const char *name = "MSG_DEVICE_MONITOR";
   static const sbp_msg_device_monitor_t &get(const sbp_msg_t &msg) {
     return msg.device_monitor;
   }
@@ -1305,7 +1305,7 @@ struct MessageTraits<sbp_msg_device_monitor_t> {
 template <>
 struct MessageTraits<sbp_msg_dgnss_status_t> {
   static constexpr sbp_msg_type_t id = SbpMsgDgnssStatus;
-  static constexpr char *name = "MSG_DGNSS_STATUS";
+  static constexpr const char *name = "MSG_DGNSS_STATUS";
   static const sbp_msg_dgnss_status_t &get(const sbp_msg_t &msg) {
     return msg.dgnss_status;
   }
@@ -1341,7 +1341,7 @@ struct MessageTraits<sbp_msg_dgnss_status_t> {
 template <>
 struct MessageTraits<sbp_msg_dops_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgDopsDepA;
-  static constexpr char *name = "MSG_DOPS_DEP_A";
+  static constexpr const char *name = "MSG_DOPS_DEP_A";
   static const sbp_msg_dops_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.dops_dep_a;
   }
@@ -1374,7 +1374,7 @@ struct MessageTraits<sbp_msg_dops_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_dops_t> {
   static constexpr sbp_msg_type_t id = SbpMsgDops;
-  static constexpr char *name = "MSG_DOPS";
+  static constexpr const char *name = "MSG_DOPS";
   static const sbp_msg_dops_t &get(const sbp_msg_t &msg) { return msg.dops; }
   static sbp_msg_dops_t &get(sbp_msg_t &msg) { return msg.dops; }
   static void to_sbp_msg(const sbp_msg_dops_t &msg, sbp_msg_t *sbp_msg) {
@@ -1405,7 +1405,7 @@ struct MessageTraits<sbp_msg_dops_t> {
 template <>
 struct MessageTraits<sbp_msg_ed25519_certificate_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEd25519Certificate;
-  static constexpr char *name = "MSG_ED25519_CERTIFICATE";
+  static constexpr const char *name = "MSG_ED25519_CERTIFICATE";
   static const sbp_msg_ed25519_certificate_t &get(const sbp_msg_t &msg) {
     return msg.ed25519_certificate;
   }
@@ -1442,7 +1442,7 @@ struct MessageTraits<sbp_msg_ed25519_certificate_t> {
 template <>
 struct MessageTraits<sbp_msg_ed25519_signature_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEd25519SignatureDep;
-  static constexpr char *name = "MSG_ED25519_SIGNATURE_DEP";
+  static constexpr const char *name = "MSG_ED25519_SIGNATURE_DEP";
   static const sbp_msg_ed25519_signature_dep_t &get(const sbp_msg_t &msg) {
     return msg.ed25519_signature_dep;
   }
@@ -1479,7 +1479,7 @@ struct MessageTraits<sbp_msg_ed25519_signature_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_ed25519_signature_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEd25519Signature;
-  static constexpr char *name = "MSG_ED25519_SIGNATURE";
+  static constexpr const char *name = "MSG_ED25519_SIGNATURE";
   static const sbp_msg_ed25519_signature_t &get(const sbp_msg_t &msg) {
     return msg.ed25519_signature;
   }
@@ -1515,7 +1515,7 @@ struct MessageTraits<sbp_msg_ed25519_signature_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_bds_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisBds;
-  static constexpr char *name = "MSG_EPHEMERIS_BDS";
+  static constexpr const char *name = "MSG_EPHEMERIS_BDS";
   static const sbp_msg_ephemeris_bds_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_bds;
   }
@@ -1551,7 +1551,7 @@ struct MessageTraits<sbp_msg_ephemeris_bds_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisDepA;
-  static constexpr char *name = "MSG_EPHEMERIS_DEP_A";
+  static constexpr const char *name = "MSG_EPHEMERIS_DEP_A";
   static const sbp_msg_ephemeris_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_dep_a;
   }
@@ -1587,7 +1587,7 @@ struct MessageTraits<sbp_msg_ephemeris_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisDepB;
-  static constexpr char *name = "MSG_EPHEMERIS_DEP_B";
+  static constexpr const char *name = "MSG_EPHEMERIS_DEP_B";
   static const sbp_msg_ephemeris_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_dep_b;
   }
@@ -1623,7 +1623,7 @@ struct MessageTraits<sbp_msg_ephemeris_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_dep_c_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisDepC;
-  static constexpr char *name = "MSG_EPHEMERIS_DEP_C";
+  static constexpr const char *name = "MSG_EPHEMERIS_DEP_C";
   static const sbp_msg_ephemeris_dep_c_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_dep_c;
   }
@@ -1659,7 +1659,7 @@ struct MessageTraits<sbp_msg_ephemeris_dep_c_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_dep_d_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisDepD;
-  static constexpr char *name = "MSG_EPHEMERIS_DEP_D";
+  static constexpr const char *name = "MSG_EPHEMERIS_DEP_D";
   static const sbp_msg_ephemeris_dep_d_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_dep_d;
   }
@@ -1695,7 +1695,7 @@ struct MessageTraits<sbp_msg_ephemeris_dep_d_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_gal_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGalDepA;
-  static constexpr char *name = "MSG_EPHEMERIS_GAL_DEP_A";
+  static constexpr const char *name = "MSG_EPHEMERIS_GAL_DEP_A";
   static const sbp_msg_ephemeris_gal_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_gal_dep_a;
   }
@@ -1732,7 +1732,7 @@ struct MessageTraits<sbp_msg_ephemeris_gal_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_gal_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGal;
-  static constexpr char *name = "MSG_EPHEMERIS_GAL";
+  static constexpr const char *name = "MSG_EPHEMERIS_GAL";
   static const sbp_msg_ephemeris_gal_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_gal;
   }
@@ -1768,7 +1768,7 @@ struct MessageTraits<sbp_msg_ephemeris_gal_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_glo_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGloDepA;
-  static constexpr char *name = "MSG_EPHEMERIS_GLO_DEP_A";
+  static constexpr const char *name = "MSG_EPHEMERIS_GLO_DEP_A";
   static const sbp_msg_ephemeris_glo_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_a;
   }
@@ -1805,7 +1805,7 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_glo_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGloDepB;
-  static constexpr char *name = "MSG_EPHEMERIS_GLO_DEP_B";
+  static constexpr const char *name = "MSG_EPHEMERIS_GLO_DEP_B";
   static const sbp_msg_ephemeris_glo_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_b;
   }
@@ -1842,7 +1842,7 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_glo_dep_c_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGloDepC;
-  static constexpr char *name = "MSG_EPHEMERIS_GLO_DEP_C";
+  static constexpr const char *name = "MSG_EPHEMERIS_GLO_DEP_C";
   static const sbp_msg_ephemeris_glo_dep_c_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_c;
   }
@@ -1879,7 +1879,7 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_c_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_glo_dep_d_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGloDepD;
-  static constexpr char *name = "MSG_EPHEMERIS_GLO_DEP_D";
+  static constexpr const char *name = "MSG_EPHEMERIS_GLO_DEP_D";
   static const sbp_msg_ephemeris_glo_dep_d_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_glo_dep_d;
   }
@@ -1916,7 +1916,7 @@ struct MessageTraits<sbp_msg_ephemeris_glo_dep_d_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_glo_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGlo;
-  static constexpr char *name = "MSG_EPHEMERIS_GLO";
+  static constexpr const char *name = "MSG_EPHEMERIS_GLO";
   static const sbp_msg_ephemeris_glo_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_glo;
   }
@@ -1952,7 +1952,7 @@ struct MessageTraits<sbp_msg_ephemeris_glo_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_gps_dep_e_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGpsDepE;
-  static constexpr char *name = "MSG_EPHEMERIS_GPS_DEP_E";
+  static constexpr const char *name = "MSG_EPHEMERIS_GPS_DEP_E";
   static const sbp_msg_ephemeris_gps_dep_e_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_gps_dep_e;
   }
@@ -1989,7 +1989,7 @@ struct MessageTraits<sbp_msg_ephemeris_gps_dep_e_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_gps_dep_f_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGpsDepF;
-  static constexpr char *name = "MSG_EPHEMERIS_GPS_DEP_F";
+  static constexpr const char *name = "MSG_EPHEMERIS_GPS_DEP_F";
   static const sbp_msg_ephemeris_gps_dep_f_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_gps_dep_f;
   }
@@ -2026,7 +2026,7 @@ struct MessageTraits<sbp_msg_ephemeris_gps_dep_f_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_gps_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisGps;
-  static constexpr char *name = "MSG_EPHEMERIS_GPS";
+  static constexpr const char *name = "MSG_EPHEMERIS_GPS";
   static const sbp_msg_ephemeris_gps_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_gps;
   }
@@ -2062,7 +2062,7 @@ struct MessageTraits<sbp_msg_ephemeris_gps_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_qzss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisQzss;
-  static constexpr char *name = "MSG_EPHEMERIS_QZSS";
+  static constexpr const char *name = "MSG_EPHEMERIS_QZSS";
   static const sbp_msg_ephemeris_qzss_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_qzss;
   }
@@ -2098,7 +2098,7 @@ struct MessageTraits<sbp_msg_ephemeris_qzss_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_sbas_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisSbasDepA;
-  static constexpr char *name = "MSG_EPHEMERIS_SBAS_DEP_A";
+  static constexpr const char *name = "MSG_EPHEMERIS_SBAS_DEP_A";
   static const sbp_msg_ephemeris_sbas_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_sbas_dep_a;
   }
@@ -2135,7 +2135,7 @@ struct MessageTraits<sbp_msg_ephemeris_sbas_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_sbas_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisSbasDepB;
-  static constexpr char *name = "MSG_EPHEMERIS_SBAS_DEP_B";
+  static constexpr const char *name = "MSG_EPHEMERIS_SBAS_DEP_B";
   static const sbp_msg_ephemeris_sbas_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_sbas_dep_b;
   }
@@ -2172,7 +2172,7 @@ struct MessageTraits<sbp_msg_ephemeris_sbas_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_ephemeris_sbas_t> {
   static constexpr sbp_msg_type_t id = SbpMsgEphemerisSbas;
-  static constexpr char *name = "MSG_EPHEMERIS_SBAS";
+  static constexpr const char *name = "MSG_EPHEMERIS_SBAS";
   static const sbp_msg_ephemeris_sbas_t &get(const sbp_msg_t &msg) {
     return msg.ephemeris_sbas;
   }
@@ -2208,7 +2208,7 @@ struct MessageTraits<sbp_msg_ephemeris_sbas_t> {
 template <>
 struct MessageTraits<sbp_msg_ext_event_t> {
   static constexpr sbp_msg_type_t id = SbpMsgExtEvent;
-  static constexpr char *name = "MSG_EXT_EVENT";
+  static constexpr const char *name = "MSG_EXT_EVENT";
   static const sbp_msg_ext_event_t &get(const sbp_msg_t &msg) {
     return msg.ext_event;
   }
@@ -2241,7 +2241,7 @@ struct MessageTraits<sbp_msg_ext_event_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_config_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioConfigReq;
-  static constexpr char *name = "MSG_FILEIO_CONFIG_REQ";
+  static constexpr const char *name = "MSG_FILEIO_CONFIG_REQ";
   static const sbp_msg_fileio_config_req_t &get(const sbp_msg_t &msg) {
     return msg.fileio_config_req;
   }
@@ -2277,7 +2277,7 @@ struct MessageTraits<sbp_msg_fileio_config_req_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_config_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioConfigResp;
-  static constexpr char *name = "MSG_FILEIO_CONFIG_RESP";
+  static constexpr const char *name = "MSG_FILEIO_CONFIG_RESP";
   static const sbp_msg_fileio_config_resp_t &get(const sbp_msg_t &msg) {
     return msg.fileio_config_resp;
   }
@@ -2314,7 +2314,7 @@ struct MessageTraits<sbp_msg_fileio_config_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_read_dir_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioReadDirReq;
-  static constexpr char *name = "MSG_FILEIO_READ_DIR_REQ";
+  static constexpr const char *name = "MSG_FILEIO_READ_DIR_REQ";
   static const sbp_msg_fileio_read_dir_req_t &get(const sbp_msg_t &msg) {
     return msg.fileio_read_dir_req;
   }
@@ -2351,7 +2351,7 @@ struct MessageTraits<sbp_msg_fileio_read_dir_req_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_read_dir_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioReadDirResp;
-  static constexpr char *name = "MSG_FILEIO_READ_DIR_RESP";
+  static constexpr const char *name = "MSG_FILEIO_READ_DIR_RESP";
   static const sbp_msg_fileio_read_dir_resp_t &get(const sbp_msg_t &msg) {
     return msg.fileio_read_dir_resp;
   }
@@ -2388,7 +2388,7 @@ struct MessageTraits<sbp_msg_fileio_read_dir_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_read_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioReadReq;
-  static constexpr char *name = "MSG_FILEIO_READ_REQ";
+  static constexpr const char *name = "MSG_FILEIO_READ_REQ";
   static const sbp_msg_fileio_read_req_t &get(const sbp_msg_t &msg) {
     return msg.fileio_read_req;
   }
@@ -2424,7 +2424,7 @@ struct MessageTraits<sbp_msg_fileio_read_req_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_read_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioReadResp;
-  static constexpr char *name = "MSG_FILEIO_READ_RESP";
+  static constexpr const char *name = "MSG_FILEIO_READ_RESP";
   static const sbp_msg_fileio_read_resp_t &get(const sbp_msg_t &msg) {
     return msg.fileio_read_resp;
   }
@@ -2460,7 +2460,7 @@ struct MessageTraits<sbp_msg_fileio_read_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_remove_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioRemove;
-  static constexpr char *name = "MSG_FILEIO_REMOVE";
+  static constexpr const char *name = "MSG_FILEIO_REMOVE";
   static const sbp_msg_fileio_remove_t &get(const sbp_msg_t &msg) {
     return msg.fileio_remove;
   }
@@ -2496,7 +2496,7 @@ struct MessageTraits<sbp_msg_fileio_remove_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_write_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioWriteReq;
-  static constexpr char *name = "MSG_FILEIO_WRITE_REQ";
+  static constexpr const char *name = "MSG_FILEIO_WRITE_REQ";
   static const sbp_msg_fileio_write_req_t &get(const sbp_msg_t &msg) {
     return msg.fileio_write_req;
   }
@@ -2532,7 +2532,7 @@ struct MessageTraits<sbp_msg_fileio_write_req_t> {
 template <>
 struct MessageTraits<sbp_msg_fileio_write_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFileioWriteResp;
-  static constexpr char *name = "MSG_FILEIO_WRITE_RESP";
+  static constexpr const char *name = "MSG_FILEIO_WRITE_RESP";
   static const sbp_msg_fileio_write_resp_t &get(const sbp_msg_t &msg) {
     return msg.fileio_write_resp;
   }
@@ -2568,7 +2568,7 @@ struct MessageTraits<sbp_msg_fileio_write_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_flash_done_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFlashDone;
-  static constexpr char *name = "MSG_FLASH_DONE";
+  static constexpr const char *name = "MSG_FLASH_DONE";
   static const sbp_msg_flash_done_t &get(const sbp_msg_t &msg) {
     return msg.flash_done;
   }
@@ -2601,7 +2601,7 @@ struct MessageTraits<sbp_msg_flash_done_t> {
 template <>
 struct MessageTraits<sbp_msg_flash_erase_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFlashErase;
-  static constexpr char *name = "MSG_FLASH_ERASE";
+  static constexpr const char *name = "MSG_FLASH_ERASE";
   static const sbp_msg_flash_erase_t &get(const sbp_msg_t &msg) {
     return msg.flash_erase;
   }
@@ -2634,7 +2634,7 @@ struct MessageTraits<sbp_msg_flash_erase_t> {
 template <>
 struct MessageTraits<sbp_msg_flash_program_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFlashProgram;
-  static constexpr char *name = "MSG_FLASH_PROGRAM";
+  static constexpr const char *name = "MSG_FLASH_PROGRAM";
   static const sbp_msg_flash_program_t &get(const sbp_msg_t &msg) {
     return msg.flash_program;
   }
@@ -2670,7 +2670,7 @@ struct MessageTraits<sbp_msg_flash_program_t> {
 template <>
 struct MessageTraits<sbp_msg_flash_read_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFlashReadReq;
-  static constexpr char *name = "MSG_FLASH_READ_REQ";
+  static constexpr const char *name = "MSG_FLASH_READ_REQ";
   static const sbp_msg_flash_read_req_t &get(const sbp_msg_t &msg) {
     return msg.flash_read_req;
   }
@@ -2706,7 +2706,7 @@ struct MessageTraits<sbp_msg_flash_read_req_t> {
 template <>
 struct MessageTraits<sbp_msg_flash_read_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFlashReadResp;
-  static constexpr char *name = "MSG_FLASH_READ_RESP";
+  static constexpr const char *name = "MSG_FLASH_READ_RESP";
   static const sbp_msg_flash_read_resp_t &get(const sbp_msg_t &msg) {
     return msg.flash_read_resp;
   }
@@ -2742,7 +2742,7 @@ struct MessageTraits<sbp_msg_flash_read_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_front_end_gain_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFrontEndGain;
-  static constexpr char *name = "MSG_FRONT_END_GAIN";
+  static constexpr const char *name = "MSG_FRONT_END_GAIN";
   static const sbp_msg_front_end_gain_t &get(const sbp_msg_t &msg) {
     return msg.front_end_gain;
   }
@@ -2778,7 +2778,7 @@ struct MessageTraits<sbp_msg_front_end_gain_t> {
 template <>
 struct MessageTraits<sbp_msg_fwd_t> {
   static constexpr sbp_msg_type_t id = SbpMsgFwd;
-  static constexpr char *name = "MSG_FWD";
+  static constexpr const char *name = "MSG_FWD";
   static const sbp_msg_fwd_t &get(const sbp_msg_t &msg) { return msg.fwd; }
   static sbp_msg_fwd_t &get(sbp_msg_t &msg) { return msg.fwd; }
   static void to_sbp_msg(const sbp_msg_fwd_t &msg, sbp_msg_t *sbp_msg) {
@@ -2809,7 +2809,7 @@ struct MessageTraits<sbp_msg_fwd_t> {
 template <>
 struct MessageTraits<sbp_msg_glo_biases_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGloBiases;
-  static constexpr char *name = "MSG_GLO_BIASES";
+  static constexpr const char *name = "MSG_GLO_BIASES";
   static const sbp_msg_glo_biases_t &get(const sbp_msg_t &msg) {
     return msg.glo_biases;
   }
@@ -2842,7 +2842,7 @@ struct MessageTraits<sbp_msg_glo_biases_t> {
 template <>
 struct MessageTraits<sbp_msg_gnss_capb_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGnssCapb;
-  static constexpr char *name = "MSG_GNSS_CAPB";
+  static constexpr const char *name = "MSG_GNSS_CAPB";
   static const sbp_msg_gnss_capb_t &get(const sbp_msg_t &msg) {
     return msg.gnss_capb;
   }
@@ -2875,7 +2875,7 @@ struct MessageTraits<sbp_msg_gnss_capb_t> {
 template <>
 struct MessageTraits<sbp_msg_gnss_time_offset_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGnssTimeOffset;
-  static constexpr char *name = "MSG_GNSS_TIME_OFFSET";
+  static constexpr const char *name = "MSG_GNSS_TIME_OFFSET";
   static const sbp_msg_gnss_time_offset_t &get(const sbp_msg_t &msg) {
     return msg.gnss_time_offset;
   }
@@ -2911,7 +2911,7 @@ struct MessageTraits<sbp_msg_gnss_time_offset_t> {
 template <>
 struct MessageTraits<sbp_msg_gps_time_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGpsTimeDepA;
-  static constexpr char *name = "MSG_GPS_TIME_DEP_A";
+  static constexpr const char *name = "MSG_GPS_TIME_DEP_A";
   static const sbp_msg_gps_time_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.gps_time_dep_a;
   }
@@ -2947,7 +2947,7 @@ struct MessageTraits<sbp_msg_gps_time_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_gps_time_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGpsTimeGnss;
-  static constexpr char *name = "MSG_GPS_TIME_GNSS";
+  static constexpr const char *name = "MSG_GPS_TIME_GNSS";
   static const sbp_msg_gps_time_gnss_t &get(const sbp_msg_t &msg) {
     return msg.gps_time_gnss;
   }
@@ -2992,7 +2992,7 @@ struct MessageTraits<sbp_msg_gps_time_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_gps_time_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGpsTime;
-  static constexpr char *name = "MSG_GPS_TIME";
+  static constexpr const char *name = "MSG_GPS_TIME";
   static const sbp_msg_gps_time_t &get(const sbp_msg_t &msg) {
     return msg.gps_time;
   }
@@ -3034,7 +3034,7 @@ struct MessageTraits<sbp_msg_gps_time_t> {
 template <>
 struct MessageTraits<sbp_msg_group_delay_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGroupDelayDepA;
-  static constexpr char *name = "MSG_GROUP_DELAY_DEP_A";
+  static constexpr const char *name = "MSG_GROUP_DELAY_DEP_A";
   static const sbp_msg_group_delay_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.group_delay_dep_a;
   }
@@ -3070,7 +3070,7 @@ struct MessageTraits<sbp_msg_group_delay_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_group_delay_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGroupDelayDepB;
-  static constexpr char *name = "MSG_GROUP_DELAY_DEP_B";
+  static constexpr const char *name = "MSG_GROUP_DELAY_DEP_B";
   static const sbp_msg_group_delay_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.group_delay_dep_b;
   }
@@ -3106,7 +3106,7 @@ struct MessageTraits<sbp_msg_group_delay_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_group_delay_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGroupDelay;
-  static constexpr char *name = "MSG_GROUP_DELAY";
+  static constexpr const char *name = "MSG_GROUP_DELAY";
   static const sbp_msg_group_delay_t &get(const sbp_msg_t &msg) {
     return msg.group_delay;
   }
@@ -3139,7 +3139,7 @@ struct MessageTraits<sbp_msg_group_delay_t> {
 template <>
 struct MessageTraits<sbp_msg_group_meta_t> {
   static constexpr sbp_msg_type_t id = SbpMsgGroupMeta;
-  static constexpr char *name = "MSG_GROUP_META";
+  static constexpr const char *name = "MSG_GROUP_META";
   static const sbp_msg_group_meta_t &get(const sbp_msg_t &msg) {
     return msg.group_meta;
   }
@@ -3172,7 +3172,7 @@ struct MessageTraits<sbp_msg_group_meta_t> {
 template <>
 struct MessageTraits<sbp_msg_heartbeat_t> {
   static constexpr sbp_msg_type_t id = SbpMsgHeartbeat;
-  static constexpr char *name = "MSG_HEARTBEAT";
+  static constexpr const char *name = "MSG_HEARTBEAT";
   static const sbp_msg_heartbeat_t &get(const sbp_msg_t &msg) {
     return msg.heartbeat;
   }
@@ -3205,7 +3205,7 @@ struct MessageTraits<sbp_msg_heartbeat_t> {
 template <>
 struct MessageTraits<sbp_msg_iar_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgIarState;
-  static constexpr char *name = "MSG_IAR_STATE";
+  static constexpr const char *name = "MSG_IAR_STATE";
   static const sbp_msg_iar_state_t &get(const sbp_msg_t &msg) {
     return msg.iar_state;
   }
@@ -3238,7 +3238,7 @@ struct MessageTraits<sbp_msg_iar_state_t> {
 template <>
 struct MessageTraits<sbp_msg_imu_aux_t> {
   static constexpr sbp_msg_type_t id = SbpMsgImuAux;
-  static constexpr char *name = "MSG_IMU_AUX";
+  static constexpr const char *name = "MSG_IMU_AUX";
   static const sbp_msg_imu_aux_t &get(const sbp_msg_t &msg) {
     return msg.imu_aux;
   }
@@ -3271,7 +3271,7 @@ struct MessageTraits<sbp_msg_imu_aux_t> {
 template <>
 struct MessageTraits<sbp_msg_imu_raw_t> {
   static constexpr sbp_msg_type_t id = SbpMsgImuRaw;
-  static constexpr char *name = "MSG_IMU_RAW";
+  static constexpr const char *name = "MSG_IMU_RAW";
   static const sbp_msg_imu_raw_t &get(const sbp_msg_t &msg) {
     return msg.imu_raw;
   }
@@ -3304,7 +3304,7 @@ struct MessageTraits<sbp_msg_imu_raw_t> {
 template <>
 struct MessageTraits<sbp_msg_init_base_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgInitBaseDep;
-  static constexpr char *name = "MSG_INIT_BASE_DEP";
+  static constexpr const char *name = "MSG_INIT_BASE_DEP";
   static const sbp_msg_init_base_dep_t &get(const sbp_msg_t &msg) {
     return msg.init_base_dep;
   }
@@ -3340,7 +3340,7 @@ struct MessageTraits<sbp_msg_init_base_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_ins_status_t> {
   static constexpr sbp_msg_type_t id = SbpMsgInsStatus;
-  static constexpr char *name = "MSG_INS_STATUS";
+  static constexpr const char *name = "MSG_INS_STATUS";
   static const sbp_msg_ins_status_t &get(const sbp_msg_t &msg) {
     return msg.ins_status;
   }
@@ -3373,7 +3373,7 @@ struct MessageTraits<sbp_msg_ins_status_t> {
 template <>
 struct MessageTraits<sbp_msg_ins_updates_t> {
   static constexpr sbp_msg_type_t id = SbpMsgInsUpdates;
-  static constexpr char *name = "MSG_INS_UPDATES";
+  static constexpr const char *name = "MSG_INS_UPDATES";
   static const sbp_msg_ins_updates_t &get(const sbp_msg_t &msg) {
     return msg.ins_updates;
   }
@@ -3406,7 +3406,7 @@ struct MessageTraits<sbp_msg_ins_updates_t> {
 template <>
 struct MessageTraits<sbp_msg_iono_t> {
   static constexpr sbp_msg_type_t id = SbpMsgIono;
-  static constexpr char *name = "MSG_IONO";
+  static constexpr const char *name = "MSG_IONO";
   static const sbp_msg_iono_t &get(const sbp_msg_t &msg) { return msg.iono; }
   static sbp_msg_iono_t &get(sbp_msg_t &msg) { return msg.iono; }
   static void to_sbp_msg(const sbp_msg_iono_t &msg, sbp_msg_t *sbp_msg) {
@@ -3437,7 +3437,7 @@ struct MessageTraits<sbp_msg_iono_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_cpu_state_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxCpuStateDepA;
-  static constexpr char *name = "MSG_LINUX_CPU_STATE_DEP_A";
+  static constexpr const char *name = "MSG_LINUX_CPU_STATE_DEP_A";
   static const sbp_msg_linux_cpu_state_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.linux_cpu_state_dep_a;
   }
@@ -3474,7 +3474,7 @@ struct MessageTraits<sbp_msg_linux_cpu_state_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_cpu_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxCpuState;
-  static constexpr char *name = "MSG_LINUX_CPU_STATE";
+  static constexpr const char *name = "MSG_LINUX_CPU_STATE";
   static const sbp_msg_linux_cpu_state_t &get(const sbp_msg_t &msg) {
     return msg.linux_cpu_state;
   }
@@ -3510,7 +3510,7 @@ struct MessageTraits<sbp_msg_linux_cpu_state_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_mem_state_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxMemStateDepA;
-  static constexpr char *name = "MSG_LINUX_MEM_STATE_DEP_A";
+  static constexpr const char *name = "MSG_LINUX_MEM_STATE_DEP_A";
   static const sbp_msg_linux_mem_state_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.linux_mem_state_dep_a;
   }
@@ -3547,7 +3547,7 @@ struct MessageTraits<sbp_msg_linux_mem_state_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_mem_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxMemState;
-  static constexpr char *name = "MSG_LINUX_MEM_STATE";
+  static constexpr const char *name = "MSG_LINUX_MEM_STATE";
   static const sbp_msg_linux_mem_state_t &get(const sbp_msg_t &msg) {
     return msg.linux_mem_state;
   }
@@ -3583,7 +3583,7 @@ struct MessageTraits<sbp_msg_linux_mem_state_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_process_fd_count_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxProcessFdCount;
-  static constexpr char *name = "MSG_LINUX_PROCESS_FD_COUNT";
+  static constexpr const char *name = "MSG_LINUX_PROCESS_FD_COUNT";
   static const sbp_msg_linux_process_fd_count_t &get(const sbp_msg_t &msg) {
     return msg.linux_process_fd_count;
   }
@@ -3620,7 +3620,7 @@ struct MessageTraits<sbp_msg_linux_process_fd_count_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_process_fd_summary_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxProcessFdSummary;
-  static constexpr char *name = "MSG_LINUX_PROCESS_FD_SUMMARY";
+  static constexpr const char *name = "MSG_LINUX_PROCESS_FD_SUMMARY";
   static const sbp_msg_linux_process_fd_summary_t &get(const sbp_msg_t &msg) {
     return msg.linux_process_fd_summary;
   }
@@ -3657,7 +3657,7 @@ struct MessageTraits<sbp_msg_linux_process_fd_summary_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_process_socket_counts_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxProcessSocketCounts;
-  static constexpr char *name = "MSG_LINUX_PROCESS_SOCKET_COUNTS";
+  static constexpr const char *name = "MSG_LINUX_PROCESS_SOCKET_COUNTS";
   static const sbp_msg_linux_process_socket_counts_t &get(
       const sbp_msg_t &msg) {
     return msg.linux_process_socket_counts;
@@ -3698,7 +3698,7 @@ struct MessageTraits<sbp_msg_linux_process_socket_counts_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_process_socket_queues_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxProcessSocketQueues;
-  static constexpr char *name = "MSG_LINUX_PROCESS_SOCKET_QUEUES";
+  static constexpr const char *name = "MSG_LINUX_PROCESS_SOCKET_QUEUES";
   static const sbp_msg_linux_process_socket_queues_t &get(
       const sbp_msg_t &msg) {
     return msg.linux_process_socket_queues;
@@ -3739,7 +3739,7 @@ struct MessageTraits<sbp_msg_linux_process_socket_queues_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_socket_usage_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxSocketUsage;
-  static constexpr char *name = "MSG_LINUX_SOCKET_USAGE";
+  static constexpr const char *name = "MSG_LINUX_SOCKET_USAGE";
   static const sbp_msg_linux_socket_usage_t &get(const sbp_msg_t &msg) {
     return msg.linux_socket_usage;
   }
@@ -3776,7 +3776,7 @@ struct MessageTraits<sbp_msg_linux_socket_usage_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_sys_state_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxSysStateDepA;
-  static constexpr char *name = "MSG_LINUX_SYS_STATE_DEP_A";
+  static constexpr const char *name = "MSG_LINUX_SYS_STATE_DEP_A";
   static const sbp_msg_linux_sys_state_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.linux_sys_state_dep_a;
   }
@@ -3813,7 +3813,7 @@ struct MessageTraits<sbp_msg_linux_sys_state_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_linux_sys_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLinuxSysState;
-  static constexpr char *name = "MSG_LINUX_SYS_STATE";
+  static constexpr const char *name = "MSG_LINUX_SYS_STATE";
   static const sbp_msg_linux_sys_state_t &get(const sbp_msg_t &msg) {
     return msg.linux_sys_state;
   }
@@ -3849,7 +3849,7 @@ struct MessageTraits<sbp_msg_linux_sys_state_t> {
 template <>
 struct MessageTraits<sbp_msg_log_t> {
   static constexpr sbp_msg_type_t id = SbpMsgLog;
-  static constexpr char *name = "MSG_LOG";
+  static constexpr const char *name = "MSG_LOG";
   static const sbp_msg_log_t &get(const sbp_msg_t &msg) { return msg.log; }
   static sbp_msg_log_t &get(sbp_msg_t &msg) { return msg.log; }
   static void to_sbp_msg(const sbp_msg_log_t &msg, sbp_msg_t *sbp_msg) {
@@ -3880,7 +3880,7 @@ struct MessageTraits<sbp_msg_log_t> {
 template <>
 struct MessageTraits<sbp_msg_m25_flash_write_status_t> {
   static constexpr sbp_msg_type_t id = SbpMsgM25FlashWriteStatus;
-  static constexpr char *name = "MSG_M25_FLASH_WRITE_STATUS";
+  static constexpr const char *name = "MSG_M25_FLASH_WRITE_STATUS";
   static const sbp_msg_m25_flash_write_status_t &get(const sbp_msg_t &msg) {
     return msg.m25_flash_write_status;
   }
@@ -3917,7 +3917,7 @@ struct MessageTraits<sbp_msg_m25_flash_write_status_t> {
 template <>
 struct MessageTraits<sbp_msg_mag_raw_t> {
   static constexpr sbp_msg_type_t id = SbpMsgMagRaw;
-  static constexpr char *name = "MSG_MAG_RAW";
+  static constexpr const char *name = "MSG_MAG_RAW";
   static const sbp_msg_mag_raw_t &get(const sbp_msg_t &msg) {
     return msg.mag_raw;
   }
@@ -3950,7 +3950,7 @@ struct MessageTraits<sbp_msg_mag_raw_t> {
 template <>
 struct MessageTraits<sbp_msg_mask_satellite_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgMaskSatelliteDep;
-  static constexpr char *name = "MSG_MASK_SATELLITE_DEP";
+  static constexpr const char *name = "MSG_MASK_SATELLITE_DEP";
   static const sbp_msg_mask_satellite_dep_t &get(const sbp_msg_t &msg) {
     return msg.mask_satellite_dep;
   }
@@ -3987,7 +3987,7 @@ struct MessageTraits<sbp_msg_mask_satellite_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_mask_satellite_t> {
   static constexpr sbp_msg_type_t id = SbpMsgMaskSatellite;
-  static constexpr char *name = "MSG_MASK_SATELLITE";
+  static constexpr const char *name = "MSG_MASK_SATELLITE";
   static const sbp_msg_mask_satellite_t &get(const sbp_msg_t &msg) {
     return msg.mask_satellite;
   }
@@ -4023,7 +4023,7 @@ struct MessageTraits<sbp_msg_mask_satellite_t> {
 template <>
 struct MessageTraits<sbp_msg_measurement_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgMeasurementState;
-  static constexpr char *name = "MSG_MEASUREMENT_STATE";
+  static constexpr const char *name = "MSG_MEASUREMENT_STATE";
   static const sbp_msg_measurement_state_t &get(const sbp_msg_t &msg) {
     return msg.measurement_state;
   }
@@ -4059,7 +4059,7 @@ struct MessageTraits<sbp_msg_measurement_state_t> {
 template <>
 struct MessageTraits<sbp_msg_nap_device_dna_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgNapDeviceDnaReq;
-  static constexpr char *name = "MSG_NAP_DEVICE_DNA_REQ";
+  static constexpr const char *name = "MSG_NAP_DEVICE_DNA_REQ";
   static const sbp_msg_nap_device_dna_req_t &get(const sbp_msg_t &msg) {
     return msg.nap_device_dna_req;
   }
@@ -4096,7 +4096,7 @@ struct MessageTraits<sbp_msg_nap_device_dna_req_t> {
 template <>
 struct MessageTraits<sbp_msg_nap_device_dna_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgNapDeviceDnaResp;
-  static constexpr char *name = "MSG_NAP_DEVICE_DNA_RESP";
+  static constexpr const char *name = "MSG_NAP_DEVICE_DNA_RESP";
   static const sbp_msg_nap_device_dna_resp_t &get(const sbp_msg_t &msg) {
     return msg.nap_device_dna_resp;
   }
@@ -4133,7 +4133,7 @@ struct MessageTraits<sbp_msg_nap_device_dna_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_ndb_event_t> {
   static constexpr sbp_msg_type_t id = SbpMsgNdbEvent;
-  static constexpr char *name = "MSG_NDB_EVENT";
+  static constexpr const char *name = "MSG_NDB_EVENT";
   static const sbp_msg_ndb_event_t &get(const sbp_msg_t &msg) {
     return msg.ndb_event;
   }
@@ -4166,7 +4166,7 @@ struct MessageTraits<sbp_msg_ndb_event_t> {
 template <>
 struct MessageTraits<sbp_msg_network_bandwidth_usage_t> {
   static constexpr sbp_msg_type_t id = SbpMsgNetworkBandwidthUsage;
-  static constexpr char *name = "MSG_NETWORK_BANDWIDTH_USAGE";
+  static constexpr const char *name = "MSG_NETWORK_BANDWIDTH_USAGE";
   static const sbp_msg_network_bandwidth_usage_t &get(const sbp_msg_t &msg) {
     return msg.network_bandwidth_usage;
   }
@@ -4203,7 +4203,7 @@ struct MessageTraits<sbp_msg_network_bandwidth_usage_t> {
 template <>
 struct MessageTraits<sbp_msg_network_state_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgNetworkStateReq;
-  static constexpr char *name = "MSG_NETWORK_STATE_REQ";
+  static constexpr const char *name = "MSG_NETWORK_STATE_REQ";
   static const sbp_msg_network_state_req_t &get(const sbp_msg_t &msg) {
     return msg.network_state_req;
   }
@@ -4239,7 +4239,7 @@ struct MessageTraits<sbp_msg_network_state_req_t> {
 template <>
 struct MessageTraits<sbp_msg_network_state_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgNetworkStateResp;
-  static constexpr char *name = "MSG_NETWORK_STATE_RESP";
+  static constexpr const char *name = "MSG_NETWORK_STATE_RESP";
   static const sbp_msg_network_state_resp_t &get(const sbp_msg_t &msg) {
     return msg.network_state_resp;
   }
@@ -4276,7 +4276,7 @@ struct MessageTraits<sbp_msg_network_state_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_obs_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgObsDepA;
-  static constexpr char *name = "MSG_OBS_DEP_A";
+  static constexpr const char *name = "MSG_OBS_DEP_A";
   static const sbp_msg_obs_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.obs_dep_a;
   }
@@ -4309,7 +4309,7 @@ struct MessageTraits<sbp_msg_obs_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_obs_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgObsDepB;
-  static constexpr char *name = "MSG_OBS_DEP_B";
+  static constexpr const char *name = "MSG_OBS_DEP_B";
   static const sbp_msg_obs_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.obs_dep_b;
   }
@@ -4342,7 +4342,7 @@ struct MessageTraits<sbp_msg_obs_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_obs_dep_c_t> {
   static constexpr sbp_msg_type_t id = SbpMsgObsDepC;
-  static constexpr char *name = "MSG_OBS_DEP_C";
+  static constexpr const char *name = "MSG_OBS_DEP_C";
   static const sbp_msg_obs_dep_c_t &get(const sbp_msg_t &msg) {
     return msg.obs_dep_c;
   }
@@ -4375,7 +4375,7 @@ struct MessageTraits<sbp_msg_obs_dep_c_t> {
 template <>
 struct MessageTraits<sbp_msg_obs_t> {
   static constexpr sbp_msg_type_t id = SbpMsgObs;
-  static constexpr char *name = "MSG_OBS";
+  static constexpr const char *name = "MSG_OBS";
   static const sbp_msg_obs_t &get(const sbp_msg_t &msg) { return msg.obs; }
   static sbp_msg_obs_t &get(sbp_msg_t &msg) { return msg.obs; }
   static void to_sbp_msg(const sbp_msg_obs_t &msg, sbp_msg_t *sbp_msg) {
@@ -4406,7 +4406,7 @@ struct MessageTraits<sbp_msg_obs_t> {
 template <>
 struct MessageTraits<sbp_msg_odometry_t> {
   static constexpr sbp_msg_type_t id = SbpMsgOdometry;
-  static constexpr char *name = "MSG_ODOMETRY";
+  static constexpr const char *name = "MSG_ODOMETRY";
   static const sbp_msg_odometry_t &get(const sbp_msg_t &msg) {
     return msg.odometry;
   }
@@ -4439,7 +4439,7 @@ struct MessageTraits<sbp_msg_odometry_t> {
 template <>
 struct MessageTraits<sbp_msg_orient_euler_t> {
   static constexpr sbp_msg_type_t id = SbpMsgOrientEuler;
-  static constexpr char *name = "MSG_ORIENT_EULER";
+  static constexpr const char *name = "MSG_ORIENT_EULER";
   static const sbp_msg_orient_euler_t &get(const sbp_msg_t &msg) {
     return msg.orient_euler;
   }
@@ -4475,7 +4475,7 @@ struct MessageTraits<sbp_msg_orient_euler_t> {
 template <>
 struct MessageTraits<sbp_msg_orient_quat_t> {
   static constexpr sbp_msg_type_t id = SbpMsgOrientQuat;
-  static constexpr char *name = "MSG_ORIENT_QUAT";
+  static constexpr const char *name = "MSG_ORIENT_QUAT";
   static const sbp_msg_orient_quat_t &get(const sbp_msg_t &msg) {
     return msg.orient_quat;
   }
@@ -4508,7 +4508,7 @@ struct MessageTraits<sbp_msg_orient_quat_t> {
 template <>
 struct MessageTraits<sbp_msg_osr_t> {
   static constexpr sbp_msg_type_t id = SbpMsgOsr;
-  static constexpr char *name = "MSG_OSR";
+  static constexpr const char *name = "MSG_OSR";
   static const sbp_msg_osr_t &get(const sbp_msg_t &msg) { return msg.osr; }
   static sbp_msg_osr_t &get(sbp_msg_t &msg) { return msg.osr; }
   static void to_sbp_msg(const sbp_msg_osr_t &msg, sbp_msg_t *sbp_msg) {
@@ -4539,7 +4539,7 @@ struct MessageTraits<sbp_msg_osr_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_ecef_cov_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosEcefCovGnss;
-  static constexpr char *name = "MSG_POS_ECEF_COV_GNSS";
+  static constexpr const char *name = "MSG_POS_ECEF_COV_GNSS";
   static const sbp_msg_pos_ecef_cov_gnss_t &get(const sbp_msg_t &msg) {
     return msg.pos_ecef_cov_gnss;
   }
@@ -4586,7 +4586,7 @@ struct MessageTraits<sbp_msg_pos_ecef_cov_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_ecef_cov_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosEcefCov;
-  static constexpr char *name = "MSG_POS_ECEF_COV";
+  static constexpr const char *name = "MSG_POS_ECEF_COV";
   static const sbp_msg_pos_ecef_cov_t &get(const sbp_msg_t &msg) {
     return msg.pos_ecef_cov;
   }
@@ -4632,7 +4632,7 @@ struct MessageTraits<sbp_msg_pos_ecef_cov_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_ecef_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosEcefDepA;
-  static constexpr char *name = "MSG_POS_ECEF_DEP_A";
+  static constexpr const char *name = "MSG_POS_ECEF_DEP_A";
   static const sbp_msg_pos_ecef_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.pos_ecef_dep_a;
   }
@@ -4668,7 +4668,7 @@ struct MessageTraits<sbp_msg_pos_ecef_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_ecef_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosEcefGnss;
-  static constexpr char *name = "MSG_POS_ECEF_GNSS";
+  static constexpr const char *name = "MSG_POS_ECEF_GNSS";
   static const sbp_msg_pos_ecef_gnss_t &get(const sbp_msg_t &msg) {
     return msg.pos_ecef_gnss;
   }
@@ -4713,7 +4713,7 @@ struct MessageTraits<sbp_msg_pos_ecef_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_ecef_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosEcef;
-  static constexpr char *name = "MSG_POS_ECEF";
+  static constexpr const char *name = "MSG_POS_ECEF";
   static const sbp_msg_pos_ecef_t &get(const sbp_msg_t &msg) {
     return msg.pos_ecef;
   }
@@ -4755,7 +4755,7 @@ struct MessageTraits<sbp_msg_pos_ecef_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_llh_acc_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosLlhAcc;
-  static constexpr char *name = "MSG_POS_LLH_ACC";
+  static constexpr const char *name = "MSG_POS_LLH_ACC";
   static const sbp_msg_pos_llh_acc_t &get(const sbp_msg_t &msg) {
     return msg.pos_llh_acc;
   }
@@ -4788,7 +4788,7 @@ struct MessageTraits<sbp_msg_pos_llh_acc_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_llh_cov_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosLlhCovGnss;
-  static constexpr char *name = "MSG_POS_LLH_COV_GNSS";
+  static constexpr const char *name = "MSG_POS_LLH_COV_GNSS";
   static const sbp_msg_pos_llh_cov_gnss_t &get(const sbp_msg_t &msg) {
     return msg.pos_llh_cov_gnss;
   }
@@ -4835,7 +4835,7 @@ struct MessageTraits<sbp_msg_pos_llh_cov_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_llh_cov_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosLlhCov;
-  static constexpr char *name = "MSG_POS_LLH_COV";
+  static constexpr const char *name = "MSG_POS_LLH_COV";
   static const sbp_msg_pos_llh_cov_t &get(const sbp_msg_t &msg) {
     return msg.pos_llh_cov;
   }
@@ -4877,7 +4877,7 @@ struct MessageTraits<sbp_msg_pos_llh_cov_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_llh_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosLlhDepA;
-  static constexpr char *name = "MSG_POS_LLH_DEP_A";
+  static constexpr const char *name = "MSG_POS_LLH_DEP_A";
   static const sbp_msg_pos_llh_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.pos_llh_dep_a;
   }
@@ -4913,7 +4913,7 @@ struct MessageTraits<sbp_msg_pos_llh_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_llh_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosLlhGnss;
-  static constexpr char *name = "MSG_POS_LLH_GNSS";
+  static constexpr const char *name = "MSG_POS_LLH_GNSS";
   static const sbp_msg_pos_llh_gnss_t &get(const sbp_msg_t &msg) {
     return msg.pos_llh_gnss;
   }
@@ -4958,7 +4958,7 @@ struct MessageTraits<sbp_msg_pos_llh_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_pos_llh_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPosLlh;
-  static constexpr char *name = "MSG_POS_LLH";
+  static constexpr const char *name = "MSG_POS_LLH";
   static const sbp_msg_pos_llh_t &get(const sbp_msg_t &msg) {
     return msg.pos_llh;
   }
@@ -5000,7 +5000,7 @@ struct MessageTraits<sbp_msg_pos_llh_t> {
 template <>
 struct MessageTraits<sbp_msg_pose_relative_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPoseRelative;
-  static constexpr char *name = "MSG_POSE_RELATIVE";
+  static constexpr const char *name = "MSG_POSE_RELATIVE";
   static const sbp_msg_pose_relative_t &get(const sbp_msg_t &msg) {
     return msg.pose_relative;
   }
@@ -5036,7 +5036,7 @@ struct MessageTraits<sbp_msg_pose_relative_t> {
 template <>
 struct MessageTraits<sbp_msg_pps_time_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPpsTime;
-  static constexpr char *name = "MSG_PPS_TIME";
+  static constexpr const char *name = "MSG_PPS_TIME";
   static const sbp_msg_pps_time_t &get(const sbp_msg_t &msg) {
     return msg.pps_time;
   }
@@ -5069,7 +5069,7 @@ struct MessageTraits<sbp_msg_pps_time_t> {
 template <>
 struct MessageTraits<sbp_msg_print_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgPrintDep;
-  static constexpr char *name = "MSG_PRINT_DEP";
+  static constexpr const char *name = "MSG_PRINT_DEP";
   static const sbp_msg_print_dep_t &get(const sbp_msg_t &msg) {
     return msg.print_dep;
   }
@@ -5102,7 +5102,7 @@ struct MessageTraits<sbp_msg_print_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_protection_level_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgProtectionLevelDepA;
-  static constexpr char *name = "MSG_PROTECTION_LEVEL_DEP_A";
+  static constexpr const char *name = "MSG_PROTECTION_LEVEL_DEP_A";
   static const sbp_msg_protection_level_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.protection_level_dep_a;
   }
@@ -5139,7 +5139,7 @@ struct MessageTraits<sbp_msg_protection_level_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_protection_level_t> {
   static constexpr sbp_msg_type_t id = SbpMsgProtectionLevel;
-  static constexpr char *name = "MSG_PROTECTION_LEVEL";
+  static constexpr const char *name = "MSG_PROTECTION_LEVEL";
   static const sbp_msg_protection_level_t &get(const sbp_msg_t &msg) {
     return msg.protection_level;
   }
@@ -5175,7 +5175,7 @@ struct MessageTraits<sbp_msg_protection_level_t> {
 template <>
 struct MessageTraits<sbp_msg_reference_frame_param_t> {
   static constexpr sbp_msg_type_t id = SbpMsgReferenceFrameParam;
-  static constexpr char *name = "MSG_REFERENCE_FRAME_PARAM";
+  static constexpr const char *name = "MSG_REFERENCE_FRAME_PARAM";
   static const sbp_msg_reference_frame_param_t &get(const sbp_msg_t &msg) {
     return msg.reference_frame_param;
   }
@@ -5212,7 +5212,7 @@ struct MessageTraits<sbp_msg_reference_frame_param_t> {
 template <>
 struct MessageTraits<sbp_msg_reset_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgResetDep;
-  static constexpr char *name = "MSG_RESET_DEP";
+  static constexpr const char *name = "MSG_RESET_DEP";
   static const sbp_msg_reset_dep_t &get(const sbp_msg_t &msg) {
     return msg.reset_dep;
   }
@@ -5245,7 +5245,7 @@ struct MessageTraits<sbp_msg_reset_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_reset_filters_t> {
   static constexpr sbp_msg_type_t id = SbpMsgResetFilters;
-  static constexpr char *name = "MSG_RESET_FILTERS";
+  static constexpr const char *name = "MSG_RESET_FILTERS";
   static const sbp_msg_reset_filters_t &get(const sbp_msg_t &msg) {
     return msg.reset_filters;
   }
@@ -5281,7 +5281,7 @@ struct MessageTraits<sbp_msg_reset_filters_t> {
 template <>
 struct MessageTraits<sbp_msg_reset_t> {
   static constexpr sbp_msg_type_t id = SbpMsgReset;
-  static constexpr char *name = "MSG_RESET";
+  static constexpr const char *name = "MSG_RESET";
   static const sbp_msg_reset_t &get(const sbp_msg_t &msg) { return msg.reset; }
   static sbp_msg_reset_t &get(sbp_msg_t &msg) { return msg.reset; }
   static void to_sbp_msg(const sbp_msg_reset_t &msg, sbp_msg_t *sbp_msg) {
@@ -5312,7 +5312,7 @@ struct MessageTraits<sbp_msg_reset_t> {
 template <>
 struct MessageTraits<sbp_msg_sbas_raw_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSbasRaw;
-  static constexpr char *name = "MSG_SBAS_RAW";
+  static constexpr const char *name = "MSG_SBAS_RAW";
   static const sbp_msg_sbas_raw_t &get(const sbp_msg_t &msg) {
     return msg.sbas_raw;
   }
@@ -5345,7 +5345,7 @@ struct MessageTraits<sbp_msg_sbas_raw_t> {
 template <>
 struct MessageTraits<sbp_msg_sensor_aid_event_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSensorAidEvent;
-  static constexpr char *name = "MSG_SENSOR_AID_EVENT";
+  static constexpr const char *name = "MSG_SENSOR_AID_EVENT";
   static const sbp_msg_sensor_aid_event_t &get(const sbp_msg_t &msg) {
     return msg.sensor_aid_event;
   }
@@ -5381,7 +5381,7 @@ struct MessageTraits<sbp_msg_sensor_aid_event_t> {
 template <>
 struct MessageTraits<sbp_msg_set_time_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSetTime;
-  static constexpr char *name = "MSG_SET_TIME";
+  static constexpr const char *name = "MSG_SET_TIME";
   static const sbp_msg_set_time_t &get(const sbp_msg_t &msg) {
     return msg.set_time;
   }
@@ -5414,7 +5414,7 @@ struct MessageTraits<sbp_msg_set_time_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_read_by_index_done_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsReadByIndexDone;
-  static constexpr char *name = "MSG_SETTINGS_READ_BY_INDEX_DONE";
+  static constexpr const char *name = "MSG_SETTINGS_READ_BY_INDEX_DONE";
   static const sbp_msg_settings_read_by_index_done_t &get(
       const sbp_msg_t &msg) {
     return msg.settings_read_by_index_done;
@@ -5455,7 +5455,7 @@ struct MessageTraits<sbp_msg_settings_read_by_index_done_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_read_by_index_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsReadByIndexReq;
-  static constexpr char *name = "MSG_SETTINGS_READ_BY_INDEX_REQ";
+  static constexpr const char *name = "MSG_SETTINGS_READ_BY_INDEX_REQ";
   static const sbp_msg_settings_read_by_index_req_t &get(const sbp_msg_t &msg) {
     return msg.settings_read_by_index_req;
   }
@@ -5493,7 +5493,7 @@ struct MessageTraits<sbp_msg_settings_read_by_index_req_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_read_by_index_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsReadByIndexResp;
-  static constexpr char *name = "MSG_SETTINGS_READ_BY_INDEX_RESP";
+  static constexpr const char *name = "MSG_SETTINGS_READ_BY_INDEX_RESP";
   static const sbp_msg_settings_read_by_index_resp_t &get(
       const sbp_msg_t &msg) {
     return msg.settings_read_by_index_resp;
@@ -5534,7 +5534,7 @@ struct MessageTraits<sbp_msg_settings_read_by_index_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_read_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsReadReq;
-  static constexpr char *name = "MSG_SETTINGS_READ_REQ";
+  static constexpr const char *name = "MSG_SETTINGS_READ_REQ";
   static const sbp_msg_settings_read_req_t &get(const sbp_msg_t &msg) {
     return msg.settings_read_req;
   }
@@ -5570,7 +5570,7 @@ struct MessageTraits<sbp_msg_settings_read_req_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_read_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsReadResp;
-  static constexpr char *name = "MSG_SETTINGS_READ_RESP";
+  static constexpr const char *name = "MSG_SETTINGS_READ_RESP";
   static const sbp_msg_settings_read_resp_t &get(const sbp_msg_t &msg) {
     return msg.settings_read_resp;
   }
@@ -5607,7 +5607,7 @@ struct MessageTraits<sbp_msg_settings_read_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_register_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsRegisterResp;
-  static constexpr char *name = "MSG_SETTINGS_REGISTER_RESP";
+  static constexpr const char *name = "MSG_SETTINGS_REGISTER_RESP";
   static const sbp_msg_settings_register_resp_t &get(const sbp_msg_t &msg) {
     return msg.settings_register_resp;
   }
@@ -5644,7 +5644,7 @@ struct MessageTraits<sbp_msg_settings_register_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_register_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsRegister;
-  static constexpr char *name = "MSG_SETTINGS_REGISTER";
+  static constexpr const char *name = "MSG_SETTINGS_REGISTER";
   static const sbp_msg_settings_register_t &get(const sbp_msg_t &msg) {
     return msg.settings_register;
   }
@@ -5680,7 +5680,7 @@ struct MessageTraits<sbp_msg_settings_register_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_save_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsSave;
-  static constexpr char *name = "MSG_SETTINGS_SAVE";
+  static constexpr const char *name = "MSG_SETTINGS_SAVE";
   static const sbp_msg_settings_save_t &get(const sbp_msg_t &msg) {
     return msg.settings_save;
   }
@@ -5716,7 +5716,7 @@ struct MessageTraits<sbp_msg_settings_save_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_write_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsWriteResp;
-  static constexpr char *name = "MSG_SETTINGS_WRITE_RESP";
+  static constexpr const char *name = "MSG_SETTINGS_WRITE_RESP";
   static const sbp_msg_settings_write_resp_t &get(const sbp_msg_t &msg) {
     return msg.settings_write_resp;
   }
@@ -5753,7 +5753,7 @@ struct MessageTraits<sbp_msg_settings_write_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_settings_write_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSettingsWrite;
-  static constexpr char *name = "MSG_SETTINGS_WRITE";
+  static constexpr const char *name = "MSG_SETTINGS_WRITE";
   static const sbp_msg_settings_write_t &get(const sbp_msg_t &msg) {
     return msg.settings_write;
   }
@@ -5789,7 +5789,7 @@ struct MessageTraits<sbp_msg_settings_write_t> {
 template <>
 struct MessageTraits<sbp_msg_soln_meta_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSolnMetaDepA;
-  static constexpr char *name = "MSG_SOLN_META_DEP_A";
+  static constexpr const char *name = "MSG_SOLN_META_DEP_A";
   static const sbp_msg_soln_meta_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.soln_meta_dep_a;
   }
@@ -5825,7 +5825,7 @@ struct MessageTraits<sbp_msg_soln_meta_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_soln_meta_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSolnMeta;
-  static constexpr char *name = "MSG_SOLN_META";
+  static constexpr const char *name = "MSG_SOLN_META";
   static const sbp_msg_soln_meta_t &get(const sbp_msg_t &msg) {
     return msg.soln_meta;
   }
@@ -5858,7 +5858,7 @@ struct MessageTraits<sbp_msg_soln_meta_t> {
 template <>
 struct MessageTraits<sbp_msg_specan_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSpecanDep;
-  static constexpr char *name = "MSG_SPECAN_DEP";
+  static constexpr const char *name = "MSG_SPECAN_DEP";
   static const sbp_msg_specan_dep_t &get(const sbp_msg_t &msg) {
     return msg.specan_dep;
   }
@@ -5891,7 +5891,7 @@ struct MessageTraits<sbp_msg_specan_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_specan_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSpecan;
-  static constexpr char *name = "MSG_SPECAN";
+  static constexpr const char *name = "MSG_SPECAN";
   static const sbp_msg_specan_t &get(const sbp_msg_t &msg) {
     return msg.specan;
   }
@@ -5924,7 +5924,7 @@ struct MessageTraits<sbp_msg_specan_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_code_biases_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrCodeBiases;
-  static constexpr char *name = "MSG_SSR_CODE_BIASES";
+  static constexpr const char *name = "MSG_SSR_CODE_BIASES";
   static const sbp_msg_ssr_code_biases_t &get(const sbp_msg_t &msg) {
     return msg.ssr_code_biases;
   }
@@ -5960,7 +5960,7 @@ struct MessageTraits<sbp_msg_ssr_code_biases_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_code_phase_biases_bounds_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrCodePhaseBiasesBounds;
-  static constexpr char *name = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
+  static constexpr const char *name = "MSG_SSR_CODE_PHASE_BIASES_BOUNDS";
   static const sbp_msg_ssr_code_phase_biases_bounds_t &get(
       const sbp_msg_t &msg) {
     return msg.ssr_code_phase_biases_bounds;
@@ -6001,7 +6001,7 @@ struct MessageTraits<sbp_msg_ssr_code_phase_biases_bounds_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_flag_high_level_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrFlagHighLevel;
-  static constexpr char *name = "MSG_SSR_FLAG_HIGH_LEVEL";
+  static constexpr const char *name = "MSG_SSR_FLAG_HIGH_LEVEL";
   static const sbp_msg_ssr_flag_high_level_t &get(const sbp_msg_t &msg) {
     return msg.ssr_flag_high_level;
   }
@@ -6038,7 +6038,7 @@ struct MessageTraits<sbp_msg_ssr_flag_high_level_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_flag_iono_grid_point_sat_los_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrFlagIonoGridPointSatLos;
-  static constexpr char *name = "MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS";
+  static constexpr const char *name = "MSG_SSR_FLAG_IONO_GRID_POINT_SAT_LOS";
   static const sbp_msg_ssr_flag_iono_grid_point_sat_los_t &get(
       const sbp_msg_t &msg) {
     return msg.ssr_flag_iono_grid_point_sat_los;
@@ -6081,7 +6081,7 @@ struct MessageTraits<sbp_msg_ssr_flag_iono_grid_point_sat_los_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_flag_iono_grid_points_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrFlagIonoGridPoints;
-  static constexpr char *name = "MSG_SSR_FLAG_IONO_GRID_POINTS";
+  static constexpr const char *name = "MSG_SSR_FLAG_IONO_GRID_POINTS";
   static const sbp_msg_ssr_flag_iono_grid_points_t &get(const sbp_msg_t &msg) {
     return msg.ssr_flag_iono_grid_points;
   }
@@ -6119,7 +6119,7 @@ struct MessageTraits<sbp_msg_ssr_flag_iono_grid_points_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_flag_iono_tile_sat_los_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrFlagIonoTileSatLos;
-  static constexpr char *name = "MSG_SSR_FLAG_IONO_TILE_SAT_LOS";
+  static constexpr const char *name = "MSG_SSR_FLAG_IONO_TILE_SAT_LOS";
   static const sbp_msg_ssr_flag_iono_tile_sat_los_t &get(const sbp_msg_t &msg) {
     return msg.ssr_flag_iono_tile_sat_los;
   }
@@ -6157,7 +6157,7 @@ struct MessageTraits<sbp_msg_ssr_flag_iono_tile_sat_los_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_flag_satellites_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrFlagSatellites;
-  static constexpr char *name = "MSG_SSR_FLAG_SATELLITES";
+  static constexpr const char *name = "MSG_SSR_FLAG_SATELLITES";
   static const sbp_msg_ssr_flag_satellites_t &get(const sbp_msg_t &msg) {
     return msg.ssr_flag_satellites;
   }
@@ -6194,7 +6194,7 @@ struct MessageTraits<sbp_msg_ssr_flag_satellites_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_flag_tropo_grid_points_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrFlagTropoGridPoints;
-  static constexpr char *name = "MSG_SSR_FLAG_TROPO_GRID_POINTS";
+  static constexpr const char *name = "MSG_SSR_FLAG_TROPO_GRID_POINTS";
   static const sbp_msg_ssr_flag_tropo_grid_points_t &get(const sbp_msg_t &msg) {
     return msg.ssr_flag_tropo_grid_points;
   }
@@ -6232,7 +6232,7 @@ struct MessageTraits<sbp_msg_ssr_flag_tropo_grid_points_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_grid_definition_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrGridDefinitionDepA;
-  static constexpr char *name = "MSG_SSR_GRID_DEFINITION_DEP_A";
+  static constexpr const char *name = "MSG_SSR_GRID_DEFINITION_DEP_A";
   static const sbp_msg_ssr_grid_definition_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.ssr_grid_definition_dep_a;
   }
@@ -6270,7 +6270,7 @@ struct MessageTraits<sbp_msg_ssr_grid_definition_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_gridded_correction_bounds_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrGriddedCorrectionBounds;
-  static constexpr char *name = "MSG_SSR_GRIDDED_CORRECTION_BOUNDS";
+  static constexpr const char *name = "MSG_SSR_GRIDDED_CORRECTION_BOUNDS";
   static const sbp_msg_ssr_gridded_correction_bounds_t &get(
       const sbp_msg_t &msg) {
     return msg.ssr_gridded_correction_bounds;
@@ -6312,7 +6312,7 @@ struct MessageTraits<sbp_msg_ssr_gridded_correction_bounds_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_gridded_correction_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrGriddedCorrectionDepA;
-  static constexpr char *name = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
+  static constexpr const char *name = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
   static const sbp_msg_ssr_gridded_correction_dep_a_t &get(
       const sbp_msg_t &msg) {
     return msg.ssr_gridded_correction_dep_a;
@@ -6353,7 +6353,7 @@ struct MessageTraits<sbp_msg_ssr_gridded_correction_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_gridded_correction_no_std_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrGriddedCorrectionNoStdDepA;
-  static constexpr char *name = "MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A";
+  static constexpr const char *name = "MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A";
   static const sbp_msg_ssr_gridded_correction_no_std_dep_a_t &get(
       const sbp_msg_t &msg) {
     return msg.ssr_gridded_correction_no_std_dep_a;
@@ -6397,7 +6397,7 @@ struct MessageTraits<sbp_msg_ssr_gridded_correction_no_std_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_gridded_correction_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrGriddedCorrection;
-  static constexpr char *name = "MSG_SSR_GRIDDED_CORRECTION";
+  static constexpr const char *name = "MSG_SSR_GRIDDED_CORRECTION";
   static const sbp_msg_ssr_gridded_correction_t &get(const sbp_msg_t &msg) {
     return msg.ssr_gridded_correction;
   }
@@ -6434,7 +6434,7 @@ struct MessageTraits<sbp_msg_ssr_gridded_correction_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_orbit_clock_bounds_degradation_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrOrbitClockBoundsDegradation;
-  static constexpr char *name = "MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION";
+  static constexpr const char *name = "MSG_SSR_ORBIT_CLOCK_BOUNDS_DEGRADATION";
   static const sbp_msg_ssr_orbit_clock_bounds_degradation_t &get(
       const sbp_msg_t &msg) {
     return msg.ssr_orbit_clock_bounds_degradation;
@@ -6478,7 +6478,7 @@ struct MessageTraits<sbp_msg_ssr_orbit_clock_bounds_degradation_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_orbit_clock_bounds_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrOrbitClockBounds;
-  static constexpr char *name = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
+  static constexpr const char *name = "MSG_SSR_ORBIT_CLOCK_BOUNDS";
   static const sbp_msg_ssr_orbit_clock_bounds_t &get(const sbp_msg_t &msg) {
     return msg.ssr_orbit_clock_bounds;
   }
@@ -6515,7 +6515,7 @@ struct MessageTraits<sbp_msg_ssr_orbit_clock_bounds_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_orbit_clock_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrOrbitClockDepA;
-  static constexpr char *name = "MSG_SSR_ORBIT_CLOCK_DEP_A";
+  static constexpr const char *name = "MSG_SSR_ORBIT_CLOCK_DEP_A";
   static const sbp_msg_ssr_orbit_clock_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.ssr_orbit_clock_dep_a;
   }
@@ -6552,7 +6552,7 @@ struct MessageTraits<sbp_msg_ssr_orbit_clock_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_orbit_clock_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrOrbitClock;
-  static constexpr char *name = "MSG_SSR_ORBIT_CLOCK";
+  static constexpr const char *name = "MSG_SSR_ORBIT_CLOCK";
   static const sbp_msg_ssr_orbit_clock_t &get(const sbp_msg_t &msg) {
     return msg.ssr_orbit_clock;
   }
@@ -6588,7 +6588,7 @@ struct MessageTraits<sbp_msg_ssr_orbit_clock_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_phase_biases_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrPhaseBiases;
-  static constexpr char *name = "MSG_SSR_PHASE_BIASES";
+  static constexpr const char *name = "MSG_SSR_PHASE_BIASES";
   static const sbp_msg_ssr_phase_biases_t &get(const sbp_msg_t &msg) {
     return msg.ssr_phase_biases;
   }
@@ -6624,7 +6624,7 @@ struct MessageTraits<sbp_msg_ssr_phase_biases_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_satellite_apc_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrSatelliteApc;
-  static constexpr char *name = "MSG_SSR_SATELLITE_APC";
+  static constexpr const char *name = "MSG_SSR_SATELLITE_APC";
   static const sbp_msg_ssr_satellite_apc_t &get(const sbp_msg_t &msg) {
     return msg.ssr_satellite_apc;
   }
@@ -6660,7 +6660,7 @@ struct MessageTraits<sbp_msg_ssr_satellite_apc_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_stec_correction_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrStecCorrectionDepA;
-  static constexpr char *name = "MSG_SSR_STEC_CORRECTION_DEP_A";
+  static constexpr const char *name = "MSG_SSR_STEC_CORRECTION_DEP_A";
   static const sbp_msg_ssr_stec_correction_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.ssr_stec_correction_dep_a;
   }
@@ -6698,7 +6698,7 @@ struct MessageTraits<sbp_msg_ssr_stec_correction_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_stec_correction_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrStecCorrectionDep;
-  static constexpr char *name = "MSG_SSR_STEC_CORRECTION_DEP";
+  static constexpr const char *name = "MSG_SSR_STEC_CORRECTION_DEP";
   static const sbp_msg_ssr_stec_correction_dep_t &get(const sbp_msg_t &msg) {
     return msg.ssr_stec_correction_dep;
   }
@@ -6735,7 +6735,7 @@ struct MessageTraits<sbp_msg_ssr_stec_correction_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_stec_correction_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrStecCorrection;
-  static constexpr char *name = "MSG_SSR_STEC_CORRECTION";
+  static constexpr const char *name = "MSG_SSR_STEC_CORRECTION";
   static const sbp_msg_ssr_stec_correction_t &get(const sbp_msg_t &msg) {
     return msg.ssr_stec_correction;
   }
@@ -6772,7 +6772,7 @@ struct MessageTraits<sbp_msg_ssr_stec_correction_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_tile_definition_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrTileDefinitionDep;
-  static constexpr char *name = "MSG_SSR_TILE_DEFINITION_DEP";
+  static constexpr const char *name = "MSG_SSR_TILE_DEFINITION_DEP";
   static const sbp_msg_ssr_tile_definition_dep_t &get(const sbp_msg_t &msg) {
     return msg.ssr_tile_definition_dep;
   }
@@ -6809,7 +6809,7 @@ struct MessageTraits<sbp_msg_ssr_tile_definition_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_ssr_tile_definition_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSsrTileDefinition;
-  static constexpr char *name = "MSG_SSR_TILE_DEFINITION";
+  static constexpr const char *name = "MSG_SSR_TILE_DEFINITION";
   static const sbp_msg_ssr_tile_definition_t &get(const sbp_msg_t &msg) {
     return msg.ssr_tile_definition;
   }
@@ -6846,7 +6846,7 @@ struct MessageTraits<sbp_msg_ssr_tile_definition_t> {
 template <>
 struct MessageTraits<sbp_msg_startup_t> {
   static constexpr sbp_msg_type_t id = SbpMsgStartup;
-  static constexpr char *name = "MSG_STARTUP";
+  static constexpr const char *name = "MSG_STARTUP";
   static const sbp_msg_startup_t &get(const sbp_msg_t &msg) {
     return msg.startup;
   }
@@ -6879,7 +6879,7 @@ struct MessageTraits<sbp_msg_startup_t> {
 template <>
 struct MessageTraits<sbp_msg_status_journal_t> {
   static constexpr sbp_msg_type_t id = SbpMsgStatusJournal;
-  static constexpr char *name = "MSG_STATUS_JOURNAL";
+  static constexpr const char *name = "MSG_STATUS_JOURNAL";
   static const sbp_msg_status_journal_t &get(const sbp_msg_t &msg) {
     return msg.status_journal;
   }
@@ -6915,7 +6915,7 @@ struct MessageTraits<sbp_msg_status_journal_t> {
 template <>
 struct MessageTraits<sbp_msg_status_report_t> {
   static constexpr sbp_msg_type_t id = SbpMsgStatusReport;
-  static constexpr char *name = "MSG_STATUS_REPORT";
+  static constexpr const char *name = "MSG_STATUS_REPORT";
   static const sbp_msg_status_report_t &get(const sbp_msg_t &msg) {
     return msg.status_report;
   }
@@ -6951,7 +6951,7 @@ struct MessageTraits<sbp_msg_status_report_t> {
 template <>
 struct MessageTraits<sbp_msg_stm_flash_lock_sector_t> {
   static constexpr sbp_msg_type_t id = SbpMsgStmFlashLockSector;
-  static constexpr char *name = "MSG_STM_FLASH_LOCK_SECTOR";
+  static constexpr const char *name = "MSG_STM_FLASH_LOCK_SECTOR";
   static const sbp_msg_stm_flash_lock_sector_t &get(const sbp_msg_t &msg) {
     return msg.stm_flash_lock_sector;
   }
@@ -6988,7 +6988,7 @@ struct MessageTraits<sbp_msg_stm_flash_lock_sector_t> {
 template <>
 struct MessageTraits<sbp_msg_stm_flash_unlock_sector_t> {
   static constexpr sbp_msg_type_t id = SbpMsgStmFlashUnlockSector;
-  static constexpr char *name = "MSG_STM_FLASH_UNLOCK_SECTOR";
+  static constexpr const char *name = "MSG_STM_FLASH_UNLOCK_SECTOR";
   static const sbp_msg_stm_flash_unlock_sector_t &get(const sbp_msg_t &msg) {
     return msg.stm_flash_unlock_sector;
   }
@@ -7025,7 +7025,7 @@ struct MessageTraits<sbp_msg_stm_flash_unlock_sector_t> {
 template <>
 struct MessageTraits<sbp_msg_stm_unique_id_req_t> {
   static constexpr sbp_msg_type_t id = SbpMsgStmUniqueIdReq;
-  static constexpr char *name = "MSG_STM_UNIQUE_ID_REQ";
+  static constexpr const char *name = "MSG_STM_UNIQUE_ID_REQ";
   static const sbp_msg_stm_unique_id_req_t &get(const sbp_msg_t &msg) {
     return msg.stm_unique_id_req;
   }
@@ -7061,7 +7061,7 @@ struct MessageTraits<sbp_msg_stm_unique_id_req_t> {
 template <>
 struct MessageTraits<sbp_msg_stm_unique_id_resp_t> {
   static constexpr sbp_msg_type_t id = SbpMsgStmUniqueIdResp;
-  static constexpr char *name = "MSG_STM_UNIQUE_ID_RESP";
+  static constexpr const char *name = "MSG_STM_UNIQUE_ID_RESP";
   static const sbp_msg_stm_unique_id_resp_t &get(const sbp_msg_t &msg) {
     return msg.stm_unique_id_resp;
   }
@@ -7098,7 +7098,7 @@ struct MessageTraits<sbp_msg_stm_unique_id_resp_t> {
 template <>
 struct MessageTraits<sbp_msg_sv_az_el_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSvAzEl;
-  static constexpr char *name = "MSG_SV_AZ_EL";
+  static constexpr const char *name = "MSG_SV_AZ_EL";
   static const sbp_msg_sv_az_el_t &get(const sbp_msg_t &msg) {
     return msg.sv_az_el;
   }
@@ -7131,7 +7131,7 @@ struct MessageTraits<sbp_msg_sv_az_el_t> {
 template <>
 struct MessageTraits<sbp_msg_sv_configuration_gps_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgSvConfigurationGpsDep;
-  static constexpr char *name = "MSG_SV_CONFIGURATION_GPS_DEP";
+  static constexpr const char *name = "MSG_SV_CONFIGURATION_GPS_DEP";
   static const sbp_msg_sv_configuration_gps_dep_t &get(const sbp_msg_t &msg) {
     return msg.sv_configuration_gps_dep;
   }
@@ -7168,7 +7168,7 @@ struct MessageTraits<sbp_msg_sv_configuration_gps_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_thread_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgThreadState;
-  static constexpr char *name = "MSG_THREAD_STATE";
+  static constexpr const char *name = "MSG_THREAD_STATE";
   static const sbp_msg_thread_state_t &get(const sbp_msg_t &msg) {
     return msg.thread_state;
   }
@@ -7204,7 +7204,7 @@ struct MessageTraits<sbp_msg_thread_state_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_iq_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingIqDepA;
-  static constexpr char *name = "MSG_TRACKING_IQ_DEP_A";
+  static constexpr const char *name = "MSG_TRACKING_IQ_DEP_A";
   static const sbp_msg_tracking_iq_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.tracking_iq_dep_a;
   }
@@ -7240,7 +7240,7 @@ struct MessageTraits<sbp_msg_tracking_iq_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_iq_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingIqDepB;
-  static constexpr char *name = "MSG_TRACKING_IQ_DEP_B";
+  static constexpr const char *name = "MSG_TRACKING_IQ_DEP_B";
   static const sbp_msg_tracking_iq_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.tracking_iq_dep_b;
   }
@@ -7276,7 +7276,7 @@ struct MessageTraits<sbp_msg_tracking_iq_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_iq_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingIq;
-  static constexpr char *name = "MSG_TRACKING_IQ";
+  static constexpr const char *name = "MSG_TRACKING_IQ";
   static const sbp_msg_tracking_iq_t &get(const sbp_msg_t &msg) {
     return msg.tracking_iq;
   }
@@ -7309,7 +7309,7 @@ struct MessageTraits<sbp_msg_tracking_iq_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_state_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingStateDepA;
-  static constexpr char *name = "MSG_TRACKING_STATE_DEP_A";
+  static constexpr const char *name = "MSG_TRACKING_STATE_DEP_A";
   static const sbp_msg_tracking_state_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.tracking_state_dep_a;
   }
@@ -7346,7 +7346,7 @@ struct MessageTraits<sbp_msg_tracking_state_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_state_dep_b_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingStateDepB;
-  static constexpr char *name = "MSG_TRACKING_STATE_DEP_B";
+  static constexpr const char *name = "MSG_TRACKING_STATE_DEP_B";
   static const sbp_msg_tracking_state_dep_b_t &get(const sbp_msg_t &msg) {
     return msg.tracking_state_dep_b;
   }
@@ -7383,7 +7383,7 @@ struct MessageTraits<sbp_msg_tracking_state_dep_b_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_state_detailed_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingStateDetailedDepA;
-  static constexpr char *name = "MSG_TRACKING_STATE_DETAILED_DEP_A";
+  static constexpr const char *name = "MSG_TRACKING_STATE_DETAILED_DEP_A";
   static const sbp_msg_tracking_state_detailed_dep_a_t &get(
       const sbp_msg_t &msg) {
     return msg.tracking_state_detailed_dep_a;
@@ -7425,7 +7425,7 @@ struct MessageTraits<sbp_msg_tracking_state_detailed_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_state_detailed_dep_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingStateDetailedDep;
-  static constexpr char *name = "MSG_TRACKING_STATE_DETAILED_DEP";
+  static constexpr const char *name = "MSG_TRACKING_STATE_DETAILED_DEP";
   static const sbp_msg_tracking_state_detailed_dep_t &get(
       const sbp_msg_t &msg) {
     return msg.tracking_state_detailed_dep;
@@ -7466,7 +7466,7 @@ struct MessageTraits<sbp_msg_tracking_state_detailed_dep_t> {
 template <>
 struct MessageTraits<sbp_msg_tracking_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgTrackingState;
-  static constexpr char *name = "MSG_TRACKING_STATE";
+  static constexpr const char *name = "MSG_TRACKING_STATE";
   static const sbp_msg_tracking_state_t &get(const sbp_msg_t &msg) {
     return msg.tracking_state;
   }
@@ -7502,7 +7502,7 @@ struct MessageTraits<sbp_msg_tracking_state_t> {
 template <>
 struct MessageTraits<sbp_msg_uart_state_depa_t> {
   static constexpr sbp_msg_type_t id = SbpMsgUartStateDepa;
-  static constexpr char *name = "MSG_UART_STATE_DEPA";
+  static constexpr const char *name = "MSG_UART_STATE_DEPA";
   static const sbp_msg_uart_state_depa_t &get(const sbp_msg_t &msg) {
     return msg.uart_state_depa;
   }
@@ -7538,7 +7538,7 @@ struct MessageTraits<sbp_msg_uart_state_depa_t> {
 template <>
 struct MessageTraits<sbp_msg_uart_state_t> {
   static constexpr sbp_msg_type_t id = SbpMsgUartState;
-  static constexpr char *name = "MSG_UART_STATE";
+  static constexpr const char *name = "MSG_UART_STATE";
   static const sbp_msg_uart_state_t &get(const sbp_msg_t &msg) {
     return msg.uart_state;
   }
@@ -7571,7 +7571,7 @@ struct MessageTraits<sbp_msg_uart_state_t> {
 template <>
 struct MessageTraits<sbp_msg_user_data_t> {
   static constexpr sbp_msg_type_t id = SbpMsgUserData;
-  static constexpr char *name = "MSG_USER_DATA";
+  static constexpr const char *name = "MSG_USER_DATA";
   static const sbp_msg_user_data_t &get(const sbp_msg_t &msg) {
     return msg.user_data;
   }
@@ -7604,7 +7604,7 @@ struct MessageTraits<sbp_msg_user_data_t> {
 template <>
 struct MessageTraits<sbp_msg_utc_leap_second_t> {
   static constexpr sbp_msg_type_t id = SbpMsgUtcLeapSecond;
-  static constexpr char *name = "MSG_UTC_LEAP_SECOND";
+  static constexpr const char *name = "MSG_UTC_LEAP_SECOND";
   static const sbp_msg_utc_leap_second_t &get(const sbp_msg_t &msg) {
     return msg.utc_leap_second;
   }
@@ -7640,7 +7640,7 @@ struct MessageTraits<sbp_msg_utc_leap_second_t> {
 template <>
 struct MessageTraits<sbp_msg_utc_time_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgUtcTimeGnss;
-  static constexpr char *name = "MSG_UTC_TIME_GNSS";
+  static constexpr const char *name = "MSG_UTC_TIME_GNSS";
   static const sbp_msg_utc_time_gnss_t &get(const sbp_msg_t &msg) {
     return msg.utc_time_gnss;
   }
@@ -7685,7 +7685,7 @@ struct MessageTraits<sbp_msg_utc_time_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_utc_time_t> {
   static constexpr sbp_msg_type_t id = SbpMsgUtcTime;
-  static constexpr char *name = "MSG_UTC_TIME";
+  static constexpr const char *name = "MSG_UTC_TIME";
   static const sbp_msg_utc_time_t &get(const sbp_msg_t &msg) {
     return msg.utc_time;
   }
@@ -7727,7 +7727,7 @@ struct MessageTraits<sbp_msg_utc_time_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_body_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelBody;
-  static constexpr char *name = "MSG_VEL_BODY";
+  static constexpr const char *name = "MSG_VEL_BODY";
   static const sbp_msg_vel_body_t &get(const sbp_msg_t &msg) {
     return msg.vel_body;
   }
@@ -7760,7 +7760,7 @@ struct MessageTraits<sbp_msg_vel_body_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_cog_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelCog;
-  static constexpr char *name = "MSG_VEL_COG";
+  static constexpr const char *name = "MSG_VEL_COG";
   static const sbp_msg_vel_cog_t &get(const sbp_msg_t &msg) {
     return msg.vel_cog;
   }
@@ -7793,7 +7793,7 @@ struct MessageTraits<sbp_msg_vel_cog_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ecef_cov_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelEcefCovGnss;
-  static constexpr char *name = "MSG_VEL_ECEF_COV_GNSS";
+  static constexpr const char *name = "MSG_VEL_ECEF_COV_GNSS";
   static const sbp_msg_vel_ecef_cov_gnss_t &get(const sbp_msg_t &msg) {
     return msg.vel_ecef_cov_gnss;
   }
@@ -7840,7 +7840,7 @@ struct MessageTraits<sbp_msg_vel_ecef_cov_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ecef_cov_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelEcefCov;
-  static constexpr char *name = "MSG_VEL_ECEF_COV";
+  static constexpr const char *name = "MSG_VEL_ECEF_COV";
   static const sbp_msg_vel_ecef_cov_t &get(const sbp_msg_t &msg) {
     return msg.vel_ecef_cov;
   }
@@ -7886,7 +7886,7 @@ struct MessageTraits<sbp_msg_vel_ecef_cov_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ecef_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelEcefDepA;
-  static constexpr char *name = "MSG_VEL_ECEF_DEP_A";
+  static constexpr const char *name = "MSG_VEL_ECEF_DEP_A";
   static const sbp_msg_vel_ecef_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.vel_ecef_dep_a;
   }
@@ -7922,7 +7922,7 @@ struct MessageTraits<sbp_msg_vel_ecef_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ecef_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelEcefGnss;
-  static constexpr char *name = "MSG_VEL_ECEF_GNSS";
+  static constexpr const char *name = "MSG_VEL_ECEF_GNSS";
   static const sbp_msg_vel_ecef_gnss_t &get(const sbp_msg_t &msg) {
     return msg.vel_ecef_gnss;
   }
@@ -7967,7 +7967,7 @@ struct MessageTraits<sbp_msg_vel_ecef_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ecef_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelEcef;
-  static constexpr char *name = "MSG_VEL_ECEF";
+  static constexpr const char *name = "MSG_VEL_ECEF";
   static const sbp_msg_vel_ecef_t &get(const sbp_msg_t &msg) {
     return msg.vel_ecef;
   }
@@ -8009,7 +8009,7 @@ struct MessageTraits<sbp_msg_vel_ecef_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ned_cov_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelNedCovGnss;
-  static constexpr char *name = "MSG_VEL_NED_COV_GNSS";
+  static constexpr const char *name = "MSG_VEL_NED_COV_GNSS";
   static const sbp_msg_vel_ned_cov_gnss_t &get(const sbp_msg_t &msg) {
     return msg.vel_ned_cov_gnss;
   }
@@ -8056,7 +8056,7 @@ struct MessageTraits<sbp_msg_vel_ned_cov_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ned_cov_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelNedCov;
-  static constexpr char *name = "MSG_VEL_NED_COV";
+  static constexpr const char *name = "MSG_VEL_NED_COV";
   static const sbp_msg_vel_ned_cov_t &get(const sbp_msg_t &msg) {
     return msg.vel_ned_cov;
   }
@@ -8098,7 +8098,7 @@ struct MessageTraits<sbp_msg_vel_ned_cov_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ned_dep_a_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelNedDepA;
-  static constexpr char *name = "MSG_VEL_NED_DEP_A";
+  static constexpr const char *name = "MSG_VEL_NED_DEP_A";
   static const sbp_msg_vel_ned_dep_a_t &get(const sbp_msg_t &msg) {
     return msg.vel_ned_dep_a;
   }
@@ -8134,7 +8134,7 @@ struct MessageTraits<sbp_msg_vel_ned_dep_a_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ned_gnss_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelNedGnss;
-  static constexpr char *name = "MSG_VEL_NED_GNSS";
+  static constexpr const char *name = "MSG_VEL_NED_GNSS";
   static const sbp_msg_vel_ned_gnss_t &get(const sbp_msg_t &msg) {
     return msg.vel_ned_gnss;
   }
@@ -8179,7 +8179,7 @@ struct MessageTraits<sbp_msg_vel_ned_gnss_t> {
 template <>
 struct MessageTraits<sbp_msg_vel_ned_t> {
   static constexpr sbp_msg_type_t id = SbpMsgVelNed;
-  static constexpr char *name = "MSG_VEL_NED";
+  static constexpr const char *name = "MSG_VEL_NED";
   static const sbp_msg_vel_ned_t &get(const sbp_msg_t &msg) {
     return msg.vel_ned;
   }
@@ -8221,7 +8221,7 @@ struct MessageTraits<sbp_msg_vel_ned_t> {
 template <>
 struct MessageTraits<sbp_msg_wheeltick_t> {
   static constexpr sbp_msg_type_t id = SbpMsgWheeltick;
-  static constexpr char *name = "MSG_WHEELTICK";
+  static constexpr const char *name = "MSG_WHEELTICK";
   static const sbp_msg_wheeltick_t &get(const sbp_msg_t &msg) {
     return msg.wheeltick;
   }
