@@ -23,12 +23,12 @@
 /** Protocol major version. */
 #define SBP_MAJOR_VERSION 4
 /** Protocol minor version. */
-#define SBP_MINOR_VERSION 9
+#define SBP_MINOR_VERSION 10
 /** Protocol patch version. */
 #define SBP_PATCH_VERSION 0
 
 /** Full SBP version string. */
-#define SBP_VERSION "4.9.1-alpha"
+#define SBP_VERSION "4.10.0"
 
 /** Is this a staging branch? */
 #define SBP_STAGING 0
