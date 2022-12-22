@@ -1,5 +1,31 @@
 # Changelog
 
+## [v4.10.0](https://github.com/swift-nav/libsbp/tree/v4.10.0) (2022-12-22)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/SR1.0.1...v4.10.0)
+
+**Closed issues:**
+
+- \[C++\] MessageTrait: name attribute [\#1240](https://github.com/swift-nav/libsbp/issues/1240)
+
+**Merged pull requests:**
+
+- bazel: Pin Bazel to 5.x [\#1279](https://github.com/swift-nav/libsbp/pull/1279) ([isaactorz](https://github.com/isaactorz))
+- C++ MessageTrait name attribute \[DEVINFRA-1034\] [\#1278](https://github.com/swift-nav/libsbp/pull/1278) ([ljbade](https://github.com/ljbade))
+- Auto submodule update: cmake - Don't fail on empty diffs when running clang-format [\#1277](https://github.com/swift-nav/libsbp/pull/1277) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- rust clippy [\#1276](https://github.com/swift-nav/libsbp/pull/1276) ([adrian-kong](https://github.com/adrian-kong))
+- add haskell cache \[DEVINFRA-470\] [\#1275](https://github.com/swift-nav/libsbp/pull/1275) ([adrian-kong](https://github.com/adrian-kong))
+- Cmake submodule update [\#1274](https://github.com/swift-nav/libsbp/pull/1274) ([RReichert](https://github.com/RReichert))
+- Auto submodule update: cmake - Add a script supporting ratcheting for clang-tidy warnings [\#1273](https://github.com/swift-nav/libsbp/pull/1273) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- change maven publish to dev email [\#1271](https://github.com/swift-nav/libsbp/pull/1271) ([adrian-kong](https://github.com/adrian-kong))
+- impl HasTime for Result Frame \[DEVINFRA-1031\] [\#1267](https://github.com/swift-nav/libsbp/pull/1267) ([adrian-kong](https://github.com/adrian-kong))
+- small rust fixup [\#1266](https://github.com/swift-nav/libsbp/pull/1266) ([adrian-kong](https://github.com/adrian-kong))
+- Add frame iterators [\#1265](https://github.com/swift-nav/libsbp/pull/1265) ([adrian-kong](https://github.com/adrian-kong))
+- rust: include original message in TryFrom Error [\#1264](https://github.com/swift-nav/libsbp/pull/1264) ([notoriaga](https://github.com/notoriaga))
+- add MsgAcknowledge [\#1263](https://github.com/swift-nav/libsbp/pull/1263) ([notoriaga](https://github.com/notoriaga))
+- add friendly\_name method \[DEVINFRA-1045\] [\#1262](https://github.com/swift-nav/libsbp/pull/1262) ([adrian-kong](https://github.com/adrian-kong))
+- build\(deps\): bump qs from 6.5.2 to 6.5.3 [\#1261](https://github.com/swift-nav/libsbp/pull/1261) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v4.9.0](https://github.com/swift-nav/libsbp/tree/v4.9.0) (2022-10-28)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.8.0...v4.9.0)
