@@ -108,6 +108,7 @@ Suite* legacy_auto_check_sbp_ssr_MsgSsrCodePhaseBiasesBounds_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBounds_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrOrbitClockBoundsDegradation_suite(void);
+Suite* legacy_auto_check_sbp_ssr_MsgSsrSatelliteApc_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrStecCorrection_suite(void);
 Suite* legacy_auto_check_sbp_ssr_MsgSsrTileDefinition_suite(void);
 Suite* legacy_auto_check_sbp_system_MsgDgnssStatus_suite(void);
