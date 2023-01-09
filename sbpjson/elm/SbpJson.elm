@@ -2832,6 +2832,10 @@ type alias PhaseBiasesContent =
 
 type alias MsgSsrSatelliteApc =
     { apc : Array SatelliteAPC
+    , iodSsr : Int
+    , solID : Int
+    , time : GpsTimeSEC
+    , updateInterval : Int
     }
 
 {-| Contains phase center offset and elevation variation corrections for one signal on a
@@ -7137,11 +7141,19 @@ msgSsrSatelliteApc : Jdec.Decoder MsgSsrSatelliteApc
 msgSsrSatelliteApc =
     Jpipe.decode MsgSsrSatelliteApc
         |> Jpipe.required "apc" (Jdec.array satelliteAPC)
+        |> Jpipe.required "iod_ssr" Jdec.int
+        |> Jpipe.required "sol_id" Jdec.int
+        |> Jpipe.required "time" gpsTimeSEC
+        |> Jpipe.required "update_interval" Jdec.int
 
 encodeMsgSsrSatelliteApc : MsgSsrSatelliteApc -> Jenc.Value
 encodeMsgSsrSatelliteApc x =
     Jenc.object
         [ ("apc", makeArrayEncoder encodeSatelliteAPC x.apc)
+        , ("iod_ssr", Jenc.int x.iodSsr)
+        , ("sol_id", Jenc.int x.solID)
+        , ("time", encodeGpsTimeSEC x.time)
+        , ("update_interval", Jenc.int x.updateInterval)
         ]
 
 satelliteAPC : Jdec.Decoder SatelliteAPC

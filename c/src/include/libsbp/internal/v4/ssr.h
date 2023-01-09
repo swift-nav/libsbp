@@ -456,6 +456,26 @@ bool sbp_satellite_apc_decode_internal(sbp_decode_ctx_t *ctx,
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
+bool sbp_msg_ssr_satellite_apc_dep_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_satellite_apc_dep_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_satellite_apc_dep_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_satellite_apc_dep_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_ssr_satellite_apc_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_satellite_apc_t *msg);
 

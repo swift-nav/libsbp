@@ -1053,8 +1053,14 @@ struct MessageTraits<msg_ssr_gridded_correction_bounds_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_satellite_apc_t> {
+struct MessageTraits<msg_ssr_satellite_apc_dep_t> {
   static constexpr u16 id = 1540;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_satellite_apc_t> {
+  static constexpr u16 id = 1541;
 };
 
 

@@ -813,10 +813,38 @@ definitions:
              degrees separation from the Z axis, subsequent elements represent
              elevation variations in 1 degree increments.
 
- - MSG_SSR_SATELLITE_APC:
+ - MSG_SSR_SATELLITE_APC_DEP:
      id: 0x0604
      short_desc: Satellite antenna phase center corrections
+     replaced_by:
+       - MSG_SSR_SATELLITE_APC
      fields:
+       - apc:
+           type: array
+           fill: SatelliteAPC
+           desc: Satellite antenna phase center corrections
+
+ - MSG_SSR_SATELLITE_APC:
+     id: 0x0605
+     short_desc: Satellite antenna phase center corrections
+     fields:
+       - time:
+           type: GPSTimeSec
+           desc: GNSS reference time of the correction
+       - update_interval:
+           type: u8
+           desc: >
+             Update interval between consecutive corrections. Encoded
+             following RTCM DF391 specification.
+       - sol_id:
+           type: u8
+           desc: SSR Solution ID. Similar to RTCM DF415.
+       - iod_ssr:
+           type: u8
+           desc: >
+             IOD of the SSR correction. A change of Issue Of Data
+             SSR is used to indicate a change in the SSR
+             generating configuration
        - apc:
            type: array
            fill: SatelliteAPC

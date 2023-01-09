@@ -966,10 +966,42 @@ SatelliteAPC.prototype.fieldSpec.push(['pco', 'array', 'writeInt16LE', function 
 SatelliteAPC.prototype.fieldSpec.push(['pcv', 'array', 'writeInt8', function () { return 1; }, 21]);
 
 /**
- * SBP class for message MSG_SSR_SATELLITE_APC (0x0604).
+ * SBP class for message MSG_SSR_SATELLITE_APC_DEP (0x0604).
  *
  
  * Fields in the SBP payload (`sbp.payload`):
+ * @field apc array Satellite antenna phase center corrections
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgSsrSatelliteApcDep = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_SATELLITE_APC_DEP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrSatelliteApcDep.prototype = Object.create(SBP.prototype);
+MsgSsrSatelliteApcDep.prototype.messageType = "MSG_SSR_SATELLITE_APC_DEP";
+MsgSsrSatelliteApcDep.prototype.msg_type = 0x0604;
+MsgSsrSatelliteApcDep.prototype.constructor = MsgSsrSatelliteApcDep;
+MsgSsrSatelliteApcDep.prototype.parser = new Parser()
+  .endianess('little')
+  .array('apc', { type: SatelliteAPC.prototype.parser, readUntil: 'eof' });
+MsgSsrSatelliteApcDep.prototype.fieldSpec = [];
+MsgSsrSatelliteApcDep.prototype.fieldSpec.push(['apc', 'array', SatelliteAPC.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message MSG_SSR_SATELLITE_APC (0x0605).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
+ * @field sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID. Similar to RTCM DF415.
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR generating configuration
  * @field apc array Satellite antenna phase center corrections
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -983,12 +1015,20 @@ let MsgSsrSatelliteApc = function (sbp, fields) {
 };
 MsgSsrSatelliteApc.prototype = Object.create(SBP.prototype);
 MsgSsrSatelliteApc.prototype.messageType = "MSG_SSR_SATELLITE_APC";
-MsgSsrSatelliteApc.prototype.msg_type = 0x0604;
+MsgSsrSatelliteApc.prototype.msg_type = 0x0605;
 MsgSsrSatelliteApc.prototype.constructor = MsgSsrSatelliteApc;
 MsgSsrSatelliteApc.prototype.parser = new Parser()
   .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .uint8('update_interval')
+  .uint8('sol_id')
+  .uint8('iod_ssr')
   .array('apc', { type: SatelliteAPC.prototype.parser, readUntil: 'eof' });
 MsgSsrSatelliteApc.prototype.fieldSpec = [];
+MsgSsrSatelliteApc.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+MsgSsrSatelliteApc.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+MsgSsrSatelliteApc.prototype.fieldSpec.push(['sol_id', 'writeUInt8', 1]);
+MsgSsrSatelliteApc.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
 MsgSsrSatelliteApc.prototype.fieldSpec.push(['apc', 'array', SatelliteAPC.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
@@ -1607,7 +1647,9 @@ module.exports = {
   0x05F7: MsgSsrTileDefinition,
   MsgSsrTileDefinition: MsgSsrTileDefinition,
   SatelliteAPC: SatelliteAPC,
-  0x0604: MsgSsrSatelliteApc,
+  0x0604: MsgSsrSatelliteApcDep,
+  MsgSsrSatelliteApcDep: MsgSsrSatelliteApcDep,
+  0x0605: MsgSsrSatelliteApc,
   MsgSsrSatelliteApc: MsgSsrSatelliteApc,
   0x05DC: MsgSsrOrbitClockDepA,
   MsgSsrOrbitClockDepA: MsgSsrOrbitClockDepA,

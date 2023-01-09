@@ -235,6 +235,7 @@ typedef enum {
   SbpMsgSsrOrbitClockDepA = SBP_MSG_SSR_ORBIT_CLOCK_DEP_A,
   SbpMsgSsrOrbitClock = SBP_MSG_SSR_ORBIT_CLOCK,
   SbpMsgSsrPhaseBiases = SBP_MSG_SSR_PHASE_BIASES,
+  SbpMsgSsrSatelliteApcDep = SBP_MSG_SSR_SATELLITE_APC_DEP,
   SbpMsgSsrSatelliteApc = SBP_MSG_SSR_SATELLITE_APC,
   SbpMsgSsrStecCorrectionDepA = SBP_MSG_SSR_STEC_CORRECTION_DEP_A,
   SbpMsgSsrStecCorrectionDep = SBP_MSG_SSR_STEC_CORRECTION_DEP,

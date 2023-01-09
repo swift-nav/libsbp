@@ -2571,8 +2571,103 @@ int sbp_satellite_apc_cmp(const sbp_satellite_apc_t *a,
   return ret;
 }
 
+bool sbp_msg_ssr_satellite_apc_dep_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_satellite_apc_dep_t *msg) {
+  for (size_t i = 0; i < msg->n_apc; i++) {
+    if (!sbp_satellite_apc_encode_internal(ctx, &msg->apc[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_ssr_satellite_apc_dep_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_satellite_apc_dep_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_ssr_satellite_apc_dep_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_msg_ssr_satellite_apc_dep_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_satellite_apc_dep_t *msg) {
+  msg->n_apc =
+      (uint8_t)((ctx->buf_len - ctx->offset) / SBP_SATELLITE_APC_ENCODED_LEN);
+  for (uint8_t i = 0; i < msg->n_apc; i++) {
+    if (!sbp_satellite_apc_decode_internal(ctx, &msg->apc[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+s8 sbp_msg_ssr_satellite_apc_dep_decode(const uint8_t *buf, uint8_t len,
+                                        uint8_t *n_read,
+                                        sbp_msg_ssr_satellite_apc_dep_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_ssr_satellite_apc_dep_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+s8 sbp_msg_ssr_satellite_apc_dep_send(
+    sbp_state_t *s, u16 sender_id, const sbp_msg_ssr_satellite_apc_dep_t *msg,
+    sbp_write_fn_t write) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_msg_ssr_satellite_apc_dep_encode(payload, sizeof(payload),
+                                                &payload_len, msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
+  return sbp_payload_send(s, SBP_MSG_SSR_SATELLITE_APC_DEP, sender_id,
+                          payload_len, payload, write);
+}
+
+int sbp_msg_ssr_satellite_apc_dep_cmp(
+    const sbp_msg_ssr_satellite_apc_dep_t *a,
+    const sbp_msg_ssr_satellite_apc_dep_t *b) {
+  int ret = 0;
+
+  ret = sbp_u8_cmp(&a->n_apc, &b->n_apc);
+  for (uint8_t i = 0; ret == 0 && i < a->n_apc; i++) {
+    ret = sbp_satellite_apc_cmp(&a->apc[i], &b->apc[i]);
+  }
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}
+
 bool sbp_msg_ssr_satellite_apc_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_satellite_apc_t *msg) {
+  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->time)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->update_interval)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->sol_id)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->iod_ssr)) {
+    return false;
+  }
   for (size_t i = 0; i < msg->n_apc; i++) {
     if (!sbp_satellite_apc_encode_internal(ctx, &msg->apc[i])) {
       return false;
@@ -2599,6 +2694,18 @@ s8 sbp_msg_ssr_satellite_apc_encode(uint8_t *buf, uint8_t len,
 
 bool sbp_msg_ssr_satellite_apc_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_satellite_apc_t *msg) {
+  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->time)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->update_interval)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->sol_id)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->iod_ssr)) {
+    return false;
+  }
   msg->n_apc =
       (uint8_t)((ctx->buf_len - ctx->offset) / SBP_SATELLITE_APC_ENCODED_LEN);
   for (uint8_t i = 0; i < msg->n_apc; i++) {
@@ -2642,6 +2749,26 @@ s8 sbp_msg_ssr_satellite_apc_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_ssr_satellite_apc_cmp(const sbp_msg_ssr_satellite_apc_t *a,
                                   const sbp_msg_ssr_satellite_apc_t *b) {
   int ret = 0;
+
+  ret = sbp_gps_time_sec_cmp(&a->time, &b->time);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->update_interval, &b->update_interval);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->sol_id, &b->sol_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->iod_ssr, &b->iod_ssr);
+  if (ret != 0) {
+    return ret;
+  }
 
   ret = sbp_u8_cmp(&a->n_apc, &b->n_apc);
   for (uint8_t i = 0; ret == 0 && i < a->n_apc; i++) {

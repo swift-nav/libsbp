@@ -3208,6 +3208,10 @@ const typeMap = {
     ], "any"),
     "MsgSsrSatelliteApc": o([
         { json: "apc", js: "apc", typ: a(r("SatelliteAPC")) },
+        { json: "iod_ssr", js: "iod_ssr", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "SatelliteAPC": o([
         { json: "pco", js: "pco", typ: a(0) },

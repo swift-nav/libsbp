@@ -32,6 +32,7 @@ pub use msg_ssr_orbit_clock_bounds_degradation::MsgSsrOrbitClockBoundsDegradatio
 pub use msg_ssr_orbit_clock_dep_a::MsgSsrOrbitClockDepA;
 pub use msg_ssr_phase_biases::MsgSsrPhaseBiases;
 pub use msg_ssr_satellite_apc::MsgSsrSatelliteApc;
+pub use msg_ssr_satellite_apc_dep::MsgSsrSatelliteApcDep;
 pub use msg_ssr_stec_correction::MsgSsrStecCorrection;
 pub use msg_ssr_stec_correction_dep::MsgSsrStecCorrectionDep;
 pub use msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
@@ -1928,13 +1929,27 @@ pub mod msg_ssr_satellite_apc {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
+        /// GNSS reference time of the correction
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
+        pub time: GpsTimeSec,
+        /// Update interval between consecutive corrections. Encoded following RTCM
+        /// DF391 specification.
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
+        pub update_interval: u8,
+        /// SSR Solution ID. Similar to RTCM DF415.
+        #[cfg_attr(feature = "serde", serde(rename = "sol_id"))]
+        pub sol_id: u8,
+        /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+        /// indicate a change in the SSR generating configuration
+        #[cfg_attr(feature = "serde", serde(rename = "iod_ssr"))]
+        pub iod_ssr: u8,
         /// Satellite antenna phase center corrections
         #[cfg_attr(feature = "serde", serde(rename = "apc"))]
         pub apc: Vec<SatelliteAPC>,
     }
 
     impl ConcreteMessage for MsgSsrSatelliteApc {
-        const MESSAGE_TYPE: u16 = 1540;
+        const MESSAGE_TYPE: u16 = 1541;
         const MESSAGE_NAME: &'static str = "MSG_SSR_SATELLITE_APC";
     }
 
@@ -1973,6 +1988,97 @@ pub mod msg_ssr_satellite_apc {
     }
 
     impl WireFormat for MsgSsrSatelliteApc {
+        const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <Vec<SatelliteAPC> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.time)
+                + WireFormat::len(&self.update_interval)
+                + WireFormat::len(&self.sol_id)
+                + WireFormat::len(&self.iod_ssr)
+                + WireFormat::len(&self.apc)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.time, buf);
+            WireFormat::write(&self.update_interval, buf);
+            WireFormat::write(&self.sol_id, buf);
+            WireFormat::write(&self.iod_ssr, buf);
+            WireFormat::write(&self.apc, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrSatelliteApc {
+                sender_id: None,
+                time: WireFormat::parse_unchecked(buf),
+                update_interval: WireFormat::parse_unchecked(buf),
+                sol_id: WireFormat::parse_unchecked(buf),
+                iod_ssr: WireFormat::parse_unchecked(buf),
+                apc: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_satellite_apc_dep {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+    /// Satellite antenna phase center corrections
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgSsrSatelliteApcDep {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// Satellite antenna phase center corrections
+        #[cfg_attr(feature = "serde", serde(rename = "apc"))]
+        pub apc: Vec<SatelliteAPC>,
+    }
+
+    impl ConcreteMessage for MsgSsrSatelliteApcDep {
+        const MESSAGE_TYPE: u16 = 1540;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_SATELLITE_APC_DEP";
+    }
+
+    impl SbpMessage for MsgSsrSatelliteApcDep {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrSatelliteApcDep {
+        fn friendly_name() -> &'static str {
+            "SSR SATELLITE APC DEP"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrSatelliteApcDep {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrSatelliteApcDep(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrSatelliteApcDep {
         const MIN_LEN: usize = <Vec<SatelliteAPC> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.apc)
@@ -1981,7 +2087,7 @@ pub mod msg_ssr_satellite_apc {
             WireFormat::write(&self.apc, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgSsrSatelliteApc {
+            MsgSsrSatelliteApcDep {
                 sender_id: None,
                 apc: WireFormat::parse_unchecked(buf),
             }

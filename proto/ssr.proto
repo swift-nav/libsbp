@@ -295,7 +295,11 @@ message SatelliteAPC {
 None
  */
 message MsgSsrSatelliteApc {
-    repeated SatelliteAPC apc = 1;
+    gnss.GpsTimeSec time = 1;
+    uint32 update_interval = 2;
+    uint32 sol_id = 3;
+    uint32 iod_ssr = 4;
+    repeated SatelliteAPC apc = 5;
 }
 
 /** None

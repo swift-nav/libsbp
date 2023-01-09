@@ -2252,11 +2252,11 @@ class MsgSsrTileDefinition(SBP):
     d.update(j)
     return d
     
-SBP_MSG_SSR_SATELLITE_APC = 0x0604
-class MsgSsrSatelliteApc(SBP):
-  """SBP class for message MSG_SSR_SATELLITE_APC (0x0604).
+SBP_MSG_SSR_SATELLITE_APC_DEP = 0x0604
+class MsgSsrSatelliteApcDep(SBP):
+  """SBP class for message MSG_SSR_SATELLITE_APC_DEP (0x0604).
 
-  You can have MSG_SSR_SATELLITE_APC inherit its fields directly
+  You can have MSG_SSR_SATELLITE_APC_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -2280,6 +2280,118 @@ class MsgSsrSatelliteApc(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
+      super( MsgSsrSatelliteApcDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrSatelliteApcDep, self).__init__()
+      self.msg_type = SBP_MSG_SSR_SATELLITE_APC_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.apc = kwargs.pop('apc')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrSatelliteApcDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrSatelliteApcDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrSatelliteApcDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrSatelliteApcDep._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "SSR SATELLITE APC DEP"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrSatelliteApcDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrSatelliteApcDep, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_SATELLITE_APC = 0x0605
+class MsgSsrSatelliteApc(SBP):
+  """SBP class for message MSG_SSR_SATELLITE_APC (0x0605).
+
+  You can have MSG_SSR_SATELLITE_APC inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  time : GPSTimeSec
+    GNSS reference time of the correction
+  update_interval : int
+    Update interval between consecutive corrections. Encoded following RTCM
+    DF391 specification.
+  sol_id : int
+    SSR Solution ID. Similar to RTCM DF415.
+  iod_ssr : int
+    IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    indicate a change in the SSR generating configuration
+  apc : array
+    Satellite antenna phase center corrections
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'time' / GPSTimeSec._parser,
+                   'update_interval' / construct.Int8ul,
+                   'sol_id' / construct.Int8ul,
+                   'iod_ssr' / construct.Int8ul,
+                   'apc' / construct.GreedyRange(SatelliteAPC._parser),)
+  __slots__ = [
+               'time',
+               'update_interval',
+               'sol_id',
+               'iod_ssr',
+               'apc',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
       super( MsgSsrSatelliteApc,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
@@ -2288,6 +2400,10 @@ class MsgSsrSatelliteApc(SBP):
       super( MsgSsrSatelliteApc, self).__init__()
       self.msg_type = SBP_MSG_SSR_SATELLITE_APC
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.time = kwargs.pop('time')
+      self.update_interval = kwargs.pop('update_interval')
+      self.sol_id = kwargs.pop('sol_id')
+      self.iod_ssr = kwargs.pop('iod_ssr')
       self.apc = kwargs.pop('apc')
 
   def __repr__(self):
@@ -3286,7 +3402,8 @@ msg_classes = {
   0x05FE: MsgSsrGriddedCorrectionBounds,
   0x05F6: MsgSsrTileDefinitionDep,
   0x05F7: MsgSsrTileDefinition,
-  0x0604: MsgSsrSatelliteApc,
+  0x0604: MsgSsrSatelliteApcDep,
+  0x0605: MsgSsrSatelliteApc,
   0x05DC: MsgSsrOrbitClockDepA,
   0x05EB: MsgSsrStecCorrectionDepA,
   0x05F0: MsgSsrGriddedCorrectionNoStdDepA,

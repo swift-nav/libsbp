@@ -36,6 +36,7 @@
 #include <libsbp/v4/ssr/MSG_SSR_ORBIT_CLOCK_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_PHASE_BIASES.h>
 #include <libsbp/v4/ssr/MSG_SSR_SATELLITE_APC.h>
+#include <libsbp/v4/ssr/MSG_SSR_SATELLITE_APC_DEP.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP_A.h>

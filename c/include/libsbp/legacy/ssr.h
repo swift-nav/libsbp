@@ -531,6 +531,19 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   satellite_apc_t apc[0]; /**< Satellite antenna phase center corrections */
+} msg_ssr_satellite_apc_dep_t;
+
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;    /**< GNSS reference time of the
+                               correction */
+  u8 update_interval;     /**< Update interval between consecutive corrections.
+                               Encoded following RTCM DF391 specification. */
+  u8 sol_id;              /**< SSR Solution ID. Similar to RTCM DF415. */
+  u8 iod_ssr;             /**< IOD of the SSR correction. A change of Issue Of
+                               Data SSR is used to indicate a change in the SSR
+                               generating configuration */
+  satellite_apc_t apc[0]; /**< Satellite antenna phase center
+                               corrections */
 } msg_ssr_satellite_apc_t;
 
 typedef struct SBP_ATTR_PACKED {

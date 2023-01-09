@@ -998,20 +998,58 @@ instance Binary SatelliteAPC where
 $(makeJSON "_satelliteAPC_" ''SatelliteAPC)
 $(makeLenses ''SatelliteAPC)
 
+msgSsrSatelliteApcDep :: Word16
+msgSsrSatelliteApcDep = 0x0604
+
+data MsgSsrSatelliteApcDep = MsgSsrSatelliteApcDep
+  { _msgSsrSatelliteApcDep_apc :: ![SatelliteAPC]
+    -- ^ Satellite antenna phase center corrections
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrSatelliteApcDep where
+  get = do
+    _msgSsrSatelliteApcDep_apc <- whileM (not <$> isEmpty) get
+    pure MsgSsrSatelliteApcDep {..}
+
+  put MsgSsrSatelliteApcDep {..} = do
+    mapM_ put _msgSsrSatelliteApcDep_apc
+
+$(makeSBP 'msgSsrSatelliteApcDep ''MsgSsrSatelliteApcDep)
+$(makeJSON "_msgSsrSatelliteApcDep_" ''MsgSsrSatelliteApcDep)
+$(makeLenses ''MsgSsrSatelliteApcDep)
+
 msgSsrSatelliteApc :: Word16
-msgSsrSatelliteApc = 0x0604
+msgSsrSatelliteApc = 0x0605
 
 data MsgSsrSatelliteApc = MsgSsrSatelliteApc
-  { _msgSsrSatelliteApc_apc :: ![SatelliteAPC]
+  { _msgSsrSatelliteApc_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _msgSsrSatelliteApc_update_interval :: !Word8
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
+  , _msgSsrSatelliteApc_sol_id        :: !Word8
+    -- ^ SSR Solution ID. Similar to RTCM DF415.
+  , _msgSsrSatelliteApc_iod_ssr       :: !Word8
+    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    -- indicate a change in the SSR generating configuration
+  , _msgSsrSatelliteApc_apc           :: ![SatelliteAPC]
     -- ^ Satellite antenna phase center corrections
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrSatelliteApc where
   get = do
+    _msgSsrSatelliteApc_time <- get
+    _msgSsrSatelliteApc_update_interval <- getWord8
+    _msgSsrSatelliteApc_sol_id <- getWord8
+    _msgSsrSatelliteApc_iod_ssr <- getWord8
     _msgSsrSatelliteApc_apc <- whileM (not <$> isEmpty) get
     pure MsgSsrSatelliteApc {..}
 
   put MsgSsrSatelliteApc {..} = do
+    put _msgSsrSatelliteApc_time
+    putWord8 _msgSsrSatelliteApc_update_interval
+    putWord8 _msgSsrSatelliteApc_sol_id
+    putWord8 _msgSsrSatelliteApc_iod_ssr
     mapM_ put _msgSsrSatelliteApc_apc
 
 $(makeSBP 'msgSsrSatelliteApc ''MsgSsrSatelliteApc)

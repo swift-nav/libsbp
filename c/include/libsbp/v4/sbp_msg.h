@@ -241,6 +241,7 @@ typedef union {
   sbp_msg_ssr_orbit_clock_dep_a_t ssr_orbit_clock_dep_a;
   sbp_msg_ssr_orbit_clock_t ssr_orbit_clock;
   sbp_msg_ssr_phase_biases_t ssr_phase_biases;
+  sbp_msg_ssr_satellite_apc_dep_t ssr_satellite_apc_dep;
   sbp_msg_ssr_satellite_apc_t ssr_satellite_apc;
   sbp_msg_ssr_stec_correction_dep_a_t ssr_stec_correction_dep_a;
   sbp_msg_ssr_stec_correction_dep_t ssr_stec_correction_dep;
@@ -796,6 +797,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_encode(buf, len, n_written,
                                              &msg->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_encode(buf, len, n_written,
+                                                  &msg->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_encode(buf, len, n_written,
                                               &msg->ssr_satellite_apc);
@@ -1422,6 +1426,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_decode(buf, len, n_read,
                                              &msg->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_decode(buf, len, n_read,
+                                                  &msg->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_decode(buf, len, n_read,
                                               &msg->ssr_satellite_apc);
@@ -1954,6 +1961,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ssr_orbit_clock_encoded_len(&msg->ssr_orbit_clock);
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_encoded_len(&msg->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_encoded_len(
+          &msg->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_encoded_len(&msg->ssr_satellite_apc);
     case SbpMsgSsrStecCorrectionDepA:
@@ -2532,6 +2542,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_cmp(&a->ssr_phase_biases,
                                           &b->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_cmp(&a->ssr_satellite_apc_dep,
+                                               &b->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_cmp(&a->ssr_satellite_apc,
                                            &b->ssr_satellite_apc);

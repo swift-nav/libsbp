@@ -207,6 +207,7 @@ import com.swiftnav.sbp.ssr.MsgSsrOrbitClockBoundsDegradation;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrSatelliteApc;
+import com.swiftnav.sbp.ssr.MsgSsrSatelliteApcDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDepA;
@@ -621,6 +622,8 @@ final class MessageTable {
                 return new MsgSsrTileDefinitionDep(msg);
             case MsgSsrTileDefinition.TYPE:
                 return new MsgSsrTileDefinition(msg);
+            case MsgSsrSatelliteApcDep.TYPE:
+                return new MsgSsrSatelliteApcDep(msg);
             case MsgSsrSatelliteApc.TYPE:
                 return new MsgSsrSatelliteApc(msg);
             case MsgSsrOrbitClockDepA.TYPE:
