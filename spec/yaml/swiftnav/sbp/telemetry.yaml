@@ -1,26 +1,109 @@
 package: swiftnav.sbp.telemetry
-description: Description
+description: Telemetry messages reported by Starling engine. 
+             The messages include various byproducts of state estimation and other logic across Starling 
+             and are aimed at efficient issue diagnostics.
 stable: False
 public: True
 include:
   - gnss.yaml
 definitions:
 
-  - MSG_TEL_SV:
-      id: 0x7778
-      short_desc: Raw SBAS data
-      desc: >
-        Description
+  - TelemetrySVHeader:
+      short_desc: Header for the Bounds messages
       fields:
-        - tow:
-            type: u32
-            units: ms
-            desc: GPS time-of-week at the start of the data block.
-        - message_type:
+        - t:
+            type: GPSTimeSec
+            desc: GNSS time of the reported telemetry.
+        - n_obs:
             type: u8
-            desc: SBAS message type (0-63)
-        - data:
+            desc: >
+              Total number of observations. First nibble is the size
+              of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
+        - origin_flags:
+            type: u8
+            desc: Flags to identify Starling component the telemetry is reported from.
+            fields:
+              - 0-7:
+                  values:
+                    - 0: Standalone
+                    - 1: Differential
+
+  - TelemetrySV:
+      short_desc: Array of per-signal telemetry entries
+      fields:
+        - az:
+            type: u8
+            units: deg * 2
+            desc: Azimuth angle (range 0..179)
+        - el:
+            type: s8
+            units: deg
+            desc: Elevation angle (range -90..90)
+        - pseudorange_residual:
+            type: s16
+            units: 1 dm
+            desc: Pseudorange observation residual
+        - phase_residual:
+            type: s16
+            units: 5 mm
+            desc: Carrier-phase or carrier-phase-derived observation residual
+        - outlier_flags:
+            type: u8
+            desc: Reports if observation is marked as an outlier and is excluded from the update.
+            fields:
+              - 0-1:
+                  desc: Pseudorange outlier
+                  values:
+                    - 0: Pseudorange accepted
+                    - 1: Pseudorange marked as outlier
+                    - 2: Major pseudorange outlier detected (all observation types excluded)
+              - 2:
+                  desc: Carrier-phase outlier
+                  values:
+                    - 0: Carrier-phase accepted
+                    - 1: Carrier-phase marked as outlier
+              - 3:
+                  desc: Computed-Doppler outlier
+                  values:
+                    - 0: Computed-Doppler accepted
+                    - 1: Computed-Doppler marked as outlier
+              - 4:
+                  desc: Measured-Doppler outlier
+                  values:
+                    - 0: Measured-Doppler accepted
+                    - 1: Measured-Doppler marked as outlier
+              - 5-7:
+                  desc: Reserved
+        - ephemeris_flags:
+            type: u8
+            desc: Ephemeris metadata
+            fields:
+              - 0-2:
+                  desc: Reason for ephemeris invalidity
+                  values:
+                    - 0: Valid
+                    - 1: Invalid (general, to be extended)
+              - 3-7:
+                  desc: Reserved
+        - correction_flags:
+            type: u8
+            desc: Reserved
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)
+
+  - MSG_TEL_SV:
+      id: 0x0120
+      short_desc: Per-signal telemetry
+      desc: >
+        This message includes telemetry pertinent to satellite signals available to Starling.
+      fields:
+        - header:
+            type: TelemetrySVHeader
+            desc: Header of a per-signal telemetry message
+        - sv_tel:
             type: array
-            size: 27
-            fill: u8
-            desc: Raw SBAS data field of 212 bits (last byte padded with zeros).
+            fill: TelemetrySV
+            map_by: sid
+            desc: Array of per-signal telemetry entries
