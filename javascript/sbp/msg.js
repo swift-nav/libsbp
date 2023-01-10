@@ -113,6 +113,7 @@ var sbpImports = {
   tracking: require('./tracking.js'),
   user: require('./user.js'),
   vehicle: require('./vehicle.js'),
+  telemetry: require('./telemetry.js'),
 };
 
 var sbpIdTable = Object.keys(sbpImports).reduce(function (prev, key) {

@@ -1,0 +1,26 @@
+package: swiftnav.sbp.telemetry
+description: Description
+stable: False
+public: True
+include:
+  - gnss.yaml
+definitions:
+
+  - MSG_TEL_SV:
+      id: 0x7778
+      short_desc: Raw SBAS data
+      desc: >
+        Description
+      fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS time-of-week at the start of the data block.
+        - message_type:
+            type: u8
+            desc: SBAS message type (0-63)
+        - data:
+            type: array
+            size: 27
+            fill: u8
+            desc: Raw SBAS data field of 212 bits (last byte padded with zeros).
