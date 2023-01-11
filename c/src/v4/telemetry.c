@@ -16,86 +16,6 @@
 #include <libsbp/sbp.h>
 #include <libsbp/v4/telemetry.h>
 
-bool sbp_telemetry_sv_header_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_telemetry_sv_header_t *msg) {
-  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->tow)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->n_obs)) {
-    return false;
-  }
-  if (!sbp_u8_encode(ctx, &msg->origin_flags)) {
-    return false;
-  }
-  return true;
-}
-
-s8 sbp_telemetry_sv_header_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
-                                  const sbp_telemetry_sv_header_t *msg) {
-  sbp_encode_ctx_t ctx;
-  ctx.buf = buf;
-  ctx.buf_len = len;
-  ctx.offset = 0;
-  if (!sbp_telemetry_sv_header_encode_internal(&ctx, msg)) {
-    return SBP_ENCODE_ERROR;
-  }
-  if (n_written != NULL) {
-    *n_written = (uint8_t)ctx.offset;
-  }
-  return SBP_OK;
-}
-
-bool sbp_telemetry_sv_header_decode_internal(sbp_decode_ctx_t *ctx,
-                                             sbp_telemetry_sv_header_t *msg) {
-  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->tow)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->n_obs)) {
-    return false;
-  }
-  if (!sbp_u8_decode(ctx, &msg->origin_flags)) {
-    return false;
-  }
-  return true;
-}
-
-s8 sbp_telemetry_sv_header_decode(const uint8_t *buf, uint8_t len,
-                                  uint8_t *n_read,
-                                  sbp_telemetry_sv_header_t *msg) {
-  sbp_decode_ctx_t ctx;
-  ctx.buf = buf;
-  ctx.buf_len = len;
-  ctx.offset = 0;
-  if (!sbp_telemetry_sv_header_decode_internal(&ctx, msg)) {
-    return SBP_DECODE_ERROR;
-  }
-  if (n_read != NULL) {
-    *n_read = (uint8_t)ctx.offset;
-  }
-  return SBP_OK;
-}
-
-int sbp_telemetry_sv_header_cmp(const sbp_telemetry_sv_header_t *a,
-                                const sbp_telemetry_sv_header_t *b) {
-  int ret = 0;
-
-  ret = sbp_gps_time_sec_cmp(&a->tow, &b->tow);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->n_obs, &b->n_obs);
-  if (ret != 0) {
-    return ret;
-  }
-
-  ret = sbp_u8_cmp(&a->origin_flags, &b->origin_flags);
-  if (ret != 0) {
-    return ret;
-  }
-  return ret;
-}
-
 bool sbp_telemetry_sv_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_telemetry_sv_t *msg) {
   if (!sbp_u8_encode(ctx, &msg->az)) {
@@ -232,7 +152,13 @@ int sbp_telemetry_sv_cmp(const sbp_telemetry_sv_t *a,
 
 bool sbp_msg_tel_sv_encode_internal(sbp_encode_ctx_t *ctx,
                                     const sbp_msg_tel_sv_t *msg) {
-  if (!sbp_telemetry_sv_header_encode_internal(ctx, &msg->header)) {
+  if (!sbp_u32_encode(ctx, &msg->tow)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->n_obs)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->origin_flags)) {
     return false;
   }
   for (size_t i = 0; i < msg->n_sv_tel; i++) {
@@ -260,7 +186,13 @@ s8 sbp_msg_tel_sv_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_tel_sv_decode_internal(sbp_decode_ctx_t *ctx,
                                     sbp_msg_tel_sv_t *msg) {
-  if (!sbp_telemetry_sv_header_decode_internal(ctx, &msg->header)) {
+  if (!sbp_u32_decode(ctx, &msg->tow)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->n_obs)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->origin_flags)) {
     return false;
   }
   msg->n_sv_tel =
@@ -303,7 +235,17 @@ s8 sbp_msg_tel_sv_send(sbp_state_t *s, u16 sender_id,
 int sbp_msg_tel_sv_cmp(const sbp_msg_tel_sv_t *a, const sbp_msg_tel_sv_t *b) {
   int ret = 0;
 
-  ret = sbp_telemetry_sv_header_cmp(&a->header, &b->header);
+  ret = sbp_u32_cmp(&a->tow, &b->tow);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->n_obs, &b->n_obs);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->origin_flags, &b->origin_flags);
   if (ret != 0) {
     return ret;
   }

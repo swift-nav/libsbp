@@ -35,26 +35,6 @@ extern "C" {
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_telemetry_sv_header_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_telemetry_sv_header_t *msg);
-
-/**
- * Internal function to decode an SBP type from a buffer
- *
- * @param ctx Decode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
-bool sbp_telemetry_sv_header_decode_internal(sbp_decode_ctx_t *ctx,
-                                             sbp_telemetry_sv_header_t *msg);
-
-/**
- * Internal function to encode an SBP type to a buffer
- *
- * @param ctx Encode context
- * @param msg SBP type instance
- * @return true on success, false otherwise
- */
 bool sbp_telemetry_sv_encode_internal(sbp_encode_ctx_t *ctx,
                                       const sbp_telemetry_sv_t *msg);
 

@@ -22,53 +22,12 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import GPSTimeSec, GnssSignal
+from sbp.gnss import GnssSignal
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/telemetry.yaml with generate.py.
 # Please do not hand edit!
 
 
-class TelemetrySVHeader(object):
-  """TelemetrySVHeader.
-  
-  
-  Parameters
-  ----------
-  tow : GPSTimeSec
-    GNSS time of the reported telemetry.
-  n_obs : int
-    Total number of observations. First nibble is the size of the sequence
-    (n), second nibble is the zero-indexed counter (ith packet of n)
-  origin_flags : int
-    Flags to identify Starling component the telemetry is reported from.
-
-  """
-  _parser = construct.Struct(
-                     'tow' / GPSTimeSec._parser,
-                     'n_obs' / construct.Int8ul,
-                     'origin_flags' / construct.Int8ul,)
-  __slots__ = [
-               'tow',
-               'n_obs',
-               'origin_flags',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.tow = kwargs.pop('tow')
-      self.n_obs = kwargs.pop('n_obs')
-      self.origin_flags = kwargs.pop('origin_flags')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = TelemetrySVHeader._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-    
 class TelemetrySV(object):
   """TelemetrySV.
   
@@ -151,8 +110,13 @@ class MsgTelSv(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
-  header : TelemetrySVHeader
-    Header of a per-signal telemetry message
+  tow : int
+    GPS Time of Week
+  n_obs : int
+    Total number of observations. First nibble is the size of the sequence
+    (n), second nibble is the zero-indexed counter (ith packet of n)
+  origin_flags : int
+    Flags to identify Starling component the telemetry is reported from.
   sv_tel : array
     Array of per-signal telemetry entries
   sender : int
@@ -160,10 +124,14 @@ class MsgTelSv(SBP):
 
   """
   _parser = construct.Struct(
-                   'header' / TelemetrySVHeader._parser,
+                   'tow' / construct.Int32ul,
+                   'n_obs' / construct.Int8ul,
+                   'origin_flags' / construct.Int8ul,
                    'sv_tel' / construct.GreedyRange(TelemetrySV._parser),)
   __slots__ = [
-               'header',
+               'tow',
+               'n_obs',
+               'origin_flags',
                'sv_tel',
               ]
 
@@ -177,7 +145,9 @@ class MsgTelSv(SBP):
       super( MsgTelSv, self).__init__()
       self.msg_type = SBP_MSG_TEL_SV
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.header = kwargs.pop('header')
+      self.tow = kwargs.pop('tow')
+      self.n_obs = kwargs.pop('n_obs')
+      self.origin_flags = kwargs.pop('origin_flags')
       self.sv_tel = kwargs.pop('sv_tel')
 
   def __repr__(self):

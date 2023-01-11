@@ -2495,14 +2495,10 @@ export interface SvAzEl {
  * This message includes telemetry pertinent to satellite signals available to Starling.
  */
 export interface MsgTelSv {
-    header: TelemetrySVHeader;
-    sv_tel: TelemetrySV[];
-}
-
-export interface TelemetrySVHeader {
     n_obs:        number;
     origin_flags: number;
-    tow:          GpsTimeSEC;
+    sv_tel:       TelemetrySV[];
+    tow:          number;
 }
 
 export interface TelemetrySV {
@@ -2898,6 +2894,12 @@ export interface STECHeader {
     tile_set_id:     number;
     time:            GpsTimeSEC;
     update_interval: number;
+}
+
+export interface TelemetrySVHeader {
+    n_obs:        number;
+    origin_flags: number;
+    tow:          GpsTimeSEC;
 }
 
 // Converts JSON strings to/from your types
@@ -5996,13 +5998,10 @@ const typeMap: any = {
         { json: "sid", js: "sid", typ: r("GnssSignal") },
     ], "any"),
     "MsgTelSv": o([
-        { json: "header", js: "header", typ: r("TelemetrySVHeader") },
-        { json: "sv_tel", js: "sv_tel", typ: a(r("TelemetrySV")) },
-    ], "any"),
-    "TelemetrySVHeader": o([
         { json: "n_obs", js: "n_obs", typ: 0 },
         { json: "origin_flags", js: "origin_flags", typ: 0 },
-        { json: "tow", js: "tow", typ: r("GpsTimeSEC") },
+        { json: "sv_tel", js: "sv_tel", typ: a(r("TelemetrySV")) },
+        { json: "tow", js: "tow", typ: 0 },
     ], "any"),
     "TelemetrySV": o([
         { json: "az", js: "az", typ: 0 },
@@ -6229,5 +6228,10 @@ const typeMap: any = {
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "TelemetrySVHeader": o([
+        { json: "n_obs", js: "n_obs", typ: 0 },
+        { json: "origin_flags", js: "origin_flags", typ: 0 },
+        { json: "tow", js: "tow", typ: r("GpsTimeSEC") },
     ], "any"),
 };

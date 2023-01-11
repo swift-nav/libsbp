@@ -19,6 +19,5 @@
 #define LIBSBP_V4_TELEMETRY_MESSAGES_H
 #include <libsbp/v4/telemetry/MSG_TEL_SV.h>
 #include <libsbp/v4/telemetry/TelemetrySV.h>
-#include <libsbp/v4/telemetry/TelemetrySVHeader.h>
 
 #endif /* LIBSBP_V4_TELEMETRY_MESSAGES_H */

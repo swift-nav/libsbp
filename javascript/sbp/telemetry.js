@@ -33,38 +33,6 @@ let GPSTimeSec = require("./gnss").GPSTimeSec;
 let SvId = require("./gnss").SvId;
 
 /**
- * SBP class for message fragment TelemetrySVHeader
- *
- 
- * Fields in the SBP payload (`sbp.payload`):
- * @field tow GPSTimeSec GNSS time of the reported telemetry.
- * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
- *   second nibble is the zero-indexed counter (ith packet of n)
- * @field origin_flags number (unsigned 8-bit int, 1 byte) Flags to identify Starling component the telemetry is reported from.
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-let TelemetrySVHeader = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "TelemetrySVHeader";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-TelemetrySVHeader.prototype = Object.create(SBP.prototype);
-TelemetrySVHeader.prototype.messageType = "TelemetrySVHeader";
-TelemetrySVHeader.prototype.constructor = TelemetrySVHeader;
-TelemetrySVHeader.prototype.parser = new Parser()
-  .endianess('little')
-  .nest('tow', { type: GPSTimeSec.prototype.parser })
-  .uint8('n_obs')
-  .uint8('origin_flags');
-TelemetrySVHeader.prototype.fieldSpec = [];
-TelemetrySVHeader.prototype.fieldSpec.push(['tow', GPSTimeSec.prototype.fieldSpec]);
-TelemetrySVHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
-TelemetrySVHeader.prototype.fieldSpec.push(['origin_flags', 'writeUInt8', 1]);
-
-/**
  * SBP class for message fragment TelemetrySV
  *
  
@@ -117,7 +85,10 @@ TelemetrySV.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
  * Starling.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field header TelemetrySVHeader Header of a per-signal telemetry message
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
+ *   second nibble is the zero-indexed counter (ith packet of n)
+ * @field origin_flags number (unsigned 8-bit int, 1 byte) Flags to identify Starling component the telemetry is reported from.
  * @field sv_tel array Array of per-signal telemetry entries
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -135,14 +106,17 @@ MsgTelSv.prototype.msg_type = 0x0120;
 MsgTelSv.prototype.constructor = MsgTelSv;
 MsgTelSv.prototype.parser = new Parser()
   .endianess('little')
-  .nest('header', { type: TelemetrySVHeader.prototype.parser })
+  .uint32('tow')
+  .uint8('n_obs')
+  .uint8('origin_flags')
   .array('sv_tel', { type: TelemetrySV.prototype.parser, readUntil: 'eof' });
 MsgTelSv.prototype.fieldSpec = [];
-MsgTelSv.prototype.fieldSpec.push(['header', TelemetrySVHeader.prototype.fieldSpec]);
+MsgTelSv.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgTelSv.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
+MsgTelSv.prototype.fieldSpec.push(['origin_flags', 'writeUInt8', 1]);
 MsgTelSv.prototype.fieldSpec.push(['sv_tel', 'array', TelemetrySV.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 module.exports = {
-  TelemetrySVHeader: TelemetrySVHeader,
   TelemetrySV: TelemetrySV,
   0x0120: MsgTelSv,
   MsgTelSv: MsgTelSv,

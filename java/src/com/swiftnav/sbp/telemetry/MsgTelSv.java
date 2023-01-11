@@ -31,8 +31,17 @@ import org.json.JSONObject;
 public class MsgTelSv extends SBPMessage {
     public static final int TYPE = 0x0120;
 
-    /** Header of a per-signal telemetry message */
-    public TelemetrySVHeader header;
+    /** GPS Time of Week */
+    public long tow;
+
+    /**
+     * Total number of observations. First nibble is the size of the sequence (n), second nibble is
+     * the zero-indexed counter (ith packet of n)
+     */
+    public int n_obs;
+
+    /** Flags to identify Starling component the telemetry is reported from. */
+    public int origin_flags;
 
     /** Array of per-signal telemetry entries */
     public TelemetrySV[] sv_tel;
@@ -55,20 +64,26 @@ public class MsgTelSv extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        header = new TelemetrySVHeader().parse(parser);
+        tow = parser.getU32();
+        n_obs = parser.getU8();
+        origin_flags = parser.getU8();
         sv_tel = parser.getArray(TelemetrySV.class);
     }
 
     @Override
     protected void build(Builder builder) {
-        header.build(builder);
+        builder.putU32(tow);
+        builder.putU8(n_obs);
+        builder.putU8(origin_flags);
         builder.putArray(sv_tel);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("header", header.toJSON());
+        obj.put("tow", tow);
+        obj.put("n_obs", n_obs);
+        obj.put("origin_flags", origin_flags);
         obj.put("sv_tel", SBPStruct.toJSONArray(sv_tel));
         return obj;
     }

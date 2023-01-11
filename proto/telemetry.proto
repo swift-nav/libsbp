@@ -23,16 +23,6 @@ package swiftnav.sbp.telemetry;
 
 import "gnss.proto";
 
-/** Header for the Bounds messages
- *
-None
- */
-message TelemetrySVHeader {
-    gnss.GpsTimeSec tow = 1;
-    uint32 n_obs = 2;
-    uint32 origin_flags = 3;
-}
-
 /** Array of per-signal telemetry entries
  *
 None
@@ -54,6 +44,8 @@ message TelemetrySV {
  * Starling.
  */
 message MsgTelSv {
-    TelemetrySVHeader header = 1;
-    repeated TelemetrySV sv_tel = 2;
+    uint32 tow = 1;
+    uint32 n_obs = 2;
+    uint32 origin_flags = 3;
+    repeated TelemetrySV sv_tel = 4;
 }

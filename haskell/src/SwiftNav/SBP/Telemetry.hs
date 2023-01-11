@@ -37,31 +37,6 @@ import SwiftNav.SBP.Gnss
 {-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
 
 
-data TelemetrySVHeader = TelemetrySVHeader
-  { _telemetrySVHeader_tow        :: !GpsTimeSec
-    -- ^ GNSS time of the reported telemetry.
-  , _telemetrySVHeader_n_obs      :: !Word8
-    -- ^ Total number of observations. First nibble is the size of the sequence
-    -- (n), second nibble is the zero-indexed counter (ith packet of n)
-  , _telemetrySVHeader_origin_flags :: !Word8
-    -- ^ Flags to identify Starling component the telemetry is reported from.
-  } deriving ( Show, Read, Eq )
-
-instance Binary TelemetrySVHeader where
-  get = do
-    _telemetrySVHeader_tow <- get
-    _telemetrySVHeader_n_obs <- getWord8
-    _telemetrySVHeader_origin_flags <- getWord8
-    pure TelemetrySVHeader {..}
-
-  put TelemetrySVHeader {..} = do
-    put _telemetrySVHeader_tow
-    putWord8 _telemetrySVHeader_n_obs
-    putWord8 _telemetrySVHeader_origin_flags
-
-$(makeJSON "_telemetrySVHeader_" ''TelemetrySVHeader)
-$(makeLenses ''TelemetrySVHeader)
-
 data TelemetrySV = TelemetrySV
   { _telemetrySV_az                 :: !Word8
     -- ^ Azimuth angle (range 0..179)
@@ -115,20 +90,29 @@ msgTelSv = 0x0120
 -- This message includes telemetry pertinent to satellite signals available to
 -- Starling.
 data MsgTelSv = MsgTelSv
-  { _msgTelSv_header :: !TelemetrySVHeader
-    -- ^ Header of a per-signal telemetry message
-  , _msgTelSv_sv_tel :: ![TelemetrySV]
+  { _msgTelSv_tow        :: !Word32
+    -- ^ GPS Time of Week
+  , _msgTelSv_n_obs      :: !Word8
+    -- ^ Total number of observations. First nibble is the size of the sequence
+    -- (n), second nibble is the zero-indexed counter (ith packet of n)
+  , _msgTelSv_origin_flags :: !Word8
+    -- ^ Flags to identify Starling component the telemetry is reported from.
+  , _msgTelSv_sv_tel     :: ![TelemetrySV]
     -- ^ Array of per-signal telemetry entries
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgTelSv where
   get = do
-    _msgTelSv_header <- get
+    _msgTelSv_tow <- getWord32le
+    _msgTelSv_n_obs <- getWord8
+    _msgTelSv_origin_flags <- getWord8
     _msgTelSv_sv_tel <- whileM (not <$> isEmpty) get
     pure MsgTelSv {..}
 
   put MsgTelSv {..} = do
-    put _msgTelSv_header
+    putWord32le _msgTelSv_tow
+    putWord8 _msgTelSv_n_obs
+    putWord8 _msgTelSv_origin_flags
     mapM_ put _msgTelSv_sv_tel
 
 $(makeSBP 'msgTelSv ''MsgTelSv)

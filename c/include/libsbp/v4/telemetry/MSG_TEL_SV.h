@@ -29,7 +29,6 @@
 #include <libsbp/telemetry_macros.h>
 #include <libsbp/v4/string/sbp_string.h>
 #include <libsbp/v4/telemetry/TelemetrySV.h>
-#include <libsbp/v4/telemetry/TelemetrySVHeader.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,9 +46,20 @@ extern "C" {
  */
 typedef struct {
   /**
-   * Header of a per-signal telemetry message
+   * GPS Time of Week [ms]
    */
-  sbp_telemetry_sv_header_t header;
+  u32 tow;
+
+  /**
+   * Total number of observations. First nibble is the size of the sequence (n),
+   * second nibble is the zero-indexed counter (ith packet of n)
+   */
+  u8 n_obs;
+
+  /**
+   * Flags to identify Starling component the telemetry is reported from.
+   */
+  u8 origin_flags;
 
   /**
    * Array of per-signal telemetry entries

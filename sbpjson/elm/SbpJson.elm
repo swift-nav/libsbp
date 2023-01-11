@@ -2985,14 +2985,10 @@ type alias SvAzEl =
 
 {-| This message includes telemetry pertinent to satellite signals available to Starling. -}
 type alias MsgTelSv =
-    { header : TelemetrySVHeader
-    , svTel : Array TelemetrySV
-    }
-
-type alias TelemetrySVHeader =
     { nObs : Int
     , originFlags : Int
-    , tow : GpsTimeSEC
+    , svTel : Array TelemetrySV
+    , tow : Int
     }
 
 type alias TelemetrySV =
@@ -3359,6 +3355,12 @@ type alias STECHeader =
     , tileSetID : Int
     , time : GpsTimeSEC
     , updateInterval : Int
+    }
+
+type alias TelemetrySVHeader =
+    { nObs : Int
+    , originFlags : Int
+    , tow : GpsTimeSEC
     }
 
 -- decoders and encoders
@@ -7413,29 +7415,18 @@ encodeSvAzEl x =
 msgTelSv : Jdec.Decoder MsgTelSv
 msgTelSv =
     Jpipe.decode MsgTelSv
-        |> Jpipe.required "header" telemetrySVHeader
+        |> Jpipe.required "n_obs" Jdec.int
+        |> Jpipe.required "origin_flags" Jdec.int
         |> Jpipe.required "sv_tel" (Jdec.array telemetrySV)
+        |> Jpipe.required "tow" Jdec.int
 
 encodeMsgTelSv : MsgTelSv -> Jenc.Value
 encodeMsgTelSv x =
     Jenc.object
-        [ ("header", encodeTelemetrySVHeader x.header)
-        , ("sv_tel", makeArrayEncoder encodeTelemetrySV x.svTel)
-        ]
-
-telemetrySVHeader : Jdec.Decoder TelemetrySVHeader
-telemetrySVHeader =
-    Jpipe.decode TelemetrySVHeader
-        |> Jpipe.required "n_obs" Jdec.int
-        |> Jpipe.required "origin_flags" Jdec.int
-        |> Jpipe.required "tow" gpsTimeSEC
-
-encodeTelemetrySVHeader : TelemetrySVHeader -> Jenc.Value
-encodeTelemetrySVHeader x =
-    Jenc.object
         [ ("n_obs", Jenc.int x.nObs)
         , ("origin_flags", Jenc.int x.originFlags)
-        , ("tow", encodeGpsTimeSEC x.tow)
+        , ("sv_tel", makeArrayEncoder encodeTelemetrySV x.svTel)
+        , ("tow", Jenc.int x.tow)
         ]
 
 telemetrySV : Jdec.Decoder TelemetrySV
@@ -8023,6 +8014,21 @@ encodeSTECHeader x =
         , ("tile_set_id", Jenc.int x.tileSetID)
         , ("time", encodeGpsTimeSEC x.time)
         , ("update_interval", Jenc.int x.updateInterval)
+        ]
+
+telemetrySVHeader : Jdec.Decoder TelemetrySVHeader
+telemetrySVHeader =
+    Jpipe.decode TelemetrySVHeader
+        |> Jpipe.required "n_obs" Jdec.int
+        |> Jpipe.required "origin_flags" Jdec.int
+        |> Jpipe.required "tow" gpsTimeSEC
+
+encodeTelemetrySVHeader : TelemetrySVHeader -> Jenc.Value
+encodeTelemetrySVHeader x =
+    Jenc.object
+        [ ("n_obs", Jenc.int x.nObs)
+        , ("origin_flags", Jenc.int x.originFlags)
+        , ("tow", encodeGpsTimeSEC x.tow)
         ]
 
 --- encoder helpers

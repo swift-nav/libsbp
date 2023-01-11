@@ -17,7 +17,6 @@
 //! are aimed at efficient issue diagnostics.
 pub use msg_tel_sv::MsgTelSv;
 pub use telemetry_sv::TelemetrySV;
-pub use telemetry_sv_header::TelemetrySVHeader;
 
 pub mod msg_tel_sv {
     #![allow(unused_imports)]
@@ -38,12 +37,35 @@ pub mod msg_tel_sv {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// Header of a per-signal telemetry message
-        #[cfg_attr(feature = "serde", serde(rename = "header"))]
-        pub header: TelemetrySVHeader,
+        /// GPS Time of Week
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
+        pub tow: u32,
+        /// Total number of observations. First nibble is the size of the sequence
+        /// (n), second nibble is the zero-indexed counter (ith packet of n)
+        #[cfg_attr(feature = "serde", serde(rename = "n_obs"))]
+        pub n_obs: u8,
+        /// Flags to identify Starling component the telemetry is reported from.
+        #[cfg_attr(feature = "serde", serde(rename = "origin_flags"))]
+        pub origin_flags: u8,
         /// Array of per-signal telemetry entries
         #[cfg_attr(feature = "serde", serde(rename = "sv_tel"))]
         pub sv_tel: Vec<TelemetrySV>,
+    }
+
+    impl MsgTelSv {
+        /// Gets the [OriginFlags][self::OriginFlags] stored in the `origin_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `OriginFlags` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `OriginFlags` were added.
+        pub fn origin_flags(&self) -> Result<OriginFlags, u8> {
+            get_bit_range!(self.origin_flags, u8, u8, 7, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [OriginFlags][OriginFlags] of the `origin_flags` bitfield.
+        pub fn set_origin_flags(&mut self, origin_flags: OriginFlags) {
+            set_bit_range!(&mut self.origin_flags, origin_flags, u8, u8, 7, 0);
+        }
     }
 
     impl ConcreteMessage for MsgTelSv {
@@ -67,6 +89,15 @@ pub mod msg_tel_sv {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
+        #[cfg(feature = "swiftnav")]
+        fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
+            let tow_s = (self.tow as f64) / 1000.0;
+            let gps_time = match time::GpsTime::new(0, tow_s) {
+                Ok(gps_time) => gps_time.tow(),
+                Err(e) => return Some(Err(e.into())),
+            };
+            Some(Ok(time::MessageTime::Rover(gps_time.into())))
+        }
     }
 
     impl FriendlyName for MsgTelSv {
@@ -86,20 +117,58 @@ pub mod msg_tel_sv {
     }
 
     impl WireFormat for MsgTelSv {
-        const MIN_LEN: usize =
-            <TelemetrySVHeader as WireFormat>::MIN_LEN + <Vec<TelemetrySV> as WireFormat>::MIN_LEN;
+        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <Vec<TelemetrySV> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.header) + WireFormat::len(&self.sv_tel)
+            WireFormat::len(&self.tow)
+                + WireFormat::len(&self.n_obs)
+                + WireFormat::len(&self.origin_flags)
+                + WireFormat::len(&self.sv_tel)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.header, buf);
+            WireFormat::write(&self.tow, buf);
+            WireFormat::write(&self.n_obs, buf);
+            WireFormat::write(&self.origin_flags, buf);
             WireFormat::write(&self.sv_tel, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgTelSv {
                 sender_id: None,
-                header: WireFormat::parse_unchecked(buf),
+                tow: WireFormat::parse_unchecked(buf),
+                n_obs: WireFormat::parse_unchecked(buf),
+                origin_flags: WireFormat::parse_unchecked(buf),
                 sv_tel: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum OriginFlags {
+        /// Standalone
+        Standalone = 0,
+
+        /// Differential
+        Differential = 1,
+    }
+
+    impl std::fmt::Display for OriginFlags {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                OriginFlags::Standalone => f.write_str("Standalone"),
+                OriginFlags::Differential => f.write_str("Differential"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for OriginFlags {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(OriginFlags::Standalone),
+                1 => Ok(OriginFlags::Differential),
+                i => Err(i),
             }
         }
     }
@@ -454,98 +523,6 @@ pub mod telemetry_sv {
             match i {
                 0 => Ok(ReasonForEphemerisInvalidity::Valid),
                 1 => Ok(ReasonForEphemerisInvalidity::Invalid),
-                i => Err(i),
-            }
-        }
-    }
-}
-
-pub mod telemetry_sv_header {
-    #![allow(unused_imports)]
-
-    use super::*;
-    use crate::messages::gnss::*;
-    use crate::messages::lib::*;
-    /// Header for the Bounds messages
-    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Debug, PartialEq, Clone)]
-    pub struct TelemetrySVHeader {
-        /// GNSS time of the reported telemetry.
-        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
-        pub tow: GpsTimeSec,
-        /// Total number of observations. First nibble is the size of the sequence
-        /// (n), second nibble is the zero-indexed counter (ith packet of n)
-        #[cfg_attr(feature = "serde", serde(rename = "n_obs"))]
-        pub n_obs: u8,
-        /// Flags to identify Starling component the telemetry is reported from.
-        #[cfg_attr(feature = "serde", serde(rename = "origin_flags"))]
-        pub origin_flags: u8,
-    }
-
-    impl TelemetrySVHeader {
-        /// Gets the [OriginFlags][self::OriginFlags] stored in the `origin_flags` bitfield.
-        ///
-        /// Returns `Ok` if the bitrange contains a known `OriginFlags` variant.
-        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `OriginFlags` were added.
-        pub fn origin_flags(&self) -> Result<OriginFlags, u8> {
-            get_bit_range!(self.origin_flags, u8, u8, 7, 0).try_into()
-        }
-
-        /// Set the bitrange corresponding to the [OriginFlags][OriginFlags] of the `origin_flags` bitfield.
-        pub fn set_origin_flags(&mut self, origin_flags: OriginFlags) {
-            set_bit_range!(&mut self.origin_flags, origin_flags, u8, u8, 7, 0);
-        }
-    }
-
-    impl WireFormat for TelemetrySVHeader {
-        const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN;
-        fn len(&self) -> usize {
-            WireFormat::len(&self.tow)
-                + WireFormat::len(&self.n_obs)
-                + WireFormat::len(&self.origin_flags)
-        }
-        fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.tow, buf);
-            WireFormat::write(&self.n_obs, buf);
-            WireFormat::write(&self.origin_flags, buf);
-        }
-        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            TelemetrySVHeader {
-                tow: WireFormat::parse_unchecked(buf),
-                n_obs: WireFormat::parse_unchecked(buf),
-                origin_flags: WireFormat::parse_unchecked(buf),
-            }
-        }
-    }
-
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum OriginFlags {
-        /// Standalone
-        Standalone = 0,
-
-        /// Differential
-        Differential = 1,
-    }
-
-    impl std::fmt::Display for OriginFlags {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            match self {
-                OriginFlags::Standalone => f.write_str("Standalone"),
-                OriginFlags::Differential => f.write_str("Differential"),
-            }
-        }
-    }
-
-    impl TryFrom<u8> for OriginFlags {
-        type Error = u8;
-        fn try_from(i: u8) -> Result<Self, u8> {
-            match i {
-                0 => Ok(OriginFlags::Standalone),
-                1 => Ok(OriginFlags::Differential),
                 i => Err(i),
             }
         }

@@ -18,27 +18,6 @@
 #ifndef LIBSBP_TELEMETRY_MACROS_H
 #define LIBSBP_TELEMETRY_MACROS_H
 
-#define SBP_TELEMETRYSVHEADER__MASK (0xffu)
-#define SBP_TELEMETRYSVHEADER__SHIFT (0u)
-#define SBP_TELEMETRYSVHEADER__GET(flags)               \
-  ((u8)((u8)((flags) >> SBP_TELEMETRYSVHEADER__SHIFT) & \
-        SBP_TELEMETRYSVHEADER__MASK))
-#define SBP_TELEMETRYSVHEADER__SET(flags, val)                      \
-  do {                                                              \
-    (flags) = (u8)((flags & (~(SBP_TELEMETRYSVHEADER__MASK          \
-                               << SBP_TELEMETRYSVHEADER__SHIFT))) | \
-                   (((val) & (SBP_TELEMETRYSVHEADER__MASK))         \
-                    << (SBP_TELEMETRYSVHEADER__SHIFT)));            \
-  } while (0)
-
-#define SBP_TELEMETRYSVHEADER_STANDALONE (0)
-#define SBP_TELEMETRYSVHEADER_DIFFERENTIAL (1)
-/**
- * Encoded length of sbp_telemetry_sv_header_t (V4 API) and
- * telemetry_sv_header_t (legacy API)
- */
-#define SBP_TELEMETRY_SV_HEADER_ENCODED_LEN 8u
-
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_MASK (0x3u)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_SHIFT (0u)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_GET(flags)               \
@@ -132,6 +111,18 @@
 #define SBP_TELEMETRY_SV_ENCODED_LEN 11u
 
 #define SBP_MSG_TEL_SV 0x0120
+#define SBP_TEL_SV__MASK (0xffu)
+#define SBP_TEL_SV__SHIFT (0u)
+#define SBP_TEL_SV__GET(flags) \
+  ((u8)((u8)((flags) >> SBP_TEL_SV__SHIFT) & SBP_TEL_SV__MASK))
+#define SBP_TEL_SV__SET(flags, val)                                        \
+  do {                                                                     \
+    (flags) = (u8)((flags & (~(SBP_TEL_SV__MASK << SBP_TEL_SV__SHIFT))) |  \
+                   (((val) & (SBP_TEL_SV__MASK)) << (SBP_TEL_SV__SHIFT))); \
+  } while (0)
+
+#define SBP_TEL_SV_STANDALONE (0)
+#define SBP_TEL_SV_DIFFERENTIAL (1)
 /**
  * The maximum number of items that can be stored in sbp_msg_tel_sv_t::sv_tel
  * (V4 API) or msg_tel_sv_t::sv_tel (legacy API) before the maximum SBP message
@@ -152,6 +143,6 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_TEL_SV_ENCODED_OVERHEAD 8u
+#define SBP_MSG_TEL_SV_ENCODED_OVERHEAD 6u
 
 #endif /* LIBSBP_TELEMETRY_MACROS_H */
