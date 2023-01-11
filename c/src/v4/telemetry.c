@@ -18,7 +18,7 @@
 
 bool sbp_telemetry_sv_header_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_telemetry_sv_header_t *msg) {
-  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->t)) {
+  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->tow)) {
     return false;
   }
   if (!sbp_u8_encode(ctx, &msg->n_obs)) {
@@ -47,7 +47,7 @@ s8 sbp_telemetry_sv_header_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_telemetry_sv_header_decode_internal(sbp_decode_ctx_t *ctx,
                                              sbp_telemetry_sv_header_t *msg) {
-  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->t)) {
+  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->tow)) {
     return false;
   }
   if (!sbp_u8_decode(ctx, &msg->n_obs)) {
@@ -79,7 +79,7 @@ int sbp_telemetry_sv_header_cmp(const sbp_telemetry_sv_header_t *a,
                                 const sbp_telemetry_sv_header_t *b) {
   int ret = 0;
 
-  ret = sbp_gps_time_sec_cmp(&a->t, &b->t);
+  ret = sbp_gps_time_sec_cmp(&a->tow, &b->tow);
   if (ret != 0) {
     return ret;
   }

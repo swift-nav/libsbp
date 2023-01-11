@@ -16,12 +16,12 @@
   "description":"",
   "type": "object",
   "properties": {
-    "t": {"$ref": "GpsTimeSec.json"},
+    "tow": {"$ref": "GpsTimeSec.json"},
     "n_obs": {"type": "integer"},
     "origin_flags": {"type": "integer"}
   },
   "required": [
-    "t",
+    "tow",
     "n_obs",
     "origin_flags"
   ]

@@ -2992,7 +2992,7 @@ type alias MsgTelSv =
 type alias TelemetrySVHeader =
     { nObs : Int
     , originFlags : Int
-    , t : GpsTimeSEC
+    , tow : GpsTimeSEC
     }
 
 type alias TelemetrySV =
@@ -7428,14 +7428,14 @@ telemetrySVHeader =
     Jpipe.decode TelemetrySVHeader
         |> Jpipe.required "n_obs" Jdec.int
         |> Jpipe.required "origin_flags" Jdec.int
-        |> Jpipe.required "t" gpsTimeSEC
+        |> Jpipe.required "tow" gpsTimeSEC
 
 encodeTelemetrySVHeader : TelemetrySVHeader -> Jenc.Value
 encodeTelemetrySVHeader x =
     Jenc.object
         [ ("n_obs", Jenc.int x.nObs)
         , ("origin_flags", Jenc.int x.originFlags)
-        , ("t", encodeGpsTimeSEC x.t)
+        , ("tow", encodeGpsTimeSEC x.tow)
         ]
 
 telemetrySV : Jdec.Decoder TelemetrySV

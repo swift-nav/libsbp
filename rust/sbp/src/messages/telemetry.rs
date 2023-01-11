@@ -67,19 +67,6 @@ pub mod msg_tel_sv {
         fn encoded_len(&self) -> usize {
             WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
         }
-        #[cfg(feature = "swiftnav")]
-        fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
-            let tow_s = (self.header.t.tow as f64) / 1000.0;
-            let wn: i16 = match self.header.t.wn.try_into() {
-                Ok(wn) => wn,
-                Err(e) => return Some(Err(e.into())),
-            };
-            let gps_time = match time::GpsTime::new(wn, tow_s) {
-                Ok(gps_time) => gps_time,
-                Err(e) => return Some(Err(e.into())),
-            };
-            Some(Ok(time::MessageTime::Rover(gps_time.into())))
-        }
     }
 
     impl FriendlyName for MsgTelSv {
@@ -485,8 +472,8 @@ pub mod telemetry_sv_header {
     #[derive(Debug, PartialEq, Clone)]
     pub struct TelemetrySVHeader {
         /// GNSS time of the reported telemetry.
-        #[cfg_attr(feature = "serde", serde(rename = "t"))]
-        pub t: GpsTimeSec,
+        #[cfg_attr(feature = "serde", serde(rename = "tow"))]
+        pub tow: GpsTimeSec,
         /// Total number of observations. First nibble is the size of the sequence
         /// (n), second nibble is the zero-indexed counter (ith packet of n)
         #[cfg_attr(feature = "serde", serde(rename = "n_obs"))]
@@ -517,18 +504,18 @@ pub mod telemetry_sv_header {
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.t)
+            WireFormat::len(&self.tow)
                 + WireFormat::len(&self.n_obs)
                 + WireFormat::len(&self.origin_flags)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.t, buf);
+            WireFormat::write(&self.tow, buf);
             WireFormat::write(&self.n_obs, buf);
             WireFormat::write(&self.origin_flags, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             TelemetrySVHeader {
-                t: WireFormat::parse_unchecked(buf),
+                tow: WireFormat::parse_unchecked(buf),
                 n_obs: WireFormat::parse_unchecked(buf),
                 origin_flags: WireFormat::parse_unchecked(buf),
             }

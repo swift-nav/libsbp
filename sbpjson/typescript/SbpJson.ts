@@ -2502,7 +2502,7 @@ export interface MsgTelSv {
 export interface TelemetrySVHeader {
     n_obs:        number;
     origin_flags: number;
-    t:            GpsTimeSEC;
+    tow:          GpsTimeSEC;
 }
 
 export interface TelemetrySV {
@@ -6002,7 +6002,7 @@ const typeMap: any = {
     "TelemetrySVHeader": o([
         { json: "n_obs", js: "n_obs", typ: 0 },
         { json: "origin_flags", js: "origin_flags", typ: 0 },
-        { json: "t", js: "t", typ: r("GpsTimeSEC") },
+        { json: "tow", js: "tow", typ: r("GpsTimeSEC") },
     ], "any"),
     "TelemetrySV": o([
         { json: "az", js: "az", typ: 0 },

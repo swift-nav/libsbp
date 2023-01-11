@@ -23,7 +23,7 @@ import org.json.JSONObject;
 public class TelemetrySVHeader extends SBPStruct {
 
     /** GNSS time of the reported telemetry. */
-    public GPSTimeSec t;
+    public GPSTimeSec tow;
 
     /**
      * Total number of observations. First nibble is the size of the sequence (n), second nibble is
@@ -39,7 +39,7 @@ public class TelemetrySVHeader extends SBPStruct {
     @Override
     public TelemetrySVHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        t = new GPSTimeSec().parse(parser);
+        tow = new GPSTimeSec().parse(parser);
         n_obs = parser.getU8();
         origin_flags = parser.getU8();
         return this;
@@ -48,7 +48,7 @@ public class TelemetrySVHeader extends SBPStruct {
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        t.build(builder);
+        tow.build(builder);
         builder.putU8(n_obs);
         builder.putU8(origin_flags);
     }
@@ -56,7 +56,7 @@ public class TelemetrySVHeader extends SBPStruct {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("t", t.toJSON());
+        obj.put("tow", tow.toJSON());
         obj.put("n_obs", n_obs);
         obj.put("origin_flags", origin_flags);
         return obj;

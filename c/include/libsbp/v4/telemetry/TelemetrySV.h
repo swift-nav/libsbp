@@ -41,7 +41,7 @@ extern "C" {
  *****************************************************************************/
 typedef struct {
   /**
-   * Azimuth angle (range 0..179) [deg * 2]
+   * Azimuth angle (range 0..179) [deg * 2g]
    */
   u8 az;
 

@@ -28,7 +28,7 @@ import "gnss.proto";
 None
  */
 message TelemetrySVHeader {
-    gnss.GpsTimeSec t = 1;
+    gnss.GpsTimeSec tow = 1;
     uint32 n_obs = 2;
     uint32 origin_flags = 3;
 }

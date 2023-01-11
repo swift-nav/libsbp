@@ -34,7 +34,7 @@ class TelemetrySVHeader(object):
   
   Parameters
   ----------
-  t : GPSTimeSec
+  tow : GPSTimeSec
     GNSS time of the reported telemetry.
   n_obs : int
     Total number of observations. First nibble is the size of the sequence
@@ -44,11 +44,11 @@ class TelemetrySVHeader(object):
 
   """
   _parser = construct.Struct(
-                     't' / GPSTimeSec._parser,
+                     'tow' / GPSTimeSec._parser,
                      'n_obs' / construct.Int8ul,
                      'origin_flags' / construct.Int8ul,)
   __slots__ = [
-               't',
+               'tow',
                'n_obs',
                'origin_flags',
               ]
@@ -57,7 +57,7 @@ class TelemetrySVHeader(object):
     if payload:
       self.from_binary(payload)
     else:
-      self.t = kwargs.pop('t')
+      self.tow = kwargs.pop('tow')
       self.n_obs = kwargs.pop('n_obs')
       self.origin_flags = kwargs.pop('origin_flags')
 

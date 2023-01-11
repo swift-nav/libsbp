@@ -33,16 +33,16 @@
 SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
-  gps_time_sec_t t; /**< GNSS time of the reported telemetry. */
-  u8 n_obs;         /**< Total number of observations. First nibble is the
-                         size of the sequence (n), second nibble is the
-                         zero-indexed counter (ith packet of n) */
-  u8 origin_flags;  /**< Flags to identify Starling component the telemetry
-                         is reported from. */
+  gps_time_sec_t tow; /**< GNSS time of the reported telemetry. */
+  u8 n_obs;           /**< Total number of observations. First nibble is the
+                           size of the sequence (n), second nibble is the
+                           zero-indexed counter (ith packet of n) */
+  u8 origin_flags;    /**< Flags to identify Starling component the telemetry
+                           is reported from. */
 } telemetry_sv_header_t;
 
 typedef struct SBP_ATTR_PACKED {
-  u8 az;                    /**< Azimuth angle (range 0..179) [deg * 2] */
+  u8 az;                    /**< Azimuth angle (range 0..179) [deg * 2g] */
   s8 el;                    /**< Elevation angle (range -90..90) [deg] */
   s16 pseudorange_residual; /**< Pseudorange observation residual [1 dm] */
   s16 phase_residual;       /**< Carrier-phase or carrier-phase-derived

@@ -11,7 +11,7 @@ definitions:
   - TelemetrySVHeader:
       short_desc: Header for the Bounds messages
       fields:
-        - t:
+        - tow:
             type: GPSTimeSec
             desc: GNSS time of the reported telemetry.
         - n_obs:

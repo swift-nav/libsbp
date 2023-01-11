@@ -38,7 +38,7 @@ import SwiftNav.SBP.Gnss
 
 
 data TelemetrySVHeader = TelemetrySVHeader
-  { _telemetrySVHeader_t          :: !GpsTimeSec
+  { _telemetrySVHeader_tow        :: !GpsTimeSec
     -- ^ GNSS time of the reported telemetry.
   , _telemetrySVHeader_n_obs      :: !Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
@@ -49,13 +49,13 @@ data TelemetrySVHeader = TelemetrySVHeader
 
 instance Binary TelemetrySVHeader where
   get = do
-    _telemetrySVHeader_t <- get
+    _telemetrySVHeader_tow <- get
     _telemetrySVHeader_n_obs <- getWord8
     _telemetrySVHeader_origin_flags <- getWord8
     pure TelemetrySVHeader {..}
 
   put TelemetrySVHeader {..} = do
-    put _telemetrySVHeader_t
+    put _telemetrySVHeader_tow
     putWord8 _telemetrySVHeader_n_obs
     putWord8 _telemetrySVHeader_origin_flags
 

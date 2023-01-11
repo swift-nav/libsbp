@@ -37,7 +37,7 @@ let SvId = require("./gnss").SvId;
  *
  
  * Fields in the SBP payload (`sbp.payload`):
- * @field t GPSTimeSec GNSS time of the reported telemetry.
+ * @field tow GPSTimeSec GNSS time of the reported telemetry.
  * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
  *   second nibble is the zero-indexed counter (ith packet of n)
  * @field origin_flags number (unsigned 8-bit int, 1 byte) Flags to identify Starling component the telemetry is reported from.
@@ -56,11 +56,11 @@ TelemetrySVHeader.prototype.messageType = "TelemetrySVHeader";
 TelemetrySVHeader.prototype.constructor = TelemetrySVHeader;
 TelemetrySVHeader.prototype.parser = new Parser()
   .endianess('little')
-  .nest('t', { type: GPSTimeSec.prototype.parser })
+  .nest('tow', { type: GPSTimeSec.prototype.parser })
   .uint8('n_obs')
   .uint8('origin_flags');
 TelemetrySVHeader.prototype.fieldSpec = [];
-TelemetrySVHeader.prototype.fieldSpec.push(['t', GPSTimeSec.prototype.fieldSpec]);
+TelemetrySVHeader.prototype.fieldSpec.push(['tow', GPSTimeSec.prototype.fieldSpec]);
 TelemetrySVHeader.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
 TelemetrySVHeader.prototype.fieldSpec.push(['origin_flags', 'writeUInt8', 1]);
 

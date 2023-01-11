@@ -43,7 +43,7 @@ typedef struct {
   /**
    * GNSS time of the reported telemetry.
    */
-  sbp_gps_time_sec_t t;
+  sbp_gps_time_sec_t tow;
 
   /**
    * Total number of observations. First nibble is the size of the sequence (n),
