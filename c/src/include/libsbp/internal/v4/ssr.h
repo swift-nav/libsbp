@@ -396,8 +396,8 @@ bool sbp_msg_ssr_gridded_correction_bounds_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ssr_tile_definition_dep_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_dep_t *msg);
+bool sbp_msg_ssr_tile_definition_dep_a_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_dep_a_t *msg);
 
 /**
  * Internal function to decode an SBP type from a buffer
@@ -406,8 +406,28 @@ bool sbp_msg_ssr_tile_definition_dep_encode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
-bool sbp_msg_ssr_tile_definition_dep_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_dep_t *msg);
+bool sbp_msg_ssr_tile_definition_dep_a_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_dep_a_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_tile_definition_dep_b_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_dep_b_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ssr_tile_definition_dep_b_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_dep_b_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer

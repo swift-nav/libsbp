@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinition.yaml by
+// spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinitionDepB.yaml by
 // generate.py. Do not modify by hand!
 
 #include <check.h>
@@ -68,7 +68,7 @@ static void msg_callback(u16 sender_id, sbp_msg_type_t msg_type,
   last_msg.context = context;
 }
 
-START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinition) {
+START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB) {
   static sbp_msg_callbacks_node_t n;
 
   // State of the SBP message parser.
@@ -103,27 +103,27 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinition) {
     sbp_msg_t test_msg;
     memset(&test_msg, 0, sizeof(test_msg));
 
-    test_msg.ssr_tile_definition.bitmask = 1234567890;
+    test_msg.ssr_tile_definition_dep_b.bitmask = 1234567890;
 
-    test_msg.ssr_tile_definition.cols = 32768;
+    test_msg.ssr_tile_definition_dep_b.cols = 32768;
 
-    test_msg.ssr_tile_definition.corner_nw_lat = 1024;
+    test_msg.ssr_tile_definition_dep_b.corner_nw_lat = 1024;
 
-    test_msg.ssr_tile_definition.corner_nw_lon = 2048;
+    test_msg.ssr_tile_definition_dep_b.corner_nw_lon = 2048;
 
-    test_msg.ssr_tile_definition.rows = 16384;
+    test_msg.ssr_tile_definition_dep_b.rows = 16384;
 
-    test_msg.ssr_tile_definition.spacing_lat = 4096;
+    test_msg.ssr_tile_definition_dep_b.spacing_lat = 4096;
 
-    test_msg.ssr_tile_definition.spacing_lon = 8192;
+    test_msg.ssr_tile_definition_dep_b.spacing_lon = 8192;
 
-    test_msg.ssr_tile_definition.ssr_sol_id = 31;
+    test_msg.ssr_tile_definition_dep_b.ssr_sol_id = 31;
 
-    test_msg.ssr_tile_definition.tile_id = 512;
+    test_msg.ssr_tile_definition_dep_b.tile_id = 512;
 
-    test_msg.ssr_tile_definition.tile_set_id = 256;
+    test_msg.ssr_tile_definition_dep_b.tile_set_id = 256;
 
-    sbp_message_send(&sbp_state, SbpMsgSsrTileDefinition, 66, &test_msg,
+    sbp_message_send(&sbp_state, SbpMsgSsrTileDefinitionDepB, 66, &test_msg,
                      &dummy_write);
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
@@ -143,77 +143,79 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinition) {
     ck_assert_msg(last_msg.sender_id == 66,
                   "msg_callback: sender_id decoded incorrectly");
 
-    ck_assert_msg(
-        sbp_message_cmp(SbpMsgSsrTileDefinition, &last_msg.msg, &test_msg) == 0,
-        "Sent and received messages did not compare equal");
+    ck_assert_msg(sbp_message_cmp(SbpMsgSsrTileDefinitionDepB, &last_msg.msg,
+                                  &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
 
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.bitmask == 1234567890,
-        "incorrect value for last_msg.msg.ssr_tile_definition.bitmask, "
+        last_msg.msg.ssr_tile_definition_dep_b.bitmask == 1234567890,
+        "incorrect value for last_msg.msg.ssr_tile_definition_dep_b.bitmask, "
         "expected 1234567890, is %d",
-        last_msg.msg.ssr_tile_definition.bitmask);
-
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.cols == 32768,
-                  "incorrect value for last_msg.msg.ssr_tile_definition.cols, "
-                  "expected 32768, is %d",
-                  last_msg.msg.ssr_tile_definition.cols);
+        last_msg.msg.ssr_tile_definition_dep_b.bitmask);
 
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.corner_nw_lat == 1024,
-        "incorrect value for last_msg.msg.ssr_tile_definition.corner_nw_lat, "
-        "expected 1024, is %d",
-        last_msg.msg.ssr_tile_definition.corner_nw_lat);
+        last_msg.msg.ssr_tile_definition_dep_b.cols == 32768,
+        "incorrect value for last_msg.msg.ssr_tile_definition_dep_b.cols, "
+        "expected 32768, is %d",
+        last_msg.msg.ssr_tile_definition_dep_b.cols);
+
+    ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_b.corner_nw_lat == 1024,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_tile_definition_dep_b.corner_nw_lat, "
+                  "expected 1024, is %d",
+                  last_msg.msg.ssr_tile_definition_dep_b.corner_nw_lat);
+
+    ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_b.corner_nw_lon == 2048,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_tile_definition_dep_b.corner_nw_lon, "
+                  "expected 2048, is %d",
+                  last_msg.msg.ssr_tile_definition_dep_b.corner_nw_lon);
 
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.corner_nw_lon == 2048,
-        "incorrect value for last_msg.msg.ssr_tile_definition.corner_nw_lon, "
-        "expected 2048, is %d",
-        last_msg.msg.ssr_tile_definition.corner_nw_lon);
+        last_msg.msg.ssr_tile_definition_dep_b.rows == 16384,
+        "incorrect value for last_msg.msg.ssr_tile_definition_dep_b.rows, "
+        "expected 16384, is %d",
+        last_msg.msg.ssr_tile_definition_dep_b.rows);
 
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.rows == 16384,
-                  "incorrect value for last_msg.msg.ssr_tile_definition.rows, "
-                  "expected 16384, is %d",
-                  last_msg.msg.ssr_tile_definition.rows);
+    ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_b.spacing_lat == 4096,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_tile_definition_dep_b.spacing_lat, "
+                  "expected 4096, is %d",
+                  last_msg.msg.ssr_tile_definition_dep_b.spacing_lat);
 
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.spacing_lat == 4096,
-        "incorrect value for last_msg.msg.ssr_tile_definition.spacing_lat, "
-        "expected 4096, is %d",
-        last_msg.msg.ssr_tile_definition.spacing_lat);
-
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.spacing_lon == 8192,
-        "incorrect value for last_msg.msg.ssr_tile_definition.spacing_lon, "
-        "expected 8192, is %d",
-        last_msg.msg.ssr_tile_definition.spacing_lon);
+    ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_b.spacing_lon == 8192,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_tile_definition_dep_b.spacing_lon, "
+                  "expected 8192, is %d",
+                  last_msg.msg.ssr_tile_definition_dep_b.spacing_lon);
 
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.ssr_sol_id == 31,
-        "incorrect value for last_msg.msg.ssr_tile_definition.ssr_sol_id, "
-        "expected 31, is %d",
-        last_msg.msg.ssr_tile_definition.ssr_sol_id);
+        last_msg.msg.ssr_tile_definition_dep_b.ssr_sol_id == 31,
+        "incorrect value for "
+        "last_msg.msg.ssr_tile_definition_dep_b.ssr_sol_id, expected 31, is %d",
+        last_msg.msg.ssr_tile_definition_dep_b.ssr_sol_id);
 
     ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.tile_id == 512,
-        "incorrect value for last_msg.msg.ssr_tile_definition.tile_id, "
+        last_msg.msg.ssr_tile_definition_dep_b.tile_id == 512,
+        "incorrect value for last_msg.msg.ssr_tile_definition_dep_b.tile_id, "
         "expected 512, is %d",
-        last_msg.msg.ssr_tile_definition.tile_id);
+        last_msg.msg.ssr_tile_definition_dep_b.tile_id);
 
-    ck_assert_msg(
-        last_msg.msg.ssr_tile_definition.tile_set_id == 256,
-        "incorrect value for last_msg.msg.ssr_tile_definition.tile_set_id, "
-        "expected 256, is %d",
-        last_msg.msg.ssr_tile_definition.tile_set_id);
+    ck_assert_msg(last_msg.msg.ssr_tile_definition_dep_b.tile_set_id == 256,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_tile_definition_dep_b.tile_set_id, "
+                  "expected 256, is %d",
+                  last_msg.msg.ssr_tile_definition_dep_b.tile_set_id);
   }
 }
 END_TEST
 
-Suite *auto_check_sbp_ssr_MsgSsrTileDefinition_suite(void) {
+Suite *auto_check_sbp_ssr_MsgSsrTileDefinitionDepB_suite(void) {
   Suite *s = suite_create(
-      "SBP generated test suite: auto_check_sbp_ssr_MsgSsrTileDefinition");
-  TCase *tc_acq =
-      tcase_create("Automated_Suite_auto_check_sbp_ssr_MsgSsrTileDefinition");
-  tcase_add_test(tc_acq, test_auto_check_sbp_ssr_MsgSsrTileDefinition);
+      "SBP generated test suite: auto_check_sbp_ssr_MsgSsrTileDefinitionDepB");
+  TCase *tc_acq = tcase_create(
+      "Automated_Suite_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB");
+  tcase_add_test(tc_acq, test_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB);
   suite_add_tcase(s, tc_acq);
   return s;
 }

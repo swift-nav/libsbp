@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinition.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinitionDepB.yaml by generate.py. Do not modify by hand!
 
 use crate::*;
 
@@ -19,7 +19,7 @@ use crate::*;
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
-fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
+fn test_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b() {
     {
         let mut payload = Cursor::new(vec![
             85, 247, 5, 66, 0, 25, 31, 0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 210, 2,
@@ -34,7 +34,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgSsrTileDefinition(msg) => {
+            sbp::messages::Sbp::MsgSsrTileDefinitionDepB(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     1527,
@@ -98,7 +98,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.tile_set_id
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgSsrTileDefinition"),
+            _ => panic!("Invalid message type! Expected a MsgSsrTileDefinitionDepB"),
         };
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
@@ -114,7 +114,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
+fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b() {
     {
         let json_input = r#"{"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048, "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85, "msg_type": 1527, "sender": 66, "length": 25, "payload": "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==", "crc": 18390}"#.as_bytes();
 
@@ -137,7 +137,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
             from_fields
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgSsrTileDefinition(msg) => {
+            sbp::messages::Sbp::MsgSsrTileDefinitionDepB(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     1527,
@@ -201,7 +201,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.tile_set_id
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgSsrTileDefinition"),
+            _ => panic!("Invalid message type! Expected a MsgSsrTileDefinitionDepB"),
         };
     }
 }
@@ -209,14 +209,14 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
 /// Tests [`sbp::json::JsonEncoder`] for roundtrip SBP message -> JSON
 ///
 /// Assumes:
-/// -   [`self::test_auto_check_sbp_ssr_msg_ssr_tile_definition`] passes
+/// -   [`self::test_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b`] passes
 ///
 /// Asserts:
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
+fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b() {
     {
         let mut payload = Cursor::new(vec![
             85, 247, 5, 66, 0, 25, 31, 0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 210, 2,
@@ -238,7 +238,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
             .unwrap();
 
         // Reconstruct Sbp message from json fields, roundtrip
-        let sbp_msg = sbp::messages::Sbp::MsgSsrTileDefinition(
+        let sbp_msg = sbp::messages::Sbp::MsgSsrTileDefinitionDepB(
             serde_json::from_str(
                 std::str::from_utf8(json_buffer.as_slice())
                     .unwrap()
@@ -248,7 +248,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
             .unwrap(),
         );
         match &sbp_msg {
-            sbp::messages::Sbp::MsgSsrTileDefinition(msg) => {
+            sbp::messages::Sbp::MsgSsrTileDefinitionDepB(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     1527,
@@ -312,7 +312,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.tile_set_id
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgSsrTileDefinition"),
+            _ => panic!("Invalid message type! Expected a MsgSsrTileDefinitionDepB"),
         };
 
         // Check payload is still identical

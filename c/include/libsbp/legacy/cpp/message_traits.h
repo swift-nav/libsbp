@@ -1011,14 +1011,20 @@ struct MessageTraits<msg_ssr_grid_definition_dep_a_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_tile_definition_dep_t> {
+struct MessageTraits<msg_ssr_tile_definition_dep_a_t> {
   static constexpr u16 id = 1526;
 };
 
 
 template<>
-struct MessageTraits<msg_ssr_tile_definition_t> {
+struct MessageTraits<msg_ssr_tile_definition_dep_b_t> {
   static constexpr u16 id = 1527;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_tile_definition_t> {
+  static constexpr u16 id = 1528;
 };
 
 

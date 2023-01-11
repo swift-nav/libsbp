@@ -244,7 +244,8 @@ data SBPMsg =
    | SBPMsgSsrStecCorrectionDep MsgSsrStecCorrectionDep Msg
    | SBPMsgSsrStecCorrectionDepA MsgSsrStecCorrectionDepA Msg
    | SBPMsgSsrTileDefinition MsgSsrTileDefinition Msg
-   | SBPMsgSsrTileDefinitionDep MsgSsrTileDefinitionDep Msg
+   | SBPMsgSsrTileDefinitionDepA MsgSsrTileDefinitionDepA Msg
+   | SBPMsgSsrTileDefinitionDepB MsgSsrTileDefinitionDepB Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStatusJournal MsgStatusJournal Msg
    | SBPMsgStatusReport MsgStatusReport Msg
@@ -482,7 +483,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSsrStecCorrectionDep = SBPMsgSsrStecCorrectionDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrTileDefinition = SBPMsgSsrTileDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgSsrTileDefinitionDep = SBPMsgSsrTileDefinitionDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrTileDefinitionDepA = SBPMsgSsrTileDefinitionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrTileDefinitionDepB = SBPMsgSsrTileDefinitionDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStatusJournal = SBPMsgStatusJournal (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStatusReport = SBPMsgStatusReport (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -712,7 +714,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgSsrStecCorrectionDep _ m) = put m
       encoder (SBPMsgSsrStecCorrectionDepA _ m) = put m
       encoder (SBPMsgSsrTileDefinition _ m) = put m
-      encoder (SBPMsgSsrTileDefinitionDep _ m) = put m
+      encoder (SBPMsgSsrTileDefinitionDepA _ m) = put m
+      encoder (SBPMsgSsrTileDefinitionDepB _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
       encoder (SBPMsgStatusJournal _ m) = put m
       encoder (SBPMsgStatusReport _ m) = put m
@@ -946,7 +949,8 @@ instance FromJSON SBPMsg where
         | msgType == msgSsrStecCorrectionDep = SBPMsgSsrStecCorrectionDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrTileDefinition = SBPMsgSsrTileDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgSsrTileDefinitionDep = SBPMsgSsrTileDefinitionDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrTileDefinitionDepA = SBPMsgSsrTileDefinitionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrTileDefinitionDepB = SBPMsgSsrTileDefinitionDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStatusJournal = SBPMsgStatusJournal <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStatusReport = SBPMsgStatusReport <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1181,7 +1185,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSsrStecCorrectionDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrectionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrTileDefinition n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgSsrTileDefinitionDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrTileDefinitionDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrTileDefinitionDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStatusJournal n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStatusReport n m) = toJSON n <<>> toJSON m
@@ -1410,7 +1415,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSsrStecCorrectionDep n m) = SBPMsgSsrStecCorrectionDep n <$> f m
   msg f (SBPMsgSsrStecCorrectionDepA n m) = SBPMsgSsrStecCorrectionDepA n <$> f m
   msg f (SBPMsgSsrTileDefinition n m) = SBPMsgSsrTileDefinition n <$> f m
-  msg f (SBPMsgSsrTileDefinitionDep n m) = SBPMsgSsrTileDefinitionDep n <$> f m
+  msg f (SBPMsgSsrTileDefinitionDepA n m) = SBPMsgSsrTileDefinitionDepA n <$> f m
+  msg f (SBPMsgSsrTileDefinitionDepB n m) = SBPMsgSsrTileDefinitionDepB n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStatusJournal n m) = SBPMsgStatusJournal n <$> f m
   msg f (SBPMsgStatusReport n m) = SBPMsgStatusReport n <$> f m

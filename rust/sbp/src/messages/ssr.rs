@@ -37,7 +37,8 @@ pub use msg_ssr_stec_correction::MsgSsrStecCorrection;
 pub use msg_ssr_stec_correction_dep::MsgSsrStecCorrectionDep;
 pub use msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
 pub use msg_ssr_tile_definition::MsgSsrTileDefinition;
-pub use msg_ssr_tile_definition_dep::MsgSsrTileDefinitionDep;
+pub use msg_ssr_tile_definition_dep_a::MsgSsrTileDefinitionDepA;
+pub use msg_ssr_tile_definition_dep_b::MsgSsrTileDefinitionDepB;
 pub use orbit_clock_bound::OrbitClockBound;
 pub use orbit_clock_bound_degradation::OrbitClockBoundDegradation;
 pub use phase_biases_content::PhaseBiasesContent;
@@ -2401,9 +2402,20 @@ pub mod msg_ssr_tile_definition {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
-        /// SSR Solution ID.
-        #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
-        pub ssr_sol_id: u8,
+        /// GNSS reference time of the correction
+        #[cfg_attr(feature = "serde", serde(rename = "time"))]
+        pub time: GpsTimeSec,
+        /// Update interval between consecutive corrections. Encoded following RTCM
+        /// DF391 specification.
+        #[cfg_attr(feature = "serde", serde(rename = "update_interval"))]
+        pub update_interval: u8,
+        /// SSR Solution ID. Similar to RTCM DF415.
+        #[cfg_attr(feature = "serde", serde(rename = "sol_id"))]
+        pub sol_id: u8,
+        /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+        /// indicate a change in the SSR generating configuration
+        #[cfg_attr(feature = "serde", serde(rename = "iod_ssr"))]
+        pub iod_ssr: u8,
         /// Unique identifier of the tile set this tile belongs to.
         #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
@@ -2471,7 +2483,7 @@ pub mod msg_ssr_tile_definition {
     }
 
     impl ConcreteMessage for MsgSsrTileDefinition {
-        const MESSAGE_TYPE: u16 = 1527;
+        const MESSAGE_TYPE: u16 = 1528;
         const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION";
     }
 
@@ -2510,7 +2522,10 @@ pub mod msg_ssr_tile_definition {
     }
 
     impl WireFormat for MsgSsrTileDefinition {
-        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+        const MIN_LEN: usize = <GpsTimeSec as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -2521,7 +2536,10 @@ pub mod msg_ssr_tile_definition {
             + <u16 as WireFormat>::MIN_LEN
             + <u64 as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.ssr_sol_id)
+            WireFormat::len(&self.time)
+                + WireFormat::len(&self.update_interval)
+                + WireFormat::len(&self.sol_id)
+                + WireFormat::len(&self.iod_ssr)
                 + WireFormat::len(&self.tile_set_id)
                 + WireFormat::len(&self.tile_id)
                 + WireFormat::len(&self.corner_nw_lat)
@@ -2533,7 +2551,10 @@ pub mod msg_ssr_tile_definition {
                 + WireFormat::len(&self.bitmask)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
-            WireFormat::write(&self.ssr_sol_id, buf);
+            WireFormat::write(&self.time, buf);
+            WireFormat::write(&self.update_interval, buf);
+            WireFormat::write(&self.sol_id, buf);
+            WireFormat::write(&self.iod_ssr, buf);
             WireFormat::write(&self.tile_set_id, buf);
             WireFormat::write(&self.tile_id, buf);
             WireFormat::write(&self.corner_nw_lat, buf);
@@ -2547,7 +2568,10 @@ pub mod msg_ssr_tile_definition {
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgSsrTileDefinition {
                 sender_id: None,
-                ssr_sol_id: WireFormat::parse_unchecked(buf),
+                time: WireFormat::parse_unchecked(buf),
+                update_interval: WireFormat::parse_unchecked(buf),
+                sol_id: WireFormat::parse_unchecked(buf),
+                iod_ssr: WireFormat::parse_unchecked(buf),
                 tile_set_id: WireFormat::parse_unchecked(buf),
                 tile_id: WireFormat::parse_unchecked(buf),
                 corner_nw_lat: WireFormat::parse_unchecked(buf),
@@ -2562,7 +2586,7 @@ pub mod msg_ssr_tile_definition {
     }
 }
 
-pub mod msg_ssr_tile_definition_dep {
+pub mod msg_ssr_tile_definition_dep_a {
     #![allow(unused_imports)]
 
     use super::*;
@@ -2583,7 +2607,7 @@ pub mod msg_ssr_tile_definition_dep {
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
-    pub struct MsgSsrTileDefinitionDep {
+    pub struct MsgSsrTileDefinitionDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
@@ -2653,12 +2677,12 @@ pub mod msg_ssr_tile_definition_dep {
         pub bitmask: u64,
     }
 
-    impl ConcreteMessage for MsgSsrTileDefinitionDep {
+    impl ConcreteMessage for MsgSsrTileDefinitionDepA {
         const MESSAGE_TYPE: u16 = 1526;
-        const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION_DEP";
+        const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION_DEP_A";
     }
 
-    impl SbpMessage for MsgSsrTileDefinitionDep {
+    impl SbpMessage for MsgSsrTileDefinitionDepA {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
@@ -2676,23 +2700,23 @@ pub mod msg_ssr_tile_definition_dep {
         }
     }
 
-    impl FriendlyName for MsgSsrTileDefinitionDep {
+    impl FriendlyName for MsgSsrTileDefinitionDepA {
         fn friendly_name() -> &'static str {
-            "SSR TILE DEFINITION DEP"
+            "SSR TILE DEFINITION DEP A"
         }
     }
 
-    impl TryFrom<Sbp> for MsgSsrTileDefinitionDep {
+    impl TryFrom<Sbp> for MsgSsrTileDefinitionDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
-                Sbp::MsgSsrTileDefinitionDep(m) => Ok(m),
+                Sbp::MsgSsrTileDefinitionDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError(msg)),
             }
         }
     }
 
-    impl WireFormat for MsgSsrTileDefinitionDep {
+    impl WireFormat for MsgSsrTileDefinitionDepA {
         const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
             + <u16 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
@@ -2725,8 +2749,194 @@ pub mod msg_ssr_tile_definition_dep {
             WireFormat::write(&self.bitmask, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgSsrTileDefinitionDep {
+            MsgSsrTileDefinitionDepA {
                 sender_id: None,
+                tile_set_id: WireFormat::parse_unchecked(buf),
+                tile_id: WireFormat::parse_unchecked(buf),
+                corner_nw_lat: WireFormat::parse_unchecked(buf),
+                corner_nw_lon: WireFormat::parse_unchecked(buf),
+                spacing_lat: WireFormat::parse_unchecked(buf),
+                spacing_lon: WireFormat::parse_unchecked(buf),
+                rows: WireFormat::parse_unchecked(buf),
+                cols: WireFormat::parse_unchecked(buf),
+                bitmask: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_ssr_tile_definition_dep_b {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::gnss::*;
+    use crate::messages::lib::*;
+
+    /// Definition of a SSR atmospheric correction tile.
+
+    ///
+    /// Provides the correction point coordinates for the atmospheric correction
+    /// values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+    /// messages.
+    ///
+    /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+    /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+    /// correction points, not lists of points.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgSsrTileDefinitionDepB {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// SSR Solution ID.
+        #[cfg_attr(feature = "serde", serde(rename = "ssr_sol_id"))]
+        pub ssr_sol_id: u8,
+        /// Unique identifier of the tile set this tile belongs to.
+        #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
+        pub tile_set_id: u16,
+        /// Unique identifier of this tile in the tile set.
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+        #[cfg_attr(feature = "serde", serde(rename = "tile_id"))]
+        pub tile_id: u16,
+        /// North-West corner correction point latitude.
+        ///
+        /// The relation between the latitude X in the range \[-90, 90\] and the coded
+        /// number N is:
+        ///
+        /// N = floor((X / 90) * 2^14)
+        ///
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+        #[cfg_attr(feature = "serde", serde(rename = "corner_nw_lat"))]
+        pub corner_nw_lat: i16,
+        /// North-West corner correction point longitude.
+        ///
+        /// The relation between the longitude X in the range \[-180, 180\] and the
+        /// coded number N is:
+        ///
+        /// N = floor((X / 180) * 2^15)
+        ///
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+        #[cfg_attr(feature = "serde", serde(rename = "corner_nw_lon"))]
+        pub corner_nw_lon: i16,
+        /// Spacing of the correction points in the latitude direction.
+        ///
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+        #[cfg_attr(feature = "serde", serde(rename = "spacing_lat"))]
+        pub spacing_lat: u16,
+        /// Spacing of the correction points in the longitude direction.
+        ///
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
+        #[cfg_attr(feature = "serde", serde(rename = "spacing_lon"))]
+        pub spacing_lon: u16,
+        /// Number of steps in the latitude direction.
+        ///
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+        #[cfg_attr(feature = "serde", serde(rename = "rows"))]
+        pub rows: u16,
+        /// Number of steps in the longitude direction.
+        ///
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
+        #[cfg_attr(feature = "serde", serde(rename = "cols"))]
+        pub cols: u16,
+        /// Specifies the availability of correction data at the correction points
+        /// in the array.
+        ///
+        /// If a specific bit is enabled (set to 1), the correction is not
+        /// available. Only the first rows * cols bits are used, the remainder are
+        /// set to 0. If there are more then 64 correction points the remaining
+        /// corrections are always available.
+        ///
+        /// Starting with the northwest corner of the array (top left on a north
+        /// oriented map) the correction points are enumerated with row precedence -
+        /// first row west to east, second row west to east, until last row west to
+        /// east - ending with the southeast corner of the array.
+        ///
+        /// See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+        /// definition of the bits is inverted.
+        #[cfg_attr(feature = "serde", serde(rename = "bitmask"))]
+        pub bitmask: u64,
+    }
+
+    impl ConcreteMessage for MsgSsrTileDefinitionDepB {
+        const MESSAGE_TYPE: u16 = 1527;
+        const MESSAGE_NAME: &'static str = "MSG_SSR_TILE_DEFINITION_DEP_B";
+    }
+
+    impl SbpMessage for MsgSsrTileDefinitionDepB {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgSsrTileDefinitionDepB {
+        fn friendly_name() -> &'static str {
+            "SSR TILE DEFINITION DEP B"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgSsrTileDefinitionDepB {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgSsrTileDefinitionDepB(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgSsrTileDefinitionDepB {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <i16 as WireFormat>::MIN_LEN
+            + <i16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u16 as WireFormat>::MIN_LEN
+            + <u64 as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.ssr_sol_id)
+                + WireFormat::len(&self.tile_set_id)
+                + WireFormat::len(&self.tile_id)
+                + WireFormat::len(&self.corner_nw_lat)
+                + WireFormat::len(&self.corner_nw_lon)
+                + WireFormat::len(&self.spacing_lat)
+                + WireFormat::len(&self.spacing_lon)
+                + WireFormat::len(&self.rows)
+                + WireFormat::len(&self.cols)
+                + WireFormat::len(&self.bitmask)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.ssr_sol_id, buf);
+            WireFormat::write(&self.tile_set_id, buf);
+            WireFormat::write(&self.tile_id, buf);
+            WireFormat::write(&self.corner_nw_lat, buf);
+            WireFormat::write(&self.corner_nw_lon, buf);
+            WireFormat::write(&self.spacing_lat, buf);
+            WireFormat::write(&self.spacing_lon, buf);
+            WireFormat::write(&self.rows, buf);
+            WireFormat::write(&self.cols, buf);
+            WireFormat::write(&self.bitmask, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgSsrTileDefinitionDepB {
+                sender_id: None,
+                ssr_sol_id: WireFormat::parse_unchecked(buf),
                 tile_set_id: WireFormat::parse_unchecked(buf),
                 tile_id: WireFormat::parse_unchecked(buf),
                 corner_nw_lat: WireFormat::parse_unchecked(buf),

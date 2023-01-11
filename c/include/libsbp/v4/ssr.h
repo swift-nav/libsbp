@@ -41,7 +41,8 @@
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP.h>
 #include <libsbp/v4/ssr/MSG_SSR_STEC_CORRECTION_DEP_A.h>
 #include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION.h>
-#include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION_DEP.h>
+#include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION_DEP_A.h>
+#include <libsbp/v4/ssr/MSG_SSR_TILE_DEFINITION_DEP_B.h>
 #include <libsbp/v4/ssr/OrbitClockBound.h>
 #include <libsbp/v4/ssr/OrbitClockBoundDegradation.h>
 #include <libsbp/v4/ssr/PhaseBiasesContent.h>

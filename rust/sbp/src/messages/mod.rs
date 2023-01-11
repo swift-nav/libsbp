@@ -233,7 +233,8 @@ use self::ssr::msg_ssr_stec_correction::MsgSsrStecCorrection;
 use self::ssr::msg_ssr_stec_correction_dep::MsgSsrStecCorrectionDep;
 use self::ssr::msg_ssr_stec_correction_dep_a::MsgSsrStecCorrectionDepA;
 use self::ssr::msg_ssr_tile_definition::MsgSsrTileDefinition;
-use self::ssr::msg_ssr_tile_definition_dep::MsgSsrTileDefinitionDep;
+use self::ssr::msg_ssr_tile_definition_dep_a::MsgSsrTileDefinitionDepA;
+use self::ssr::msg_ssr_tile_definition_dep_b::MsgSsrTileDefinitionDepB;
 use self::system::msg_csac_telemetry::MsgCsacTelemetry;
 use self::system::msg_csac_telemetry_labels::MsgCsacTelemetryLabels;
 use self::system::msg_dgnss_status::MsgDgnssStatus;
@@ -703,7 +704,9 @@ pub enum Sbp {
     /// Deprecated
     MsgSsrGridDefinitionDepA(MsgSsrGridDefinitionDepA),
     /// Definition of a SSR atmospheric correction tile.
-    MsgSsrTileDefinitionDep(MsgSsrTileDefinitionDep),
+    MsgSsrTileDefinitionDepA(MsgSsrTileDefinitionDepA),
+    /// Definition of a SSR atmospheric correction tile.
+    MsgSsrTileDefinitionDepB(MsgSsrTileDefinitionDepB),
     /// Definition of a SSR atmospheric correction tile.
     MsgSsrTileDefinition(MsgSsrTileDefinition),
     /// Deprecated
@@ -1356,9 +1359,13 @@ impl<'de> serde::Deserialize<'de> for Sbp {
                 serde_json::from_value::<MsgSsrGridDefinitionDepA>(value)
                     .map(Sbp::MsgSsrGridDefinitionDepA)
             }
-            Some(MsgSsrTileDefinitionDep::MESSAGE_TYPE) => {
-                serde_json::from_value::<MsgSsrTileDefinitionDep>(value)
-                    .map(Sbp::MsgSsrTileDefinitionDep)
+            Some(MsgSsrTileDefinitionDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrTileDefinitionDepA>(value)
+                    .map(Sbp::MsgSsrTileDefinitionDepA)
+            }
+            Some(MsgSsrTileDefinitionDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgSsrTileDefinitionDepB>(value)
+                    .map(Sbp::MsgSsrTileDefinitionDepB)
             }
             Some(MsgSsrTileDefinition::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgSsrTileDefinition>(value).map(Sbp::MsgSsrTileDefinition)
@@ -2422,10 +2429,15 @@ impl Sbp {
                 msg.set_sender_id(sender_id);
                 Ok(Sbp::MsgSsrGridDefinitionDepA(msg))
             }
-            MsgSsrTileDefinitionDep::MESSAGE_TYPE => {
-                let mut msg = MsgSsrTileDefinitionDep::parse(&mut payload)?;
+            MsgSsrTileDefinitionDepA::MESSAGE_TYPE => {
+                let mut msg = MsgSsrTileDefinitionDepA::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgSsrTileDefinitionDep(msg))
+                Ok(Sbp::MsgSsrTileDefinitionDepA(msg))
+            }
+            MsgSsrTileDefinitionDepB::MESSAGE_TYPE => {
+                let mut msg = MsgSsrTileDefinitionDepB::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgSsrTileDefinitionDepB(msg))
             }
             MsgSsrTileDefinition::MESSAGE_TYPE => {
                 let mut msg = MsgSsrTileDefinition::parse(&mut payload)?;
@@ -2879,7 +2891,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_name(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_name(),
-            Sbp::MsgSsrTileDefinitionDep(msg) => msg.message_name(),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.message_name(),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.message_name(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_name(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.message_name(),
             Sbp::MsgSsrStecCorrectionDep(msg) => msg.message_name(),
@@ -3110,7 +3123,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.message_type(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.message_type(),
-            Sbp::MsgSsrTileDefinitionDep(msg) => msg.message_type(),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.message_type(),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.message_type(),
             Sbp::MsgSsrTileDefinition(msg) => msg.message_type(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.message_type(),
             Sbp::MsgSsrStecCorrectionDep(msg) => msg.message_type(),
@@ -3341,7 +3355,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.sender_id(),
-            Sbp::MsgSsrTileDefinitionDep(msg) => msg.sender_id(),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.sender_id(),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.sender_id(),
             Sbp::MsgSsrTileDefinition(msg) => msg.sender_id(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.sender_id(),
             Sbp::MsgSsrStecCorrectionDep(msg) => msg.sender_id(),
@@ -3572,7 +3587,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgSsrTileDefinitionDep(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrTileDefinition(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrStecCorrectionDep(msg) => msg.set_sender_id(new_id),
@@ -3803,7 +3819,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.encoded_len(),
-            Sbp::MsgSsrTileDefinitionDep(msg) => msg.encoded_len(),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.encoded_len(),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.encoded_len(),
             Sbp::MsgSsrTileDefinition(msg) => msg.encoded_len(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.encoded_len(),
             Sbp::MsgSsrStecCorrectionDep(msg) => msg.encoded_len(),
@@ -4037,7 +4054,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.gps_time(),
-            Sbp::MsgSsrTileDefinitionDep(msg) => msg.gps_time(),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.gps_time(),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.gps_time(),
             Sbp::MsgSsrTileDefinition(msg) => msg.gps_time(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.gps_time(),
             Sbp::MsgSsrStecCorrectionDep(msg) => msg.gps_time(),
@@ -4268,7 +4286,8 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => msg.friendly_name(),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg.friendly_name(),
             Sbp::MsgSsrGridDefinitionDepA(msg) => msg.friendly_name(),
-            Sbp::MsgSsrTileDefinitionDep(msg) => msg.friendly_name(),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => msg.friendly_name(),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => msg.friendly_name(),
             Sbp::MsgSsrTileDefinition(msg) => msg.friendly_name(),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => msg.friendly_name(),
             Sbp::MsgSsrStecCorrectionDep(msg) => msg.friendly_name(),
@@ -4507,7 +4526,8 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgSsrTileDefinitionDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrStecCorrectionDep(msg) => WireFormat::write(msg, buf),
@@ -4738,7 +4758,8 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrCodePhaseBiasesBounds(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrectionNoStdDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGridDefinitionDepA(msg) => WireFormat::len(msg),
-            Sbp::MsgSsrTileDefinitionDep(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrTileDefinitionDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgSsrTileDefinitionDepB(msg) => WireFormat::len(msg),
             Sbp::MsgSsrTileDefinition(msg) => WireFormat::len(msg),
             Sbp::MsgSsrGriddedCorrectionDepA(msg) => WireFormat::len(msg),
             Sbp::MsgSsrStecCorrectionDep(msg) => WireFormat::len(msg),
@@ -5818,9 +5839,15 @@ impl From<MsgSsrGridDefinitionDepA> for Sbp {
     }
 }
 
-impl From<MsgSsrTileDefinitionDep> for Sbp {
-    fn from(msg: MsgSsrTileDefinitionDep) -> Self {
-        Sbp::MsgSsrTileDefinitionDep(msg)
+impl From<MsgSsrTileDefinitionDepA> for Sbp {
+    fn from(msg: MsgSsrTileDefinitionDepA) -> Self {
+        Sbp::MsgSsrTileDefinitionDepA(msg)
+    }
+}
+
+impl From<MsgSsrTileDefinitionDepB> for Sbp {
+    fn from(msg: MsgSsrTileDefinitionDepB) -> Self {
+        Sbp::MsgSsrTileDefinitionDepB(msg)
     }
 }
 

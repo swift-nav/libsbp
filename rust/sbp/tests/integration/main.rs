@@ -103,7 +103,7 @@ mod auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds;
 mod auto_check_sbp_ssr_msg_ssr_orbit_clock_bounds_degradation;
 mod auto_check_sbp_ssr_msg_ssr_satellite_apc;
 mod auto_check_sbp_ssr_msg_ssr_stec_correction;
-mod auto_check_sbp_ssr_msg_ssr_tile_definition;
+mod auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b;
 mod auto_check_sbp_system_msg_dgnss_status;
 mod auto_check_sbp_system_msg_group_meta;
 mod auto_check_sbp_system_msg_heartbeat;

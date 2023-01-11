@@ -2124,8 +2124,8 @@ int sbp_msg_ssr_gridded_correction_bounds_cmp(
   return ret;
 }
 
-bool sbp_msg_ssr_tile_definition_dep_encode_internal(
-    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_dep_t *msg) {
+bool sbp_msg_ssr_tile_definition_dep_a_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_dep_a_t *msg) {
   if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
     return false;
   }
@@ -2156,14 +2156,14 @@ bool sbp_msg_ssr_tile_definition_dep_encode_internal(
   return true;
 }
 
-s8 sbp_msg_ssr_tile_definition_dep_encode(
+s8 sbp_msg_ssr_tile_definition_dep_a_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
-    const sbp_msg_ssr_tile_definition_dep_t *msg) {
+    const sbp_msg_ssr_tile_definition_dep_a_t *msg) {
   sbp_encode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_ssr_tile_definition_dep_encode_internal(&ctx, msg)) {
+  if (!sbp_msg_ssr_tile_definition_dep_a_encode_internal(&ctx, msg)) {
     return SBP_ENCODE_ERROR;
   }
   if (n_written != NULL) {
@@ -2172,8 +2172,8 @@ s8 sbp_msg_ssr_tile_definition_dep_encode(
   return SBP_OK;
 }
 
-bool sbp_msg_ssr_tile_definition_dep_decode_internal(
-    sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_dep_t *msg) {
+bool sbp_msg_ssr_tile_definition_dep_a_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_dep_a_t *msg) {
   if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
     return false;
   }
@@ -2204,14 +2204,14 @@ bool sbp_msg_ssr_tile_definition_dep_decode_internal(
   return true;
 }
 
-s8 sbp_msg_ssr_tile_definition_dep_decode(
+s8 sbp_msg_ssr_tile_definition_dep_a_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
-    sbp_msg_ssr_tile_definition_dep_t *msg) {
+    sbp_msg_ssr_tile_definition_dep_a_t *msg) {
   sbp_decode_ctx_t ctx;
   ctx.buf = buf;
   ctx.buf_len = len;
   ctx.offset = 0;
-  if (!sbp_msg_ssr_tile_definition_dep_decode_internal(&ctx, msg)) {
+  if (!sbp_msg_ssr_tile_definition_dep_a_decode_internal(&ctx, msg)) {
     return SBP_DECODE_ERROR;
   }
   if (n_read != NULL) {
@@ -2220,24 +2220,197 @@ s8 sbp_msg_ssr_tile_definition_dep_decode(
   return SBP_OK;
 }
 
-s8 sbp_msg_ssr_tile_definition_dep_send(
-    sbp_state_t *s, u16 sender_id, const sbp_msg_ssr_tile_definition_dep_t *msg,
-    sbp_write_fn_t write) {
+s8 sbp_msg_ssr_tile_definition_dep_a_send(
+    sbp_state_t *s, u16 sender_id,
+    const sbp_msg_ssr_tile_definition_dep_a_t *msg, sbp_write_fn_t write) {
   uint8_t payload[SBP_MAX_PAYLOAD_LEN];
   uint8_t payload_len;
-  s8 ret = sbp_msg_ssr_tile_definition_dep_encode(payload, sizeof(payload),
-                                                  &payload_len, msg);
+  s8 ret = sbp_msg_ssr_tile_definition_dep_a_encode(payload, sizeof(payload),
+                                                    &payload_len, msg);
   if (ret != SBP_OK) {
     return ret;
   }
-  return sbp_payload_send(s, SBP_MSG_SSR_TILE_DEFINITION_DEP, sender_id,
+  return sbp_payload_send(s, SBP_MSG_SSR_TILE_DEFINITION_DEP_A, sender_id,
                           payload_len, payload, write);
 }
 
-int sbp_msg_ssr_tile_definition_dep_cmp(
-    const sbp_msg_ssr_tile_definition_dep_t *a,
-    const sbp_msg_ssr_tile_definition_dep_t *b) {
+int sbp_msg_ssr_tile_definition_dep_a_cmp(
+    const sbp_msg_ssr_tile_definition_dep_a_t *a,
+    const sbp_msg_ssr_tile_definition_dep_a_t *b) {
   int ret = 0;
+
+  ret = sbp_u16_cmp(&a->tile_set_id, &b->tile_set_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->tile_id, &b->tile_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_s16_cmp(&a->corner_nw_lat, &b->corner_nw_lat);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_s16_cmp(&a->corner_nw_lon, &b->corner_nw_lon);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->spacing_lat, &b->spacing_lat);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->spacing_lon, &b->spacing_lon);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->rows, &b->rows);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u16_cmp(&a->cols, &b->cols);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u64_cmp(&a->bitmask, &b->bitmask);
+  if (ret != 0) {
+    return ret;
+  }
+  return ret;
+}
+
+bool sbp_msg_ssr_tile_definition_dep_b_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_dep_b_t *msg) {
+  if (!sbp_u8_encode(ctx, &msg->ssr_sol_id)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->tile_id)) {
+    return false;
+  }
+  if (!sbp_s16_encode(ctx, &msg->corner_nw_lat)) {
+    return false;
+  }
+  if (!sbp_s16_encode(ctx, &msg->corner_nw_lon)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->spacing_lat)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->spacing_lon)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->rows)) {
+    return false;
+  }
+  if (!sbp_u16_encode(ctx, &msg->cols)) {
+    return false;
+  }
+  if (!sbp_u64_encode(ctx, &msg->bitmask)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_msg_ssr_tile_definition_dep_b_encode(
+    uint8_t *buf, uint8_t len, uint8_t *n_written,
+    const sbp_msg_ssr_tile_definition_dep_b_t *msg) {
+  sbp_encode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_ssr_tile_definition_dep_b_encode_internal(&ctx, msg)) {
+    return SBP_ENCODE_ERROR;
+  }
+  if (n_written != NULL) {
+    *n_written = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+bool sbp_msg_ssr_tile_definition_dep_b_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_dep_b_t *msg) {
+  if (!sbp_u8_decode(ctx, &msg->ssr_sol_id)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->tile_id)) {
+    return false;
+  }
+  if (!sbp_s16_decode(ctx, &msg->corner_nw_lat)) {
+    return false;
+  }
+  if (!sbp_s16_decode(ctx, &msg->corner_nw_lon)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->spacing_lat)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->spacing_lon)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->rows)) {
+    return false;
+  }
+  if (!sbp_u16_decode(ctx, &msg->cols)) {
+    return false;
+  }
+  if (!sbp_u64_decode(ctx, &msg->bitmask)) {
+    return false;
+  }
+  return true;
+}
+
+s8 sbp_msg_ssr_tile_definition_dep_b_decode(
+    const uint8_t *buf, uint8_t len, uint8_t *n_read,
+    sbp_msg_ssr_tile_definition_dep_b_t *msg) {
+  sbp_decode_ctx_t ctx;
+  ctx.buf = buf;
+  ctx.buf_len = len;
+  ctx.offset = 0;
+  if (!sbp_msg_ssr_tile_definition_dep_b_decode_internal(&ctx, msg)) {
+    return SBP_DECODE_ERROR;
+  }
+  if (n_read != NULL) {
+    *n_read = (uint8_t)ctx.offset;
+  }
+  return SBP_OK;
+}
+
+s8 sbp_msg_ssr_tile_definition_dep_b_send(
+    sbp_state_t *s, u16 sender_id,
+    const sbp_msg_ssr_tile_definition_dep_b_t *msg, sbp_write_fn_t write) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  uint8_t payload_len;
+  s8 ret = sbp_msg_ssr_tile_definition_dep_b_encode(payload, sizeof(payload),
+                                                    &payload_len, msg);
+  if (ret != SBP_OK) {
+    return ret;
+  }
+  return sbp_payload_send(s, SBP_MSG_SSR_TILE_DEFINITION_DEP_B, sender_id,
+                          payload_len, payload, write);
+}
+
+int sbp_msg_ssr_tile_definition_dep_b_cmp(
+    const sbp_msg_ssr_tile_definition_dep_b_t *a,
+    const sbp_msg_ssr_tile_definition_dep_b_t *b) {
+  int ret = 0;
+
+  ret = sbp_u8_cmp(&a->ssr_sol_id, &b->ssr_sol_id);
+  if (ret != 0) {
+    return ret;
+  }
 
   ret = sbp_u16_cmp(&a->tile_set_id, &b->tile_set_id);
   if (ret != 0) {
@@ -2288,7 +2461,16 @@ int sbp_msg_ssr_tile_definition_dep_cmp(
 
 bool sbp_msg_ssr_tile_definition_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ssr_tile_definition_t *msg) {
-  if (!sbp_u8_encode(ctx, &msg->ssr_sol_id)) {
+  if (!sbp_gps_time_sec_encode_internal(ctx, &msg->time)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->update_interval)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->sol_id)) {
+    return false;
+  }
+  if (!sbp_u8_encode(ctx, &msg->iod_ssr)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
@@ -2339,7 +2521,16 @@ s8 sbp_msg_ssr_tile_definition_encode(
 
 bool sbp_msg_ssr_tile_definition_decode_internal(
     sbp_decode_ctx_t *ctx, sbp_msg_ssr_tile_definition_t *msg) {
-  if (!sbp_u8_decode(ctx, &msg->ssr_sol_id)) {
+  if (!sbp_gps_time_sec_decode_internal(ctx, &msg->time)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->update_interval)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->sol_id)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->iod_ssr)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
@@ -2406,7 +2597,22 @@ int sbp_msg_ssr_tile_definition_cmp(const sbp_msg_ssr_tile_definition_t *a,
                                     const sbp_msg_ssr_tile_definition_t *b) {
   int ret = 0;
 
-  ret = sbp_u8_cmp(&a->ssr_sol_id, &b->ssr_sol_id);
+  ret = sbp_gps_time_sec_cmp(&a->time, &b->time);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->update_interval, &b->update_interval);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->sol_id, &b->sol_id);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->iod_ssr, &b->iod_ssr);
   if (ret != 0) {
     return ret;
   }

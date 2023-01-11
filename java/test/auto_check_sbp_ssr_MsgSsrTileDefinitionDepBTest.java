@@ -10,24 +10,26 @@
  */
 package com.swiftnav.sbp.test;
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinition.yaml
-// by generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinitionDepB.yaml by generate.py. Do not modify
+// by hand!
 
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.ssr.MsgSsrTileDefinition;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDepB;
 import java.math.BigInteger;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class auto_check_sbp_ssr_MsgSsrTileDefinitionTest {
+public class auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest {
 
     public static boolean debug = false;
     private static final double DELTA = 1e-15;
 
     @Test
     public void test1() throws Throwable {
-        if (debug) System.out.format("%n%s%n", "auto_check_sbp_ssr_MsgSsrTileDefinitionTest.test1");
+        if (debug)
+            System.out.format("%n%s%n", "auto_check_sbp_ssr_MsgSsrTileDefinitionDepBTest.test1");
         byte[] payload =
                 new byte[] {
                     (byte) 31,
@@ -57,7 +59,7 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionTest {
                     (byte) 0,
                 };
         SBPMessage sbp = new SBPMessage(0x0042, 0x05F7, payload);
-        MsgSsrTileDefinition msg = new MsgSsrTileDefinition(sbp);
+        MsgSsrTileDefinitionDepB msg = new MsgSsrTileDefinitionDepB(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;

@@ -759,10 +759,10 @@ $(makeSBP 'msgSsrGriddedCorrectionBounds ''MsgSsrGriddedCorrectionBounds)
 $(makeJSON "_msgSsrGriddedCorrectionBounds_" ''MsgSsrGriddedCorrectionBounds)
 $(makeLenses ''MsgSsrGriddedCorrectionBounds)
 
-msgSsrTileDefinitionDep :: Word16
-msgSsrTileDefinitionDep = 0x05F6
+msgSsrTileDefinitionDepA :: Word16
+msgSsrTileDefinitionDepA = 0x05F6
 
--- | SBP class for message MSG_SSR_TILE_DEFINITION_DEP (0x05F6).
+-- | SBP class for message MSG_SSR_TILE_DEFINITION_DEP_A (0x05F6).
 --
 -- Provides the correction point coordinates for the atmospheric correction
 -- values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
@@ -771,13 +771,13 @@ msgSsrTileDefinitionDep = 0x05F6
 -- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
 -- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
 -- correction points, not lists of points.
-data MsgSsrTileDefinitionDep = MsgSsrTileDefinitionDep
-  { _msgSsrTileDefinitionDep_tile_set_id :: !Word16
+data MsgSsrTileDefinitionDepA = MsgSsrTileDefinitionDepA
+  { _msgSsrTileDefinitionDepA_tile_set_id :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
-  , _msgSsrTileDefinitionDep_tile_id     :: !Word16
+  , _msgSsrTileDefinitionDepA_tile_id     :: !Word16
     -- ^ Unique identifier of this tile in the tile set.
     -- See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
-  , _msgSsrTileDefinitionDep_corner_nw_lat :: !Int16
+  , _msgSsrTileDefinitionDepA_corner_nw_lat :: !Int16
     -- ^ North-West corner correction point latitude.
     --
     -- The relation between the latitude X in the range [-90, 90] and the
@@ -786,7 +786,7 @@ data MsgSsrTileDefinitionDep = MsgSsrTileDefinitionDep
     -- N = floor((X / 90) * 2^14)
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
-  , _msgSsrTileDefinitionDep_corner_nw_lon :: !Int16
+  , _msgSsrTileDefinitionDepA_corner_nw_lon :: !Int16
     -- ^ North-West corner correction point longitude.
     --
     -- The relation between the longitude X in the range [-180, 180] and the
@@ -795,23 +795,23 @@ data MsgSsrTileDefinitionDep = MsgSsrTileDefinitionDep
     -- N = floor((X / 180) * 2^15)
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
-  , _msgSsrTileDefinitionDep_spacing_lat :: !Word16
+  , _msgSsrTileDefinitionDepA_spacing_lat :: !Word16
     -- ^ Spacing of the correction points in the latitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
-  , _msgSsrTileDefinitionDep_spacing_lon :: !Word16
+  , _msgSsrTileDefinitionDepA_spacing_lon :: !Word16
     -- ^ Spacing of the correction points in the longitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
-  , _msgSsrTileDefinitionDep_rows        :: !Word16
+  , _msgSsrTileDefinitionDepA_rows        :: !Word16
     -- ^ Number of steps in the latitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
-  , _msgSsrTileDefinitionDep_cols        :: !Word16
+  , _msgSsrTileDefinitionDepA_cols        :: !Word16
     -- ^ Number of steps in the longitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
-  , _msgSsrTileDefinitionDep_bitmask     :: !Word64
+  , _msgSsrTileDefinitionDepA_bitmask     :: !Word64
     -- ^ Specifies the availability of correction data at the correction points
     -- in the array.
     --
@@ -829,38 +829,140 @@ data MsgSsrTileDefinitionDep = MsgSsrTileDefinitionDep
     -- definition of the bits is inverted.
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgSsrTileDefinitionDep where
+instance Binary MsgSsrTileDefinitionDepA where
   get = do
-    _msgSsrTileDefinitionDep_tile_set_id <- getWord16le
-    _msgSsrTileDefinitionDep_tile_id <- getWord16le
-    _msgSsrTileDefinitionDep_corner_nw_lat <- (fromIntegral <$> getWord16le)
-    _msgSsrTileDefinitionDep_corner_nw_lon <- (fromIntegral <$> getWord16le)
-    _msgSsrTileDefinitionDep_spacing_lat <- getWord16le
-    _msgSsrTileDefinitionDep_spacing_lon <- getWord16le
-    _msgSsrTileDefinitionDep_rows <- getWord16le
-    _msgSsrTileDefinitionDep_cols <- getWord16le
-    _msgSsrTileDefinitionDep_bitmask <- getWord64le
-    pure MsgSsrTileDefinitionDep {..}
+    _msgSsrTileDefinitionDepA_tile_set_id <- getWord16le
+    _msgSsrTileDefinitionDepA_tile_id <- getWord16le
+    _msgSsrTileDefinitionDepA_corner_nw_lat <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinitionDepA_corner_nw_lon <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinitionDepA_spacing_lat <- getWord16le
+    _msgSsrTileDefinitionDepA_spacing_lon <- getWord16le
+    _msgSsrTileDefinitionDepA_rows <- getWord16le
+    _msgSsrTileDefinitionDepA_cols <- getWord16le
+    _msgSsrTileDefinitionDepA_bitmask <- getWord64le
+    pure MsgSsrTileDefinitionDepA {..}
 
-  put MsgSsrTileDefinitionDep {..} = do
-    putWord16le _msgSsrTileDefinitionDep_tile_set_id
-    putWord16le _msgSsrTileDefinitionDep_tile_id
-    (putWord16le . fromIntegral) _msgSsrTileDefinitionDep_corner_nw_lat
-    (putWord16le . fromIntegral) _msgSsrTileDefinitionDep_corner_nw_lon
-    putWord16le _msgSsrTileDefinitionDep_spacing_lat
-    putWord16le _msgSsrTileDefinitionDep_spacing_lon
-    putWord16le _msgSsrTileDefinitionDep_rows
-    putWord16le _msgSsrTileDefinitionDep_cols
-    putWord64le _msgSsrTileDefinitionDep_bitmask
+  put MsgSsrTileDefinitionDepA {..} = do
+    putWord16le _msgSsrTileDefinitionDepA_tile_set_id
+    putWord16le _msgSsrTileDefinitionDepA_tile_id
+    (putWord16le . fromIntegral) _msgSsrTileDefinitionDepA_corner_nw_lat
+    (putWord16le . fromIntegral) _msgSsrTileDefinitionDepA_corner_nw_lon
+    putWord16le _msgSsrTileDefinitionDepA_spacing_lat
+    putWord16le _msgSsrTileDefinitionDepA_spacing_lon
+    putWord16le _msgSsrTileDefinitionDepA_rows
+    putWord16le _msgSsrTileDefinitionDepA_cols
+    putWord64le _msgSsrTileDefinitionDepA_bitmask
 
-$(makeSBP 'msgSsrTileDefinitionDep ''MsgSsrTileDefinitionDep)
-$(makeJSON "_msgSsrTileDefinitionDep_" ''MsgSsrTileDefinitionDep)
-$(makeLenses ''MsgSsrTileDefinitionDep)
+$(makeSBP 'msgSsrTileDefinitionDepA ''MsgSsrTileDefinitionDepA)
+$(makeJSON "_msgSsrTileDefinitionDepA_" ''MsgSsrTileDefinitionDepA)
+$(makeLenses ''MsgSsrTileDefinitionDepA)
+
+msgSsrTileDefinitionDepB :: Word16
+msgSsrTileDefinitionDepB = 0x05F7
+
+-- | SBP class for message MSG_SSR_TILE_DEFINITION_DEP_B (0x05F7).
+--
+-- Provides the correction point coordinates for the atmospheric correction
+-- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+-- messages.
+--
+-- Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+-- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+-- correction points, not lists of points.
+data MsgSsrTileDefinitionDepB = MsgSsrTileDefinitionDepB
+  { _msgSsrTileDefinitionDepB_ssr_sol_id  :: !Word8
+    -- ^ SSR Solution ID.
+  , _msgSsrTileDefinitionDepB_tile_set_id :: !Word16
+    -- ^ Unique identifier of the tile set this tile belongs to.
+  , _msgSsrTileDefinitionDepB_tile_id     :: !Word16
+    -- ^ Unique identifier of this tile in the tile set.
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+  , _msgSsrTileDefinitionDepB_corner_nw_lat :: !Int16
+    -- ^ North-West corner correction point latitude.
+    --
+    -- The relation between the latitude X in the range [-90, 90] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 90) * 2^14)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+  , _msgSsrTileDefinitionDepB_corner_nw_lon :: !Int16
+    -- ^ North-West corner correction point longitude.
+    --
+    -- The relation between the longitude X in the range [-180, 180] and the
+    -- coded number N is:
+    --
+    -- N = floor((X / 180) * 2^15)
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+  , _msgSsrTileDefinitionDepB_spacing_lat :: !Word16
+    -- ^ Spacing of the correction points in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+  , _msgSsrTileDefinitionDepB_spacing_lon :: !Word16
+    -- ^ Spacing of the correction points in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
+  , _msgSsrTileDefinitionDepB_rows        :: !Word16
+    -- ^ Number of steps in the latitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+  , _msgSsrTileDefinitionDepB_cols        :: !Word16
+    -- ^ Number of steps in the longitude direction.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
+  , _msgSsrTileDefinitionDepB_bitmask     :: !Word64
+    -- ^ Specifies the availability of correction data at the correction points
+    -- in the array.
+    --
+    -- If a specific bit is enabled (set to 1), the correction is not
+    -- available. Only the first rows * cols bits are used, the remainder are
+    -- set to 0. If there are more then 64 correction points the remaining
+    -- corrections are always available.
+    --
+    -- Starting with the northwest corner of the array (top left on a north
+    -- oriented map) the correction points are enumerated with row precedence
+    -- - first row west to east, second row west to east, until last row west
+    -- to east - ending with the southeast corner of the array.
+    --
+    -- See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
+    -- definition of the bits is inverted.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrTileDefinitionDepB where
+  get = do
+    _msgSsrTileDefinitionDepB_ssr_sol_id <- getWord8
+    _msgSsrTileDefinitionDepB_tile_set_id <- getWord16le
+    _msgSsrTileDefinitionDepB_tile_id <- getWord16le
+    _msgSsrTileDefinitionDepB_corner_nw_lat <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinitionDepB_corner_nw_lon <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinitionDepB_spacing_lat <- getWord16le
+    _msgSsrTileDefinitionDepB_spacing_lon <- getWord16le
+    _msgSsrTileDefinitionDepB_rows <- getWord16le
+    _msgSsrTileDefinitionDepB_cols <- getWord16le
+    _msgSsrTileDefinitionDepB_bitmask <- getWord64le
+    pure MsgSsrTileDefinitionDepB {..}
+
+  put MsgSsrTileDefinitionDepB {..} = do
+    putWord8 _msgSsrTileDefinitionDepB_ssr_sol_id
+    putWord16le _msgSsrTileDefinitionDepB_tile_set_id
+    putWord16le _msgSsrTileDefinitionDepB_tile_id
+    (putWord16le . fromIntegral) _msgSsrTileDefinitionDepB_corner_nw_lat
+    (putWord16le . fromIntegral) _msgSsrTileDefinitionDepB_corner_nw_lon
+    putWord16le _msgSsrTileDefinitionDepB_spacing_lat
+    putWord16le _msgSsrTileDefinitionDepB_spacing_lon
+    putWord16le _msgSsrTileDefinitionDepB_rows
+    putWord16le _msgSsrTileDefinitionDepB_cols
+    putWord64le _msgSsrTileDefinitionDepB_bitmask
+
+$(makeSBP 'msgSsrTileDefinitionDepB ''MsgSsrTileDefinitionDepB)
+$(makeJSON "_msgSsrTileDefinitionDepB_" ''MsgSsrTileDefinitionDepB)
+$(makeLenses ''MsgSsrTileDefinitionDepB)
 
 msgSsrTileDefinition :: Word16
-msgSsrTileDefinition = 0x05F7
+msgSsrTileDefinition = 0x05F8
 
--- | SBP class for message MSG_SSR_TILE_DEFINITION (0x05F7).
+-- | SBP class for message MSG_SSR_TILE_DEFINITION (0x05F8).
 --
 -- Provides the correction point coordinates for the atmospheric correction
 -- values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
@@ -870,11 +972,19 @@ msgSsrTileDefinition = 0x05F7
 -- element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
 -- correction points, not lists of points.
 data MsgSsrTileDefinition = MsgSsrTileDefinition
-  { _msgSsrTileDefinition_ssr_sol_id  :: !Word8
-    -- ^ SSR Solution ID.
-  , _msgSsrTileDefinition_tile_set_id :: !Word16
+  { _msgSsrTileDefinition_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _msgSsrTileDefinition_update_interval :: !Word8
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
+  , _msgSsrTileDefinition_sol_id        :: !Word8
+    -- ^ SSR Solution ID. Similar to RTCM DF415.
+  , _msgSsrTileDefinition_iod_ssr       :: !Word8
+    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    -- indicate a change in the SSR generating configuration
+  , _msgSsrTileDefinition_tile_set_id   :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
-  , _msgSsrTileDefinition_tile_id     :: !Word16
+  , _msgSsrTileDefinition_tile_id       :: !Word16
     -- ^ Unique identifier of this tile in the tile set.
     -- See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
   , _msgSsrTileDefinition_corner_nw_lat :: !Int16
@@ -895,23 +1005,23 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
     -- N = floor((X / 180) * 2^15)
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
-  , _msgSsrTileDefinition_spacing_lat :: !Word16
+  , _msgSsrTileDefinition_spacing_lat   :: !Word16
     -- ^ Spacing of the correction points in the latitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
-  , _msgSsrTileDefinition_spacing_lon :: !Word16
+  , _msgSsrTileDefinition_spacing_lon   :: !Word16
     -- ^ Spacing of the correction points in the longitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
-  , _msgSsrTileDefinition_rows        :: !Word16
+  , _msgSsrTileDefinition_rows          :: !Word16
     -- ^ Number of steps in the latitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
-  , _msgSsrTileDefinition_cols        :: !Word16
+  , _msgSsrTileDefinition_cols          :: !Word16
     -- ^ Number of steps in the longitude direction.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
-  , _msgSsrTileDefinition_bitmask     :: !Word64
+  , _msgSsrTileDefinition_bitmask       :: !Word64
     -- ^ Specifies the availability of correction data at the correction points
     -- in the array.
     --
@@ -931,7 +1041,10 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
 
 instance Binary MsgSsrTileDefinition where
   get = do
-    _msgSsrTileDefinition_ssr_sol_id <- getWord8
+    _msgSsrTileDefinition_time <- get
+    _msgSsrTileDefinition_update_interval <- getWord8
+    _msgSsrTileDefinition_sol_id <- getWord8
+    _msgSsrTileDefinition_iod_ssr <- getWord8
     _msgSsrTileDefinition_tile_set_id <- getWord16le
     _msgSsrTileDefinition_tile_id <- getWord16le
     _msgSsrTileDefinition_corner_nw_lat <- (fromIntegral <$> getWord16le)
@@ -944,7 +1057,10 @@ instance Binary MsgSsrTileDefinition where
     pure MsgSsrTileDefinition {..}
 
   put MsgSsrTileDefinition {..} = do
-    putWord8 _msgSsrTileDefinition_ssr_sol_id
+    put _msgSsrTileDefinition_time
+    putWord8 _msgSsrTileDefinition_update_interval
+    putWord8 _msgSsrTileDefinition_sol_id
+    putWord8 _msgSsrTileDefinition_iod_ssr
     putWord16le _msgSsrTileDefinition_tile_set_id
     putWord16le _msgSsrTileDefinition_tile_id
     (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lat

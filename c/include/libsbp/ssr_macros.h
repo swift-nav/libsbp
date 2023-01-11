@@ -240,19 +240,26 @@
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_ENCODED_OVERHEAD 27u
 
-#define SBP_MSG_SSR_TILE_DEFINITION_DEP 0x05F6
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_A 0x05F6
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_dep_t (V4 API) and
- * msg_ssr_tile_definition_dep_t (legacy API)
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_a_t (V4 API) and
+ * msg_ssr_tile_definition_dep_a_t (legacy API)
  */
-#define SBP_MSG_SSR_TILE_DEFINITION_DEP_ENCODED_LEN 24u
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_A_ENCODED_LEN 24u
 
-#define SBP_MSG_SSR_TILE_DEFINITION 0x05F7
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_B 0x05F7
+/**
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_b_t (V4 API) and
+ * msg_ssr_tile_definition_dep_b_t (legacy API)
+ */
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_B_ENCODED_LEN 25u
+
+#define SBP_MSG_SSR_TILE_DEFINITION 0x05F8
 /**
  * Encoded length of sbp_msg_ssr_tile_definition_t (V4 API) and
  * msg_ssr_tile_definition_t (legacy API)
  */
-#define SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN 25u
+#define SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN 33u
 
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1fu)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT (0u)

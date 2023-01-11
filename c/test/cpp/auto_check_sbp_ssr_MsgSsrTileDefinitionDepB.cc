@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinition.yaml by
+// spec/tests/yaml/swiftnav/sbp/ssr/test_MsgSsrTileDefinitionDepB.yaml by
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
@@ -19,19 +19,19 @@
 #include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
 #include <cstring>
-class Test_auto_check_sbp_ssr_MsgSsrTileDefinition0
+class Test_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<sbp_msg_ssr_tile_definition_t> {
+      sbp::MessageHandler<sbp_msg_ssr_tile_definition_dep_b_t> {
  public:
-  Test_auto_check_sbp_ssr_MsgSsrTileDefinition0()
+  Test_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<sbp_msg_ssr_tile_definition_t>(this),
+        sbp::MessageHandler<sbp_msg_ssr_tile_definition_dep_b_t>(this),
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
@@ -59,13 +59,13 @@ class Test_auto_check_sbp_ssr_MsgSsrTileDefinition0
 
  protected:
   void handle_sbp_msg(uint16_t sender_id,
-                      const sbp_msg_ssr_tile_definition_t &msg) override {
+                      const sbp_msg_ssr_tile_definition_dep_b_t &msg) override {
     last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  sbp_msg_ssr_tile_definition_t last_msg_;
+  sbp_msg_ssr_tile_definition_dep_b_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -74,13 +74,13 @@ class Test_auto_check_sbp_ssr_MsgSsrTileDefinition0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
+TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinitionDepB0, Test) {
   uint8_t encoded_frame[] = {
       85, 247, 5, 66, 0, 25,  31,  0, 1,   0,  2, 0, 4, 0, 8,   0,  16,
       0,  32,  0, 64, 0, 128, 210, 2, 150, 73, 0, 0, 0, 0, 214, 71,
   };
 
-  sbp_msg_ssr_tile_definition_t test_msg{};
+  sbp_msg_ssr_tile_definition_dep_b_t test_msg{};
   test_msg.bitmask = 1234567890;
   test_msg.cols = 32768;
   test_msg.corner_nw_lat = 1024;

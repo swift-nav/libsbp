@@ -2379,16 +2379,19 @@ export interface STECSatElement {
  * lists of points.
  */
 export interface MsgSsrTileDefinition {
-    bitmask:       number;
-    cols:          number;
-    corner_nw_lat: number;
-    corner_nw_lon: number;
-    rows:          number;
-    spacing_lat:   number;
-    spacing_lon:   number;
-    ssr_sol_id:    number;
-    tile_id:       number;
-    tile_set_id:   number;
+    bitmask:         number;
+    cols:            number;
+    corner_nw_lat:   number;
+    corner_nw_lon:   number;
+    iod_ssr:         number;
+    rows:            number;
+    sol_id:          number;
+    spacing_lat:     number;
+    spacing_lon:     number;
+    tile_id:         number;
+    tile_set_id:     number;
+    time:            GpsTimeSEC;
+    update_interval: number;
 }
 
 /**
@@ -5900,12 +5903,15 @@ const typeMap: any = {
         { json: "cols", js: "cols", typ: 0 },
         { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
         { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
+        { json: "iod_ssr", js: "iod_ssr", typ: 0 },
         { json: "rows", js: "rows", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
         { json: "spacing_lat", js: "spacing_lat", typ: 0 },
         { json: "spacing_lon", js: "spacing_lon", typ: 0 },
-        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },

@@ -126,7 +126,7 @@ int main(void) {
       sr, auto_check_sbp_ssr_MsgSsrOrbitClockBoundsDegradation_suite());
   srunner_add_suite(sr, auto_check_sbp_ssr_MsgSsrSatelliteApc_suite());
   srunner_add_suite(sr, auto_check_sbp_ssr_MsgSsrStecCorrection_suite());
-  srunner_add_suite(sr, auto_check_sbp_ssr_MsgSsrTileDefinition_suite());
+  srunner_add_suite(sr, auto_check_sbp_ssr_MsgSsrTileDefinitionDepB_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgDgnssStatus_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgGroupMeta_suite());
   srunner_add_suite(sr, auto_check_sbp_system_MsgHeartbeat_suite());
