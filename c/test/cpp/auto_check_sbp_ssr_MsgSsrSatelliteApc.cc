@@ -136,6 +136,7 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrSatelliteApc0, Test) {
   test_msg.apc[0].sid.sat = 2;
   test_msg.apc[0].svn = 61;
   test_msg.iod_ssr = 3;
+  test_msg.n_apc = 1;
   test_msg.sol_id = 2;
   test_msg.time.tow = 604799;
   test_msg.time.wn = 2222;
@@ -240,6 +241,9 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrSatelliteApc0, Test) {
   EXPECT_EQ(last_msg_.iod_ssr, 3)
       << "incorrect value for last_msg_.iod_ssr, expected 3, is "
       << last_msg_.iod_ssr;
+  EXPECT_EQ(last_msg_.n_apc, 1)
+      << "incorrect value for last_msg_.n_apc, expected 1, is "
+      << last_msg_.n_apc;
   EXPECT_EQ(last_msg_.sol_id, 2)
       << "incorrect value for last_msg_.sol_id, expected 2, is "
       << last_msg_.sol_id;

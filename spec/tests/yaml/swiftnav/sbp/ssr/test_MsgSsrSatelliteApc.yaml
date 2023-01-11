@@ -3,6 +3,8 @@ generated_on: '2023-01-09 22:41:50.310466'
 package: sbp.ssr
 tests:
 - msg:
+    c_decoded_fields:
+      n_apc: 1
     fields:
       apc:
       - pco:

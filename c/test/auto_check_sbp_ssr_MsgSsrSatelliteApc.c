@@ -163,6 +163,8 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrSatelliteApc) {
 
     test_msg.ssr_satellite_apc.iod_ssr = 3;
 
+    test_msg.ssr_satellite_apc.n_apc = 1;
+
     test_msg.ssr_satellite_apc.sol_id = 2;
 
     test_msg.ssr_satellite_apc.time.tow = 604799;
@@ -345,6 +347,11 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrSatelliteApc) {
                   "incorrect value for last_msg.msg.ssr_satellite_apc.iod_ssr, "
                   "expected 3, is %d",
                   last_msg.msg.ssr_satellite_apc.iod_ssr);
+
+    ck_assert_msg(last_msg.msg.ssr_satellite_apc.n_apc == 1,
+                  "incorrect value for last_msg.msg.ssr_satellite_apc.n_apc, "
+                  "expected 1, is %d",
+                  last_msg.msg.ssr_satellite_apc.n_apc);
 
     ck_assert_msg(last_msg.msg.ssr_satellite_apc.sol_id == 2,
                   "incorrect value for last_msg.msg.ssr_satellite_apc.sol_id, "
