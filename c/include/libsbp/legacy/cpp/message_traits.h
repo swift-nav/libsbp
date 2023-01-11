@@ -34,6 +34,7 @@
 #include <libsbp/legacy/solution_meta.h>
 #include <libsbp/legacy/ssr.h>
 #include <libsbp/legacy/system.h>
+#include <libsbp/legacy/telemetry.h>
 #include <libsbp/legacy/tracking.h>
 #include <libsbp/legacy/user.h>
 #include <libsbp/legacy/vehicle.h>
@@ -683,6 +684,12 @@ struct MessageTraits<msg_gps_time_gnss_t> {
 template<>
 struct MessageTraits<msg_utc_time_gnss_t> {
   static constexpr u16 id = 261;
+};
+
+
+template<>
+struct MessageTraits<msg_tel_sv_t> {
+  static constexpr u16 id = 288;
 };
 
 
