@@ -36,7 +36,7 @@ definitions:
                   values:
                     - 0: Pseudorange accepted
                     - 1: Pseudorange marked as outlier
-                    - 2: Major pseudorange outlier detected (all observation types excluded)
+                    - 2: Pseudorange marked as major outlier
               - 2:
                   desc: Carrier-phase outlier
                   values:
@@ -62,7 +62,7 @@ definitions:
                   desc: Reason for ephemeris invalidity
                   values:
                     - 0: Valid
-                    - 1: Invalid (general, to be extended)
+                    - 1: Invalid (general status, to be extended)
               - 3-7:
                   desc: Reserved
         - correction_flags:
