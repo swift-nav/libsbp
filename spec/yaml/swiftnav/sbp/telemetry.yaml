@@ -78,6 +78,10 @@ definitions:
       desc: >
         This message includes telemetry pertinent to satellite signals available to Starling.
       fields:
+        - wn:
+            type: u16
+            units: weeks
+            desc: GPS week number
         - tow:
             type: u32
             units: ms
