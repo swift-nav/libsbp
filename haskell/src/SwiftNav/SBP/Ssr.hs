@@ -980,8 +980,8 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
   , _msgSsrTileDefinition_sol_id        :: !Word8
     -- ^ SSR Solution ID. Similar to RTCM DF415.
   , _msgSsrTileDefinition_iod_ssr       :: !Word8
-    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    -- indicate a change in the SSR generating configuration
+    -- ^ IOD of the SSR correction. A change of Issue Of Data is used to
+    -- indicate a change in the SSR generating configuration.
   , _msgSsrTileDefinition_tile_set_id   :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
   , _msgSsrTileDefinition_tile_id       :: !Word16
@@ -991,18 +991,14 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
     -- ^ North-West corner correction point latitude.
     --
     -- The relation between the latitude X in the range [-90, 90] and the
-    -- coded number N is:
-    --
-    -- N = floor((X / 90) * 2^14)
+    -- coded number N is:  N = floor((X / 90) * 2^14)
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
   , _msgSsrTileDefinition_corner_nw_lon :: !Int16
     -- ^ North-West corner correction point longitude.
     --
     -- The relation between the longitude X in the range [-180, 180] and the
-    -- coded number N is:
-    --
-    -- N = floor((X / 180) * 2^15)
+    -- coded number N is: N = floor((X / 180) * 2^15)
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
   , _msgSsrTileDefinition_spacing_lat   :: !Word16
@@ -1022,18 +1018,17 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
   , _msgSsrTileDefinition_bitmask       :: !Word64
-    -- ^ Specifies the availability of correction data at the correction points
-    -- in the array.
+    -- ^ Specifies the absence of correction data at the correction points in
+    -- the array (grid).
     --
-    -- If a specific bit is enabled (set to 1), the correction is not
-    -- available. Only the first rows * cols bits are used, the remainder are
-    -- set to 0. If there are more then 64 correction points the remaining
-    -- corrections are always available.
+    -- Only the first rows * cols bits are used, and if a specific bit is
+    -- enabled (set to 1), the correction is not available. If there are more
+    -- than 64 correction points the remaining corrections are always
+    -- available.
     --
-    -- Starting with the northwest corner of the array (top left on a north
-    -- oriented map) the correction points are enumerated with row precedence
-    -- - first row west to east, second row west to east, until last row west
-    -- to east - ending with the southeast corner of the array.
+    -- The correction points are packed by rows, starting with the northwest
+    -- corner of the array (top-left on a north oriented map), with each row
+    -- spanning west to east, ending with the southeast corner of the array.
     --
     -- See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the
     -- definition of the bits is inverted.

@@ -937,8 +937,8 @@ MsgSsrTileDefinitionDepB.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID. Similar to RTCM DF415.
- * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
- *   change in the SSR generating configuration
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data is used to indicate a
+ *   change in the SSR generating configuration.
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
  * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set. See GNSS-SSR-
  *   ArrayOfCorrectionPoints field correctionPointSetID.
@@ -946,7 +946,7 @@ MsgSsrTileDefinitionDepB.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8
  *   X in the range [-90, 90] and the coded number N is:  N = floor((X / 90) * 2^14)
  *   See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
  * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longitude.  The relation between the
- *   longitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
+ *   longitude X in the range [-180, 180] and the coded number N is: N = floor((X /
  *   180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
  *   referencePointLongitude.
  * @field spacing_lat number (unsigned 16-bit int, 2 bytes) Spacing of the correction points in the latitude direction.  See GNSS-SSR-
@@ -957,15 +957,15 @@ MsgSsrTileDefinitionDepB.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8
  *   field numberOfStepsLatitude.
  * @field cols number (unsigned 16-bit int, 2 bytes) Number of steps in the longitude direction.  See GNSS-SSR-
  *   ArrayOfCorrectionPoints field numberOfStepsLongitude.
- * @field bitmask number (unsigned 64-bit int, 8 bytes) Specifies the availability of correction data at the correction points in the
- *   array.  If a specific bit is enabled (set to 1), the correction is not
- *   available. Only the first rows * cols bits are used, the remainder are set to 0.
- *   If there are more then 64 correction points the remaining corrections are always
- *   available.  Starting with the northwest corner of the array (top left on a north
- *   oriented map) the correction points are enumerated with row precedence - first
- *   row west to east, second row west to east, until last row west to east - ending
- *   with the southeast corner of the array.  See GNSS-SSR-ArrayOfCorrectionPoints
- *   field bitmaskOfGrids but note the definition of the bits is inverted.
+ * @field bitmask number (unsigned 64-bit int, 8 bytes) Specifies the absence of correction data at the correction points in the array
+ *   (grid).  Only the first rows * cols bits are used, and if a specific bit is
+ *   enabled (set to 1), the correction is not available. If there are more than 64
+ *   correction points the remaining corrections are always available.  The
+ *   correction points are packed by rows, starting with the northwest corner of the
+ *   array (top-left on a north oriented map), with each row spanning west to east,
+ *   ending with the southeast corner of the array.  See GNSS-SSR-
+ *   ArrayOfCorrectionPoints field bitmaskOfGrids but note the definition of the bits
+ *   is inverted.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
