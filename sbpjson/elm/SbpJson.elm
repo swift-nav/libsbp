@@ -2989,6 +2989,7 @@ type alias MsgTelSv =
     , originFlags : Int
     , svTel : Array TelemetrySV
     , tow : Int
+    , wn : Int
     }
 
 type alias TelemetrySV =
@@ -7419,6 +7420,7 @@ msgTelSv =
         |> Jpipe.required "origin_flags" Jdec.int
         |> Jpipe.required "sv_tel" (Jdec.array telemetrySV)
         |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "wn" Jdec.int
 
 encodeMsgTelSv : MsgTelSv -> Jenc.Value
 encodeMsgTelSv x =
@@ -7427,6 +7429,7 @@ encodeMsgTelSv x =
         , ("origin_flags", Jenc.int x.originFlags)
         , ("sv_tel", makeArrayEncoder encodeTelemetrySV x.svTel)
         , ("tow", Jenc.int x.tow)
+        , ("wn", Jenc.int x.wn)
         ]
 
 telemetrySV : Jdec.Decoder TelemetrySV

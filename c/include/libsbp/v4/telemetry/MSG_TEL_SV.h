@@ -46,6 +46,11 @@ extern "C" {
  */
 typedef struct {
   /**
+   * GPS week number [weeks]
+   */
+  u16 wn;
+
+  /**
    * GPS Time of Week [ms]
    */
   u32 tow;

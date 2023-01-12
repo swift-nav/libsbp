@@ -110,6 +110,8 @@ class MsgTelSv(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  wn : int
+    GPS week number
   tow : int
     GPS Time of Week
   n_obs : int
@@ -124,11 +126,13 @@ class MsgTelSv(SBP):
 
   """
   _parser = construct.Struct(
+                   'wn' / construct.Int16ul,
                    'tow' / construct.Int32ul,
                    'n_obs' / construct.Int8ul,
                    'origin_flags' / construct.Int8ul,
                    'sv_tel' / construct.GreedyRange(TelemetrySV._parser),)
   __slots__ = [
+               'wn',
                'tow',
                'n_obs',
                'origin_flags',
@@ -145,6 +149,7 @@ class MsgTelSv(SBP):
       super( MsgTelSv, self).__init__()
       self.msg_type = SBP_MSG_TEL_SV
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
       self.n_obs = kwargs.pop('n_obs')
       self.origin_flags = kwargs.pop('origin_flags')

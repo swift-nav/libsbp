@@ -85,6 +85,7 @@ TelemetrySV.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
  * Starling.
  *
  * Fields in the SBP payload (`sbp.payload`):
+ * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
  * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
  *   second nibble is the zero-indexed counter (ith packet of n)
@@ -106,11 +107,13 @@ MsgTelSv.prototype.msg_type = 0x0120;
 MsgTelSv.prototype.constructor = MsgTelSv;
 MsgTelSv.prototype.parser = new Parser()
   .endianess('little')
+  .uint16('wn')
   .uint32('tow')
   .uint8('n_obs')
   .uint8('origin_flags')
   .array('sv_tel', { type: TelemetrySV.prototype.parser, readUntil: 'eof' });
 MsgTelSv.prototype.fieldSpec = [];
+MsgTelSv.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 MsgTelSv.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 MsgTelSv.prototype.fieldSpec.push(['n_obs', 'writeUInt8', 1]);
 MsgTelSv.prototype.fieldSpec.push(['origin_flags', 'writeUInt8', 1]);

@@ -16,12 +16,14 @@
   "description":"This message includes telemetry pertinent to satellite signals available to Starling.\n",
   "type": "object",
   "properties": {
+    "wn": {"type": "integer"},
     "tow": {"type": "integer"},
     "n_obs": {"type": "integer"},
     "origin_flags": {"type": "integer"},
     "sv_tel": {"type": "array", "items": {"$ref": "TelemetrySV.json"}}
   },
   "required": [
+    "wn",
     "tow",
     "n_obs",
     "origin_flags",

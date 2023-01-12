@@ -44,8 +44,9 @@ message TelemetrySV {
  * Starling.
  */
 message MsgTelSv {
-    uint32 tow = 1;
-    uint32 n_obs = 2;
-    uint32 origin_flags = 3;
-    repeated TelemetrySV sv_tel = 4;
+    uint32 wn = 1;
+    uint32 tow = 2;
+    uint32 n_obs = 3;
+    uint32 origin_flags = 4;
+    repeated TelemetrySV sv_tel = 5;
 }

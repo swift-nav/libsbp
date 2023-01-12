@@ -90,7 +90,9 @@ msgTelSv = 0x0120
 -- This message includes telemetry pertinent to satellite signals available to
 -- Starling.
 data MsgTelSv = MsgTelSv
-  { _msgTelSv_tow        :: !Word32
+  { _msgTelSv_wn         :: !Word16
+    -- ^ GPS week number
+  , _msgTelSv_tow        :: !Word32
     -- ^ GPS Time of Week
   , _msgTelSv_n_obs      :: !Word8
     -- ^ Total number of observations. First nibble is the size of the sequence
@@ -103,6 +105,7 @@ data MsgTelSv = MsgTelSv
 
 instance Binary MsgTelSv where
   get = do
+    _msgTelSv_wn <- getWord16le
     _msgTelSv_tow <- getWord32le
     _msgTelSv_n_obs <- getWord8
     _msgTelSv_origin_flags <- getWord8
@@ -110,6 +113,7 @@ instance Binary MsgTelSv where
     pure MsgTelSv {..}
 
   put MsgTelSv {..} = do
+    putWord16le _msgTelSv_wn
     putWord32le _msgTelSv_tow
     putWord8 _msgTelSv_n_obs
     putWord8 _msgTelSv_origin_flags

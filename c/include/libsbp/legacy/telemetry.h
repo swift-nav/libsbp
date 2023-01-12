@@ -53,6 +53,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
+  u16 wn;          /**< GPS week number [weeks] */
   u32 tow;         /**< GPS Time of Week [ms] */
   u8 n_obs;        /**< Total number of observations. First nibble is the
                         size of the sequence (n), second nibble is the

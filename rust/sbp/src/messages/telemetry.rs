@@ -37,6 +37,9 @@ pub mod msg_tel_sv {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
+        /// GPS week number
+        #[cfg_attr(feature = "serde", serde(rename = "wn"))]
+        pub wn: u16,
         /// GPS Time of Week
         #[cfg_attr(feature = "serde", serde(rename = "tow"))]
         pub tow: u32,
@@ -92,8 +95,13 @@ pub mod msg_tel_sv {
         #[cfg(feature = "swiftnav")]
         fn gps_time(&self) -> Option<std::result::Result<time::MessageTime, time::GpsTimeError>> {
             let tow_s = (self.tow as f64) / 1000.0;
-            let gps_time = match time::GpsTime::new(0, tow_s) {
-                Ok(gps_time) => gps_time.tow(),
+            #[allow(clippy::useless_conversion)]
+            let wn: i16 = match self.wn.try_into() {
+                Ok(wn) => wn,
+                Err(e) => return Some(Err(e.into())),
+            };
+            let gps_time = match time::GpsTime::new(wn, tow_s) {
+                Ok(gps_time) => gps_time,
                 Err(e) => return Some(Err(e.into())),
             };
             Some(Ok(time::MessageTime::Rover(gps_time.into())))
@@ -117,17 +125,20 @@ pub mod msg_tel_sv {
     }
 
     impl WireFormat for MsgTelSv {
-        const MIN_LEN: usize = <u32 as WireFormat>::MIN_LEN
+        const MIN_LEN: usize = <u16 as WireFormat>::MIN_LEN
+            + <u32 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <Vec<TelemetrySV> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
-            WireFormat::len(&self.tow)
+            WireFormat::len(&self.wn)
+                + WireFormat::len(&self.tow)
                 + WireFormat::len(&self.n_obs)
                 + WireFormat::len(&self.origin_flags)
                 + WireFormat::len(&self.sv_tel)
         }
         fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.wn, buf);
             WireFormat::write(&self.tow, buf);
             WireFormat::write(&self.n_obs, buf);
             WireFormat::write(&self.origin_flags, buf);
@@ -136,6 +147,7 @@ pub mod msg_tel_sv {
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgTelSv {
                 sender_id: None,
+                wn: WireFormat::parse_unchecked(buf),
                 tow: WireFormat::parse_unchecked(buf),
                 n_obs: WireFormat::parse_unchecked(buf),
                 origin_flags: WireFormat::parse_unchecked(buf),
@@ -366,8 +378,8 @@ pub mod telemetry_sv {
         /// Pseudorange marked as outlier
         PseudorangeMarkedAsOutlier = 1,
 
-        /// Major pseudorange outlier detected (all observation types excluded)
-        MajorPseudorangeOutlierDetected = 2,
+        /// Pseudorange marked as major outlier
+        PseudorangeMarkedAsMajorOutlier = 2,
     }
 
     impl std::fmt::Display for PseudorangeOutlier {
@@ -377,9 +389,9 @@ pub mod telemetry_sv {
                 PseudorangeOutlier::PseudorangeMarkedAsOutlier => {
                     f.write_str("Pseudorange marked as outlier")
                 }
-                PseudorangeOutlier::MajorPseudorangeOutlierDetected => f.write_str(
-                    "Major pseudorange outlier detected (all observation types excluded)",
-                ),
+                PseudorangeOutlier::PseudorangeMarkedAsMajorOutlier => {
+                    f.write_str("Pseudorange marked as major outlier")
+                }
             }
         }
     }
@@ -390,7 +402,7 @@ pub mod telemetry_sv {
             match i {
                 0 => Ok(PseudorangeOutlier::PseudorangeAccepted),
                 1 => Ok(PseudorangeOutlier::PseudorangeMarkedAsOutlier),
-                2 => Ok(PseudorangeOutlier::MajorPseudorangeOutlierDetected),
+                2 => Ok(PseudorangeOutlier::PseudorangeMarkedAsMajorOutlier),
                 i => Err(i),
             }
         }
@@ -502,7 +514,7 @@ pub mod telemetry_sv {
         /// Valid
         Valid = 0,
 
-        /// Invalid (general, to be extended)
+        /// Invalid (general status, to be extended)
         Invalid = 1,
     }
 
@@ -511,7 +523,7 @@ pub mod telemetry_sv {
             match self {
                 ReasonForEphemerisInvalidity::Valid => f.write_str("Valid"),
                 ReasonForEphemerisInvalidity::Invalid => {
-                    f.write_str("Invalid (general, to be extended)")
+                    f.write_str("Invalid (general status, to be extended)")
                 }
             }
         }

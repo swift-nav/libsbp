@@ -31,6 +31,9 @@ import org.json.JSONObject;
 public class MsgTelSv extends SBPMessage {
     public static final int TYPE = 0x0120;
 
+    /** GPS week number */
+    public int wn;
+
     /** GPS Time of Week */
     public long tow;
 
@@ -64,6 +67,7 @@ public class MsgTelSv extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
+        wn = parser.getU16();
         tow = parser.getU32();
         n_obs = parser.getU8();
         origin_flags = parser.getU8();
@@ -72,6 +76,7 @@ public class MsgTelSv extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
+        builder.putU16(wn);
         builder.putU32(tow);
         builder.putU8(n_obs);
         builder.putU8(origin_flags);
@@ -81,6 +86,7 @@ public class MsgTelSv extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
+        obj.put("wn", wn);
         obj.put("tow", tow);
         obj.put("n_obs", n_obs);
         obj.put("origin_flags", origin_flags);

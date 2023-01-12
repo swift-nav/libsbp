@@ -2499,6 +2499,7 @@ export interface MsgTelSv {
     origin_flags: number;
     sv_tel:       TelemetrySV[];
     tow:          number;
+    wn:           number;
 }
 
 export interface TelemetrySV {
@@ -6002,6 +6003,7 @@ const typeMap: any = {
         { json: "origin_flags", js: "origin_flags", typ: 0 },
         { json: "sv_tel", js: "sv_tel", typ: a(r("TelemetrySV")) },
         { json: "tow", js: "tow", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
     ], "any"),
     "TelemetrySV": o([
         { json: "az", js: "az", typ: 0 },

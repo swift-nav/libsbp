@@ -152,6 +152,9 @@ int sbp_telemetry_sv_cmp(const sbp_telemetry_sv_t *a,
 
 bool sbp_msg_tel_sv_encode_internal(sbp_encode_ctx_t *ctx,
                                     const sbp_msg_tel_sv_t *msg) {
+  if (!sbp_u16_encode(ctx, &msg->wn)) {
+    return false;
+  }
   if (!sbp_u32_encode(ctx, &msg->tow)) {
     return false;
   }
@@ -186,6 +189,9 @@ s8 sbp_msg_tel_sv_encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
 
 bool sbp_msg_tel_sv_decode_internal(sbp_decode_ctx_t *ctx,
                                     sbp_msg_tel_sv_t *msg) {
+  if (!sbp_u16_decode(ctx, &msg->wn)) {
+    return false;
+  }
   if (!sbp_u32_decode(ctx, &msg->tow)) {
     return false;
   }
@@ -234,6 +240,11 @@ s8 sbp_msg_tel_sv_send(sbp_state_t *s, u16 sender_id,
 
 int sbp_msg_tel_sv_cmp(const sbp_msg_tel_sv_t *a, const sbp_msg_tel_sv_t *b) {
   int ret = 0;
+
+  ret = sbp_u16_cmp(&a->wn, &b->wn);
+  if (ret != 0) {
+    return ret;
+  }
 
   ret = sbp_u32_cmp(&a->tow, &b->tow);
   if (ret != 0) {
