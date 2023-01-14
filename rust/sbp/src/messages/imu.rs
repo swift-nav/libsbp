@@ -161,6 +161,9 @@ pub mod msg_imu_aux {
 
         /// ST Microelectronics ASM330LLH
         StMicroelectronicsAsm330Llh = 1,
+
+        /// Murata SCHA634-D03
+        MurataScha634D03 = 2,
     }
 
     impl std::fmt::Display for ImuType {
@@ -170,6 +173,7 @@ pub mod msg_imu_aux {
                 ImuType::StMicroelectronicsAsm330Llh => {
                     f.write_str("ST Microelectronics ASM330LLH")
                 }
+                ImuType::MurataScha634D03 => f.write_str("Murata SCHA634-D03"),
             }
         }
     }
@@ -180,6 +184,7 @@ pub mod msg_imu_aux {
             match i {
                 0 => Ok(ImuType::BoschBmi160),
                 1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
+                2 => Ok(ImuType::MurataScha634D03),
                 i => Err(i),
             }
         }
@@ -202,6 +207,9 @@ pub mod msg_imu_aux {
 
         /// +/- 125 deg / s
         _125DegS = 4,
+
+        /// +/- 300 deg / s
+        _300DegS = 5,
     }
 
     impl std::fmt::Display for GyroscopeRange {
@@ -212,6 +220,7 @@ pub mod msg_imu_aux {
                 GyroscopeRange::_500DegS => f.write_str("+/- 500 deg / s"),
                 GyroscopeRange::_250DegS => f.write_str("+/- 250 deg / s"),
                 GyroscopeRange::_125DegS => f.write_str("+/- 125 deg / s"),
+                GyroscopeRange::_300DegS => f.write_str("+/- 300 deg / s"),
             }
         }
     }
@@ -225,6 +234,7 @@ pub mod msg_imu_aux {
                 2 => Ok(GyroscopeRange::_500DegS),
                 3 => Ok(GyroscopeRange::_250DegS),
                 4 => Ok(GyroscopeRange::_125DegS),
+                5 => Ok(GyroscopeRange::_300DegS),
                 i => Err(i),
             }
         }
@@ -244,6 +254,9 @@ pub mod msg_imu_aux {
 
         /// +/- 16g
         _16G = 3,
+
+        /// +/- 6g
+        _6G = 4,
     }
 
     impl std::fmt::Display for AccelerometerRange {
@@ -253,6 +266,7 @@ pub mod msg_imu_aux {
                 AccelerometerRange::_4G => f.write_str("+/- 4g"),
                 AccelerometerRange::_8G => f.write_str("+/- 8g"),
                 AccelerometerRange::_16G => f.write_str("+/- 16g"),
+                AccelerometerRange::_6G => f.write_str("+/- 6g"),
             }
         }
     }
@@ -265,6 +279,7 @@ pub mod msg_imu_aux {
                 1 => Ok(AccelerometerRange::_4G),
                 2 => Ok(AccelerometerRange::_8G),
                 3 => Ok(AccelerometerRange::_16G),
+                4 => Ok(AccelerometerRange::_6G),
                 i => Err(i),
             }
         }
