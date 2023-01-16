@@ -2412,10 +2412,9 @@ pub mod msg_ssr_tile_definition {
         /// SSR Solution ID. Similar to RTCM DF415.
         #[cfg_attr(feature = "serde", serde(rename = "sol_id"))]
         pub sol_id: u8,
-        /// IOD of the SSR correction. A change of Issue Of Data is used to indicate
-        /// a change in the SSR generating configuration.
-        #[cfg_attr(feature = "serde", serde(rename = "iod_ssr"))]
-        pub iod_ssr: u8,
+        /// IOD of the SSR atmospheric correction.
+        #[cfg_attr(feature = "serde", serde(rename = "iod_atmo"))]
+        pub iod_atmo: u8,
         /// Unique identifier of the tile set this tile belongs to.
         #[cfg_attr(feature = "serde", serde(rename = "tile_set_id"))]
         pub tile_set_id: u16,
@@ -2534,7 +2533,7 @@ pub mod msg_ssr_tile_definition {
             WireFormat::len(&self.time)
                 + WireFormat::len(&self.update_interval)
                 + WireFormat::len(&self.sol_id)
-                + WireFormat::len(&self.iod_ssr)
+                + WireFormat::len(&self.iod_atmo)
                 + WireFormat::len(&self.tile_set_id)
                 + WireFormat::len(&self.tile_id)
                 + WireFormat::len(&self.corner_nw_lat)
@@ -2549,7 +2548,7 @@ pub mod msg_ssr_tile_definition {
             WireFormat::write(&self.time, buf);
             WireFormat::write(&self.update_interval, buf);
             WireFormat::write(&self.sol_id, buf);
-            WireFormat::write(&self.iod_ssr, buf);
+            WireFormat::write(&self.iod_atmo, buf);
             WireFormat::write(&self.tile_set_id, buf);
             WireFormat::write(&self.tile_id, buf);
             WireFormat::write(&self.corner_nw_lat, buf);
@@ -2566,7 +2565,7 @@ pub mod msg_ssr_tile_definition {
                 time: WireFormat::parse_unchecked(buf),
                 update_interval: WireFormat::parse_unchecked(buf),
                 sol_id: WireFormat::parse_unchecked(buf),
-                iod_ssr: WireFormat::parse_unchecked(buf),
+                iod_atmo: WireFormat::parse_unchecked(buf),
                 tile_set_id: WireFormat::parse_unchecked(buf),
                 tile_id: WireFormat::parse_unchecked(buf),
                 corner_nw_lat: WireFormat::parse_unchecked(buf),

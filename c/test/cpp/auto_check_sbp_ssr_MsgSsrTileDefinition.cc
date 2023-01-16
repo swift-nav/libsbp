@@ -86,7 +86,7 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   test_msg.cols = 6;
   test_msg.corner_nw_lat = 7354;
   test_msg.corner_nw_lon = -22725;
-  test_msg.iod_ssr = 3;
+  test_msg.iod_atmo = 3;
   test_msg.rows = 6;
   test_msg.sol_id = 2;
   test_msg.spacing_lat = 100;
@@ -121,9 +121,9 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   EXPECT_EQ(last_msg_.corner_nw_lon, -22725)
       << "incorrect value for last_msg_.corner_nw_lon, expected -22725, is "
       << last_msg_.corner_nw_lon;
-  EXPECT_EQ(last_msg_.iod_ssr, 3)
-      << "incorrect value for last_msg_.iod_ssr, expected 3, is "
-      << last_msg_.iod_ssr;
+  EXPECT_EQ(last_msg_.iod_atmo, 3)
+      << "incorrect value for last_msg_.iod_atmo, expected 3, is "
+      << last_msg_.iod_atmo;
   EXPECT_EQ(last_msg_.rows, 6)
       << "incorrect value for last_msg_.rows, expected 6, is "
       << last_msg_.rows;

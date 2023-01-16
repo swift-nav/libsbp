@@ -68,9 +68,9 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.corner_nw_lon
                 );
                 assert_eq!(
-                    msg.iod_ssr, 3,
-                    "incorrect value for iod_ssr, expected 3, is {}",
-                    msg.iod_ssr
+                    msg.iod_atmo, 3,
+                    "incorrect value for iod_atmo, expected 3, is {}",
+                    msg.iod_atmo
                 );
                 assert_eq!(
                     msg.rows, 6,
@@ -136,7 +136,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
     {
-        let json_input = r#"{"preamble": 85, "msg_type": 1528, "sender": 0, "length": 33, "payload": "fzoJAK4IAQIDBAAFALocO6dkAGQABgAGANIClkkAAAAA", "crc": 24268, "time": {"tow": 604799, "wn": 2222}, "update_interval": 1, "sol_id": 2, "iod_ssr": 3, "tile_set_id": 4, "tile_id": 5, "corner_nw_lat": 7354, "corner_nw_lon": -22725, "spacing_lat": 100, "spacing_lon": 100, "rows": 6, "cols": 6, "bitmask": 1234567890}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 1528, "sender": 0, "length": 33, "payload": "fzoJAK4IAQIDBAAFALocO6dkAGQABgAGANIClkkAAAAA", "crc": 24268, "time": {"tow": 604799, "wn": 2222}, "update_interval": 1, "sol_id": 2, "iod_atmo": 3, "tile_set_id": 4, "tile_id": 5, "corner_nw_lat": 7354, "corner_nw_lon": -22725, "spacing_lat": 100, "spacing_lon": 100, "rows": 6, "cols": 6, "bitmask": 1234567890}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -191,9 +191,9 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.corner_nw_lon
                 );
                 assert_eq!(
-                    msg.iod_ssr, 3,
-                    "incorrect value for iod_ssr, expected 3, is {}",
-                    msg.iod_ssr
+                    msg.iod_atmo, 3,
+                    "incorrect value for iod_atmo, expected 3, is {}",
+                    msg.iod_atmo
                 );
                 assert_eq!(
                     msg.rows, 6,
@@ -322,9 +322,9 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.corner_nw_lon
                 );
                 assert_eq!(
-                    msg.iod_ssr, 3,
-                    "incorrect value for iod_ssr, expected 3, is {}",
-                    msg.iod_ssr
+                    msg.iod_atmo, 3,
+                    "incorrect value for iod_atmo, expected 3, is {}",
+                    msg.iod_atmo
                 );
                 assert_eq!(
                     msg.rows, 6,

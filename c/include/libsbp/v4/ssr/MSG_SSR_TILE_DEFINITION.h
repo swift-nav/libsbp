@@ -64,10 +64,9 @@ typedef struct {
   u8 sol_id;
 
   /**
-   * IOD of the SSR correction. A change of Issue Of Data is used to indicate a
-   * change in the SSR generating configuration.
+   * IOD of the SSR atmospheric correction.
    */
-  u8 iod_ssr;
+  u8 iod_atmo;
 
   /**
    * Unique identifier of the tile set this tile belongs to.

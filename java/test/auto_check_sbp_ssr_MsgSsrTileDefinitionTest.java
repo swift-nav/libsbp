@@ -80,10 +80,10 @@ public class auto_check_sbp_ssr_MsgSsrTileDefinitionTest {
             expected = -22725L;
             org.junit.Assert.assertEquals(value, expected);
         }
-        value = msg.iod_ssr;
+        value = msg.iod_atmo;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.iod_ssr + "' != '" + 3 + "'", value.equals(BigInteger.valueOf(3L)));
+                    "'" + msg.iod_atmo + "' != '" + 3 + "'", value.equals(BigInteger.valueOf(3L)));
         } else {
             value = value.longValue();
             expected = 3L;

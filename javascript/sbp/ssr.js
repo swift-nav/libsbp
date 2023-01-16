@@ -937,8 +937,7 @@ MsgSsrTileDefinitionDepB.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID. Similar to RTCM DF415.
- * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data is used to indicate a
- *   change in the SSR generating configuration.
+ * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction.
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
  * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set. See GNSS-SSR-
  *   ArrayOfCorrectionPoints field correctionPointSetID.
@@ -985,7 +984,7 @@ MsgSsrTileDefinition.prototype.parser = new Parser()
   .nest('time', { type: GPSTimeSec.prototype.parser })
   .uint8('update_interval')
   .uint8('sol_id')
-  .uint8('iod_ssr')
+  .uint8('iod_atmo')
   .uint16('tile_set_id')
   .uint16('tile_id')
   .int16('corner_nw_lat')
@@ -999,7 +998,7 @@ MsgSsrTileDefinition.prototype.fieldSpec = [];
 MsgSsrTileDefinition.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['sol_id', 'writeUInt8', 1]);
-MsgSsrTileDefinition.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lat', 'writeInt16LE', 2]);

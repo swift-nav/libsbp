@@ -112,7 +112,7 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinition) {
 
     test_msg.ssr_tile_definition.corner_nw_lon = -22725;
 
-    test_msg.ssr_tile_definition.iod_ssr = 3;
+    test_msg.ssr_tile_definition.iod_atmo = 3;
 
     test_msg.ssr_tile_definition.rows = 6;
 
@@ -179,10 +179,11 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrTileDefinition) {
         "expected -22725, is %d",
         last_msg.msg.ssr_tile_definition.corner_nw_lon);
 
-    ck_assert_msg(last_msg.msg.ssr_tile_definition.iod_ssr == 3,
-                  "incorrect value for "
-                  "last_msg.msg.ssr_tile_definition.iod_ssr, expected 3, is %d",
-                  last_msg.msg.ssr_tile_definition.iod_ssr);
+    ck_assert_msg(
+        last_msg.msg.ssr_tile_definition.iod_atmo == 3,
+        "incorrect value for last_msg.msg.ssr_tile_definition.iod_atmo, "
+        "expected 3, is %d",
+        last_msg.msg.ssr_tile_definition.iod_atmo);
 
     ck_assert_msg(last_msg.msg.ssr_tile_definition.rows == 6,
                   "incorrect value for last_msg.msg.ssr_tile_definition.rows, "

@@ -979,9 +979,8 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
     -- DF391 specification.
   , _msgSsrTileDefinition_sol_id        :: !Word8
     -- ^ SSR Solution ID. Similar to RTCM DF415.
-  , _msgSsrTileDefinition_iod_ssr       :: !Word8
-    -- ^ IOD of the SSR correction. A change of Issue Of Data is used to
-    -- indicate a change in the SSR generating configuration.
+  , _msgSsrTileDefinition_iod_atmo      :: !Word8
+    -- ^ IOD of the SSR atmospheric correction.
   , _msgSsrTileDefinition_tile_set_id   :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
   , _msgSsrTileDefinition_tile_id       :: !Word16
@@ -1039,7 +1038,7 @@ instance Binary MsgSsrTileDefinition where
     _msgSsrTileDefinition_time <- get
     _msgSsrTileDefinition_update_interval <- getWord8
     _msgSsrTileDefinition_sol_id <- getWord8
-    _msgSsrTileDefinition_iod_ssr <- getWord8
+    _msgSsrTileDefinition_iod_atmo <- getWord8
     _msgSsrTileDefinition_tile_set_id <- getWord16le
     _msgSsrTileDefinition_tile_id <- getWord16le
     _msgSsrTileDefinition_corner_nw_lat <- (fromIntegral <$> getWord16le)
@@ -1055,7 +1054,7 @@ instance Binary MsgSsrTileDefinition where
     put _msgSsrTileDefinition_time
     putWord8 _msgSsrTileDefinition_update_interval
     putWord8 _msgSsrTileDefinition_sol_id
-    putWord8 _msgSsrTileDefinition_iod_ssr
+    putWord8 _msgSsrTileDefinition_iod_atmo
     putWord16le _msgSsrTileDefinition_tile_set_id
     putWord16le _msgSsrTileDefinition_tile_id
     (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lat

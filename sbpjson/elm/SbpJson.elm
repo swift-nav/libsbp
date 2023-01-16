@@ -2877,7 +2877,7 @@ type alias MsgSsrTileDefinition =
     , cols : Int
     , cornerNwLat : Int
     , cornerNwLon : Int
-    , iodSsr : Int
+    , iodAtmo : Int
     , rows : Int
     , solID : Int
     , spacingLat : Int
@@ -7221,7 +7221,7 @@ msgSsrTileDefinition =
         |> Jpipe.required "cols" Jdec.int
         |> Jpipe.required "corner_nw_lat" Jdec.int
         |> Jpipe.required "corner_nw_lon" Jdec.int
-        |> Jpipe.required "iod_ssr" Jdec.int
+        |> Jpipe.required "iod_atmo" Jdec.int
         |> Jpipe.required "rows" Jdec.int
         |> Jpipe.required "sol_id" Jdec.int
         |> Jpipe.required "spacing_lat" Jdec.int
@@ -7238,7 +7238,7 @@ encodeMsgSsrTileDefinition x =
         , ("cols", Jenc.int x.cols)
         , ("corner_nw_lat", Jenc.int x.cornerNwLat)
         , ("corner_nw_lon", Jenc.int x.cornerNwLon)
-        , ("iod_ssr", Jenc.int x.iodSsr)
+        , ("iod_atmo", Jenc.int x.iodAtmo)
         , ("rows", Jenc.int x.rows)
         , ("sol_id", Jenc.int x.solID)
         , ("spacing_lat", Jenc.int x.spacingLat)

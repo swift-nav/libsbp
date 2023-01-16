@@ -2470,7 +2470,7 @@ bool sbp_msg_ssr_tile_definition_encode_internal(
   if (!sbp_u8_encode(ctx, &msg->sol_id)) {
     return false;
   }
-  if (!sbp_u8_encode(ctx, &msg->iod_ssr)) {
+  if (!sbp_u8_encode(ctx, &msg->iod_atmo)) {
     return false;
   }
   if (!sbp_u16_encode(ctx, &msg->tile_set_id)) {
@@ -2530,7 +2530,7 @@ bool sbp_msg_ssr_tile_definition_decode_internal(
   if (!sbp_u8_decode(ctx, &msg->sol_id)) {
     return false;
   }
-  if (!sbp_u8_decode(ctx, &msg->iod_ssr)) {
+  if (!sbp_u8_decode(ctx, &msg->iod_atmo)) {
     return false;
   }
   if (!sbp_u16_decode(ctx, &msg->tile_set_id)) {
@@ -2612,7 +2612,7 @@ int sbp_msg_ssr_tile_definition_cmp(const sbp_msg_ssr_tile_definition_t *a,
     return ret;
   }
 
-  ret = sbp_u8_cmp(&a->iod_ssr, &b->iod_ssr);
+  ret = sbp_u8_cmp(&a->iod_atmo, &b->iod_atmo);
   if (ret != 0) {
     return ret;
   }

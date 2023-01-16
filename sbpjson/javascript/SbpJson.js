@@ -3238,7 +3238,7 @@ const typeMap = {
         { json: "cols", js: "cols", typ: 0 },
         { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
         { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
-        { json: "iod_ssr", js: "iod_ssr", typ: 0 },
+        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
         { json: "rows", js: "rows", typ: 0 },
         { json: "sol_id", js: "sol_id", typ: 0 },
         { json: "spacing_lat", js: "spacing_lat", typ: 0 },

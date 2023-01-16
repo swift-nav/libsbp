@@ -781,11 +781,10 @@ definitions:
        - sol_id:
            type: u8
            desc: SSR Solution ID. Similar to RTCM DF415.
-       - iod_ssr:
+       - iod_atmo:
            type: u8
            desc: >
-             IOD of the SSR correction. A change of Issue Of Data
-             is used to indicate a change in the SSR generating configuration.
+             IOD of the SSR atmospheric correction.
        - tile_set_id:
            type: u16
            desc: Unique identifier of the tile set this tile belongs to.

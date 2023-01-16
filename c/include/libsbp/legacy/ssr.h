@@ -527,9 +527,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 update_interval;  /**< Update interval between consecutive corrections.
                             Encoded following RTCM DF391 specification. */
   u8 sol_id;           /**< SSR Solution ID. Similar to RTCM DF415. */
-  u8 iod_ssr;          /**< IOD of the SSR correction. A change of Issue Of
-                            Data is used to indicate a change in the SSR
-                            generating configuration. */
+  u8 iod_atmo;         /**< IOD of the SSR atmospheric correction. */
   u16 tile_set_id;     /**< Unique identifier of the tile set this tile
                             belongs to. */
   u16 tile_id;         /**< Unique identifier of this tile in the tile set.

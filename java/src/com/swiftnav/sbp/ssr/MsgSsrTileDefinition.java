@@ -47,11 +47,8 @@ public class MsgSsrTileDefinition extends SBPMessage {
     /** SSR Solution ID. Similar to RTCM DF415. */
     public int sol_id;
 
-    /**
-     * IOD of the SSR correction. A change of Issue Of Data is used to indicate a change in the SSR
-     * generating configuration.
-     */
-    public int iod_ssr;
+    /** IOD of the SSR atmospheric correction. */
+    public int iod_atmo;
 
     /** Unique identifier of the tile set this tile belongs to. */
     public int tile_set_id;
@@ -147,7 +144,7 @@ public class MsgSsrTileDefinition extends SBPMessage {
         time = new GPSTimeSec().parse(parser);
         update_interval = parser.getU8();
         sol_id = parser.getU8();
-        iod_ssr = parser.getU8();
+        iod_atmo = parser.getU8();
         tile_set_id = parser.getU16();
         tile_id = parser.getU16();
         corner_nw_lat = parser.getS16();
@@ -164,7 +161,7 @@ public class MsgSsrTileDefinition extends SBPMessage {
         time.build(builder);
         builder.putU8(update_interval);
         builder.putU8(sol_id);
-        builder.putU8(iod_ssr);
+        builder.putU8(iod_atmo);
         builder.putU16(tile_set_id);
         builder.putU16(tile_id);
         builder.putS16(corner_nw_lat);
@@ -182,7 +179,7 @@ public class MsgSsrTileDefinition extends SBPMessage {
         obj.put("time", time.toJSON());
         obj.put("update_interval", update_interval);
         obj.put("sol_id", sol_id);
-        obj.put("iod_ssr", iod_ssr);
+        obj.put("iod_atmo", iod_atmo);
         obj.put("tile_set_id", tile_set_id);
         obj.put("tile_id", tile_id);
         obj.put("corner_nw_lat", corner_nw_lat);

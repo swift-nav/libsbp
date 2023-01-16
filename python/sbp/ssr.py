@@ -2280,9 +2280,8 @@ class MsgSsrTileDefinition(SBP):
     DF391 specification.
   sol_id : int
     SSR Solution ID. Similar to RTCM DF415.
-  iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data is used to indicate a
-    change in the SSR generating configuration.
+  iod_atmo : int
+    IOD of the SSR atmospheric correction.
   tile_set_id : int
     Unique identifier of the tile set this tile belongs to.
   tile_id : int
@@ -2340,7 +2339,7 @@ class MsgSsrTileDefinition(SBP):
                    'time' / GPSTimeSec._parser,
                    'update_interval' / construct.Int8ul,
                    'sol_id' / construct.Int8ul,
-                   'iod_ssr' / construct.Int8ul,
+                   'iod_atmo' / construct.Int8ul,
                    'tile_set_id' / construct.Int16ul,
                    'tile_id' / construct.Int16ul,
                    'corner_nw_lat' / construct.Int16sl,
@@ -2354,7 +2353,7 @@ class MsgSsrTileDefinition(SBP):
                'time',
                'update_interval',
                'sol_id',
-               'iod_ssr',
+               'iod_atmo',
                'tile_set_id',
                'tile_id',
                'corner_nw_lat',
@@ -2379,7 +2378,7 @@ class MsgSsrTileDefinition(SBP):
       self.time = kwargs.pop('time')
       self.update_interval = kwargs.pop('update_interval')
       self.sol_id = kwargs.pop('sol_id')
-      self.iod_ssr = kwargs.pop('iod_ssr')
+      self.iod_atmo = kwargs.pop('iod_atmo')
       self.tile_set_id = kwargs.pop('tile_set_id')
       self.tile_id = kwargs.pop('tile_id')
       self.corner_nw_lat = kwargs.pop('corner_nw_lat')

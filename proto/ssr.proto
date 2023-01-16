@@ -268,7 +268,7 @@ message MsgSsrTileDefinition {
     gnss.GpsTimeSec time = 1;
     uint32 update_interval = 2;
     uint32 sol_id = 3;
-    uint32 iod_ssr = 4;
+    uint32 iod_atmo = 4;
     uint32 tile_set_id = 5;
     uint32 tile_id = 6;
     sint32 corner_nw_lat = 7;

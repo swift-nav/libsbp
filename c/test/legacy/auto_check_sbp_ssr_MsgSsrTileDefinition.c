@@ -139,7 +139,7 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
     test_msg->cols = 6;
     test_msg->corner_nw_lat = 7354;
     test_msg->corner_nw_lon = -22725;
-    test_msg->iod_ssr = 3;
+    test_msg->iod_atmo = 3;
     test_msg->rows = 6;
     test_msg->sol_id = 2;
     test_msg->spacing_lat = 100;
@@ -216,9 +216,9 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
     ck_assert_msg(check_msg->corner_nw_lon == -22725,
                   "incorrect value for corner_nw_lon, expected -22725, is %d",
                   check_msg->corner_nw_lon);
-    ck_assert_msg(check_msg->iod_ssr == 3,
-                  "incorrect value for iod_ssr, expected 3, is %d",
-                  check_msg->iod_ssr);
+    ck_assert_msg(check_msg->iod_atmo == 3,
+                  "incorrect value for iod_atmo, expected 3, is %d",
+                  check_msg->iod_atmo);
     ck_assert_msg(check_msg->rows == 6,
                   "incorrect value for rows, expected 6, is %d",
                   check_msg->rows);
