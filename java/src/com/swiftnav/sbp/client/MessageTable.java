@@ -207,11 +207,13 @@ import com.swiftnav.sbp.ssr.MsgSsrOrbitClockBoundsDegradation;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrSatelliteApc;
+import com.swiftnav.sbp.ssr.MsgSsrSatelliteApcDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrTileDefinition;
-import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDep;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDepA;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDepB;
 import com.swiftnav.sbp.system.MsgCsacTelemetry;
 import com.swiftnav.sbp.system.MsgCsacTelemetryLabels;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
@@ -617,10 +619,14 @@ final class MessageTable {
                 return new MsgSsrGriddedCorrection(msg);
             case MsgSsrGriddedCorrectionBounds.TYPE:
                 return new MsgSsrGriddedCorrectionBounds(msg);
-            case MsgSsrTileDefinitionDep.TYPE:
-                return new MsgSsrTileDefinitionDep(msg);
+            case MsgSsrTileDefinitionDepA.TYPE:
+                return new MsgSsrTileDefinitionDepA(msg);
+            case MsgSsrTileDefinitionDepB.TYPE:
+                return new MsgSsrTileDefinitionDepB(msg);
             case MsgSsrTileDefinition.TYPE:
                 return new MsgSsrTileDefinition(msg);
+            case MsgSsrSatelliteApcDep.TYPE:
+                return new MsgSsrSatelliteApcDep(msg);
             case MsgSsrSatelliteApc.TYPE:
                 return new MsgSsrSatelliteApc(msg);
             case MsgSsrOrbitClockDepA.TYPE:

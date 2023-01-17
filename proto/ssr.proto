@@ -265,16 +265,19 @@ message MsgSsrGriddedCorrectionBounds {
  * correction points, not lists of points.
  */
 message MsgSsrTileDefinition {
-    uint32 ssr_sol_id = 1;
-    uint32 tile_set_id = 2;
-    uint32 tile_id = 3;
-    sint32 corner_nw_lat = 4;
-    sint32 corner_nw_lon = 5;
-    uint32 spacing_lat = 6;
-    uint32 spacing_lon = 7;
-    uint32 rows = 8;
-    uint32 cols = 9;
-    uint64 bitmask = 10;
+    gnss.GpsTimeSec time = 1;
+    uint32 update_interval = 2;
+    uint32 sol_id = 3;
+    uint32 iod_atmo = 4;
+    uint32 tile_set_id = 5;
+    uint32 tile_id = 6;
+    sint32 corner_nw_lat = 7;
+    sint32 corner_nw_lon = 8;
+    uint32 spacing_lat = 9;
+    uint32 spacing_lon = 10;
+    uint32 rows = 11;
+    uint32 cols = 12;
+    uint64 bitmask = 13;
 }
 
 /** Antenna phase center correction
@@ -295,7 +298,11 @@ message SatelliteAPC {
 None
  */
 message MsgSsrSatelliteApc {
-    repeated SatelliteAPC apc = 1;
+    gnss.GpsTimeSec time = 1;
+    uint32 update_interval = 2;
+    uint32 sol_id = 3;
+    uint32 iod_ssr = 4;
+    repeated SatelliteAPC apc = 5;
 }
 
 /** None

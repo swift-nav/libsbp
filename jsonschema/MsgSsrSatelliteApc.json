@@ -16,9 +16,17 @@
   "description":"",
   "type": "object",
   "properties": {
+    "time": {"$ref": "GpsTimeSec.json"},
+    "update_interval": {"type": "integer"},
+    "sol_id": {"type": "integer"},
+    "iod_ssr": {"type": "integer"},
     "apc": {"type": "array", "items": {"$ref": "SatelliteAPC.json"}}
   },
   "required": [
+    "time",
+    "update_interval",
+    "sol_id",
+    "iod_ssr",
     "apc"
   ]
 }

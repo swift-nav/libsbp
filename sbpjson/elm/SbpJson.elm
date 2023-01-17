@@ -2832,6 +2832,10 @@ type alias PhaseBiasesContent =
 
 type alias MsgSsrSatelliteApc =
     { apc : Array SatelliteAPC
+    , iodSsr : Int
+    , solID : Int
+    , time : GpsTimeSEC
+    , updateInterval : Int
     }
 
 {-| Contains phase center offset and elevation variation corrections for one signal on a
@@ -2873,12 +2877,15 @@ type alias MsgSsrTileDefinition =
     , cols : Int
     , cornerNwLat : Int
     , cornerNwLon : Int
+    , iodAtmo : Int
     , rows : Int
+    , solID : Int
     , spacingLat : Int
     , spacingLon : Int
-    , ssrSolID : Int
     , tileID : Int
     , tileSetID : Int
+    , time : GpsTimeSEC
+    , updateInterval : Int
     }
 
 {-| The system start-up message is sent once on system start-up. It notifies the host or
@@ -7137,11 +7144,19 @@ msgSsrSatelliteApc : Jdec.Decoder MsgSsrSatelliteApc
 msgSsrSatelliteApc =
     Jpipe.decode MsgSsrSatelliteApc
         |> Jpipe.required "apc" (Jdec.array satelliteAPC)
+        |> Jpipe.required "iod_ssr" Jdec.int
+        |> Jpipe.required "sol_id" Jdec.int
+        |> Jpipe.required "time" gpsTimeSEC
+        |> Jpipe.required "update_interval" Jdec.int
 
 encodeMsgSsrSatelliteApc : MsgSsrSatelliteApc -> Jenc.Value
 encodeMsgSsrSatelliteApc x =
     Jenc.object
         [ ("apc", makeArrayEncoder encodeSatelliteAPC x.apc)
+        , ("iod_ssr", Jenc.int x.iodSsr)
+        , ("sol_id", Jenc.int x.solID)
+        , ("time", encodeGpsTimeSEC x.time)
+        , ("update_interval", Jenc.int x.updateInterval)
         ]
 
 satelliteAPC : Jdec.Decoder SatelliteAPC
@@ -7206,12 +7221,15 @@ msgSsrTileDefinition =
         |> Jpipe.required "cols" Jdec.int
         |> Jpipe.required "corner_nw_lat" Jdec.int
         |> Jpipe.required "corner_nw_lon" Jdec.int
+        |> Jpipe.required "iod_atmo" Jdec.int
         |> Jpipe.required "rows" Jdec.int
+        |> Jpipe.required "sol_id" Jdec.int
         |> Jpipe.required "spacing_lat" Jdec.int
         |> Jpipe.required "spacing_lon" Jdec.int
-        |> Jpipe.required "ssr_sol_id" Jdec.int
         |> Jpipe.required "tile_id" Jdec.int
         |> Jpipe.required "tile_set_id" Jdec.int
+        |> Jpipe.required "time" gpsTimeSEC
+        |> Jpipe.required "update_interval" Jdec.int
 
 encodeMsgSsrTileDefinition : MsgSsrTileDefinition -> Jenc.Value
 encodeMsgSsrTileDefinition x =
@@ -7220,12 +7238,15 @@ encodeMsgSsrTileDefinition x =
         , ("cols", Jenc.int x.cols)
         , ("corner_nw_lat", Jenc.int x.cornerNwLat)
         , ("corner_nw_lon", Jenc.int x.cornerNwLon)
+        , ("iod_atmo", Jenc.int x.iodAtmo)
         , ("rows", Jenc.int x.rows)
+        , ("sol_id", Jenc.int x.solID)
         , ("spacing_lat", Jenc.int x.spacingLat)
         , ("spacing_lon", Jenc.int x.spacingLon)
-        , ("ssr_sol_id", Jenc.int x.ssrSolID)
         , ("tile_id", Jenc.int x.tileID)
         , ("tile_set_id", Jenc.int x.tileSetID)
+        , ("time", encodeGpsTimeSEC x.time)
+        , ("update_interval", Jenc.int x.updateInterval)
         ]
 
 msgStartup : Jdec.Decoder MsgStartup

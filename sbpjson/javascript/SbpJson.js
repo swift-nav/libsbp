@@ -3208,6 +3208,10 @@ const typeMap = {
     ], "any"),
     "MsgSsrSatelliteApc": o([
         { json: "apc", js: "apc", typ: a(r("SatelliteAPC")) },
+        { json: "iod_ssr", js: "iod_ssr", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "SatelliteAPC": o([
         { json: "pco", js: "pco", typ: a(0) },
@@ -3234,12 +3238,15 @@ const typeMap = {
         { json: "cols", js: "cols", typ: 0 },
         { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
         { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
+        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
         { json: "rows", js: "rows", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
         { json: "spacing_lat", js: "spacing_lat", typ: 0 },
         { json: "spacing_lon", js: "spacing_lon", typ: 0 },
-        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },

@@ -1011,14 +1011,20 @@ struct MessageTraits<msg_ssr_grid_definition_dep_a_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_tile_definition_dep_t> {
+struct MessageTraits<msg_ssr_tile_definition_dep_a_t> {
   static constexpr u16 id = 1526;
 };
 
 
 template<>
-struct MessageTraits<msg_ssr_tile_definition_t> {
+struct MessageTraits<msg_ssr_tile_definition_dep_b_t> {
   static constexpr u16 id = 1527;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_tile_definition_t> {
+  static constexpr u16 id = 1528;
 };
 
 
@@ -1053,8 +1059,14 @@ struct MessageTraits<msg_ssr_gridded_correction_bounds_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_satellite_apc_t> {
+struct MessageTraits<msg_ssr_satellite_apc_dep_t> {
   static constexpr u16 id = 1540;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_satellite_apc_t> {
+  static constexpr u16 id = 1541;
 };
 
 
