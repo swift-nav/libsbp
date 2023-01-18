@@ -25,8 +25,7 @@ definitions:
      - code:
             type: u8
             desc: >
-                Signal encoded following RTCM specifications
-                (DF380, DF381, DF382 and DF467).
+                Signal encoded following Swift RTCM specifications. Table Signal and Tracking Mode Identiﬁer.
      - value:
             type: s16
             units: 0.01 m
@@ -40,8 +39,7 @@ definitions:
      - code:
             type: u8
             desc: >
-                Signal encoded following RTCM specifications
-                (DF380, DF381, DF382 and DF467)
+                Signal encoded following Swift RTCM specifications. Table Signal and Tracking Mode Identiﬁer.
      - integer_indicator:
             type: u8
             desc: Indicator for integer property
@@ -1298,8 +1296,7 @@ definitions:
        - signal_id:
            type: u8
            desc: >
-             Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS),
-             DF382 (Galileo) or DF467 (BDS) depending on the constellation.
+             Signal encoded following Swift RTCM specifications. Table Signal and Tracking Mode Identiﬁer.
        - code_bias_bound_mu:
            type: u8
            units: 0.005 m
