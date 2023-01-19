@@ -19,6 +19,27 @@ definitions:
             type: s8
             units: deg
             desc: Elevation angle (range -90..90)
+        - availability_flags:
+            type: u8
+            desc: Observation availability at filter update
+            fields:
+              - 0:
+                  desc: Pseudorange availability
+                  values:
+                    - 0: Pseudorange unavailable
+                    - 1: Pseudorange available
+              - 1:
+                  desc: Carrier-phase availability
+                  values:
+                    - 0: Carrier-phase unavailable
+                    - 1: Carrier-phase available
+              - 2:
+                  desc: Computed-Doppler availability
+                  values:
+                    - 0: Computed-Doppler unavailable
+                    - 1: Computed-Doppler available
+              - 3-7:
+                  desc: Reserved
         - pseudorange_residual:
             type: s16
             units: 1 dm
