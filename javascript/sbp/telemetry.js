@@ -39,6 +39,7 @@ let SvId = require("./gnss").SvId;
  * Fields in the SBP payload (`sbp.payload`):
  * @field az number (unsigned 8-bit int, 1 byte) Azimuth angle (range 0..179)
  * @field el number (signed 8-bit int, 1 byte) Elevation angle (range -90..90)
+ * @field availability_flags number (unsigned 8-bit int, 1 byte) Observation availability at filter update
  * @field pseudorange_residual number (signed 16-bit int, 2 bytes) Pseudorange observation residual
  * @field phase_residual number (signed 16-bit int, 2 bytes) Carrier-phase or carrier-phase-derived observation residual
  * @field outlier_flags number (unsigned 8-bit int, 1 byte) Reports if observation is marked as an outlier and is excluded from the update.
@@ -62,6 +63,7 @@ TelemetrySV.prototype.parser = new Parser()
   .endianess('little')
   .uint8('az')
   .int8('el')
+  .uint8('availability_flags')
   .int16('pseudorange_residual')
   .int16('phase_residual')
   .uint8('outlier_flags')
@@ -71,6 +73,7 @@ TelemetrySV.prototype.parser = new Parser()
 TelemetrySV.prototype.fieldSpec = [];
 TelemetrySV.prototype.fieldSpec.push(['az', 'writeUInt8', 1]);
 TelemetrySV.prototype.fieldSpec.push(['el', 'writeInt8', 1]);
+TelemetrySV.prototype.fieldSpec.push(['availability_flags', 'writeUInt8', 1]);
 TelemetrySV.prototype.fieldSpec.push(['pseudorange_residual', 'writeInt16LE', 2]);
 TelemetrySV.prototype.fieldSpec.push(['phase_residual', 'writeInt16LE', 2]);
 TelemetrySV.prototype.fieldSpec.push(['outlier_flags', 'writeUInt8', 1]);

@@ -24,6 +24,9 @@ bool sbp_telemetry_sv_encode_internal(sbp_encode_ctx_t *ctx,
   if (!sbp_s8_encode(ctx, &msg->el)) {
     return false;
   }
+  if (!sbp_u8_encode(ctx, &msg->availability_flags)) {
+    return false;
+  }
   if (!sbp_s16_encode(ctx, &msg->pseudorange_residual)) {
     return false;
   }
@@ -66,6 +69,9 @@ bool sbp_telemetry_sv_decode_internal(sbp_decode_ctx_t *ctx,
     return false;
   }
   if (!sbp_s8_decode(ctx, &msg->el)) {
+    return false;
+  }
+  if (!sbp_u8_decode(ctx, &msg->availability_flags)) {
     return false;
   }
   if (!sbp_s16_decode(ctx, &msg->pseudorange_residual)) {
@@ -114,6 +120,11 @@ int sbp_telemetry_sv_cmp(const sbp_telemetry_sv_t *a,
   }
 
   ret = sbp_s8_cmp(&a->el, &b->el);
+  if (ret != 0) {
+    return ret;
+  }
+
+  ret = sbp_u8_cmp(&a->availability_flags, &b->availability_flags);
   if (ret != 0) {
     return ret;
   }

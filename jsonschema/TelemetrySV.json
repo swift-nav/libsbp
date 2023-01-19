@@ -18,6 +18,7 @@
   "properties": {
     "az": {"type": "integer"},
     "el": {"type": "integer"},
+    "availability_flags": {"type": "integer"},
     "pseudorange_residual": {"type": "integer"},
     "phase_residual": {"type": "integer"},
     "outlier_flags": {"type": "integer"},
@@ -28,6 +29,7 @@
   "required": [
     "az",
     "el",
+    "availability_flags",
     "pseudorange_residual",
     "phase_residual",
     "outlier_flags",

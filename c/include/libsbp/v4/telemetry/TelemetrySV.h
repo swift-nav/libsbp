@@ -51,6 +51,11 @@ typedef struct {
   s8 el;
 
   /**
+   * Observation availability at filter update
+   */
+  u8 availability_flags;
+
+  /**
    * Pseudorange observation residual [1 dm]
    */
   s16 pseudorange_residual;

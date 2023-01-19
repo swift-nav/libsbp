@@ -38,6 +38,8 @@ class TelemetrySV(object):
     Azimuth angle (range 0..179)
   el : int
     Elevation angle (range -90..90)
+  availability_flags : int
+    Observation availability at filter update
   pseudorange_residual : int
     Pseudorange observation residual
   phase_residual : int
@@ -56,6 +58,7 @@ class TelemetrySV(object):
   _parser = construct.Struct(
                      'az' / construct.Int8ul,
                      'el' / construct.Int8sl,
+                     'availability_flags' / construct.Int8ul,
                      'pseudorange_residual' / construct.Int16sl,
                      'phase_residual' / construct.Int16sl,
                      'outlier_flags' / construct.Int8ul,
@@ -65,6 +68,7 @@ class TelemetrySV(object):
   __slots__ = [
                'az',
                'el',
+               'availability_flags',
                'pseudorange_residual',
                'phase_residual',
                'outlier_flags',
@@ -79,6 +83,7 @@ class TelemetrySV(object):
     else:
       self.az = kwargs.pop('az')
       self.el = kwargs.pop('el')
+      self.availability_flags = kwargs.pop('availability_flags')
       self.pseudorange_residual = kwargs.pop('pseudorange_residual')
       self.phase_residual = kwargs.pop('phase_residual')
       self.outlier_flags = kwargs.pop('outlier_flags')

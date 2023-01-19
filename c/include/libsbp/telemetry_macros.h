@@ -18,6 +18,56 @@
 #ifndef LIBSBP_TELEMETRY_MACROS_H
 #define LIBSBP_TELEMETRY_MACROS_H
 
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK (0x1u)
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT (0u)
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT) & \
+        SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK))
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SET(flags, val)           \
+  do {                                                                     \
+    (flags) = (u8)(                                                        \
+        (flags & (~(SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK          \
+                    << SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT))) | \
+        (((val) & (SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK))         \
+         << (SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_PSEUDORANGE_UNAVAILABLE (0)
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_PSEUDORANGE_AVAILABLE (1)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK (0x1u)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT (1u)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT) & \
+        SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK))
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SET(flags, val)           \
+  do {                                                                      \
+    (flags) = (u8)(                                                         \
+        (flags & (~(SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK          \
+                    << SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT))) | \
+        (((val) & (SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK))         \
+         << (SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_CARRIER_PHASE_UNAVAILABLE (0)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_CARRIER_PHASE_AVAILABLE (1)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_MASK (0x1u)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_SHIFT (2u)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_SHIFT) & \
+        SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_MASK))
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_SET(flags, val)           \
+  do {                                                                         \
+    (flags) = (u8)(                                                            \
+        (flags & (~(SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_MASK          \
+                    << SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_SHIFT))) | \
+        (((val) & (SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_MASK))         \
+         << (SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_COMPUTED_DOPPLER_UNAVAILABLE \
+  (0)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_COMPUTED_DOPPLER_AVAILABLE \
+  (1)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_MASK (0x3u)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_SHIFT (0u)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_GET(flags)               \
@@ -108,7 +158,7 @@
  * Encoded length of sbp_telemetry_sv_t (V4 API) and
  * telemetry_sv_t (legacy API)
  */
-#define SBP_TELEMETRY_SV_ENCODED_LEN 11u
+#define SBP_TELEMETRY_SV_ENCODED_LEN 12u
 
 #define SBP_MSG_TEL_SV 0x0120
 #define SBP_TEL_SV__MASK (0xffu)
@@ -128,7 +178,7 @@
  * (V4 API) or msg_tel_sv_t::sv_tel (legacy API) before the maximum SBP message
  * size is exceeded
  */
-#define SBP_MSG_TEL_SV_SV_TEL_MAX 22u
+#define SBP_MSG_TEL_SV_SV_TEL_MAX 20u
 
 /**
  * Encoded length of sbp_msg_tel_sv_t (V4 API) and

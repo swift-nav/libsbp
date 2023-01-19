@@ -2503,6 +2503,7 @@ export interface MsgTelSv {
 }
 
 export interface TelemetrySV {
+    availability_flags:   number;
     az:                   number;
     correction_flags:     number;
     el:                   number;
@@ -6006,6 +6007,7 @@ const typeMap: any = {
         { json: "wn", js: "wn", typ: 0 },
     ], "any"),
     "TelemetrySV": o([
+        { json: "availability_flags", js: "availability_flags", typ: 0 },
         { json: "az", js: "az", typ: 0 },
         { json: "correction_flags", js: "correction_flags", typ: 0 },
         { json: "el", js: "el", typ: 0 },

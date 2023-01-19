@@ -35,6 +35,7 @@ SBP_PACK_START
 typedef struct SBP_ATTR_PACKED {
   u8 az;                    /**< Azimuth angle (range 0..179) [deg * 2g] */
   s8 el;                    /**< Elevation angle (range -90..90) [deg] */
+  u8 availability_flags;    /**< Observation availability at filter update */
   s16 pseudorange_residual; /**< Pseudorange observation residual [1 dm] */
   s16 phase_residual;       /**< Carrier-phase or carrier-phase-derived
                                  observation residual [5 mm] */

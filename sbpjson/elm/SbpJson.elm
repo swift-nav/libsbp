@@ -2993,7 +2993,8 @@ type alias MsgTelSv =
     }
 
 type alias TelemetrySV =
-    { az : Int
+    { availabilityFlags : Int
+    , az : Int
     , correctionFlags : Int
     , el : Int
     , ephemerisFlags : Int
@@ -7435,6 +7436,7 @@ encodeMsgTelSv x =
 telemetrySV : Jdec.Decoder TelemetrySV
 telemetrySV =
     Jpipe.decode TelemetrySV
+        |> Jpipe.required "availability_flags" Jdec.int
         |> Jpipe.required "az" Jdec.int
         |> Jpipe.required "correction_flags" Jdec.int
         |> Jpipe.required "el" Jdec.int
@@ -7447,7 +7449,8 @@ telemetrySV =
 encodeTelemetrySV : TelemetrySV -> Jenc.Value
 encodeTelemetrySV x =
     Jenc.object
-        [ ("az", Jenc.int x.az)
+        [ ("availability_flags", Jenc.int x.availabilityFlags)
+        , ("az", Jenc.int x.az)
         , ("correction_flags", Jenc.int x.correctionFlags)
         , ("el", Jenc.int x.el)
         , ("ephemeris_flags", Jenc.int x.ephemerisFlags)

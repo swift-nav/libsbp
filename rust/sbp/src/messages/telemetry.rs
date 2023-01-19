@@ -203,6 +203,9 @@ pub mod telemetry_sv {
         /// Elevation angle (range -90..90)
         #[cfg_attr(feature = "serde", serde(rename = "el"))]
         pub el: i8,
+        /// Observation availability at filter update
+        #[cfg_attr(feature = "serde", serde(rename = "availability_flags"))]
+        pub availability_flags: u8,
         /// Pseudorange observation residual
         #[cfg_attr(feature = "serde", serde(rename = "pseudorange_residual"))]
         pub pseudorange_residual: i16,
@@ -225,6 +228,78 @@ pub mod telemetry_sv {
     }
 
     impl TelemetrySV {
+        /// Gets the [PseudorangeAvailability][self::PseudorangeAvailability] stored in the `availability_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PseudorangeAvailability` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PseudorangeAvailability` were added.
+        pub fn pseudorange_availability(&self) -> Result<PseudorangeAvailability, u8> {
+            get_bit_range!(self.availability_flags, u8, u8, 0, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [PseudorangeAvailability][PseudorangeAvailability] of the `availability_flags` bitfield.
+        pub fn set_pseudorange_availability(
+            &mut self,
+            pseudorange_availability: PseudorangeAvailability,
+        ) {
+            set_bit_range!(
+                &mut self.availability_flags,
+                pseudorange_availability,
+                u8,
+                u8,
+                0,
+                0
+            );
+        }
+
+        /// Gets the [CarrierPhaseAvailability][self::CarrierPhaseAvailability] stored in the `availability_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CarrierPhaseAvailability` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CarrierPhaseAvailability` were added.
+        pub fn carrierphase_availability(&self) -> Result<CarrierPhaseAvailability, u8> {
+            get_bit_range!(self.availability_flags, u8, u8, 1, 1).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [CarrierPhaseAvailability][CarrierPhaseAvailability] of the `availability_flags` bitfield.
+        pub fn set_carrierphase_availability(
+            &mut self,
+            carrierphase_availability: CarrierPhaseAvailability,
+        ) {
+            set_bit_range!(
+                &mut self.availability_flags,
+                carrierphase_availability,
+                u8,
+                u8,
+                1,
+                1
+            );
+        }
+
+        /// Gets the [ComputedDopplerAvailability][self::ComputedDopplerAvailability] stored in the `availability_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `ComputedDopplerAvailability` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `ComputedDopplerAvailability` were added.
+        pub fn computed_doppler_availability(&self) -> Result<ComputedDopplerAvailability, u8> {
+            get_bit_range!(self.availability_flags, u8, u8, 2, 2).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [ComputedDopplerAvailability][ComputedDopplerAvailability] of the `availability_flags` bitfield.
+        pub fn set_computed_doppler_availability(
+            &mut self,
+            computed_doppler_availability: ComputedDopplerAvailability,
+        ) {
+            set_bit_range!(
+                &mut self.availability_flags,
+                computed_doppler_availability,
+                u8,
+                u8,
+                2,
+                2
+            );
+        }
+
         /// Gets the [PseudorangeOutlier][self::PseudorangeOutlier] stored in the `outlier_flags` bitfield.
         ///
         /// Returns `Ok` if the bitrange contains a known `PseudorangeOutlier` variant.
@@ -329,6 +404,7 @@ pub mod telemetry_sv {
     impl WireFormat for TelemetrySV {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <i8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
             + <i16 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -338,6 +414,7 @@ pub mod telemetry_sv {
         fn len(&self) -> usize {
             WireFormat::len(&self.az)
                 + WireFormat::len(&self.el)
+                + WireFormat::len(&self.availability_flags)
                 + WireFormat::len(&self.pseudorange_residual)
                 + WireFormat::len(&self.phase_residual)
                 + WireFormat::len(&self.outlier_flags)
@@ -348,6 +425,7 @@ pub mod telemetry_sv {
         fn write<B: BufMut>(&self, buf: &mut B) {
             WireFormat::write(&self.az, buf);
             WireFormat::write(&self.el, buf);
+            WireFormat::write(&self.availability_flags, buf);
             WireFormat::write(&self.pseudorange_residual, buf);
             WireFormat::write(&self.phase_residual, buf);
             WireFormat::write(&self.outlier_flags, buf);
@@ -359,12 +437,115 @@ pub mod telemetry_sv {
             TelemetrySV {
                 az: WireFormat::parse_unchecked(buf),
                 el: WireFormat::parse_unchecked(buf),
+                availability_flags: WireFormat::parse_unchecked(buf),
                 pseudorange_residual: WireFormat::parse_unchecked(buf),
                 phase_residual: WireFormat::parse_unchecked(buf),
                 outlier_flags: WireFormat::parse_unchecked(buf),
                 ephemeris_flags: WireFormat::parse_unchecked(buf),
                 correction_flags: WireFormat::parse_unchecked(buf),
                 sid: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Pseudorange availability
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum PseudorangeAvailability {
+        /// Pseudorange unavailable
+        PseudorangeUnavailable = 0,
+
+        /// Pseudorange available
+        PseudorangeAvailable = 1,
+    }
+
+    impl std::fmt::Display for PseudorangeAvailability {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                PseudorangeAvailability::PseudorangeUnavailable => {
+                    f.write_str("Pseudorange unavailable")
+                }
+                PseudorangeAvailability::PseudorangeAvailable => {
+                    f.write_str("Pseudorange available")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for PseudorangeAvailability {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(PseudorangeAvailability::PseudorangeUnavailable),
+                1 => Ok(PseudorangeAvailability::PseudorangeAvailable),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Carrier-phase availability
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum CarrierPhaseAvailability {
+        /// Carrier-phase unavailable
+        CarrierPhaseUnavailable = 0,
+
+        /// Carrier-phase available
+        CarrierPhaseAvailable = 1,
+    }
+
+    impl std::fmt::Display for CarrierPhaseAvailability {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                CarrierPhaseAvailability::CarrierPhaseUnavailable => {
+                    f.write_str("Carrier-phase unavailable")
+                }
+                CarrierPhaseAvailability::CarrierPhaseAvailable => {
+                    f.write_str("Carrier-phase available")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for CarrierPhaseAvailability {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(CarrierPhaseAvailability::CarrierPhaseUnavailable),
+                1 => Ok(CarrierPhaseAvailability::CarrierPhaseAvailable),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Computed-Doppler availability
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum ComputedDopplerAvailability {
+        /// Computed-Doppler unavailable
+        ComputedDopplerUnavailable = 0,
+
+        /// Computed-Doppler available
+        ComputedDopplerAvailable = 1,
+    }
+
+    impl std::fmt::Display for ComputedDopplerAvailability {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                ComputedDopplerAvailability::ComputedDopplerUnavailable => {
+                    f.write_str("Computed-Doppler unavailable")
+                }
+                ComputedDopplerAvailability::ComputedDopplerAvailable => {
+                    f.write_str("Computed-Doppler available")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for ComputedDopplerAvailability {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(ComputedDopplerAvailability::ComputedDopplerUnavailable),
+                1 => Ok(ComputedDopplerAvailability::ComputedDopplerAvailable),
+                i => Err(i),
             }
         }
     }

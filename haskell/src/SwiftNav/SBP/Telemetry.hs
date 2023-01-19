@@ -42,6 +42,8 @@ data TelemetrySV = TelemetrySV
     -- ^ Azimuth angle (range 0..179)
   , _telemetrySV_el                 :: !Int8
     -- ^ Elevation angle (range -90..90)
+  , _telemetrySV_availability_flags :: !Word8
+    -- ^ Observation availability at filter update
   , _telemetrySV_pseudorange_residual :: !Int16
     -- ^ Pseudorange observation residual
   , _telemetrySV_phase_residual     :: !Int16
@@ -61,6 +63,7 @@ instance Binary TelemetrySV where
   get = do
     _telemetrySV_az <- getWord8
     _telemetrySV_el <- (fromIntegral <$> getWord8)
+    _telemetrySV_availability_flags <- getWord8
     _telemetrySV_pseudorange_residual <- (fromIntegral <$> getWord16le)
     _telemetrySV_phase_residual <- (fromIntegral <$> getWord16le)
     _telemetrySV_outlier_flags <- getWord8
@@ -72,6 +75,7 @@ instance Binary TelemetrySV where
   put TelemetrySV {..} = do
     putWord8 _telemetrySV_az
     (putWord8 . fromIntegral) _telemetrySV_el
+    putWord8 _telemetrySV_availability_flags
     (putWord16le . fromIntegral) _telemetrySV_pseudorange_residual
     (putWord16le . fromIntegral) _telemetrySV_phase_residual
     putWord8 _telemetrySV_outlier_flags

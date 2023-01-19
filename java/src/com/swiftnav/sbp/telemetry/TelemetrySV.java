@@ -28,6 +28,9 @@ public class TelemetrySV extends SBPStruct {
     /** Elevation angle (range -90..90) */
     public int el;
 
+    /** Observation availability at filter update */
+    public int availability_flags;
+
     /** Pseudorange observation residual */
     public int pseudorange_residual;
 
@@ -53,6 +56,7 @@ public class TelemetrySV extends SBPStruct {
         /* Parse fields from binary */
         az = parser.getU8();
         el = parser.getS8();
+        availability_flags = parser.getU8();
         pseudorange_residual = parser.getS16();
         phase_residual = parser.getS16();
         outlier_flags = parser.getU8();
@@ -67,6 +71,7 @@ public class TelemetrySV extends SBPStruct {
         /* Build fields into binary */
         builder.putU8(az);
         builder.putS8(el);
+        builder.putU8(availability_flags);
         builder.putS16(pseudorange_residual);
         builder.putS16(phase_residual);
         builder.putU8(outlier_flags);
@@ -80,6 +85,7 @@ public class TelemetrySV extends SBPStruct {
         JSONObject obj = new JSONObject();
         obj.put("az", az);
         obj.put("el", el);
+        obj.put("availability_flags", availability_flags);
         obj.put("pseudorange_residual", pseudorange_residual);
         obj.put("phase_residual", phase_residual);
         obj.put("outlier_flags", outlier_flags);
