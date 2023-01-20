@@ -22,9 +22,9 @@ use crate::*;
 fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
     {
         let mut payload = Cursor::new(vec![
-            85, 254, 5, 66, 0, 45, 180, 0, 0, 0, 3, 0, 1, 1, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
+            85, 254, 5, 66, 0, 45, 180, 0, 0, 0, 3, 0, 1, 0, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
             244, 1, 100, 200, 150, 100, 150, 100, 2, 5, 10, 16, 0, 17, 18, 19, 20, 21, 6, 10, 22,
-            0, 23, 24, 25, 26, 27, 119, 82,
+            0, 23, 24, 25, 26, 27, 236, 182,
         ]);
 
         // Test the round trip payload parsing
@@ -59,8 +59,8 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.header.num_msgs
                 );
                 assert_eq!(
-                    msg.header.seq_num, 1,
-                    "incorrect value for header.seq_num, expected 1, is {}",
+                    msg.header.seq_num, 0,
+                    "incorrect value for header.seq_num, expected 0, is {}",
                     msg.header.seq_num
                 );
                 assert_eq!(
@@ -207,8 +207,8 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 254, 5, 66, 0, 27, 180, 0, 0, 0, 3, 0, 1, 1, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
-            244, 1, 100, 200, 150, 100, 150, 100, 0, 40, 17,
+            85, 254, 5, 66, 0, 27, 180, 0, 0, 0, 3, 0, 1, 0, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
+            244, 1, 100, 200, 150, 100, 150, 100, 0, 155, 36,
         ]);
 
         // Test the round trip payload parsing
@@ -243,8 +243,8 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.header.num_msgs
                 );
                 assert_eq!(
-                    msg.header.seq_num, 1,
-                    "incorrect value for header.seq_num, expected 1, is {}",
+                    msg.header.seq_num, 0,
+                    "incorrect value for header.seq_num, expected 0, is {}",
                     msg.header.seq_num
                 );
                 assert_eq!(
@@ -346,7 +346,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
     {
-        let json_input = r#"{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 2, "stec_sat_list": [{"stec_residual": {"sv_id": {"satId": 5, "constellation": 10}, "residual": 16, "stddev": 17}, "stec_bound_mu": 18, "stec_bound_sig": 19, "stec_bound_mu_dot": 20, "stec_bound_sig_dot": 21}, {"stec_residual": {"sv_id": {"satId": 6, "constellation": 10}, "residual": 22, "stddev": 23}, "stec_bound_mu": 24, "stec_bound_sig": 25, "stec_bound_mu_dot": 26, "stec_bound_sig_dot": 27}], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 45, "payload": "tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob", "crc": 21111}"#.as_bytes();
+        let json_input = r#"{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 2, "stec_sat_list": [{"stec_residual": {"sv_id": {"satId": 5, "constellation": 10}, "residual": 16, "stddev": 17}, "stec_bound_mu": 18, "stec_bound_sig": 19, "stec_bound_mu_dot": 20, "stec_bound_sig_dot": 21}, {"stec_residual": {"sv_id": {"satId": 6, "constellation": 10}, "residual": 22, "stddev": 23}, "stec_bound_mu": 24, "stec_bound_sig": 25, "stec_bound_mu_dot": 26, "stec_bound_sig_dot": 27}], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 45, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob", "crc": 46828}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -391,8 +391,8 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.header.num_msgs
                 );
                 assert_eq!(
-                    msg.header.seq_num, 1,
-                    "incorrect value for header.seq_num, expected 1, is {}",
+                    msg.header.seq_num, 0,
+                    "incorrect value for header.seq_num, expected 0, is {}",
                     msg.header.seq_num
                 );
                 assert_eq!(
@@ -536,7 +536,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
         };
     }
     {
-        let json_input = r#"{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 0, "stec_sat_list": [], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 27, "payload": "tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQA", "crc": 4392}"#.as_bytes();
+        let json_input = r#"{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0}, "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction": {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100, "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 0, "stec_sat_list": [], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 27, "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA", "crc": 9371}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -581,8 +581,8 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.header.num_msgs
                 );
                 assert_eq!(
-                    msg.header.seq_num, 1,
-                    "incorrect value for header.seq_num, expected 1, is {}",
+                    msg.header.seq_num, 0,
+                    "incorrect value for header.seq_num, expected 0, is {}",
                     msg.header.seq_num
                 );
                 assert_eq!(
@@ -684,9 +684,9 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
 fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
     {
         let mut payload = Cursor::new(vec![
-            85, 254, 5, 66, 0, 45, 180, 0, 0, 0, 3, 0, 1, 1, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
+            85, 254, 5, 66, 0, 45, 180, 0, 0, 0, 3, 0, 1, 0, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
             244, 1, 100, 200, 150, 100, 150, 100, 2, 5, 10, 16, 0, 17, 18, 19, 20, 21, 6, 10, 22,
-            0, 23, 24, 25, 26, 27, 119, 82,
+            0, 23, 24, 25, 26, 27, 236, 182,
         ]);
 
         // Construct sbp message
@@ -738,8 +738,8 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.header.num_msgs
                 );
                 assert_eq!(
-                    msg.header.seq_num, 1,
-                    "incorrect value for header.seq_num, expected 1, is {}",
+                    msg.header.seq_num, 0,
+                    "incorrect value for header.seq_num, expected 0, is {}",
                     msg.header.seq_num
                 );
                 assert_eq!(
@@ -888,8 +888,8 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 254, 5, 66, 0, 27, 180, 0, 0, 0, 3, 0, 1, 1, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
-            244, 1, 100, 200, 150, 100, 150, 100, 0, 40, 17,
+            85, 254, 5, 66, 0, 27, 180, 0, 0, 0, 3, 0, 1, 0, 10, 0, 15, 1, 0, 10, 0, 39, 232, 3,
+            244, 1, 100, 200, 150, 100, 150, 100, 0, 155, 36,
         ]);
 
         // Construct sbp message
@@ -941,8 +941,8 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_gridded_correction_bounds() {
                     msg.header.num_msgs
                 );
                 assert_eq!(
-                    msg.header.seq_num, 1,
-                    "incorrect value for header.seq_num, expected 1, is {}",
+                    msg.header.seq_num, 0,
+                    "incorrect value for header.seq_num, expected 0, is {}",
                     msg.header.seq_num
                 );
                 assert_eq!(

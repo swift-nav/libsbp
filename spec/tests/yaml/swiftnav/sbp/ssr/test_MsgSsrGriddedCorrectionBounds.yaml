@@ -10,7 +10,7 @@ tests:
             tow: 180
             wn: 3
           num_msgs: 1
-          seq_num: 1
+          seq_num: 0
           update_interval: 10
           sol_id: 0
         ssr_iod_atmo: 15
@@ -51,7 +51,7 @@ tests:
       module: sbp.ssr
       name: MsgSsrGriddedCorrectionBounds
     msg_type: '1534'
-    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0},
+    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0},
     "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction":
     {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100,
     "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 2, "stec_sat_list":
@@ -59,15 +59,15 @@ tests:
     "stec_bound_sig": 19, "stec_bound_mu_dot": 20, "stec_bound_sig_dot": 21}, {"stec_residual": {"sv_id": {"satId": 6,
     "constellation": 10}, "residual": 22, "stddev": 23}, "stec_bound_mu": 24, "stec_bound_sig": 25, "stec_bound_mu_dot": 26,
     "stec_bound_sig_dot": 27}], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 45,
-    "payload": "tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob", "crc": 21111}'
-    raw_packet: Vf4FQgAttAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRobd1I=
+    "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob", "crc": 46828}'
+    raw_packet: Vf4FQgAttAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob7LY=
     sbp:
       preamble: '0x55'
       msg_type: '0x05FE'
       sender: '0x0042'
       length: 45
-      payload: tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob
-      crc: '0x5277'
+      payload: tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQCBQoQABESExQVBgoWABcYGRob
+      crc: '0xB6EC'
 
   - msg:
       fields:
@@ -76,7 +76,7 @@ tests:
             tow: 180
             wn: 3
           num_msgs: 1
-          seq_num: 1
+          seq_num: 0
           update_interval: 10
           sol_id: 0
         ssr_iod_atmo: 15
@@ -97,17 +97,17 @@ tests:
       module: sbp.ssr
       name: MsgSsrGriddedCorrectionBounds
     msg_type: '1534'
-    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 1, "update_interval": 10, "sol_id": 0},
+    raw_json: '{"header": {"time": {"tow": 180, "wn": 3}, "num_msgs": 1, "seq_num": 0, "update_interval": 10, "sol_id": 0},
     "ssr_iod_atmo": 15, "tile_set_id": 1, "tile_id": 10, "tropo_qi": 39, "grid_point_id": 1000, "tropo_delay_correction":
     {"hydro": 500, "wet": 100, "stddev": 200}, "tropo_v_hydro_bound_mu": 150, "tropo_v_hydro_bound_sig": 100,
     "tropo_v_wet_bound_mu": 150, "tropo_v_wet_bound_sig": 100, "n_sats": 0, "stec_sat_list":
     [], "preamble": 85, "msg_type": 1534, "sender": 66, "length": 27,
-    "payload": "tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQA", "crc": 4392}'
-    raw_packet: Vf4FQgAbtAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQAKBE=
+    "payload": "tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA", "crc": 9371}'
+    raw_packet: Vf4FQgAbtAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQAmyQ=
     sbp:
       preamble: '0x55'
       msg_type: '0x05FE'
       sender: '0x0042'
       length: 27
-      payload: tAAAAAMAAQEKAA8BAAoAJ+gD9AFkyJZklmQA
-      crc: '0x1128'
+      payload: tAAAAAMAAQAKAA8BAAoAJ+gD9AFkyJZklmQA
+      crc: '0x249B'

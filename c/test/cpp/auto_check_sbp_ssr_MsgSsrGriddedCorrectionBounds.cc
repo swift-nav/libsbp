@@ -77,16 +77,16 @@ class Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0
 
 TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0, Test) {
   uint8_t encoded_frame[] = {
-      85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   1,
+      85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   0,
       10,  0,   15,  1,   0,  10, 0,   39, 232, 3,   244, 1,  100, 200,
       150, 100, 150, 100, 2,  5,  10,  16, 0,   17,  18,  19, 20,  21,
-      6,   10,  22,  0,   23, 24, 25,  26, 27,  119, 82,
+      6,   10,  22,  0,   23, 24, 25,  26, 27,  236, 182,
   };
 
   sbp_msg_ssr_gridded_correction_bounds_t test_msg{};
   test_msg.grid_point_id = 1000;
   test_msg.header.num_msgs = 1;
-  test_msg.header.seq_num = 1;
+  test_msg.header.seq_num = 0;
   test_msg.header.sol_id = 0;
   test_msg.header.time.tow = 180;
   test_msg.header.time.wn = 3;
@@ -140,8 +140,8 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds0, Test) {
   EXPECT_EQ(last_msg_.header.num_msgs, 1)
       << "incorrect value for last_msg_.header.num_msgs, expected 1, is "
       << last_msg_.header.num_msgs;
-  EXPECT_EQ(last_msg_.header.seq_num, 1)
-      << "incorrect value for last_msg_.header.seq_num, expected 1, is "
+  EXPECT_EQ(last_msg_.header.seq_num, 0)
+      << "incorrect value for last_msg_.header.seq_num, expected 0, is "
       << last_msg_.header.seq_num;
   EXPECT_EQ(last_msg_.header.sol_id, 0)
       << "incorrect value for last_msg_.header.sol_id, expected 0, is "
@@ -323,15 +323,15 @@ class Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds1
 
 TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds1, Test) {
   uint8_t encoded_frame[] = {
-      85,  254, 5,   66,  0,   27,  180, 0,   0, 0,  3,   0,
-      1,   1,   10,  0,   15,  1,   0,   10,  0, 39, 232, 3,
-      244, 1,   100, 200, 150, 100, 150, 100, 0, 40, 17,
+      85,  254, 5,   66,  0,   27,  180, 0,   0, 0,   3,   0,
+      1,   0,   10,  0,   15,  1,   0,   10,  0, 39,  232, 3,
+      244, 1,   100, 200, 150, 100, 150, 100, 0, 155, 36,
   };
 
   sbp_msg_ssr_gridded_correction_bounds_t test_msg{};
   test_msg.grid_point_id = 1000;
   test_msg.header.num_msgs = 1;
-  test_msg.header.seq_num = 1;
+  test_msg.header.seq_num = 0;
   test_msg.header.sol_id = 0;
   test_msg.header.time.tow = 180;
   test_msg.header.time.wn = 3;
@@ -367,8 +367,8 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds1, Test) {
   EXPECT_EQ(last_msg_.header.num_msgs, 1)
       << "incorrect value for last_msg_.header.num_msgs, expected 1, is "
       << last_msg_.header.num_msgs;
-  EXPECT_EQ(last_msg_.header.seq_num, 1)
-      << "incorrect value for last_msg_.header.seq_num, expected 1, is "
+  EXPECT_EQ(last_msg_.header.seq_num, 0)
+      << "incorrect value for last_msg_.header.seq_num, expected 0, is "
       << last_msg_.header.seq_num;
   EXPECT_EQ(last_msg_.header.sol_id, 0)
       << "incorrect value for last_msg_.header.sol_id, expected 0, is "

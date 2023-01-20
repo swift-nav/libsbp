@@ -94,10 +94,10 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   1,
+        85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   0,
         10,  0,   15,  1,   0,  10, 0,   39, 232, 3,   244, 1,  100, 200,
         150, 100, 150, 100, 2,  5,  10,  16, 0,   17,  18,  19, 20,  21,
-        6,   10,  22,  0,   23, 24, 25,  26, 27,  119, 82,
+        6,   10,  22,  0,   23, 24, 25,  26, 27,  236, 182,
     };
 
     dummy_reset();
@@ -109,7 +109,7 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
 
     test_msg.ssr_gridded_correction_bounds.header.num_msgs = 1;
 
-    test_msg.ssr_gridded_correction_bounds.header.seq_num = 1;
+    test_msg.ssr_gridded_correction_bounds.header.seq_num = 0;
 
     test_msg.ssr_gridded_correction_bounds.header.sol_id = 0;
 
@@ -226,10 +226,10 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
         last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
 
     ck_assert_msg(
-        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 1,
+        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 0,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.seq_num, expected "
-        "1, is %d",
+        "0, is %d",
         last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,
@@ -487,9 +487,9 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85,  254, 5,   66,  0,   27,  180, 0,   0, 0,  3,   0,
-        1,   1,   10,  0,   15,  1,   0,   10,  0, 39, 232, 3,
-        244, 1,   100, 200, 150, 100, 150, 100, 0, 40, 17,
+        85,  254, 5,   66,  0,   27,  180, 0,   0, 0,   3,   0,
+        1,   0,   10,  0,   15,  1,   0,   10,  0, 39,  232, 3,
+        244, 1,   100, 200, 150, 100, 150, 100, 0, 155, 36,
     };
 
     dummy_reset();
@@ -501,7 +501,7 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
 
     test_msg.ssr_gridded_correction_bounds.header.num_msgs = 1;
 
-    test_msg.ssr_gridded_correction_bounds.header.seq_num = 1;
+    test_msg.ssr_gridded_correction_bounds.header.seq_num = 0;
 
     test_msg.ssr_gridded_correction_bounds.header.sol_id = 0;
 
@@ -574,10 +574,10 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
         last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
 
     ck_assert_msg(
-        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 1,
+        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 0,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.seq_num, expected "
-        "1, is %d",
+        "0, is %d",
         last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,

@@ -34,7 +34,7 @@ public class auto_check_sbp_ssr_MsgSsrGriddedCorrectionBoundsTest {
         byte[] payload =
                 new byte[] {
                     (byte) 180, (byte) 0, (byte) 0, (byte) 0, (byte) 3, (byte) 0, (byte) 1,
-                    (byte) 1, (byte) 10, (byte) 0, (byte) 15, (byte) 1, (byte) 0, (byte) 10,
+                    (byte) 0, (byte) 10, (byte) 0, (byte) 15, (byte) 1, (byte) 0, (byte) 10,
                     (byte) 0, (byte) 39, (byte) 232, (byte) 3, (byte) 244, (byte) 1, (byte) 100,
                     (byte) 200, (byte) 150, (byte) 100, (byte) 150, (byte) 100, (byte) 2, (byte) 5,
                     (byte) 10, (byte) 16, (byte) 0, (byte) 17, (byte) 18, (byte) 19, (byte) 20,
@@ -69,11 +69,11 @@ public class auto_check_sbp_ssr_MsgSsrGriddedCorrectionBoundsTest {
         value = msg.header.seq_num;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.header.seq_num + "' != '" + 1 + "'",
-                    value.equals(BigInteger.valueOf(1L)));
+                    "'" + msg.header.seq_num + "' != '" + 0 + "'",
+                    value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
-            expected = 1L;
+            expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.header.sol_id;
@@ -414,7 +414,7 @@ public class auto_check_sbp_ssr_MsgSsrGriddedCorrectionBoundsTest {
         byte[] payload =
                 new byte[] {
                     (byte) 180, (byte) 0, (byte) 0, (byte) 0, (byte) 3, (byte) 0, (byte) 1,
-                    (byte) 1, (byte) 10, (byte) 0, (byte) 15, (byte) 1, (byte) 0, (byte) 10,
+                    (byte) 0, (byte) 10, (byte) 0, (byte) 15, (byte) 1, (byte) 0, (byte) 10,
                     (byte) 0, (byte) 39, (byte) 232, (byte) 3, (byte) 244, (byte) 1, (byte) 100,
                     (byte) 200, (byte) 150, (byte) 100, (byte) 150, (byte) 100, (byte) 0,
                 };
@@ -446,11 +446,11 @@ public class auto_check_sbp_ssr_MsgSsrGriddedCorrectionBoundsTest {
         value = msg.header.seq_num;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.header.seq_num + "' != '" + 1 + "'",
-                    value.equals(BigInteger.valueOf(1L)));
+                    "'" + msg.header.seq_num + "' != '" + 0 + "'",
+                    value.equals(BigInteger.valueOf(0L)));
         } else {
             value = value.longValue();
-            expected = 1L;
+            expected = 0L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.header.sol_id;
