@@ -94,10 +94,10 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   1,
+        85,  254, 5,   66,  0,  45, 180, 0,  0,   0,   3,   0,  1,   0,
         10,  0,   15,  1,   0,  10, 0,   39, 232, 3,   244, 1,  100, 200,
         150, 100, 150, 100, 2,  5,  10,  16, 0,   17,  18,  19, 20,  21,
-        6,   10,  22,  0,   23, 24, 25,  26, 27,  119, 82,
+        6,   10,  22,  0,   23, 24, 25,  26, 27,  236, 182,
     };
 
     dummy_reset();
@@ -109,7 +109,7 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
 
     test_msg.ssr_gridded_correction_bounds.header.num_msgs = 1;
 
-    test_msg.ssr_gridded_correction_bounds.header.seq_num = 1;
+    test_msg.ssr_gridded_correction_bounds.header.seq_num = 0;
 
     test_msg.ssr_gridded_correction_bounds.header.sol_id = 0;
 
@@ -226,10 +226,10 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
         last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
 
     ck_assert_msg(
-        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 1,
+        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 0,
         "incorrect value for "
         "last_msg.msg.ssr_gridded_correction_bounds.header.seq_num, expected "
-        "1, is %d",
+        "0, is %d",
         last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,
@@ -398,6 +398,226 @@ START_TEST(test_auto_check_sbp_ssr_MsgSsrGriddedCorrectionBounds) {
                   "stec_residual.sv_id.satId, expected 6, is %d",
                   last_msg.msg.ssr_gridded_correction_bounds.stec_sat_list[1]
                       .stec_residual.sv_id.satId);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tile_id == 10,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.tile_id, "
+                  "expected 10, is %d",
+                  last_msg.msg.ssr_gridded_correction_bounds.tile_id);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tile_set_id == 1,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.tile_set_id, "
+                  "expected 1, is %d",
+                  last_msg.msg.ssr_gridded_correction_bounds.tile_set_id);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds
+                          .tropo_delay_correction.hydro == 500,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_"
+                  "correction.hydro, expected 500, is %d",
+                  last_msg.msg.ssr_gridded_correction_bounds
+                      .tropo_delay_correction.hydro);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds
+                          .tropo_delay_correction.stddev == 200,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_"
+                  "correction.stddev, expected 200, is %d",
+                  last_msg.msg.ssr_gridded_correction_bounds
+                      .tropo_delay_correction.stddev);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet ==
+            100,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet,"
+        " expected 100, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tropo_qi == 39,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.tropo_qi, "
+                  "expected 39, is %d",
+                  last_msg.msg.ssr_gridded_correction_bounds.tropo_qi);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu ==
+            150,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu, "
+        "expected 150, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig ==
+            100,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig, "
+        "expected 100, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu == 150,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu, "
+        "expected 150, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig == 100,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig, "
+        "expected 100, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_callback_register(&sbp_state, 1534, &msg_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+    u8 encoded_frame[] = {
+        85,  254, 5,   66,  0,   27,  180, 0,   0, 0,   3,   0,
+        1,   0,   10,  0,   15,  1,   0,   10,  0, 39,  232, 3,
+        244, 1,   100, 200, 150, 100, 150, 100, 0, 155, 36,
+    };
+
+    dummy_reset();
+
+    sbp_msg_t test_msg;
+    memset(&test_msg, 0, sizeof(test_msg));
+
+    test_msg.ssr_gridded_correction_bounds.grid_point_id = 1000;
+
+    test_msg.ssr_gridded_correction_bounds.header.num_msgs = 1;
+
+    test_msg.ssr_gridded_correction_bounds.header.seq_num = 0;
+
+    test_msg.ssr_gridded_correction_bounds.header.sol_id = 0;
+
+    test_msg.ssr_gridded_correction_bounds.header.time.tow = 180;
+
+    test_msg.ssr_gridded_correction_bounds.header.time.wn = 3;
+
+    test_msg.ssr_gridded_correction_bounds.header.update_interval = 10;
+
+    test_msg.ssr_gridded_correction_bounds.n_sats = 0;
+
+    test_msg.ssr_gridded_correction_bounds.ssr_iod_atmo = 15;
+
+    test_msg.ssr_gridded_correction_bounds.tile_id = 10;
+
+    test_msg.ssr_gridded_correction_bounds.tile_set_id = 1;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_delay_correction.hydro = 500;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_delay_correction.stddev = 200;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_delay_correction.wet = 100;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_qi = 39;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_mu = 150;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_hydro_bound_sig = 100;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_mu = 150;
+
+    test_msg.ssr_gridded_correction_bounds.tropo_v_wet_bound_sig = 100;
+
+    sbp_message_send(&sbp_state, SbpMsgSsrGriddedCorrectionBounds, 66,
+                     &test_msg, &dummy_write);
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff (expected: %zu, "
+                  "actual: %zu)",
+                  sizeof(encoded_frame), dummy_wr);
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 66,
+                  "msg_callback: sender_id decoded incorrectly");
+
+    ck_assert_msg(sbp_message_cmp(SbpMsgSsrGriddedCorrectionBounds,
+                                  &last_msg.msg, &test_msg) == 0,
+                  "Sent and received messages did not compare equal");
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.grid_point_id == 1000,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.grid_point_id, expected "
+        "1000, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.grid_point_id);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs == 1,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs, expected "
+        "1, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.header.num_msgs);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num == 0,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.header.seq_num, expected "
+        "0, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.header.seq_num);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.header.sol_id == 0,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.header.sol_id, "
+                  "expected 0, is %d",
+                  last_msg.msg.ssr_gridded_correction_bounds.header.sol_id);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.header.time.tow == 180,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.header.time.tow, expected "
+        "180, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.header.time.tow);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.header.time.wn == 3,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.header.time.wn, expected "
+        "3, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.header.time.wn);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.header.update_interval == 10,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.header.update_interval, "
+        "expected 10, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.header.update_interval);
+
+    ck_assert_msg(
+        last_msg.msg.ssr_gridded_correction_bounds.n_sats == 0,
+        "incorrect value for "
+        "last_msg.msg.ssr_gridded_correction_bounds.n_sats, expected 0, is %d",
+        last_msg.msg.ssr_gridded_correction_bounds.n_sats);
+
+    ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo == 15,
+                  "incorrect value for "
+                  "last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo, "
+                  "expected 15, is %d",
+                  last_msg.msg.ssr_gridded_correction_bounds.ssr_iod_atmo);
 
     ck_assert_msg(last_msg.msg.ssr_gridded_correction_bounds.tile_id == 10,
                   "incorrect value for "
