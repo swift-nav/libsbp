@@ -227,6 +227,7 @@ import com.swiftnav.sbp.system.MsgSensorAidEvent;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgStatusJournal;
 import com.swiftnav.sbp.system.MsgStatusReport;
+import com.swiftnav.sbp.telemetry.MsgTelSv;
 import com.swiftnav.sbp.tracking.MsgMeasurementState;
 import com.swiftnav.sbp.tracking.MsgTrackingIq;
 import com.swiftnav.sbp.tracking.MsgTrackingIqDepA;
@@ -671,6 +672,8 @@ final class MessageTable {
                 return new MsgSensorAidEvent(msg);
             case MsgGroupMeta.TYPE:
                 return new MsgGroupMeta(msg);
+            case MsgTelSv.TYPE:
+                return new MsgTelSv(msg);
             case MsgTrackingStateDetailedDepA.TYPE:
                 return new MsgTrackingStateDetailedDepA(msg);
             case MsgTrackingStateDetailedDep.TYPE:

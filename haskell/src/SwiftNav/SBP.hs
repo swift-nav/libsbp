@@ -36,6 +36,7 @@ import SwiftNav.SBP.Signing as Exports
 import SwiftNav.SBP.SolutionMeta as Exports
 import SwiftNav.SBP.Ssr as Exports
 import SwiftNav.SBP.System as Exports
+import SwiftNav.SBP.Telemetry as Exports
 import SwiftNav.SBP.Tracking as Exports
 import SwiftNav.SBP.User as Exports
 import SwiftNav.SBP.Vehicle as Exports

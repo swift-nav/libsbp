@@ -1,0 +1,53 @@
+/*
+ * Copyright (C) 2021 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Telemetry
+ *
+ * Telemetry messages reported by Starling engine. The messages include
+ * various byproducts of state estimation and other logic across Starling and
+ * are aimed at efficient issue diagnostics.
+ */
+
+package swiftnav.sbp.telemetry;
+
+import "gnss.proto";
+
+/** Array of per-signal telemetry entries
+ *
+None
+ */
+message TelemetrySV {
+    uint32 az = 1;
+    sint32 el = 2;
+    uint32 availability_flags = 3;
+    sint32 pseudorange_residual = 4;
+    sint32 phase_residual = 5;
+    uint32 outlier_flags = 6;
+    uint32 ephemeris_flags = 7;
+    uint32 correction_flags = 8;
+    gnss.GnssSignal sid = 9;
+}
+
+/** Per-signal telemetry
+ *
+ * This message includes telemetry pertinent to satellite signals available to
+ * Starling.
+ */
+message MsgTelSv {
+    uint32 wn = 1;
+    uint32 tow = 2;
+    uint32 n_obs = 3;
+    uint32 origin_flags = 4;
+    repeated TelemetrySV sv_tel = 5;
+}
