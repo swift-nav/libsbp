@@ -56,18 +56,18 @@ pub mod msg_tel_sv {
     }
 
     impl MsgTelSv {
-        /// Gets the [OriginFlags][self::OriginFlags] stored in the `origin_flags` bitfield.
+        /// Gets the [StarlingComponent][self::StarlingComponent] stored in the `origin_flags` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `OriginFlags` variant.
+        /// Returns `Ok` if the bitrange contains a known `StarlingComponent` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `OriginFlags` were added.
-        pub fn origin_flags(&self) -> Result<OriginFlags, u8> {
+        /// or because new variants of `StarlingComponent` were added.
+        pub fn starling_component(&self) -> Result<StarlingComponent, u8> {
             get_bit_range!(self.origin_flags, u8, u8, 7, 0).try_into()
         }
 
-        /// Set the bitrange corresponding to the [OriginFlags][OriginFlags] of the `origin_flags` bitfield.
-        pub fn set_origin_flags(&mut self, origin_flags: OriginFlags) {
-            set_bit_range!(&mut self.origin_flags, origin_flags, u8, u8, 7, 0);
+        /// Set the bitrange corresponding to the [StarlingComponent][StarlingComponent] of the `origin_flags` bitfield.
+        pub fn set_starling_component(&mut self, starling_component: StarlingComponent) {
+            set_bit_range!(&mut self.origin_flags, starling_component, u8, u8, 7, 0);
         }
     }
 
@@ -156,8 +156,9 @@ pub mod msg_tel_sv {
         }
     }
 
+    /// Starling component
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum OriginFlags {
+    pub enum StarlingComponent {
         /// Standalone
         Standalone = 0,
 
@@ -165,21 +166,21 @@ pub mod msg_tel_sv {
         Differential = 1,
     }
 
-    impl std::fmt::Display for OriginFlags {
+    impl std::fmt::Display for StarlingComponent {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                OriginFlags::Standalone => f.write_str("Standalone"),
-                OriginFlags::Differential => f.write_str("Differential"),
+                StarlingComponent::Standalone => f.write_str("Standalone"),
+                StarlingComponent::Differential => f.write_str("Differential"),
             }
         }
     }
 
-    impl TryFrom<u8> for OriginFlags {
+    impl TryFrom<u8> for StarlingComponent {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(OriginFlags::Standalone),
-                1 => Ok(OriginFlags::Differential),
+                0 => Ok(StarlingComponent::Standalone),
+                1 => Ok(StarlingComponent::Differential),
                 i => Err(i),
             }
         }
@@ -228,27 +229,27 @@ pub mod telemetry_sv {
     }
 
     impl TelemetrySV {
-        /// Gets the [PseudorangeAvailability][self::PseudorangeAvailability] stored in the `availability_flags` bitfield.
+        /// Gets the [ComputedDopplerAvailability][self::ComputedDopplerAvailability] stored in the `availability_flags` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `PseudorangeAvailability` variant.
+        /// Returns `Ok` if the bitrange contains a known `ComputedDopplerAvailability` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `PseudorangeAvailability` were added.
-        pub fn pseudorange_availability(&self) -> Result<PseudorangeAvailability, u8> {
-            get_bit_range!(self.availability_flags, u8, u8, 0, 0).try_into()
+        /// or because new variants of `ComputedDopplerAvailability` were added.
+        pub fn computed_doppler_availability(&self) -> Result<ComputedDopplerAvailability, u8> {
+            get_bit_range!(self.availability_flags, u8, u8, 2, 2).try_into()
         }
 
-        /// Set the bitrange corresponding to the [PseudorangeAvailability][PseudorangeAvailability] of the `availability_flags` bitfield.
-        pub fn set_pseudorange_availability(
+        /// Set the bitrange corresponding to the [ComputedDopplerAvailability][ComputedDopplerAvailability] of the `availability_flags` bitfield.
+        pub fn set_computed_doppler_availability(
             &mut self,
-            pseudorange_availability: PseudorangeAvailability,
+            computed_doppler_availability: ComputedDopplerAvailability,
         ) {
             set_bit_range!(
                 &mut self.availability_flags,
-                pseudorange_availability,
+                computed_doppler_availability,
                 u8,
                 u8,
-                0,
-                0
+                2,
+                2
             );
         }
 
@@ -276,56 +277,52 @@ pub mod telemetry_sv {
             );
         }
 
-        /// Gets the [ComputedDopplerAvailability][self::ComputedDopplerAvailability] stored in the `availability_flags` bitfield.
+        /// Gets the [PseudorangeAvailability][self::PseudorangeAvailability] stored in the `availability_flags` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `ComputedDopplerAvailability` variant.
+        /// Returns `Ok` if the bitrange contains a known `PseudorangeAvailability` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `ComputedDopplerAvailability` were added.
-        pub fn computed_doppler_availability(&self) -> Result<ComputedDopplerAvailability, u8> {
-            get_bit_range!(self.availability_flags, u8, u8, 2, 2).try_into()
+        /// or because new variants of `PseudorangeAvailability` were added.
+        pub fn pseudorange_availability(&self) -> Result<PseudorangeAvailability, u8> {
+            get_bit_range!(self.availability_flags, u8, u8, 0, 0).try_into()
         }
 
-        /// Set the bitrange corresponding to the [ComputedDopplerAvailability][ComputedDopplerAvailability] of the `availability_flags` bitfield.
-        pub fn set_computed_doppler_availability(
+        /// Set the bitrange corresponding to the [PseudorangeAvailability][PseudorangeAvailability] of the `availability_flags` bitfield.
+        pub fn set_pseudorange_availability(
             &mut self,
-            computed_doppler_availability: ComputedDopplerAvailability,
+            pseudorange_availability: PseudorangeAvailability,
         ) {
             set_bit_range!(
                 &mut self.availability_flags,
-                computed_doppler_availability,
+                pseudorange_availability,
                 u8,
                 u8,
-                2,
-                2
+                0,
+                0
             );
         }
 
-        /// Gets the [PseudorangeOutlier][self::PseudorangeOutlier] stored in the `outlier_flags` bitfield.
+        /// Gets the [MeasuredDopplerOutlier][self::MeasuredDopplerOutlier] stored in the `outlier_flags` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `PseudorangeOutlier` variant.
+        /// Returns `Ok` if the bitrange contains a known `MeasuredDopplerOutlier` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `PseudorangeOutlier` were added.
-        pub fn pseudorange_outlier(&self) -> Result<PseudorangeOutlier, u8> {
-            get_bit_range!(self.outlier_flags, u8, u8, 1, 0).try_into()
+        /// or because new variants of `MeasuredDopplerOutlier` were added.
+        pub fn measured_doppler_outlier(&self) -> Result<MeasuredDopplerOutlier, u8> {
+            get_bit_range!(self.outlier_flags, u8, u8, 4, 4).try_into()
         }
 
-        /// Set the bitrange corresponding to the [PseudorangeOutlier][PseudorangeOutlier] of the `outlier_flags` bitfield.
-        pub fn set_pseudorange_outlier(&mut self, pseudorange_outlier: PseudorangeOutlier) {
-            set_bit_range!(&mut self.outlier_flags, pseudorange_outlier, u8, u8, 1, 0);
-        }
-
-        /// Gets the [CarrierPhaseOutlier][self::CarrierPhaseOutlier] stored in the `outlier_flags` bitfield.
-        ///
-        /// Returns `Ok` if the bitrange contains a known `CarrierPhaseOutlier` variant.
-        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `CarrierPhaseOutlier` were added.
-        pub fn carrierphase_outlier(&self) -> Result<CarrierPhaseOutlier, u8> {
-            get_bit_range!(self.outlier_flags, u8, u8, 2, 2).try_into()
-        }
-
-        /// Set the bitrange corresponding to the [CarrierPhaseOutlier][CarrierPhaseOutlier] of the `outlier_flags` bitfield.
-        pub fn set_carrierphase_outlier(&mut self, carrierphase_outlier: CarrierPhaseOutlier) {
-            set_bit_range!(&mut self.outlier_flags, carrierphase_outlier, u8, u8, 2, 2);
+        /// Set the bitrange corresponding to the [MeasuredDopplerOutlier][MeasuredDopplerOutlier] of the `outlier_flags` bitfield.
+        pub fn set_measured_doppler_outlier(
+            &mut self,
+            measured_doppler_outlier: MeasuredDopplerOutlier,
+        ) {
+            set_bit_range!(
+                &mut self.outlier_flags,
+                measured_doppler_outlier,
+                u8,
+                u8,
+                4,
+                4
+            );
         }
 
         /// Gets the [ComputedDopplerOutlier][self::ComputedDopplerOutlier] stored in the `outlier_flags` bitfield.
@@ -352,28 +349,32 @@ pub mod telemetry_sv {
             );
         }
 
-        /// Gets the [MeasuredDopplerOutlier][self::MeasuredDopplerOutlier] stored in the `outlier_flags` bitfield.
+        /// Gets the [CarrierPhaseOutlier][self::CarrierPhaseOutlier] stored in the `outlier_flags` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `MeasuredDopplerOutlier` variant.
+        /// Returns `Ok` if the bitrange contains a known `CarrierPhaseOutlier` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `MeasuredDopplerOutlier` were added.
-        pub fn measured_doppler_outlier(&self) -> Result<MeasuredDopplerOutlier, u8> {
-            get_bit_range!(self.outlier_flags, u8, u8, 4, 4).try_into()
+        /// or because new variants of `CarrierPhaseOutlier` were added.
+        pub fn carrierphase_outlier(&self) -> Result<CarrierPhaseOutlier, u8> {
+            get_bit_range!(self.outlier_flags, u8, u8, 2, 2).try_into()
         }
 
-        /// Set the bitrange corresponding to the [MeasuredDopplerOutlier][MeasuredDopplerOutlier] of the `outlier_flags` bitfield.
-        pub fn set_measured_doppler_outlier(
-            &mut self,
-            measured_doppler_outlier: MeasuredDopplerOutlier,
-        ) {
-            set_bit_range!(
-                &mut self.outlier_flags,
-                measured_doppler_outlier,
-                u8,
-                u8,
-                4,
-                4
-            );
+        /// Set the bitrange corresponding to the [CarrierPhaseOutlier][CarrierPhaseOutlier] of the `outlier_flags` bitfield.
+        pub fn set_carrierphase_outlier(&mut self, carrierphase_outlier: CarrierPhaseOutlier) {
+            set_bit_range!(&mut self.outlier_flags, carrierphase_outlier, u8, u8, 2, 2);
+        }
+
+        /// Gets the [PseudorangeOutlier][self::PseudorangeOutlier] stored in the `outlier_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `PseudorangeOutlier` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `PseudorangeOutlier` were added.
+        pub fn pseudorange_outlier(&self) -> Result<PseudorangeOutlier, u8> {
+            get_bit_range!(self.outlier_flags, u8, u8, 1, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [PseudorangeOutlier][PseudorangeOutlier] of the `outlier_flags` bitfield.
+        pub fn set_pseudorange_outlier(&mut self, pseudorange_outlier: PseudorangeOutlier) {
+            set_bit_range!(&mut self.outlier_flags, pseudorange_outlier, u8, u8, 1, 0);
         }
 
         /// Gets the [ReasonForEphemerisInvalidity][self::ReasonForEphemerisInvalidity] stored in the `ephemeris_flags` bitfield.
@@ -448,35 +449,35 @@ pub mod telemetry_sv {
         }
     }
 
-    /// Pseudorange availability
+    /// Computed-Doppler availability
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum PseudorangeAvailability {
-        /// Pseudorange unavailable
-        PseudorangeUnavailable = 0,
+    pub enum ComputedDopplerAvailability {
+        /// Computed-Doppler unavailable
+        ComputedDopplerUnavailable = 0,
 
-        /// Pseudorange available
-        PseudorangeAvailable = 1,
+        /// Computed-Doppler available
+        ComputedDopplerAvailable = 1,
     }
 
-    impl std::fmt::Display for PseudorangeAvailability {
+    impl std::fmt::Display for ComputedDopplerAvailability {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                PseudorangeAvailability::PseudorangeUnavailable => {
-                    f.write_str("Pseudorange unavailable")
+                ComputedDopplerAvailability::ComputedDopplerUnavailable => {
+                    f.write_str("Computed-Doppler unavailable")
                 }
-                PseudorangeAvailability::PseudorangeAvailable => {
-                    f.write_str("Pseudorange available")
+                ComputedDopplerAvailability::ComputedDopplerAvailable => {
+                    f.write_str("Computed-Doppler available")
                 }
             }
         }
     }
 
-    impl TryFrom<u8> for PseudorangeAvailability {
+    impl TryFrom<u8> for ComputedDopplerAvailability {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(PseudorangeAvailability::PseudorangeUnavailable),
-                1 => Ok(PseudorangeAvailability::PseudorangeAvailable),
+                0 => Ok(ComputedDopplerAvailability::ComputedDopplerUnavailable),
+                1 => Ok(ComputedDopplerAvailability::ComputedDopplerAvailable),
                 i => Err(i),
             }
         }
@@ -516,106 +517,69 @@ pub mod telemetry_sv {
         }
     }
 
-    /// Computed-Doppler availability
+    /// Pseudorange availability
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum ComputedDopplerAvailability {
-        /// Computed-Doppler unavailable
-        ComputedDopplerUnavailable = 0,
+    pub enum PseudorangeAvailability {
+        /// Pseudorange unavailable
+        PseudorangeUnavailable = 0,
 
-        /// Computed-Doppler available
-        ComputedDopplerAvailable = 1,
+        /// Pseudorange available
+        PseudorangeAvailable = 1,
     }
 
-    impl std::fmt::Display for ComputedDopplerAvailability {
+    impl std::fmt::Display for PseudorangeAvailability {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                ComputedDopplerAvailability::ComputedDopplerUnavailable => {
-                    f.write_str("Computed-Doppler unavailable")
+                PseudorangeAvailability::PseudorangeUnavailable => {
+                    f.write_str("Pseudorange unavailable")
                 }
-                ComputedDopplerAvailability::ComputedDopplerAvailable => {
-                    f.write_str("Computed-Doppler available")
+                PseudorangeAvailability::PseudorangeAvailable => {
+                    f.write_str("Pseudorange available")
                 }
             }
         }
     }
 
-    impl TryFrom<u8> for ComputedDopplerAvailability {
+    impl TryFrom<u8> for PseudorangeAvailability {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(ComputedDopplerAvailability::ComputedDopplerUnavailable),
-                1 => Ok(ComputedDopplerAvailability::ComputedDopplerAvailable),
+                0 => Ok(PseudorangeAvailability::PseudorangeUnavailable),
+                1 => Ok(PseudorangeAvailability::PseudorangeAvailable),
                 i => Err(i),
             }
         }
     }
 
-    /// Pseudorange outlier
+    /// Measured-Doppler outlier
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum PseudorangeOutlier {
-        /// Pseudorange accepted
-        PseudorangeAccepted = 0,
+    pub enum MeasuredDopplerOutlier {
+        /// Measured-Doppler accepted
+        MeasuredDopplerAccepted = 0,
 
-        /// Pseudorange marked as outlier
-        PseudorangeMarkedAsOutlier = 1,
-
-        /// Pseudorange marked as major outlier
-        PseudorangeMarkedAsMajorOutlier = 2,
+        /// Measured-Doppler marked as outlier
+        MeasuredDopplerMarkedAsOutlier = 1,
     }
 
-    impl std::fmt::Display for PseudorangeOutlier {
+    impl std::fmt::Display for MeasuredDopplerOutlier {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                PseudorangeOutlier::PseudorangeAccepted => f.write_str("Pseudorange accepted"),
-                PseudorangeOutlier::PseudorangeMarkedAsOutlier => {
-                    f.write_str("Pseudorange marked as outlier")
+                MeasuredDopplerOutlier::MeasuredDopplerAccepted => {
+                    f.write_str("Measured-Doppler accepted")
                 }
-                PseudorangeOutlier::PseudorangeMarkedAsMajorOutlier => {
-                    f.write_str("Pseudorange marked as major outlier")
+                MeasuredDopplerOutlier::MeasuredDopplerMarkedAsOutlier => {
+                    f.write_str("Measured-Doppler marked as outlier")
                 }
             }
         }
     }
 
-    impl TryFrom<u8> for PseudorangeOutlier {
+    impl TryFrom<u8> for MeasuredDopplerOutlier {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(PseudorangeOutlier::PseudorangeAccepted),
-                1 => Ok(PseudorangeOutlier::PseudorangeMarkedAsOutlier),
-                2 => Ok(PseudorangeOutlier::PseudorangeMarkedAsMajorOutlier),
-                i => Err(i),
-            }
-        }
-    }
-
-    /// Carrier-phase outlier
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum CarrierPhaseOutlier {
-        /// Carrier-phase accepted
-        CarrierPhaseAccepted = 0,
-
-        /// Carrier-phase marked as outlier
-        CarrierPhaseMarkedAsOutlier = 1,
-    }
-
-    impl std::fmt::Display for CarrierPhaseOutlier {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            match self {
-                CarrierPhaseOutlier::CarrierPhaseAccepted => f.write_str("Carrier-phase accepted"),
-                CarrierPhaseOutlier::CarrierPhaseMarkedAsOutlier => {
-                    f.write_str("Carrier-phase marked as outlier")
-                }
-            }
-        }
-    }
-
-    impl TryFrom<u8> for CarrierPhaseOutlier {
-        type Error = u8;
-        fn try_from(i: u8) -> Result<Self, u8> {
-            match i {
-                0 => Ok(CarrierPhaseOutlier::CarrierPhaseAccepted),
-                1 => Ok(CarrierPhaseOutlier::CarrierPhaseMarkedAsOutlier),
+                0 => Ok(MeasuredDopplerOutlier::MeasuredDopplerAccepted),
+                1 => Ok(MeasuredDopplerOutlier::MeasuredDopplerMarkedAsOutlier),
                 i => Err(i),
             }
         }
@@ -655,35 +619,72 @@ pub mod telemetry_sv {
         }
     }
 
-    /// Measured-Doppler outlier
+    /// Carrier-phase outlier
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum MeasuredDopplerOutlier {
-        /// Measured-Doppler accepted
-        MeasuredDopplerAccepted = 0,
+    pub enum CarrierPhaseOutlier {
+        /// Carrier-phase accepted
+        CarrierPhaseAccepted = 0,
 
-        /// Measured-Doppler marked as outlier
-        MeasuredDopplerMarkedAsOutlier = 1,
+        /// Carrier-phase marked as outlier
+        CarrierPhaseMarkedAsOutlier = 1,
     }
 
-    impl std::fmt::Display for MeasuredDopplerOutlier {
+    impl std::fmt::Display for CarrierPhaseOutlier {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                MeasuredDopplerOutlier::MeasuredDopplerAccepted => {
-                    f.write_str("Measured-Doppler accepted")
-                }
-                MeasuredDopplerOutlier::MeasuredDopplerMarkedAsOutlier => {
-                    f.write_str("Measured-Doppler marked as outlier")
+                CarrierPhaseOutlier::CarrierPhaseAccepted => f.write_str("Carrier-phase accepted"),
+                CarrierPhaseOutlier::CarrierPhaseMarkedAsOutlier => {
+                    f.write_str("Carrier-phase marked as outlier")
                 }
             }
         }
     }
 
-    impl TryFrom<u8> for MeasuredDopplerOutlier {
+    impl TryFrom<u8> for CarrierPhaseOutlier {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(MeasuredDopplerOutlier::MeasuredDopplerAccepted),
-                1 => Ok(MeasuredDopplerOutlier::MeasuredDopplerMarkedAsOutlier),
+                0 => Ok(CarrierPhaseOutlier::CarrierPhaseAccepted),
+                1 => Ok(CarrierPhaseOutlier::CarrierPhaseMarkedAsOutlier),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Pseudorange outlier
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum PseudorangeOutlier {
+        /// Pseudorange accepted
+        PseudorangeAccepted = 0,
+
+        /// Pseudorange marked as outlier
+        PseudorangeMarkedAsOutlier = 1,
+
+        /// Pseudorange marked as major outlier
+        PseudorangeMarkedAsMajorOutlier = 2,
+    }
+
+    impl std::fmt::Display for PseudorangeOutlier {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                PseudorangeOutlier::PseudorangeAccepted => f.write_str("Pseudorange accepted"),
+                PseudorangeOutlier::PseudorangeMarkedAsOutlier => {
+                    f.write_str("Pseudorange marked as outlier")
+                }
+                PseudorangeOutlier::PseudorangeMarkedAsMajorOutlier => {
+                    f.write_str("Pseudorange marked as major outlier")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for PseudorangeOutlier {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(PseudorangeOutlier::PseudorangeAccepted),
+                1 => Ok(PseudorangeOutlier::PseudorangeMarkedAsOutlier),
+                2 => Ok(PseudorangeOutlier::PseudorangeMarkedAsMajorOutlier),
                 i => Err(i),
             }
         }

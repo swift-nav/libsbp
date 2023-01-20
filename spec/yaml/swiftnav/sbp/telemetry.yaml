@@ -23,23 +23,23 @@ definitions:
             type: u8
             desc: Observation availability at filter update
             fields:
-              - 0:
-                  desc: Pseudorange availability
-                  values:
-                    - 0: Pseudorange unavailable
-                    - 1: Pseudorange available
-              - 1:
-                  desc: Carrier-phase availability
-                  values:
-                    - 0: Carrier-phase unavailable
-                    - 1: Carrier-phase available
+              - 3-7:
+                  desc: Reserved
               - 2:
                   desc: Computed-Doppler availability
                   values:
                     - 0: Computed-Doppler unavailable
                     - 1: Computed-Doppler available
-              - 3-7:
-                  desc: Reserved
+              - 1:
+                  desc: Carrier-phase availability
+                  values:
+                    - 0: Carrier-phase unavailable
+                    - 1: Carrier-phase available
+              - 0:
+                  desc: Pseudorange availability
+                  values:
+                    - 0: Pseudorange unavailable
+                    - 1: Pseudorange available
         - pseudorange_residual:
             type: s16
             units: 1 dm
@@ -52,40 +52,40 @@ definitions:
             type: u8
             desc: Reports if observation is marked as an outlier and is excluded from the update.
             fields:
+              - 5-7:
+                  desc: Reserved
+              - 4:
+                  desc: Measured-Doppler outlier
+                  values:
+                    - 0: Measured-Doppler accepted
+                    - 1: Measured-Doppler marked as outlier
+              - 3:
+                  desc: Computed-Doppler outlier
+                  values:
+                    - 0: Computed-Doppler accepted
+                    - 1: Computed-Doppler marked as outlier
+              - 2:
+                  desc: Carrier-phase outlier
+                  values:
+                    - 0: Carrier-phase accepted
+                    - 1: Carrier-phase marked as outlier
               - 0-1:
                   desc: Pseudorange outlier
                   values:
                     - 0: Pseudorange accepted
                     - 1: Pseudorange marked as outlier
                     - 2: Pseudorange marked as major outlier
-              - 2:
-                  desc: Carrier-phase outlier
-                  values:
-                    - 0: Carrier-phase accepted
-                    - 1: Carrier-phase marked as outlier
-              - 3:
-                  desc: Computed-Doppler outlier
-                  values:
-                    - 0: Computed-Doppler accepted
-                    - 1: Computed-Doppler marked as outlier
-              - 4:
-                  desc: Measured-Doppler outlier
-                  values:
-                    - 0: Measured-Doppler accepted
-                    - 1: Measured-Doppler marked as outlier
-              - 5-7:
-                  desc: Reserved
         - ephemeris_flags:
             type: u8
             desc: Ephemeris metadata
             fields:
+              - 3-7:
+                  desc: Reserved
               - 0-2:
                   desc: Reason for ephemeris invalidity
                   values:
                     - 0: Valid
                     - 1: Invalid (general status, to be extended)
-              - 3-7:
-                  desc: Reserved
         - correction_flags:
             type: u8
             desc: Reserved
@@ -118,6 +118,7 @@ definitions:
             desc: Flags to identify Starling component the telemetry is reported from.
             fields:
               - 0-7:
+                  desc: Starling component
                   values:
                     - 0: Standalone
                     - 1: Differential

@@ -18,38 +18,6 @@
 #ifndef LIBSBP_TELEMETRY_MACROS_H
 #define LIBSBP_TELEMETRY_MACROS_H
 
-#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK (0x1u)
-#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT (0u)
-#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_GET(flags)               \
-  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT) & \
-        SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK))
-#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SET(flags, val)           \
-  do {                                                                     \
-    (flags) = (u8)(                                                        \
-        (flags & (~(SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK          \
-                    << SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT))) | \
-        (((val) & (SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK))         \
-         << (SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT)));            \
-  } while (0)
-
-#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_PSEUDORANGE_UNAVAILABLE (0)
-#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_PSEUDORANGE_AVAILABLE (1)
-#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK (0x1u)
-#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT (1u)
-#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_GET(flags)               \
-  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT) & \
-        SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK))
-#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SET(flags, val)           \
-  do {                                                                      \
-    (flags) = (u8)(                                                         \
-        (flags & (~(SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK          \
-                    << SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT))) | \
-        (((val) & (SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK))         \
-         << (SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT)));            \
-  } while (0)
-
-#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_CARRIER_PHASE_UNAVAILABLE (0)
-#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_CARRIER_PHASE_AVAILABLE (1)
 #define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_MASK (0x1u)
 #define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_SHIFT (2u)
 #define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_GET(flags)               \
@@ -68,6 +36,88 @@
   (0)
 #define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_COMPUTED_DOPPLER_AVAILABLE \
   (1)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK (0x1u)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT (1u)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT) & \
+        SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK))
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SET(flags, val)           \
+  do {                                                                      \
+    (flags) = (u8)(                                                         \
+        (flags & (~(SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK          \
+                    << SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT))) | \
+        (((val) & (SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_MASK))         \
+         << (SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_CARRIER_PHASE_UNAVAILABLE (0)
+#define SBP_TELEMETRYSV_CARRIERPHASE_AVAILABILITY_CARRIER_PHASE_AVAILABLE (1)
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK (0x1u)
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT (0u)
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT) & \
+        SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK))
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SET(flags, val)           \
+  do {                                                                     \
+    (flags) = (u8)(                                                        \
+        (flags & (~(SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK          \
+                    << SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT))) | \
+        (((val) & (SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_MASK))         \
+         << (SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_PSEUDORANGE_UNAVAILABLE (0)
+#define SBP_TELEMETRYSV_PSEUDORANGE_AVAILABILITY_PSEUDORANGE_AVAILABLE (1)
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK (0x1u)
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT (4u)
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT) & \
+        SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK))
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SET(flags, val)                \
+  do {                                                                         \
+    (flags) =                                                                  \
+        (u8)((flags & (~(SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK          \
+                         << SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT))) | \
+             (((val) & (SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK))         \
+              << (SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MEASURED_DOPPLER_ACCEPTED (0)
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MEASURED_DOPPLER_MARKED_AS_OUTLIER \
+  (1)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK (0x1u)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT (3u)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT) & \
+        SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK))
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SET(flags, val)                \
+  do {                                                                         \
+    (flags) =                                                                  \
+        (u8)((flags & (~(SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK          \
+                         << SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT))) | \
+             (((val) & (SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK))         \
+              << (SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_COMPUTED_DOPPLER_ACCEPTED (0)
+#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_COMPUTED_DOPPLER_MARKED_AS_OUTLIER \
+  (1)
+#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK (0x1u)
+#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT (2u)
+#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT) & \
+        SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK))
+#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SET(flags, val)                \
+  do {                                                                      \
+    (flags) =                                                               \
+        (u8)((flags & (~(SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK          \
+                         << SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT))) | \
+             (((val) & (SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK))         \
+              << (SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_CARRIER_PHASE_ACCEPTED (0)
+#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_CARRIER_PHASE_MARKED_AS_OUTLIER (1)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_MASK (0x3u)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_SHIFT (0u)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_GET(flags)               \
@@ -86,56 +136,6 @@
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_PSEUDORANGE_MARKED_AS_OUTLIER (1)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_PSEUDORANGE_MARKED_AS_MAJOR_OUTLIER \
   (2)
-#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK (0x1u)
-#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT (2u)
-#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_GET(flags)               \
-  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT) & \
-        SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK))
-#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SET(flags, val)                \
-  do {                                                                      \
-    (flags) =                                                               \
-        (u8)((flags & (~(SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK          \
-                         << SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT))) | \
-             (((val) & (SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_MASK))         \
-              << (SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_SHIFT)));            \
-  } while (0)
-
-#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_CARRIER_PHASE_ACCEPTED (0)
-#define SBP_TELEMETRYSV_CARRIERPHASE_OUTLIER_CARRIER_PHASE_MARKED_AS_OUTLIER (1)
-#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK (0x1u)
-#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT (3u)
-#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_GET(flags)               \
-  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT) & \
-        SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK))
-#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SET(flags, val)                \
-  do {                                                                         \
-    (flags) =                                                                  \
-        (u8)((flags & (~(SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK          \
-                         << SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT))) | \
-             (((val) & (SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_MASK))         \
-              << (SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_SHIFT)));            \
-  } while (0)
-
-#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_COMPUTED_DOPPLER_ACCEPTED (0)
-#define SBP_TELEMETRYSV_COMPUTEDDOPPLER_OUTLIER_COMPUTED_DOPPLER_MARKED_AS_OUTLIER \
-  (1)
-#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK (0x1u)
-#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT (4u)
-#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_GET(flags)               \
-  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT) & \
-        SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK))
-#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SET(flags, val)                \
-  do {                                                                         \
-    (flags) =                                                                  \
-        (u8)((flags & (~(SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK          \
-                         << SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT))) | \
-             (((val) & (SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MASK))         \
-              << (SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_SHIFT)));            \
-  } while (0)
-
-#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MEASURED_DOPPLER_ACCEPTED (0)
-#define SBP_TELEMETRYSV_MEASUREDDOPPLER_OUTLIER_MEASURED_DOPPLER_MARKED_AS_OUTLIER \
-  (1)
 #define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_MASK (0x7u)
 #define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_SHIFT (0u)
 #define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_GET(flags)             \
@@ -161,18 +161,21 @@
 #define SBP_TELEMETRY_SV_ENCODED_LEN 12u
 
 #define SBP_MSG_TEL_SV 0x0120
-#define SBP_TEL_SV__MASK (0xffu)
-#define SBP_TEL_SV__SHIFT (0u)
-#define SBP_TEL_SV__GET(flags) \
-  ((u8)((u8)((flags) >> SBP_TEL_SV__SHIFT) & SBP_TEL_SV__MASK))
-#define SBP_TEL_SV__SET(flags, val)                                        \
+#define SBP_TEL_SV_STARLING_COMPONENT_MASK (0xffu)
+#define SBP_TEL_SV_STARLING_COMPONENT_SHIFT (0u)
+#define SBP_TEL_SV_STARLING_COMPONENT_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TEL_SV_STARLING_COMPONENT_SHIFT) & \
+        SBP_TEL_SV_STARLING_COMPONENT_MASK))
+#define SBP_TEL_SV_STARLING_COMPONENT_SET(flags, val)                      \
   do {                                                                     \
-    (flags) = (u8)((flags & (~(SBP_TEL_SV__MASK << SBP_TEL_SV__SHIFT))) |  \
-                   (((val) & (SBP_TEL_SV__MASK)) << (SBP_TEL_SV__SHIFT))); \
+    (flags) = (u8)((flags & (~(SBP_TEL_SV_STARLING_COMPONENT_MASK          \
+                               << SBP_TEL_SV_STARLING_COMPONENT_SHIFT))) | \
+                   (((val) & (SBP_TEL_SV_STARLING_COMPONENT_MASK))         \
+                    << (SBP_TEL_SV_STARLING_COMPONENT_SHIFT)));            \
   } while (0)
 
-#define SBP_TEL_SV_STANDALONE (0)
-#define SBP_TEL_SV_DIFFERENTIAL (1)
+#define SBP_TEL_SV_STARLING_COMPONENT_STANDALONE (0)
+#define SBP_TEL_SV_STARLING_COMPONENT_DIFFERENTIAL (1)
 /**
  * The maximum number of items that can be stored in sbp_msg_tel_sv_t::sv_tel
  * (V4 API) or msg_tel_sv_t::sv_tel (legacy API) before the maximum SBP message
