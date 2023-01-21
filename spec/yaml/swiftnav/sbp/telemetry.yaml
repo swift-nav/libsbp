@@ -13,7 +13,7 @@ definitions:
       fields:
         - az:
             type: u8
-            units: deg * 2g
+            units: deg * 2
             desc: Azimuth angle (range 0..179)
         - el:
             type: s8
