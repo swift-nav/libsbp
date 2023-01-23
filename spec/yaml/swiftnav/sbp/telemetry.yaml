@@ -88,7 +88,7 @@ definitions:
                   desc: Ephemeris available
                   values:
                     - 0: Valid ephemeris available
-                    - 1: No valid ephemeris available (general status, to be extended in reserved fields)
+                    - 1: No valid ephemeris available (general status)
         - correction_flags:
             type: u8
             desc: Reserved
