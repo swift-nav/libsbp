@@ -62,7 +62,7 @@ typedef struct {
   u8 n_obs;
 
   /**
-   * Flags to identify Starling component the telemetry is reported from.
+   * Flags to identify the filter type from which the telemetry is reported from
    */
   u8 origin_flags;
 

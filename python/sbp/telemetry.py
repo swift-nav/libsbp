@@ -46,7 +46,7 @@ class TelemetrySV(object):
     Carrier-phase or carrier-phase-derived observation residual
   outlier_flags : int
     Reports if observation is marked as an outlier and is excluded from the
-    update.
+    update
   ephemeris_flags : int
     Ephemeris metadata
   correction_flags : int
@@ -123,7 +123,8 @@ class MsgTelSv(SBP):
     Total number of observations. First nibble is the size of the sequence
     (n), second nibble is the zero-indexed counter (ith packet of n)
   origin_flags : int
-    Flags to identify Starling component the telemetry is reported from.
+    Flags to identify the filter type from which the telemetry is reported
+    from
   sv_tel : array
     Array of per-signal telemetry entries
   sender : int

@@ -50,7 +50,7 @@ data TelemetrySV = TelemetrySV
     -- ^ Carrier-phase or carrier-phase-derived observation residual
   , _telemetrySV_outlier_flags      :: !Word8
     -- ^ Reports if observation is marked as an outlier and is excluded from the
-    -- update.
+    -- update
   , _telemetrySV_ephemeris_flags    :: !Word8
     -- ^ Ephemeris metadata
   , _telemetrySV_correction_flags   :: !Word8
@@ -102,7 +102,8 @@ data MsgTelSv = MsgTelSv
     -- ^ Total number of observations. First nibble is the size of the sequence
     -- (n), second nibble is the zero-indexed counter (ith packet of n)
   , _msgTelSv_origin_flags :: !Word8
-    -- ^ Flags to identify Starling component the telemetry is reported from.
+    -- ^ Flags to identify the filter type from which the telemetry is reported
+    -- from
   , _msgTelSv_sv_tel     :: ![TelemetrySV]
     -- ^ Array of per-signal telemetry entries
   } deriving ( Show, Read, Eq )

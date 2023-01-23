@@ -43,7 +43,7 @@ public class MsgTelSv extends SBPMessage {
      */
     public int n_obs;
 
-    /** Flags to identify Starling component the telemetry is reported from. */
+    /** Flags to identify the filter type from which the telemetry is reported from */
     public int origin_flags;
 
     /** Array of per-signal telemetry entries */

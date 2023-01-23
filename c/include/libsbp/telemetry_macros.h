@@ -18,6 +18,24 @@
 #ifndef LIBSBP_TELEMETRY_MACROS_H
 #define LIBSBP_TELEMETRY_MACROS_H
 
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_MASK (0x1u)
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_SHIFT (3u)
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_SHIFT) & \
+        SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_MASK))
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_SET(flags, val)           \
+  do {                                                                         \
+    (flags) = (u8)(                                                            \
+        (flags & (~(SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_MASK          \
+                    << SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_SHIFT))) | \
+        (((val) & (SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_MASK))         \
+         << (SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_SHIFT)));            \
+  } while (0)
+
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_MEASURED_DOPPLER_UNAVAILABLE \
+  (0)
+#define SBP_TELEMETRYSV_MEASUREDDOPPLER_AVAILABILITY_MEASURED_DOPPLER_AVAILABLE \
+  (1)
 #define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_MASK (0x1u)
 #define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_SHIFT (2u)
 #define SBP_TELEMETRYSV_COMPUTEDDOPPLER_AVAILABILITY_GET(flags)               \
@@ -136,24 +154,22 @@
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_PSEUDORANGE_MARKED_AS_OUTLIER (1)
 #define SBP_TELEMETRYSV_PSEUDORANGE_OUTLIER_PSEUDORANGE_MARKED_AS_MAJOR_OUTLIER \
   (2)
-#define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_MASK (0x7u)
-#define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_SHIFT (0u)
-#define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_GET(flags)             \
-  ((u8)(                                                                       \
-      (u8)((flags) >> SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_SHIFT) & \
-      SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_MASK))
-#define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_SET(flags, val)        \
-  do {                                                                         \
-    (flags) =                                                                  \
-        (u8)((flags &                                                          \
-              (~(SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_MASK          \
-                 << SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_SHIFT))) | \
-             (((val) & (SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_MASK)) \
-              << (SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_SHIFT)));    \
+#define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_MASK (0x1u)
+#define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_SHIFT (0u)
+#define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_SHIFT) & \
+        SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_MASK))
+#define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_SET(flags, val)                \
+  do {                                                                     \
+    (flags) =                                                              \
+        (u8)((flags & (~(SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_MASK          \
+                         << SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_SHIFT))) | \
+             (((val) & (SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_MASK))         \
+              << (SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_SHIFT)));            \
   } while (0)
 
-#define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_VALID (0)
-#define SBP_TELEMETRYSV_REASON_FOR_EPHEMERIS_INVALIDITY_INVALID (1)
+#define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_VALID_EPHEMERIS_AVAILABLE (0)
+#define SBP_TELEMETRYSV_EPHEMERIS_AVAILABLE_NO_VALID_EPHEMERIS_AVAILABLE (1)
 /**
  * Encoded length of sbp_telemetry_sv_t (V4 API) and
  * telemetry_sv_t (legacy API)
@@ -161,21 +177,21 @@
 #define SBP_TELEMETRY_SV_ENCODED_LEN 12u
 
 #define SBP_MSG_TEL_SV 0x0120
-#define SBP_TEL_SV_STARLING_COMPONENT_MASK (0xffu)
-#define SBP_TEL_SV_STARLING_COMPONENT_SHIFT (0u)
-#define SBP_TEL_SV_STARLING_COMPONENT_GET(flags)               \
-  ((u8)((u8)((flags) >> SBP_TEL_SV_STARLING_COMPONENT_SHIFT) & \
-        SBP_TEL_SV_STARLING_COMPONENT_MASK))
-#define SBP_TEL_SV_STARLING_COMPONENT_SET(flags, val)                      \
-  do {                                                                     \
-    (flags) = (u8)((flags & (~(SBP_TEL_SV_STARLING_COMPONENT_MASK          \
-                               << SBP_TEL_SV_STARLING_COMPONENT_SHIFT))) | \
-                   (((val) & (SBP_TEL_SV_STARLING_COMPONENT_MASK))         \
-                    << (SBP_TEL_SV_STARLING_COMPONENT_SHIFT)));            \
+#define SBP_TEL_SV_FILTER_TYPE_MASK (0xffu)
+#define SBP_TEL_SV_FILTER_TYPE_SHIFT (0u)
+#define SBP_TEL_SV_FILTER_TYPE_GET(flags)               \
+  ((u8)((u8)((flags) >> SBP_TEL_SV_FILTER_TYPE_SHIFT) & \
+        SBP_TEL_SV_FILTER_TYPE_MASK))
+#define SBP_TEL_SV_FILTER_TYPE_SET(flags, val)                      \
+  do {                                                              \
+    (flags) = (u8)((flags & (~(SBP_TEL_SV_FILTER_TYPE_MASK          \
+                               << SBP_TEL_SV_FILTER_TYPE_SHIFT))) | \
+                   (((val) & (SBP_TEL_SV_FILTER_TYPE_MASK))         \
+                    << (SBP_TEL_SV_FILTER_TYPE_SHIFT)));            \
   } while (0)
 
-#define SBP_TEL_SV_STARLING_COMPONENT_STANDALONE (0)
-#define SBP_TEL_SV_STARLING_COMPONENT_DIFFERENTIAL (1)
+#define SBP_TEL_SV_FILTER_TYPE_STANDALONE (0)
+#define SBP_TEL_SV_FILTER_TYPE_DIFFERENTIAL (1)
 /**
  * The maximum number of items that can be stored in sbp_msg_tel_sv_t::sv_tel
  * (V4 API) or msg_tel_sv_t::sv_tel (legacy API) before the maximum SBP message

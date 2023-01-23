@@ -41,7 +41,7 @@ extern "C" {
  *****************************************************************************/
 typedef struct {
   /**
-   * Azimuth angle (range 0..179) [deg * 2g]
+   * Azimuth angle (range 0..179) [deg * 2]
    */
   u8 az;
 
@@ -67,7 +67,7 @@ typedef struct {
 
   /**
    * Reports if observation is marked as an outlier and is excluded from the
-   * update.
+   * update
    */
   u8 outlier_flags;
 

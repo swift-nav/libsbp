@@ -33,14 +33,14 @@
 SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
-  u8 az;                    /**< Azimuth angle (range 0..179) [deg * 2g] */
+  u8 az;                    /**< Azimuth angle (range 0..179) [deg * 2] */
   s8 el;                    /**< Elevation angle (range -90..90) [deg] */
   u8 availability_flags;    /**< Observation availability at filter update */
   s16 pseudorange_residual; /**< Pseudorange observation residual [1 dm] */
   s16 phase_residual;       /**< Carrier-phase or carrier-phase-derived
                                  observation residual [5 mm] */
   u8 outlier_flags;         /**< Reports if observation is marked as an
-                                 outlier and is excluded from the update. */
+                                 outlier and is excluded from the update */
   u8 ephemeris_flags;       /**< Ephemeris metadata */
   u8 correction_flags;      /**< Reserved */
   sbp_gnss_signal_t sid;    /**< GNSS signal identifier (16
@@ -59,8 +59,8 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_obs;        /**< Total number of observations. First nibble is the
                         size of the sequence (n), second nibble is the
                         zero-indexed counter (ith packet of n) */
-  u8 origin_flags; /**< Flags to identify Starling component the telemetry
-                        is reported from. */
+  u8 origin_flags; /**< Flags to identify the filter type from which the
+                        telemetry is reported from */
   telemetry_sv_t sv_tel[0]; /**< Array of per-signal telemetry entries */
 } msg_tel_sv_t;
 

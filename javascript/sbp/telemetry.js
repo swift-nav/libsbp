@@ -42,7 +42,7 @@ let SvId = require("./gnss").SvId;
  * @field availability_flags number (unsigned 8-bit int, 1 byte) Observation availability at filter update
  * @field pseudorange_residual number (signed 16-bit int, 2 bytes) Pseudorange observation residual
  * @field phase_residual number (signed 16-bit int, 2 bytes) Carrier-phase or carrier-phase-derived observation residual
- * @field outlier_flags number (unsigned 8-bit int, 1 byte) Reports if observation is marked as an outlier and is excluded from the update.
+ * @field outlier_flags number (unsigned 8-bit int, 1 byte) Reports if observation is marked as an outlier and is excluded from the update
  * @field ephemeris_flags number (unsigned 8-bit int, 1 byte) Ephemeris metadata
  * @field correction_flags number (unsigned 8-bit int, 1 byte) Reserved
  * @field sid GnssSignal GNSS signal identifier (16 bit)
@@ -92,7 +92,7 @@ TelemetrySV.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
  * @field n_obs number (unsigned 8-bit int, 1 byte) Total number of observations. First nibble is the size of the sequence (n),
  *   second nibble is the zero-indexed counter (ith packet of n)
- * @field origin_flags number (unsigned 8-bit int, 1 byte) Flags to identify Starling component the telemetry is reported from.
+ * @field origin_flags number (unsigned 8-bit int, 1 byte) Flags to identify the filter type from which the telemetry is reported from
  * @field sv_tel array Array of per-signal telemetry entries
  *
  * @param sbp An SBP object with a payload to be decoded.

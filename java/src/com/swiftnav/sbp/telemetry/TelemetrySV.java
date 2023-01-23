@@ -37,7 +37,7 @@ public class TelemetrySV extends SBPStruct {
     /** Carrier-phase or carrier-phase-derived observation residual */
     public int phase_residual;
 
-    /** Reports if observation is marked as an outlier and is excluded from the update. */
+    /** Reports if observation is marked as an outlier and is excluded from the update */
     public int outlier_flags;
 
     /** Ephemeris metadata */

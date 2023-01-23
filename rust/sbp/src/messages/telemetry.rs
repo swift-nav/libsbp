@@ -47,7 +47,8 @@ pub mod msg_tel_sv {
         /// (n), second nibble is the zero-indexed counter (ith packet of n)
         #[cfg_attr(feature = "serde", serde(rename = "n_obs"))]
         pub n_obs: u8,
-        /// Flags to identify Starling component the telemetry is reported from.
+        /// Flags to identify the filter type from which the telemetry is reported
+        /// from
         #[cfg_attr(feature = "serde", serde(rename = "origin_flags"))]
         pub origin_flags: u8,
         /// Array of per-signal telemetry entries
@@ -56,18 +57,18 @@ pub mod msg_tel_sv {
     }
 
     impl MsgTelSv {
-        /// Gets the [StarlingComponent][self::StarlingComponent] stored in the `origin_flags` bitfield.
+        /// Gets the [FilterType][self::FilterType] stored in the `origin_flags` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `StarlingComponent` variant.
+        /// Returns `Ok` if the bitrange contains a known `FilterType` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `StarlingComponent` were added.
-        pub fn starling_component(&self) -> Result<StarlingComponent, u8> {
+        /// or because new variants of `FilterType` were added.
+        pub fn filter_type(&self) -> Result<FilterType, u8> {
             get_bit_range!(self.origin_flags, u8, u8, 7, 0).try_into()
         }
 
-        /// Set the bitrange corresponding to the [StarlingComponent][StarlingComponent] of the `origin_flags` bitfield.
-        pub fn set_starling_component(&mut self, starling_component: StarlingComponent) {
-            set_bit_range!(&mut self.origin_flags, starling_component, u8, u8, 7, 0);
+        /// Set the bitrange corresponding to the [FilterType][FilterType] of the `origin_flags` bitfield.
+        pub fn set_filter_type(&mut self, filter_type: FilterType) {
+            set_bit_range!(&mut self.origin_flags, filter_type, u8, u8, 7, 0);
         }
     }
 
@@ -156,9 +157,9 @@ pub mod msg_tel_sv {
         }
     }
 
-    /// Starling component
+    /// Filter type
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum StarlingComponent {
+    pub enum FilterType {
         /// Standalone
         Standalone = 0,
 
@@ -166,21 +167,21 @@ pub mod msg_tel_sv {
         Differential = 1,
     }
 
-    impl std::fmt::Display for StarlingComponent {
+    impl std::fmt::Display for FilterType {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                StarlingComponent::Standalone => f.write_str("Standalone"),
-                StarlingComponent::Differential => f.write_str("Differential"),
+                FilterType::Standalone => f.write_str("Standalone"),
+                FilterType::Differential => f.write_str("Differential"),
             }
         }
     }
 
-    impl TryFrom<u8> for StarlingComponent {
+    impl TryFrom<u8> for FilterType {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(StarlingComponent::Standalone),
-                1 => Ok(StarlingComponent::Differential),
+                0 => Ok(FilterType::Standalone),
+                1 => Ok(FilterType::Differential),
                 i => Err(i),
             }
         }
@@ -214,7 +215,7 @@ pub mod telemetry_sv {
         #[cfg_attr(feature = "serde", serde(rename = "phase_residual"))]
         pub phase_residual: i16,
         /// Reports if observation is marked as an outlier and is excluded from the
-        /// update.
+        /// update
         #[cfg_attr(feature = "serde", serde(rename = "outlier_flags"))]
         pub outlier_flags: u8,
         /// Ephemeris metadata
@@ -229,6 +230,30 @@ pub mod telemetry_sv {
     }
 
     impl TelemetrySV {
+        /// Gets the [MeasuredDopplerAvailability][self::MeasuredDopplerAvailability] stored in the `availability_flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `MeasuredDopplerAvailability` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `MeasuredDopplerAvailability` were added.
+        pub fn measured_doppler_availability(&self) -> Result<MeasuredDopplerAvailability, u8> {
+            get_bit_range!(self.availability_flags, u8, u8, 3, 3).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [MeasuredDopplerAvailability][MeasuredDopplerAvailability] of the `availability_flags` bitfield.
+        pub fn set_measured_doppler_availability(
+            &mut self,
+            measured_doppler_availability: MeasuredDopplerAvailability,
+        ) {
+            set_bit_range!(
+                &mut self.availability_flags,
+                measured_doppler_availability,
+                u8,
+                u8,
+                3,
+                3
+            );
+        }
+
         /// Gets the [ComputedDopplerAvailability][self::ComputedDopplerAvailability] stored in the `availability_flags` bitfield.
         ///
         /// Returns `Ok` if the bitrange contains a known `ComputedDopplerAvailability` variant.
@@ -377,28 +402,18 @@ pub mod telemetry_sv {
             set_bit_range!(&mut self.outlier_flags, pseudorange_outlier, u8, u8, 1, 0);
         }
 
-        /// Gets the [ReasonForEphemerisInvalidity][self::ReasonForEphemerisInvalidity] stored in the `ephemeris_flags` bitfield.
+        /// Gets the [EphemerisAvailable][self::EphemerisAvailable] stored in the `ephemeris_flags` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `ReasonForEphemerisInvalidity` variant.
+        /// Returns `Ok` if the bitrange contains a known `EphemerisAvailable` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `ReasonForEphemerisInvalidity` were added.
-        pub fn reason_for_ephemeris_invalidity(&self) -> Result<ReasonForEphemerisInvalidity, u8> {
-            get_bit_range!(self.ephemeris_flags, u8, u8, 2, 0).try_into()
+        /// or because new variants of `EphemerisAvailable` were added.
+        pub fn ephemeris_available(&self) -> Result<EphemerisAvailable, u8> {
+            get_bit_range!(self.ephemeris_flags, u8, u8, 0, 0).try_into()
         }
 
-        /// Set the bitrange corresponding to the [ReasonForEphemerisInvalidity][ReasonForEphemerisInvalidity] of the `ephemeris_flags` bitfield.
-        pub fn set_reason_for_ephemeris_invalidity(
-            &mut self,
-            reason_for_ephemeris_invalidity: ReasonForEphemerisInvalidity,
-        ) {
-            set_bit_range!(
-                &mut self.ephemeris_flags,
-                reason_for_ephemeris_invalidity,
-                u8,
-                u8,
-                2,
-                0
-            );
+        /// Set the bitrange corresponding to the [EphemerisAvailable][EphemerisAvailable] of the `ephemeris_flags` bitfield.
+        pub fn set_ephemeris_available(&mut self, ephemeris_available: EphemerisAvailable) {
+            set_bit_range!(&mut self.ephemeris_flags, ephemeris_available, u8, u8, 0, 0);
         }
     }
 
@@ -445,6 +460,40 @@ pub mod telemetry_sv {
                 ephemeris_flags: WireFormat::parse_unchecked(buf),
                 correction_flags: WireFormat::parse_unchecked(buf),
                 sid: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// Measured-Doppler availability
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum MeasuredDopplerAvailability {
+        /// Measured-Doppler unavailable
+        MeasuredDopplerUnavailable = 0,
+
+        /// Measured-Doppler available
+        MeasuredDopplerAvailable = 1,
+    }
+
+    impl std::fmt::Display for MeasuredDopplerAvailability {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                MeasuredDopplerAvailability::MeasuredDopplerUnavailable => {
+                    f.write_str("Measured-Doppler unavailable")
+                }
+                MeasuredDopplerAvailability::MeasuredDopplerAvailable => {
+                    f.write_str("Measured-Doppler available")
+                }
+            }
+        }
+    }
+
+    impl TryFrom<u8> for MeasuredDopplerAvailability {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(MeasuredDopplerAvailability::MeasuredDopplerUnavailable),
+                1 => Ok(MeasuredDopplerAvailability::MeasuredDopplerAvailable),
+                i => Err(i),
             }
         }
     }
@@ -690,33 +739,35 @@ pub mod telemetry_sv {
         }
     }
 
-    /// Reason for ephemeris invalidity
+    /// Ephemeris available
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum ReasonForEphemerisInvalidity {
-        /// Valid
-        Valid = 0,
+    pub enum EphemerisAvailable {
+        /// Valid ephemeris available
+        ValidEphemerisAvailable = 0,
 
-        /// Invalid (general status, to be extended)
-        Invalid = 1,
+        /// No valid ephemeris available (general status)
+        NoValidEphemerisAvailable = 1,
     }
 
-    impl std::fmt::Display for ReasonForEphemerisInvalidity {
+    impl std::fmt::Display for EphemerisAvailable {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                ReasonForEphemerisInvalidity::Valid => f.write_str("Valid"),
-                ReasonForEphemerisInvalidity::Invalid => {
-                    f.write_str("Invalid (general status, to be extended)")
+                EphemerisAvailable::ValidEphemerisAvailable => {
+                    f.write_str("Valid ephemeris available")
+                }
+                EphemerisAvailable::NoValidEphemerisAvailable => {
+                    f.write_str("No valid ephemeris available (general status)")
                 }
             }
         }
     }
 
-    impl TryFrom<u8> for ReasonForEphemerisInvalidity {
+    impl TryFrom<u8> for EphemerisAvailable {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(ReasonForEphemerisInvalidity::Valid),
-                1 => Ok(ReasonForEphemerisInvalidity::Invalid),
+                0 => Ok(EphemerisAvailable::ValidEphemerisAvailable),
+                1 => Ok(EphemerisAvailable::NoValidEphemerisAvailable),
                 i => Err(i),
             }
         }
