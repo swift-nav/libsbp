@@ -1,0 +1,10 @@
+files:
+  'docs/sbp.pdf':
+    - swiftnav-adam
+  'spec/yaml/swiftnav/sbp/*.yaml':
+    - swiftnav-adam
+
+options:
+  ignore_draft: true
+  ignored_keywords:
+    - DO NOT REVIEW
