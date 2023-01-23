@@ -247,6 +247,3 @@ definitions:
             fill: AcqSvProfileDep
             desc: SV profiles during acquisition time
 
-
-
-# test change to trigger CI
