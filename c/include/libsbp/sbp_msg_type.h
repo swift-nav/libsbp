@@ -40,6 +40,7 @@
 #include <libsbp/solution_meta_macros.h>
 #include <libsbp/ssr_macros.h>
 #include <libsbp/system_macros.h>
+#include <libsbp/telemetry_macros.h>
 #include <libsbp/tracking_macros.h>
 #include <libsbp/user_macros.h>
 #include <libsbp/vehicle_macros.h>
@@ -250,6 +251,7 @@ typedef enum {
   SbpMsgStmUniqueIdResp = SBP_MSG_STM_UNIQUE_ID_RESP,
   SbpMsgSvAzEl = SBP_MSG_SV_AZ_EL,
   SbpMsgSvConfigurationGpsDep = SBP_MSG_SV_CONFIGURATION_GPS_DEP,
+  SbpMsgTelSv = SBP_MSG_TEL_SV,
   SbpMsgThreadState = SBP_MSG_THREAD_STATE,
   SbpMsgTrackingIqDepA = SBP_MSG_TRACKING_IQ_DEP_A,
   SbpMsgTrackingIqDepB = SBP_MSG_TRACKING_IQ_DEP_B,

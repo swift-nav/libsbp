@@ -45,6 +45,7 @@
 #include <libsbp/v4/solution_meta.h>
 #include <libsbp/v4/ssr.h>
 #include <libsbp/v4/system.h>
+#include <libsbp/v4/telemetry.h>
 #include <libsbp/v4/tracking.h>
 #include <libsbp/v4/user.h>
 #include <libsbp/v4/vehicle.h>
@@ -256,6 +257,7 @@ typedef union {
   sbp_msg_stm_unique_id_resp_t stm_unique_id_resp;
   sbp_msg_sv_az_el_t sv_az_el;
   sbp_msg_sv_configuration_gps_dep_t sv_configuration_gps_dep;
+  sbp_msg_tel_sv_t tel_sv;
   sbp_msg_thread_state_t thread_state;
   sbp_msg_tracking_iq_dep_a_t tracking_iq_dep_a;
   sbp_msg_tracking_iq_dep_b_t tracking_iq_dep_b;
@@ -839,6 +841,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_encode(
           buf, len, n_written, &msg->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_encode(buf, len, n_written, &msg->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_encode(buf, len, n_written,
                                          &msg->thread_state);
@@ -1465,6 +1469,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_decode(
           buf, len, n_read, &msg->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_decode(buf, len, n_read, &msg->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_decode(buf, len, n_read, &msg->thread_state);
     case SbpMsgTrackingIqDepA:
@@ -1990,6 +1996,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_encoded_len(
           &msg->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_encoded_len(&msg->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_encoded_len(&msg->thread_state);
     case SbpMsgTrackingIqDepA:
@@ -2573,6 +2581,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_cmp(&a->sv_configuration_gps_dep,
                                                   &b->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_cmp(&a->tel_sv, &b->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_cmp(&a->thread_state, &b->thread_state);
     case SbpMsgTrackingIqDepA:

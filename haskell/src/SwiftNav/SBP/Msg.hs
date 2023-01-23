@@ -46,6 +46,7 @@ import SwiftNav.SBP.Signing
 import SwiftNav.SBP.SolutionMeta
 import SwiftNav.SBP.Ssr
 import SwiftNav.SBP.System
+import SwiftNav.SBP.Telemetry
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
 import SwiftNav.SBP.Vehicle
@@ -253,6 +254,7 @@ data SBPMsg =
    | SBPMsgStmUniqueIdResp MsgStmUniqueIdResp Msg
    | SBPMsgSvAzEl MsgSvAzEl Msg
    | SBPMsgSvConfigurationGpsDep MsgSvConfigurationGpsDep Msg
+   | SBPMsgTelSv MsgTelSv Msg
    | SBPMsgThreadState MsgThreadState Msg
    | SBPMsgTrackingIq MsgTrackingIq Msg
    | SBPMsgTrackingIqDepA MsgTrackingIqDepA Msg
@@ -490,6 +492,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSvAzEl = SBPMsgSvAzEl (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTelSv = SBPMsgTelSv (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingIqDepA = SBPMsgTrackingIqDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -719,6 +722,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgStmUniqueIdResp _ m) = put m
       encoder (SBPMsgSvAzEl _ m) = put m
       encoder (SBPMsgSvConfigurationGpsDep _ m) = put m
+      encoder (SBPMsgTelSv _ m) = put m
       encoder (SBPMsgThreadState _ m) = put m
       encoder (SBPMsgTrackingIq _ m) = put m
       encoder (SBPMsgTrackingIqDepA _ m) = put m
@@ -952,6 +956,7 @@ instance FromJSON SBPMsg where
         | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSvAzEl = SBPMsgSvAzEl <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTelSv = SBPMsgTelSv <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgThreadState = SBPMsgThreadState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingIq = SBPMsgTrackingIq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingIqDepA = SBPMsgTrackingIqDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1186,6 +1191,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgStmUniqueIdResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSvAzEl n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSvConfigurationGpsDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTelSv n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgThreadState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingIq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingIqDepA n m) = toJSON n <<>> toJSON m
@@ -1414,6 +1420,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgStmUniqueIdResp n m) = SBPMsgStmUniqueIdResp n <$> f m
   msg f (SBPMsgSvAzEl n m) = SBPMsgSvAzEl n <$> f m
   msg f (SBPMsgSvConfigurationGpsDep n m) = SBPMsgSvConfigurationGpsDep n <$> f m
+  msg f (SBPMsgTelSv n m) = SBPMsgTelSv n <$> f m
   msg f (SBPMsgThreadState n m) = SBPMsgThreadState n <$> f m
   msg f (SBPMsgTrackingIq n m) = SBPMsgTrackingIq n <$> f m
   msg f (SBPMsgTrackingIqDepA n m) = SBPMsgTrackingIqDepA n <$> f m
