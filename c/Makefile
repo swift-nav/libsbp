@@ -4,12 +4,6 @@ do-all-unit-tests:
 do-all-integration-tests:
 	bazel test --test_tag_filters=integration --test_output=all //...
 
-clang-format-all-check:
-	bazel build //... --config=clang-format-check
-
-clang-format-all:
-	bazel run @rules_swiftnav//clang_format
-
 clang-tidy-all-check:
 	bazel build //... --config=clang-tidy
 
