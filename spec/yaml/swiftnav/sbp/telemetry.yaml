@@ -23,8 +23,13 @@ definitions:
             type: u8
             desc: Observation availability at filter update
             fields:
-              - 3-7:
+              - 4-7:
                   desc: Reserved
+              - 3:
+                  desc: Measured-Doppler availability
+                  values:
+                    - 0: Measured-Doppler unavailable
+                    - 1: Measured-Doppler available
               - 2:
                   desc: Computed-Doppler availability
                   values:
@@ -50,7 +55,7 @@ definitions:
             desc: Carrier-phase or carrier-phase-derived observation residual
         - outlier_flags:
             type: u8
-            desc: Reports if observation is marked as an outlier and is excluded from the update.
+            desc: Reports if observation is marked as an outlier and is excluded from the update
             fields:
               - 5-7:
                   desc: Reserved
@@ -79,13 +84,13 @@ definitions:
             type: u8
             desc: Ephemeris metadata
             fields:
-              - 3-7:
+              - 1-7:
                   desc: Reserved
-              - 0-2:
-                  desc: Reason for ephemeris invalidity
+              - 0:
+                  desc: Ephemeris available
                   values:
-                    - 0: Valid
-                    - 1: Invalid (general status, to be extended)
+                    - 0: Valid ephemeris available
+                    - 1: No valid ephemeris available (general status, to be extended in reserved fields)
         - correction_flags:
             type: u8
             desc: Reserved
@@ -97,7 +102,7 @@ definitions:
       id: 0x0120
       short_desc: Per-signal telemetry
       desc: >
-        This message includes telemetry pertinent to satellite signals available to Starling.
+        This message includes telemetry pertinent to satellite signals available to Starling
       fields:
         - wn:
             type: u16
@@ -115,10 +120,10 @@ definitions:
               counter (ith packet of n)
         - origin_flags:
             type: u8
-            desc: Flags to identify Starling component the telemetry is reported from.
+            desc: Flags to identify the filter type from which the telemetry is reported from
             fields:
               - 0-7:
-                  desc: Starling component
+                  desc: Filter type
                   values:
                     - 0: Standalone
                     - 1: Differential
