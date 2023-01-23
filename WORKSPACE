@@ -4,8 +4,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "rules_swiftnav",
-    strip_prefix = "rules_swiftnav-e59de2d94814156ab50b467f562c8bb29beffc3c",
-    url = "https://github.com/swift-nav/rules_swiftnav/archive/e59de2d94814156ab50b467f562c8bb29beffc3c.tar.gz"
+    strip_prefix = "rules_swiftnav-edb32932741b965bde9816fa85c05f2fb3d2699a",
+    url = "https://github.com/swift-nav/rules_swiftnav/archive/edb32932741b965bde9816fa85c05f2fb3d2699a.tar.gz"
 )
 
 http_archive(
