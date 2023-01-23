@@ -1,7 +1,5 @@
 package: swiftnav.sbp.telemetry
-description: Telemetry messages reported by Starling engine.
-  The messages include various byproducts of state estimation and other logic across Starling
-  and are aimed at efficient issue diagnostics.
+description: Telemetry messages reported by Starling engine. The messages include various byproducts of state estimation and other logic across Starling and are aimed at efficient issue diagnostics.
 stable: False
 public: True
 include:
@@ -102,7 +100,7 @@ definitions:
       id: 0x0120
       short_desc: Per-signal telemetry
       desc: >
-        This message includes telemetry pertinent to satellite signals available to Starling
+        This message includes telemetry pertinent to satellite signals available to Starling.
       fields:
         - wn:
             type: u16
