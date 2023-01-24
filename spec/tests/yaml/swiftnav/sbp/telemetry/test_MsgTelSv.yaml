@@ -3,8 +3,6 @@ generated_on: '2023-01-24 17:13:58.473801'
 package: sbp.telemetry
 tests:
 - msg:
-#    c_decoded_fields:
-#      n_obs: 1
     fields:
       n_obs: 16
       origin_flags: 1
