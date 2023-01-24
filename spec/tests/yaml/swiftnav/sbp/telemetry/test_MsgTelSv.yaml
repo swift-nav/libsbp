@@ -1,0 +1,51 @@
+description: Unit tests for swiftnav.sbp.telemetry MsgTelSv
+generated_on: '2023-01-24 11:02:20.930599'
+package: sbp.telemetry
+tests:
+- msg:
+    fields:
+      n_obs: 2
+      origin_flags: 0
+      sv_tel:
+      - availability_flags: 5
+        az: 29
+        correction_flags: 0
+        el: 64
+        ephemeris_flags: 0
+        outlier_flags: 0
+        phase_residual: 1
+        pseudorange_residual: 11
+        sid:
+          code: 12
+          sat: 28
+      - availability_flags: 5
+        az: 31
+        correction_flags: 0
+        el: 22
+        ephemeris_flags: 0
+        outlier_flags: 0
+        phase_residual: 2
+        pseudorange_residual: 1
+        sid:
+          code: 26
+          sat: 9
+      tow: 345689
+      wn: 2223
+    module: sbp.telemetry
+    name: MsgTelSv
+  msg_type: '0x120'
+  raw_json: '{"preamble": 85, "msg_type": 288, "sender": 4096, "length": 32, "payload":
+    "rwhZRgUAAgAdQAULAAEAAAAAHAwfFgUBAAIAAAAACRo=", "crc": 53077, "wn": 2223, "tow":
+    345689, "n_obs": 2, "origin_flags": 0, "sv_tel": [{"az": 29, "el": 64, "availability_flags":
+    5, "pseudorange_residual": 11, "phase_residual": 1, "outlier_flags": 0, "ephemeris_flags":
+    0, "correction_flags": 0, "sid": {"sat": 28, "code": 12}}, {"az": 31, "el": 22,
+    "availability_flags": 5, "pseudorange_residual": 1, "phase_residual": 2, "outlier_flags":
+    0, "ephemeris_flags": 0, "correction_flags": 0, "sid": {"sat": 9, "code": 26}}]}'
+  raw_packet: VSABABAgrwhZRgUAAgAdQAULAAEAAAAAHAwfFgUBAAIAAAAACRpVzw==
+  sbp:
+    crc: '0xCF55'
+    length: 32
+    msg_type: '0x120'
+    payload: rwhZRgUAAgAdQAULAAEAAAAAHAwfFgUBAAIAAAAACRo=
+    preamble: '0x55'
+    sender: '0x1000'
