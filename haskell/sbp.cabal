@@ -47,6 +47,7 @@ library
                      , SwiftNav.SBP.SolutionMeta
                      , SwiftNav.SBP.Ssr
                      , SwiftNav.SBP.System
+                     , SwiftNav.SBP.Telemetry
                      , SwiftNav.SBP.Tracking
                      , SwiftNav.SBP.User
                      , SwiftNav.SBP.Vehicle

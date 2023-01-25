@@ -30,6 +30,7 @@ pub mod signing;
 pub mod solution_meta;
 pub mod ssr;
 pub mod system;
+pub mod telemetry;
 pub mod tracking;
 pub mod unknown;
 pub mod user;
@@ -248,6 +249,7 @@ use self::system::msg_sensor_aid_event::MsgSensorAidEvent;
 use self::system::msg_startup::MsgStartup;
 use self::system::msg_status_journal::MsgStatusJournal;
 use self::system::msg_status_report::MsgStatusReport;
+use self::telemetry::msg_tel_sv::MsgTelSv;
 use self::tracking::msg_measurement_state::MsgMeasurementState;
 use self::tracking::msg_tracking_iq::MsgTrackingIq;
 use self::tracking::msg_tracking_iq_dep_a::MsgTrackingIqDepA;
@@ -595,6 +597,8 @@ pub enum Sbp {
     MsgGpsTimeGnss(MsgGpsTimeGnss),
     /// UTC Time
     MsgUtcTimeGnss(MsgUtcTimeGnss),
+    /// Per-signal telemetry
+    MsgTelSv(MsgTelSv),
     /// Register setting and default value (device <= host)
     MsgSettingsRegisterResp(MsgSettingsRegisterResp),
     /// Single-point position in ECEF
@@ -1190,6 +1194,9 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             }
             Some(MsgUtcTimeGnss::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgUtcTimeGnss>(value).map(Sbp::MsgUtcTimeGnss)
+            }
+            Some(MsgTelSv::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgTelSv>(value).map(Sbp::MsgTelSv)
             }
             Some(MsgSettingsRegisterResp::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgSettingsRegisterResp>(value)
@@ -2159,6 +2166,11 @@ impl Sbp {
                 msg.set_sender_id(sender_id);
                 Ok(Sbp::MsgUtcTimeGnss(msg))
             }
+            MsgTelSv::MESSAGE_TYPE => {
+                let mut msg = MsgTelSv::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgTelSv(msg))
+            }
             MsgSettingsRegisterResp::MESSAGE_TYPE => {
                 let mut msg = MsgSettingsRegisterResp::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
@@ -2837,6 +2849,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgUtcTime(msg) => msg.message_name(),
             Sbp::MsgGpsTimeGnss(msg) => msg.message_name(),
             Sbp::MsgUtcTimeGnss(msg) => msg.message_name(),
+            Sbp::MsgTelSv(msg) => msg.message_name(),
             Sbp::MsgSettingsRegisterResp(msg) => msg.message_name(),
             Sbp::MsgPosEcefDepA(msg) => msg.message_name(),
             Sbp::MsgPosLlhDepA(msg) => msg.message_name(),
@@ -3069,6 +3082,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgUtcTime(msg) => msg.message_type(),
             Sbp::MsgGpsTimeGnss(msg) => msg.message_type(),
             Sbp::MsgUtcTimeGnss(msg) => msg.message_type(),
+            Sbp::MsgTelSv(msg) => msg.message_type(),
             Sbp::MsgSettingsRegisterResp(msg) => msg.message_type(),
             Sbp::MsgPosEcefDepA(msg) => msg.message_type(),
             Sbp::MsgPosLlhDepA(msg) => msg.message_type(),
@@ -3301,6 +3315,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgUtcTime(msg) => msg.sender_id(),
             Sbp::MsgGpsTimeGnss(msg) => msg.sender_id(),
             Sbp::MsgUtcTimeGnss(msg) => msg.sender_id(),
+            Sbp::MsgTelSv(msg) => msg.sender_id(),
             Sbp::MsgSettingsRegisterResp(msg) => msg.sender_id(),
             Sbp::MsgPosEcefDepA(msg) => msg.sender_id(),
             Sbp::MsgPosLlhDepA(msg) => msg.sender_id(),
@@ -3533,6 +3548,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgUtcTime(msg) => msg.set_sender_id(new_id),
             Sbp::MsgGpsTimeGnss(msg) => msg.set_sender_id(new_id),
             Sbp::MsgUtcTimeGnss(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgTelSv(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSettingsRegisterResp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPosEcefDepA(msg) => msg.set_sender_id(new_id),
             Sbp::MsgPosLlhDepA(msg) => msg.set_sender_id(new_id),
@@ -3765,6 +3781,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgUtcTime(msg) => msg.encoded_len(),
             Sbp::MsgGpsTimeGnss(msg) => msg.encoded_len(),
             Sbp::MsgUtcTimeGnss(msg) => msg.encoded_len(),
+            Sbp::MsgTelSv(msg) => msg.encoded_len(),
             Sbp::MsgSettingsRegisterResp(msg) => msg.encoded_len(),
             Sbp::MsgPosEcefDepA(msg) => msg.encoded_len(),
             Sbp::MsgPosLlhDepA(msg) => msg.encoded_len(),
@@ -4000,6 +4017,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgUtcTime(msg) => msg.gps_time(),
             Sbp::MsgGpsTimeGnss(msg) => msg.gps_time(),
             Sbp::MsgUtcTimeGnss(msg) => msg.gps_time(),
+            Sbp::MsgTelSv(msg) => msg.gps_time(),
             Sbp::MsgSettingsRegisterResp(msg) => msg.gps_time(),
             Sbp::MsgPosEcefDepA(msg) => msg.gps_time(),
             Sbp::MsgPosLlhDepA(msg) => msg.gps_time(),
@@ -4232,6 +4250,7 @@ impl SbpMessage for Sbp {
             Sbp::MsgUtcTime(msg) => msg.friendly_name(),
             Sbp::MsgGpsTimeGnss(msg) => msg.friendly_name(),
             Sbp::MsgUtcTimeGnss(msg) => msg.friendly_name(),
+            Sbp::MsgTelSv(msg) => msg.friendly_name(),
             Sbp::MsgSettingsRegisterResp(msg) => msg.friendly_name(),
             Sbp::MsgPosEcefDepA(msg) => msg.friendly_name(),
             Sbp::MsgPosLlhDepA(msg) => msg.friendly_name(),
@@ -4472,6 +4491,7 @@ impl WireFormat for Sbp {
             Sbp::MsgUtcTime(msg) => WireFormat::write(msg, buf),
             Sbp::MsgGpsTimeGnss(msg) => WireFormat::write(msg, buf),
             Sbp::MsgUtcTimeGnss(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgTelSv(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSettingsRegisterResp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPosEcefDepA(msg) => WireFormat::write(msg, buf),
             Sbp::MsgPosLlhDepA(msg) => WireFormat::write(msg, buf),
@@ -4704,6 +4724,7 @@ impl WireFormat for Sbp {
             Sbp::MsgUtcTime(msg) => WireFormat::len(msg),
             Sbp::MsgGpsTimeGnss(msg) => WireFormat::len(msg),
             Sbp::MsgUtcTimeGnss(msg) => WireFormat::len(msg),
+            Sbp::MsgTelSv(msg) => WireFormat::len(msg),
             Sbp::MsgSettingsRegisterResp(msg) => WireFormat::len(msg),
             Sbp::MsgPosEcefDepA(msg) => WireFormat::len(msg),
             Sbp::MsgPosLlhDepA(msg) => WireFormat::len(msg),
@@ -5512,6 +5533,12 @@ impl From<MsgGpsTimeGnss> for Sbp {
 impl From<MsgUtcTimeGnss> for Sbp {
     fn from(msg: MsgUtcTimeGnss) -> Self {
         Sbp::MsgUtcTimeGnss(msg)
+    }
+}
+
+impl From<MsgTelSv> for Sbp {
+    fn from(msg: MsgTelSv) -> Self {
+        Sbp::MsgTelSv(msg)
     }
 }
 

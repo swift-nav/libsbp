@@ -42,6 +42,7 @@ swift_cc_library(
         "src/v4/solution_meta.c",
         "src/v4/ssr.c",
         "src/v4/system.c",
+        "src/v4/telemetry.c",
         "src/v4/tracking.c",
         "src/v4/user.c",
         "src/v4/vehicle.c",

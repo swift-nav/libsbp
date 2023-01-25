@@ -1,0 +1,40 @@
+description: Unit tests for swiftnav.sbp.telemetry MsgTelSv
+generated_on: '2023-01-24 17:13:58.473801'
+package: sbp.telemetry
+tests:
+- msg:
+    c_decoded_fields:
+      n_sv_tel: 1
+    fields:
+      n_obs: 16
+      origin_flags: 1
+      sv_tel:
+      - availability_flags: 5
+        az: 40
+        correction_flags: 1
+        el: 50
+        ephemeris_flags: 1
+        outlier_flags: 1
+        phase_residual: 1
+        pseudorange_residual: -30
+        sid:
+          code: 12
+          sat: 33
+      tow: 406773200
+      wn: 2223
+    module: sbp.telemetry
+    name: MsgTelSv
+  msg_type: '0x120'
+  raw_json: '{"preamble": 85, "msg_type": 288, "sender": 9876, "length": 20, "payload":
+    "rwjQ3T4YEAEoMgXi/wEAAQEBIQw=", "crc": 26919, "wn": 2223, "tow": 406773200, "n_obs":
+    16, "origin_flags": 1, "sv_tel": [{"az": 40, "el": 50, "availability_flags": 5,
+    "pseudorange_residual": -30, "phase_residual": 1, "outlier_flags": 1, "ephemeris_flags":
+    1, "correction_flags": 1, "sid": {"sat": 33, "code": 12}}]}'
+  raw_packet: VSABlCYUrwjQ3T4YEAEoMgXi/wEAAQEBIQwnaQ==
+  sbp:
+    crc: '0x6927'
+    length: 20
+    msg_type: '0x120'
+    payload: rwjQ3T4YEAEoMgXi/wEAAQEBIQw=
+    preamble: '0x55'
+    sender: '0x2694'

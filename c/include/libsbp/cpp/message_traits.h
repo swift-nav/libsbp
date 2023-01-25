@@ -40,6 +40,7 @@
 #include <libsbp/v4/solution_meta.h>
 #include <libsbp/v4/ssr.h>
 #include <libsbp/v4/system.h>
+#include <libsbp/v4/telemetry.h>
 #include <libsbp/v4/tracking.h>
 #include <libsbp/v4/user.h>
 #include <libsbp/v4/vehicle.h>
@@ -7238,6 +7239,39 @@ struct MessageTraits<sbp_msg_sv_configuration_gps_dep_t> {
   }
   static size_t encoded_len(const sbp_msg_sv_configuration_gps_dep_t &msg) {
     return sbp_msg_sv_configuration_gps_dep_encoded_len(&msg);
+  }
+};
+
+template <>
+struct MessageTraits<sbp_msg_tel_sv_t> {
+  static constexpr sbp_msg_type_t id = SbpMsgTelSv;
+  static constexpr const char *name = "MSG_TEL_SV";
+  static const sbp_msg_tel_sv_t &get(const sbp_msg_t &msg) {
+    return msg.tel_sv;
+  }
+  static sbp_msg_tel_sv_t &get(sbp_msg_t &msg) { return msg.tel_sv; }
+  static void to_sbp_msg(const sbp_msg_tel_sv_t &msg, sbp_msg_t *sbp_msg) {
+    sbp_msg->tel_sv = msg;
+  }
+  static sbp_msg_t to_sbp_msg(const sbp_msg_tel_sv_t &msg) {
+    sbp_msg_t sbp_msg;
+    sbp_msg.tel_sv = msg;
+    return sbp_msg;
+  }
+  static s8 send(sbp_state_t *state, u16 sender_id, const sbp_msg_tel_sv_t &msg,
+                 sbp_write_fn_t write) {
+    return sbp_msg_tel_sv_send(state, sender_id, &msg, write);
+  }
+  static s8 encode(uint8_t *buf, uint8_t len, uint8_t *n_written,
+                   const sbp_msg_tel_sv_t &msg) {
+    return sbp_msg_tel_sv_encode(buf, len, n_written, &msg);
+  }
+  static s8 decode(const uint8_t *buf, uint8_t len, uint8_t *n_read,
+                   sbp_msg_tel_sv_t *msg) {
+    return sbp_msg_tel_sv_decode(buf, len, n_read, msg);
+  }
+  static size_t encoded_len(const sbp_msg_tel_sv_t &msg) {
+    return sbp_msg_tel_sv_encoded_len(&msg);
   }
 };
 

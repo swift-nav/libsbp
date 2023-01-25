@@ -119,6 +119,7 @@ Suite* auto_check_sbp_system_MsgInsUpdates_suite(void);
 Suite* auto_check_sbp_system_MsgSensorAidEvent_suite(void);
 Suite* auto_check_sbp_system_MsgStartup_suite(void);
 Suite* auto_check_sbp_system_MsgStatusJournal_suite(void);
+Suite* auto_check_sbp_telemetry_MsgTelSv_suite(void);
 Suite* auto_check_sbp_tracking_MsgMeasurementState_suite(void);
 Suite* auto_check_sbp_tracking_MsgTrackingState_suite(void);
 Suite* auto_check_sbp_tracking_MsgTrackingStateDetailedDep_suite(void);

@@ -1,0 +1,40 @@
+{
+  "copyright": [
+    "Copyright (C) 2019-2021 Swift Navigation Inc.",
+    "Contact: https://support.swiftnav.com",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#TelemetrySV",
+  "title":"TelemetrySV",
+  "description":"",
+  "type": "object",
+  "properties": {
+    "az": {"type": "integer"},
+    "el": {"type": "integer"},
+    "availability_flags": {"type": "integer"},
+    "pseudorange_residual": {"type": "integer"},
+    "phase_residual": {"type": "integer"},
+    "outlier_flags": {"type": "integer"},
+    "ephemeris_flags": {"type": "integer"},
+    "correction_flags": {"type": "integer"},
+    "sid": {"$ref": "GnssSignal.json"}
+  },
+  "required": [
+    "az",
+    "el",
+    "availability_flags",
+    "pseudorange_residual",
+    "phase_residual",
+    "outlier_flags",
+    "ephemeris_flags",
+    "correction_flags",
+    "sid"
+  ]
+}

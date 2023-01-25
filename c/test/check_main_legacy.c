@@ -179,6 +179,7 @@ int main(void) {
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgSensorAidEvent_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgStartup_suite());
   srunner_add_suite(sr, legacy_auto_check_sbp_system_MsgStatusJournal_suite());
+  srunner_add_suite(sr, legacy_auto_check_sbp_telemetry_MsgTelSv_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_tracking_MsgMeasurementState_suite());
   srunner_add_suite(sr,
