@@ -105,6 +105,8 @@ START_TEST(test_auto_check_sbp_telemetry_MsgTelSv) {
 
     test_msg.tel_sv.n_obs = 16;
 
+    test_msg.tel_sv.n_sv_tel = 1;
+
     test_msg.tel_sv.origin_flags = 1;
 
     test_msg.tel_sv.sv_tel[0].availability_flags = 5;
@@ -157,6 +159,11 @@ START_TEST(test_auto_check_sbp_telemetry_MsgTelSv) {
         last_msg.msg.tel_sv.n_obs == 16,
         "incorrect value for last_msg.msg.tel_sv.n_obs, expected 16, is %d",
         last_msg.msg.tel_sv.n_obs);
+
+    ck_assert_msg(
+        last_msg.msg.tel_sv.n_sv_tel == 1,
+        "incorrect value for last_msg.msg.tel_sv.n_sv_tel, expected 1, is %d",
+        last_msg.msg.tel_sv.n_sv_tel);
 
     ck_assert_msg(last_msg.msg.tel_sv.origin_flags == 1,
                   "incorrect value for last_msg.msg.tel_sv.origin_flags, "

@@ -82,6 +82,7 @@ TEST_F(Test_auto_check_sbp_telemetry_MsgTelSv0, Test) {
 
   sbp_msg_tel_sv_t test_msg{};
   test_msg.n_obs = 16;
+  test_msg.n_sv_tel = 1;
   test_msg.origin_flags = 1;
 
   test_msg.sv_tel[0].availability_flags = 5;
@@ -112,6 +113,9 @@ TEST_F(Test_auto_check_sbp_telemetry_MsgTelSv0, Test) {
   EXPECT_EQ(last_msg_.n_obs, 16)
       << "incorrect value for last_msg_.n_obs, expected 16, is "
       << last_msg_.n_obs;
+  EXPECT_EQ(last_msg_.n_sv_tel, 1)
+      << "incorrect value for last_msg_.n_sv_tel, expected 1, is "
+      << last_msg_.n_sv_tel;
   EXPECT_EQ(last_msg_.origin_flags, 1)
       << "incorrect value for last_msg_.origin_flags, expected 1, is "
       << last_msg_.origin_flags;
