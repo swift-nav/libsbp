@@ -25,7 +25,7 @@ definitions:
      - code:
             type: u8
             desc: >
-                Signal encoded following Swift RTCM specifications. Table Signal and Tracking Mode Identiﬁer.
+              Swift RTCM Signal and Tracking Mode Identifiers
      - value:
             type: s16
             units: 0.01 m
@@ -39,7 +39,7 @@ definitions:
      - code:
             type: u8
             desc: >
-                Signal encoded following Swift RTCM specifications. Table Signal and Tracking Mode Identiﬁer.
+                Swift RTCM Signal and Tracking Mode Identifiers
      - integer_indicator:
             type: u8
             desc: Indicator for integer property
@@ -1296,7 +1296,7 @@ definitions:
        - signal_id:
            type: u8
            desc: >
-             Signal encoded following Swift RTCM specifications. Table Signal and Tracking Mode Identiﬁer.
+             Swift RTCM Signal and Tracking Mode Identifiers
        - code_bias_bound_mu:
            type: u8
            units: 0.005 m
