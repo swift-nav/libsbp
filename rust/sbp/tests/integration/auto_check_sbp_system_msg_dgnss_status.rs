@@ -61,11 +61,11 @@ fn test_auto_check_sbp_system_msg_dgnss_status() {
                     msg.num_signals
                 );
                 assert_eq!(
-                    msg.source.to_string(),
-                    "Skylark",
-                    "incorrect value for msg.source, expected string '{}', is '{}'",
-                    "Skylark",
-                    msg.source
+                    msg.source.as_bytes(),
+                    &[83, 107, 121, 108, 97, 114, 107],
+                    "incorrect value for msg.source, expected string '{:?}', is '{:?}'",
+                    &[83, 107, 121, 108, 97, 114, 107],
+                    msg.source.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgDgnssStatus"),
@@ -135,11 +135,11 @@ fn test_json2sbp_auto_check_sbp_system_msg_dgnss_status() {
                     msg.num_signals
                 );
                 assert_eq!(
-                    msg.source.to_string(),
-                    "Skylark",
-                    "incorrect value for msg.source, expected string '{}', is '{}'",
-                    "Skylark",
-                    msg.source
+                    msg.source.as_bytes(),
+                    &[83, 107, 121, 108, 97, 114, 107],
+                    "incorrect value for msg.source, expected string '{:?}', is '{:?}'",
+                    &[83, 107, 121, 108, 97, 114, 107],
+                    msg.source.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgDgnssStatus"),
@@ -216,11 +216,11 @@ fn test_sbp2json_auto_check_sbp_system_msg_dgnss_status() {
                     msg.num_signals
                 );
                 assert_eq!(
-                    msg.source.to_string(),
-                    "Skylark",
-                    "incorrect value for msg.source, expected string '{}', is '{}'",
-                    "Skylark",
-                    msg.source
+                    msg.source.as_bytes(),
+                    &[83, 107, 121, 108, 97, 114, 107],
+                    "incorrect value for msg.source, expected string '{:?}', is '{:?}'",
+                    &[83, 107, 121, 108, 97, 114, 107],
+                    msg.source.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgDgnssStatus"),

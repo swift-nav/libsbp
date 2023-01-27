@@ -51,13 +51,11 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.version.to_string(),
-                    "v1.2
-",
-                    "incorrect value for msg.version, expected string '{}', is '{}'",
-                    "v1.2
-",
-                    msg.version
+                    msg.version.as_bytes(),
+                    &[118, 49, 46, 50, 10],
+                    "incorrect value for msg.version, expected string '{:?}', is '{:?}'",
+                    &[118, 49, 46, 50, 10],
+                    msg.version.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
@@ -166,13 +164,11 @@ fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.version.to_string(),
-                    "v1.2
-",
-                    "incorrect value for msg.version, expected string '{}', is '{}'",
-                    "v1.2
-",
-                    msg.version
+                    msg.version.as_bytes(),
+                    &[118, 49, 46, 50, 10],
+                    "incorrect value for msg.version, expected string '{:?}', is '{:?}'",
+                    &[118, 49, 46, 50, 10],
+                    msg.version.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
@@ -297,13 +293,11 @@ fn test_sbp2json_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.version.to_string(),
-                    "v1.2
-",
-                    "incorrect value for msg.version, expected string '{}', is '{}'",
-                    "v1.2
-",
-                    msg.version
+                    msg.version.as_bytes(),
+                    &[118, 49, 46, 50, 10],
+                    "incorrect value for msg.version, expected string '{:?}', is '{:?}'",
+                    &[118, 49, 46, 50, 10],
+                    msg.version.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
