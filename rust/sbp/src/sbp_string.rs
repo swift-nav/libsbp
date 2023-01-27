@@ -226,7 +226,7 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
                 Er: Error,
             {
                 let data = v.as_bytes().try_into().map_err(|_| {
-                    Error::custom(format!("was expecting a string of length {}", LEN))
+                    Error::custom(format!("was expecting a string of length {LEN}"))
                 })?;
                 Ok(SbpString::new(data))
             }
@@ -236,7 +236,7 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
                 Er: Error,
             {
                 let data = v.into_bytes().try_into().map_err(|_| {
-                    Error::custom(format!("was expecting a string of length {}", LEN))
+                    Error::custom(format!("was expecting a string of length {LEN}"))
                 })?;
                 Ok(SbpString::new(data))
             }
@@ -246,7 +246,7 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
                 Er: Error,
             {
                 let data = v.try_into().map_err(|_| {
-                    Error::custom(format!("was expecting a string of length {}", LEN))
+                    Error::custom(format!("was expecting a string of length {LEN}"))
                 })?;
                 Ok(SbpString::new(data))
             }
@@ -256,7 +256,7 @@ impl<'de, E, const LEN: usize> serde::Deserialize<'de> for SbpString<[u8; LEN], 
                 Er: Error,
             {
                 let data = v.try_into().map_err(|_| {
-                    Error::custom(format!("was expecting a string of length {}", LEN))
+                    Error::custom(format!("was expecting a string of length {LEN}"))
                 })?;
                 Ok(SbpString::new(data))
             }

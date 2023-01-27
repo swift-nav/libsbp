@@ -47,8 +47,7 @@ fn test_auto_check_sbp_observation_msg_ephemeris_glo() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert!(
                     msg.acc[0].almost_eq(9.31322574615478516e-07),
@@ -210,8 +209,7 @@ fn test_json2sbp_auto_check_sbp_observation_msg_ephemeris_glo() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert!(
                     msg.acc[0].almost_eq(9.31322574615478516e-07),
@@ -384,8 +382,7 @@ fn test_sbp2json_auto_check_sbp_observation_msg_ephemeris_glo() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert!(
                     msg.acc[0].almost_eq(9.31322574615478516e-07),

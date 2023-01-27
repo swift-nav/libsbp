@@ -26,7 +26,7 @@ fn main() {
             Ok(Sbp::MsgLog(x)) => println!("{}", x.text),
             Ok(Sbp::MsgPosLlh(x)) => println!("{} {} {}", x.lat, x.lon, x.height),
             Err(e) => {
-                eprintln!("{:?}", e);
+                eprintln!("{e:?}");
                 break;
             }
             _ => {}

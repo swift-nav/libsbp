@@ -43,8 +43,7 @@ fn test_auto_check_sbp_ext_events_msg_ext_event() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x6f5,
-                    "incorrect sender id, expected 0x6f5, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x6f5, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 3,
@@ -121,8 +120,7 @@ fn test_json2sbp_auto_check_sbp_ext_events_msg_ext_event() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x6f5,
-                    "incorrect sender id, expected 0x6f5, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x6f5, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 3,
@@ -206,8 +204,7 @@ fn test_sbp2json_auto_check_sbp_ext_events_msg_ext_event() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x6f5,
-                    "incorrect sender id, expected 0x6f5, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x6f5, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 3,

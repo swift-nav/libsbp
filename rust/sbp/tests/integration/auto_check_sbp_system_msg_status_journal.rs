@@ -44,8 +44,7 @@ fn test_auto_check_sbp_system_msg_status_journal() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88D3,
-                    "incorrect sender id, expected 0x88D3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88D3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.journal[0].report.component, 6,
@@ -157,8 +156,7 @@ fn test_auto_check_sbp_system_msg_status_journal() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88D3,
-                    "incorrect sender id, expected 0x88D3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88D3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.journal[0].report.component, 6,
@@ -250,8 +248,7 @@ fn test_json2sbp_auto_check_sbp_system_msg_status_journal() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88D3,
-                    "incorrect sender id, expected 0x88D3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88D3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.journal[0].report.component, 6,
@@ -369,8 +366,7 @@ fn test_json2sbp_auto_check_sbp_system_msg_status_journal() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88D3,
-                    "incorrect sender id, expected 0x88D3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88D3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.journal[0].report.component, 6,
@@ -470,8 +466,7 @@ fn test_sbp2json_auto_check_sbp_system_msg_status_journal() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88D3,
-                    "incorrect sender id, expected 0x88D3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88D3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.journal[0].report.component, 6,
@@ -602,8 +597,7 @@ fn test_sbp2json_auto_check_sbp_system_msg_status_journal() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88D3,
-                    "incorrect sender id, expected 0x88D3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88D3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.journal[0].report.component, 6,

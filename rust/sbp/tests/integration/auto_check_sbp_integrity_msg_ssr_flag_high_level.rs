@@ -44,8 +44,7 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.chain_id, 40,
@@ -202,8 +201,7 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.chain_id, 40,
@@ -368,8 +366,7 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_high_level() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.chain_id, 40,

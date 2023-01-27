@@ -44,8 +44,7 @@ fn test_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.faulty_los[0].constellation, 11,
@@ -167,8 +166,7 @@ fn test_json2sbp_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los()
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.faulty_los[0].constellation, 11,
@@ -298,8 +296,7 @@ fn test_sbp2json_auto_check_sbp_integrity_msg_ssr_flag_iono_grid_point_sat_los()
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.faulty_los[0].constellation, 11,
