@@ -22,14 +22,14 @@ from sbpg.targets.rust import lower_acronyms, snake_case
 TEST_TEMPLATE_NAME = "rust/test/sbp_tests_template.rs"
 TEST_MAIN_TEMPLATE_NAME = "rust/test/sbp_tests_main_template.rs"
 
-def str_escape(value):
-    return "\"{}\"".format(value)
+def bytes_escape(value):
+    return "&{}".format(list(bytes(value, "ascii")))
 
 def mod_name(value):
     return value.split('.')[1]
 
 JENV.filters['to_str'] = to_str
-JENV.filters['str_escape'] = str_escape
+JENV.filters['bytes_escape'] = bytes_escape
 JENV.filters['sorted'] = sorted
 JENV.filters['mod_name'] = mod_name
 JENV.filters['lower_acronyms'] = lower_acronyms

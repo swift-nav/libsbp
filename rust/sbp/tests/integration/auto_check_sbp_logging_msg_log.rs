@@ -53,11 +53,19 @@ fn test_auto_check_sbp_logging_msg_log() {
                     msg.level
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "Filtered all obs from 2314 at tow 83.539019",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "Filtered all obs from 2314 at tow 83.539019",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        70, 105, 108, 116, 101, 114, 101, 100, 32, 97, 108, 108, 32, 111, 98, 115,
+                        32, 102, 114, 111, 109, 32, 50, 51, 49, 52, 32, 97, 116, 32, 116, 111, 119,
+                        32, 56, 51, 46, 53, 51, 57, 48, 49, 57
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        70, 105, 108, 116, 101, 114, 101, 100, 32, 97, 108, 108, 32, 111, 98, 115,
+                        32, 102, 114, 111, 109, 32, 50, 51, 49, 52, 32, 97, 116, 32, 116, 111, 119,
+                        32, 56, 51, 46, 53, 51, 57, 48, 49, 57
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgLog"),
@@ -117,11 +125,19 @@ fn test_json2sbp_auto_check_sbp_logging_msg_log() {
                     msg.level
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "Filtered all obs from 2314 at tow 83.539019",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "Filtered all obs from 2314 at tow 83.539019",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        70, 105, 108, 116, 101, 114, 101, 100, 32, 97, 108, 108, 32, 111, 98, 115,
+                        32, 102, 114, 111, 109, 32, 50, 51, 49, 52, 32, 97, 116, 32, 116, 111, 119,
+                        32, 56, 51, 46, 53, 51, 57, 48, 49, 57
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        70, 105, 108, 116, 101, 114, 101, 100, 32, 97, 108, 108, 32, 111, 98, 115,
+                        32, 102, 114, 111, 109, 32, 50, 51, 49, 52, 32, 97, 116, 32, 116, 111, 119,
+                        32, 56, 51, 46, 53, 51, 57, 48, 49, 57
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgLog"),
@@ -190,11 +206,19 @@ fn test_sbp2json_auto_check_sbp_logging_msg_log() {
                     msg.level
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "Filtered all obs from 2314 at tow 83.539019",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "Filtered all obs from 2314 at tow 83.539019",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        70, 105, 108, 116, 101, 114, 101, 100, 32, 97, 108, 108, 32, 111, 98, 115,
+                        32, 102, 114, 111, 109, 32, 50, 51, 49, 52, 32, 97, 116, 32, 116, 111, 119,
+                        32, 56, 51, 46, 53, 51, 57, 48, 49, 57
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        70, 105, 108, 116, 101, 114, 101, 100, 32, 97, 108, 108, 32, 111, 98, 115,
+                        32, 102, 114, 111, 109, 32, 50, 51, 49, 52, 32, 97, 116, 32, 116, 111, 119,
+                        32, 56, 51, 46, 53, 51, 57, 48, 49, 57
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgLog"),

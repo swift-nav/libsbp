@@ -15,7 +15,7 @@ use crate::*;
 
 ((*- macro compare_value(prefix, value) *))
 ((*- if value is string_type *))
-assert_eq!(msg.(((prefix|snake_case))).to_string(), (((value|str_escape))), "incorrect value for msg.(((prefix|snake_case))), expected string '{}', is '{}'", (((value|str_escape))), msg.(((prefix|snake_case))));
+assert_eq!(msg.(((prefix|snake_case))).as_bytes(), (((value|bytes_escape))), "incorrect value for msg.(((prefix|snake_case))), expected string '{:?}', is '{:?}'", (((value|bytes_escape))), msg.(((prefix|snake_case))).as_bytes());
 ((*- elif value is array_type *))
 ((*- for ff in value *))((( compare_value( (((prefix|snake_case))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) )))((*- endfor *))
 ((*- elif value is dict_type *))
