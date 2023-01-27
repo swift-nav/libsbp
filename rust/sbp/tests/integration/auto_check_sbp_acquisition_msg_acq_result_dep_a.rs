@@ -43,8 +43,7 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(8.24194335937500000e+03),
@@ -95,8 +94,7 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(7.49267639160156250e+02),
@@ -147,8 +145,7 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-6.49365283203125000e+03),
@@ -200,8 +197,7 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-9.99023498535156250e+02),
@@ -252,8 +248,7 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(4.74536132812500000e+03),
@@ -304,8 +299,7 @@ fn test_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-4.99511749267578125e+02),
@@ -377,8 +371,7 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(8.24194335937500000e+03),
@@ -436,8 +429,7 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(7.49267639160156250e+02),
@@ -495,8 +487,7 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-6.49365283203125000e+03),
@@ -554,8 +545,7 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-9.99023498535156250e+02),
@@ -613,8 +603,7 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(4.74536132812500000e+03),
@@ -672,8 +661,7 @@ fn test_json2sbp_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-4.99511749267578125e+02),
@@ -752,8 +740,7 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(8.24194335937500000e+03),
@@ -823,8 +810,7 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(7.49267639160156250e+02),
@@ -894,8 +880,7 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-6.49365283203125000e+03),
@@ -966,8 +951,7 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-9.99023498535156250e+02),
@@ -1037,8 +1021,7 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(4.74536132812500000e+03),
@@ -1108,8 +1091,7 @@ fn test_sbp2json_auto_check_sbp_acquisition_msg_acq_result_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.cf.almost_eq(-4.99511749267578125e+02),

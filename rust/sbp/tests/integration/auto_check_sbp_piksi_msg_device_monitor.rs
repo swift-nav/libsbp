@@ -43,8 +43,7 @@ fn test_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6165,
@@ -100,8 +99,7 @@ fn test_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6168,
@@ -157,8 +155,7 @@ fn test_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6166,
@@ -214,8 +211,7 @@ fn test_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6150,
@@ -271,8 +267,7 @@ fn test_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6123,
@@ -349,8 +344,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6165,
@@ -413,8 +407,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6168,
@@ -477,8 +470,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6166,
@@ -541,8 +533,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6150,
@@ -605,8 +596,7 @@ fn test_json2sbp_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6123,
@@ -690,8 +680,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6165,
@@ -766,8 +755,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6168,
@@ -842,8 +830,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6166,
@@ -918,8 +905,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6150,
@@ -994,8 +980,7 @@ fn test_sbp2json_auto_check_sbp_piksi_msg_device_monitor() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x425f,
-                    "incorrect sender id, expected 0x425f, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x425f, is {sender_id}"
                 );
                 assert_eq!(
                     msg.cpu_temperature, 6123,

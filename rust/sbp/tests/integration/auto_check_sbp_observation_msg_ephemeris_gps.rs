@@ -50,8 +50,7 @@ fn test_auto_check_sbp_observation_msg_ephemeris_gps() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert!(
                     msg.af0.almost_eq(-6.31501898169517517e-04),
@@ -258,8 +257,7 @@ fn test_json2sbp_auto_check_sbp_observation_msg_ephemeris_gps() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert!(
                     msg.af0.almost_eq(-6.31501898169517517e-04),
@@ -480,8 +478,7 @@ fn test_sbp2json_auto_check_sbp_observation_msg_ephemeris_gps() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert!(
                     msg.af0.almost_eq(-6.31501898169517517e-04),

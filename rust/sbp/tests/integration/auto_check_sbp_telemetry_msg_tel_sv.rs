@@ -44,8 +44,7 @@ fn test_auto_check_sbp_telemetry_msg_tel_sv() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2694,
-                    "incorrect sender id, expected 0x2694, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2694, is {sender_id}"
                 );
                 assert_eq!(
                     msg.n_obs, 16,
@@ -167,8 +166,7 @@ fn test_json2sbp_auto_check_sbp_telemetry_msg_tel_sv() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2694,
-                    "incorrect sender id, expected 0x2694, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2694, is {sender_id}"
                 );
                 assert_eq!(
                     msg.n_obs, 16,
@@ -298,8 +296,7 @@ fn test_sbp2json_auto_check_sbp_telemetry_msg_tel_sv() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2694,
-                    "incorrect sender id, expected 0x2694, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2694, is {sender_id}"
                 );
                 assert_eq!(
                     msg.n_obs, 16,

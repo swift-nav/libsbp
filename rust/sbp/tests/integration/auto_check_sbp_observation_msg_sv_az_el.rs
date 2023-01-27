@@ -49,8 +49,7 @@ fn test_auto_check_sbp_observation_msg_sv_az_el() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x79CF,
-                    "incorrect sender id, expected 0x79CF, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x79CF, is {sender_id}"
                 );
                 assert_eq!(
                     msg.azel[0].az, 160,
@@ -762,8 +761,7 @@ fn test_json2sbp_auto_check_sbp_observation_msg_sv_az_el() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x79CF,
-                    "incorrect sender id, expected 0x79CF, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x79CF, is {sender_id}"
                 );
                 assert_eq!(
                     msg.azel[0].az, 160,
@@ -1488,8 +1486,7 @@ fn test_sbp2json_auto_check_sbp_observation_msg_sv_az_el() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x79CF,
-                    "incorrect sender id, expected 0x79CF, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x79CF, is {sender_id}"
                 );
                 assert_eq!(
                     msg.azel[0].az, 160,

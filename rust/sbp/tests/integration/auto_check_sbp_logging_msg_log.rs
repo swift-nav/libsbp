@@ -45,8 +45,7 @@ fn test_auto_check_sbp_logging_msg_log() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert_eq!(
                     msg.level, 6,
@@ -110,8 +109,7 @@ fn test_json2sbp_auto_check_sbp_logging_msg_log() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert_eq!(
                     msg.level, 6,
@@ -184,8 +182,7 @@ fn test_sbp2json_auto_check_sbp_logging_msg_log() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x90a,
-                    "incorrect sender id, expected 0x90a, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x90a, is {sender_id}"
                 );
                 assert_eq!(
                     msg.level, 6,

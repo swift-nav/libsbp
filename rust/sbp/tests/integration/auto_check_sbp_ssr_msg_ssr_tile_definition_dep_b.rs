@@ -44,8 +44,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.bitmask, 1234567890,
@@ -147,8 +146,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.bitmask, 1234567890,
@@ -258,8 +256,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition_dep_b() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.bitmask, 1234567890,

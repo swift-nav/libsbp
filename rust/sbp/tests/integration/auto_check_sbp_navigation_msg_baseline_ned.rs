@@ -44,8 +44,7 @@ fn test_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32153,
@@ -117,8 +116,7 @@ fn test_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32622,
@@ -190,8 +188,7 @@ fn test_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32750,
@@ -263,8 +260,7 @@ fn test_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32559,
@@ -336,8 +332,7 @@ fn test_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32421,
@@ -429,8 +424,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32153,
@@ -508,8 +502,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32622,
@@ -587,8 +580,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32750,
@@ -666,8 +658,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32559,
@@ -745,8 +736,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32421,
@@ -846,8 +836,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32153,
@@ -938,8 +927,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32622,
@@ -1030,8 +1018,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32750,
@@ -1122,8 +1109,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32559,
@@ -1214,8 +1200,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_baseline_ned() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
-                    "incorrect sender id, expected 0x88d3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x88d3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 32421,

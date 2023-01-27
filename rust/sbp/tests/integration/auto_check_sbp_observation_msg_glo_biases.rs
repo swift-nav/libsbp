@@ -43,8 +43,7 @@ fn test_auto_check_sbp_observation_msg_glo_biases() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0,
-                    "incorrect sender id, expected 0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.l1ca_bias, 0,
@@ -121,8 +120,7 @@ fn test_json2sbp_auto_check_sbp_observation_msg_glo_biases() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0,
-                    "incorrect sender id, expected 0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.l1ca_bias, 0,
@@ -206,8 +204,7 @@ fn test_sbp2json_auto_check_sbp_observation_msg_glo_biases() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0,
-                    "incorrect sender id, expected 0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.l1ca_bias, 0,

@@ -44,8 +44,7 @@ fn test_auto_check_sbp_navigation_msg_utc_time() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x315,
-                    "incorrect sender id, expected 0x315, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x315, is {sender_id}"
                 );
                 assert_eq!(
                     msg.day, 9,
@@ -142,8 +141,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_utc_time() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x315,
-                    "incorrect sender id, expected 0x315, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x315, is {sender_id}"
                 );
                 assert_eq!(
                     msg.day, 9,
@@ -248,8 +246,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_utc_time() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x315,
-                    "incorrect sender id, expected 0x315, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x315, is {sender_id}"
                 );
                 assert_eq!(
                     msg.day, 9,

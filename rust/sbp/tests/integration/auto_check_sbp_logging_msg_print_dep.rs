@@ -45,8 +45,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -88,8 +87,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -131,8 +129,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -174,8 +171,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -217,8 +213,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -260,8 +255,7 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -322,8 +316,7 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -370,8 +363,7 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -418,8 +410,7 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -466,8 +457,7 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -514,8 +504,7 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -562,8 +551,7 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -633,8 +621,7 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -695,8 +682,7 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -757,8 +743,7 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -819,8 +804,7 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -881,8 +865,7 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),
@@ -943,8 +926,7 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
                     msg.text.to_string(),

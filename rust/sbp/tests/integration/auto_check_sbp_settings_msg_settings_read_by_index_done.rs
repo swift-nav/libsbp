@@ -41,8 +41,7 @@ fn test_auto_check_sbp_settings_msg_settings_read_by_index_done() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSettingsReadByIndexDone"),
@@ -94,8 +93,7 @@ fn test_json2sbp_auto_check_sbp_settings_msg_settings_read_by_index_done() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSettingsReadByIndexDone"),
@@ -152,8 +150,7 @@ fn test_sbp2json_auto_check_sbp_settings_msg_settings_read_by_index_done() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSettingsReadByIndexDone"),

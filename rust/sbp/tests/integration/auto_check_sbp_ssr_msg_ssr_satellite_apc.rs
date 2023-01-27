@@ -45,8 +45,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_satellite_apc() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0,
-                    "incorrect sender id, expected 0x0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.apc[0].pco[0], 1,
@@ -263,8 +262,7 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_satellite_apc() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0,
-                    "incorrect sender id, expected 0x0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.apc[0].pco[0], 1,
@@ -490,8 +488,7 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_satellite_apc() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0,
-                    "incorrect sender id, expected 0x0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.apc[0].pco[0], 1,

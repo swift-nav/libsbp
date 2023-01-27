@@ -46,8 +46,7 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.12309074401855469e+01),
@@ -246,8 +245,7 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.10141220092773438e+01),
@@ -446,8 +444,7 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.17686891555786133e+01),
@@ -646,8 +643,7 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(6.21398582458496094e+01),
@@ -842,8 +838,7 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(3.67645034790039062e+01),
@@ -1038,8 +1033,7 @@ fn test_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(2.73942298889160156e+01),
@@ -1252,8 +1246,7 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.12309074401855469e+01),
@@ -1456,8 +1449,7 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.10141220092773438e+01),
@@ -1660,8 +1652,7 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.17686891555786133e+01),
@@ -1864,8 +1855,7 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(6.21398582458496094e+01),
@@ -2064,8 +2054,7 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(3.67645034790039062e+01),
@@ -2264,8 +2253,7 @@ fn test_json2sbp_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(2.73942298889160156e+01),
@@ -2488,8 +2476,7 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.12309074401855469e+01),
@@ -2707,8 +2694,7 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.10141220092773438e+01),
@@ -2926,8 +2912,7 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(1.17686891555786133e+01),
@@ -3145,8 +3130,7 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(6.21398582458496094e+01),
@@ -3360,8 +3344,7 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(3.67645034790039062e+01),
@@ -3575,8 +3558,7 @@ fn test_sbp2json_auto_check_sbp_tracking_msgtracking_state_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert!(
                     msg.states[0].cn0.almost_eq(2.73942298889160156e+01),

@@ -83,7 +83,7 @@ impl Drop for DeleteTestOutput {
         }
         for file in &self.files {
             if file.as_path().exists() {
-                let _ = fs::remove_file(file).map_err(|e| format!("could not delete file: {}", e));
+                let _ = fs::remove_file(file).map_err(|e| format!("could not delete file: {e}"));
             }
         }
     }
@@ -134,10 +134,10 @@ pub fn test_round_trip<F1, F2, F3>(
 
     let root = find_project_root().unwrap();
     let root = root.as_path();
-    let input_path = root.join(format!("test_data/{}", input_filename));
-    let first_transform_output = format!("test_data/test_{}.output.first_transform", test_name);
-    let second_transform_output = format!("test_data/test_{}.output.second_transform", test_name);
-    let third_transform_output = format!("test_data/test_{}.output.third_transform", test_name);
+    let input_path = root.join(format!("test_data/{input_filename}"));
+    let first_transform_output = format!("test_data/test_{test_name}.output.first_transform");
+    let second_transform_output = format!("test_data/test_{test_name}.output.second_transform");
+    let third_transform_output = format!("test_data/test_{test_name}.output.third_transform");
     let output_path = root.join(&first_transform_output);
 
     {
@@ -253,7 +253,7 @@ fn json_file_equals(a: File, b: File) -> bool {
         .find(|(_, res)| res.is_err());
 
     if let Some((line, Err(err))) = wrong {
-        eprintln!("value mismatch at line {}\n{}", line, err);
+        eprintln!("value mismatch at line {line}\n{err}");
         false
     } else {
         true
