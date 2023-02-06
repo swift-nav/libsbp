@@ -163,7 +163,7 @@ pub mod msg_imu_aux {
         StMicroelectronicsAsm330Llh = 1,
 
         /// Murata SCHA634-D03
-        MurataScha634D03 = 2,
+        MurataScha634D03 = 4,
     }
 
     impl std::fmt::Display for ImuType {
@@ -184,7 +184,7 @@ pub mod msg_imu_aux {
             match i {
                 0 => Ok(ImuType::BoschBmi160),
                 1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
-                2 => Ok(ImuType::MurataScha634D03),
+                4 => Ok(ImuType::MurataScha634D03),
                 i => Err(i),
             }
         }

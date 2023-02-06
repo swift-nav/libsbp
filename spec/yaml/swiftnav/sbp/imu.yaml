@@ -86,7 +86,7 @@ definitions:
                   values:
                       - 0: Bosch BMI160
                       - 1: ST Microelectronics ASM330LLH
-                      - 2: Murata SCHA634-D03
+                      - 4: Murata SCHA634-D03
         - temp:
             type: s16
             desc: Raw IMU temperature
