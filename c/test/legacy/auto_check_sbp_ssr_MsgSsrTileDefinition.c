@@ -116,14 +116,15 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
 
     logging_reset();
 
-    sbp_payload_callback_register(&sbp_state, 1527, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0x5F8, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_frame_callback_register(&sbp_state, 1527, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0x5F8, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 247, 5, 66, 0, 25,  31,  0, 1,   0,  2, 0, 4, 0, 8,   0,  16,
-        0,  32,  0, 64, 0, 128, 210, 2, 150, 73, 0, 0, 0, 0, 214, 71,
+        85, 248, 5, 0,   0, 33,  127, 58, 9,   0,   174, 8,   1,  2,
+        3,  4,   0, 5,   0, 186, 28,  59, 167, 100, 0,   100, 0,  6,
+        0,  6,   0, 210, 2, 150, 73,  0,  0,   0,   0,   204, 94,
     };
 
     dummy_reset();
@@ -135,16 +136,20 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
         (msg_ssr_tile_definition_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->bitmask = 1234567890;
-    test_msg->cols = 32768;
-    test_msg->corner_nw_lat = 1024;
-    test_msg->corner_nw_lon = 2048;
-    test_msg->rows = 16384;
-    test_msg->spacing_lat = 4096;
-    test_msg->spacing_lon = 8192;
-    test_msg->ssr_sol_id = 31;
-    test_msg->tile_id = 512;
-    test_msg->tile_set_id = 256;
-    sbp_payload_send(&sbp_state, 1527, 66, test_msg_len, test_msg_storage,
+    test_msg->cols = 6;
+    test_msg->corner_nw_lat = 7354;
+    test_msg->corner_nw_lon = -22725;
+    test_msg->iod_atmo = 3;
+    test_msg->rows = 6;
+    test_msg->sol_id = 2;
+    test_msg->spacing_lat = 100;
+    test_msg->spacing_lon = 100;
+    test_msg->tile_id = 5;
+    test_msg->tile_set_id = 4;
+    test_msg->time.tow = 604799;
+    test_msg->time.wn = 2222;
+    test_msg->update_interval = 1;
+    sbp_payload_send(&sbp_state, 0x5F8, 0, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -164,7 +169,7 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
                   "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 66,
+    ck_assert_msg(last_msg.sender_id == 0,
                   "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
                   "msg_callback: len decoded incorrectly");
@@ -176,9 +181,9 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
                   "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 66,
+    ck_assert_msg(last_frame.sender_id == 0,
                   "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 1527,
+    ck_assert_msg(last_frame.msg_type == 0x5F8,
                   "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
                   "frame_callback: msg_len decoded incorrectly");
@@ -202,33 +207,45 @@ START_TEST(test_legacy_auto_check_sbp_ssr_MsgSsrTileDefinition) {
     ck_assert_msg(check_msg->bitmask == 1234567890,
                   "incorrect value for bitmask, expected 1234567890, is %d",
                   check_msg->bitmask);
-    ck_assert_msg(check_msg->cols == 32768,
-                  "incorrect value for cols, expected 32768, is %d",
+    ck_assert_msg(check_msg->cols == 6,
+                  "incorrect value for cols, expected 6, is %d",
                   check_msg->cols);
-    ck_assert_msg(check_msg->corner_nw_lat == 1024,
-                  "incorrect value for corner_nw_lat, expected 1024, is %d",
+    ck_assert_msg(check_msg->corner_nw_lat == 7354,
+                  "incorrect value for corner_nw_lat, expected 7354, is %d",
                   check_msg->corner_nw_lat);
-    ck_assert_msg(check_msg->corner_nw_lon == 2048,
-                  "incorrect value for corner_nw_lon, expected 2048, is %d",
+    ck_assert_msg(check_msg->corner_nw_lon == -22725,
+                  "incorrect value for corner_nw_lon, expected -22725, is %d",
                   check_msg->corner_nw_lon);
-    ck_assert_msg(check_msg->rows == 16384,
-                  "incorrect value for rows, expected 16384, is %d",
+    ck_assert_msg(check_msg->iod_atmo == 3,
+                  "incorrect value for iod_atmo, expected 3, is %d",
+                  check_msg->iod_atmo);
+    ck_assert_msg(check_msg->rows == 6,
+                  "incorrect value for rows, expected 6, is %d",
                   check_msg->rows);
-    ck_assert_msg(check_msg->spacing_lat == 4096,
-                  "incorrect value for spacing_lat, expected 4096, is %d",
+    ck_assert_msg(check_msg->sol_id == 2,
+                  "incorrect value for sol_id, expected 2, is %d",
+                  check_msg->sol_id);
+    ck_assert_msg(check_msg->spacing_lat == 100,
+                  "incorrect value for spacing_lat, expected 100, is %d",
                   check_msg->spacing_lat);
-    ck_assert_msg(check_msg->spacing_lon == 8192,
-                  "incorrect value for spacing_lon, expected 8192, is %d",
+    ck_assert_msg(check_msg->spacing_lon == 100,
+                  "incorrect value for spacing_lon, expected 100, is %d",
                   check_msg->spacing_lon);
-    ck_assert_msg(check_msg->ssr_sol_id == 31,
-                  "incorrect value for ssr_sol_id, expected 31, is %d",
-                  check_msg->ssr_sol_id);
-    ck_assert_msg(check_msg->tile_id == 512,
-                  "incorrect value for tile_id, expected 512, is %d",
+    ck_assert_msg(check_msg->tile_id == 5,
+                  "incorrect value for tile_id, expected 5, is %d",
                   check_msg->tile_id);
-    ck_assert_msg(check_msg->tile_set_id == 256,
-                  "incorrect value for tile_set_id, expected 256, is %d",
+    ck_assert_msg(check_msg->tile_set_id == 4,
+                  "incorrect value for tile_set_id, expected 4, is %d",
                   check_msg->tile_set_id);
+    ck_assert_msg(check_msg->time.tow == 604799,
+                  "incorrect value for time.tow, expected 604799, is %d",
+                  check_msg->time.tow);
+    ck_assert_msg(check_msg->time.wn == 2222,
+                  "incorrect value for time.wn, expected 2222, is %d",
+                  check_msg->time.wn);
+    ck_assert_msg(check_msg->update_interval == 1,
+                  "incorrect value for update_interval, expected 1, is %d",
+                  check_msg->update_interval);
   }
 }
 END_TEST

@@ -45,17 +45,22 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 49, 53, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 45, 50, 52, 57, 55, 32, 72, 122, 44,
+                        32, 50, 48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 49, 53, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 45, 50, 52, 57, 55, 32, 72, 122, 44,
+                        32, 50, 48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -88,17 +93,22 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 51, 49, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 52, 50, 52, 53, 32, 72, 122, 44, 32,
+                        50, 49, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 51, 49, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 52, 50, 52, 53, 32, 72, 122, 44, 32,
+                        50, 49, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -131,17 +141,22 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: Disabling channel 0 (PRN 11)
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: Disabling channel 0 (PRN 11)
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 48, 32, 40, 80, 82, 78, 32, 49, 49, 41,
+                        10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 48, 32, 40, 80, 82, 78, 32, 49, 49, 41,
+                        10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -174,17 +189,22 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 50, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 51, 57, 57, 54, 32, 72, 122, 44, 32, 50,
+                        48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 50, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 51, 57, 57, 54, 32, 72, 122, 44, 32, 50,
+                        48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -217,17 +237,22 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 52, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 45, 55, 52, 57, 50, 32, 72, 122, 44, 32,
+                        50, 48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 52, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 45, 55, 52, 57, 50, 32, 72, 122, 44, 32,
+                        50, 48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -260,17 +285,22 @@ fn test_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: Disabling channel 1 (PRN 15)
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: Disabling channel 1 (PRN 15)
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 49, 32, 40, 80, 82, 78, 32, 49, 53, 41,
+                        10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 49, 32, 40, 80, 82, 78, 32, 49, 53, 41,
+                        10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -322,17 +352,22 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 49, 53, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 45, 50, 52, 57, 55, 32, 72, 122, 44,
+                        32, 50, 48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 49, 53, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 45, 50, 52, 57, 55, 32, 72, 122, 44,
+                        32, 50, 48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -370,17 +405,22 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 51, 49, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 52, 50, 52, 53, 32, 72, 122, 44, 32,
+                        50, 49, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 51, 49, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 52, 50, 52, 53, 32, 72, 122, 44, 32,
+                        50, 49, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -418,17 +458,22 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: Disabling channel 0 (PRN 11)
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: Disabling channel 0 (PRN 11)
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 48, 32, 40, 80, 82, 78, 32, 49, 49, 41,
+                        10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 48, 32, 40, 80, 82, 78, 32, 49, 49, 41,
+                        10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -466,17 +511,22 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 50, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 51, 57, 57, 54, 32, 72, 122, 44, 32, 50,
+                        48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 50, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 51, 57, 57, 54, 32, 72, 122, 44, 32, 50,
+                        48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -514,17 +564,22 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 52, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 45, 55, 52, 57, 50, 32, 72, 122, 44, 32,
+                        50, 48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 52, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 45, 55, 52, 57, 50, 32, 72, 122, 44, 32,
+                        50, 48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -562,17 +617,22 @@ fn test_json2sbp_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: Disabling channel 1 (PRN 15)
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: Disabling channel 1 (PRN 15)
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 49, 32, 40, 80, 82, 78, 32, 49, 53, 41,
+                        10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 49, 32, 40, 80, 82, 78, 32, 49, 53, 41,
+                        10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -633,17 +693,22 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 15 found @ -2497 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 49, 53, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 45, 50, 52, 57, 55, 32, 72, 122, 44,
+                        32, 50, 48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 49, 53, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 45, 50, 52, 57, 55, 32, 72, 122, 44,
+                        32, 50, 48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -695,17 +760,22 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 31 found @ 4245 Hz, 21 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 51, 49, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 52, 50, 52, 53, 32, 72, 122, 44, 32,
+                        50, 49, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 51, 49, 32,
+                        102, 111, 117, 110, 100, 32, 64, 32, 52, 50, 52, 53, 32, 72, 122, 44, 32,
+                        50, 49, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -757,17 +827,22 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: Disabling channel 0 (PRN 11)
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: Disabling channel 0 (PRN 11)
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 48, 32, 40, 80, 82, 78, 32, 49, 49, 41,
+                        10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 48, 32, 40, 80, 82, 78, 32, 49, 49, 41,
+                        10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -819,17 +894,22 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 2 found @ 3996 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 50, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 51, 57, 57, 54, 32, 72, 122, 44, 32, 50,
+                        48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 50, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 51, 57, 57, 54, 32, 72, 122, 44, 32, 50,
+                        48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -881,17 +961,22 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: acq: PRN 4 found @ -7492 Hz, 20 SNR
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 52, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 45, 55, 52, 57, 50, 32, 72, 122, 44, 32,
+                        50, 48, 32, 83, 78, 82, 10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 97, 99, 113, 58, 32, 80, 82, 78, 32, 52, 32, 102,
+                        111, 117, 110, 100, 32, 64, 32, 45, 55, 52, 57, 50, 32, 72, 122, 44, 32,
+                        50, 48, 32, 83, 78, 82, 10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),
@@ -943,17 +1028,22 @@ fn test_sbp2json_auto_check_sbp_logging_msg_print_dep() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x2222,
-                    "incorrect sender id, expected 0x2222, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x2222, is {sender_id}"
                 );
                 assert_eq!(
-                    msg.text.to_string(),
-                    "INFO: Disabling channel 1 (PRN 15)
-",
-                    "incorrect value for msg.text, expected string '{}', is '{}'",
-                    "INFO: Disabling channel 1 (PRN 15)
-",
-                    msg.text
+                    msg.text.as_bytes(),
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 49, 32, 40, 80, 82, 78, 32, 49, 53, 41,
+                        10
+                    ],
+                    "incorrect value for msg.text, expected string '{:?}', is '{:?}'",
+                    &[
+                        73, 78, 70, 79, 58, 32, 68, 105, 115, 97, 98, 108, 105, 110, 103, 32, 99,
+                        104, 97, 110, 110, 101, 108, 32, 49, 32, 40, 80, 82, 78, 32, 49, 53, 41,
+                        10
+                    ],
+                    msg.text.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgPrintDep"),

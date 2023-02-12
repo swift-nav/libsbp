@@ -207,11 +207,13 @@ import com.swiftnav.sbp.ssr.MsgSsrOrbitClockBoundsDegradation;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrSatelliteApc;
+import com.swiftnav.sbp.ssr.MsgSsrSatelliteApcDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDep;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrTileDefinition;
-import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDep;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDepA;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinitionDepB;
 import com.swiftnav.sbp.system.MsgCsacTelemetry;
 import com.swiftnav.sbp.system.MsgCsacTelemetryLabels;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
@@ -225,6 +227,7 @@ import com.swiftnav.sbp.system.MsgSensorAidEvent;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgStatusJournal;
 import com.swiftnav.sbp.system.MsgStatusReport;
+import com.swiftnav.sbp.telemetry.MsgTelSv;
 import com.swiftnav.sbp.tracking.MsgMeasurementState;
 import com.swiftnav.sbp.tracking.MsgTrackingIq;
 import com.swiftnav.sbp.tracking.MsgTrackingIqDepA;
@@ -617,10 +620,14 @@ final class MessageTable {
                 return new MsgSsrGriddedCorrection(msg);
             case MsgSsrGriddedCorrectionBounds.TYPE:
                 return new MsgSsrGriddedCorrectionBounds(msg);
-            case MsgSsrTileDefinitionDep.TYPE:
-                return new MsgSsrTileDefinitionDep(msg);
+            case MsgSsrTileDefinitionDepA.TYPE:
+                return new MsgSsrTileDefinitionDepA(msg);
+            case MsgSsrTileDefinitionDepB.TYPE:
+                return new MsgSsrTileDefinitionDepB(msg);
             case MsgSsrTileDefinition.TYPE:
                 return new MsgSsrTileDefinition(msg);
+            case MsgSsrSatelliteApcDep.TYPE:
+                return new MsgSsrSatelliteApcDep(msg);
             case MsgSsrSatelliteApc.TYPE:
                 return new MsgSsrSatelliteApc(msg);
             case MsgSsrOrbitClockDepA.TYPE:
@@ -665,6 +672,8 @@ final class MessageTable {
                 return new MsgSensorAidEvent(msg);
             case MsgGroupMeta.TYPE:
                 return new MsgGroupMeta(msg);
+            case MsgTelSv.TYPE:
+                return new MsgTelSv(msg);
             case MsgTrackingStateDetailedDepA.TYPE:
                 return new MsgTrackingStateDetailedDepA(msg);
             case MsgTrackingStateDetailedDep.TYPE:

@@ -76,23 +76,28 @@ class Test_auto_check_sbp_ssr_MsgSsrTileDefinition0
 
 TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   uint8_t encoded_frame[] = {
-      85, 247, 5, 66, 0, 25,  31,  0, 1,   0,  2, 0, 4, 0, 8,   0,  16,
-      0,  32,  0, 64, 0, 128, 210, 2, 150, 73, 0, 0, 0, 0, 214, 71,
+      85, 248, 5, 0,   0, 33,  127, 58, 9,   0,   174, 8,   1,  2,
+      3,  4,   0, 5,   0, 186, 28,  59, 167, 100, 0,   100, 0,  6,
+      0,  6,   0, 210, 2, 150, 73,  0,  0,   0,   0,   204, 94,
   };
 
   sbp_msg_ssr_tile_definition_t test_msg{};
   test_msg.bitmask = 1234567890;
-  test_msg.cols = 32768;
-  test_msg.corner_nw_lat = 1024;
-  test_msg.corner_nw_lon = 2048;
-  test_msg.rows = 16384;
-  test_msg.spacing_lat = 4096;
-  test_msg.spacing_lon = 8192;
-  test_msg.ssr_sol_id = 31;
-  test_msg.tile_id = 512;
-  test_msg.tile_set_id = 256;
+  test_msg.cols = 6;
+  test_msg.corner_nw_lat = 7354;
+  test_msg.corner_nw_lon = -22725;
+  test_msg.iod_atmo = 3;
+  test_msg.rows = 6;
+  test_msg.sol_id = 2;
+  test_msg.spacing_lat = 100;
+  test_msg.spacing_lon = 100;
+  test_msg.tile_id = 5;
+  test_msg.tile_set_id = 4;
+  test_msg.time.tow = 604799;
+  test_msg.time.wn = 2222;
+  test_msg.update_interval = 1;
 
-  EXPECT_EQ(send_message(66, test_msg), SBP_OK);
+  EXPECT_EQ(send_message(0, test_msg), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -102,36 +107,48 @@ TEST_F(Test_auto_check_sbp_ssr_MsgSsrTileDefinition0, Test) {
   }
 
   EXPECT_EQ(n_callbacks_logged_, 1);
-  EXPECT_EQ(last_sender_id_, 66);
+  EXPECT_EQ(last_sender_id_, 0);
   EXPECT_EQ(last_msg_, test_msg);
   EXPECT_EQ(last_msg_.bitmask, 1234567890)
       << "incorrect value for last_msg_.bitmask, expected 1234567890, is "
       << last_msg_.bitmask;
-  EXPECT_EQ(last_msg_.cols, 32768)
-      << "incorrect value for last_msg_.cols, expected 32768, is "
+  EXPECT_EQ(last_msg_.cols, 6)
+      << "incorrect value for last_msg_.cols, expected 6, is "
       << last_msg_.cols;
-  EXPECT_EQ(last_msg_.corner_nw_lat, 1024)
-      << "incorrect value for last_msg_.corner_nw_lat, expected 1024, is "
+  EXPECT_EQ(last_msg_.corner_nw_lat, 7354)
+      << "incorrect value for last_msg_.corner_nw_lat, expected 7354, is "
       << last_msg_.corner_nw_lat;
-  EXPECT_EQ(last_msg_.corner_nw_lon, 2048)
-      << "incorrect value for last_msg_.corner_nw_lon, expected 2048, is "
+  EXPECT_EQ(last_msg_.corner_nw_lon, -22725)
+      << "incorrect value for last_msg_.corner_nw_lon, expected -22725, is "
       << last_msg_.corner_nw_lon;
-  EXPECT_EQ(last_msg_.rows, 16384)
-      << "incorrect value for last_msg_.rows, expected 16384, is "
+  EXPECT_EQ(last_msg_.iod_atmo, 3)
+      << "incorrect value for last_msg_.iod_atmo, expected 3, is "
+      << last_msg_.iod_atmo;
+  EXPECT_EQ(last_msg_.rows, 6)
+      << "incorrect value for last_msg_.rows, expected 6, is "
       << last_msg_.rows;
-  EXPECT_EQ(last_msg_.spacing_lat, 4096)
-      << "incorrect value for last_msg_.spacing_lat, expected 4096, is "
+  EXPECT_EQ(last_msg_.sol_id, 2)
+      << "incorrect value for last_msg_.sol_id, expected 2, is "
+      << last_msg_.sol_id;
+  EXPECT_EQ(last_msg_.spacing_lat, 100)
+      << "incorrect value for last_msg_.spacing_lat, expected 100, is "
       << last_msg_.spacing_lat;
-  EXPECT_EQ(last_msg_.spacing_lon, 8192)
-      << "incorrect value for last_msg_.spacing_lon, expected 8192, is "
+  EXPECT_EQ(last_msg_.spacing_lon, 100)
+      << "incorrect value for last_msg_.spacing_lon, expected 100, is "
       << last_msg_.spacing_lon;
-  EXPECT_EQ(last_msg_.ssr_sol_id, 31)
-      << "incorrect value for last_msg_.ssr_sol_id, expected 31, is "
-      << last_msg_.ssr_sol_id;
-  EXPECT_EQ(last_msg_.tile_id, 512)
-      << "incorrect value for last_msg_.tile_id, expected 512, is "
+  EXPECT_EQ(last_msg_.tile_id, 5)
+      << "incorrect value for last_msg_.tile_id, expected 5, is "
       << last_msg_.tile_id;
-  EXPECT_EQ(last_msg_.tile_set_id, 256)
-      << "incorrect value for last_msg_.tile_set_id, expected 256, is "
+  EXPECT_EQ(last_msg_.tile_set_id, 4)
+      << "incorrect value for last_msg_.tile_set_id, expected 4, is "
       << last_msg_.tile_set_id;
+  EXPECT_EQ(last_msg_.time.tow, 604799)
+      << "incorrect value for last_msg_.time.tow, expected 604799, is "
+      << last_msg_.time.tow;
+  EXPECT_EQ(last_msg_.time.wn, 2222)
+      << "incorrect value for last_msg_.time.wn, expected 2222, is "
+      << last_msg_.time.wn;
+  EXPECT_EQ(last_msg_.update_interval, 1)
+      << "incorrect value for last_msg_.update_interval, expected 1, is "
+      << last_msg_.update_interval;
 }

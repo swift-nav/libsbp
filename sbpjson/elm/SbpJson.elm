@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcknowledge, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEd25519Certificate, msgEd25519Signature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPoseRelative, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcknowledge, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEd25519Certificate, msgEd25519Signature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPoseRelative, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgTelSv, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, telemetrySV, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -175,6 +175,7 @@
 --     decodeString msgStmUniqueIDReq myJsonString
 --     decodeString msgStmUniqueIDResp myJsonString
 --     decodeString msgSvAzEl myJsonString
+--     decodeString msgTelSv myJsonString
 --     decodeString msgThreadState myJsonString
 --     decodeString msgTrackingIq myJsonString
 --     decodeString msgTrackingState myJsonString
@@ -214,6 +215,7 @@
 --     decodeString subSystemReport myJsonString
 --     decodeString svAzEl myJsonString
 --     decodeString svID myJsonString
+--     decodeString telemetrySV myJsonString
 --     decodeString trackingChannelCorrelation myJsonString
 --     decodeString trackingChannelState myJsonString
 --     decodeString troposphericDelayCorrection myJsonString
@@ -719,6 +721,9 @@ module SbpJson exposing
     , MsgSvAzEl
     , msgSvAzElToString
     , msgSvAzEl
+    , MsgTelSv
+    , msgTelSvToString
+    , msgTelSv
     , MsgThreadState
     , msgThreadStateToString
     , msgThreadState
@@ -836,6 +841,9 @@ module SbpJson exposing
     , SvID
     , svIDToString
     , svID
+    , TelemetrySV
+    , telemetrySVToString
+    , telemetrySV
     , TrackingChannelCorrelation
     , trackingChannelCorrelationToString
     , trackingChannelCorrelation
@@ -2832,6 +2840,10 @@ type alias PhaseBiasesContent =
 
 type alias MsgSsrSatelliteApc =
     { apc : Array SatelliteAPC
+    , iodSsr : Int
+    , solID : Int
+    , time : GpsTimeSEC
+    , updateInterval : Int
     }
 
 {-| Contains phase center offset and elevation variation corrections for one signal on a
@@ -2873,12 +2885,15 @@ type alias MsgSsrTileDefinition =
     , cols : Int
     , cornerNwLat : Int
     , cornerNwLon : Int
+    , iodAtmo : Int
     , rows : Int
+    , solID : Int
     , spacingLat : Int
     , spacingLon : Int
-    , ssrSolID : Int
     , tileID : Int
     , tileSetID : Int
+    , time : GpsTimeSEC
+    , updateInterval : Int
     }
 
 {-| The system start-up message is sent once on system start-up. It notifies the host or
@@ -2968,6 +2983,27 @@ type alias MsgSvAzEl =
 type alias SvAzEl =
     { az : Int
     , el : Int
+    , sid : GnssSignal
+    }
+
+{-| This message includes telemetry pertinent to satellite signals available to Starling. -}
+type alias MsgTelSv =
+    { nObs : Int
+    , originFlags : Int
+    , svTel : Array TelemetrySV
+    , tow : Int
+    , wn : Int
+    }
+
+type alias TelemetrySV =
+    { availabilityFlags : Int
+    , az : Int
+    , correctionFlags : Int
+    , el : Int
+    , ephemerisFlags : Int
+    , outlierFlags : Int
+    , phaseResidual : Int
+    , pseudorangeResidual : Int
     , sid : GnssSignal
     }
 
@@ -3856,6 +3892,9 @@ msgStmUniqueIDRespToString r = Jenc.encode 0 (encodeMsgStmUniqueIDResp r)
 msgSvAzElToString : MsgSvAzEl -> String
 msgSvAzElToString r = Jenc.encode 0 (encodeMsgSvAzEl r)
 
+msgTelSvToString : MsgTelSv -> String
+msgTelSvToString r = Jenc.encode 0 (encodeMsgTelSv r)
+
 msgThreadStateToString : MsgThreadState -> String
 msgThreadStateToString r = Jenc.encode 0 (encodeMsgThreadState r)
 
@@ -3972,6 +4011,9 @@ svAzElToString r = Jenc.encode 0 (encodeSvAzEl r)
 
 svIDToString : SvID -> String
 svIDToString r = Jenc.encode 0 (encodeSvID r)
+
+telemetrySVToString : TelemetrySV -> String
+telemetrySVToString r = Jenc.encode 0 (encodeTelemetrySV r)
 
 trackingChannelCorrelationToString : TrackingChannelCorrelation -> String
 trackingChannelCorrelationToString r = Jenc.encode 0 (encodeTrackingChannelCorrelation r)
@@ -7137,11 +7179,19 @@ msgSsrSatelliteApc : Jdec.Decoder MsgSsrSatelliteApc
 msgSsrSatelliteApc =
     Jpipe.decode MsgSsrSatelliteApc
         |> Jpipe.required "apc" (Jdec.array satelliteAPC)
+        |> Jpipe.required "iod_ssr" Jdec.int
+        |> Jpipe.required "sol_id" Jdec.int
+        |> Jpipe.required "time" gpsTimeSEC
+        |> Jpipe.required "update_interval" Jdec.int
 
 encodeMsgSsrSatelliteApc : MsgSsrSatelliteApc -> Jenc.Value
 encodeMsgSsrSatelliteApc x =
     Jenc.object
         [ ("apc", makeArrayEncoder encodeSatelliteAPC x.apc)
+        , ("iod_ssr", Jenc.int x.iodSsr)
+        , ("sol_id", Jenc.int x.solID)
+        , ("time", encodeGpsTimeSEC x.time)
+        , ("update_interval", Jenc.int x.updateInterval)
         ]
 
 satelliteAPC : Jdec.Decoder SatelliteAPC
@@ -7206,12 +7256,15 @@ msgSsrTileDefinition =
         |> Jpipe.required "cols" Jdec.int
         |> Jpipe.required "corner_nw_lat" Jdec.int
         |> Jpipe.required "corner_nw_lon" Jdec.int
+        |> Jpipe.required "iod_atmo" Jdec.int
         |> Jpipe.required "rows" Jdec.int
+        |> Jpipe.required "sol_id" Jdec.int
         |> Jpipe.required "spacing_lat" Jdec.int
         |> Jpipe.required "spacing_lon" Jdec.int
-        |> Jpipe.required "ssr_sol_id" Jdec.int
         |> Jpipe.required "tile_id" Jdec.int
         |> Jpipe.required "tile_set_id" Jdec.int
+        |> Jpipe.required "time" gpsTimeSEC
+        |> Jpipe.required "update_interval" Jdec.int
 
 encodeMsgSsrTileDefinition : MsgSsrTileDefinition -> Jenc.Value
 encodeMsgSsrTileDefinition x =
@@ -7220,12 +7273,15 @@ encodeMsgSsrTileDefinition x =
         , ("cols", Jenc.int x.cols)
         , ("corner_nw_lat", Jenc.int x.cornerNwLat)
         , ("corner_nw_lon", Jenc.int x.cornerNwLon)
+        , ("iod_atmo", Jenc.int x.iodAtmo)
         , ("rows", Jenc.int x.rows)
+        , ("sol_id", Jenc.int x.solID)
         , ("spacing_lat", Jenc.int x.spacingLat)
         , ("spacing_lon", Jenc.int x.spacingLon)
-        , ("ssr_sol_id", Jenc.int x.ssrSolID)
         , ("tile_id", Jenc.int x.tileID)
         , ("tile_set_id", Jenc.int x.tileSetID)
+        , ("time", encodeGpsTimeSEC x.time)
+        , ("update_interval", Jenc.int x.updateInterval)
         ]
 
 msgStartup : Jdec.Decoder MsgStartup
@@ -7363,6 +7419,52 @@ encodeSvAzEl x =
     Jenc.object
         [ ("az", Jenc.int x.az)
         , ("el", Jenc.int x.el)
+        , ("sid", encodeGnssSignal x.sid)
+        ]
+
+msgTelSv : Jdec.Decoder MsgTelSv
+msgTelSv =
+    Jpipe.decode MsgTelSv
+        |> Jpipe.required "n_obs" Jdec.int
+        |> Jpipe.required "origin_flags" Jdec.int
+        |> Jpipe.required "sv_tel" (Jdec.array telemetrySV)
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "wn" Jdec.int
+
+encodeMsgTelSv : MsgTelSv -> Jenc.Value
+encodeMsgTelSv x =
+    Jenc.object
+        [ ("n_obs", Jenc.int x.nObs)
+        , ("origin_flags", Jenc.int x.originFlags)
+        , ("sv_tel", makeArrayEncoder encodeTelemetrySV x.svTel)
+        , ("tow", Jenc.int x.tow)
+        , ("wn", Jenc.int x.wn)
+        ]
+
+telemetrySV : Jdec.Decoder TelemetrySV
+telemetrySV =
+    Jpipe.decode TelemetrySV
+        |> Jpipe.required "availability_flags" Jdec.int
+        |> Jpipe.required "az" Jdec.int
+        |> Jpipe.required "correction_flags" Jdec.int
+        |> Jpipe.required "el" Jdec.int
+        |> Jpipe.required "ephemeris_flags" Jdec.int
+        |> Jpipe.required "outlier_flags" Jdec.int
+        |> Jpipe.required "phase_residual" Jdec.int
+        |> Jpipe.required "pseudorange_residual" Jdec.int
+        |> Jpipe.required "sid" gnssSignal
+
+encodeTelemetrySV : TelemetrySV -> Jenc.Value
+encodeTelemetrySV x =
+    Jenc.object
+        [ ("availability_flags", Jenc.int x.availabilityFlags)
+        , ("az", Jenc.int x.az)
+        , ("correction_flags", Jenc.int x.correctionFlags)
+        , ("el", Jenc.int x.el)
+        , ("ephemeris_flags", Jenc.int x.ephemerisFlags)
+        , ("outlier_flags", Jenc.int x.outlierFlags)
+        , ("phase_residual", Jenc.int x.phaseResidual)
+        , ("pseudorange_residual", Jenc.int x.pseudorangeResidual)
         , ("sid", encodeGnssSignal x.sid)
         ]
 

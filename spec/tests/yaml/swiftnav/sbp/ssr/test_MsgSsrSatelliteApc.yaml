@@ -1,0 +1,63 @@
+description: Unit tests for swiftnav.sbp.ssr MsgSsrSatelliteApc
+generated_on: '2023-01-09 22:41:50.310466'
+package: sbp.ssr
+tests:
+- msg:
+    c_decoded_fields:
+      n_apc: 1
+    fields:
+      apc:
+      - pco:
+        - 1
+        - -1
+        - 729
+        pcv:
+        - 11
+        - 10
+        - 8
+        - 5
+        - 1
+        - -4
+        - -8
+        - -10
+        - -10
+        - -10
+        - -7
+        - -4
+        - 0
+        - 6
+        - 12
+        - 22
+        - 30
+        - 41
+        - 41
+        - 41
+        - 41
+        sat_info: 4
+        sid:
+          code: 0
+          sat: 2
+        svn: 61
+      iod_ssr: 3
+      sol_id: 2
+      time:
+        tow: 604799
+        wn: 2222
+      update_interval: 1
+    module: sbp.ssr
+    name: MsgSsrSatelliteApc
+  msg_type: '0x605'
+  raw_json: '{"preamble": 85, "msg_type": 1541, "sender": 0, "length": 41, "payload":
+    "fzoJAK4IAQIDAgAEPQABAP//2QILCggFAfz49vb2+fwABgwWHikpKSk=", "crc": 41360, "time":
+    {"tow": 604799, "wn": 2222}, "update_interval": 1, "sol_id": 2, "iod_ssr": 3,
+    "apc": [{"sid": {"sat": 2, "code": 0}, "sat_info": 4, "svn": 61, "pco": [1, -1,
+    729], "pcv": [11, 10, 8, 5, 1, -4, -8, -10, -10, -10, -7, -4, 0, 6, 12, 22, 30,
+    41, 41, 41, 41]}]}'
+  raw_packet: VQUGAAApfzoJAK4IAQIDAgAEPQABAP//2QILCggFAfz49vb2+fwABgwWHikpKSmQoQ==
+  sbp:
+    crc: '0xA190'
+    length: 41
+    msg_type: '0x605'
+    payload: fzoJAK4IAQIDAgAEPQABAP//2QILCggFAfz49vb2+fwABgwWHikpKSk=
+    preamble: '0x55'
+    sender: '0x0'

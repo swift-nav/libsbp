@@ -21,7 +21,7 @@ import java.math.BigInteger;
 import org.json.JSONObject;
 
 /**
- * SBP class for message MSG_SSR_TILE_DEFINITION (0x05F7).
+ * SBP class for message MSG_SSR_TILE_DEFINITION (0x05F8).
  *
  * <p>You can have MSG_SSR_TILE_DEFINITION inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
@@ -34,10 +34,21 @@ import org.json.JSONObject;
  * points.
  */
 public class MsgSsrTileDefinition extends SBPMessage {
-    public static final int TYPE = 0x05F7;
+    public static final int TYPE = 0x05F8;
 
-    /** SSR Solution ID. */
-    public int ssr_sol_id;
+    /** GNSS reference time of the correction */
+    public GPSTimeSec time;
+
+    /**
+     * Update interval between consecutive corrections. Encoded following RTCM DF391 specification.
+     */
+    public int update_interval;
+
+    /** SSR Solution ID. Similar to RTCM DF415. */
+    public int sol_id;
+
+    /** IOD of the SSR atmospheric correction. */
+    public int iod_atmo;
 
     /** Unique identifier of the tile set this tile belongs to. */
     public int tile_set_id;
@@ -51,9 +62,8 @@ public class MsgSsrTileDefinition extends SBPMessage {
     /**
      * North-West corner correction point latitude.
      *
-     * <p>The relation between the latitude X in the range [-90, 90] and the coded number N is:
-     *
-     * <p>N = floor((X / 90) * 2^14)
+     * <p>The relation between the latitude X in the range [-90, 90] and the coded number N is: N =
+     * floor((X / 90) * 2^14)
      *
      * <p>See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
      */
@@ -62,9 +72,8 @@ public class MsgSsrTileDefinition extends SBPMessage {
     /**
      * North-West corner correction point longitude.
      *
-     * <p>The relation between the longitude X in the range [-180, 180] and the coded number N is:
-     *
-     * <p>N = floor((X / 180) * 2^15)
+     * <p>The relation between the longitude X in the range [-180, 180] and the coded number N is: N
+     * = floor((X / 180) * 2^15)
      *
      * <p>See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
      */
@@ -99,15 +108,15 @@ public class MsgSsrTileDefinition extends SBPMessage {
     public int cols;
 
     /**
-     * Specifies the availability of correction data at the correction points in the array.
+     * Specifies the absence of correction data at the correction points in the array (grid).
      *
-     * <p>If a specific bit is enabled (set to 1), the correction is not available. Only the first
-     * rows * cols bits are used, the remainder are set to 0. If there are more then 64 correction
-     * points the remaining corrections are always available.
+     * <p>Only the first rows * cols bits are used, and if a specific bit is enabled (set to 1), the
+     * correction is not available. If there are more than 64 correction points the remaining
+     * corrections are always available.
      *
-     * <p>Starting with the northwest corner of the array (top left on a north oriented map) the
-     * correction points are enumerated with row precedence - first row west to east, second row
-     * west to east, until last row west to east - ending with the southeast corner of the array.
+     * <p>The correction points are packed by rows, starting with the northwest corner of the array
+     * (top-left on a north oriented map), with each row spanning west to east, ending with the
+     * southeast corner of the array.
      *
      * <p>See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but note the definition of the
      * bits is inverted.
@@ -126,13 +135,16 @@ public class MsgSsrTileDefinition extends SBPMessage {
         super(msg);
         if (msg.type != TYPE)
             throw new SBPBinaryException(
-                    "Type mismatch for MsgSsrTileDefinition, expected 1527, actual " + msg.type);
+                    "Type mismatch for MsgSsrTileDefinition, expected 1528, actual " + msg.type);
     }
 
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        ssr_sol_id = parser.getU8();
+        time = new GPSTimeSec().parse(parser);
+        update_interval = parser.getU8();
+        sol_id = parser.getU8();
+        iod_atmo = parser.getU8();
         tile_set_id = parser.getU16();
         tile_id = parser.getU16();
         corner_nw_lat = parser.getS16();
@@ -146,7 +158,10 @@ public class MsgSsrTileDefinition extends SBPMessage {
 
     @Override
     protected void build(Builder builder) {
-        builder.putU8(ssr_sol_id);
+        time.build(builder);
+        builder.putU8(update_interval);
+        builder.putU8(sol_id);
+        builder.putU8(iod_atmo);
         builder.putU16(tile_set_id);
         builder.putU16(tile_id);
         builder.putS16(corner_nw_lat);
@@ -161,7 +176,10 @@ public class MsgSsrTileDefinition extends SBPMessage {
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("ssr_sol_id", ssr_sol_id);
+        obj.put("time", time.toJSON());
+        obj.put("update_interval", update_interval);
+        obj.put("sol_id", sol_id);
+        obj.put("iod_atmo", iod_atmo);
         obj.put("tile_set_id", tile_set_id);
         obj.put("tile_id", tile_id);
         obj.put("corner_nw_lat", corner_nw_lat);

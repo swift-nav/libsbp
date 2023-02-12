@@ -34,6 +34,7 @@
 #include <libsbp/legacy/solution_meta.h>
 #include <libsbp/legacy/ssr.h>
 #include <libsbp/legacy/system.h>
+#include <libsbp/legacy/telemetry.h>
 #include <libsbp/legacy/tracking.h>
 #include <libsbp/legacy/user.h>
 #include <libsbp/legacy/vehicle.h>
@@ -687,6 +688,12 @@ struct MessageTraits<msg_utc_time_gnss_t> {
 
 
 template<>
+struct MessageTraits<msg_tel_sv_t> {
+  static constexpr u16 id = 288;
+};
+
+
+template<>
 struct MessageTraits<msg_settings_register_resp_t> {
   static constexpr u16 id = 431;
 };
@@ -1011,14 +1018,20 @@ struct MessageTraits<msg_ssr_grid_definition_dep_a_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_tile_definition_dep_t> {
+struct MessageTraits<msg_ssr_tile_definition_dep_a_t> {
   static constexpr u16 id = 1526;
 };
 
 
 template<>
-struct MessageTraits<msg_ssr_tile_definition_t> {
+struct MessageTraits<msg_ssr_tile_definition_dep_b_t> {
   static constexpr u16 id = 1527;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_tile_definition_t> {
+  static constexpr u16 id = 1528;
 };
 
 
@@ -1053,8 +1066,14 @@ struct MessageTraits<msg_ssr_gridded_correction_bounds_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_satellite_apc_t> {
+struct MessageTraits<msg_ssr_satellite_apc_dep_t> {
   static constexpr u16 id = 1540;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_satellite_apc_t> {
+  static constexpr u16 id = 1541;
 };
 
 

@@ -1,0 +1,4 @@
+build --action_env=BAZEL_CXXOPTS='-std=c++14'
+
+build:clang-tidy --aspects @rules_swiftnav//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
+build:clang-tidy --output_groups=report

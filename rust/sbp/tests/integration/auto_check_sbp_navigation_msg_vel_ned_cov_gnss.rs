@@ -45,8 +45,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_cov_gnss() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x1000,
-                    "incorrect sender id, expected 0x1000, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x1000, is {sender_id}"
                 );
                 assert!(
                     msg.cov_d_d.almost_eq(7.88295920938253403e-03),
@@ -154,8 +153,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_cov_gnss() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x1000,
-                    "incorrect sender id, expected 0x1000, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x1000, is {sender_id}"
                 );
                 assert!(
                     msg.cov_d_d.almost_eq(7.88295920938253403e-03),
@@ -272,8 +270,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_cov_gnss() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x1000,
-                    "incorrect sender id, expected 0x1000, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x1000, is {sender_id}"
                 );
                 assert!(
                     msg.cov_d_d.almost_eq(7.88295920938253403e-03),

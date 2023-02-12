@@ -1,0 +1,16 @@
+name: Add Additional Reviewers
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+jobs:
+  auto-request-review:
+    name: Add Additional Reviewers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request additional reviews based on supplied rules
+        uses: necojackarc/auto-request-review@v0.10.0
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          config: .github/additional_reviewers_config.yaml

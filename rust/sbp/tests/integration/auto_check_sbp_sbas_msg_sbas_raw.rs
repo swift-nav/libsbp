@@ -45,8 +45,7 @@ fn test_auto_check_sbp_sbas_msg_sbas_raw() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xc81c,
-                    "incorrect sender id, expected 0xc81c, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xc81c, is {sender_id}"
                 );
                 assert_eq!(
                     msg.data[0], 23,
@@ -253,8 +252,7 @@ fn test_json2sbp_auto_check_sbp_sbas_msg_sbas_raw() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xc81c,
-                    "incorrect sender id, expected 0xc81c, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xc81c, is {sender_id}"
                 );
                 assert_eq!(
                     msg.data[0], 23,
@@ -470,8 +468,7 @@ fn test_sbp2json_auto_check_sbp_sbas_msg_sbas_raw() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xc81c,
-                    "incorrect sender id, expected 0xc81c, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xc81c, is {sender_id}"
                 );
                 assert_eq!(
                     msg.data[0], 23,

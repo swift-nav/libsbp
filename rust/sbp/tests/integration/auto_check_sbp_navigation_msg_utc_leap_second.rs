@@ -43,8 +43,7 @@ fn test_auto_check_sbp_navigation_msg_utc_leap_second() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.count_after, 9,
@@ -141,8 +140,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_utc_leap_second() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.count_after, 9,
@@ -246,8 +244,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_utc_leap_second() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0042, is {sender_id}"
                 );
                 assert_eq!(
                     msg.count_after, 9,

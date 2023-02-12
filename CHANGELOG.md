@@ -1,8 +1,22 @@
 # Changelog
 
+## [v4.11.0](https://github.com/swift-nav/libsbp/tree/v4.11.0) (2023-01-25)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.10.0...v4.11.0)
+
+**Merged pull requests:**
+
+- ci: auto request additional reviewers \(doc review\) [\#1291](https://github.com/swift-nav/libsbp/pull/1291) ([silverjam](https://github.com/silverjam))
+- Add MSG\_TEL\_SV:  per-SV telemetry message  \[POS-913\] [\#1290](https://github.com/swift-nav/libsbp/pull/1290) ([ismolyakov](https://github.com/ismolyakov))
+- Added Makefile with bazel wrappers \[BUILD-360\] [\#1289](https://github.com/swift-nav/libsbp/pull/1289) ([wwieclaw](https://github.com/wwieclaw))
+- Add test for SBP-1534 STEC list empty [\#1287](https://github.com/swift-nav/libsbp/pull/1287) ([JADC362](https://github.com/JADC362))
+- Add new SSR Satellite APC and Tile Definition message \[PC-116\] [\#1284](https://github.com/swift-nav/libsbp/pull/1284) ([Davinco](https://github.com/Davinco))
+- build\(deps\): bump json5 from 1.0.1 to 1.0.2 [\#1283](https://github.com/swift-nav/libsbp/pull/1283) ([dependabot[bot]](https://github.com/apps/dependabot))
+- prep release \#no\_auto\_pr [\#1281](https://github.com/swift-nav/libsbp/pull/1281) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.10.0](https://github.com/swift-nav/libsbp/tree/v4.10.0) (2022-12-22)
 
-[Full Changelog](https://github.com/swift-nav/libsbp/compare/SR1.0.1...v4.10.0)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.9.0...v4.10.0)
 
 **Closed issues:**
 

@@ -168,6 +168,7 @@
 //   const msgStmUniqueIDReq = Convert.toMsgStmUniqueIDReq(json);
 //   const msgStmUniqueIDResp = Convert.toMsgStmUniqueIDResp(json);
 //   const msgSvAzEl = Convert.toMsgSvAzEl(json);
+//   const msgTelSv = Convert.toMsgTelSv(json);
 //   const msgThreadState = Convert.toMsgThreadState(json);
 //   const msgTrackingIq = Convert.toMsgTrackingIq(json);
 //   const msgTrackingState = Convert.toMsgTrackingState(json);
@@ -207,6 +208,7 @@
 //   const subSystemReport = Convert.toSubSystemReport(json);
 //   const svAzEl = Convert.toSvAzEl(json);
 //   const svID = Convert.toSvID(json);
+//   const telemetrySV = Convert.toTelemetrySV(json);
 //   const trackingChannelCorrelation = Convert.toTrackingChannelCorrelation(json);
 //   const trackingChannelState = Convert.toTrackingChannelState(json);
 //   const troposphericDelayCorrection = Convert.toTroposphericDelayCorrection(json);
@@ -1546,6 +1548,14 @@ function msgSvAzElToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSvAzEl")), null, 2);
 }
 
+function toMsgTelSv(json) {
+    return cast(JSON.parse(json), r("MsgTelSv"));
+}
+
+function msgTelSvToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgTelSv")), null, 2);
+}
+
 function toMsgThreadState(json) {
     return cast(JSON.parse(json), r("MsgThreadState"));
 }
@@ -1856,6 +1866,14 @@ function toSvID(json) {
 
 function svIDToJson(value) {
     return JSON.stringify(uncast(value, r("SvID")), null, 2);
+}
+
+function toTelemetrySV(json) {
+    return cast(JSON.parse(json), r("TelemetrySV"));
+}
+
+function telemetrySVToJson(value) {
+    return JSON.stringify(uncast(value, r("TelemetrySV")), null, 2);
 }
 
 function toTrackingChannelCorrelation(json) {
@@ -3208,6 +3226,10 @@ const typeMap = {
     ], "any"),
     "MsgSsrSatelliteApc": o([
         { json: "apc", js: "apc", typ: a(r("SatelliteAPC")) },
+        { json: "iod_ssr", js: "iod_ssr", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "SatelliteAPC": o([
         { json: "pco", js: "pco", typ: a(0) },
@@ -3234,12 +3256,15 @@ const typeMap = {
         { json: "cols", js: "cols", typ: 0 },
         { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
         { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
+        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
         { json: "rows", js: "rows", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
         { json: "spacing_lat", js: "spacing_lat", typ: 0 },
         { json: "spacing_lon", js: "spacing_lon", typ: 0 },
-        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },
@@ -3283,6 +3308,24 @@ const typeMap = {
     "SvAzEl": o([
         { json: "az", js: "az", typ: 0 },
         { json: "el", js: "el", typ: 0 },
+        { json: "sid", js: "sid", typ: r("GnssSignal") },
+    ], "any"),
+    "MsgTelSv": o([
+        { json: "n_obs", js: "n_obs", typ: 0 },
+        { json: "origin_flags", js: "origin_flags", typ: 0 },
+        { json: "sv_tel", js: "sv_tel", typ: a(r("TelemetrySV")) },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
+    ], "any"),
+    "TelemetrySV": o([
+        { json: "availability_flags", js: "availability_flags", typ: 0 },
+        { json: "az", js: "az", typ: 0 },
+        { json: "correction_flags", js: "correction_flags", typ: 0 },
+        { json: "el", js: "el", typ: 0 },
+        { json: "ephemeris_flags", js: "ephemeris_flags", typ: 0 },
+        { json: "outlier_flags", js: "outlier_flags", typ: 0 },
+        { json: "phase_residual", js: "phase_residual", typ: 0 },
+        { json: "pseudorange_residual", js: "pseudorange_residual", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
     ], "any"),
     "MsgThreadState": o([
@@ -3836,6 +3879,8 @@ module.exports = {
     "toMsgStmUniqueIDResp": toMsgStmUniqueIDResp,
     "msgSvAzElToJson": msgSvAzElToJson,
     "toMsgSvAzEl": toMsgSvAzEl,
+    "msgTelSvToJson": msgTelSvToJson,
+    "toMsgTelSv": toMsgTelSv,
     "msgThreadStateToJson": msgThreadStateToJson,
     "toMsgThreadState": toMsgThreadState,
     "msgTrackingIqToJson": msgTrackingIqToJson,
@@ -3914,6 +3959,8 @@ module.exports = {
     "toSvAzEl": toSvAzEl,
     "svIDToJson": svIDToJson,
     "toSvID": toSvID,
+    "telemetrySVToJson": telemetrySVToJson,
+    "toTelemetrySV": toTelemetrySV,
     "trackingChannelCorrelationToJson": trackingChannelCorrelationToJson,
     "toTrackingChannelCorrelation": toTrackingChannelCorrelation,
     "trackingChannelStateToJson": trackingChannelStateToJson,

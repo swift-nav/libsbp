@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEd25519Certificate, MsgEd25519Signature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEd25519Certificate, MsgEd25519Signature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgTelSv, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TelemetrySV, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -168,6 +168,7 @@
 //   const msgStmUniqueIDReq = Convert.toMsgStmUniqueIDReq(json);
 //   const msgStmUniqueIDResp = Convert.toMsgStmUniqueIDResp(json);
 //   const msgSvAzEl = Convert.toMsgSvAzEl(json);
+//   const msgTelSv = Convert.toMsgTelSv(json);
 //   const msgThreadState = Convert.toMsgThreadState(json);
 //   const msgTrackingIq = Convert.toMsgTrackingIq(json);
 //   const msgTrackingState = Convert.toMsgTrackingState(json);
@@ -207,6 +208,7 @@
 //   const subSystemReport = Convert.toSubSystemReport(json);
 //   const svAzEl = Convert.toSvAzEl(json);
 //   const svID = Convert.toSvID(json);
+//   const telemetrySV = Convert.toTelemetrySV(json);
 //   const trackingChannelCorrelation = Convert.toTrackingChannelCorrelation(json);
 //   const trackingChannelState = Convert.toTrackingChannelState(json);
 //   const troposphericDelayCorrection = Convert.toTroposphericDelayCorrection(json);
@@ -2333,7 +2335,11 @@ export interface PhaseBiasesContent {
 }
 
 export interface MsgSsrSatelliteApc {
-    apc: SatelliteAPC[];
+    apc:             SatelliteAPC[];
+    iod_ssr:         number;
+    sol_id:          number;
+    time:            GpsTimeSEC;
+    update_interval: number;
 }
 
 /**
@@ -2375,16 +2381,19 @@ export interface STECSatElement {
  * lists of points.
  */
 export interface MsgSsrTileDefinition {
-    bitmask:       number;
-    cols:          number;
-    corner_nw_lat: number;
-    corner_nw_lon: number;
-    rows:          number;
-    spacing_lat:   number;
-    spacing_lon:   number;
-    ssr_sol_id:    number;
-    tile_id:       number;
-    tile_set_id:   number;
+    bitmask:         number;
+    cols:            number;
+    corner_nw_lat:   number;
+    corner_nw_lon:   number;
+    iod_atmo:        number;
+    rows:            number;
+    sol_id:          number;
+    spacing_lat:     number;
+    spacing_lon:     number;
+    tile_id:         number;
+    tile_set_id:     number;
+    time:            GpsTimeSEC;
+    update_interval: number;
 }
 
 /**
@@ -2486,6 +2495,29 @@ export interface SvAzEl {
     az:  number;
     el:  number;
     sid: GnssSignal;
+}
+
+/**
+ * This message includes telemetry pertinent to satellite signals available to Starling.
+ */
+export interface MsgTelSv {
+    n_obs:        number;
+    origin_flags: number;
+    sv_tel:       TelemetrySV[];
+    tow:          number;
+    wn:           number;
+}
+
+export interface TelemetrySV {
+    availability_flags:   number;
+    az:                   number;
+    correction_flags:     number;
+    el:                   number;
+    ephemeris_flags:      number;
+    outlier_flags:        number;
+    phase_residual:       number;
+    pseudorange_residual: number;
+    sid:                  GnssSignal;
 }
 
 /**
@@ -4203,6 +4235,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgSvAzEl")), null, 2);
     }
 
+    public static toMsgTelSv(json: string): MsgTelSv {
+        return cast(JSON.parse(json), r("MsgTelSv"));
+    }
+
+    public static msgTelSvToJson(value: MsgTelSv): string {
+        return JSON.stringify(uncast(value, r("MsgTelSv")), null, 2);
+    }
+
     public static toMsgThreadState(json: string): MsgThreadState {
         return cast(JSON.parse(json), r("MsgThreadState"));
     }
@@ -4513,6 +4553,14 @@ export class Convert {
 
     public static svIDToJson(value: SvID): string {
         return JSON.stringify(uncast(value, r("SvID")), null, 2);
+    }
+
+    public static toTelemetrySV(json: string): TelemetrySV {
+        return cast(JSON.parse(json), r("TelemetrySV"));
+    }
+
+    public static telemetrySVToJson(value: TelemetrySV): string {
+        return JSON.stringify(uncast(value, r("TelemetrySV")), null, 2);
     }
 
     public static toTrackingChannelCorrelation(json: string): TrackingChannelCorrelation {
@@ -5866,6 +5914,10 @@ const typeMap: any = {
     ], "any"),
     "MsgSsrSatelliteApc": o([
         { json: "apc", js: "apc", typ: a(r("SatelliteAPC")) },
+        { json: "iod_ssr", js: "iod_ssr", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "SatelliteAPC": o([
         { json: "pco", js: "pco", typ: a(0) },
@@ -5892,12 +5944,15 @@ const typeMap: any = {
         { json: "cols", js: "cols", typ: 0 },
         { json: "corner_nw_lat", js: "corner_nw_lat", typ: 0 },
         { json: "corner_nw_lon", js: "corner_nw_lon", typ: 0 },
+        { json: "iod_atmo", js: "iod_atmo", typ: 0 },
         { json: "rows", js: "rows", typ: 0 },
+        { json: "sol_id", js: "sol_id", typ: 0 },
         { json: "spacing_lat", js: "spacing_lat", typ: 0 },
         { json: "spacing_lon", js: "spacing_lon", typ: 0 },
-        { json: "ssr_sol_id", js: "ssr_sol_id", typ: 0 },
         { json: "tile_id", js: "tile_id", typ: 0 },
         { json: "tile_set_id", js: "tile_set_id", typ: 0 },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
+        { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgStartup": o([
         { json: "cause", js: "cause", typ: 0 },
@@ -5941,6 +5996,24 @@ const typeMap: any = {
     "SvAzEl": o([
         { json: "az", js: "az", typ: 0 },
         { json: "el", js: "el", typ: 0 },
+        { json: "sid", js: "sid", typ: r("GnssSignal") },
+    ], "any"),
+    "MsgTelSv": o([
+        { json: "n_obs", js: "n_obs", typ: 0 },
+        { json: "origin_flags", js: "origin_flags", typ: 0 },
+        { json: "sv_tel", js: "sv_tel", typ: a(r("TelemetrySV")) },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
+    ], "any"),
+    "TelemetrySV": o([
+        { json: "availability_flags", js: "availability_flags", typ: 0 },
+        { json: "az", js: "az", typ: 0 },
+        { json: "correction_flags", js: "correction_flags", typ: 0 },
+        { json: "el", js: "el", typ: 0 },
+        { json: "ephemeris_flags", js: "ephemeris_flags", typ: 0 },
+        { json: "outlier_flags", js: "outlier_flags", typ: 0 },
+        { json: "phase_residual", js: "phase_residual", typ: 0 },
+        { json: "pseudorange_residual", js: "pseudorange_residual", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
     ], "any"),
     "MsgThreadState": o([

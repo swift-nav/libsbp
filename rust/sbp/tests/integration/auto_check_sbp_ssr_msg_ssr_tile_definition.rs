@@ -22,8 +22,8 @@ use crate::*;
 fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
     {
         let mut payload = Cursor::new(vec![
-            85, 247, 5, 66, 0, 25, 31, 0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 210, 2,
-            150, 73, 0, 0, 0, 0, 214, 71,
+            85, 248, 5, 0, 0, 33, 127, 58, 9, 0, 174, 8, 1, 2, 3, 4, 0, 5, 0, 186, 28, 59, 167,
+            100, 0, 100, 0, 6, 0, 6, 0, 210, 2, 150, 73, 0, 0, 0, 0, 204, 94,
         ]);
 
         // Test the round trip payload parsing
@@ -37,15 +37,14 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
             sbp::messages::Sbp::MsgSsrTileDefinition(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    1527,
-                    "Incorrect message type, expected 1527, is {}",
+                    0x5F8,
+                    "Incorrect message type, expected 0x5F8, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    sender_id, 0x0,
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.bitmask, 1234567890,
@@ -53,49 +52,69 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.bitmask
                 );
                 assert_eq!(
-                    msg.cols, 32768,
-                    "incorrect value for cols, expected 32768, is {}",
+                    msg.cols, 6,
+                    "incorrect value for cols, expected 6, is {}",
                     msg.cols
                 );
                 assert_eq!(
-                    msg.corner_nw_lat, 1024,
-                    "incorrect value for corner_nw_lat, expected 1024, is {}",
+                    msg.corner_nw_lat, 7354,
+                    "incorrect value for corner_nw_lat, expected 7354, is {}",
                     msg.corner_nw_lat
                 );
                 assert_eq!(
-                    msg.corner_nw_lon, 2048,
-                    "incorrect value for corner_nw_lon, expected 2048, is {}",
+                    msg.corner_nw_lon, -22725,
+                    "incorrect value for corner_nw_lon, expected -22725, is {}",
                     msg.corner_nw_lon
                 );
                 assert_eq!(
-                    msg.rows, 16384,
-                    "incorrect value for rows, expected 16384, is {}",
+                    msg.iod_atmo, 3,
+                    "incorrect value for iod_atmo, expected 3, is {}",
+                    msg.iod_atmo
+                );
+                assert_eq!(
+                    msg.rows, 6,
+                    "incorrect value for rows, expected 6, is {}",
                     msg.rows
                 );
                 assert_eq!(
-                    msg.spacing_lat, 4096,
-                    "incorrect value for spacing_lat, expected 4096, is {}",
+                    msg.sol_id, 2,
+                    "incorrect value for sol_id, expected 2, is {}",
+                    msg.sol_id
+                );
+                assert_eq!(
+                    msg.spacing_lat, 100,
+                    "incorrect value for spacing_lat, expected 100, is {}",
                     msg.spacing_lat
                 );
                 assert_eq!(
-                    msg.spacing_lon, 8192,
-                    "incorrect value for spacing_lon, expected 8192, is {}",
+                    msg.spacing_lon, 100,
+                    "incorrect value for spacing_lon, expected 100, is {}",
                     msg.spacing_lon
                 );
                 assert_eq!(
-                    msg.ssr_sol_id, 31,
-                    "incorrect value for ssr_sol_id, expected 31, is {}",
-                    msg.ssr_sol_id
-                );
-                assert_eq!(
-                    msg.tile_id, 512,
-                    "incorrect value for tile_id, expected 512, is {}",
+                    msg.tile_id, 5,
+                    "incorrect value for tile_id, expected 5, is {}",
                     msg.tile_id
                 );
                 assert_eq!(
-                    msg.tile_set_id, 256,
-                    "incorrect value for tile_set_id, expected 256, is {}",
+                    msg.tile_set_id, 4,
+                    "incorrect value for tile_set_id, expected 4, is {}",
                     msg.tile_set_id
+                );
+                assert_eq!(
+                    msg.time.tow, 604799,
+                    "incorrect value for time.tow, expected 604799, is {}",
+                    msg.time.tow
+                );
+                assert_eq!(
+                    msg.time.wn, 2222,
+                    "incorrect value for time.wn, expected 2222, is {}",
+                    msg.time.wn
+                );
+                assert_eq!(
+                    msg.update_interval, 1,
+                    "incorrect value for update_interval, expected 1, is {}",
+                    msg.update_interval
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrTileDefinition"),
@@ -116,7 +135,7 @@ fn test_auto_check_sbp_ssr_msg_ssr_tile_definition() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
     {
-        let json_input = r#"{"ssr_sol_id": 31, "tile_set_id": 256, "tile_id": 512, "corner_nw_lat": 1024, "corner_nw_lon": 2048, "spacing_lat": 4096, "spacing_lon": 8192, "rows": 16384, "cols": 32768, "bitmask": 1234567890, "preamble": 85, "msg_type": 1527, "sender": 66, "length": 25, "payload": "HwABAAIABAAIABAAIABAAIDSApZJAAAAAA==", "crc": 18390}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 1528, "sender": 0, "length": 33, "payload": "fzoJAK4IAQIDBAAFALocO6dkAGQABgAGANIClkkAAAAA", "crc": 24268, "time": {"tow": 604799, "wn": 2222}, "update_interval": 1, "sol_id": 2, "iod_atmo": 3, "tile_set_id": 4, "tile_id": 5, "corner_nw_lat": 7354, "corner_nw_lon": -22725, "spacing_lat": 100, "spacing_lon": 100, "rows": 6, "cols": 6, "bitmask": 1234567890}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -140,15 +159,14 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
             sbp::messages::Sbp::MsgSsrTileDefinition(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    1527,
-                    "Incorrect message type, expected 1527, is {}",
+                    0x5F8,
+                    "Incorrect message type, expected 0x5F8, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    sender_id, 0x0,
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.bitmask, 1234567890,
@@ -156,49 +174,69 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.bitmask
                 );
                 assert_eq!(
-                    msg.cols, 32768,
-                    "incorrect value for cols, expected 32768, is {}",
+                    msg.cols, 6,
+                    "incorrect value for cols, expected 6, is {}",
                     msg.cols
                 );
                 assert_eq!(
-                    msg.corner_nw_lat, 1024,
-                    "incorrect value for corner_nw_lat, expected 1024, is {}",
+                    msg.corner_nw_lat, 7354,
+                    "incorrect value for corner_nw_lat, expected 7354, is {}",
                     msg.corner_nw_lat
                 );
                 assert_eq!(
-                    msg.corner_nw_lon, 2048,
-                    "incorrect value for corner_nw_lon, expected 2048, is {}",
+                    msg.corner_nw_lon, -22725,
+                    "incorrect value for corner_nw_lon, expected -22725, is {}",
                     msg.corner_nw_lon
                 );
                 assert_eq!(
-                    msg.rows, 16384,
-                    "incorrect value for rows, expected 16384, is {}",
+                    msg.iod_atmo, 3,
+                    "incorrect value for iod_atmo, expected 3, is {}",
+                    msg.iod_atmo
+                );
+                assert_eq!(
+                    msg.rows, 6,
+                    "incorrect value for rows, expected 6, is {}",
                     msg.rows
                 );
                 assert_eq!(
-                    msg.spacing_lat, 4096,
-                    "incorrect value for spacing_lat, expected 4096, is {}",
+                    msg.sol_id, 2,
+                    "incorrect value for sol_id, expected 2, is {}",
+                    msg.sol_id
+                );
+                assert_eq!(
+                    msg.spacing_lat, 100,
+                    "incorrect value for spacing_lat, expected 100, is {}",
                     msg.spacing_lat
                 );
                 assert_eq!(
-                    msg.spacing_lon, 8192,
-                    "incorrect value for spacing_lon, expected 8192, is {}",
+                    msg.spacing_lon, 100,
+                    "incorrect value for spacing_lon, expected 100, is {}",
                     msg.spacing_lon
                 );
                 assert_eq!(
-                    msg.ssr_sol_id, 31,
-                    "incorrect value for ssr_sol_id, expected 31, is {}",
-                    msg.ssr_sol_id
-                );
-                assert_eq!(
-                    msg.tile_id, 512,
-                    "incorrect value for tile_id, expected 512, is {}",
+                    msg.tile_id, 5,
+                    "incorrect value for tile_id, expected 5, is {}",
                     msg.tile_id
                 );
                 assert_eq!(
-                    msg.tile_set_id, 256,
-                    "incorrect value for tile_set_id, expected 256, is {}",
+                    msg.tile_set_id, 4,
+                    "incorrect value for tile_set_id, expected 4, is {}",
                     msg.tile_set_id
+                );
+                assert_eq!(
+                    msg.time.tow, 604799,
+                    "incorrect value for time.tow, expected 604799, is {}",
+                    msg.time.tow
+                );
+                assert_eq!(
+                    msg.time.wn, 2222,
+                    "incorrect value for time.wn, expected 2222, is {}",
+                    msg.time.wn
+                );
+                assert_eq!(
+                    msg.update_interval, 1,
+                    "incorrect value for update_interval, expected 1, is {}",
+                    msg.update_interval
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrTileDefinition"),
@@ -219,8 +257,8 @@ fn test_json2sbp_auto_check_sbp_ssr_msg_ssr_tile_definition() {
 fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
     {
         let mut payload = Cursor::new(vec![
-            85, 247, 5, 66, 0, 25, 31, 0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 210, 2,
-            150, 73, 0, 0, 0, 0, 214, 71,
+            85, 248, 5, 0, 0, 33, 127, 58, 9, 0, 174, 8, 1, 2, 3, 4, 0, 5, 0, 186, 28, 59, 167,
+            100, 0, 100, 0, 6, 0, 6, 0, 210, 2, 150, 73, 0, 0, 0, 0, 204, 94,
         ]);
 
         // Construct sbp message
@@ -251,15 +289,14 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
             sbp::messages::Sbp::MsgSsrTileDefinition(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    1527,
-                    "Incorrect message type, expected 1527, is {}",
+                    0x5F8,
+                    "Incorrect message type, expected 0x5F8, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x0042,
-                    "incorrect sender id, expected 0x0042, is {}",
-                    sender_id
+                    sender_id, 0x0,
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.bitmask, 1234567890,
@@ -267,49 +304,69 @@ fn test_sbp2json_auto_check_sbp_ssr_msg_ssr_tile_definition() {
                     msg.bitmask
                 );
                 assert_eq!(
-                    msg.cols, 32768,
-                    "incorrect value for cols, expected 32768, is {}",
+                    msg.cols, 6,
+                    "incorrect value for cols, expected 6, is {}",
                     msg.cols
                 );
                 assert_eq!(
-                    msg.corner_nw_lat, 1024,
-                    "incorrect value for corner_nw_lat, expected 1024, is {}",
+                    msg.corner_nw_lat, 7354,
+                    "incorrect value for corner_nw_lat, expected 7354, is {}",
                     msg.corner_nw_lat
                 );
                 assert_eq!(
-                    msg.corner_nw_lon, 2048,
-                    "incorrect value for corner_nw_lon, expected 2048, is {}",
+                    msg.corner_nw_lon, -22725,
+                    "incorrect value for corner_nw_lon, expected -22725, is {}",
                     msg.corner_nw_lon
                 );
                 assert_eq!(
-                    msg.rows, 16384,
-                    "incorrect value for rows, expected 16384, is {}",
+                    msg.iod_atmo, 3,
+                    "incorrect value for iod_atmo, expected 3, is {}",
+                    msg.iod_atmo
+                );
+                assert_eq!(
+                    msg.rows, 6,
+                    "incorrect value for rows, expected 6, is {}",
                     msg.rows
                 );
                 assert_eq!(
-                    msg.spacing_lat, 4096,
-                    "incorrect value for spacing_lat, expected 4096, is {}",
+                    msg.sol_id, 2,
+                    "incorrect value for sol_id, expected 2, is {}",
+                    msg.sol_id
+                );
+                assert_eq!(
+                    msg.spacing_lat, 100,
+                    "incorrect value for spacing_lat, expected 100, is {}",
                     msg.spacing_lat
                 );
                 assert_eq!(
-                    msg.spacing_lon, 8192,
-                    "incorrect value for spacing_lon, expected 8192, is {}",
+                    msg.spacing_lon, 100,
+                    "incorrect value for spacing_lon, expected 100, is {}",
                     msg.spacing_lon
                 );
                 assert_eq!(
-                    msg.ssr_sol_id, 31,
-                    "incorrect value for ssr_sol_id, expected 31, is {}",
-                    msg.ssr_sol_id
-                );
-                assert_eq!(
-                    msg.tile_id, 512,
-                    "incorrect value for tile_id, expected 512, is {}",
+                    msg.tile_id, 5,
+                    "incorrect value for tile_id, expected 5, is {}",
                     msg.tile_id
                 );
                 assert_eq!(
-                    msg.tile_set_id, 256,
-                    "incorrect value for tile_set_id, expected 256, is {}",
+                    msg.tile_set_id, 4,
+                    "incorrect value for tile_set_id, expected 4, is {}",
                     msg.tile_set_id
+                );
+                assert_eq!(
+                    msg.time.tow, 604799,
+                    "incorrect value for time.tow, expected 604799, is {}",
+                    msg.time.tow
+                );
+                assert_eq!(
+                    msg.time.wn, 2222,
+                    "incorrect value for time.wn, expected 2222, is {}",
+                    msg.time.wn
+                );
+                assert_eq!(
+                    msg.update_interval, 1,
+                    "incorrect value for update_interval, expected 1, is {}",
+                    msg.update_interval
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgSsrTileDefinition"),

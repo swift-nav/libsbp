@@ -43,8 +43,7 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0,
-                    "incorrect sender id, expected 0x0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -52,13 +51,11 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.version.to_string(),
-                    "v1.2
-",
-                    "incorrect value for msg.version, expected string '{}', is '{}'",
-                    "v1.2
-",
-                    msg.version
+                    msg.version.as_bytes(),
+                    &[118, 49, 46, 50, 10],
+                    "incorrect value for msg.version, expected string '{:?}', is '{:?}'",
+                    &[118, 49, 46, 50, 10],
+                    msg.version.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
@@ -87,8 +84,7 @@ fn test_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.handshake[0], 118,
@@ -160,8 +156,7 @@ fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0,
-                    "incorrect sender id, expected 0x0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -169,13 +164,11 @@ fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.version.to_string(),
-                    "v1.2
-",
-                    "incorrect value for msg.version, expected string '{}', is '{}'",
-                    "v1.2
-",
-                    msg.version
+                    msg.version.as_bytes(),
+                    &[118, 49, 46, 50, 10],
+                    "incorrect value for msg.version, expected string '{:?}', is '{:?}'",
+                    &[118, 49, 46, 50, 10],
+                    msg.version.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
@@ -213,8 +206,7 @@ fn test_json2sbp_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.handshake[0], 118,
@@ -293,8 +285,7 @@ fn test_sbp2json_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0,
-                    "incorrect sender id, expected 0x0, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x0, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -302,13 +293,11 @@ fn test_sbp2json_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.version.to_string(),
-                    "v1.2
-",
-                    "incorrect value for msg.version, expected string '{}', is '{}'",
-                    "v1.2
-",
-                    msg.version
+                    msg.version.as_bytes(),
+                    &[118, 49, 46, 50, 10],
+                    "incorrect value for msg.version, expected string '{:?}', is '{:?}'",
+                    &[118, 49, 46, 50, 10],
+                    msg.version.as_bytes()
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
@@ -356,8 +345,7 @@ fn test_sbp2json_auto_check_sbp_bootload_msg_bootloader_handshake_resp() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.handshake[0], 118,

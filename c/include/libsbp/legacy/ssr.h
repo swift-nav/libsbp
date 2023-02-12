@@ -431,7 +431,7 @@ typedef struct SBP_ATTR_PACKED {
                           See GNSS-SSR-ArrayOfCorrectionPoints field
                           bitmaskOfGrids but note the definition of the
                           bits is inverted. */
-} msg_ssr_tile_definition_dep_t;
+} msg_ssr_tile_definition_dep_a_t;
 
 /** Definition of a SSR atmospheric correction tile.
 
@@ -507,6 +507,84 @@ typedef struct SBP_ATTR_PACKED {
                           See GNSS-SSR-ArrayOfCorrectionPoints field
                           bitmaskOfGrids but note the definition of the
                           bits is inverted. */
+} msg_ssr_tile_definition_dep_b_t;
+
+/** Definition of a SSR atmospheric correction tile.
+
+ *
+ * Provides the correction point coordinates for the atmospheric correction
+ * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+ * messages.
+ *
+ * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+ * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+ * correction points, not lists of points.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time; /**< GNSS reference time of the
+                            correction */
+  u8 update_interval;  /**< Update interval between consecutive corrections.
+                            Encoded following RTCM DF391 specification. */
+  u8 sol_id;           /**< SSR Solution ID. Similar to RTCM DF415. */
+  u8 iod_atmo;         /**< IOD of the SSR atmospheric correction. */
+  u16 tile_set_id;     /**< Unique identifier of the tile set this tile
+                            belongs to. */
+  u16 tile_id;         /**< Unique identifier of this tile in the tile set.
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            correctionPointSetID. */
+  s16 corner_nw_lat;   /**< North-West corner correction point latitude.
+
+                            The relation between the latitude X in the
+                            range [-90, 90] and the coded number N is:  N =
+                            floor((X / 90) * 2^14)
+
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            referencePointLatitude. [encoded degrees] */
+  s16 corner_nw_lon;   /**< North-West corner correction point longitude.
+
+                            The relation between the longitude X in the
+                            range [-180, 180] and the coded number N is: N
+                            = floor((X / 180) * 2^15)
+
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            referencePointLongitude. [encoded degrees] */
+  u16 spacing_lat;     /**< Spacing of the correction points in the
+                            latitude direction.
+
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            stepOfLatitude. [0.01 degrees] */
+  u16 spacing_lon;     /**< Spacing of the correction points in the
+                            longitude direction.
+
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            stepOfLongitude. [0.01 degrees] */
+  u16 rows;            /**< Number of steps in the latitude direction.
+
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            numberOfStepsLatitude. */
+  u16 cols;            /**< Number of steps in the longitude direction.
+
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            numberOfStepsLongitude. */
+  u64 bitmask;         /**< Specifies the absence of correction data at the
+                            correction points in the array (grid).
+
+                            Only the first rows * cols bits are used, and
+                            if a specific bit is enabled (set to 1), the
+                            correction is not available. If there are more
+                            than 64 correction points the remaining
+                            corrections are always available.
+
+                            The correction points are packed by rows,
+                            starting with the northwest corner of the array
+                            (top-left on a north oriented map), with each
+                            row spanning west to east, ending with the
+                            southeast corner of the array.
+
+                            See GNSS-SSR-ArrayOfCorrectionPoints field
+                            bitmaskOfGrids but note the definition of the
+                            bits is inverted. */
 } msg_ssr_tile_definition_t;
 
 /** Antenna phase center correction
@@ -531,6 +609,19 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   satellite_apc_t apc[0]; /**< Satellite antenna phase center corrections */
+} msg_ssr_satellite_apc_dep_t;
+
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;    /**< GNSS reference time of the
+                               correction */
+  u8 update_interval;     /**< Update interval between consecutive corrections.
+                               Encoded following RTCM DF391 specification. */
+  u8 sol_id;              /**< SSR Solution ID. Similar to RTCM DF415. */
+  u8 iod_ssr;             /**< IOD of the SSR correction. A change of Issue Of
+                               Data SSR is used to indicate a change in the SSR
+                               generating configuration */
+  satellite_apc_t apc[0]; /**< Satellite antenna phase center
+                               corrections */
 } msg_ssr_satellite_apc_t;
 
 typedef struct SBP_ATTR_PACKED {

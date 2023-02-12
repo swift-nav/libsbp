@@ -40,6 +40,7 @@
 #include <libsbp/solution_meta_macros.h>
 #include <libsbp/ssr_macros.h>
 #include <libsbp/system_macros.h>
+#include <libsbp/telemetry_macros.h>
 #include <libsbp/tracking_macros.h>
 #include <libsbp/user_macros.h>
 #include <libsbp/vehicle_macros.h>
@@ -235,11 +236,13 @@ typedef enum {
   SbpMsgSsrOrbitClockDepA = SBP_MSG_SSR_ORBIT_CLOCK_DEP_A,
   SbpMsgSsrOrbitClock = SBP_MSG_SSR_ORBIT_CLOCK,
   SbpMsgSsrPhaseBiases = SBP_MSG_SSR_PHASE_BIASES,
+  SbpMsgSsrSatelliteApcDep = SBP_MSG_SSR_SATELLITE_APC_DEP,
   SbpMsgSsrSatelliteApc = SBP_MSG_SSR_SATELLITE_APC,
   SbpMsgSsrStecCorrectionDepA = SBP_MSG_SSR_STEC_CORRECTION_DEP_A,
   SbpMsgSsrStecCorrectionDep = SBP_MSG_SSR_STEC_CORRECTION_DEP,
   SbpMsgSsrStecCorrection = SBP_MSG_SSR_STEC_CORRECTION,
-  SbpMsgSsrTileDefinitionDep = SBP_MSG_SSR_TILE_DEFINITION_DEP,
+  SbpMsgSsrTileDefinitionDepA = SBP_MSG_SSR_TILE_DEFINITION_DEP_A,
+  SbpMsgSsrTileDefinitionDepB = SBP_MSG_SSR_TILE_DEFINITION_DEP_B,
   SbpMsgSsrTileDefinition = SBP_MSG_SSR_TILE_DEFINITION,
   SbpMsgStartup = SBP_MSG_STARTUP,
   SbpMsgStatusJournal = SBP_MSG_STATUS_JOURNAL,
@@ -250,6 +253,7 @@ typedef enum {
   SbpMsgStmUniqueIdResp = SBP_MSG_STM_UNIQUE_ID_RESP,
   SbpMsgSvAzEl = SBP_MSG_SV_AZ_EL,
   SbpMsgSvConfigurationGpsDep = SBP_MSG_SV_CONFIGURATION_GPS_DEP,
+  SbpMsgTelSv = SBP_MSG_TEL_SV,
   SbpMsgThreadState = SBP_MSG_THREAD_STATE,
   SbpMsgTrackingIqDepA = SBP_MSG_TRACKING_IQ_DEP_A,
   SbpMsgTrackingIqDepB = SBP_MSG_TRACKING_IQ_DEP_B,

@@ -43,8 +43,7 @@ fn test_auto_check_sbp_orientation_msg_angular_rate() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
-                    "incorrect sender id, expected 0x42, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x42, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -109,8 +108,7 @@ fn test_json2sbp_auto_check_sbp_orientation_msg_angular_rate() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
-                    "incorrect sender id, expected 0x42, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x42, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -182,8 +180,7 @@ fn test_sbp2json_auto_check_sbp_orientation_msg_angular_rate() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
-                    "incorrect sender id, expected 0x42, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x42, is {sender_id}"
                 );
                 assert_eq!(
                     msg.flags, 0,

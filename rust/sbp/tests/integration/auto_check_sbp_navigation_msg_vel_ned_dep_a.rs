@@ -44,8 +44,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -113,8 +112,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -182,8 +180,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -251,8 +248,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -320,8 +316,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -389,8 +384,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 25,
@@ -462,8 +456,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -24,
@@ -531,8 +524,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -9,
@@ -604,8 +596,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -34,
@@ -673,8 +664,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(msg.d, 7, "incorrect value for d, expected 7, is {}", msg.d);
                 assert_eq!(
@@ -742,8 +732,7 @@ fn test_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -108,
@@ -835,8 +824,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -910,8 +898,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -985,8 +972,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -1060,8 +1046,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -1135,8 +1120,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -1210,8 +1194,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 25,
@@ -1289,8 +1272,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -24,
@@ -1364,8 +1346,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -9,
@@ -1443,8 +1424,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -34,
@@ -1518,8 +1498,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(msg.d, 7, "incorrect value for d, expected 7, is {}", msg.d);
                 assert_eq!(
@@ -1593,8 +1572,7 @@ fn test_json2sbp_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -108,
@@ -1694,8 +1672,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -1782,8 +1759,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -1870,8 +1846,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -1958,8 +1933,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -2046,8 +2020,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0xd7f6, is {sender_id}"
                 );
                 assert_eq!(msg.d, 0, "incorrect value for d, expected 0, is {}", msg.d);
                 assert_eq!(
@@ -2134,8 +2107,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, 25,
@@ -2226,8 +2198,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -24,
@@ -2314,8 +2285,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -9,
@@ -2406,8 +2376,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -34,
@@ -2494,8 +2463,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(msg.d, 7, "incorrect value for d, expected 7, is {}", msg.d);
                 assert_eq!(
@@ -2582,8 +2550,7 @@ fn test_sbp2json_auto_check_sbp_navigation_msg_vel_ned_dep_a() {
                 let sender_id = msg.sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
+                    "incorrect sender id, expected 0x4c3, is {sender_id}"
                 );
                 assert_eq!(
                     msg.d, -108,

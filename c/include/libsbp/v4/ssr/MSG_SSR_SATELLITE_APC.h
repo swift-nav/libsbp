@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/ssr_macros.h>
+#include <libsbp/v4/gnss/GPSTimeSec.h>
 #include <libsbp/v4/ssr/SatelliteAPC.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -40,6 +41,28 @@ extern "C" {
  *
  *****************************************************************************/
 typedef struct {
+  /**
+   * GNSS reference time of the correction
+   */
+  sbp_gps_time_sec_t time;
+
+  /**
+   * Update interval between consecutive corrections. Encoded following RTCM
+   * DF391 specification.
+   */
+  u8 update_interval;
+
+  /**
+   * SSR Solution ID. Similar to RTCM DF415.
+   */
+  u8 sol_id;
+
+  /**
+   * IOD of the SSR correction. A change of Issue Of Data SSR is used to
+   * indicate a change in the SSR generating configuration
+   */
+  u8 iod_ssr;
+
   /**
    * Satellite antenna phase center corrections
    */

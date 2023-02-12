@@ -1,0 +1,132 @@
+package: swiftnav.sbp.telemetry
+description: Telemetry messages reported by Starling engine. The messages include various byproducts of state estimation and other logic across Starling and are aimed at efficient issue diagnostics.
+stable: False
+public: True
+include:
+  - gnss.yaml
+definitions:
+
+  - TelemetrySV:
+      short_desc: Array of per-signal telemetry entries
+      fields:
+        - az:
+            type: u8
+            units: deg * 2
+            desc: Azimuth angle (range 0..179)
+        - el:
+            type: s8
+            units: deg
+            desc: Elevation angle (range -90..90)
+        - availability_flags:
+            type: u8
+            desc: Observation availability at filter update
+            fields:
+              - 4-7:
+                  desc: Reserved
+              - 3:
+                  desc: Measured-Doppler availability
+                  values:
+                    - 0: Measured-Doppler unavailable
+                    - 1: Measured-Doppler available
+              - 2:
+                  desc: Computed-Doppler availability
+                  values:
+                    - 0: Computed-Doppler unavailable
+                    - 1: Computed-Doppler available
+              - 1:
+                  desc: Carrier-phase availability
+                  values:
+                    - 0: Carrier-phase unavailable
+                    - 1: Carrier-phase available
+              - 0:
+                  desc: Pseudorange availability
+                  values:
+                    - 0: Pseudorange unavailable
+                    - 1: Pseudorange available
+        - pseudorange_residual:
+            type: s16
+            units: 1 dm
+            desc: Pseudorange observation residual
+        - phase_residual:
+            type: s16
+            units: 5 mm
+            desc: Carrier-phase or carrier-phase-derived observation residual
+        - outlier_flags:
+            type: u8
+            desc: Reports if observation is marked as an outlier and is excluded from the update
+            fields:
+              - 5-7:
+                  desc: Reserved
+              - 4:
+                  desc: Measured-Doppler outlier
+                  values:
+                    - 0: Measured-Doppler accepted
+                    - 1: Measured-Doppler marked as outlier
+              - 3:
+                  desc: Computed-Doppler outlier
+                  values:
+                    - 0: Computed-Doppler accepted
+                    - 1: Computed-Doppler marked as outlier
+              - 2:
+                  desc: Carrier-phase outlier
+                  values:
+                    - 0: Carrier-phase accepted
+                    - 1: Carrier-phase marked as outlier
+              - 0-1:
+                  desc: Pseudorange outlier
+                  values:
+                    - 0: Pseudorange accepted
+                    - 1: Pseudorange marked as outlier
+                    - 2: Pseudorange marked as major outlier
+        - ephemeris_flags:
+            type: u8
+            desc: Ephemeris metadata
+            fields:
+              - 1-7:
+                  desc: Reserved
+              - 0:
+                  desc: Ephemeris available
+                  values:
+                    - 0: Valid ephemeris available
+                    - 1: No valid ephemeris available (general status)
+        - correction_flags:
+            type: u8
+            desc: Reserved
+        - sid:
+            type: GnssSignal
+            desc: GNSS signal identifier (16 bit)
+
+  - MSG_TEL_SV:
+      id: 0x0120
+      short_desc: Per-signal telemetry
+      desc: >
+        This message includes telemetry pertinent to satellite signals available to Starling.
+      fields:
+        - wn:
+            type: u16
+            units: weeks
+            desc: GPS week number
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - n_obs:
+            type: u8
+            desc: >
+              Total number of observations. First nibble is the size
+              of the sequence (n), second nibble is the zero-indexed
+              counter (ith packet of n)
+        - origin_flags:
+            type: u8
+            desc: Flags to identify the filter type from which the telemetry is reported from
+            fields:
+              - 0-7:
+                  desc: Filter type
+                  values:
+                    - 0: Standalone
+                    - 1: Differential
+        - sv_tel:
+            type: array
+            fill: TelemetrySV
+            map_by: sid
+            desc: Array of per-signal telemetry entries

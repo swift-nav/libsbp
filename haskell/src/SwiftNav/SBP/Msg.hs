@@ -46,6 +46,7 @@ import SwiftNav.SBP.Signing
 import SwiftNav.SBP.SolutionMeta
 import SwiftNav.SBP.Ssr
 import SwiftNav.SBP.System
+import SwiftNav.SBP.Telemetry
 import SwiftNav.SBP.Tracking
 import SwiftNav.SBP.User
 import SwiftNav.SBP.Vehicle
@@ -239,11 +240,13 @@ data SBPMsg =
    | SBPMsgSsrOrbitClockDepA MsgSsrOrbitClockDepA Msg
    | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
    | SBPMsgSsrSatelliteApc MsgSsrSatelliteApc Msg
+   | SBPMsgSsrSatelliteApcDep MsgSsrSatelliteApcDep Msg
    | SBPMsgSsrStecCorrection MsgSsrStecCorrection Msg
    | SBPMsgSsrStecCorrectionDep MsgSsrStecCorrectionDep Msg
    | SBPMsgSsrStecCorrectionDepA MsgSsrStecCorrectionDepA Msg
    | SBPMsgSsrTileDefinition MsgSsrTileDefinition Msg
-   | SBPMsgSsrTileDefinitionDep MsgSsrTileDefinitionDep Msg
+   | SBPMsgSsrTileDefinitionDepA MsgSsrTileDefinitionDepA Msg
+   | SBPMsgSsrTileDefinitionDepB MsgSsrTileDefinitionDepB Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStatusJournal MsgStatusJournal Msg
    | SBPMsgStatusReport MsgStatusReport Msg
@@ -253,6 +256,7 @@ data SBPMsg =
    | SBPMsgStmUniqueIdResp MsgStmUniqueIdResp Msg
    | SBPMsgSvAzEl MsgSvAzEl Msg
    | SBPMsgSvConfigurationGpsDep MsgSvConfigurationGpsDep Msg
+   | SBPMsgTelSv MsgTelSv Msg
    | SBPMsgThreadState MsgThreadState Msg
    | SBPMsgTrackingIq MsgTrackingIq Msg
    | SBPMsgTrackingIqDepA MsgTrackingIqDepA Msg
@@ -476,11 +480,13 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrSatelliteApcDep = SBPMsgSsrSatelliteApcDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrection = SBPMsgSsrStecCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrectionDep = SBPMsgSsrStecCorrectionDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrTileDefinition = SBPMsgSsrTileDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgSsrTileDefinitionDep = SBPMsgSsrTileDefinitionDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrTileDefinitionDepA = SBPMsgSsrTileDefinitionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrTileDefinitionDepB = SBPMsgSsrTileDefinitionDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStatusJournal = SBPMsgStatusJournal (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStatusReport = SBPMsgStatusReport (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -490,6 +496,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSvAzEl = SBPMsgSvAzEl (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgTelSv = SBPMsgTelSv (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgThreadState = SBPMsgThreadState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingIq = SBPMsgTrackingIq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgTrackingIqDepA = SBPMsgTrackingIqDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -705,11 +712,13 @@ instance Binary SBPMsg where
       encoder (SBPMsgSsrOrbitClockDepA _ m) = put m
       encoder (SBPMsgSsrPhaseBiases _ m) = put m
       encoder (SBPMsgSsrSatelliteApc _ m) = put m
+      encoder (SBPMsgSsrSatelliteApcDep _ m) = put m
       encoder (SBPMsgSsrStecCorrection _ m) = put m
       encoder (SBPMsgSsrStecCorrectionDep _ m) = put m
       encoder (SBPMsgSsrStecCorrectionDepA _ m) = put m
       encoder (SBPMsgSsrTileDefinition _ m) = put m
-      encoder (SBPMsgSsrTileDefinitionDep _ m) = put m
+      encoder (SBPMsgSsrTileDefinitionDepA _ m) = put m
+      encoder (SBPMsgSsrTileDefinitionDepB _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
       encoder (SBPMsgStatusJournal _ m) = put m
       encoder (SBPMsgStatusReport _ m) = put m
@@ -719,6 +728,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgStmUniqueIdResp _ m) = put m
       encoder (SBPMsgSvAzEl _ m) = put m
       encoder (SBPMsgSvConfigurationGpsDep _ m) = put m
+      encoder (SBPMsgTelSv _ m) = put m
       encoder (SBPMsgThreadState _ m) = put m
       encoder (SBPMsgTrackingIq _ m) = put m
       encoder (SBPMsgTrackingIqDepA _ m) = put m
@@ -938,11 +948,13 @@ instance FromJSON SBPMsg where
         | msgType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrSatelliteApcDep = SBPMsgSsrSatelliteApcDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrection = SBPMsgSsrStecCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrectionDep = SBPMsgSsrStecCorrectionDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrTileDefinition = SBPMsgSsrTileDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgSsrTileDefinitionDep = SBPMsgSsrTileDefinitionDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrTileDefinitionDepA = SBPMsgSsrTileDefinitionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrTileDefinitionDepB = SBPMsgSsrTileDefinitionDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStatusJournal = SBPMsgStatusJournal <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStatusReport = SBPMsgStatusReport <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -952,6 +964,7 @@ instance FromJSON SBPMsg where
         | msgType == msgStmUniqueIdResp = SBPMsgStmUniqueIdResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSvAzEl = SBPMsgSvAzEl <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSvConfigurationGpsDep = SBPMsgSvConfigurationGpsDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgTelSv = SBPMsgTelSv <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgThreadState = SBPMsgThreadState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingIq = SBPMsgTrackingIq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgTrackingIqDepA = SBPMsgTrackingIqDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1172,11 +1185,13 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSsrOrbitClockDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrSatelliteApc n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrSatelliteApcDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrection n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrectionDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrectionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrTileDefinition n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgSsrTileDefinitionDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrTileDefinitionDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrTileDefinitionDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStatusJournal n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStatusReport n m) = toJSON n <<>> toJSON m
@@ -1186,6 +1201,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgStmUniqueIdResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSvAzEl n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSvConfigurationGpsDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgTelSv n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgThreadState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingIq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgTrackingIqDepA n m) = toJSON n <<>> toJSON m
@@ -1400,11 +1416,13 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSsrOrbitClockDepA n m) = SBPMsgSsrOrbitClockDepA n <$> f m
   msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
   msg f (SBPMsgSsrSatelliteApc n m) = SBPMsgSsrSatelliteApc n <$> f m
+  msg f (SBPMsgSsrSatelliteApcDep n m) = SBPMsgSsrSatelliteApcDep n <$> f m
   msg f (SBPMsgSsrStecCorrection n m) = SBPMsgSsrStecCorrection n <$> f m
   msg f (SBPMsgSsrStecCorrectionDep n m) = SBPMsgSsrStecCorrectionDep n <$> f m
   msg f (SBPMsgSsrStecCorrectionDepA n m) = SBPMsgSsrStecCorrectionDepA n <$> f m
   msg f (SBPMsgSsrTileDefinition n m) = SBPMsgSsrTileDefinition n <$> f m
-  msg f (SBPMsgSsrTileDefinitionDep n m) = SBPMsgSsrTileDefinitionDep n <$> f m
+  msg f (SBPMsgSsrTileDefinitionDepA n m) = SBPMsgSsrTileDefinitionDepA n <$> f m
+  msg f (SBPMsgSsrTileDefinitionDepB n m) = SBPMsgSsrTileDefinitionDepB n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStatusJournal n m) = SBPMsgStatusJournal n <$> f m
   msg f (SBPMsgStatusReport n m) = SBPMsgStatusReport n <$> f m
@@ -1414,6 +1432,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgStmUniqueIdResp n m) = SBPMsgStmUniqueIdResp n <$> f m
   msg f (SBPMsgSvAzEl n m) = SBPMsgSvAzEl n <$> f m
   msg f (SBPMsgSvConfigurationGpsDep n m) = SBPMsgSvConfigurationGpsDep n <$> f m
+  msg f (SBPMsgTelSv n m) = SBPMsgTelSv n <$> f m
   msg f (SBPMsgThreadState n m) = SBPMsgThreadState n <$> f m
   msg f (SBPMsgTrackingIq n m) = SBPMsgTrackingIq n <$> f m
   msg f (SBPMsgTrackingIqDepA n m) = SBPMsgTrackingIqDepA n <$> f m

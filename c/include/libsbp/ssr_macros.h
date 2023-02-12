@@ -240,19 +240,26 @@
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_BOUNDS_ENCODED_OVERHEAD 27u
 
-#define SBP_MSG_SSR_TILE_DEFINITION_DEP 0x05F6
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_A 0x05F6
 /**
- * Encoded length of sbp_msg_ssr_tile_definition_dep_t (V4 API) and
- * msg_ssr_tile_definition_dep_t (legacy API)
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_a_t (V4 API) and
+ * msg_ssr_tile_definition_dep_a_t (legacy API)
  */
-#define SBP_MSG_SSR_TILE_DEFINITION_DEP_ENCODED_LEN 24u
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_A_ENCODED_LEN 24u
 
-#define SBP_MSG_SSR_TILE_DEFINITION 0x05F7
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_B 0x05F7
+/**
+ * Encoded length of sbp_msg_ssr_tile_definition_dep_b_t (V4 API) and
+ * msg_ssr_tile_definition_dep_b_t (legacy API)
+ */
+#define SBP_MSG_SSR_TILE_DEFINITION_DEP_B_ENCODED_LEN 25u
+
+#define SBP_MSG_SSR_TILE_DEFINITION 0x05F8
 /**
  * Encoded length of sbp_msg_ssr_tile_definition_t (V4 API) and
  * msg_ssr_tile_definition_t (legacy API)
  */
-#define SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN 25u
+#define SBP_MSG_SSR_TILE_DEFINITION_ENCODED_LEN 33u
 
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_MASK (0x1fu)
 #define SBP_SATELLITEAPC_SATELLITE_TYPE_SHIFT (0u)
@@ -307,7 +314,31 @@
  */
 #define SBP_SATELLITE_APC_ENCODED_LEN 32u
 
-#define SBP_MSG_SSR_SATELLITE_APC 0x0604
+#define SBP_MSG_SSR_SATELLITE_APC_DEP 0x0604
+/**
+ * The maximum number of items that can be stored in
+ * sbp_msg_ssr_satellite_apc_dep_t::apc (V4 API) or
+ * msg_ssr_satellite_apc_dep_t::apc (legacy API) before the maximum SBP message
+ * size is exceeded
+ */
+#define SBP_MSG_SSR_SATELLITE_APC_DEP_APC_MAX 7u
+
+/**
+ * Encoded length of sbp_msg_ssr_satellite_apc_dep_t (V4 API) and
+ * msg_ssr_satellite_apc_dep_t (legacy API)
+ *
+ * This type is not fixed size and an instance of this message may be longer
+ * than the value indicated by this symbol. Users of the V4 API should call
+ * #sbp_msg_ssr_satellite_apc_dep_encoded_len to determine the actual size of an
+ * instance of this message. Users of the legacy API are required to track the
+ * encoded message length when interacting with the legacy type.
+ *
+ * See the documentation for libsbp for more details regarding the message
+ * structure and its variable length component(s)
+ */
+#define SBP_MSG_SSR_SATELLITE_APC_DEP_ENCODED_OVERHEAD 0u
+
+#define SBP_MSG_SSR_SATELLITE_APC 0x0605
 /**
  * The maximum number of items that can be stored in
  * sbp_msg_ssr_satellite_apc_t::apc (V4 API) or msg_ssr_satellite_apc_t::apc
@@ -328,7 +359,7 @@
  * See the documentation for libsbp for more details regarding the message
  * structure and its variable length component(s)
  */
-#define SBP_MSG_SSR_SATELLITE_APC_ENCODED_OVERHEAD 0u
+#define SBP_MSG_SSR_SATELLITE_APC_ENCODED_OVERHEAD 9u
 
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
 /**

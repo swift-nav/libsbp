@@ -45,6 +45,7 @@
 #include <libsbp/v4/solution_meta.h>
 #include <libsbp/v4/ssr.h>
 #include <libsbp/v4/system.h>
+#include <libsbp/v4/telemetry.h>
 #include <libsbp/v4/tracking.h>
 #include <libsbp/v4/user.h>
 #include <libsbp/v4/vehicle.h>
@@ -241,11 +242,13 @@ typedef union {
   sbp_msg_ssr_orbit_clock_dep_a_t ssr_orbit_clock_dep_a;
   sbp_msg_ssr_orbit_clock_t ssr_orbit_clock;
   sbp_msg_ssr_phase_biases_t ssr_phase_biases;
+  sbp_msg_ssr_satellite_apc_dep_t ssr_satellite_apc_dep;
   sbp_msg_ssr_satellite_apc_t ssr_satellite_apc;
   sbp_msg_ssr_stec_correction_dep_a_t ssr_stec_correction_dep_a;
   sbp_msg_ssr_stec_correction_dep_t ssr_stec_correction_dep;
   sbp_msg_ssr_stec_correction_t ssr_stec_correction;
-  sbp_msg_ssr_tile_definition_dep_t ssr_tile_definition_dep;
+  sbp_msg_ssr_tile_definition_dep_a_t ssr_tile_definition_dep_a;
+  sbp_msg_ssr_tile_definition_dep_b_t ssr_tile_definition_dep_b;
   sbp_msg_ssr_tile_definition_t ssr_tile_definition;
   sbp_msg_startup_t startup;
   sbp_msg_status_journal_t status_journal;
@@ -256,6 +259,7 @@ typedef union {
   sbp_msg_stm_unique_id_resp_t stm_unique_id_resp;
   sbp_msg_sv_az_el_t sv_az_el;
   sbp_msg_sv_configuration_gps_dep_t sv_configuration_gps_dep;
+  sbp_msg_tel_sv_t tel_sv;
   sbp_msg_thread_state_t thread_state;
   sbp_msg_tracking_iq_dep_a_t tracking_iq_dep_a;
   sbp_msg_tracking_iq_dep_b_t tracking_iq_dep_b;
@@ -796,6 +800,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_encode(buf, len, n_written,
                                              &msg->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_encode(buf, len, n_written,
+                                                  &msg->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_encode(buf, len, n_written,
                                               &msg->ssr_satellite_apc);
@@ -808,9 +815,12 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_encode(buf, len, n_written,
                                                 &msg->ssr_stec_correction);
-    case SbpMsgSsrTileDefinitionDep:
-      return sbp_msg_ssr_tile_definition_dep_encode(
-          buf, len, n_written, &msg->ssr_tile_definition_dep);
+    case SbpMsgSsrTileDefinitionDepA:
+      return sbp_msg_ssr_tile_definition_dep_a_encode(
+          buf, len, n_written, &msg->ssr_tile_definition_dep_a);
+    case SbpMsgSsrTileDefinitionDepB:
+      return sbp_msg_ssr_tile_definition_dep_b_encode(
+          buf, len, n_written, &msg->ssr_tile_definition_dep_b);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_encode(buf, len, n_written,
                                                 &msg->ssr_tile_definition);
@@ -839,6 +849,8 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_encode(
           buf, len, n_written, &msg->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_encode(buf, len, n_written, &msg->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_encode(buf, len, n_written,
                                          &msg->thread_state);
@@ -1422,6 +1434,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_decode(buf, len, n_read,
                                              &msg->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_decode(buf, len, n_read,
+                                                  &msg->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_decode(buf, len, n_read,
                                               &msg->ssr_satellite_apc);
@@ -1434,9 +1449,12 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_decode(buf, len, n_read,
                                                 &msg->ssr_stec_correction);
-    case SbpMsgSsrTileDefinitionDep:
-      return sbp_msg_ssr_tile_definition_dep_decode(
-          buf, len, n_read, &msg->ssr_tile_definition_dep);
+    case SbpMsgSsrTileDefinitionDepA:
+      return sbp_msg_ssr_tile_definition_dep_a_decode(
+          buf, len, n_read, &msg->ssr_tile_definition_dep_a);
+    case SbpMsgSsrTileDefinitionDepB:
+      return sbp_msg_ssr_tile_definition_dep_b_decode(
+          buf, len, n_read, &msg->ssr_tile_definition_dep_b);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_decode(buf, len, n_read,
                                                 &msg->ssr_tile_definition);
@@ -1465,6 +1483,8 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_decode(
           buf, len, n_read, &msg->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_decode(buf, len, n_read, &msg->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_decode(buf, len, n_read, &msg->thread_state);
     case SbpMsgTrackingIqDepA:
@@ -1954,6 +1974,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_ssr_orbit_clock_encoded_len(&msg->ssr_orbit_clock);
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_encoded_len(&msg->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_encoded_len(
+          &msg->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_encoded_len(&msg->ssr_satellite_apc);
     case SbpMsgSsrStecCorrectionDepA:
@@ -1964,9 +1987,12 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
           &msg->ssr_stec_correction_dep);
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_encoded_len(&msg->ssr_stec_correction);
-    case SbpMsgSsrTileDefinitionDep:
-      return sbp_msg_ssr_tile_definition_dep_encoded_len(
-          &msg->ssr_tile_definition_dep);
+    case SbpMsgSsrTileDefinitionDepA:
+      return sbp_msg_ssr_tile_definition_dep_a_encoded_len(
+          &msg->ssr_tile_definition_dep_a);
+    case SbpMsgSsrTileDefinitionDepB:
+      return sbp_msg_ssr_tile_definition_dep_b_encoded_len(
+          &msg->ssr_tile_definition_dep_b);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_encoded_len(&msg->ssr_tile_definition);
     case SbpMsgStartup:
@@ -1990,6 +2016,8 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_encoded_len(
           &msg->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_encoded_len(&msg->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_encoded_len(&msg->thread_state);
     case SbpMsgTrackingIqDepA:
@@ -2532,6 +2560,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrPhaseBiases:
       return sbp_msg_ssr_phase_biases_cmp(&a->ssr_phase_biases,
                                           &b->ssr_phase_biases);
+    case SbpMsgSsrSatelliteApcDep:
+      return sbp_msg_ssr_satellite_apc_dep_cmp(&a->ssr_satellite_apc_dep,
+                                               &b->ssr_satellite_apc_dep);
     case SbpMsgSsrSatelliteApc:
       return sbp_msg_ssr_satellite_apc_cmp(&a->ssr_satellite_apc,
                                            &b->ssr_satellite_apc);
@@ -2544,9 +2575,12 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSsrStecCorrection:
       return sbp_msg_ssr_stec_correction_cmp(&a->ssr_stec_correction,
                                              &b->ssr_stec_correction);
-    case SbpMsgSsrTileDefinitionDep:
-      return sbp_msg_ssr_tile_definition_dep_cmp(&a->ssr_tile_definition_dep,
-                                                 &b->ssr_tile_definition_dep);
+    case SbpMsgSsrTileDefinitionDepA:
+      return sbp_msg_ssr_tile_definition_dep_a_cmp(
+          &a->ssr_tile_definition_dep_a, &b->ssr_tile_definition_dep_a);
+    case SbpMsgSsrTileDefinitionDepB:
+      return sbp_msg_ssr_tile_definition_dep_b_cmp(
+          &a->ssr_tile_definition_dep_b, &b->ssr_tile_definition_dep_b);
     case SbpMsgSsrTileDefinition:
       return sbp_msg_ssr_tile_definition_cmp(&a->ssr_tile_definition,
                                              &b->ssr_tile_definition);
@@ -2573,6 +2607,8 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgSvConfigurationGpsDep:
       return sbp_msg_sv_configuration_gps_dep_cmp(&a->sv_configuration_gps_dep,
                                                   &b->sv_configuration_gps_dep);
+    case SbpMsgTelSv:
+      return sbp_msg_tel_sv_cmp(&a->tel_sv, &b->tel_sv);
     case SbpMsgThreadState:
       return sbp_msg_thread_state_cmp(&a->thread_state, &b->thread_state);
     case SbpMsgTrackingIqDepA:
