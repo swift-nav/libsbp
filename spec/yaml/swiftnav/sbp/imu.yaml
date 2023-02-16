@@ -86,6 +86,7 @@ definitions:
                   values:
                       - 0: Bosch BMI160
                       - 1: ST Microelectronics ASM330LLH
+                      - 4: Murata SCHA634-D03
         - temp:
             type: s16
             desc: Raw IMU temperature
@@ -101,6 +102,7 @@ definitions:
                       - 2: +/- 500 deg / s
                       - 3: +/- 250 deg / s
                       - 4: +/- 125 deg / s
+                      - 5: +/- 300 deg / s
               - 0-3:
                   desc: Accelerometer Range
                   values:
@@ -108,3 +110,4 @@ definitions:
                       - 1: +/- 4g
                       - 2: +/- 8g
                       - 3: +/- 16g
+                      - 4: +/- 6g
