@@ -53,13 +53,6 @@ test {
 
 archivesBaseName = 'sbp'
 
-jacocoTestReport {
-    reports {
-        // Using deprecated 'enabled' for gradle 4 compatibility
-        xml.enabled = true
-    }
-}
-
 sonarqube {
   properties {
     property 'sonar.projectName', "libsbp-java"
