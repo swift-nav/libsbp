@@ -264,7 +264,7 @@ inside the container (so you don't have to setup git inside the docker container
    ```markdown
    [Protocol Documentation](https://github.com/swift-nav/libsbp/blob/v3.4.6/docs/sbp.pdf)
    ```
-
+ 
 8. Prep for the next development cycle.  Add the new release section from
    `DRAFT_CHANGELOG.md` to `CHANGELOG.md` and re-run `make release`.
 
