@@ -1,5 +1,16 @@
 # Changelog
 
+## [v4.12.0](https://github.com/swift-nav/libsbp/tree/v4.12.0) (2023-02-27)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.11.0...v4.12.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Exclude unit test header files from coverage reporting \(\#145\) [\#1295](https://github.com/swift-nav/libsbp/pull/1295) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- make it so all .rs files are treated as text files for git diffs [\#1294](https://github.com/swift-nav/libsbp/pull/1294) ([pcrumley](https://github.com/pcrumley))
+- new rust clippy [\#1292](https://github.com/swift-nav/libsbp/pull/1292) ([adrian-kong](https://github.com/adrian-kong))
+- Add support for murata scha634 to imu aux message [\#1286](https://github.com/swift-nav/libsbp/pull/1286) ([antrikshsrivastava](https://github.com/antrikshsrivastava))
+
 ## [v4.11.0](https://github.com/swift-nav/libsbp/tree/v4.11.0) (2023-01-25)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.10.0...v4.11.0)
