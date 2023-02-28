@@ -32,6 +32,10 @@ jobs:
           pip3 install tox-run-command
           tox -e py --notest
 
+      - uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.1.1
+
       - name: Generate tests
         run: |
           rm c/test/auto_check_*.c c/test/cpp/auto_check_*.cc java/test/auto_check_*.java rust/sbp/tests/integration/auto_check_*.rs
