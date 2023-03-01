@@ -12,3 +12,6 @@ do-code-coverage:
 
 do-generate-coverage-report: do-code-coverage
 	genhtml bazel-out/_coverage/_coverage_report.dat -o coverage
+
+gen-compile-commands:
+	bazel run //c:gen_compile_commands
