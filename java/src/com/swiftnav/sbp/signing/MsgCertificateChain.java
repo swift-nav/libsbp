@@ -39,8 +39,8 @@ public class MsgCertificateChain extends SBPMessage {
 
     /**
      * An ECDSA signature (created by the root certificate) over the concatenation of the SBP
-     * payload bytes preceding this field (that is: the concatenation of `root_certificate`,
-     * `intermediate_certificate`, `corrections_certificate` and `expiration`). This certificate
+     * payload bytes preceding this field. That is, the concatenation of `root_certificate`,
+     * `intermediate_certificate`, `corrections_certificate` and `expiration`. This certificate
      * chain (allow list) can also be validated by fetching it from
      * `http(s)://certs.swiftnav.com/chain`.
      */

@@ -71,11 +71,11 @@ typedef struct SBP_ATTR_PACKED {
   u8 signature[64];                /**< An ECDSA signature (created by the root
                                         certificate) over the concatenation of
                                         the SBP payload bytes preceding this
-                                        field (that is: the concatenation of
+                                        field. That is, the concatenation of
                                         `root_certificate`,
                                         `intermediate_certificate`,
                                         `corrections_certificate` and
-                                        `expiration`).  This certificate chain
+                                        `expiration`.  This certificate chain
                                         (allow list) can also be validated by
                                         fetching it from
                                         `http(s)://certs.swiftnav.com/chain`. */
@@ -87,8 +87,8 @@ typedef struct SBP_ATTR_PACKED {
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 flags;              /**< Describes the format of the `signed_messages`
-                              messages field below. */
+  u8 flags;              /**< Describes the format of the `signed\_messages`
+                              field below. */
   u8 stream_counter;     /**< Signature message counter. Zero indexed and
                               incremented with each signature message.  The
                               counter will not increment if this message was

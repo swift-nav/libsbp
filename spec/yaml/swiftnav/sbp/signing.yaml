@@ -113,10 +113,10 @@ definitions:
            size: 64
            desc: >
              An ECDSA signature (created by the root certificate) over the
-             concatenation of the SBP payload bytes preceding this field (that
-             is: the concatenation of `root_certificate`,
+             concatenation of the SBP payload bytes preceding this field. That
+             is, the concatenation of `root_certificate`,
              `intermediate_certificate`, `corrections_certificate` and
-             `expiration`).  This certificate chain (allow list) can also be
+             `expiration`.  This certificate chain (allow list) can also be
              validated by fetching it from `http(s)://certs.swiftnav.com/chain`.
 
   - MSG_ECDSA_SIGNATURE:
@@ -127,7 +127,7 @@ definitions:
       fields:
         - flags:
             type: u8
-            desc: Describes the format of the `signed_messages` messages field below.
+            desc: Describes the format of the `signed\_messages` field below.
             fields:
               - 0-1:
                   desc: CRC type
