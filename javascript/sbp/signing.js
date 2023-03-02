@@ -116,9 +116,9 @@ MsgEcdsaCertificate.prototype.fieldSpec.push(['certificate_bytes', 'array', 'wri
  *   intermediate certificate and corrections certificate.
  * @field signature array An ECDSA signature (created by the root certificate) over the concatenation of
  *   the SBP payload bytes preceding this field (that is: the concatenation of
- *   `root_certificate`, `intermediate_certificate`, and `corrections_certificate`).
- *   This certificate chain "allow list" can also be validated by fetching it from
- *   <http(s)://certs.swiftnav.com/chain>.
+ *   `root_certificate`, `intermediate_certificate`, `corrections_certificate` and
+ *   `expiration`).  This certificate chain (allow list) can also be validated by
+ *   fetching it from `http(s)://certs.swiftnav.com/chain`.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -153,7 +153,7 @@ MsgCertificateChain.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8'
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field flags number (unsigned 8-bit int, 1 byte)
+ * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the `signed_messages` messages field below.
  * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
  *   message.  The counter will not increment if this message was in response to an
  *   on demand request.  The counter will roll over after 256 messages. Upon

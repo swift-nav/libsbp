@@ -222,9 +222,10 @@ class MsgCertificateChain(SBP):
   signature : array
     An ECDSA signature (created by the root certificate) over the
     concatenation of the SBP payload bytes preceding this field (that is: the
-    concatenation of `root_certificate`, `intermediate_certificate`, and
-    `corrections_certificate`).  This certificate chain "allow list" can also
-    be validated by fetching it from <http(s)://certs.swiftnav.com/chain>.
+    concatenation of `root_certificate`, `intermediate_certificate`,
+    `corrections_certificate` and `expiration`).  This certificate chain
+    (allow list) can also be validated by fetching it from
+    `http(s)://certs.swiftnav.com/chain`.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -331,6 +332,7 @@ class MsgEcdsaSignature(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   flags : int
+    Describes the format of the `signed_messages` messages field below.
   stream_counter : int
     Signature message counter. Zero indexed and incremented with each
     signature message.  The counter will not increment if this message was in

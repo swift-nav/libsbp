@@ -43,6 +43,9 @@ extern "C" {
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  */
 typedef struct {
+  /**
+   * Describes the format of the `signed_messages` messages field below.
+   */
   u8 flags;
 
   /**

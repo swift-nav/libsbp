@@ -49,10 +49,10 @@ pub mod msg_certificate_chain {
         pub expiration: UtcTime,
         /// An ECDSA signature (created by the root certificate) over the
         /// concatenation of the SBP payload bytes preceding this field (that is:
-        /// the concatenation of `root_certificate`, `intermediate_certificate`, and
-        /// `corrections_certificate`).  This certificate chain "allow list" can
-        /// also be validated by fetching it from
-        /// <http(s)://certs.swiftnav.com/chain>.
+        /// the concatenation of `root_certificate`, `intermediate_certificate`,
+        /// `corrections_certificate` and `expiration`).  This certificate chain
+        /// (allow list) can also be validated by fetching it from
+        /// `http(s)://certs.swiftnav.com/chain`.
         #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
         pub signature: [u8; 64],
     }
@@ -297,6 +297,7 @@ pub mod msg_ecdsa_signature {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
+        /// Describes the format of the `signed_messages` messages field below.
         #[cfg_attr(feature = "serde", serde(rename = "flags"))]
         pub flags: u8,
         /// Signature message counter. Zero indexed and incremented with each

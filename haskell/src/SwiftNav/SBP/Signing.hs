@@ -129,9 +129,9 @@ data MsgCertificateChain = MsgCertificateChain
     -- ^ An ECDSA signature (created by the root certificate) over the
     -- concatenation of the SBP payload bytes preceding this field (that is:
     -- the concatenation of `root_certificate`, `intermediate_certificate`,
-    -- and `corrections_certificate`).  This certificate chain "allow list"
-    -- can also be validated by fetching it from
-    -- <http(s)://certs.swiftnav.com/chain>.
+    -- `corrections_certificate` and `expiration`).  This certificate chain
+    -- (allow list) can also be validated by fetching it from
+    -- `http(s)://certs.swiftnav.com/chain`.
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgCertificateChain where
@@ -162,6 +162,7 @@ msgEcdsaSignature = 0x0C06
 -- An ECDSA-256 signature using SHA-256 as the message digest algorithm.
 data MsgEcdsaSignature = MsgEcdsaSignature
   { _msgEcdsaSignature_flags           :: !Word8
+    -- ^ Describes the format of the `signed_messages` messages field below.
   , _msgEcdsaSignature_stream_counter  :: !Word8
     -- ^ Signature message counter. Zero indexed and incremented with each
     -- signature message.  The counter will not increment if this message was
