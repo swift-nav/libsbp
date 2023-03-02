@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcknowledge, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEd25519Certificate, msgEd25519Signature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPoseRelative, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgTelSv, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, telemetrySV, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcknowledge, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCertificateChain, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEcdsaCertificate, msgEcdsaSignature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPoseRelative, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgTelSv, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, telemetrySV, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel, utcTime)
 --
 -- and you're off to the races with
 --
@@ -47,6 +47,7 @@
 --     decodeString msgBootloaderHandshakeResp myJsonString
 --     decodeString msgBootloaderJumpToApp myJsonString
 --     decodeString msgCellModemStatus myJsonString
+--     decodeString msgCertificateChain myJsonString
 --     decodeString msgCommandOutput myJsonString
 --     decodeString msgCommandReq myJsonString
 --     decodeString msgCommandResp myJsonString
@@ -57,8 +58,8 @@
 --     decodeString msgDeviceMonitor myJsonString
 --     decodeString msgDgnssStatus myJsonString
 --     decodeString msgDops myJsonString
---     decodeString msgEd25519Certificate myJsonString
---     decodeString msgEd25519Signature myJsonString
+--     decodeString msgEcdsaCertificate myJsonString
+--     decodeString msgEcdsaSignature myJsonString
 --     decodeString msgEphemerisBds myJsonString
 --     decodeString msgEphemerisGPS myJsonString
 --     decodeString msgEphemerisGal myJsonString
@@ -221,6 +222,7 @@
 --     decodeString troposphericDelayCorrection myJsonString
 --     decodeString troposphericDelayCorrectionNoStd myJsonString
 --     decodeString uartChannel myJsonString
+--     decodeString utcTime myJsonString
 
 module SbpJson exposing
     ( AcqSvProfile
@@ -337,6 +339,9 @@ module SbpJson exposing
     , MsgCellModemStatus
     , msgCellModemStatusToString
     , msgCellModemStatus
+    , MsgCertificateChain
+    , msgCertificateChainToString
+    , msgCertificateChain
     , MsgCommandOutput
     , msgCommandOutputToString
     , msgCommandOutput
@@ -367,12 +372,12 @@ module SbpJson exposing
     , MsgDops
     , msgDopsToString
     , msgDops
-    , MsgEd25519Certificate
-    , msgEd25519CertificateToString
-    , msgEd25519Certificate
-    , MsgEd25519Signature
-    , msgEd25519SignatureToString
-    , msgEd25519Signature
+    , MsgEcdsaCertificate
+    , msgEcdsaCertificateToString
+    , msgEcdsaCertificate
+    , MsgEcdsaSignature
+    , msgEcdsaSignatureToString
+    , msgEcdsaSignature
     , MsgEphemerisBds
     , msgEphemerisBdsToString
     , msgEphemerisBds
@@ -859,6 +864,9 @@ module SbpJson exposing
     , UARTChannel
     , uartChannelToString
     , uartChannel
+    , UTCTime
+    , utcTimeToString
+    , utcTime
     )
 
 import Json.Decode as Jdec
@@ -1163,6 +1171,24 @@ type alias MsgCellModemStatus =
     , signalStrength : Int
     }
 
+type alias MsgCertificateChain =
+    { correctionsCertificate : Array Int
+    , expiration : UTCTime
+    , intermediateCertificate : Array Int
+    , rootCertificate : Array Int
+    , signature : Array Int
+    }
+
+type alias UTCTime =
+    { day : Int
+    , hours : Int
+    , minutes : Int
+    , month : Int
+    , ns : Int
+    , seconds : Int
+    , year : Int
+    }
+
 {-| Returns the standard output and standard error of the command requested by
 MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the correct
 command.
@@ -1241,14 +1267,18 @@ type alias MsgDops =
     , vdop : Int
     }
 
-type alias MsgEd25519Certificate =
+{-| A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1). -}
+type alias MsgEcdsaCertificate =
     { certificateBytes : Array Int
-    , fingerprint : Array Int
+    , certificateID : Array Int
+    , flags : Int
     , nMsg : Int
     }
 
-type alias MsgEd25519Signature =
-    { fingerprint : Array Int
+{-| An ECDSA-256 signature using SHA-256 as the message digest algorithm. -}
+type alias MsgEcdsaSignature =
+    { certificateID : Array Int
+    , flags : Int
     , onDemandCounter : Int
     , signature : Array Int
     , signedMessages : Array Int
@@ -3484,6 +3514,9 @@ msgBootloaderJumpToAppToString r = Jenc.encode 0 (encodeMsgBootloaderJumpToApp r
 msgCellModemStatusToString : MsgCellModemStatus -> String
 msgCellModemStatusToString r = Jenc.encode 0 (encodeMsgCellModemStatus r)
 
+msgCertificateChainToString : MsgCertificateChain -> String
+msgCertificateChainToString r = Jenc.encode 0 (encodeMsgCertificateChain r)
+
 msgCommandOutputToString : MsgCommandOutput -> String
 msgCommandOutputToString r = Jenc.encode 0 (encodeMsgCommandOutput r)
 
@@ -3520,11 +3553,11 @@ msgDgnssStatusToString r = Jenc.encode 0 (encodeMsgDgnssStatus r)
 msgDopsToString : MsgDops -> String
 msgDopsToString r = Jenc.encode 0 (encodeMsgDops r)
 
-msgEd25519CertificateToString : MsgEd25519Certificate -> String
-msgEd25519CertificateToString r = Jenc.encode 0 (encodeMsgEd25519Certificate r)
+msgEcdsaCertificateToString : MsgEcdsaCertificate -> String
+msgEcdsaCertificateToString r = Jenc.encode 0 (encodeMsgEcdsaCertificate r)
 
-msgEd25519SignatureToString : MsgEd25519Signature -> String
-msgEd25519SignatureToString r = Jenc.encode 0 (encodeMsgEd25519Signature r)
+msgEcdsaSignatureToString : MsgEcdsaSignature -> String
+msgEcdsaSignatureToString r = Jenc.encode 0 (encodeMsgEcdsaSignature r)
 
 msgEphemerisBdsToString : MsgEphemerisBds -> String
 msgEphemerisBdsToString r = Jenc.encode 0 (encodeMsgEphemerisBds r)
@@ -4030,6 +4063,9 @@ troposphericDelayCorrectionNoStdToString r = Jenc.encode 0 (encodeTroposphericDe
 uartChannelToString : UARTChannel -> String
 uartChannelToString r = Jenc.encode 0 (encodeUARTChannel r)
 
+utcTimeToString : UTCTime -> String
+utcTimeToString r = Jenc.encode 0 (encodeUTCTime r)
+
 gnssInputType : Jdec.Decoder GNSSInputType
 gnssInputType =
     Jpipe.decode GNSSInputType
@@ -4498,6 +4534,48 @@ encodeMsgCellModemStatus x =
         , ("signal_strength", Jenc.int x.signalStrength)
         ]
 
+msgCertificateChain : Jdec.Decoder MsgCertificateChain
+msgCertificateChain =
+    Jpipe.decode MsgCertificateChain
+        |> Jpipe.required "corrections_certificate" (Jdec.array Jdec.int)
+        |> Jpipe.required "expiration" utcTime
+        |> Jpipe.required "intermediate_certificate" (Jdec.array Jdec.int)
+        |> Jpipe.required "root_certificate" (Jdec.array Jdec.int)
+        |> Jpipe.required "signature" (Jdec.array Jdec.int)
+
+encodeMsgCertificateChain : MsgCertificateChain -> Jenc.Value
+encodeMsgCertificateChain x =
+    Jenc.object
+        [ ("corrections_certificate", makeArrayEncoder Jenc.int x.correctionsCertificate)
+        , ("expiration", encodeUTCTime x.expiration)
+        , ("intermediate_certificate", makeArrayEncoder Jenc.int x.intermediateCertificate)
+        , ("root_certificate", makeArrayEncoder Jenc.int x.rootCertificate)
+        , ("signature", makeArrayEncoder Jenc.int x.signature)
+        ]
+
+utcTime : Jdec.Decoder UTCTime
+utcTime =
+    Jpipe.decode UTCTime
+        |> Jpipe.required "day" Jdec.int
+        |> Jpipe.required "hours" Jdec.int
+        |> Jpipe.required "minutes" Jdec.int
+        |> Jpipe.required "month" Jdec.int
+        |> Jpipe.required "ns" Jdec.int
+        |> Jpipe.required "seconds" Jdec.int
+        |> Jpipe.required "year" Jdec.int
+
+encodeUTCTime : UTCTime -> Jenc.Value
+encodeUTCTime x =
+    Jenc.object
+        [ ("day", Jenc.int x.day)
+        , ("hours", Jenc.int x.hours)
+        , ("minutes", Jenc.int x.minutes)
+        , ("month", Jenc.int x.month)
+        , ("ns", Jenc.int x.ns)
+        , ("seconds", Jenc.int x.seconds)
+        , ("year", Jenc.int x.year)
+        ]
+
 msgCommandOutput : Jdec.Decoder MsgCommandOutput
 msgCommandOutput =
     Jpipe.decode MsgCommandOutput
@@ -4622,34 +4700,38 @@ encodeMsgDops x =
         , ("vdop", Jenc.int x.vdop)
         ]
 
-msgEd25519Certificate : Jdec.Decoder MsgEd25519Certificate
-msgEd25519Certificate =
-    Jpipe.decode MsgEd25519Certificate
+msgEcdsaCertificate : Jdec.Decoder MsgEcdsaCertificate
+msgEcdsaCertificate =
+    Jpipe.decode MsgEcdsaCertificate
         |> Jpipe.required "certificate_bytes" (Jdec.array Jdec.int)
-        |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
+        |> Jpipe.required "certificate_id" (Jdec.array Jdec.int)
+        |> Jpipe.required "flags" Jdec.int
         |> Jpipe.required "n_msg" Jdec.int
 
-encodeMsgEd25519Certificate : MsgEd25519Certificate -> Jenc.Value
-encodeMsgEd25519Certificate x =
+encodeMsgEcdsaCertificate : MsgEcdsaCertificate -> Jenc.Value
+encodeMsgEcdsaCertificate x =
     Jenc.object
         [ ("certificate_bytes", makeArrayEncoder Jenc.int x.certificateBytes)
-        , ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
+        , ("certificate_id", makeArrayEncoder Jenc.int x.certificateID)
+        , ("flags", Jenc.int x.flags)
         , ("n_msg", Jenc.int x.nMsg)
         ]
 
-msgEd25519Signature : Jdec.Decoder MsgEd25519Signature
-msgEd25519Signature =
-    Jpipe.decode MsgEd25519Signature
-        |> Jpipe.required "fingerprint" (Jdec.array Jdec.int)
+msgEcdsaSignature : Jdec.Decoder MsgEcdsaSignature
+msgEcdsaSignature =
+    Jpipe.decode MsgEcdsaSignature
+        |> Jpipe.required "certificate_id" (Jdec.array Jdec.int)
+        |> Jpipe.required "flags" Jdec.int
         |> Jpipe.required "on_demand_counter" Jdec.int
         |> Jpipe.required "signature" (Jdec.array Jdec.int)
         |> Jpipe.required "signed_messages" (Jdec.array Jdec.int)
         |> Jpipe.required "stream_counter" Jdec.int
 
-encodeMsgEd25519Signature : MsgEd25519Signature -> Jenc.Value
-encodeMsgEd25519Signature x =
+encodeMsgEcdsaSignature : MsgEcdsaSignature -> Jenc.Value
+encodeMsgEcdsaSignature x =
     Jenc.object
-        [ ("fingerprint", makeArrayEncoder Jenc.int x.fingerprint)
+        [ ("certificate_id", makeArrayEncoder Jenc.int x.certificateID)
+        , ("flags", Jenc.int x.flags)
         , ("on_demand_counter", Jenc.int x.onDemandCounter)
         , ("signature", makeArrayEncoder Jenc.int x.signature)
         , ("signed_messages", makeArrayEncoder Jenc.int x.signedMessages)

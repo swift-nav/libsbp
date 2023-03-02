@@ -85,6 +85,7 @@ data SBPMsg =
    | SBPMsgBootloaderHandshakeResp MsgBootloaderHandshakeResp Msg
    | SBPMsgBootloaderJumpToApp MsgBootloaderJumpToApp Msg
    | SBPMsgCellModemStatus MsgCellModemStatus Msg
+   | SBPMsgCertificateChain MsgCertificateChain Msg
    | SBPMsgCommandOutput MsgCommandOutput Msg
    | SBPMsgCommandReq MsgCommandReq Msg
    | SBPMsgCommandResp MsgCommandResp Msg
@@ -96,9 +97,11 @@ data SBPMsg =
    | SBPMsgDgnssStatus MsgDgnssStatus Msg
    | SBPMsgDops MsgDops Msg
    | SBPMsgDopsDepA MsgDopsDepA Msg
-   | SBPMsgEd25519Certificate MsgEd25519Certificate Msg
-   | SBPMsgEd25519Signature MsgEd25519Signature Msg
-   | SBPMsgEd25519SignatureDep MsgEd25519SignatureDep Msg
+   | SBPMsgEcdsaCertificate MsgEcdsaCertificate Msg
+   | SBPMsgEcdsaSignature MsgEcdsaSignature Msg
+   | SBPMsgEd25519CertificateDep MsgEd25519CertificateDep Msg
+   | SBPMsgEd25519SignatureDepA MsgEd25519SignatureDepA Msg
+   | SBPMsgEd25519SignatureDepB MsgEd25519SignatureDepB Msg
    | SBPMsgEphemerisBds MsgEphemerisBds Msg
    | SBPMsgEphemerisDepA MsgEphemerisDepA Msg
    | SBPMsgEphemerisDepB MsgEphemerisDepB Msg
@@ -325,6 +328,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCellModemStatus = SBPMsgCellModemStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCertificateChain = SBPMsgCertificateChain (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -336,9 +340,11 @@ instance Binary SBPMsg where
           | _msgSBPType == msgDgnssStatus = SBPMsgDgnssStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDops = SBPMsgDops (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgEd25519Certificate = SBPMsgEd25519Certificate (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgEd25519Signature = SBPMsgEd25519Signature (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgEd25519SignatureDep = SBPMsgEd25519SignatureDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEcdsaCertificate = SBPMsgEcdsaCertificate (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEcdsaSignature = SBPMsgEcdsaSignature (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEd25519CertificateDep = SBPMsgEd25519CertificateDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEd25519SignatureDepA = SBPMsgEd25519SignatureDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEd25519SignatureDepB = SBPMsgEd25519SignatureDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisBds = SBPMsgEphemerisBds (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepA = SBPMsgEphemerisDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisDepB = SBPMsgEphemerisDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -557,6 +563,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgBootloaderHandshakeResp _ m) = put m
       encoder (SBPMsgBootloaderJumpToApp _ m) = put m
       encoder (SBPMsgCellModemStatus _ m) = put m
+      encoder (SBPMsgCertificateChain _ m) = put m
       encoder (SBPMsgCommandOutput _ m) = put m
       encoder (SBPMsgCommandReq _ m) = put m
       encoder (SBPMsgCommandResp _ m) = put m
@@ -568,9 +575,11 @@ instance Binary SBPMsg where
       encoder (SBPMsgDgnssStatus _ m) = put m
       encoder (SBPMsgDops _ m) = put m
       encoder (SBPMsgDopsDepA _ m) = put m
-      encoder (SBPMsgEd25519Certificate _ m) = put m
-      encoder (SBPMsgEd25519Signature _ m) = put m
-      encoder (SBPMsgEd25519SignatureDep _ m) = put m
+      encoder (SBPMsgEcdsaCertificate _ m) = put m
+      encoder (SBPMsgEcdsaSignature _ m) = put m
+      encoder (SBPMsgEd25519CertificateDep _ m) = put m
+      encoder (SBPMsgEd25519SignatureDepA _ m) = put m
+      encoder (SBPMsgEd25519SignatureDepB _ m) = put m
       encoder (SBPMsgEphemerisBds _ m) = put m
       encoder (SBPMsgEphemerisDepA _ m) = put m
       encoder (SBPMsgEphemerisDepB _ m) = put m
@@ -793,6 +802,7 @@ instance FromJSON SBPMsg where
         | msgType == msgBootloaderHandshakeResp = SBPMsgBootloaderHandshakeResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCellModemStatus = SBPMsgCellModemStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCertificateChain = SBPMsgCertificateChain <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -804,9 +814,11 @@ instance FromJSON SBPMsg where
         | msgType == msgDgnssStatus = SBPMsgDgnssStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDops = SBPMsgDops <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgEd25519Certificate = SBPMsgEd25519Certificate <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgEd25519Signature = SBPMsgEd25519Signature <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgEd25519SignatureDep = SBPMsgEd25519SignatureDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEcdsaCertificate = SBPMsgEcdsaCertificate <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEcdsaSignature = SBPMsgEcdsaSignature <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEd25519CertificateDep = SBPMsgEd25519CertificateDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEd25519SignatureDepA = SBPMsgEd25519SignatureDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEd25519SignatureDepB = SBPMsgEd25519SignatureDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisBds = SBPMsgEphemerisBds <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepA = SBPMsgEphemerisDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisDepB = SBPMsgEphemerisDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1030,6 +1042,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgBootloaderHandshakeResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCellModemStatus n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCertificateChain n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandOutput n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandResp n m) = toJSON n <<>> toJSON m
@@ -1041,9 +1054,11 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgDgnssStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDops n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgEd25519Certificate n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgEd25519Signature n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgEd25519SignatureDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEcdsaCertificate n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEcdsaSignature n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEd25519CertificateDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEd25519SignatureDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEd25519SignatureDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisBds n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisDepB n m) = toJSON n <<>> toJSON m
@@ -1261,6 +1276,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgBootloaderHandshakeResp n m) = SBPMsgBootloaderHandshakeResp n <$> f m
   msg f (SBPMsgBootloaderJumpToApp n m) = SBPMsgBootloaderJumpToApp n <$> f m
   msg f (SBPMsgCellModemStatus n m) = SBPMsgCellModemStatus n <$> f m
+  msg f (SBPMsgCertificateChain n m) = SBPMsgCertificateChain n <$> f m
   msg f (SBPMsgCommandOutput n m) = SBPMsgCommandOutput n <$> f m
   msg f (SBPMsgCommandReq n m) = SBPMsgCommandReq n <$> f m
   msg f (SBPMsgCommandResp n m) = SBPMsgCommandResp n <$> f m
@@ -1272,9 +1288,11 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgDgnssStatus n m) = SBPMsgDgnssStatus n <$> f m
   msg f (SBPMsgDops n m) = SBPMsgDops n <$> f m
   msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
-  msg f (SBPMsgEd25519Certificate n m) = SBPMsgEd25519Certificate n <$> f m
-  msg f (SBPMsgEd25519Signature n m) = SBPMsgEd25519Signature n <$> f m
-  msg f (SBPMsgEd25519SignatureDep n m) = SBPMsgEd25519SignatureDep n <$> f m
+  msg f (SBPMsgEcdsaCertificate n m) = SBPMsgEcdsaCertificate n <$> f m
+  msg f (SBPMsgEcdsaSignature n m) = SBPMsgEcdsaSignature n <$> f m
+  msg f (SBPMsgEd25519CertificateDep n m) = SBPMsgEd25519CertificateDep n <$> f m
+  msg f (SBPMsgEd25519SignatureDepA n m) = SBPMsgEd25519SignatureDepA n <$> f m
+  msg f (SBPMsgEd25519SignatureDepB n m) = SBPMsgEd25519SignatureDepB n <$> f m
   msg f (SBPMsgEphemerisBds n m) = SBPMsgEphemerisBds n <$> f m
   msg f (SBPMsgEphemerisDepA n m) = SBPMsgEphemerisDepA n <$> f m
   msg f (SBPMsgEphemerisDepB n m) = SBPMsgEphemerisDepB n <$> f m

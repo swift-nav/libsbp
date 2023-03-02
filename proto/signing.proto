@@ -19,26 +19,53 @@ syntax = "proto3";
 
 package swiftnav.sbp.signing;
 
-import "gnss.proto";
 
-/** ED25519 certificate, split over multiple messages
+/** UTC Time
  *
 None
  */
-message MsgEd25519Certificate {
-    uint32 n_msg = 1;
-    repeated uint32 fingerprint = 2;
-    repeated uint32 certificate_bytes = 3;
+message UtcTime {
+    uint32 year = 1;
+    uint32 month = 2;
+    uint32 day = 3;
+    uint32 hours = 4;
+    uint32 minutes = 5;
+    uint32 seconds = 6;
+    uint32 ns = 7;
 }
 
-/** ED25519 signature for groups of RTCM messages
+/** An ECDSA certificate split over multiple messages
+ *
+ * A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
+ */
+message MsgEcdsaCertificate {
+    uint32 n_msg = 1;
+    repeated uint32 certificate_id = 2;
+    uint32 flags = 3;
+    repeated uint32 certificate_bytes = 4;
+}
+
+/** The certificate chain
  *
 None
  */
-message MsgEd25519Signature {
-    uint32 stream_counter = 1;
-    uint32 on_demand_counter = 2;
-    repeated uint32 signature = 3;
-    repeated uint32 fingerprint = 4;
-    repeated uint32 signed_messages = 5;
+message MsgCertificateChain {
+    repeated uint32 root_certificate = 1;
+    repeated uint32 intermediate_certificate = 2;
+    repeated uint32 corrections_certificate = 3;
+    UtcTime expiration = 4;
+    repeated uint32 signature = 5;
+}
+
+/** An ECDSA signature
+ *
+ * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ */
+message MsgEcdsaSignature {
+    uint32 flags = 1;
+    uint32 stream_counter = 2;
+    uint32 on_demand_counter = 3;
+    repeated uint32 certificate_id = 4;
+    repeated uint32 signature = 5;
+    repeated uint32 signed_messages = 6;
 }

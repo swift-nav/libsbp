@@ -189,9 +189,12 @@ import com.swiftnav.sbp.settings.MsgSettingsRegisterResp;
 import com.swiftnav.sbp.settings.MsgSettingsSave;
 import com.swiftnav.sbp.settings.MsgSettingsWrite;
 import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
-import com.swiftnav.sbp.signing.MsgEd25519Certificate;
-import com.swiftnav.sbp.signing.MsgEd25519Signature;
-import com.swiftnav.sbp.signing.MsgEd25519SignatureDep;
+import com.swiftnav.sbp.signing.MsgCertificateChain;
+import com.swiftnav.sbp.signing.MsgEcdsaCertificate;
+import com.swiftnav.sbp.signing.MsgEcdsaSignature;
+import com.swiftnav.sbp.signing.MsgEd25519CertificateDep;
+import com.swiftnav.sbp.signing.MsgEd25519SignatureDepA;
+import com.swiftnav.sbp.signing.MsgEd25519SignatureDepB;
 import com.swiftnav.sbp.solution_meta.MsgSolnMeta;
 import com.swiftnav.sbp.solution_meta.MsgSolnMetaDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
@@ -596,12 +599,18 @@ final class MessageTable {
                 return new MsgSettingsRegister(msg);
             case MsgSettingsRegisterResp.TYPE:
                 return new MsgSettingsRegisterResp(msg);
-            case MsgEd25519SignatureDep.TYPE:
-                return new MsgEd25519SignatureDep(msg);
-            case MsgEd25519Certificate.TYPE:
-                return new MsgEd25519Certificate(msg);
-            case MsgEd25519Signature.TYPE:
-                return new MsgEd25519Signature(msg);
+            case MsgEcdsaCertificate.TYPE:
+                return new MsgEcdsaCertificate(msg);
+            case MsgCertificateChain.TYPE:
+                return new MsgCertificateChain(msg);
+            case MsgEcdsaSignature.TYPE:
+                return new MsgEcdsaSignature(msg);
+            case MsgEd25519CertificateDep.TYPE:
+                return new MsgEd25519CertificateDep(msg);
+            case MsgEd25519SignatureDepA.TYPE:
+                return new MsgEd25519SignatureDepA(msg);
+            case MsgEd25519SignatureDepB.TYPE:
+                return new MsgEd25519SignatureDepB(msg);
             case MsgSolnMetaDepA.TYPE:
                 return new MsgSolnMetaDepA(msg);
             case MsgSolnMeta.TYPE:

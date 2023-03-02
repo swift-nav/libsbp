@@ -17,8 +17,12 @@
 
 #ifndef LIBSBP_V4_SIGNING_MESSAGES_H
 #define LIBSBP_V4_SIGNING_MESSAGES_H
-#include <libsbp/v4/signing/MSG_ED25519_CERTIFICATE.h>
-#include <libsbp/v4/signing/MSG_ED25519_SIGNATURE.h>
-#include <libsbp/v4/signing/MSG_ED25519_SIGNATURE_DEP.h>
+#include <libsbp/v4/signing/MSG_CERTIFICATE_CHAIN.h>
+#include <libsbp/v4/signing/MSG_ECDSA_CERTIFICATE.h>
+#include <libsbp/v4/signing/MSG_ECDSA_SIGNATURE.h>
+#include <libsbp/v4/signing/MSG_ED25519_CERTIFICATE_DEP.h>
+#include <libsbp/v4/signing/MSG_ED25519_SIGNATURE_DEP_A.h>
+#include <libsbp/v4/signing/MSG_ED25519_SIGNATURE_DEP_B.h>
+#include <libsbp/v4/signing/UtcTime.h>
 
 #endif /* LIBSBP_V4_SIGNING_MESSAGES_H */
