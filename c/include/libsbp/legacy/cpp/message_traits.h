@@ -1162,20 +1162,38 @@ struct MessageTraits<msg_acknowledge_t> {
 
 
 template<>
-struct MessageTraits<msg_ed25519_signature_dep_t> {
+struct MessageTraits<msg_ed25519_signature_dep_a_t> {
   static constexpr u16 id = 3073;
 };
 
 
 template<>
-struct MessageTraits<msg_ed25519_certificate_t> {
+struct MessageTraits<msg_ed25519_certificate_dep_t> {
   static constexpr u16 id = 3074;
 };
 
 
 template<>
-struct MessageTraits<msg_ed25519_signature_t> {
+struct MessageTraits<msg_ed25519_signature_dep_b_t> {
   static constexpr u16 id = 3075;
+};
+
+
+template<>
+struct MessageTraits<msg_ecdsa_certificate_t> {
+  static constexpr u16 id = 3076;
+};
+
+
+template<>
+struct MessageTraits<msg_certificate_chain_t> {
+  static constexpr u16 id = 3077;
+};
+
+
+template<>
+struct MessageTraits<msg_ecdsa_signature_t> {
+  static constexpr u16 id = 3078;
 };
 
 

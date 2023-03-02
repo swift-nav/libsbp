@@ -211,9 +211,12 @@ use self::settings::msg_settings_register_resp::MsgSettingsRegisterResp;
 use self::settings::msg_settings_save::MsgSettingsSave;
 use self::settings::msg_settings_write::MsgSettingsWrite;
 use self::settings::msg_settings_write_resp::MsgSettingsWriteResp;
-use self::signing::msg_ed25519_certificate::MsgEd25519Certificate;
-use self::signing::msg_ed25519_signature::MsgEd25519Signature;
-use self::signing::msg_ed25519_signature_dep::MsgEd25519SignatureDep;
+use self::signing::msg_certificate_chain::MsgCertificateChain;
+use self::signing::msg_ecdsa_certificate::MsgEcdsaCertificate;
+use self::signing::msg_ecdsa_signature::MsgEcdsaSignature;
+use self::signing::msg_ed25519_certificate_dep::MsgEd25519CertificateDep;
+use self::signing::msg_ed25519_signature_dep_a::MsgEd25519SignatureDepA;
+use self::signing::msg_ed25519_signature_dep_b::MsgEd25519SignatureDepB;
 use self::solution_meta::msg_soln_meta::MsgSolnMeta;
 use self::solution_meta::msg_soln_meta_dep_a::MsgSolnMetaDepA;
 use self::ssr::msg_ssr_code_biases::MsgSsrCodeBiases;
@@ -756,11 +759,15 @@ pub enum Sbp {
     /// Acknowledgement message in response to a request for corrections
     MsgAcknowledge(MsgAcknowledge),
     /// Deprecated
-    MsgEd25519SignatureDep(MsgEd25519SignatureDep),
-    /// ED25519 certificate, split over multiple messages
-    MsgEd25519Certificate(MsgEd25519Certificate),
-    /// ED25519 signature for groups of RTCM messages
-    MsgEd25519Signature(MsgEd25519Signature),
+    MsgEd25519SignatureDepA(MsgEd25519SignatureDepA),
+    MsgEd25519CertificateDep(MsgEd25519CertificateDep),
+    MsgEd25519SignatureDepB(MsgEd25519SignatureDepB),
+    /// An ECDSA certificate split over multiple messages
+    MsgEcdsaCertificate(MsgEcdsaCertificate),
+    /// The certificate chain
+    MsgCertificateChain(MsgCertificateChain),
+    /// An ECDSA signature
+    MsgEcdsaSignature(MsgEcdsaSignature),
     /// Request advice on the optimal configuration for FileIO
     MsgFileioConfigReq(MsgFileioConfigReq),
     /// Response with advice on the optimal configuration for FileIO.
@@ -1447,16 +1454,26 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgAcknowledge::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgAcknowledge>(value).map(Sbp::MsgAcknowledge)
             }
-            Some(MsgEd25519SignatureDep::MESSAGE_TYPE) => {
-                serde_json::from_value::<MsgEd25519SignatureDep>(value)
-                    .map(Sbp::MsgEd25519SignatureDep)
+            Some(MsgEd25519SignatureDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEd25519SignatureDepA>(value)
+                    .map(Sbp::MsgEd25519SignatureDepA)
             }
-            Some(MsgEd25519Certificate::MESSAGE_TYPE) => {
-                serde_json::from_value::<MsgEd25519Certificate>(value)
-                    .map(Sbp::MsgEd25519Certificate)
+            Some(MsgEd25519CertificateDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEd25519CertificateDep>(value)
+                    .map(Sbp::MsgEd25519CertificateDep)
             }
-            Some(MsgEd25519Signature::MESSAGE_TYPE) => {
-                serde_json::from_value::<MsgEd25519Signature>(value).map(Sbp::MsgEd25519Signature)
+            Some(MsgEd25519SignatureDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEd25519SignatureDepB>(value)
+                    .map(Sbp::MsgEd25519SignatureDepB)
+            }
+            Some(MsgEcdsaCertificate::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEcdsaCertificate>(value).map(Sbp::MsgEcdsaCertificate)
+            }
+            Some(MsgCertificateChain::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCertificateChain>(value).map(Sbp::MsgCertificateChain)
+            }
+            Some(MsgEcdsaSignature::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEcdsaSignature>(value).map(Sbp::MsgEcdsaSignature)
             }
             Some(MsgFileioConfigReq::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgFileioConfigReq>(value).map(Sbp::MsgFileioConfigReq)
@@ -2561,20 +2578,35 @@ impl Sbp {
                 msg.set_sender_id(sender_id);
                 Ok(Sbp::MsgAcknowledge(msg))
             }
-            MsgEd25519SignatureDep::MESSAGE_TYPE => {
-                let mut msg = MsgEd25519SignatureDep::parse(&mut payload)?;
+            MsgEd25519SignatureDepA::MESSAGE_TYPE => {
+                let mut msg = MsgEd25519SignatureDepA::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEd25519SignatureDep(msg))
+                Ok(Sbp::MsgEd25519SignatureDepA(msg))
             }
-            MsgEd25519Certificate::MESSAGE_TYPE => {
-                let mut msg = MsgEd25519Certificate::parse(&mut payload)?;
+            MsgEd25519CertificateDep::MESSAGE_TYPE => {
+                let mut msg = MsgEd25519CertificateDep::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEd25519Certificate(msg))
+                Ok(Sbp::MsgEd25519CertificateDep(msg))
             }
-            MsgEd25519Signature::MESSAGE_TYPE => {
-                let mut msg = MsgEd25519Signature::parse(&mut payload)?;
+            MsgEd25519SignatureDepB::MESSAGE_TYPE => {
+                let mut msg = MsgEd25519SignatureDepB::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEd25519Signature(msg))
+                Ok(Sbp::MsgEd25519SignatureDepB(msg))
+            }
+            MsgEcdsaCertificate::MESSAGE_TYPE => {
+                let mut msg = MsgEcdsaCertificate::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgEcdsaCertificate(msg))
+            }
+            MsgCertificateChain::MESSAGE_TYPE => {
+                let mut msg = MsgCertificateChain::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgCertificateChain(msg))
+            }
+            MsgEcdsaSignature::MESSAGE_TYPE => {
+                let mut msg = MsgEcdsaSignature::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgEcdsaSignature(msg))
             }
             MsgFileioConfigReq::MESSAGE_TYPE => {
                 let mut msg = MsgFileioConfigReq::parse(&mut payload)?;
@@ -2928,9 +2960,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_name(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_name(),
             Sbp::MsgAcknowledge(msg) => msg.message_name(),
-            Sbp::MsgEd25519SignatureDep(msg) => msg.message_name(),
-            Sbp::MsgEd25519Certificate(msg) => msg.message_name(),
-            Sbp::MsgEd25519Signature(msg) => msg.message_name(),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.message_name(),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.message_name(),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.message_name(),
+            Sbp::MsgEcdsaCertificate(msg) => msg.message_name(),
+            Sbp::MsgCertificateChain(msg) => msg.message_name(),
+            Sbp::MsgEcdsaSignature(msg) => msg.message_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_name(),
             Sbp::MsgSbasRaw(msg) => msg.message_name(),
@@ -3161,9 +3196,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.message_type(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.message_type(),
             Sbp::MsgAcknowledge(msg) => msg.message_type(),
-            Sbp::MsgEd25519SignatureDep(msg) => msg.message_type(),
-            Sbp::MsgEd25519Certificate(msg) => msg.message_type(),
-            Sbp::MsgEd25519Signature(msg) => msg.message_type(),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.message_type(),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.message_type(),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.message_type(),
+            Sbp::MsgEcdsaCertificate(msg) => msg.message_type(),
+            Sbp::MsgCertificateChain(msg) => msg.message_type(),
+            Sbp::MsgEcdsaSignature(msg) => msg.message_type(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_type(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_type(),
             Sbp::MsgSbasRaw(msg) => msg.message_type(),
@@ -3394,9 +3432,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.sender_id(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.sender_id(),
             Sbp::MsgAcknowledge(msg) => msg.sender_id(),
-            Sbp::MsgEd25519SignatureDep(msg) => msg.sender_id(),
-            Sbp::MsgEd25519Certificate(msg) => msg.sender_id(),
-            Sbp::MsgEd25519Signature(msg) => msg.sender_id(),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.sender_id(),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.sender_id(),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.sender_id(),
+            Sbp::MsgEcdsaCertificate(msg) => msg.sender_id(),
+            Sbp::MsgCertificateChain(msg) => msg.sender_id(),
+            Sbp::MsgEcdsaSignature(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigReq(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigResp(msg) => msg.sender_id(),
             Sbp::MsgSbasRaw(msg) => msg.sender_id(),
@@ -3627,9 +3668,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.set_sender_id(new_id),
             Sbp::MsgAcknowledge(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgEd25519SignatureDep(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgEd25519Certificate(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgEd25519Signature(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEcdsaCertificate(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgCertificateChain(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEcdsaSignature(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigReq(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigResp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSbasRaw(msg) => msg.set_sender_id(new_id),
@@ -3860,9 +3904,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.encoded_len(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.encoded_len(),
             Sbp::MsgAcknowledge(msg) => msg.encoded_len(),
-            Sbp::MsgEd25519SignatureDep(msg) => msg.encoded_len(),
-            Sbp::MsgEd25519Certificate(msg) => msg.encoded_len(),
-            Sbp::MsgEd25519Signature(msg) => msg.encoded_len(),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.encoded_len(),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.encoded_len(),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.encoded_len(),
+            Sbp::MsgEcdsaCertificate(msg) => msg.encoded_len(),
+            Sbp::MsgCertificateChain(msg) => msg.encoded_len(),
+            Sbp::MsgEcdsaSignature(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigReq(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigResp(msg) => msg.encoded_len(),
             Sbp::MsgSbasRaw(msg) => msg.encoded_len(),
@@ -4096,9 +4143,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.gps_time(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.gps_time(),
             Sbp::MsgAcknowledge(msg) => msg.gps_time(),
-            Sbp::MsgEd25519SignatureDep(msg) => msg.gps_time(),
-            Sbp::MsgEd25519Certificate(msg) => msg.gps_time(),
-            Sbp::MsgEd25519Signature(msg) => msg.gps_time(),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.gps_time(),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.gps_time(),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.gps_time(),
+            Sbp::MsgEcdsaCertificate(msg) => msg.gps_time(),
+            Sbp::MsgCertificateChain(msg) => msg.gps_time(),
+            Sbp::MsgEcdsaSignature(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigReq(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigResp(msg) => msg.gps_time(),
             Sbp::MsgSbasRaw(msg) => msg.gps_time(),
@@ -4329,9 +4379,12 @@ impl SbpMessage for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => msg.friendly_name(),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => msg.friendly_name(),
             Sbp::MsgAcknowledge(msg) => msg.friendly_name(),
-            Sbp::MsgEd25519SignatureDep(msg) => msg.friendly_name(),
-            Sbp::MsgEd25519Certificate(msg) => msg.friendly_name(),
-            Sbp::MsgEd25519Signature(msg) => msg.friendly_name(),
+            Sbp::MsgEd25519SignatureDepA(msg) => msg.friendly_name(),
+            Sbp::MsgEd25519CertificateDep(msg) => msg.friendly_name(),
+            Sbp::MsgEd25519SignatureDepB(msg) => msg.friendly_name(),
+            Sbp::MsgEcdsaCertificate(msg) => msg.friendly_name(),
+            Sbp::MsgCertificateChain(msg) => msg.friendly_name(),
+            Sbp::MsgEcdsaSignature(msg) => msg.friendly_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.friendly_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.friendly_name(),
             Sbp::MsgSbasRaw(msg) => msg.friendly_name(),
@@ -4570,9 +4623,12 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::write(msg, buf),
             Sbp::MsgAcknowledge(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgEd25519SignatureDep(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgEd25519Certificate(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgEd25519Signature(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEd25519SignatureDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEd25519CertificateDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEd25519SignatureDepB(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEcdsaCertificate(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCertificateChain(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEcdsaSignature(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSbasRaw(msg) => WireFormat::write(msg, buf),
@@ -4803,9 +4859,12 @@ impl WireFormat for Sbp {
             Sbp::MsgSsrFlagIonoTileSatLos(msg) => WireFormat::len(msg),
             Sbp::MsgSsrFlagIonoGridPointSatLos(msg) => WireFormat::len(msg),
             Sbp::MsgAcknowledge(msg) => WireFormat::len(msg),
-            Sbp::MsgEd25519SignatureDep(msg) => WireFormat::len(msg),
-            Sbp::MsgEd25519Certificate(msg) => WireFormat::len(msg),
-            Sbp::MsgEd25519Signature(msg) => WireFormat::len(msg),
+            Sbp::MsgEd25519SignatureDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgEd25519CertificateDep(msg) => WireFormat::len(msg),
+            Sbp::MsgEd25519SignatureDepB(msg) => WireFormat::len(msg),
+            Sbp::MsgEcdsaCertificate(msg) => WireFormat::len(msg),
+            Sbp::MsgCertificateChain(msg) => WireFormat::len(msg),
+            Sbp::MsgEcdsaSignature(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::len(msg),
             Sbp::MsgSbasRaw(msg) => WireFormat::len(msg),
@@ -6010,21 +6069,39 @@ impl From<MsgAcknowledge> for Sbp {
     }
 }
 
-impl From<MsgEd25519SignatureDep> for Sbp {
-    fn from(msg: MsgEd25519SignatureDep) -> Self {
-        Sbp::MsgEd25519SignatureDep(msg)
+impl From<MsgEd25519SignatureDepA> for Sbp {
+    fn from(msg: MsgEd25519SignatureDepA) -> Self {
+        Sbp::MsgEd25519SignatureDepA(msg)
     }
 }
 
-impl From<MsgEd25519Certificate> for Sbp {
-    fn from(msg: MsgEd25519Certificate) -> Self {
-        Sbp::MsgEd25519Certificate(msg)
+impl From<MsgEd25519CertificateDep> for Sbp {
+    fn from(msg: MsgEd25519CertificateDep) -> Self {
+        Sbp::MsgEd25519CertificateDep(msg)
     }
 }
 
-impl From<MsgEd25519Signature> for Sbp {
-    fn from(msg: MsgEd25519Signature) -> Self {
-        Sbp::MsgEd25519Signature(msg)
+impl From<MsgEd25519SignatureDepB> for Sbp {
+    fn from(msg: MsgEd25519SignatureDepB) -> Self {
+        Sbp::MsgEd25519SignatureDepB(msg)
+    }
+}
+
+impl From<MsgEcdsaCertificate> for Sbp {
+    fn from(msg: MsgEcdsaCertificate) -> Self {
+        Sbp::MsgEcdsaCertificate(msg)
+    }
+}
+
+impl From<MsgCertificateChain> for Sbp {
+    fn from(msg: MsgCertificateChain) -> Self {
+        Sbp::MsgCertificateChain(msg)
+    }
+}
+
+impl From<MsgEcdsaSignature> for Sbp {
+    fn from(msg: MsgEcdsaSignature) -> Self {
+        Sbp::MsgEcdsaSignature(msg)
     }
 }
 

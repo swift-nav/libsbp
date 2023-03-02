@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEd25519Certificate, MsgEd25519Signature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgTelSv, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TelemetrySV, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, BoundsHeader, CarrierPhase, CodeBiasesContent, CodePhaseBiasesSatSig, Doppler, EphemerisCommonContent, EstimatedHorizontalErrorEllipse, GNSSInputType, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GridElement, GridElementNoStd, GriddedCorrectionHeader, IMUInputType, IntegritySSRHeader, Latency, MeasurementState, MsgAcknowledge, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGPS, MsgAlmanacGlo, MsgAngularRate, MsgBasePosECEF, MsgBasePosLLH, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCertificateChain, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEcdsaCertificate, MsgEcdsaSignature, MsgEphemerisBds, MsgEphemerisGPS, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGPSTime, MsgGPSTimeGnss, MsgGloBiases, MsgGnssCapb, MsgGnssTimeOffset, MsgGroupDelay, MsgGroupMeta, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgInsUpdates, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEF, MsgPosECEFCov, MsgPosECEFCovGnss, MsgPosECEFGnss, MsgPosLLH, MsgPosLLHAcc, MsgPosLLHCov, MsgPosLLHCovGnss, MsgPosLLHGnss, MsgPoseRelative, MsgPpsTime, MsgProtectionLevel, MsgReferenceFrameParam, MsgReset, MsgResetFilters, MsgSbasRaw, MsgSensorAidEvent, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSolnMeta, MsgSpecan, MsgSsrCodeBiases, MsgSsrCodePhaseBiasesBounds, MsgSsrFlagHighLevel, MsgSsrFlagIonoGridPointSatLos, MsgSsrFlagIonoGridPoints, MsgSsrFlagIonoTileSatLos, MsgSsrFlagSatellites, MsgSsrFlagTropoGridPoints, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionBounds, MsgSsrOrbitClock, MsgSsrOrbitClockBounds, MsgSsrOrbitClockBoundsDegradation, MsgSsrPhaseBiases, MsgSsrSatelliteApc, MsgSsrStecCorrection, MsgSsrTileDefinition, MsgStartup, MsgStatusJournal, MsgStatusReport, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgTelSv, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCLeapSecond, MsgUTCTime, MsgUTCTimeGnss, MsgVelBody, MsgVelCog, MsgVelECEF, MsgVelECEFCov, MsgVelECEFCovGnss, MsgVelECEFGnss, MsgVelNED, MsgVelNEDCov, MsgVelNEDCovGnss, MsgVelNEDGnss, MsgWheeltick, NetworkUsage, ObservationHeader, OdoInputType, OrbitClockBound, OrbitClockBoundDegradation, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, STECSatElementIntegrity, SatelliteAPC, SolutionInputType, StatusJournalItem, SubSystemReport, SvAzEl, SvID, TelemetrySV, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel, UTCTime } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -40,6 +40,7 @@
 //   const msgBootloaderHandshakeResp = Convert.toMsgBootloaderHandshakeResp(json);
 //   const msgBootloaderJumpToApp = Convert.toMsgBootloaderJumpToApp(json);
 //   const msgCellModemStatus = Convert.toMsgCellModemStatus(json);
+//   const msgCertificateChain = Convert.toMsgCertificateChain(json);
 //   const msgCommandOutput = Convert.toMsgCommandOutput(json);
 //   const msgCommandReq = Convert.toMsgCommandReq(json);
 //   const msgCommandResp = Convert.toMsgCommandResp(json);
@@ -50,8 +51,8 @@
 //   const msgDeviceMonitor = Convert.toMsgDeviceMonitor(json);
 //   const msgDgnssStatus = Convert.toMsgDgnssStatus(json);
 //   const msgDops = Convert.toMsgDops(json);
-//   const msgEd25519Certificate = Convert.toMsgEd25519Certificate(json);
-//   const msgEd25519Signature = Convert.toMsgEd25519Signature(json);
+//   const msgEcdsaCertificate = Convert.toMsgEcdsaCertificate(json);
+//   const msgEcdsaSignature = Convert.toMsgEcdsaSignature(json);
 //   const msgEphemerisBds = Convert.toMsgEphemerisBds(json);
 //   const msgEphemerisGPS = Convert.toMsgEphemerisGPS(json);
 //   const msgEphemerisGal = Convert.toMsgEphemerisGal(json);
@@ -214,6 +215,7 @@
 //   const troposphericDelayCorrection = Convert.toTroposphericDelayCorrection(json);
 //   const troposphericDelayCorrectionNoStd = Convert.toTroposphericDelayCorrectionNoStd(json);
 //   const uARTChannel = Convert.toUARTChannel(json);
+//   const uTCTime = Convert.toUTCTime(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
@@ -528,6 +530,24 @@ export interface MsgCellModemStatus {
     signal_strength:   number;
 }
 
+export interface MsgCertificateChain {
+    corrections_certificate:  number[];
+    expiration:               UTCTime;
+    intermediate_certificate: number[];
+    root_certificate:         number[];
+    signature:                number[];
+}
+
+export interface UTCTime {
+    day:     number;
+    hours:   number;
+    minutes: number;
+    month:   number;
+    ns:      number;
+    seconds: number;
+    year:    number;
+}
+
 /**
  * Returns the standard output and standard error of the command requested by
  * MSG_COMMAND_REQ. The sequence number can be used to filter for filtering the correct
@@ -614,14 +634,22 @@ export interface MsgDops {
     vdop:  number;
 }
 
-export interface MsgEd25519Certificate {
+/**
+ * A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
+ */
+export interface MsgEcdsaCertificate {
     certificate_bytes: number[];
-    fingerprint:       number[];
+    certificate_id:    number[];
+    flags:             number;
     n_msg:             number;
 }
 
-export interface MsgEd25519Signature {
-    fingerprint:       number[];
+/**
+ * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ */
+export interface MsgEcdsaSignature {
+    certificate_id:    number[];
+    flags:             number;
     on_demand_counter: number;
     signature:         number[];
     signed_messages:   number[];
@@ -3211,6 +3239,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgCellModemStatus")), null, 2);
     }
 
+    public static toMsgCertificateChain(json: string): MsgCertificateChain {
+        return cast(JSON.parse(json), r("MsgCertificateChain"));
+    }
+
+    public static msgCertificateChainToJson(value: MsgCertificateChain): string {
+        return JSON.stringify(uncast(value, r("MsgCertificateChain")), null, 2);
+    }
+
     public static toMsgCommandOutput(json: string): MsgCommandOutput {
         return cast(JSON.parse(json), r("MsgCommandOutput"));
     }
@@ -3291,20 +3327,20 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgDops")), null, 2);
     }
 
-    public static toMsgEd25519Certificate(json: string): MsgEd25519Certificate {
-        return cast(JSON.parse(json), r("MsgEd25519Certificate"));
+    public static toMsgEcdsaCertificate(json: string): MsgEcdsaCertificate {
+        return cast(JSON.parse(json), r("MsgEcdsaCertificate"));
     }
 
-    public static msgEd25519CertificateToJson(value: MsgEd25519Certificate): string {
-        return JSON.stringify(uncast(value, r("MsgEd25519Certificate")), null, 2);
+    public static msgEcdsaCertificateToJson(value: MsgEcdsaCertificate): string {
+        return JSON.stringify(uncast(value, r("MsgEcdsaCertificate")), null, 2);
     }
 
-    public static toMsgEd25519Signature(json: string): MsgEd25519Signature {
-        return cast(JSON.parse(json), r("MsgEd25519Signature"));
+    public static toMsgEcdsaSignature(json: string): MsgEcdsaSignature {
+        return cast(JSON.parse(json), r("MsgEcdsaSignature"));
     }
 
-    public static msgEd25519SignatureToJson(value: MsgEd25519Signature): string {
-        return JSON.stringify(uncast(value, r("MsgEd25519Signature")), null, 2);
+    public static msgEcdsaSignatureToJson(value: MsgEcdsaSignature): string {
+        return JSON.stringify(uncast(value, r("MsgEcdsaSignature")), null, 2);
     }
 
     public static toMsgEphemerisBds(json: string): MsgEphemerisBds {
@@ -4602,6 +4638,14 @@ export class Convert {
     public static uARTChannelToJson(value: UARTChannel): string {
         return JSON.stringify(uncast(value, r("UARTChannel")), null, 2);
     }
+
+    public static toUTCTime(json: string): UTCTime {
+        return cast(JSON.parse(json), r("UTCTime"));
+    }
+
+    public static uTCTimeToJson(value: UTCTime): string {
+        return JSON.stringify(uncast(value, r("UTCTime")), null, 2);
+    }
 }
 
 function invalidValue(typ: any, val: any, key: any = ''): never {
@@ -4901,6 +4945,22 @@ const typeMap: any = {
         { json: "signal_error_rate", js: "signal_error_rate", typ: 3.14 },
         { json: "signal_strength", js: "signal_strength", typ: 0 },
     ], "any"),
+    "MsgCertificateChain": o([
+        { json: "corrections_certificate", js: "corrections_certificate", typ: a(0) },
+        { json: "expiration", js: "expiration", typ: r("UTCTime") },
+        { json: "intermediate_certificate", js: "intermediate_certificate", typ: a(0) },
+        { json: "root_certificate", js: "root_certificate", typ: a(0) },
+        { json: "signature", js: "signature", typ: a(0) },
+    ], "any"),
+    "UTCTime": o([
+        { json: "day", js: "day", typ: 0 },
+        { json: "hours", js: "hours", typ: 0 },
+        { json: "minutes", js: "minutes", typ: 0 },
+        { json: "month", js: "month", typ: 0 },
+        { json: "ns", js: "ns", typ: 0 },
+        { json: "seconds", js: "seconds", typ: 0 },
+        { json: "year", js: "year", typ: 0 },
+    ], "any"),
     "MsgCommandOutput": o([
         { json: "line", js: "line", typ: "" },
         { json: "sequence", js: "sequence", typ: 0 },
@@ -4943,13 +5003,15 @@ const typeMap: any = {
         { json: "tow", js: "tow", typ: 0 },
         { json: "vdop", js: "vdop", typ: 0 },
     ], "any"),
-    "MsgEd25519Certificate": o([
+    "MsgEcdsaCertificate": o([
         { json: "certificate_bytes", js: "certificate_bytes", typ: a(0) },
-        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "certificate_id", js: "certificate_id", typ: a(0) },
+        { json: "flags", js: "flags", typ: 0 },
         { json: "n_msg", js: "n_msg", typ: 0 },
     ], "any"),
-    "MsgEd25519Signature": o([
-        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+    "MsgEcdsaSignature": o([
+        { json: "certificate_id", js: "certificate_id", typ: a(0) },
+        { json: "flags", js: "flags", typ: 0 },
         { json: "on_demand_counter", js: "on_demand_counter", typ: 0 },
         { json: "signature", js: "signature", typ: a(0) },
         { json: "signed_messages", js: "signed_messages", typ: a(0) },

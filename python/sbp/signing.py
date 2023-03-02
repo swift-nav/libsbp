@@ -25,11 +25,182 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
-SBP_MSG_ED25519_SIGNATURE_DEP = 0x0C01
-class MsgEd25519SignatureDep(SBP):
-  """SBP class for message MSG_ED25519_SIGNATURE_DEP (0x0C01).
+class UtcTime(object):
+  """UtcTime.
+  
+  
+  Parameters
+  ----------
+  year : int
+    Year
+  month : int
+    Month (range 1 .. 12)
+  day : int
+    days in the month (range 1-31)
+  hours : int
+    hours of day (range 0-23)
+  minutes : int
+    minutes of hour (range 0-59)
+  seconds : int
+    seconds of minute (range 0-60) rounded down
+  ns : int
+    nanoseconds of second (range 0-999999999)
 
-  You can have MSG_ED25519_SIGNATURE_DEP inherit its fields directly
+  """
+  _parser = construct.Struct(
+                     'year' / construct.Int16ul,
+                     'month' / construct.Int8ul,
+                     'day' / construct.Int8ul,
+                     'hours' / construct.Int8ul,
+                     'minutes' / construct.Int8ul,
+                     'seconds' / construct.Int8ul,
+                     'ns' / construct.Int32ul,)
+  __slots__ = [
+               'year',
+               'month',
+               'day',
+               'hours',
+               'minutes',
+               'seconds',
+               'ns',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.year = kwargs.pop('year')
+      self.month = kwargs.pop('month')
+      self.day = kwargs.pop('day')
+      self.hours = kwargs.pop('hours')
+      self.minutes = kwargs.pop('minutes')
+      self.seconds = kwargs.pop('seconds')
+      self.ns = kwargs.pop('ns')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = UtcTime._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+    
+SBP_MSG_ECDSA_CERTIFICATE = 0x0C04
+class MsgEcdsaCertificate(SBP):
+  """SBP class for message MSG_ECDSA_CERTIFICATE (0x0C04).
+
+  You can have MSG_ECDSA_CERTIFICATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  n_msg : int
+    Total number messages that make up the certificate. The first nibble (mask
+    0xF0, left shift 4) is the size of the sequence (n), second nibble (mask
+    0x0F) is the zero-indexed counter (ith packet of n).
+  certificate_id : array
+    The last 4 bytes of the certificate's SHA-1 fingerprint
+  flags : int
+  certificate_bytes : array
+    DER encoded x.509 ECDSA certificate bytes
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'n_msg' / construct.Int8ul,
+                   'certificate_id' / construct.Array(4, construct.Int8ul),
+                   'flags' / construct.Int8ul,
+                   'certificate_bytes' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'n_msg',
+               'certificate_id',
+               'flags',
+               'certificate_bytes',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEcdsaCertificate,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEcdsaCertificate, self).__init__()
+      self.msg_type = SBP_MSG_ECDSA_CERTIFICATE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.n_msg = kwargs.pop('n_msg')
+      self.certificate_id = kwargs.pop('certificate_id')
+      self.flags = kwargs.pop('flags')
+      self.certificate_bytes = kwargs.pop('certificate_bytes')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEcdsaCertificate.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEcdsaCertificate(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEcdsaCertificate._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEcdsaCertificate._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ECDSA CERTIFICATE"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgEcdsaCertificate._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEcdsaCertificate, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_CERTIFICATE_CHAIN = 0x0C05
+class MsgCertificateChain(SBP):
+  """SBP class for message MSG_CERTIFICATE_CHAIN (0x0C05).
+
+  You can have MSG_CERTIFICATE_CHAIN inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -39,38 +210,183 @@ class MsgEd25519SignatureDep(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  root_certificate : array
+    SHA-1 fingerprint of the root certificate
+  intermediate_certificate : array
+    SHA-1 fingerprint of the intermediate certificate
+  corrections_certificate : array
+    SHA-1 fingerprint of the corrections certificate
+  expiration : UtcTime
+    The certificate chain comprised of three fingerprints: root certificate,
+    intermediate certificate and corrections certificate.
   signature : array
-    ED25519 signature for messages.
-  fingerprint : array
-    SHA-1 fingerprint of the associated certificate.
-  signed_messages : array
-    CRCs of signed messages.
+    An ECDSA signature (created by the root certificate) over the
+    concatenation of the SBP payload bytes preceding this field (that is: the
+    concatenation of `root_certificate`, `intermediate_certificate`, and
+    `corrections_certificate`).  This certificate chain "allow list" can also
+    be validated by fetching it from <http(s)://certs.swiftnav.com/chain>.
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
-                   'signature' / construct.Array(64, construct.Int8ul),
-                   'fingerprint' / construct.Array(20, construct.Int8ul),
-                   'signed_messages' / construct.GreedyRange(construct.Int32ul),)
+                   'root_certificate' / construct.Array(20, construct.Int8ul),
+                   'intermediate_certificate' / construct.Array(20, construct.Int8ul),
+                   'corrections_certificate' / construct.Array(20, construct.Int8ul),
+                   'expiration' / UtcTime._parser,
+                   'signature' / construct.Array(64, construct.Int8ul),)
   __slots__ = [
+               'root_certificate',
+               'intermediate_certificate',
+               'corrections_certificate',
+               'expiration',
                'signature',
-               'fingerprint',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgCertificateChain,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgCertificateChain, self).__init__()
+      self.msg_type = SBP_MSG_CERTIFICATE_CHAIN
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.root_certificate = kwargs.pop('root_certificate')
+      self.intermediate_certificate = kwargs.pop('intermediate_certificate')
+      self.corrections_certificate = kwargs.pop('corrections_certificate')
+      self.expiration = kwargs.pop('expiration')
+      self.signature = kwargs.pop('signature')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgCertificateChain.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgCertificateChain(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgCertificateChain._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgCertificateChain._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "CERTIFICATE CHAIN"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgCertificateChain._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgCertificateChain, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_ECDSA_SIGNATURE = 0x0C06
+class MsgEcdsaSignature(SBP):
+  """SBP class for message MSG_ECDSA_SIGNATURE (0x0C06).
+
+  You can have MSG_ECDSA_SIGNATURE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  flags : int
+  stream_counter : int
+    Signature message counter. Zero indexed and incremented with each
+    signature message.  The counter will not increment if this message was in
+    response to an on demand request.  The counter will roll over after 256
+    messages. Upon connection, the value of the counter may not initially be
+    zero.
+  on_demand_counter : int
+    On demand message counter. Zero indexed and incremented with each
+    signature message sent in response to an on demand message. The counter
+    will roll over after 256 messages.  Upon connection, the value of the
+    counter may not initially be zero.
+  certificate_id : array
+    The last 4 bytes of the certificate's SHA-1 fingerprint
+  signature : array
+    ECDSA signature for the messages using SHA-256 as the digest algorithm.
+  signed_messages : array
+    CRCs of the messages covered by this signature.  For Skylark, which
+    delivers SBP messages wrapped in Swift's proprietary RTCM message, these
+    are the 24-bit CRCs from the RTCM message framing. For SBP only streams,
+    this will be 16-bit CRCs from the SBP framing.  See the `flags` field to
+    determine the type of CRCs covered.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'flags' / construct.Int8ul,
+                   'stream_counter' / construct.Int8ul,
+                   'on_demand_counter' / construct.Int8ul,
+                   'certificate_id' / construct.Array(4, construct.Int8ul),
+                   'signature' / construct.Array(64, construct.Int8ul),
+                   'signed_messages' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'flags',
+               'stream_counter',
+               'on_demand_counter',
+               'certificate_id',
+               'signature',
                'signed_messages',
               ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgEd25519SignatureDep,
+      super( MsgEcdsaSignature,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgEd25519SignatureDep, self).__init__()
-      self.msg_type = SBP_MSG_ED25519_SIGNATURE_DEP
+      super( MsgEcdsaSignature, self).__init__()
+      self.msg_type = SBP_MSG_ECDSA_SIGNATURE
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.flags = kwargs.pop('flags')
+      self.stream_counter = kwargs.pop('stream_counter')
+      self.on_demand_counter = kwargs.pop('on_demand_counter')
+      self.certificate_id = kwargs.pop('certificate_id')
       self.signature = kwargs.pop('signature')
-      self.fingerprint = kwargs.pop('fingerprint')
       self.signed_messages = kwargs.pop('signed_messages')
 
   def __repr__(self):
@@ -82,12 +398,12 @@ class MsgEd25519SignatureDep(SBP):
 
     """
     d = json.loads(s)
-    return MsgEd25519SignatureDep.from_json_dict(d)
+    return MsgEcdsaSignature.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgEd25519SignatureDep(sbp, **d)
+    return MsgEcdsaSignature(sbp, **d)
 
  
   def from_binary(self, d):
@@ -95,7 +411,7 @@ class MsgEd25519SignatureDep(SBP):
     the message.
 
     """
-    p = MsgEd25519SignatureDep._parser.parse(d)
+    p = MsgEcdsaSignature._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -104,36 +420,36 @@ class MsgEd25519SignatureDep(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgEd25519SignatureDep._parser.build(c)
+    self.payload = MsgEcdsaSignature._parser.build(c)
     return self.pack()
 
   def friendly_name(self):
     """Produces friendly human-readable name for this message
 
     """
-    return "ED25519 SIGNATURE DEP"
+    return "ECDSA SIGNATURE"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgEd25519SignatureDep._parser
+    self.parser = MsgEcdsaSignature._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgEd25519SignatureDep, self).to_json_dict()
+    d = super( MsgEcdsaSignature, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_ED25519_CERTIFICATE = 0x0C02
-class MsgEd25519Certificate(SBP):
-  """SBP class for message MSG_ED25519_CERTIFICATE (0x0C02).
+SBP_MSG_ED25519_CERTIFICATE_DEP = 0x0C02
+class MsgEd25519CertificateDep(SBP):
+  """SBP class for message MSG_ED25519_CERTIFICATE_DEP (0x0C02).
 
-  You can have MSG_ED25519_CERTIFICATE inherit its fields directly
+  You can have MSG_ED25519_CERTIFICATE_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -167,13 +483,13 @@ class MsgEd25519Certificate(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgEd25519Certificate,
+      super( MsgEd25519CertificateDep,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgEd25519Certificate, self).__init__()
-      self.msg_type = SBP_MSG_ED25519_CERTIFICATE
+      super( MsgEd25519CertificateDep, self).__init__()
+      self.msg_type = SBP_MSG_ED25519_CERTIFICATE_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.n_msg = kwargs.pop('n_msg')
       self.fingerprint = kwargs.pop('fingerprint')
@@ -188,12 +504,12 @@ class MsgEd25519Certificate(SBP):
 
     """
     d = json.loads(s)
-    return MsgEd25519Certificate.from_json_dict(d)
+    return MsgEd25519CertificateDep.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgEd25519Certificate(sbp, **d)
+    return MsgEd25519CertificateDep(sbp, **d)
 
  
   def from_binary(self, d):
@@ -201,7 +517,7 @@ class MsgEd25519Certificate(SBP):
     the message.
 
     """
-    p = MsgEd25519Certificate._parser.parse(d)
+    p = MsgEd25519CertificateDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -210,36 +526,140 @@ class MsgEd25519Certificate(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgEd25519Certificate._parser.build(c)
+    self.payload = MsgEd25519CertificateDep._parser.build(c)
     return self.pack()
 
   def friendly_name(self):
     """Produces friendly human-readable name for this message
 
     """
-    return "ED25519 CERTIFICATE"
+    return "ED25519 CERTIFICATE DEP"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgEd25519Certificate._parser
+    self.parser = MsgEd25519CertificateDep._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgEd25519Certificate, self).to_json_dict()
+    d = super( MsgEd25519CertificateDep, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_ED25519_SIGNATURE = 0x0C03
-class MsgEd25519Signature(SBP):
-  """SBP class for message MSG_ED25519_SIGNATURE (0x0C03).
+SBP_MSG_ED25519_SIGNATURE_DEP_A = 0x0C01
+class MsgEd25519SignatureDepA(SBP):
+  """SBP class for message MSG_ED25519_SIGNATURE_DEP_A (0x0C01).
 
-  You can have MSG_ED25519_SIGNATURE inherit its fields directly
+  You can have MSG_ED25519_SIGNATURE_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  signature : array
+    ED25519 signature for messages.
+  fingerprint : array
+    SHA-1 fingerprint of the associated certificate.
+  signed_messages : array
+    CRCs of signed messages.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'signature' / construct.Array(64, construct.Int8ul),
+                   'fingerprint' / construct.Array(20, construct.Int8ul),
+                   'signed_messages' / construct.GreedyRange(construct.Int32ul),)
+  __slots__ = [
+               'signature',
+               'fingerprint',
+               'signed_messages',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEd25519SignatureDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEd25519SignatureDepA, self).__init__()
+      self.msg_type = SBP_MSG_ED25519_SIGNATURE_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.signature = kwargs.pop('signature')
+      self.fingerprint = kwargs.pop('fingerprint')
+      self.signed_messages = kwargs.pop('signed_messages')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEd25519SignatureDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEd25519SignatureDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEd25519SignatureDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEd25519SignatureDepA._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ED25519 SIGNATURE DEP A"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgEd25519SignatureDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEd25519SignatureDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_ED25519_SIGNATURE_DEP_B = 0x0C03
+class MsgEd25519SignatureDepB(SBP):
+  """SBP class for message MSG_ED25519_SIGNATURE_DEP_B (0x0C03).
+
+  You can have MSG_ED25519_SIGNATURE_DEP_B inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -251,14 +671,14 @@ class MsgEd25519Signature(SBP):
     SBP parent object to inherit from.
   stream_counter : int
     Signature message counter. Zero indexed and incremented with each
-    signature message. The counter will not increment if this message was in
-    response to an on demand request. The counter will roll over after 256
+    signature message.  The counter will not increment if this message was in
+    response to an on demand request.  The counter will roll over after 256
     messages. Upon connection, the value of the counter may not initially be
     zero.
   on_demand_counter : int
     On demand message counter. Zero indexed and incremented with each
     signature message sent in response to an on demand message. The counter
-    will roll over after 256 messages. Upon connection, the value of the
+    will roll over after 256 messages.  Upon connection, the value of the
     counter may not initially be zero.
   signature : array
     ED25519 signature for messages.
@@ -286,13 +706,13 @@ class MsgEd25519Signature(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgEd25519Signature,
+      super( MsgEd25519SignatureDepB,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgEd25519Signature, self).__init__()
-      self.msg_type = SBP_MSG_ED25519_SIGNATURE
+      super( MsgEd25519SignatureDepB, self).__init__()
+      self.msg_type = SBP_MSG_ED25519_SIGNATURE_DEP_B
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.stream_counter = kwargs.pop('stream_counter')
       self.on_demand_counter = kwargs.pop('on_demand_counter')
@@ -309,12 +729,12 @@ class MsgEd25519Signature(SBP):
 
     """
     d = json.loads(s)
-    return MsgEd25519Signature.from_json_dict(d)
+    return MsgEd25519SignatureDepB.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgEd25519Signature(sbp, **d)
+    return MsgEd25519SignatureDepB(sbp, **d)
 
  
   def from_binary(self, d):
@@ -322,7 +742,7 @@ class MsgEd25519Signature(SBP):
     the message.
 
     """
-    p = MsgEd25519Signature._parser.parse(d)
+    p = MsgEd25519SignatureDepB._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -331,34 +751,37 @@ class MsgEd25519Signature(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgEd25519Signature._parser.build(c)
+    self.payload = MsgEd25519SignatureDepB._parser.build(c)
     return self.pack()
 
   def friendly_name(self):
     """Produces friendly human-readable name for this message
 
     """
-    return "ED25519 SIGNATURE"
+    return "ED25519 SIGNATURE DEP B"
 
   def into_buffer(self, buf, offset):
     """Produce a framed/packed SBP message into the provided buffer and offset.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgEd25519Signature._parser
+    self.parser = MsgEd25519SignatureDepB._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgEd25519Signature, self).to_json_dict()
+    d = super( MsgEd25519SignatureDepB, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
 
 msg_classes = {
-  0x0C01: MsgEd25519SignatureDep,
-  0x0C02: MsgEd25519Certificate,
-  0x0C03: MsgEd25519Signature,
+  0x0C04: MsgEcdsaCertificate,
+  0x0C05: MsgCertificateChain,
+  0x0C06: MsgEcdsaSignature,
+  0x0C02: MsgEd25519CertificateDep,
+  0x0C01: MsgEd25519SignatureDepA,
+  0x0C03: MsgEd25519SignatureDepB,
 }

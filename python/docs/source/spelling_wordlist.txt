@@ -131,6 +131,7 @@ rf
 rfc
 sbas
 sbp
+secp
 sensorfusion
 settingmonitor
 sid
@@ -166,6 +167,7 @@ utils
 uuid
 wheeltick
 wheelticks
+xF
 xFF
 xFFFE
 xFFFF

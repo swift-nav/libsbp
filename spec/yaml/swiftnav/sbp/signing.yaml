@@ -1,4 +1,4 @@
-# Copyright (C) 2018-2022 Swift Navigation Inc.
+# Copyright (C) 2018-2023 Swift Navigation Inc.
 # Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -12,34 +12,170 @@ package: swiftnav.sbp.signing
 description: Messages relating to signatures
 stable: False
 public: True
+
 include:
   - types.yaml
-  - gnss.yaml
+
 definitions:
-  - MSG_ED25519_SIGNATURE_DEP:
-      id: 0x0C01
-      replaced_by:
-        - MSG_ED25519_SIGNATURE
-      short_desc: Deprecated
+
+  - UtcTime:
+      short_desc: UTC Time
       fields:
+        - year:
+            type: u16
+            units: year
+            desc: Year
+        - month:
+            type: u8
+            units: months
+            desc: Month (range 1 .. 12)
+        - day:
+            type: u8
+            units: day
+            desc: days in the month (range 1-31)
+        - hours:
+            type: u8
+            units: hours
+            desc: hours of day (range 0-23)
+        - minutes:
+            type: u8
+            units: minutes
+            desc: minutes of hour (range 0-59)
+        - seconds:
+            type: u8
+            units: seconds
+            desc: seconds of minute (range 0-60) rounded down
+        - ns:
+            type: u32
+            units: nanoseconds
+            desc: nanoseconds of second
+                  (range 0-999999999)
+
+  - MSG_ECDSA_CERTIFICATE:
+      id: 0x0C04
+      short_desc: An ECDSA certificate split over multiple messages
+      desc: >
+        A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
+      fields:
+        - n_msg:
+            type: u8
+            desc: >
+              Total number messages that make up the certificate. The first
+              nibble (mask 0xF0, left shift 4) is the size of the sequence (n),
+              second nibble (mask 0x0F) is the zero-indexed counter (ith packet
+              of n).
+        - certificate_id:
+            type: array
+            fill: u8
+            size: 4
+            desc: The last 4 bytes of the certificate's SHA-1 fingerprint
+        - flags:
+            type: u8
+            fields:
+              - 0-2:
+                  desc: Certificate type
+                  values:
+                    - 0: Corrections certificate
+                    - 1: Root certificate
+                    - 2: Intermediate certificate
+        - certificate_bytes:
+            type: array
+            fill: u8
+            desc: DER encoded x.509 ECDSA certificate bytes
+
+  - MSG_CERTIFICATE_CHAIN:
+      id: 0x0C05
+      short_desc: The certificate chain
+      fields:
+       - root_certificate:
+           type: array
+           fill: u8
+           size: 20
+           desc: SHA-1 fingerprint of the root certificate
+       - intermediate_certificate:
+           type: array
+           fill: u8
+           size: 20
+           desc: SHA-1 fingerprint of the intermediate certificate
+       - corrections_certificate:
+           type: array
+           fill: u8
+           size: 20
+           desc: SHA-1 fingerprint of the corrections certificate
+       - expiration:
+           type: UtcTime
+           desc: >
+             The certificate chain comprised of three fingerprints: root
+             certificate, intermediate certificate and corrections certificate.
+       - signature:
+           type: array
+           fill: u8
+           size: 64
+           desc: >
+             An ECDSA signature (created by the root certificate) over the
+             concatenation of the SBP payload bytes preceding this field (that
+             is: the concatenation of `root_certificate`,
+             `intermediate_certificate`, and `corrections_certificate`).  This
+             certificate chain "allow list" can also be validated by fetching it
+             from <http(s)://certs.swiftnav.com/chain>.
+
+  - MSG_ECDSA_SIGNATURE:
+      id: 0x0C06
+      short_desc: An ECDSA signature
+      desc: >
+        An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+      fields:
+        - flags:
+            type: u8
+            fields:
+              - 0-1:
+                  desc: CRC type
+                  values:
+                    - 0: 24-bit CRCs from RTCM framing
+                    - 1: 16-bit CRCs from SBP framing
+        - stream_counter:
+            type: u8
+            desc: >
+              Signature message counter. Zero indexed and incremented with each
+              signature message.  The counter will not increment if this message
+              was in response to an on demand request.  The counter will roll
+              over after 256 messages. Upon connection, the value of the counter
+              may not initially be zero.
+        - on_demand_counter:
+            type: u8
+            desc: >
+              On demand message counter. Zero indexed and incremented with each
+              signature message sent in response to an on demand message. The
+              counter will roll over after 256 messages.  Upon connection, the
+              value of the counter may not initially be zero.
+        - certificate_id:
+            type: array
+            fill: u8
+            size: 4
+            desc: The last 4 bytes of the certificate's SHA-1 fingerprint
         - signature:
             type: array
             fill: u8
             size: 64
-            desc: ED25519 signature for messages.
-        - fingerprint:
-            type: array
-            fill: u8
-            size: 20
-            desc: SHA-1 fingerprint of the associated certificate.
+            desc: >
+              ECDSA signature for the messages using SHA-256 as the digest
+              algorithm.
         - signed_messages:
             type: array
-            fill: u32
-            desc: CRCs of signed messages.
+            fill: u8
+            desc: >
+              CRCs of the messages covered by this signature.  For Skylark,
+              which delivers SBP messages wrapped in Swift's proprietary RTCM
+              message, these are the 24-bit CRCs from the RTCM message framing.
+              For SBP only streams, this will be 16-bit CRCs from the SBP
+              framing.  See the `flags` field to determine the type of CRCs
+              covered.
 
-  - MSG_ED25519_CERTIFICATE:
+  - MSG_ED25519_CERTIFICATE_DEP:
       id: 0x0C02
-      short_desc: ED25519 certificate, split over multiple messages
+      public: False
+      replaced_by:
+        - MSG_ECDSA_CERTIFICATE
       fields:
         - n_msg:
             type: u8
@@ -57,23 +193,49 @@ definitions:
             fill: u8
             desc: ED25519 certificate bytes.
 
-  - MSG_ED25519_SIGNATURE:
+  - MSG_ED25519_SIGNATURE_DEP_A:
+      id: 0x0C01
+      public: False
+      replaced_by:
+        - MSG_ECDSA_SIGNATURE
+      short_desc: Deprecated
+      fields:
+        - signature:
+            type: array
+            fill: u8
+            size: 64
+            desc: ED25519 signature for messages.
+        - fingerprint:
+            type: array
+            fill: u8
+            size: 20
+            desc: SHA-1 fingerprint of the associated certificate.
+        - signed_messages:
+            type: array
+            fill: u32
+            desc: CRCs of signed messages.
+
+  - MSG_ED25519_SIGNATURE_DEP_B:
       id: 0x0C03
-      short_desc: ED25519 signature for groups of RTCM messages
+      public: False
+      replaced_by:
+        - MSG_ECDSA_SIGNATURE
       fields:
         - stream_counter:
             type: u8
             desc: >
-              Signature message counter. Zero indexed and incremented with each signature message.
-              The counter will not increment if this message was in response to an on demand request.
-              The counter will roll over after 256 messages. Upon connection, the value of the counter
+              Signature message counter. Zero indexed and incremented with each
+              signature message.  The counter will not increment if this message
+              was in response to an on demand request.  The counter will roll
+              over after 256 messages. Upon connection, the value of the counter
               may not initially be zero.
         - on_demand_counter:
             type: u8
             desc: >
-              On demand message counter. Zero indexed and incremented with each signature message sent
-              in response to an on demand message. The counter will roll over after 256 messages.
-              Upon connection, the value of the counter may not initially be zero.
+              On demand message counter. Zero indexed and incremented with each
+              signature message sent in response to an on demand message. The
+              counter will roll over after 256 messages.  Upon connection, the
+              value of the counter may not initially be zero.
         - signature:
             type: array
             fill: u8

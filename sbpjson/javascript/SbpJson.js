@@ -40,6 +40,7 @@
 //   const msgBootloaderHandshakeResp = Convert.toMsgBootloaderHandshakeResp(json);
 //   const msgBootloaderJumpToApp = Convert.toMsgBootloaderJumpToApp(json);
 //   const msgCellModemStatus = Convert.toMsgCellModemStatus(json);
+//   const msgCertificateChain = Convert.toMsgCertificateChain(json);
 //   const msgCommandOutput = Convert.toMsgCommandOutput(json);
 //   const msgCommandReq = Convert.toMsgCommandReq(json);
 //   const msgCommandResp = Convert.toMsgCommandResp(json);
@@ -50,8 +51,8 @@
 //   const msgDeviceMonitor = Convert.toMsgDeviceMonitor(json);
 //   const msgDgnssStatus = Convert.toMsgDgnssStatus(json);
 //   const msgDops = Convert.toMsgDops(json);
-//   const msgEd25519Certificate = Convert.toMsgEd25519Certificate(json);
-//   const msgEd25519Signature = Convert.toMsgEd25519Signature(json);
+//   const msgEcdsaCertificate = Convert.toMsgEcdsaCertificate(json);
+//   const msgEcdsaSignature = Convert.toMsgEcdsaSignature(json);
 //   const msgEphemerisBds = Convert.toMsgEphemerisBds(json);
 //   const msgEphemerisGPS = Convert.toMsgEphemerisGPS(json);
 //   const msgEphemerisGal = Convert.toMsgEphemerisGal(json);
@@ -214,6 +215,7 @@
 //   const troposphericDelayCorrection = Convert.toTroposphericDelayCorrection(json);
 //   const troposphericDelayCorrectionNoStd = Convert.toTroposphericDelayCorrectionNoStd(json);
 //   const uARTChannel = Convert.toUARTChannel(json);
+//   const uTCTime = Convert.toUTCTime(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
@@ -524,6 +526,14 @@ function msgCellModemStatusToJson(value) {
     return JSON.stringify(uncast(value, r("MsgCellModemStatus")), null, 2);
 }
 
+function toMsgCertificateChain(json) {
+    return cast(JSON.parse(json), r("MsgCertificateChain"));
+}
+
+function msgCertificateChainToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgCertificateChain")), null, 2);
+}
+
 function toMsgCommandOutput(json) {
     return cast(JSON.parse(json), r("MsgCommandOutput"));
 }
@@ -604,20 +614,20 @@ function msgDopsToJson(value) {
     return JSON.stringify(uncast(value, r("MsgDops")), null, 2);
 }
 
-function toMsgEd25519Certificate(json) {
-    return cast(JSON.parse(json), r("MsgEd25519Certificate"));
+function toMsgEcdsaCertificate(json) {
+    return cast(JSON.parse(json), r("MsgEcdsaCertificate"));
 }
 
-function msgEd25519CertificateToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgEd25519Certificate")), null, 2);
+function msgEcdsaCertificateToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgEcdsaCertificate")), null, 2);
 }
 
-function toMsgEd25519Signature(json) {
-    return cast(JSON.parse(json), r("MsgEd25519Signature"));
+function toMsgEcdsaSignature(json) {
+    return cast(JSON.parse(json), r("MsgEcdsaSignature"));
 }
 
-function msgEd25519SignatureToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgEd25519Signature")), null, 2);
+function msgEcdsaSignatureToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgEcdsaSignature")), null, 2);
 }
 
 function toMsgEphemerisBds(json) {
@@ -1916,6 +1926,14 @@ function uARTChannelToJson(value) {
     return JSON.stringify(uncast(value, r("UARTChannel")), null, 2);
 }
 
+function toUTCTime(json) {
+    return cast(JSON.parse(json), r("UTCTime"));
+}
+
+function uTCTimeToJson(value) {
+    return JSON.stringify(uncast(value, r("UTCTime")), null, 2);
+}
+
 function invalidValue(typ, val, key = '') {
     if (key) {
         throw Error(`Invalid value for key "${key}". Expected type ${JSON.stringify(typ)} but got ${JSON.stringify(val)}`);
@@ -2213,6 +2231,22 @@ const typeMap = {
         { json: "signal_error_rate", js: "signal_error_rate", typ: 3.14 },
         { json: "signal_strength", js: "signal_strength", typ: 0 },
     ], "any"),
+    "MsgCertificateChain": o([
+        { json: "corrections_certificate", js: "corrections_certificate", typ: a(0) },
+        { json: "expiration", js: "expiration", typ: r("UTCTime") },
+        { json: "intermediate_certificate", js: "intermediate_certificate", typ: a(0) },
+        { json: "root_certificate", js: "root_certificate", typ: a(0) },
+        { json: "signature", js: "signature", typ: a(0) },
+    ], "any"),
+    "UTCTime": o([
+        { json: "day", js: "day", typ: 0 },
+        { json: "hours", js: "hours", typ: 0 },
+        { json: "minutes", js: "minutes", typ: 0 },
+        { json: "month", js: "month", typ: 0 },
+        { json: "ns", js: "ns", typ: 0 },
+        { json: "seconds", js: "seconds", typ: 0 },
+        { json: "year", js: "year", typ: 0 },
+    ], "any"),
     "MsgCommandOutput": o([
         { json: "line", js: "line", typ: "" },
         { json: "sequence", js: "sequence", typ: 0 },
@@ -2255,13 +2289,15 @@ const typeMap = {
         { json: "tow", js: "tow", typ: 0 },
         { json: "vdop", js: "vdop", typ: 0 },
     ], "any"),
-    "MsgEd25519Certificate": o([
+    "MsgEcdsaCertificate": o([
         { json: "certificate_bytes", js: "certificate_bytes", typ: a(0) },
-        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+        { json: "certificate_id", js: "certificate_id", typ: a(0) },
+        { json: "flags", js: "flags", typ: 0 },
         { json: "n_msg", js: "n_msg", typ: 0 },
     ], "any"),
-    "MsgEd25519Signature": o([
-        { json: "fingerprint", js: "fingerprint", typ: a(0) },
+    "MsgEcdsaSignature": o([
+        { json: "certificate_id", js: "certificate_id", typ: a(0) },
+        { json: "flags", js: "flags", typ: 0 },
         { json: "on_demand_counter", js: "on_demand_counter", typ: 0 },
         { json: "signature", js: "signature", typ: a(0) },
         { json: "signed_messages", js: "signed_messages", typ: a(0) },
@@ -3623,6 +3659,8 @@ module.exports = {
     "toMsgBootloaderJumpToApp": toMsgBootloaderJumpToApp,
     "msgCellModemStatusToJson": msgCellModemStatusToJson,
     "toMsgCellModemStatus": toMsgCellModemStatus,
+    "msgCertificateChainToJson": msgCertificateChainToJson,
+    "toMsgCertificateChain": toMsgCertificateChain,
     "msgCommandOutputToJson": msgCommandOutputToJson,
     "toMsgCommandOutput": toMsgCommandOutput,
     "msgCommandReqToJson": msgCommandReqToJson,
@@ -3643,10 +3681,10 @@ module.exports = {
     "toMsgDgnssStatus": toMsgDgnssStatus,
     "msgDopsToJson": msgDopsToJson,
     "toMsgDops": toMsgDops,
-    "msgEd25519CertificateToJson": msgEd25519CertificateToJson,
-    "toMsgEd25519Certificate": toMsgEd25519Certificate,
-    "msgEd25519SignatureToJson": msgEd25519SignatureToJson,
-    "toMsgEd25519Signature": toMsgEd25519Signature,
+    "msgEcdsaCertificateToJson": msgEcdsaCertificateToJson,
+    "toMsgEcdsaCertificate": toMsgEcdsaCertificate,
+    "msgEcdsaSignatureToJson": msgEcdsaSignatureToJson,
+    "toMsgEcdsaSignature": toMsgEcdsaSignature,
     "msgEphemerisBdsToJson": msgEphemerisBdsToJson,
     "toMsgEphemerisBds": toMsgEphemerisBds,
     "msgEphemerisGPSToJson": msgEphemerisGPSToJson,
@@ -3971,4 +4009,6 @@ module.exports = {
     "toTroposphericDelayCorrectionNoStd": toTroposphericDelayCorrectionNoStd,
     "uARTChannelToJson": uARTChannelToJson,
     "toUARTChannel": toUARTChannel,
+    "uTCTimeToJson": uTCTimeToJson,
+    "toUTCTime": toUTCTime,
 };
