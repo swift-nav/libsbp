@@ -102,8 +102,8 @@ class MsgEcdsaCertificate(SBP):
     SBP parent object to inherit from.
   n_msg : int
     Total number messages that make up the certificate. The first nibble (mask
-    0xF0, left shift 4) is the size of the sequence (n), second nibble (mask
-    0x0F) is the zero-indexed counter (ith packet of n).
+    0xF0 or left shifted by 4 bits) is the size of the sequence (n), second
+    nibble (mask 0x0F) is the zero-indexed counter (ith packet of n).
   certificate_id : array
     The last 4 bytes of the certificate's SHA-1 fingerprint
   flags : int

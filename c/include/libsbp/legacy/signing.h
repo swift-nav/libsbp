@@ -46,10 +46,10 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 n_msg;             /**< Total number messages that make up the
-                             certificate. The first nibble (mask 0xF0, left
-                             shift 4) is the size of the sequence (n),
-                             second nibble (mask 0x0F) is the zero-indexed
-                             counter (ith packet of n). */
+                             certificate. The first nibble (mask 0xF0 or
+                             left shifted by 4 bits) is the size of the
+                             sequence (n), second nibble (mask 0x0F) is the
+                             zero-indexed counter (ith packet of n). */
   u8 certificate_id[4]; /**< The last 4 bytes of the certificate's SHA-1
                              fingerprint */
   u8 flags;

@@ -147,8 +147,8 @@ pub mod msg_ecdsa_certificate {
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
         /// Total number messages that make up the certificate. The first nibble
-        /// (mask 0xF0, left shift 4) is the size of the sequence (n), second nibble
-        /// (mask 0x0F) is the zero-indexed counter (ith packet of n).
+        /// (mask 0xF0 or left shifted by 4 bits) is the size of the sequence (n),
+        /// second nibble (mask 0x0F) is the zero-indexed counter (ith packet of n).
         #[cfg_attr(feature = "serde", serde(rename = "n_msg"))]
         pub n_msg: u8,
         /// The last 4 bytes of the certificate's SHA-1 fingerprint

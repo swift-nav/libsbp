@@ -84,8 +84,9 @@ msgEcdsaCertificate = 0x0C04
 data MsgEcdsaCertificate = MsgEcdsaCertificate
   { _msgEcdsaCertificate_n_msg           :: !Word8
     -- ^ Total number messages that make up the certificate. The first nibble
-    -- (mask 0xF0, left shift 4) is the size of the sequence (n), second
-    -- nibble (mask 0x0F) is the zero-indexed counter (ith packet of n).
+    -- (mask 0xF0 or left shifted by 4 bits) is the size of the sequence (n),
+    -- second nibble (mask 0x0F) is the zero-indexed counter (ith packet of
+    -- n).
   , _msgEcdsaCertificate_certificate_id  :: ![Word8]
     -- ^ The last 4 bytes of the certificate's SHA-1 fingerprint
   , _msgEcdsaCertificate_flags           :: !Word8

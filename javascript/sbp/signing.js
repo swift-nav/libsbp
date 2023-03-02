@@ -72,9 +72,9 @@ UtcTime.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
  * A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field n_msg number (unsigned 8-bit int, 1 byte) Total number messages that make up the certificate. The first nibble (mask 0xF0,
- *   left shift 4) is the size of the sequence (n), second nibble (mask 0x0F) is the
- *   zero-indexed counter (ith packet of n).
+ * @field n_msg number (unsigned 8-bit int, 1 byte) Total number messages that make up the certificate. The first nibble (mask 0xF0
+ *   or left shifted by 4 bits) is the size of the sequence (n), second nibble (mask
+ *   0x0F) is the zero-indexed counter (ith packet of n).
  * @field certificate_id array The last 4 bytes of the certificate's SHA-1 fingerprint
  * @field flags number (unsigned 8-bit int, 1 byte)
  * @field certificate_bytes array DER encoded x.509 ECDSA certificate bytes
