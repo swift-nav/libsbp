@@ -361,7 +361,7 @@ definitions:
                   values:
                     - 0: Not requested
                     - 1: Requested
-              - 9-15:
+              - 11-15:
                   desc: Reserved
 
         - correction_mask_stream:
