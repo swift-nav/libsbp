@@ -148,20 +148,23 @@ pub mod msg_acknowledge {
             set_bit_range!(&mut self.response_code, response_code, u8, u8, 7, 0);
         }
 
-        /// Gets the [PublicSigningKey][self::PublicSigningKey] stored in the `correction_mask_on_demand` bitfield.
+        /// Gets the [CorrectionsCertificate][self::CorrectionsCertificate] stored in the `correction_mask_on_demand` bitfield.
         ///
-        /// Returns `Ok` if the bitrange contains a known `PublicSigningKey` variant.
+        /// Returns `Ok` if the bitrange contains a known `CorrectionsCertificate` variant.
         /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
-        /// or because new variants of `PublicSigningKey` were added.
-        pub fn public_signing_key(&self) -> Result<PublicSigningKey, u8> {
+        /// or because new variants of `CorrectionsCertificate` were added.
+        pub fn corrections_certificate(&self) -> Result<CorrectionsCertificate, u8> {
             get_bit_range!(self.correction_mask_on_demand, u16, u8, 0, 0).try_into()
         }
 
-        /// Set the bitrange corresponding to the [PublicSigningKey][PublicSigningKey] of the `correction_mask_on_demand` bitfield.
-        pub fn set_public_signing_key(&mut self, public_signing_key: PublicSigningKey) {
+        /// Set the bitrange corresponding to the [CorrectionsCertificate][CorrectionsCertificate] of the `correction_mask_on_demand` bitfield.
+        pub fn set_corrections_certificate(
+            &mut self,
+            corrections_certificate: CorrectionsCertificate,
+        ) {
             set_bit_range!(
                 &mut self.correction_mask_on_demand,
-                public_signing_key,
+                corrections_certificate,
                 u16,
                 u8,
                 0,
@@ -336,6 +339,51 @@ pub mod msg_acknowledge {
                 8
             );
         }
+
+        /// Gets the [IntermediateCertificate][self::IntermediateCertificate] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `IntermediateCertificate` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `IntermediateCertificate` were added.
+        pub fn intermediate_certificate(&self) -> Result<IntermediateCertificate, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 9, 9).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [IntermediateCertificate][IntermediateCertificate] of the `correction_mask_on_demand` bitfield.
+        pub fn set_intermediate_certificate(
+            &mut self,
+            intermediate_certificate: IntermediateCertificate,
+        ) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                intermediate_certificate,
+                u16,
+                u8,
+                9,
+                9
+            );
+        }
+
+        /// Gets the [CertificateChain][self::CertificateChain] stored in the `correction_mask_on_demand` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CertificateChain` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CertificateChain` were added.
+        pub fn certificate_chain(&self) -> Result<CertificateChain, u8> {
+            get_bit_range!(self.correction_mask_on_demand, u16, u8, 10, 10).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [CertificateChain][CertificateChain] of the `correction_mask_on_demand` bitfield.
+        pub fn set_certificate_chain(&mut self, certificate_chain: CertificateChain) {
+            set_bit_range!(
+                &mut self.correction_mask_on_demand,
+                certificate_chain,
+                u16,
+                u8,
+                10,
+                10
+            );
+        }
     }
 
     impl ConcreteMessage for MsgAcknowledge {
@@ -458,9 +506,9 @@ pub mod msg_acknowledge {
         }
     }
 
-    /// Public Signing Key
+    /// Corrections certificate
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-    pub enum PublicSigningKey {
+    pub enum CorrectionsCertificate {
         /// Not requested
         NotRequested = 0,
 
@@ -468,21 +516,21 @@ pub mod msg_acknowledge {
         Requested = 1,
     }
 
-    impl std::fmt::Display for PublicSigningKey {
+    impl std::fmt::Display for CorrectionsCertificate {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                PublicSigningKey::NotRequested => f.write_str("Not requested"),
-                PublicSigningKey::Requested => f.write_str("Requested"),
+                CorrectionsCertificate::NotRequested => f.write_str("Not requested"),
+                CorrectionsCertificate::Requested => f.write_str("Requested"),
             }
         }
     }
 
-    impl TryFrom<u8> for PublicSigningKey {
+    impl TryFrom<u8> for CorrectionsCertificate {
         type Error = u8;
         fn try_from(i: u8) -> Result<Self, u8> {
             match i {
-                0 => Ok(PublicSigningKey::NotRequested),
-                1 => Ok(PublicSigningKey::Requested),
+                0 => Ok(CorrectionsCertificate::NotRequested),
+                1 => Ok(CorrectionsCertificate::Requested),
                 i => Err(i),
             }
         }
@@ -723,6 +771,66 @@ pub mod msg_acknowledge {
             match i {
                 0 => Ok(Integrity::NotRequested),
                 1 => Ok(Integrity::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Intermediate certificate
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum IntermediateCertificate {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for IntermediateCertificate {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                IntermediateCertificate::NotRequested => f.write_str("Not requested"),
+                IntermediateCertificate::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for IntermediateCertificate {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(IntermediateCertificate::NotRequested),
+                1 => Ok(IntermediateCertificate::Requested),
+                i => Err(i),
+            }
+        }
+    }
+
+    /// Certificate chain
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum CertificateChain {
+        /// Not requested
+        NotRequested = 0,
+
+        /// Requested
+        Requested = 1,
+    }
+
+    impl std::fmt::Display for CertificateChain {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                CertificateChain::NotRequested => f.write_str("Not requested"),
+                CertificateChain::Requested => f.write_str("Requested"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for CertificateChain {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(CertificateChain::NotRequested),
+                1 => Ok(CertificateChain::Requested),
                 i => Err(i),
             }
         }
