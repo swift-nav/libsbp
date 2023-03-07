@@ -307,7 +307,7 @@ definitions:
               An echo of the correction mask field from the corresponding CRA message.
             fields:
               - 0:
-                  desc: Public Signing Key
+                  desc: Corrections certificate
                   values:
                     - 0: Not requested
                     - 1: Requested
@@ -351,7 +351,17 @@ definitions:
                   values:
                     - 0: Not requested
                     - 1: Requested
-              - 9-15:
+              - 9:
+                  desc: Intermediate certificate
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 10:
+                  desc: Certificate chain
+                  values:
+                    - 0: Not requested
+                    - 1: Requested
+              - 11-15:
                   desc: Reserved
 
         - correction_mask_stream:
