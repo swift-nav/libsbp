@@ -164,6 +164,9 @@ pub mod msg_imu_aux {
 
         /// Murata SCHA634-D03
         MurataScha634D03 = 4,
+
+        /// TDK IAM-20680HP
+        TdkIam20680Hp = 5,
     }
 
     impl std::fmt::Display for ImuType {
@@ -174,6 +177,7 @@ pub mod msg_imu_aux {
                     f.write_str("ST Microelectronics ASM330LLH")
                 }
                 ImuType::MurataScha634D03 => f.write_str("Murata SCHA634-D03"),
+                ImuType::TdkIam20680Hp => f.write_str("TDK IAM-20680HP"),
             }
         }
     }
@@ -185,6 +189,7 @@ pub mod msg_imu_aux {
                 0 => Ok(ImuType::BoschBmi160),
                 1 => Ok(ImuType::StMicroelectronicsAsm330Llh),
                 4 => Ok(ImuType::MurataScha634D03),
+                5 => Ok(ImuType::TdkIam20680Hp),
                 i => Err(i),
             }
         }
