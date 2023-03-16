@@ -78,12 +78,12 @@ class Test_legacy_auto_check_sbp_signing_MsgEcdsaSignature0
 
 TEST_F(Test_legacy_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
   uint8_t encoded_frame[] = {
-      85, 6,  12, 66, 0,  84, 0,  1,  2,  1,  2,   3,   4,  73, 0,  1,
-      2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,  13,  14, 15, 16, 17,
-      18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,  29,  30, 31, 32, 33,
-      34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,  45,  46, 47, 48, 49,
-      50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,  61,  62, 63, 64, 65,
-      66, 67, 68, 69, 70, 71, 72, 10, 21, 23, 209, 195,
+      85, 7,  12, 66, 0,  83, 0,  1,  2,  1,   2,   3,  4,  72, 0,  1,
+      2,  3,  4,  5,  6,  7,  8,  9,  10, 11,  12,  13, 14, 15, 16, 17,
+      18, 19, 20, 21, 22, 23, 24, 25, 26, 27,  28,  29, 30, 31, 32, 33,
+      34, 35, 36, 37, 38, 39, 40, 41, 42, 43,  44,  45, 46, 47, 48, 49,
+      50, 51, 52, 53, 54, 55, 56, 57, 58, 59,  60,  61, 62, 63, 64, 65,
+      66, 67, 68, 69, 70, 71, 10, 21, 23, 254, 159,
   };
 
   uint8_t test_msg_storage[SBP_MAX_PAYLOAD_LEN]{};
@@ -115,7 +115,7 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
   }
   test_msg->certificate_id[3] = 4;
   test_msg->flags = 0;
-  test_msg->n_signature_bytes = 73;
+  test_msg->n_signature_bytes = 72;
   test_msg->on_demand_counter = 2;
   if (sizeof(test_msg->signature) == 0) {
     // Cope with variable length arrays
@@ -477,11 +477,6 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
     test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->signature[0]));
   }
   test_msg->signature[71] = 71;
-  if (sizeof(test_msg->signature) == 0) {
-    // Cope with variable length arrays
-    test_msg_len = (uint8_t)(test_msg_len + sizeof(test_msg->signature[0]));
-  }
-  test_msg->signature[72] = 72;
   if (sizeof(test_msg->signed_messages) == 0) {
     // Cope with variable length arrays
     test_msg_len =
@@ -502,7 +497,7 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
   test_msg->signed_messages[2] = 23;
   test_msg->stream_counter = 1;
 
-  EXPECT_EQ(send_message(0xC06, 66, test_msg_len, test_msg_storage), SBP_OK);
+  EXPECT_EQ(send_message(0xC07, 66, test_msg_len, test_msg_storage), SBP_OK);
 
   EXPECT_EQ(dummy_wr_, sizeof(encoded_frame));
   EXPECT_EQ(memcmp(dummy_buff_, encoded_frame, sizeof(encoded_frame)), 0);
@@ -528,8 +523,8 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
       << last_msg_->certificate_id[3];
   EXPECT_EQ(last_msg_->flags, 0)
       << "incorrect value for flags, expected 0, is " << last_msg_->flags;
-  EXPECT_EQ(last_msg_->n_signature_bytes, 73)
-      << "incorrect value for n_signature_bytes, expected 73, is "
+  EXPECT_EQ(last_msg_->n_signature_bytes, 72)
+      << "incorrect value for n_signature_bytes, expected 72, is "
       << last_msg_->n_signature_bytes;
   EXPECT_EQ(last_msg_->on_demand_counter, 2)
       << "incorrect value for on_demand_counter, expected 2, is "
@@ -750,9 +745,6 @@ TEST_F(Test_legacy_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
   EXPECT_EQ(last_msg_->signature[71], 71)
       << "incorrect value for signature[71], expected 71, is "
       << last_msg_->signature[71];
-  EXPECT_EQ(last_msg_->signature[72], 72)
-      << "incorrect value for signature[72], expected 72, is "
-      << last_msg_->signature[72];
   EXPECT_EQ(last_msg_->signed_messages[0], 10)
       << "incorrect value for signed_messages[0], expected 10, is "
       << last_msg_->signed_messages[0];

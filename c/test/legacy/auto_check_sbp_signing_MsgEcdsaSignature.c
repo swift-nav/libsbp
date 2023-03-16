@@ -116,18 +116,18 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignature) {
 
     logging_reset();
 
-    sbp_payload_callback_register(&sbp_state, 0xC06, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xC07, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_frame_callback_register(&sbp_state, 0xC06, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xC07, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 6,  12, 66, 0,  84, 0,  1,  2,  1,  2,   3,   4,  73, 0,  1,
-        2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,  13,  14, 15, 16, 17,
-        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,  29,  30, 31, 32, 33,
-        34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,  45,  46, 47, 48, 49,
-        50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,  61,  62, 63, 64, 65,
-        66, 67, 68, 69, 70, 71, 72, 10, 21, 23, 209, 195,
+        85, 7,  12, 66, 0,  83, 0,  1,  2,  1,   2,   3,  4,  72, 0,  1,
+        2,  3,  4,  5,  6,  7,  8,  9,  10, 11,  12,  13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27,  28,  29, 30, 31, 32, 33,
+        34, 35, 36, 37, 38, 39, 40, 41, 42, 43,  44,  45, 46, 47, 48, 49,
+        50, 51, 52, 53, 54, 55, 56, 57, 58, 59,  60,  61, 62, 63, 64, 65,
+        66, 67, 68, 69, 70, 71, 10, 21, 23, 254, 159,
     };
 
     dummy_reset();
@@ -158,7 +158,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignature) {
     }
     test_msg->certificate_id[3] = 4;
     test_msg->flags = 0;
-    test_msg->n_signature_bytes = 73;
+    test_msg->n_signature_bytes = 72;
     test_msg->on_demand_counter = 2;
     if (sizeof(test_msg->signature) == 0) {
       // Cope with variable length arrays
@@ -520,11 +520,6 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignature) {
       test_msg_len += sizeof(test_msg->signature[0]);
     }
     test_msg->signature[71] = 71;
-    if (sizeof(test_msg->signature) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
-    }
-    test_msg->signature[72] = 72;
     if (sizeof(test_msg->signed_messages) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->signed_messages[0]);
@@ -541,7 +536,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignature) {
     }
     test_msg->signed_messages[2] = 23;
     test_msg->stream_counter = 1;
-    sbp_payload_send(&sbp_state, 0xC06, 66, test_msg_len, test_msg_storage,
+    sbp_payload_send(&sbp_state, 0xC07, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -575,7 +570,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignature) {
                   "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 66,
                   "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xC06,
+    ck_assert_msg(last_frame.msg_type == 0xC07,
                   "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
                   "frame_callback: msg_len decoded incorrectly");
@@ -611,8 +606,8 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignature) {
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
-    ck_assert_msg(check_msg->n_signature_bytes == 73,
-                  "incorrect value for n_signature_bytes, expected 73, is %d",
+    ck_assert_msg(check_msg->n_signature_bytes == 72,
+                  "incorrect value for n_signature_bytes, expected 72, is %d",
                   check_msg->n_signature_bytes);
     ck_assert_msg(check_msg->on_demand_counter == 2,
                   "incorrect value for on_demand_counter, expected 2, is %d",
@@ -833,9 +828,6 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignature) {
     ck_assert_msg(check_msg->signature[71] == 71,
                   "incorrect value for signature[71], expected 71, is %d",
                   check_msg->signature[71]);
-    ck_assert_msg(check_msg->signature[72] == 72,
-                  "incorrect value for signature[72], expected 72, is %d",
-                  check_msg->signature[72]);
     ck_assert_msg(check_msg->signed_messages[0] == 10,
                   "incorrect value for signed_messages[0], expected 10, is %d",
                   check_msg->signed_messages[0]);

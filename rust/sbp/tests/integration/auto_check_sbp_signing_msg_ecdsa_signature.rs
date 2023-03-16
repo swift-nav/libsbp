@@ -22,11 +22,10 @@ use crate::*;
 fn test_auto_check_sbp_signing_msg_ecdsa_signature() {
     {
         let mut payload = Cursor::new(vec![
-            85, 6, 12, 66, 0, 84, 0, 1, 2, 1, 2, 3, 4, 73, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+            85, 7, 12, 66, 0, 83, 0, 1, 2, 1, 2, 3, 4, 72, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
             12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
             34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
-            56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 10, 21, 23, 209,
-            195,
+            56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 10, 21, 23, 254, 159,
         ]);
 
         // Test the round trip payload parsing
@@ -40,8 +39,8 @@ fn test_auto_check_sbp_signing_msg_ecdsa_signature() {
             sbp::messages::Sbp::MsgEcdsaSignature(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xC06,
-                    "Incorrect message type, expected 0xC06, is {}",
+                    0xC07,
+                    "Incorrect message type, expected 0xC07, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -75,8 +74,8 @@ fn test_auto_check_sbp_signing_msg_ecdsa_signature() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.n_signature_bytes, 73,
-                    "incorrect value for n_signature_bytes, expected 73, is {}",
+                    msg.n_signature_bytes, 72,
+                    "incorrect value for n_signature_bytes, expected 72, is {}",
                     msg.n_signature_bytes
                 );
                 assert_eq!(
@@ -443,11 +442,6 @@ fn test_auto_check_sbp_signing_msg_ecdsa_signature() {
                     msg.signature[71], 71,
                     "incorrect value for signature[71], expected 71, is {}",
                     msg.signature[71]
-                );
-                assert_eq!(
-                    msg.signature[72], 72,
-                    "incorrect value for signature[72], expected 72, is {}",
-                    msg.signature[72]
                 );
                 assert_eq!(
                     msg.signed_messages[0], 10,
@@ -488,7 +482,7 @@ fn test_auto_check_sbp_signing_msg_ecdsa_signature() {
 #[cfg(feature = "json")]
 fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature() {
     {
-        let json_input = r#"{"preamble": 85, "msg_type": 3078, "sender": 66, "length": 84, "payload": "AAECAQIDBEkAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT4/QEFCQ0RFRkdIChUX", "crc": 50129, "flags": 0, "stream_counter": 1, "on_demand_counter": 2, "certificate_id": [1, 2, 3, 4], "n_signature_bytes": 73, "signature": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72], "signed_messages": [10, 21, 23]}"#.as_bytes();
+        let json_input = r#"{"preamble": 85, "msg_type": 3079, "sender": 66, "length": 83, "payload": "AAECAQIDBEgAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ojs8PT4/QEFCQ0RFRkcKFRc=", "crc": 40958, "flags": 0, "stream_counter": 1, "on_demand_counter": 2, "certificate_id": [1, 2, 3, 4], "n_signature_bytes": 72, "signature": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71], "signed_messages": [10, 21, 23]}"#.as_bytes();
 
         let sbp_msg = {
             // JSON to SBP message from payload
@@ -512,8 +506,8 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature() {
             sbp::messages::Sbp::MsgEcdsaSignature(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xC06,
-                    "Incorrect message type, expected 0xC06, is {}",
+                    0xC07,
+                    "Incorrect message type, expected 0xC07, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -547,8 +541,8 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.n_signature_bytes, 73,
-                    "incorrect value for n_signature_bytes, expected 73, is {}",
+                    msg.n_signature_bytes, 72,
+                    "incorrect value for n_signature_bytes, expected 72, is {}",
                     msg.n_signature_bytes
                 );
                 assert_eq!(
@@ -915,11 +909,6 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature() {
                     msg.signature[71], 71,
                     "incorrect value for signature[71], expected 71, is {}",
                     msg.signature[71]
-                );
-                assert_eq!(
-                    msg.signature[72], 72,
-                    "incorrect value for signature[72], expected 72, is {}",
-                    msg.signature[72]
                 );
                 assert_eq!(
                     msg.signed_messages[0], 10,
@@ -960,11 +949,10 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature() {
 fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature() {
     {
         let mut payload = Cursor::new(vec![
-            85, 6, 12, 66, 0, 84, 0, 1, 2, 1, 2, 3, 4, 73, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+            85, 7, 12, 66, 0, 83, 0, 1, 2, 1, 2, 3, 4, 72, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
             12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
             34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
-            56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 10, 21, 23, 209,
-            195,
+            56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 10, 21, 23, 254, 159,
         ]);
 
         // Construct sbp message
@@ -995,8 +983,8 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature() {
             sbp::messages::Sbp::MsgEcdsaSignature(msg) => {
                 assert_eq!(
                     msg.message_type(),
-                    0xC06,
-                    "Incorrect message type, expected 0xC06, is {}",
+                    0xC07,
+                    "Incorrect message type, expected 0xC07, is {}",
                     msg.message_type()
                 );
                 let sender_id = msg.sender_id().unwrap();
@@ -1030,8 +1018,8 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.n_signature_bytes, 73,
-                    "incorrect value for n_signature_bytes, expected 73, is {}",
+                    msg.n_signature_bytes, 72,
+                    "incorrect value for n_signature_bytes, expected 72, is {}",
                     msg.n_signature_bytes
                 );
                 assert_eq!(
@@ -1398,11 +1386,6 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature() {
                     msg.signature[71], 71,
                     "incorrect value for signature[71], expected 71, is {}",
                     msg.signature[71]
-                );
-                assert_eq!(
-                    msg.signature[72], 72,
-                    "incorrect value for signature[72], expected 72, is {}",
-                    msg.signature[72]
                 );
                 assert_eq!(
                     msg.signed_messages[0], 10,

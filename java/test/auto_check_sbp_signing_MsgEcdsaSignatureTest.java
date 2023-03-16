@@ -32,7 +32,7 @@ public class auto_check_sbp_signing_MsgEcdsaSignatureTest {
             System.out.format("%n%s%n", "auto_check_sbp_signing_MsgEcdsaSignatureTest.test1");
         byte[] payload =
                 new byte[] {
-                    (byte) 0, (byte) 1, (byte) 2, (byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 73,
+                    (byte) 0, (byte) 1, (byte) 2, (byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 72,
                     (byte) 0, (byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6, (byte) 7,
                     (byte) 8, (byte) 9, (byte) 10, (byte) 11, (byte) 12, (byte) 13, (byte) 14,
                     (byte) 15, (byte) 16, (byte) 17, (byte) 18, (byte) 19, (byte) 20, (byte) 21,
@@ -43,9 +43,9 @@ public class auto_check_sbp_signing_MsgEcdsaSignatureTest {
                     (byte) 50, (byte) 51, (byte) 52, (byte) 53, (byte) 54, (byte) 55, (byte) 56,
                     (byte) 57, (byte) 58, (byte) 59, (byte) 60, (byte) 61, (byte) 62, (byte) 63,
                     (byte) 64, (byte) 65, (byte) 66, (byte) 67, (byte) 68, (byte) 69, (byte) 70,
-                    (byte) 71, (byte) 72, (byte) 10, (byte) 21, (byte) 23,
+                    (byte) 71, (byte) 10, (byte) 21, (byte) 23,
                 };
-        SBPMessage sbp = new SBPMessage(0x42, 0xC06, payload);
+        SBPMessage sbp = new SBPMessage(0x42, 0xC07, payload);
         MsgEcdsaSignature msg = new MsgEcdsaSignature(sbp);
         JSONObject json = msg.toJSON();
         Number value;
@@ -102,11 +102,11 @@ public class auto_check_sbp_signing_MsgEcdsaSignatureTest {
         value = msg.n_signature_bytes;
         if (value instanceof BigInteger) {
             org.junit.Assert.assertTrue(
-                    "'" + msg.n_signature_bytes + "' != '" + 73 + "'",
-                    value.equals(BigInteger.valueOf(73L)));
+                    "'" + msg.n_signature_bytes + "' != '" + 72 + "'",
+                    value.equals(BigInteger.valueOf(72L)));
         } else {
             value = value.longValue();
-            expected = 73L;
+            expected = 72L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.on_demand_counter;
@@ -837,16 +837,6 @@ public class auto_check_sbp_signing_MsgEcdsaSignatureTest {
         } else {
             value = value.longValue();
             expected = 71L;
-            org.junit.Assert.assertEquals(value, expected);
-        }
-        value = msg.signature[72];
-        if (value instanceof BigInteger) {
-            org.junit.Assert.assertTrue(
-                    "'" + msg.signature[72] + "' != '" + 72 + "'",
-                    value.equals(BigInteger.valueOf(72L)));
-        } else {
-            value = value.longValue();
-            expected = 72L;
             org.junit.Assert.assertEquals(value, expected);
         }
         value = msg.signed_messages[0];

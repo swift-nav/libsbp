@@ -90,16 +90,16 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
 
     logging_reset();
 
-    sbp_callback_register(&sbp_state, 0xC06, &msg_callback,
+    sbp_callback_register(&sbp_state, 0xC07, &msg_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
     u8 encoded_frame[] = {
-        85, 6,  12, 66, 0,  84, 0,  1,  2,  1,  2,   3,   4,  73, 0,  1,
-        2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,  13,  14, 15, 16, 17,
-        18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,  29,  30, 31, 32, 33,
-        34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,  45,  46, 47, 48, 49,
-        50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,  61,  62, 63, 64, 65,
-        66, 67, 68, 69, 70, 71, 72, 10, 21, 23, 209, 195,
+        85, 7,  12, 66, 0,  83, 0,  1,  2,  1,   2,   3,  4,  72, 0,  1,
+        2,  3,  4,  5,  6,  7,  8,  9,  10, 11,  12,  13, 14, 15, 16, 17,
+        18, 19, 20, 21, 22, 23, 24, 25, 26, 27,  28,  29, 30, 31, 32, 33,
+        34, 35, 36, 37, 38, 39, 40, 41, 42, 43,  44,  45, 46, 47, 48, 49,
+        50, 51, 52, 53, 54, 55, 56, 57, 58, 59,  60,  61, 62, 63, 64, 65,
+        66, 67, 68, 69, 70, 71, 10, 21, 23, 254, 159,
     };
 
     dummy_reset();
@@ -117,9 +117,7 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
 
     test_msg.ecdsa_signature.flags = 0;
 
-    test_msg.ecdsa_signature.n_signature_bytes = 73;
-
-    test_msg.ecdsa_signature.n_signed_messages = 3;
+    test_msg.ecdsa_signature.n_signature_bytes = 72;
 
     test_msg.ecdsa_signature.on_demand_counter = 2;
 
@@ -267,8 +265,6 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
 
     test_msg.ecdsa_signature.signature[71] = 71;
 
-    test_msg.ecdsa_signature.signature[72] = 72;
-
     test_msg.ecdsa_signature.signed_messages[0] = 10;
 
     test_msg.ecdsa_signature.signed_messages[1] = 21;
@@ -328,16 +324,10 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
                   last_msg.msg.ecdsa_signature.flags);
 
     ck_assert_msg(
-        last_msg.msg.ecdsa_signature.n_signature_bytes == 73,
+        last_msg.msg.ecdsa_signature.n_signature_bytes == 72,
         "incorrect value for last_msg.msg.ecdsa_signature.n_signature_bytes, "
-        "expected 73, is %d",
+        "expected 72, is %d",
         last_msg.msg.ecdsa_signature.n_signature_bytes);
-
-    ck_assert_msg(
-        last_msg.msg.ecdsa_signature.n_signed_messages == 3,
-        "incorrect value for last_msg.msg.ecdsa_signature.n_signed_messages, "
-        "expected 3, is %d",
-        last_msg.msg.ecdsa_signature.n_signed_messages);
 
     ck_assert_msg(
         last_msg.msg.ecdsa_signature.on_demand_counter == 2,
@@ -705,11 +695,6 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
         "incorrect value for last_msg.msg.ecdsa_signature.signature[71], "
         "expected 71, is %d",
         last_msg.msg.ecdsa_signature.signature[71]);
-    ck_assert_msg(
-        last_msg.msg.ecdsa_signature.signature[72] == 72,
-        "incorrect value for last_msg.msg.ecdsa_signature.signature[72], "
-        "expected 72, is %d",
-        last_msg.msg.ecdsa_signature.signature[72]);
 
     ck_assert_msg(
         last_msg.msg.ecdsa_signature.signed_messages[0] == 10,
