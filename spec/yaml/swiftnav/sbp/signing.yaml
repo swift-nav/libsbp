@@ -157,7 +157,9 @@ definitions:
         - n_signature_bytes:
             type: u8
             desc: >
-              Number of bytes to use of the signature field.
+              Number of bytes to use of the signature field.  The DER encoded
+              signature has a maximum size of 72 bytes but can vary between 70
+              and 72 bytes in length. 
         - signature:
             type: array
             fill: u8
