@@ -119,6 +119,8 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
 
     test_msg.ecdsa_signature.n_signature_bytes = 72;
 
+    test_msg.ecdsa_signature.n_signed_messages = 3;
+
     test_msg.ecdsa_signature.on_demand_counter = 2;
 
     test_msg.ecdsa_signature.signature[0] = 0;
@@ -328,6 +330,12 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
         "incorrect value for last_msg.msg.ecdsa_signature.n_signature_bytes, "
         "expected 72, is %d",
         last_msg.msg.ecdsa_signature.n_signature_bytes);
+
+    ck_assert_msg(
+        last_msg.msg.ecdsa_signature.n_signed_messages == 3,
+        "incorrect value for last_msg.msg.ecdsa_signature.n_signed_messages, "
+        "expected 3, is %d",
+        last_msg.msg.ecdsa_signature.n_signed_messages);
 
     ck_assert_msg(
         last_msg.msg.ecdsa_signature.on_demand_counter == 2,
