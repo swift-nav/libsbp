@@ -1,4 +1,4 @@
-load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_cc_library", "swift_cc_test")
+load("@rules_swiftnav//cc:defs.bzl", "UNIT", "swift_c_library", "swift_cc_test")
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
 SBP_INCLUDE = glob(["include/**/*.h"])
@@ -10,7 +10,7 @@ refresh_compile_commands(
     visibility = ["//visibility:public"],
 )
 
-swift_cc_library(
+swift_c_library(
     name = "sbp",
     srcs = [
         "src/edc.c",
