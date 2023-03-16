@@ -20,15 +20,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * SBP class for message MSG_ECDSA_SIGNATURE (0x0C07).
+ * SBP class for message MSG_ECDSA_SIGNATURE_DEP (0x0C06).
  *
- * <p>You can have MSG_ECDSA_SIGNATURE inherent its fields directly from an inherited SBP object, or
- * construct it inline using a dict of its fields.
+ * <p>You can have MSG_ECDSA_SIGNATURE_DEP inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
  *
  * <p>An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  */
-public class MsgEcdsaSignature extends SBPMessage {
-    public static final int TYPE = 0x0C07;
+public class MsgEcdsaSignatureDep extends SBPMessage {
+    public static final int TYPE = 0x0C06;
 
     /** Describes the format of the `signed\_messages` field below. */
     public int flags;
@@ -51,10 +51,7 @@ public class MsgEcdsaSignature extends SBPMessage {
     /** The last 4 bytes of the certificate's SHA-1 fingerprint */
     public int[] certificate_id;
 
-    /** Number of bytes to use of the signature field. */
-    public int n_signature_bytes;
-
-    /** DER encoded ECDSA signature for the messages using SHA-256 as the digest algorithm. */
+    /** ECDSA signature for the messages using SHA-256 as the digest algorithm. */
     public int[] signature;
 
     /**
@@ -65,19 +62,19 @@ public class MsgEcdsaSignature extends SBPMessage {
      */
     public int[] signed_messages;
 
-    public MsgEcdsaSignature(int sender) {
+    public MsgEcdsaSignatureDep(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgEcdsaSignature() {
+    public MsgEcdsaSignatureDep() {
         super(TYPE);
     }
 
-    public MsgEcdsaSignature(SBPMessage msg) throws SBPBinaryException {
+    public MsgEcdsaSignatureDep(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
             throw new SBPBinaryException(
-                    "Type mismatch for MsgEcdsaSignature, expected 3079, actual " + msg.type);
+                    "Type mismatch for MsgEcdsaSignatureDep, expected 3078, actual " + msg.type);
     }
 
     @Override
@@ -87,8 +84,7 @@ public class MsgEcdsaSignature extends SBPMessage {
         stream_counter = parser.getU8();
         on_demand_counter = parser.getU8();
         certificate_id = parser.getArrayofU8(4);
-        n_signature_bytes = parser.getU8();
-        signature = parser.getArrayofU8(72);
+        signature = parser.getArrayofU8(64);
         signed_messages = parser.getArrayofU8();
     }
 
@@ -98,8 +94,7 @@ public class MsgEcdsaSignature extends SBPMessage {
         builder.putU8(stream_counter);
         builder.putU8(on_demand_counter);
         builder.putArrayofU8(certificate_id, 4);
-        builder.putU8(n_signature_bytes);
-        builder.putArrayofU8(signature, 72);
+        builder.putArrayofU8(signature, 64);
         builder.putArrayofU8(signed_messages);
     }
 
@@ -110,7 +105,6 @@ public class MsgEcdsaSignature extends SBPMessage {
         obj.put("stream_counter", stream_counter);
         obj.put("on_demand_counter", on_demand_counter);
         obj.put("certificate_id", new JSONArray(certificate_id));
-        obj.put("n_signature_bytes", n_signature_bytes);
         obj.put("signature", new JSONArray(signature));
         obj.put("signed_messages", new JSONArray(signed_messages));
         return obj;
@@ -118,6 +112,6 @@ public class MsgEcdsaSignature extends SBPMessage {
 
     @Override
     public String getFriendlyName() {
-        return "ECDSA SIGNATURE";
+        return "ECDSA SIGNATURE DEP";
     }
 }

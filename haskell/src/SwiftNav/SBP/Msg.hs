@@ -99,6 +99,7 @@ data SBPMsg =
    | SBPMsgDopsDepA MsgDopsDepA Msg
    | SBPMsgEcdsaCertificate MsgEcdsaCertificate Msg
    | SBPMsgEcdsaSignature MsgEcdsaSignature Msg
+   | SBPMsgEcdsaSignatureDep MsgEcdsaSignatureDep Msg
    | SBPMsgEd25519CertificateDep MsgEd25519CertificateDep Msg
    | SBPMsgEd25519SignatureDepA MsgEd25519SignatureDepA Msg
    | SBPMsgEd25519SignatureDepB MsgEd25519SignatureDepB Msg
@@ -342,6 +343,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEcdsaCertificate = SBPMsgEcdsaCertificate (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEcdsaSignature = SBPMsgEcdsaSignature (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEcdsaSignatureDep = SBPMsgEcdsaSignatureDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519CertificateDep = SBPMsgEd25519CertificateDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519SignatureDepA = SBPMsgEd25519SignatureDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519SignatureDepB = SBPMsgEd25519SignatureDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -577,6 +579,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgDopsDepA _ m) = put m
       encoder (SBPMsgEcdsaCertificate _ m) = put m
       encoder (SBPMsgEcdsaSignature _ m) = put m
+      encoder (SBPMsgEcdsaSignatureDep _ m) = put m
       encoder (SBPMsgEd25519CertificateDep _ m) = put m
       encoder (SBPMsgEd25519SignatureDepA _ m) = put m
       encoder (SBPMsgEd25519SignatureDepB _ m) = put m
@@ -816,6 +819,7 @@ instance FromJSON SBPMsg where
         | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEcdsaCertificate = SBPMsgEcdsaCertificate <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEcdsaSignature = SBPMsgEcdsaSignature <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEcdsaSignatureDep = SBPMsgEcdsaSignatureDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519CertificateDep = SBPMsgEd25519CertificateDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519SignatureDepA = SBPMsgEd25519SignatureDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519SignatureDepB = SBPMsgEd25519SignatureDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1056,6 +1060,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEcdsaCertificate n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEcdsaSignature n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEcdsaSignatureDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519CertificateDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519SignatureDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519SignatureDepB n m) = toJSON n <<>> toJSON m
@@ -1290,6 +1295,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
   msg f (SBPMsgEcdsaCertificate n m) = SBPMsgEcdsaCertificate n <$> f m
   msg f (SBPMsgEcdsaSignature n m) = SBPMsgEcdsaSignature n <$> f m
+  msg f (SBPMsgEcdsaSignatureDep n m) = SBPMsgEcdsaSignatureDep n <$> f m
   msg f (SBPMsgEd25519CertificateDep n m) = SBPMsgEd25519CertificateDep n <$> f m
   msg f (SBPMsgEd25519SignatureDepA n m) = SBPMsgEd25519SignatureDepA n <$> f m
   msg f (SBPMsgEd25519SignatureDepB n m) = SBPMsgEd25519SignatureDepB n <$> f m
