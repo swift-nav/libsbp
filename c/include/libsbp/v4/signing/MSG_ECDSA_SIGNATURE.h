@@ -70,7 +70,9 @@ typedef struct {
   u8 certificate_id[SBP_MSG_ECDSA_SIGNATURE_CERTIFICATE_ID_MAX];
 
   /**
-   * Number of bytes to use of the signature field.
+   * Number of bytes to use of the signature field.  The DER encoded signature
+   * has a maximum size of 72 bytes but can vary between 70 and 72 bytes in
+   * length.
    */
   u8 n_signature_bytes;
 

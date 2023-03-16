@@ -163,7 +163,8 @@ MsgCertificateChain.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8'
  *   after 256 messages.  Upon connection, the value of the counter may not initially
  *   be zero.
  * @field certificate_id array The last 4 bytes of the certificate's SHA-1 fingerprint
- * @field n_signature_bytes number (unsigned 8-bit int, 1 byte) Number of bytes to use of the signature field.
+ * @field n_signature_bytes number (unsigned 8-bit int, 1 byte) Number of bytes to use of the signature field.  The DER encoded signature has a
+ *   maximum size of 72 bytes but can vary between 70 and 72 bytes in length.
  * @field signature array DER encoded ECDSA signature for the messages using SHA-256 as the digest
  *   algorithm.
  * @field signed_messages array CRCs of the messages covered by this signature.  For Skylark, which delivers SBP

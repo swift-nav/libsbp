@@ -347,7 +347,9 @@ class MsgEcdsaSignature(SBP):
   certificate_id : array
     The last 4 bytes of the certificate's SHA-1 fingerprint
   n_signature_bytes : int
-    Number of bytes to use of the signature field.
+    Number of bytes to use of the signature field.  The DER encoded signature
+    has a maximum size of 72 bytes but can vary between 70 and 72 bytes in
+    length.
   signature : array
     DER encoded ECDSA signature for the messages using SHA-256 as the digest
     algorithm.

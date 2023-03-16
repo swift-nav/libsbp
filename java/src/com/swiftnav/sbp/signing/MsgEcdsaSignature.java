@@ -51,7 +51,10 @@ public class MsgEcdsaSignature extends SBPMessage {
     /** The last 4 bytes of the certificate's SHA-1 fingerprint */
     public int[] certificate_id;
 
-    /** Number of bytes to use of the signature field. */
+    /**
+     * Number of bytes to use of the signature field. The DER encoded signature has a maximum size
+     * of 72 bytes but can vary between 70 and 72 bytes in length.
+     */
     public int n_signature_bytes;
 
     /** DER encoded ECDSA signature for the messages using SHA-256 as the digest algorithm. */

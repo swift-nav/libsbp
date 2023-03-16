@@ -104,7 +104,10 @@ typedef struct SBP_ATTR_PACKED {
                               not initially be zero. */
   u8 certificate_id[4];  /**< The last 4 bytes of the certificate's SHA-1
                               fingerprint */
-  u8 n_signature_bytes;  /**< Number of bytes to use of the signature field. */
+  u8 n_signature_bytes;  /**< Number of bytes to use of the signature field.
+                              The DER encoded signature has a maximum size
+                              of 72 bytes but can vary between 70 and 72
+                              bytes in length. */
   u8 signature[72];      /**< DER encoded ECDSA signature for the messages
                               using SHA-256 as the digest algorithm. */
   u8 signed_messages[0]; /**< CRCs of the messages covered by this

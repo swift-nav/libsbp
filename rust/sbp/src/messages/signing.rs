@@ -317,7 +317,9 @@ pub mod msg_ecdsa_signature {
         /// The last 4 bytes of the certificate's SHA-1 fingerprint
         #[cfg_attr(feature = "serde", serde(rename = "certificate_id"))]
         pub certificate_id: [u8; 4],
-        /// Number of bytes to use of the signature field.
+        /// Number of bytes to use of the signature field.  The DER encoded
+        /// signature has a maximum size of 72 bytes but can vary between 70 and 72
+        /// bytes in length.
         #[cfg_attr(feature = "serde", serde(rename = "n_signature_bytes"))]
         pub n_signature_bytes: u8,
         /// DER encoded ECDSA signature for the messages using SHA-256 as the digest
