@@ -3,6 +3,8 @@ generated_on: '2023-03-17 19:24:46.292191'
 package: sbp.signing
 tests:
 - msg:
+    c_decoded_fields:
+      n_signed_messages: 3
     fields:
       certificate_id:
       - 1

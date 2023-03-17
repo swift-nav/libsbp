@@ -94,6 +94,7 @@ TEST_F(Test_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
 
   test_msg.certificate_id[3] = 4;
   test_msg.flags = 0;
+  test_msg.n_signed_messages = 3;
   test_msg.on_demand_counter = 2;
 
   test_msg.signature.data[0] = 0;
@@ -275,6 +276,9 @@ TEST_F(Test_auto_check_sbp_signing_MsgEcdsaSignature0, Test) {
   EXPECT_EQ(last_msg_.flags, 0)
       << "incorrect value for last_msg_.flags, expected 0, is "
       << last_msg_.flags;
+  EXPECT_EQ(last_msg_.n_signed_messages, 3)
+      << "incorrect value for last_msg_.n_signed_messages, expected 3, is "
+      << last_msg_.n_signed_messages;
   EXPECT_EQ(last_msg_.on_demand_counter, 2)
       << "incorrect value for last_msg_.on_demand_counter, expected 2, is "
       << last_msg_.on_demand_counter;

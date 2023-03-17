@@ -117,6 +117,8 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
 
     test_msg.ecdsa_signature.flags = 0;
 
+    test_msg.ecdsa_signature.n_signed_messages = 3;
+
     test_msg.ecdsa_signature.on_demand_counter = 2;
 
     test_msg.ecdsa_signature.signature.data[0] = 0;
@@ -322,6 +324,12 @@ START_TEST(test_auto_check_sbp_signing_MsgEcdsaSignature) {
                   "incorrect value for last_msg.msg.ecdsa_signature.flags, "
                   "expected 0, is %d",
                   last_msg.msg.ecdsa_signature.flags);
+
+    ck_assert_msg(
+        last_msg.msg.ecdsa_signature.n_signed_messages == 3,
+        "incorrect value for last_msg.msg.ecdsa_signature.n_signed_messages, "
+        "expected 3, is %d",
+        last_msg.msg.ecdsa_signature.n_signed_messages);
 
     ck_assert_msg(
         last_msg.msg.ecdsa_signature.on_demand_counter == 2,
