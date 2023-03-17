@@ -1,4 +1,4 @@
-description: Unit tests for swiftnav.sbp.signing MsgEcdsaSignatureDep
+description: Unit tests for swiftnav.sbp.signing MsgEcdsaSignatureDepA
 generated_on: '2023-03-01 18:56:51.200360'
 package: sbp.signing
 tests:
@@ -265,7 +265,7 @@ tests:
       - 174
       stream_counter: 1
     module: sbp.signing
-    name: MsgEcdsaSignatureDep
+    name: MsgEcdsaSignatureDepA
   msg_type: '0xC06'
   raw_json: '{"preamble": 85, "msg_type": 3078, "sender": 66, "length": 255, "payload":
     "AAECAQIDBAABAgMEBQYHAAECAwQFBgcAAQIDBAUGBwABAgMEBQYHAAECAwQFBgcAAQIDBAUGBwABAgMEBQYHAAECAwQFBgcKFRc/jCWCahwopbNJsjx+ck5xG18DPmiRYBNcew5ambcJSFF2cHwQtkySczqQEWlCH4c2ZFS1ZwtYhZunrY9WnhSohI1mMjBHkzVXAWyKJIaLo1IrNJYMHm6ca3hbekWkqnQZXgUWGKKvJp1iLKAvYY4ISg2xD4Aag5pBqTeIfauhHYGXRKYzRi04T5VjKmWYJ1m0QDEGUKwgbQJ3XbAAITkiElV5iVNvOwdNBHWflCM9KUMuf0uu",

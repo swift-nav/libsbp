@@ -212,9 +212,11 @@ use self::settings::msg_settings_save::MsgSettingsSave;
 use self::settings::msg_settings_write::MsgSettingsWrite;
 use self::settings::msg_settings_write_resp::MsgSettingsWriteResp;
 use self::signing::msg_certificate_chain::MsgCertificateChain;
+use self::signing::msg_certificate_chain_dep::MsgCertificateChainDep;
 use self::signing::msg_ecdsa_certificate::MsgEcdsaCertificate;
 use self::signing::msg_ecdsa_signature::MsgEcdsaSignature;
-use self::signing::msg_ecdsa_signature_dep::MsgEcdsaSignatureDep;
+use self::signing::msg_ecdsa_signature_dep_a::MsgEcdsaSignatureDepA;
+use self::signing::msg_ecdsa_signature_dep_b::MsgEcdsaSignatureDepB;
 use self::signing::msg_ed25519_certificate_dep::MsgEd25519CertificateDep;
 use self::signing::msg_ed25519_signature_dep_a::MsgEd25519SignatureDepA;
 use self::signing::msg_ed25519_signature_dep_b::MsgEd25519SignatureDepB;
@@ -766,11 +768,15 @@ pub enum Sbp {
     /// An ECDSA certificate split over multiple messages
     MsgEcdsaCertificate(MsgEcdsaCertificate),
     /// The certificate chain
-    MsgCertificateChain(MsgCertificateChain),
+    MsgCertificateChainDep(MsgCertificateChainDep),
     /// An ECDSA signature
-    MsgEcdsaSignatureDep(MsgEcdsaSignatureDep),
+    MsgEcdsaSignatureDepA(MsgEcdsaSignatureDepA),
+    /// An ECDSA signature
+    MsgEcdsaSignatureDepB(MsgEcdsaSignatureDepB),
     /// An ECDSA signature
     MsgEcdsaSignature(MsgEcdsaSignature),
+    /// The certificate chain
+    MsgCertificateChain(MsgCertificateChain),
     /// Request advice on the optimal configuration for FileIO
     MsgFileioConfigReq(MsgFileioConfigReq),
     /// Response with advice on the optimal configuration for FileIO.
@@ -1472,14 +1478,23 @@ impl<'de> serde::Deserialize<'de> for Sbp {
             Some(MsgEcdsaCertificate::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgEcdsaCertificate>(value).map(Sbp::MsgEcdsaCertificate)
             }
-            Some(MsgCertificateChain::MESSAGE_TYPE) => {
-                serde_json::from_value::<MsgCertificateChain>(value).map(Sbp::MsgCertificateChain)
+            Some(MsgCertificateChainDep::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCertificateChainDep>(value)
+                    .map(Sbp::MsgCertificateChainDep)
             }
-            Some(MsgEcdsaSignatureDep::MESSAGE_TYPE) => {
-                serde_json::from_value::<MsgEcdsaSignatureDep>(value).map(Sbp::MsgEcdsaSignatureDep)
+            Some(MsgEcdsaSignatureDepA::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEcdsaSignatureDepA>(value)
+                    .map(Sbp::MsgEcdsaSignatureDepA)
+            }
+            Some(MsgEcdsaSignatureDepB::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgEcdsaSignatureDepB>(value)
+                    .map(Sbp::MsgEcdsaSignatureDepB)
             }
             Some(MsgEcdsaSignature::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgEcdsaSignature>(value).map(Sbp::MsgEcdsaSignature)
+            }
+            Some(MsgCertificateChain::MESSAGE_TYPE) => {
+                serde_json::from_value::<MsgCertificateChain>(value).map(Sbp::MsgCertificateChain)
             }
             Some(MsgFileioConfigReq::MESSAGE_TYPE) => {
                 serde_json::from_value::<MsgFileioConfigReq>(value).map(Sbp::MsgFileioConfigReq)
@@ -2604,20 +2619,30 @@ impl Sbp {
                 msg.set_sender_id(sender_id);
                 Ok(Sbp::MsgEcdsaCertificate(msg))
             }
-            MsgCertificateChain::MESSAGE_TYPE => {
-                let mut msg = MsgCertificateChain::parse(&mut payload)?;
+            MsgCertificateChainDep::MESSAGE_TYPE => {
+                let mut msg = MsgCertificateChainDep::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgCertificateChain(msg))
+                Ok(Sbp::MsgCertificateChainDep(msg))
             }
-            MsgEcdsaSignatureDep::MESSAGE_TYPE => {
-                let mut msg = MsgEcdsaSignatureDep::parse(&mut payload)?;
+            MsgEcdsaSignatureDepA::MESSAGE_TYPE => {
+                let mut msg = MsgEcdsaSignatureDepA::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(Sbp::MsgEcdsaSignatureDep(msg))
+                Ok(Sbp::MsgEcdsaSignatureDepA(msg))
+            }
+            MsgEcdsaSignatureDepB::MESSAGE_TYPE => {
+                let mut msg = MsgEcdsaSignatureDepB::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgEcdsaSignatureDepB(msg))
             }
             MsgEcdsaSignature::MESSAGE_TYPE => {
                 let mut msg = MsgEcdsaSignature::parse(&mut payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(Sbp::MsgEcdsaSignature(msg))
+            }
+            MsgCertificateChain::MESSAGE_TYPE => {
+                let mut msg = MsgCertificateChain::parse(&mut payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(Sbp::MsgCertificateChain(msg))
             }
             MsgFileioConfigReq::MESSAGE_TYPE => {
                 let mut msg = MsgFileioConfigReq::parse(&mut payload)?;
@@ -2975,9 +3000,11 @@ impl SbpMessage for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => msg.message_name(),
             Sbp::MsgEd25519SignatureDepB(msg) => msg.message_name(),
             Sbp::MsgEcdsaCertificate(msg) => msg.message_name(),
-            Sbp::MsgCertificateChain(msg) => msg.message_name(),
-            Sbp::MsgEcdsaSignatureDep(msg) => msg.message_name(),
+            Sbp::MsgCertificateChainDep(msg) => msg.message_name(),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.message_name(),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.message_name(),
             Sbp::MsgEcdsaSignature(msg) => msg.message_name(),
+            Sbp::MsgCertificateChain(msg) => msg.message_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_name(),
             Sbp::MsgSbasRaw(msg) => msg.message_name(),
@@ -3212,9 +3239,11 @@ impl SbpMessage for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => msg.message_type(),
             Sbp::MsgEd25519SignatureDepB(msg) => msg.message_type(),
             Sbp::MsgEcdsaCertificate(msg) => msg.message_type(),
-            Sbp::MsgCertificateChain(msg) => msg.message_type(),
-            Sbp::MsgEcdsaSignatureDep(msg) => msg.message_type(),
+            Sbp::MsgCertificateChainDep(msg) => msg.message_type(),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.message_type(),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.message_type(),
             Sbp::MsgEcdsaSignature(msg) => msg.message_type(),
+            Sbp::MsgCertificateChain(msg) => msg.message_type(),
             Sbp::MsgFileioConfigReq(msg) => msg.message_type(),
             Sbp::MsgFileioConfigResp(msg) => msg.message_type(),
             Sbp::MsgSbasRaw(msg) => msg.message_type(),
@@ -3449,9 +3478,11 @@ impl SbpMessage for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => msg.sender_id(),
             Sbp::MsgEd25519SignatureDepB(msg) => msg.sender_id(),
             Sbp::MsgEcdsaCertificate(msg) => msg.sender_id(),
-            Sbp::MsgCertificateChain(msg) => msg.sender_id(),
-            Sbp::MsgEcdsaSignatureDep(msg) => msg.sender_id(),
+            Sbp::MsgCertificateChainDep(msg) => msg.sender_id(),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.sender_id(),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.sender_id(),
             Sbp::MsgEcdsaSignature(msg) => msg.sender_id(),
+            Sbp::MsgCertificateChain(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigReq(msg) => msg.sender_id(),
             Sbp::MsgFileioConfigResp(msg) => msg.sender_id(),
             Sbp::MsgSbasRaw(msg) => msg.sender_id(),
@@ -3686,9 +3717,11 @@ impl SbpMessage for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEd25519SignatureDepB(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEcdsaCertificate(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgCertificateChain(msg) => msg.set_sender_id(new_id),
-            Sbp::MsgEcdsaSignatureDep(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgCertificateChainDep(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.set_sender_id(new_id),
             Sbp::MsgEcdsaSignature(msg) => msg.set_sender_id(new_id),
+            Sbp::MsgCertificateChain(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigReq(msg) => msg.set_sender_id(new_id),
             Sbp::MsgFileioConfigResp(msg) => msg.set_sender_id(new_id),
             Sbp::MsgSbasRaw(msg) => msg.set_sender_id(new_id),
@@ -3923,9 +3956,11 @@ impl SbpMessage for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => msg.encoded_len(),
             Sbp::MsgEd25519SignatureDepB(msg) => msg.encoded_len(),
             Sbp::MsgEcdsaCertificate(msg) => msg.encoded_len(),
-            Sbp::MsgCertificateChain(msg) => msg.encoded_len(),
-            Sbp::MsgEcdsaSignatureDep(msg) => msg.encoded_len(),
+            Sbp::MsgCertificateChainDep(msg) => msg.encoded_len(),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.encoded_len(),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.encoded_len(),
             Sbp::MsgEcdsaSignature(msg) => msg.encoded_len(),
+            Sbp::MsgCertificateChain(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigReq(msg) => msg.encoded_len(),
             Sbp::MsgFileioConfigResp(msg) => msg.encoded_len(),
             Sbp::MsgSbasRaw(msg) => msg.encoded_len(),
@@ -4163,9 +4198,11 @@ impl SbpMessage for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => msg.gps_time(),
             Sbp::MsgEd25519SignatureDepB(msg) => msg.gps_time(),
             Sbp::MsgEcdsaCertificate(msg) => msg.gps_time(),
-            Sbp::MsgCertificateChain(msg) => msg.gps_time(),
-            Sbp::MsgEcdsaSignatureDep(msg) => msg.gps_time(),
+            Sbp::MsgCertificateChainDep(msg) => msg.gps_time(),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.gps_time(),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.gps_time(),
             Sbp::MsgEcdsaSignature(msg) => msg.gps_time(),
+            Sbp::MsgCertificateChain(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigReq(msg) => msg.gps_time(),
             Sbp::MsgFileioConfigResp(msg) => msg.gps_time(),
             Sbp::MsgSbasRaw(msg) => msg.gps_time(),
@@ -4400,9 +4437,11 @@ impl SbpMessage for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => msg.friendly_name(),
             Sbp::MsgEd25519SignatureDepB(msg) => msg.friendly_name(),
             Sbp::MsgEcdsaCertificate(msg) => msg.friendly_name(),
-            Sbp::MsgCertificateChain(msg) => msg.friendly_name(),
-            Sbp::MsgEcdsaSignatureDep(msg) => msg.friendly_name(),
+            Sbp::MsgCertificateChainDep(msg) => msg.friendly_name(),
+            Sbp::MsgEcdsaSignatureDepA(msg) => msg.friendly_name(),
+            Sbp::MsgEcdsaSignatureDepB(msg) => msg.friendly_name(),
             Sbp::MsgEcdsaSignature(msg) => msg.friendly_name(),
+            Sbp::MsgCertificateChain(msg) => msg.friendly_name(),
             Sbp::MsgFileioConfigReq(msg) => msg.friendly_name(),
             Sbp::MsgFileioConfigResp(msg) => msg.friendly_name(),
             Sbp::MsgSbasRaw(msg) => msg.friendly_name(),
@@ -4645,9 +4684,11 @@ impl WireFormat for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEd25519SignatureDepB(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEcdsaCertificate(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgCertificateChain(msg) => WireFormat::write(msg, buf),
-            Sbp::MsgEcdsaSignatureDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCertificateChainDep(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEcdsaSignatureDepA(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgEcdsaSignatureDepB(msg) => WireFormat::write(msg, buf),
             Sbp::MsgEcdsaSignature(msg) => WireFormat::write(msg, buf),
+            Sbp::MsgCertificateChain(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::write(msg, buf),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::write(msg, buf),
             Sbp::MsgSbasRaw(msg) => WireFormat::write(msg, buf),
@@ -4882,9 +4923,11 @@ impl WireFormat for Sbp {
             Sbp::MsgEd25519CertificateDep(msg) => WireFormat::len(msg),
             Sbp::MsgEd25519SignatureDepB(msg) => WireFormat::len(msg),
             Sbp::MsgEcdsaCertificate(msg) => WireFormat::len(msg),
-            Sbp::MsgCertificateChain(msg) => WireFormat::len(msg),
-            Sbp::MsgEcdsaSignatureDep(msg) => WireFormat::len(msg),
+            Sbp::MsgCertificateChainDep(msg) => WireFormat::len(msg),
+            Sbp::MsgEcdsaSignatureDepA(msg) => WireFormat::len(msg),
+            Sbp::MsgEcdsaSignatureDepB(msg) => WireFormat::len(msg),
             Sbp::MsgEcdsaSignature(msg) => WireFormat::len(msg),
+            Sbp::MsgCertificateChain(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigReq(msg) => WireFormat::len(msg),
             Sbp::MsgFileioConfigResp(msg) => WireFormat::len(msg),
             Sbp::MsgSbasRaw(msg) => WireFormat::len(msg),
@@ -6113,21 +6156,33 @@ impl From<MsgEcdsaCertificate> for Sbp {
     }
 }
 
-impl From<MsgCertificateChain> for Sbp {
-    fn from(msg: MsgCertificateChain) -> Self {
-        Sbp::MsgCertificateChain(msg)
+impl From<MsgCertificateChainDep> for Sbp {
+    fn from(msg: MsgCertificateChainDep) -> Self {
+        Sbp::MsgCertificateChainDep(msg)
     }
 }
 
-impl From<MsgEcdsaSignatureDep> for Sbp {
-    fn from(msg: MsgEcdsaSignatureDep) -> Self {
-        Sbp::MsgEcdsaSignatureDep(msg)
+impl From<MsgEcdsaSignatureDepA> for Sbp {
+    fn from(msg: MsgEcdsaSignatureDepA) -> Self {
+        Sbp::MsgEcdsaSignatureDepA(msg)
+    }
+}
+
+impl From<MsgEcdsaSignatureDepB> for Sbp {
+    fn from(msg: MsgEcdsaSignatureDepB) -> Self {
+        Sbp::MsgEcdsaSignatureDepB(msg)
     }
 }
 
 impl From<MsgEcdsaSignature> for Sbp {
     fn from(msg: MsgEcdsaSignature) -> Self {
         Sbp::MsgEcdsaSignature(msg)
+    }
+}
+
+impl From<MsgCertificateChain> for Sbp {
+    fn from(msg: MsgCertificateChain) -> Self {
+        Sbp::MsgCertificateChain(msg)
     }
 }
 

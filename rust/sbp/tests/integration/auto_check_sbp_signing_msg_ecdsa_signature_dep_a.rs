@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDep.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDepA.yaml by generate.py. Do not modify by hand!
 
 use crate::*;
 
@@ -19,7 +19,7 @@ use crate::*;
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
-fn test_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
+fn test_auto_check_sbp_signing_msg_ecdsa_signature_dep_a() {
     {
         let mut payload = Cursor::new(vec![
             85, 6, 12, 66, 0, 255, 0, 1, 2, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5,
@@ -45,7 +45,7 @@ fn test_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgEcdsaSignatureDep(msg) => {
+            sbp::messages::Sbp::MsgEcdsaSignatureDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0xC06,
@@ -1333,7 +1333,7 @@ fn test_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
                     msg.stream_counter
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgEcdsaSignatureDep"),
+            _ => panic!("Invalid message type! Expected a MsgEcdsaSignatureDepA"),
         };
         let frame = sbp::to_vec(&sbp_msg).unwrap();
         assert_eq!(frame, payload.into_inner());
@@ -1349,7 +1349,7 @@ fn test_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
+fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature_dep_a() {
     {
         let json_input = r#"{"preamble": 85, "msg_type": 3078, "sender": 66, "length": 255, "payload": "AAECAQIDBAABAgMEBQYHAAECAwQFBgcAAQIDBAUGBwABAgMEBQYHAAECAwQFBgcAAQIDBAUGBwABAgMEBQYHAAECAwQFBgcKFRc/jCWCahwopbNJsjx+ck5xG18DPmiRYBNcew5ambcJSFF2cHwQtkySczqQEWlCH4c2ZFS1ZwtYhZunrY9WnhSohI1mMjBHkzVXAWyKJIaLo1IrNJYMHm6ca3hbekWkqnQZXgUWGKKvJp1iLKAvYY4ISg2xD4Aag5pBqTeIfauhHYGXRKYzRi04T5VjKmWYJ1m0QDEGUKwgbQJ3XbAAITkiElV5iVNvOwdNBHWflCM9KUMuf0uu", "crc": 44129, "flags": 0, "stream_counter": 1, "on_demand_counter": 2, "certificate_id": [1, 2, 3, 4], "signature": [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7], "signed_messages": [10, 21, 23, 63, 140, 37, 130, 106, 28, 40, 165, 179, 73, 178, 60, 126, 114, 78, 113, 27, 95, 3, 62, 104, 145, 96, 19, 92, 123, 14, 90, 153, 183, 9, 72, 81, 118, 112, 124, 16, 182, 76, 146, 115, 58, 144, 17, 105, 66, 31, 135, 54, 100, 84, 181, 103, 11, 88, 133, 155, 167, 173, 143, 86, 158, 20, 168, 132, 141, 102, 50, 48, 71, 147, 53, 87, 1, 108, 138, 36, 134, 139, 163, 82, 43, 52, 150, 12, 30, 110, 156, 107, 120, 91, 122, 69, 164, 170, 116, 25, 94, 5, 22, 24, 162, 175, 38, 157, 98, 44, 160, 47, 97, 142, 8, 74, 13, 177, 15, 128, 26, 131, 154, 65, 169, 55, 136, 125, 171, 161, 29, 129, 151, 68, 166, 51, 70, 45, 56, 79, 149, 99, 42, 101, 152, 39, 89, 180, 64, 49, 6, 80, 172, 32, 109, 2, 119, 93, 176, 0, 33, 57, 34, 18, 85, 121, 137, 83, 111, 59, 7, 77, 4, 117, 159, 148, 35, 61, 41, 67, 46, 127, 75, 174]}"#.as_bytes();
 
@@ -1372,7 +1372,7 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
             from_fields
         };
         match &sbp_msg {
-            sbp::messages::Sbp::MsgEcdsaSignatureDep(msg) => {
+            sbp::messages::Sbp::MsgEcdsaSignatureDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0xC06,
@@ -2660,7 +2660,7 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
                     msg.stream_counter
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgEcdsaSignatureDep"),
+            _ => panic!("Invalid message type! Expected a MsgEcdsaSignatureDepA"),
         };
     }
 }
@@ -2668,14 +2668,14 @@ fn test_json2sbp_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
 /// Tests [`sbp::json::JsonEncoder`] for roundtrip SBP message -> JSON
 ///
 /// Assumes:
-/// -   [`self::test_auto_check_sbp_signing_msg_ecdsa_signature_dep`] passes
+/// -   [`self::test_auto_check_sbp_signing_msg_ecdsa_signature_dep_a`] passes
 ///
 /// Asserts:
 /// -   SBP fields equates to that of the field
 /// -   Payload is identical
 #[test]
 #[cfg(feature = "json")]
-fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
+fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature_dep_a() {
     {
         let mut payload = Cursor::new(vec![
             85, 6, 12, 66, 0, 255, 0, 1, 2, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5,
@@ -2708,7 +2708,7 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
             .unwrap();
 
         // Reconstruct Sbp message from json fields, roundtrip
-        let sbp_msg = sbp::messages::Sbp::MsgEcdsaSignatureDep(
+        let sbp_msg = sbp::messages::Sbp::MsgEcdsaSignatureDepA(
             serde_json::from_str(
                 std::str::from_utf8(json_buffer.as_slice())
                     .unwrap()
@@ -2718,7 +2718,7 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
             .unwrap(),
         );
         match &sbp_msg {
-            sbp::messages::Sbp::MsgEcdsaSignatureDep(msg) => {
+            sbp::messages::Sbp::MsgEcdsaSignatureDepA(msg) => {
                 assert_eq!(
                     msg.message_type(),
                     0xC06,
@@ -4006,7 +4006,7 @@ fn test_sbp2json_auto_check_sbp_signing_msg_ecdsa_signature_dep() {
                     msg.stream_counter
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgEcdsaSignatureDep"),
+            _ => panic!("Invalid message type! Expected a MsgEcdsaSignatureDepA"),
         };
 
         // Check payload is still identical

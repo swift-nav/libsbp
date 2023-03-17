@@ -51,6 +51,23 @@ definitions:
             desc: nanoseconds of second
                   (range 0-999999999)
 
+  - ECDSASignature:
+      short_desc: ECDSA signature
+      fields:
+        - len:
+            type: u8
+            desc: >
+              Number of bytes to use of the signature field.  The DER encoded
+              signature has a maximum size of 72 bytes but can vary between 70
+              and 72 bytes in length.
+        - data:
+            type: array
+            fill: u8
+            size: 72
+            desc: >
+              DER encoded ECDSA signature for the messages using SHA-256 as the digest
+              algorithm.
+
   - MSG_ECDSA_CERTIFICATE:
       id: 0x0C04
       short_desc: An ECDSA certificate split over multiple messages
@@ -84,6 +101,43 @@ definitions:
             desc: DER encoded x.509 ECDSA certificate bytes
 
   - MSG_CERTIFICATE_CHAIN:
+      id: 0x0C09
+      short_desc: The certificate chain
+      fields:
+        - root_certificate:
+            type: array
+            fill: u8
+            size: 20
+            desc: SHA-1 fingerprint of the root certificate
+        - intermediate_certificate:
+            type: array
+            fill: u8
+            size: 20
+            desc: SHA-1 fingerprint of the intermediate certificate
+        - corrections_certificate:
+            type: array
+            fill: u8
+            size: 20
+            desc: SHA-1 fingerprint of the corrections certificate
+        - expiration:
+            type: UtcTime
+            desc: >
+              The time after which the signature given is no longer valid.
+              Implementors should consult a time source (such as GNSS) to
+              check if the current time is later than the expiration time,
+              if the condition is true, signatures in the stream should not
+              be considered valid.              
+        - signature:
+            type: ECDSASignature
+            desc: >
+              Signature (created by the root certificate) over the
+              concatenation of the SBP payload bytes preceding this field. That
+              is, the concatenation of `root_certificate`,
+              `intermediate_certificate`, `corrections_certificate` and
+              `expiration`.  This certificate chain (allow list) can also be
+              validated by fetching it from `http(s)://certs.swiftnav.com/chain`.
+
+  - MSG_CERTIFICATE_CHAIN_DEP:
       id: 0x0C05
       short_desc: The certificate chain
       fields:
@@ -120,6 +174,56 @@ definitions:
              validated by fetching it from `http(s)://certs.swiftnav.com/chain`.
 
   - MSG_ECDSA_SIGNATURE:
+      id: 0x0C08
+      short_desc: An ECDSA signature
+      desc: >
+        An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+      fields:
+        - flags:
+            type: u8
+            desc: Describes the format of the `signed\_messages` field below.
+            fields:
+              - 0-1:
+                  desc: CRC type
+                  values:
+                    - 0: 24-bit CRCs from RTCM framing
+                    - 1: 16-bit CRCs from SBP framing
+        - stream_counter:
+            type: u8
+            desc: >
+              Signature message counter. Zero indexed and incremented with each
+              signature message.  The counter will not increment if this message
+              was in response to an on demand request.  The counter will roll
+              over after 256 messages. Upon connection, the value of the counter
+              may not initially be zero.
+        - on_demand_counter:
+            type: u8
+            desc: >
+              On demand message counter. Zero indexed and incremented with each
+              signature message sent in response to an on demand message. The
+              counter will roll over after 256 messages.  Upon connection, the
+              value of the counter may not initially be zero.
+        - certificate_id:
+            type: array
+            fill: u8
+            size: 4
+            desc: The last 4 bytes of the certificate's SHA-1 fingerprint
+        - signature:
+            type: ECDSASignature
+            desc: >
+              Signature over the frames of this message group.
+        - signed_messages:
+            type: array
+            fill: u8
+            desc: >
+              CRCs of the messages covered by this signature.  For Skylark,
+              which delivers SBP messages wrapped in Swift's proprietary RTCM
+              message, these are the 24-bit CRCs from the RTCM message framing.
+              For SBP only streams, this will be 16-bit CRCs from the SBP
+              framing.  See the `flags` field to determine the type of CRCs
+              covered.
+
+  - MSG_ECDSA_SIGNATURE_DEP_B:
       id: 0x0C07
       short_desc: An ECDSA signature
       desc: >
@@ -159,7 +263,7 @@ definitions:
             desc: >
               Number of bytes to use of the signature field.  The DER encoded
               signature has a maximum size of 72 bytes but can vary between 70
-              and 72 bytes in length. 
+              and 72 bytes in length.
         - signature:
             type: array
             fill: u8
@@ -178,7 +282,7 @@ definitions:
               framing.  See the `flags` field to determine the type of CRCs
               covered.
 
-  - MSG_ECDSA_SIGNATURE_DEP:
+  - MSG_ECDSA_SIGNATURE_DEP_A:
       id: 0x0C06
       short_desc: An ECDSA signature
       desc: >

@@ -11,17 +11,17 @@
 package com.swiftnav.sbp.test;
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDep.yaml by generate.py. Do not modify
-// by hand!
+// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDepA.yaml by generate.py. Do not
+// modify by hand!
 
 
 import com.swiftnav.sbp.SBPMessage;
-import com.swiftnav.sbp.signing.MsgEcdsaSignatureDep;
+import com.swiftnav.sbp.signing.MsgEcdsaSignatureDepA;
 import java.math.BigInteger;
 import org.json.JSONObject;
 import org.junit.Test;
 
-public class auto_check_sbp_signing_MsgEcdsaSignatureDepTest {
+public class auto_check_sbp_signing_MsgEcdsaSignatureDepATest {
 
     public static boolean debug = false;
     private static final double DELTA = 1e-15;
@@ -29,7 +29,7 @@ public class auto_check_sbp_signing_MsgEcdsaSignatureDepTest {
     @Test
     public void test1() throws Throwable {
         if (debug)
-            System.out.format("%n%s%n", "auto_check_sbp_signing_MsgEcdsaSignatureDepTest.test1");
+            System.out.format("%n%s%n", "auto_check_sbp_signing_MsgEcdsaSignatureDepATest.test1");
         byte[] payload =
                 new byte[] {
                     (byte) 0,
@@ -289,7 +289,7 @@ public class auto_check_sbp_signing_MsgEcdsaSignatureDepTest {
                     (byte) 174,
                 };
         SBPMessage sbp = new SBPMessage(0x42, 0xC06, payload);
-        MsgEcdsaSignatureDep msg = new MsgEcdsaSignatureDep(sbp);
+        MsgEcdsaSignatureDepA msg = new MsgEcdsaSignatureDepA(sbp);
         JSONObject json = msg.toJSON();
         Number value;
         Number expected;
