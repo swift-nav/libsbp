@@ -104,6 +104,45 @@ typedef struct SBP_ATTR_PACKED {
                               not initially be zero. */
   u8 certificate_id[4];  /**< The last 4 bytes of the certificate's SHA-1
                               fingerprint */
+  u8 n_signature_bytes;  /**< Number of bytes to use of the signature field.
+                              The DER encoded signature has a maximum size
+                              of 72 bytes but can vary between 70 and 72
+                              bytes in length. */
+  u8 signature[72];      /**< DER encoded ECDSA signature for the messages
+                              using SHA-256 as the digest algorithm. */
+  u8 signed_messages[0]; /**< CRCs of the messages covered by this
+                              signature.  For Skylark, which delivers SBP
+                              messages wrapped in Swift's proprietary RTCM
+                              message, these are the 24-bit CRCs from the
+                              RTCM message framing. For SBP only streams,
+                              this will be 16-bit CRCs from the SBP framing.
+                              See the `flags` field to determine the type of
+                              CRCs covered. */
+} msg_ecdsa_signature_t;
+
+/** An ECDSA signature
+ *
+ * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 flags;              /**< Describes the format of the `signed\_messages`
+                              field below. */
+  u8 stream_counter;     /**< Signature message counter. Zero indexed and
+                              incremented with each signature message.  The
+                              counter will not increment if this message was
+                              in response to an on demand request.  The
+                              counter will roll over after 256 messages.
+                              Upon connection, the value of the counter may
+                              not initially be zero. */
+  u8 on_demand_counter;  /**< On demand message counter. Zero indexed and
+                              incremented with each signature message sent
+                              in response to an on demand message. The
+                              counter will roll over after 256 messages.
+                              Upon connection, the value of the counter may
+                              not initially be zero. */
+  u8 certificate_id[4];  /**< The last 4 bytes of the certificate's SHA-1
+                              fingerprint */
   u8 signature[64];      /**< ECDSA signature for the messages using SHA-256
                               as the digest algorithm. */
   u8 signed_messages[0]; /**< CRCs of the messages covered by this
@@ -114,7 +153,7 @@ typedef struct SBP_ATTR_PACKED {
                               this will be 16-bit CRCs from the SBP framing.
                               See the `flags` field to determine the type of
                               CRCs covered. */
-} msg_ecdsa_signature_t;
+} msg_ecdsa_signature_dep_t;
 
 typedef struct SBP_ATTR_PACKED {
   u8 n_msg;                /**< Total number messages that make up the

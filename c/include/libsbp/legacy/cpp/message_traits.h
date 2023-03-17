@@ -1192,8 +1192,14 @@ struct MessageTraits<msg_certificate_chain_t> {
 
 
 template<>
-struct MessageTraits<msg_ecdsa_signature_t> {
+struct MessageTraits<msg_ecdsa_signature_dep_t> {
   static constexpr u16 id = 3078;
+};
+
+
+template<>
+struct MessageTraits<msg_ecdsa_signature_t> {
+  static constexpr u16 id = 3079;
 };
 
 

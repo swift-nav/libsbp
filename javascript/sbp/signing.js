@@ -148,7 +148,64 @@ MsgCertificateChain.prototype.fieldSpec.push(['expiration', UtcTime.prototype.fi
 MsgCertificateChain.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
 
 /**
- * SBP class for message MSG_ECDSA_SIGNATURE (0x0C06).
+ * SBP class for message MSG_ECDSA_SIGNATURE (0x0C07).
+ *
+ * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the `signed\_messages` field below.
+ * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
+ *   message.  The counter will not increment if this message was in response to an
+ *   on demand request.  The counter will roll over after 256 messages. Upon
+ *   connection, the value of the counter may not initially be zero.
+ * @field on_demand_counter number (unsigned 8-bit int, 1 byte) On demand message counter. Zero indexed and incremented with each signature
+ *   message sent in response to an on demand message. The counter will roll over
+ *   after 256 messages.  Upon connection, the value of the counter may not initially
+ *   be zero.
+ * @field certificate_id array The last 4 bytes of the certificate's SHA-1 fingerprint
+ * @field n_signature_bytes number (unsigned 8-bit int, 1 byte) Number of bytes to use of the signature field.  The DER encoded signature has a
+ *   maximum size of 72 bytes but can vary between 70 and 72 bytes in length.
+ * @field signature array DER encoded ECDSA signature for the messages using SHA-256 as the digest
+ *   algorithm.
+ * @field signed_messages array CRCs of the messages covered by this signature.  For Skylark, which delivers SBP
+ *   messages wrapped in Swift's proprietary RTCM message, these are the 24-bit CRCs
+ *   from the RTCM message framing. For SBP only streams, this will be 16-bit CRCs
+ *   from the SBP framing.  See the `flags` field to determine the type of CRCs
+ *   covered.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+let MsgEcdsaSignature = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_ECDSA_SIGNATURE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgEcdsaSignature.prototype = Object.create(SBP.prototype);
+MsgEcdsaSignature.prototype.messageType = "MSG_ECDSA_SIGNATURE";
+MsgEcdsaSignature.prototype.msg_type = 0x0C07;
+MsgEcdsaSignature.prototype.constructor = MsgEcdsaSignature;
+MsgEcdsaSignature.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('flags')
+  .uint8('stream_counter')
+  .uint8('on_demand_counter')
+  .array('certificate_id', { length: 4, type: 'uint8' })
+  .uint8('n_signature_bytes')
+  .array('signature', { length: 72, type: 'uint8' })
+  .array('signed_messages', { type: 'uint8', readUntil: 'eof' });
+MsgEcdsaSignature.prototype.fieldSpec = [];
+MsgEcdsaSignature.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgEcdsaSignature.prototype.fieldSpec.push(['stream_counter', 'writeUInt8', 1]);
+MsgEcdsaSignature.prototype.fieldSpec.push(['on_demand_counter', 'writeUInt8', 1]);
+MsgEcdsaSignature.prototype.fieldSpec.push(['certificate_id', 'array', 'writeUInt8', function () { return 1; }, 4]);
+MsgEcdsaSignature.prototype.fieldSpec.push(['n_signature_bytes', 'writeUInt8', 1]);
+MsgEcdsaSignature.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 72]);
+MsgEcdsaSignature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+/**
+ * SBP class for message MSG_ECDSA_SIGNATURE_DEP (0x0C06).
  *
  * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  *
@@ -172,18 +229,18 @@ MsgCertificateChain.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8'
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-let MsgEcdsaSignature = function (sbp, fields) {
+let MsgEcdsaSignatureDep = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_ECDSA_SIGNATURE";
+  this.messageType = "MSG_ECDSA_SIGNATURE_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgEcdsaSignature.prototype = Object.create(SBP.prototype);
-MsgEcdsaSignature.prototype.messageType = "MSG_ECDSA_SIGNATURE";
-MsgEcdsaSignature.prototype.msg_type = 0x0C06;
-MsgEcdsaSignature.prototype.constructor = MsgEcdsaSignature;
-MsgEcdsaSignature.prototype.parser = new Parser()
+MsgEcdsaSignatureDep.prototype = Object.create(SBP.prototype);
+MsgEcdsaSignatureDep.prototype.messageType = "MSG_ECDSA_SIGNATURE_DEP";
+MsgEcdsaSignatureDep.prototype.msg_type = 0x0C06;
+MsgEcdsaSignatureDep.prototype.constructor = MsgEcdsaSignatureDep;
+MsgEcdsaSignatureDep.prototype.parser = new Parser()
   .endianess('little')
   .uint8('flags')
   .uint8('stream_counter')
@@ -191,13 +248,13 @@ MsgEcdsaSignature.prototype.parser = new Parser()
   .array('certificate_id', { length: 4, type: 'uint8' })
   .array('signature', { length: 64, type: 'uint8' })
   .array('signed_messages', { type: 'uint8', readUntil: 'eof' });
-MsgEcdsaSignature.prototype.fieldSpec = [];
-MsgEcdsaSignature.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
-MsgEcdsaSignature.prototype.fieldSpec.push(['stream_counter', 'writeUInt8', 1]);
-MsgEcdsaSignature.prototype.fieldSpec.push(['on_demand_counter', 'writeUInt8', 1]);
-MsgEcdsaSignature.prototype.fieldSpec.push(['certificate_id', 'array', 'writeUInt8', function () { return 1; }, 4]);
-MsgEcdsaSignature.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
-MsgEcdsaSignature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgEcdsaSignatureDep.prototype.fieldSpec = [];
+MsgEcdsaSignatureDep.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgEcdsaSignatureDep.prototype.fieldSpec.push(['stream_counter', 'writeUInt8', 1]);
+MsgEcdsaSignatureDep.prototype.fieldSpec.push(['on_demand_counter', 'writeUInt8', 1]);
+MsgEcdsaSignatureDep.prototype.fieldSpec.push(['certificate_id', 'array', 'writeUInt8', function () { return 1; }, 4]);
+MsgEcdsaSignatureDep.prototype.fieldSpec.push(['signature', 'array', 'writeUInt8', function () { return 1; }, 64]);
+MsgEcdsaSignatureDep.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 /**
  * SBP class for message MSG_ED25519_CERTIFICATE_DEP (0x0C02).
@@ -314,8 +371,10 @@ module.exports = {
   MsgEcdsaCertificate: MsgEcdsaCertificate,
   0x0C05: MsgCertificateChain,
   MsgCertificateChain: MsgCertificateChain,
-  0x0C06: MsgEcdsaSignature,
+  0x0C07: MsgEcdsaSignature,
   MsgEcdsaSignature: MsgEcdsaSignature,
+  0x0C06: MsgEcdsaSignatureDep,
+  MsgEcdsaSignatureDep: MsgEcdsaSignatureDep,
   0x0C02: MsgEd25519CertificateDep,
   MsgEd25519CertificateDep: MsgEd25519CertificateDep,
   0x0C01: MsgEd25519SignatureDepA,

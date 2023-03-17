@@ -104,6 +104,7 @@ Suite* legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgCertificateChain_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEcdsaCertificate_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEcdsaSignature_suite(void);
+Suite* legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEd25519CertificateDep_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEd25519SignatureDepA_suite(void);
 Suite* legacy_auto_check_sbp_signing_MsgEd25519SignatureDepB_suite(void);

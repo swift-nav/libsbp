@@ -155,9 +155,9 @@ $(makeJSON "_msgCertificateChain_" ''MsgCertificateChain)
 $(makeLenses ''MsgCertificateChain)
 
 msgEcdsaSignature :: Word16
-msgEcdsaSignature = 0x0C06
+msgEcdsaSignature = 0x0C07
 
--- | SBP class for message MSG_ECDSA_SIGNATURE (0x0C06).
+-- | SBP class for message MSG_ECDSA_SIGNATURE (0x0C07).
 --
 -- An ECDSA-256 signature using SHA-256 as the message digest algorithm.
 data MsgEcdsaSignature = MsgEcdsaSignature
@@ -176,8 +176,13 @@ data MsgEcdsaSignature = MsgEcdsaSignature
     -- counter may not initially be zero.
   , _msgEcdsaSignature_certificate_id  :: ![Word8]
     -- ^ The last 4 bytes of the certificate's SHA-1 fingerprint
+  , _msgEcdsaSignature_n_signature_bytes :: !Word8
+    -- ^ Number of bytes to use of the signature field.  The DER encoded
+    -- signature has a maximum size of 72 bytes but can vary between 70 and 72
+    -- bytes in length.
   , _msgEcdsaSignature_signature       :: ![Word8]
-    -- ^ ECDSA signature for the messages using SHA-256 as the digest algorithm.
+    -- ^ DER encoded ECDSA signature for the messages using SHA-256 as the
+    -- digest algorithm.
   , _msgEcdsaSignature_signed_messages :: ![Word8]
     -- ^ CRCs of the messages covered by this signature.  For Skylark, which
     -- delivers SBP messages wrapped in Swift's proprietary RTCM message,
@@ -192,7 +197,8 @@ instance Binary MsgEcdsaSignature where
     _msgEcdsaSignature_stream_counter <- getWord8
     _msgEcdsaSignature_on_demand_counter <- getWord8
     _msgEcdsaSignature_certificate_id <- replicateM 4 getWord8
-    _msgEcdsaSignature_signature <- replicateM 64 getWord8
+    _msgEcdsaSignature_n_signature_bytes <- getWord8
+    _msgEcdsaSignature_signature <- replicateM 72 getWord8
     _msgEcdsaSignature_signed_messages <- whileM (not <$> isEmpty) getWord8
     pure MsgEcdsaSignature {..}
 
@@ -201,12 +207,67 @@ instance Binary MsgEcdsaSignature where
     putWord8 _msgEcdsaSignature_stream_counter
     putWord8 _msgEcdsaSignature_on_demand_counter
     mapM_ putWord8 _msgEcdsaSignature_certificate_id
+    putWord8 _msgEcdsaSignature_n_signature_bytes
     mapM_ putWord8 _msgEcdsaSignature_signature
     mapM_ putWord8 _msgEcdsaSignature_signed_messages
 
 $(makeSBP 'msgEcdsaSignature ''MsgEcdsaSignature)
 $(makeJSON "_msgEcdsaSignature_" ''MsgEcdsaSignature)
 $(makeLenses ''MsgEcdsaSignature)
+
+msgEcdsaSignatureDep :: Word16
+msgEcdsaSignatureDep = 0x0C06
+
+-- | SBP class for message MSG_ECDSA_SIGNATURE_DEP (0x0C06).
+--
+-- An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+data MsgEcdsaSignatureDep = MsgEcdsaSignatureDep
+  { _msgEcdsaSignatureDep_flags           :: !Word8
+    -- ^ Describes the format of the `signed\_messages` field below.
+  , _msgEcdsaSignatureDep_stream_counter  :: !Word8
+    -- ^ Signature message counter. Zero indexed and incremented with each
+    -- signature message.  The counter will not increment if this message was
+    -- in response to an on demand request.  The counter will roll over after
+    -- 256 messages. Upon connection, the value of the counter may not
+    -- initially be zero.
+  , _msgEcdsaSignatureDep_on_demand_counter :: !Word8
+    -- ^ On demand message counter. Zero indexed and incremented with each
+    -- signature message sent in response to an on demand message. The counter
+    -- will roll over after 256 messages.  Upon connection, the value of the
+    -- counter may not initially be zero.
+  , _msgEcdsaSignatureDep_certificate_id  :: ![Word8]
+    -- ^ The last 4 bytes of the certificate's SHA-1 fingerprint
+  , _msgEcdsaSignatureDep_signature       :: ![Word8]
+    -- ^ ECDSA signature for the messages using SHA-256 as the digest algorithm.
+  , _msgEcdsaSignatureDep_signed_messages :: ![Word8]
+    -- ^ CRCs of the messages covered by this signature.  For Skylark, which
+    -- delivers SBP messages wrapped in Swift's proprietary RTCM message,
+    -- these are the 24-bit CRCs from the RTCM message framing. For SBP only
+    -- streams, this will be 16-bit CRCs from the SBP framing.  See the
+    -- `flags` field to determine the type of CRCs covered.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEcdsaSignatureDep where
+  get = do
+    _msgEcdsaSignatureDep_flags <- getWord8
+    _msgEcdsaSignatureDep_stream_counter <- getWord8
+    _msgEcdsaSignatureDep_on_demand_counter <- getWord8
+    _msgEcdsaSignatureDep_certificate_id <- replicateM 4 getWord8
+    _msgEcdsaSignatureDep_signature <- replicateM 64 getWord8
+    _msgEcdsaSignatureDep_signed_messages <- whileM (not <$> isEmpty) getWord8
+    pure MsgEcdsaSignatureDep {..}
+
+  put MsgEcdsaSignatureDep {..} = do
+    putWord8 _msgEcdsaSignatureDep_flags
+    putWord8 _msgEcdsaSignatureDep_stream_counter
+    putWord8 _msgEcdsaSignatureDep_on_demand_counter
+    mapM_ putWord8 _msgEcdsaSignatureDep_certificate_id
+    mapM_ putWord8 _msgEcdsaSignatureDep_signature
+    mapM_ putWord8 _msgEcdsaSignatureDep_signed_messages
+
+$(makeSBP 'msgEcdsaSignatureDep ''MsgEcdsaSignatureDep)
+$(makeJSON "_msgEcdsaSignatureDep_" ''MsgEcdsaSignatureDep)
+$(makeLenses ''MsgEcdsaSignatureDep)
 
 msgEd25519CertificateDep :: Word16
 msgEd25519CertificateDep = 0x0C02
