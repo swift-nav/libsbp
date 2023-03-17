@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/signing_macros.h>
+#include <libsbp/v4/signing/ECDSASignature.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -70,17 +71,9 @@ typedef struct {
   u8 certificate_id[SBP_MSG_ECDSA_SIGNATURE_CERTIFICATE_ID_MAX];
 
   /**
-   * Number of bytes to use of the signature field.  The DER encoded signature
-   * has a maximum size of 72 bytes but can vary between 70 and 72 bytes in
-   * length.
+   * Signature over the frames of this message group.
    */
-  u8 n_signature_bytes;
-
-  /**
-   * DER encoded ECDSA signature for the messages using SHA-256 as the digest
-   * algorithm.
-   */
-  u8 signature[SBP_MSG_ECDSA_SIGNATURE_SIGNATURE_MAX];
+  sbp_ecdsa_signature_t signature;
 
   /**
    * CRCs of the messages covered by this signature.  For Skylark, which

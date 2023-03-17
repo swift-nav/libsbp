@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDep.yaml by
+// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDepA.yaml by
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
@@ -19,19 +19,19 @@
 #include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
 #include <cstring>
-class Test_auto_check_sbp_signing_MsgEcdsaSignatureDep0
+class Test_auto_check_sbp_signing_MsgEcdsaSignatureDepA0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_t> {
+      sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_a_t> {
  public:
-  Test_auto_check_sbp_signing_MsgEcdsaSignatureDep0()
+  Test_auto_check_sbp_signing_MsgEcdsaSignatureDepA0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_t>(this),
+        sbp::MessageHandler<sbp_msg_ecdsa_signature_dep_a_t>(this),
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
@@ -59,13 +59,13 @@ class Test_auto_check_sbp_signing_MsgEcdsaSignatureDep0
 
  protected:
   void handle_sbp_msg(uint16_t sender_id,
-                      const sbp_msg_ecdsa_signature_dep_t &msg) override {
+                      const sbp_msg_ecdsa_signature_dep_a_t &msg) override {
     last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  sbp_msg_ecdsa_signature_dep_t last_msg_;
+  sbp_msg_ecdsa_signature_dep_a_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -74,7 +74,7 @@ class Test_auto_check_sbp_signing_MsgEcdsaSignatureDep0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_signing_MsgEcdsaSignatureDep0, Test) {
+TEST_F(Test_auto_check_sbp_signing_MsgEcdsaSignatureDepA0, Test) {
   uint8_t encoded_frame[] = {
       85,  6,   12,  66,  0,   255, 0,   1,   2,   1,   2,   3,   4,   0,   1,
       2,   3,   4,   5,   6,   7,   0,   1,   2,   3,   4,   5,   6,   7,   0,
@@ -96,7 +96,7 @@ TEST_F(Test_auto_check_sbp_signing_MsgEcdsaSignatureDep0, Test) {
       41,  67,  46,  127, 75,  174, 97,  172,
   };
 
-  sbp_msg_ecdsa_signature_dep_t test_msg{};
+  sbp_msg_ecdsa_signature_dep_a_t test_msg{};
 
   test_msg.certificate_id[0] = 1;
 

@@ -190,9 +190,11 @@ import com.swiftnav.sbp.settings.MsgSettingsSave;
 import com.swiftnav.sbp.settings.MsgSettingsWrite;
 import com.swiftnav.sbp.settings.MsgSettingsWriteResp;
 import com.swiftnav.sbp.signing.MsgCertificateChain;
+import com.swiftnav.sbp.signing.MsgCertificateChainDep;
 import com.swiftnav.sbp.signing.MsgEcdsaCertificate;
 import com.swiftnav.sbp.signing.MsgEcdsaSignature;
-import com.swiftnav.sbp.signing.MsgEcdsaSignatureDep;
+import com.swiftnav.sbp.signing.MsgEcdsaSignatureDepA;
+import com.swiftnav.sbp.signing.MsgEcdsaSignatureDepB;
 import com.swiftnav.sbp.signing.MsgEd25519CertificateDep;
 import com.swiftnav.sbp.signing.MsgEd25519SignatureDepA;
 import com.swiftnav.sbp.signing.MsgEd25519SignatureDepB;
@@ -604,10 +606,14 @@ final class MessageTable {
                 return new MsgEcdsaCertificate(msg);
             case MsgCertificateChain.TYPE:
                 return new MsgCertificateChain(msg);
+            case MsgCertificateChainDep.TYPE:
+                return new MsgCertificateChainDep(msg);
             case MsgEcdsaSignature.TYPE:
                 return new MsgEcdsaSignature(msg);
-            case MsgEcdsaSignatureDep.TYPE:
-                return new MsgEcdsaSignatureDep(msg);
+            case MsgEcdsaSignatureDepB.TYPE:
+                return new MsgEcdsaSignatureDepB(msg);
+            case MsgEcdsaSignatureDepA.TYPE:
+                return new MsgEcdsaSignatureDepA(msg);
             case MsgEd25519CertificateDep.TYPE:
                 return new MsgEd25519CertificateDep(msg);
             case MsgEd25519SignatureDepA.TYPE:

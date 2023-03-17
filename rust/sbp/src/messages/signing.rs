@@ -13,14 +13,56 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages relating to signatures
+pub use ecdsa_signature::ECDSASignature;
 pub use msg_certificate_chain::MsgCertificateChain;
+pub use msg_certificate_chain_dep::MsgCertificateChainDep;
 pub use msg_ecdsa_certificate::MsgEcdsaCertificate;
 pub use msg_ecdsa_signature::MsgEcdsaSignature;
-pub use msg_ecdsa_signature_dep::MsgEcdsaSignatureDep;
+pub use msg_ecdsa_signature_dep_a::MsgEcdsaSignatureDepA;
+pub use msg_ecdsa_signature_dep_b::MsgEcdsaSignatureDepB;
 pub use msg_ed25519_certificate_dep::MsgEd25519CertificateDep;
 pub use msg_ed25519_signature_dep_a::MsgEd25519SignatureDepA;
 pub use msg_ed25519_signature_dep_b::MsgEd25519SignatureDepB;
 pub use utc_time::UtcTime;
+
+pub mod ecdsa_signature {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+    /// ECDSA signature
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct ECDSASignature {
+        /// Number of bytes to use of the signature field.  The DER encoded
+        /// signature has a maximum size of 72 bytes but can vary between 70 and 72
+        /// bytes in length.
+        #[cfg_attr(feature = "serde", serde(rename = "len"))]
+        pub len: u8,
+        /// DER encoded ECDSA signature for the messages using SHA-256 as the digest
+        /// algorithm.
+        #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "data"))]
+        pub data: [u8; 72],
+    }
+
+    impl WireFormat for ECDSASignature {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN + <[u8; 72] as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.len) + WireFormat::len(&self.data)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.len, buf);
+            WireFormat::write(&self.data, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            ECDSASignature {
+                len: WireFormat::parse_unchecked(buf),
+                data: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
 
 pub mod msg_certificate_chain {
     #![allow(unused_imports)]
@@ -48,18 +90,18 @@ pub mod msg_certificate_chain {
         /// intermediate certificate and corrections certificate.
         #[cfg_attr(feature = "serde", serde(rename = "expiration"))]
         pub expiration: UtcTime,
-        /// An ECDSA signature (created by the root certificate) over the
-        /// concatenation of the SBP payload bytes preceding this field. That is,
-        /// the concatenation of `root_certificate`, `intermediate_certificate`,
+        /// Signature (created by the root certificate) over the concatenation of
+        /// the SBP payload bytes preceding this field. That is, the concatenation
+        /// of `root_certificate`, `intermediate_certificate`,
         /// `corrections_certificate` and `expiration`.  This certificate chain
         /// (allow list) can also be validated by fetching it from
         /// `http(s)://certs.swiftnav.com/chain`.
-        #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
-        pub signature: [u8; 64],
+        #[cfg_attr(feature = "serde", serde(rename = "signature"))]
+        pub signature: ECDSASignature,
     }
 
     impl ConcreteMessage for MsgCertificateChain {
-        const MESSAGE_TYPE: u16 = 3077;
+        const MESSAGE_TYPE: u16 = 3081;
         const MESSAGE_NAME: &'static str = "MSG_CERTIFICATE_CHAIN";
     }
 
@@ -102,7 +144,7 @@ pub mod msg_certificate_chain {
             + <[u8; 20] as WireFormat>::MIN_LEN
             + <[u8; 20] as WireFormat>::MIN_LEN
             + <UtcTime as WireFormat>::MIN_LEN
-            + <[u8; 64] as WireFormat>::MIN_LEN;
+            + <ECDSASignature as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.root_certificate)
                 + WireFormat::len(&self.intermediate_certificate)
@@ -119,6 +161,114 @@ pub mod msg_certificate_chain {
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
             MsgCertificateChain {
+                sender_id: None,
+                root_certificate: WireFormat::parse_unchecked(buf),
+                intermediate_certificate: WireFormat::parse_unchecked(buf),
+                corrections_certificate: WireFormat::parse_unchecked(buf),
+                expiration: WireFormat::parse_unchecked(buf),
+                signature: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+}
+
+pub mod msg_certificate_chain_dep {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+    /// The certificate chain
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgCertificateChainDep {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// SHA-1 fingerprint of the root certificate
+        #[cfg_attr(feature = "serde", serde(rename = "root_certificate"))]
+        pub root_certificate: [u8; 20],
+        /// SHA-1 fingerprint of the intermediate certificate
+        #[cfg_attr(feature = "serde", serde(rename = "intermediate_certificate"))]
+        pub intermediate_certificate: [u8; 20],
+        /// SHA-1 fingerprint of the corrections certificate
+        #[cfg_attr(feature = "serde", serde(rename = "corrections_certificate"))]
+        pub corrections_certificate: [u8; 20],
+        /// The certificate chain comprised of three fingerprints: root certificate,
+        /// intermediate certificate and corrections certificate.
+        #[cfg_attr(feature = "serde", serde(rename = "expiration"))]
+        pub expiration: UtcTime,
+        /// An ECDSA signature (created by the root certificate) over the
+        /// concatenation of the SBP payload bytes preceding this field. That is,
+        /// the concatenation of `root_certificate`, `intermediate_certificate`,
+        /// `corrections_certificate` and `expiration`.  This certificate chain
+        /// (allow list) can also be validated by fetching it from
+        /// `http(s)://certs.swiftnav.com/chain`.
+        #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
+        pub signature: [u8; 64],
+    }
+
+    impl ConcreteMessage for MsgCertificateChainDep {
+        const MESSAGE_TYPE: u16 = 3077;
+        const MESSAGE_NAME: &'static str = "MSG_CERTIFICATE_CHAIN_DEP";
+    }
+
+    impl SbpMessage for MsgCertificateChainDep {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgCertificateChainDep {
+        fn friendly_name() -> &'static str {
+            "CERTIFICATE CHAIN DEP"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgCertificateChainDep {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgCertificateChainDep(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgCertificateChainDep {
+        const MIN_LEN: usize = <[u8; 20] as WireFormat>::MIN_LEN
+            + <[u8; 20] as WireFormat>::MIN_LEN
+            + <[u8; 20] as WireFormat>::MIN_LEN
+            + <UtcTime as WireFormat>::MIN_LEN
+            + <[u8; 64] as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.root_certificate)
+                + WireFormat::len(&self.intermediate_certificate)
+                + WireFormat::len(&self.corrections_certificate)
+                + WireFormat::len(&self.expiration)
+                + WireFormat::len(&self.signature)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.root_certificate, buf);
+            WireFormat::write(&self.intermediate_certificate, buf);
+            WireFormat::write(&self.corrections_certificate, buf);
+            WireFormat::write(&self.expiration, buf);
+            WireFormat::write(&self.signature, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgCertificateChainDep {
                 sender_id: None,
                 root_certificate: WireFormat::parse_unchecked(buf),
                 intermediate_certificate: WireFormat::parse_unchecked(buf),
@@ -317,15 +467,9 @@ pub mod msg_ecdsa_signature {
         /// The last 4 bytes of the certificate's SHA-1 fingerprint
         #[cfg_attr(feature = "serde", serde(rename = "certificate_id"))]
         pub certificate_id: [u8; 4],
-        /// Number of bytes to use of the signature field.  The DER encoded
-        /// signature has a maximum size of 72 bytes but can vary between 70 and 72
-        /// bytes in length.
-        #[cfg_attr(feature = "serde", serde(rename = "n_signature_bytes"))]
-        pub n_signature_bytes: u8,
-        /// DER encoded ECDSA signature for the messages using SHA-256 as the digest
-        /// algorithm.
-        #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
-        pub signature: [u8; 72],
+        /// Signature over the frames of this message group.
+        #[cfg_attr(feature = "serde", serde(rename = "signature"))]
+        pub signature: ECDSASignature,
         /// CRCs of the messages covered by this signature.  For Skylark, which
         /// delivers SBP messages wrapped in Swift's proprietary RTCM message, these
         /// are the 24-bit CRCs from the RTCM message framing. For SBP only streams,
@@ -352,7 +496,7 @@ pub mod msg_ecdsa_signature {
     }
 
     impl ConcreteMessage for MsgEcdsaSignature {
-        const MESSAGE_TYPE: u16 = 3079;
+        const MESSAGE_TYPE: u16 = 3080;
         const MESSAGE_NAME: &'static str = "MSG_ECDSA_SIGNATURE";
     }
 
@@ -395,15 +539,13 @@ pub mod msg_ecdsa_signature {
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <[u8; 4] as WireFormat>::MIN_LEN
-            + <u8 as WireFormat>::MIN_LEN
-            + <[u8; 72] as WireFormat>::MIN_LEN
+            + <ECDSASignature as WireFormat>::MIN_LEN
             + <Vec<u8> as WireFormat>::MIN_LEN;
         fn len(&self) -> usize {
             WireFormat::len(&self.flags)
                 + WireFormat::len(&self.stream_counter)
                 + WireFormat::len(&self.on_demand_counter)
                 + WireFormat::len(&self.certificate_id)
-                + WireFormat::len(&self.n_signature_bytes)
                 + WireFormat::len(&self.signature)
                 + WireFormat::len(&self.signed_messages)
         }
@@ -412,7 +554,6 @@ pub mod msg_ecdsa_signature {
             WireFormat::write(&self.stream_counter, buf);
             WireFormat::write(&self.on_demand_counter, buf);
             WireFormat::write(&self.certificate_id, buf);
-            WireFormat::write(&self.n_signature_bytes, buf);
             WireFormat::write(&self.signature, buf);
             WireFormat::write(&self.signed_messages, buf);
         }
@@ -423,7 +564,6 @@ pub mod msg_ecdsa_signature {
                 stream_counter: WireFormat::parse_unchecked(buf),
                 on_demand_counter: WireFormat::parse_unchecked(buf),
                 certificate_id: WireFormat::parse_unchecked(buf),
-                n_signature_bytes: WireFormat::parse_unchecked(buf),
                 signature: WireFormat::parse_unchecked(buf),
                 signed_messages: WireFormat::parse_unchecked(buf),
             }
@@ -461,7 +601,7 @@ pub mod msg_ecdsa_signature {
     }
 }
 
-pub mod msg_ecdsa_signature_dep {
+pub mod msg_ecdsa_signature_dep_a {
     #![allow(unused_imports)]
 
     use super::*;
@@ -474,7 +614,7 @@ pub mod msg_ecdsa_signature_dep {
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
-    pub struct MsgEcdsaSignatureDep {
+    pub struct MsgEcdsaSignatureDepA {
         /// The message sender_id
         #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
         pub sender_id: Option<u16>,
@@ -509,7 +649,7 @@ pub mod msg_ecdsa_signature_dep {
         pub signed_messages: Vec<u8>,
     }
 
-    impl MsgEcdsaSignatureDep {
+    impl MsgEcdsaSignatureDepA {
         /// Gets the [CrcType][self::CrcType] stored in the `flags` bitfield.
         ///
         /// Returns `Ok` if the bitrange contains a known `CrcType` variant.
@@ -525,12 +665,12 @@ pub mod msg_ecdsa_signature_dep {
         }
     }
 
-    impl ConcreteMessage for MsgEcdsaSignatureDep {
+    impl ConcreteMessage for MsgEcdsaSignatureDepA {
         const MESSAGE_TYPE: u16 = 3078;
-        const MESSAGE_NAME: &'static str = "MSG_ECDSA_SIGNATURE_DEP";
+        const MESSAGE_NAME: &'static str = "MSG_ECDSA_SIGNATURE_DEP_A";
     }
 
-    impl SbpMessage for MsgEcdsaSignatureDep {
+    impl SbpMessage for MsgEcdsaSignatureDepA {
         fn message_name(&self) -> &'static str {
             <Self as ConcreteMessage>::MESSAGE_NAME
         }
@@ -548,23 +688,23 @@ pub mod msg_ecdsa_signature_dep {
         }
     }
 
-    impl FriendlyName for MsgEcdsaSignatureDep {
+    impl FriendlyName for MsgEcdsaSignatureDepA {
         fn friendly_name() -> &'static str {
-            "ECDSA SIGNATURE DEP"
+            "ECDSA SIGNATURE DEP A"
         }
     }
 
-    impl TryFrom<Sbp> for MsgEcdsaSignatureDep {
+    impl TryFrom<Sbp> for MsgEcdsaSignatureDepA {
         type Error = TryFromSbpError;
         fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
             match msg {
-                Sbp::MsgEcdsaSignatureDep(m) => Ok(m),
+                Sbp::MsgEcdsaSignatureDepA(m) => Ok(m),
                 _ => Err(TryFromSbpError(msg)),
             }
         }
     }
 
-    impl WireFormat for MsgEcdsaSignatureDep {
+    impl WireFormat for MsgEcdsaSignatureDepA {
         const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
             + <u8 as WireFormat>::MIN_LEN
@@ -588,12 +728,192 @@ pub mod msg_ecdsa_signature_dep {
             WireFormat::write(&self.signed_messages, buf);
         }
         fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
-            MsgEcdsaSignatureDep {
+            MsgEcdsaSignatureDepA {
                 sender_id: None,
                 flags: WireFormat::parse_unchecked(buf),
                 stream_counter: WireFormat::parse_unchecked(buf),
                 on_demand_counter: WireFormat::parse_unchecked(buf),
                 certificate_id: WireFormat::parse_unchecked(buf),
+                signature: WireFormat::parse_unchecked(buf),
+                signed_messages: WireFormat::parse_unchecked(buf),
+            }
+        }
+    }
+
+    /// CRC type
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+    pub enum CrcType {
+        /// 24-bit CRCs from RTCM framing
+        _24BitCrcsFromRtcmFraming = 0,
+
+        /// 16-bit CRCs from SBP framing
+        _16BitCrcsFromSbpFraming = 1,
+    }
+
+    impl std::fmt::Display for CrcType {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                CrcType::_24BitCrcsFromRtcmFraming => f.write_str("24-bit CRCs from RTCM framing"),
+                CrcType::_16BitCrcsFromSbpFraming => f.write_str("16-bit CRCs from SBP framing"),
+            }
+        }
+    }
+
+    impl TryFrom<u8> for CrcType {
+        type Error = u8;
+        fn try_from(i: u8) -> Result<Self, u8> {
+            match i {
+                0 => Ok(CrcType::_24BitCrcsFromRtcmFraming),
+                1 => Ok(CrcType::_16BitCrcsFromSbpFraming),
+                i => Err(i),
+            }
+        }
+    }
+}
+
+pub mod msg_ecdsa_signature_dep_b {
+    #![allow(unused_imports)]
+
+    use super::*;
+    use crate::messages::lib::*;
+
+    /// An ECDSA signature
+    ///
+    /// An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+    ///
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Debug, PartialEq, Clone)]
+    pub struct MsgEcdsaSignatureDepB {
+        /// The message sender_id
+        #[cfg_attr(feature = "serde", serde(skip_serializing, alias = "sender"))]
+        pub sender_id: Option<u16>,
+        /// Describes the format of the `signed\_messages` field below.
+        #[cfg_attr(feature = "serde", serde(rename = "flags"))]
+        pub flags: u8,
+        /// Signature message counter. Zero indexed and incremented with each
+        /// signature message.  The counter will not increment if this message was
+        /// in response to an on demand request.  The counter will roll over after
+        /// 256 messages. Upon connection, the value of the counter may not
+        /// initially be zero.
+        #[cfg_attr(feature = "serde", serde(rename = "stream_counter"))]
+        pub stream_counter: u8,
+        /// On demand message counter. Zero indexed and incremented with each
+        /// signature message sent in response to an on demand message. The counter
+        /// will roll over after 256 messages.  Upon connection, the value of the
+        /// counter may not initially be zero.
+        #[cfg_attr(feature = "serde", serde(rename = "on_demand_counter"))]
+        pub on_demand_counter: u8,
+        /// The last 4 bytes of the certificate's SHA-1 fingerprint
+        #[cfg_attr(feature = "serde", serde(rename = "certificate_id"))]
+        pub certificate_id: [u8; 4],
+        /// Number of bytes to use of the signature field.  The DER encoded
+        /// signature has a maximum size of 72 bytes but can vary between 70 and 72
+        /// bytes in length.
+        #[cfg_attr(feature = "serde", serde(rename = "n_signature_bytes"))]
+        pub n_signature_bytes: u8,
+        /// DER encoded ECDSA signature for the messages using SHA-256 as the digest
+        /// algorithm.
+        #[cfg_attr(feature = "serde", serde(with = "BigArray", rename = "signature"))]
+        pub signature: [u8; 72],
+        /// CRCs of the messages covered by this signature.  For Skylark, which
+        /// delivers SBP messages wrapped in Swift's proprietary RTCM message, these
+        /// are the 24-bit CRCs from the RTCM message framing. For SBP only streams,
+        /// this will be 16-bit CRCs from the SBP framing.  See the `flags` field to
+        /// determine the type of CRCs covered.
+        #[cfg_attr(feature = "serde", serde(rename = "signed_messages"))]
+        pub signed_messages: Vec<u8>,
+    }
+
+    impl MsgEcdsaSignatureDepB {
+        /// Gets the [CrcType][self::CrcType] stored in the `flags` bitfield.
+        ///
+        /// Returns `Ok` if the bitrange contains a known `CrcType` variant.
+        /// Otherwise the value of the bitrange is returned as an `Err(u8)`. This may be because of a malformed message,
+        /// or because new variants of `CrcType` were added.
+        pub fn crc_type(&self) -> Result<CrcType, u8> {
+            get_bit_range!(self.flags, u8, u8, 1, 0).try_into()
+        }
+
+        /// Set the bitrange corresponding to the [CrcType][CrcType] of the `flags` bitfield.
+        pub fn set_crc_type(&mut self, crc_type: CrcType) {
+            set_bit_range!(&mut self.flags, crc_type, u8, u8, 1, 0);
+        }
+    }
+
+    impl ConcreteMessage for MsgEcdsaSignatureDepB {
+        const MESSAGE_TYPE: u16 = 3079;
+        const MESSAGE_NAME: &'static str = "MSG_ECDSA_SIGNATURE_DEP_B";
+    }
+
+    impl SbpMessage for MsgEcdsaSignatureDepB {
+        fn message_name(&self) -> &'static str {
+            <Self as ConcreteMessage>::MESSAGE_NAME
+        }
+        fn message_type(&self) -> u16 {
+            <Self as ConcreteMessage>::MESSAGE_TYPE
+        }
+        fn sender_id(&self) -> Option<u16> {
+            self.sender_id
+        }
+        fn set_sender_id(&mut self, new_id: u16) {
+            self.sender_id = Some(new_id);
+        }
+        fn encoded_len(&self) -> usize {
+            WireFormat::len(self) + crate::HEADER_LEN + crate::CRC_LEN
+        }
+    }
+
+    impl FriendlyName for MsgEcdsaSignatureDepB {
+        fn friendly_name() -> &'static str {
+            "ECDSA SIGNATURE DEP B"
+        }
+    }
+
+    impl TryFrom<Sbp> for MsgEcdsaSignatureDepB {
+        type Error = TryFromSbpError;
+        fn try_from(msg: Sbp) -> Result<Self, Self::Error> {
+            match msg {
+                Sbp::MsgEcdsaSignatureDepB(m) => Ok(m),
+                _ => Err(TryFromSbpError(msg)),
+            }
+        }
+    }
+
+    impl WireFormat for MsgEcdsaSignatureDepB {
+        const MIN_LEN: usize = <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <[u8; 4] as WireFormat>::MIN_LEN
+            + <u8 as WireFormat>::MIN_LEN
+            + <[u8; 72] as WireFormat>::MIN_LEN
+            + <Vec<u8> as WireFormat>::MIN_LEN;
+        fn len(&self) -> usize {
+            WireFormat::len(&self.flags)
+                + WireFormat::len(&self.stream_counter)
+                + WireFormat::len(&self.on_demand_counter)
+                + WireFormat::len(&self.certificate_id)
+                + WireFormat::len(&self.n_signature_bytes)
+                + WireFormat::len(&self.signature)
+                + WireFormat::len(&self.signed_messages)
+        }
+        fn write<B: BufMut>(&self, buf: &mut B) {
+            WireFormat::write(&self.flags, buf);
+            WireFormat::write(&self.stream_counter, buf);
+            WireFormat::write(&self.on_demand_counter, buf);
+            WireFormat::write(&self.certificate_id, buf);
+            WireFormat::write(&self.n_signature_bytes, buf);
+            WireFormat::write(&self.signature, buf);
+            WireFormat::write(&self.signed_messages, buf);
+        }
+        fn parse_unchecked<B: Buf>(buf: &mut B) -> Self {
+            MsgEcdsaSignatureDepB {
+                sender_id: None,
+                flags: WireFormat::parse_unchecked(buf),
+                stream_counter: WireFormat::parse_unchecked(buf),
+                on_demand_counter: WireFormat::parse_unchecked(buf),
+                certificate_id: WireFormat::parse_unchecked(buf),
+                n_signature_bytes: WireFormat::parse_unchecked(buf),
                 signature: WireFormat::parse_unchecked(buf),
                 signed_messages: WireFormat::parse_unchecked(buf),
             }

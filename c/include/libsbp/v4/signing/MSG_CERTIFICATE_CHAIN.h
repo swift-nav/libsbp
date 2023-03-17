@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/signing_macros.h>
+#include <libsbp/v4/signing/ECDSASignature.h>
 #include <libsbp/v4/signing/UtcTime.h>
 #include <libsbp/v4/string/sbp_string.h>
 
@@ -64,14 +65,13 @@ typedef struct {
   sbp_utc_time_t expiration;
 
   /**
-   * An ECDSA signature (created by the root certificate) over the concatenation
-   * of the SBP payload bytes preceding this field. That is, the concatenation
-   * of `root_certificate`, `intermediate_certificate`,
-   * `corrections_certificate` and `expiration`.  This certificate chain (allow
-   * list) can also be validated by fetching it from
-   * `http(s)://certs.swiftnav.com/chain`.
+   * Signature (created by the root certificate) over the concatenation of the
+   * SBP payload bytes preceding this field. That is, the concatenation of
+   * `root_certificate`, `intermediate_certificate`, `corrections_certificate`
+   * and `expiration`.  This certificate chain (allow list) can also be
+   * validated by fetching it from `http(s)://certs.swiftnav.com/chain`.
    */
-  u8 signature[SBP_MSG_CERTIFICATE_CHAIN_SIGNATURE_MAX];
+  sbp_ecdsa_signature_t signature;
 } sbp_msg_certificate_chain_t;
 
 /**

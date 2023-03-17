@@ -154,12 +154,16 @@ int main(void) {
       sr, legacy_auto_check_sbp_settings_MsgSettingsReadByIndexResp_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_signing_MsgCertificateChain_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_signing_MsgCertificateChainDep_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_signing_MsgEcdsaCertificate_suite());
   srunner_add_suite(sr,
                     legacy_auto_check_sbp_signing_MsgEcdsaSignature_suite());
-  srunner_add_suite(sr,
-                    legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepA_suite());
+  srunner_add_suite(
+      sr, legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepB_suite());
   srunner_add_suite(
       sr, legacy_auto_check_sbp_signing_MsgEd25519CertificateDep_suite());
   srunner_add_suite(

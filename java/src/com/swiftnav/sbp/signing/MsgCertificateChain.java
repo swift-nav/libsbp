@@ -20,7 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MsgCertificateChain extends SBPMessage {
-    public static final int TYPE = 0x0C05;
+    public static final int TYPE = 0x0C09;
 
     /** SHA-1 fingerprint of the root certificate */
     public int[] root_certificate;
@@ -38,13 +38,13 @@ public class MsgCertificateChain extends SBPMessage {
     public UtcTime expiration;
 
     /**
-     * An ECDSA signature (created by the root certificate) over the concatenation of the SBP
-     * payload bytes preceding this field. That is, the concatenation of `root_certificate`,
+     * Signature (created by the root certificate) over the concatenation of the SBP payload bytes
+     * preceding this field. That is, the concatenation of `root_certificate`,
      * `intermediate_certificate`, `corrections_certificate` and `expiration`. This certificate
      * chain (allow list) can also be validated by fetching it from
      * `http(s)://certs.swiftnav.com/chain`.
      */
-    public int[] signature;
+    public ECDSASignature signature;
 
     public MsgCertificateChain(int sender) {
         super(sender, TYPE);
@@ -58,7 +58,7 @@ public class MsgCertificateChain extends SBPMessage {
         super(msg);
         if (msg.type != TYPE)
             throw new SBPBinaryException(
-                    "Type mismatch for MsgCertificateChain, expected 3077, actual " + msg.type);
+                    "Type mismatch for MsgCertificateChain, expected 3081, actual " + msg.type);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class MsgCertificateChain extends SBPMessage {
         intermediate_certificate = parser.getArrayofU8(20);
         corrections_certificate = parser.getArrayofU8(20);
         expiration = new UtcTime().parse(parser);
-        signature = parser.getArrayofU8(64);
+        signature = new ECDSASignature().parse(parser);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MsgCertificateChain extends SBPMessage {
         builder.putArrayofU8(intermediate_certificate, 20);
         builder.putArrayofU8(corrections_certificate, 20);
         expiration.build(builder);
-        builder.putArrayofU8(signature, 64);
+        signature.build(builder);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class MsgCertificateChain extends SBPMessage {
         obj.put("intermediate_certificate", new JSONArray(intermediate_certificate));
         obj.put("corrections_certificate", new JSONArray(corrections_certificate));
         obj.put("expiration", expiration.toJSON());
-        obj.put("signature", new JSONArray(signature));
+        obj.put("signature", signature.toJSON());
         return obj;
     }
 

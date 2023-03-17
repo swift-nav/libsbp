@@ -15,8 +15,8 @@
  * with generate.py. Please do not hand edit!
  *****************************************************************************/
 
-#ifndef LIBSBP_V4_SIGNING_MSG_ECDSA_SIGNATURE_DEP_H
-#define LIBSBP_V4_SIGNING_MSG_ECDSA_SIGNATURE_DEP_H
+#ifndef LIBSBP_V4_SIGNING_MSG_ECDSA_SIGNATURE_DEP_B_H
+#define LIBSBP_V4_SIGNING_MSG_ECDSA_SIGNATURE_DEP_B_H
 
 #include <math.h>
 #include <stdarg.h>
@@ -35,7 +35,7 @@ extern "C" {
 
 /******************************************************************************
  *
- * SBP_MSG_ECDSA_SIGNATURE_DEP
+ * SBP_MSG_ECDSA_SIGNATURE_DEP_B
  *
  *****************************************************************************/
 /** An ECDSA signature
@@ -67,12 +67,20 @@ typedef struct {
   /**
    * The last 4 bytes of the certificate's SHA-1 fingerprint
    */
-  u8 certificate_id[SBP_MSG_ECDSA_SIGNATURE_DEP_CERTIFICATE_ID_MAX];
+  u8 certificate_id[SBP_MSG_ECDSA_SIGNATURE_DEP_B_CERTIFICATE_ID_MAX];
 
   /**
-   * ECDSA signature for the messages using SHA-256 as the digest algorithm.
+   * Number of bytes to use of the signature field.  The DER encoded signature
+   * has a maximum size of 72 bytes but can vary between 70 and 72 bytes in
+   * length.
    */
-  u8 signature[SBP_MSG_ECDSA_SIGNATURE_DEP_SIGNATURE_MAX];
+  u8 n_signature_bytes;
+
+  /**
+   * DER encoded ECDSA signature for the messages using SHA-256 as the digest
+   * algorithm.
+   */
+  u8 signature[SBP_MSG_ECDSA_SIGNATURE_DEP_B_SIGNATURE_MAX];
 
   /**
    * CRCs of the messages covered by this signature.  For Skylark, which
@@ -81,7 +89,7 @@ typedef struct {
    * this will be 16-bit CRCs from the SBP framing.  See the `flags` field to
    * determine the type of CRCs covered.
    */
-  u8 signed_messages[SBP_MSG_ECDSA_SIGNATURE_DEP_SIGNED_MESSAGES_MAX];
+  u8 signed_messages[SBP_MSG_ECDSA_SIGNATURE_DEP_B_SIGNED_MESSAGES_MAX];
   /**
    * Number of elements in signed_messages
    *
@@ -93,22 +101,22 @@ typedef struct {
    * this field is undefined
    */
   u8 n_signed_messages;
-} sbp_msg_ecdsa_signature_dep_t;
+} sbp_msg_ecdsa_signature_dep_b_t;
 
 /**
- * Get encoded size of an instance of sbp_msg_ecdsa_signature_dep_t
+ * Get encoded size of an instance of sbp_msg_ecdsa_signature_dep_b_t
  *
- * @param msg sbp_msg_ecdsa_signature_dep_t instance
+ * @param msg sbp_msg_ecdsa_signature_dep_b_t instance
  * @return Length of on-wire representation
  */
-static inline size_t sbp_msg_ecdsa_signature_dep_encoded_len(
-    const sbp_msg_ecdsa_signature_dep_t *msg) {
-  return SBP_MSG_ECDSA_SIGNATURE_DEP_ENCODED_OVERHEAD +
+static inline size_t sbp_msg_ecdsa_signature_dep_b_encoded_len(
+    const sbp_msg_ecdsa_signature_dep_b_t *msg) {
+  return SBP_MSG_ECDSA_SIGNATURE_DEP_B_ENCODED_OVERHEAD +
          (msg->n_signed_messages * SBP_ENCODED_LEN_U8);
 }
 
 /**
- * Encode an instance of sbp_msg_ecdsa_signature_dep_t to wire representation
+ * Encode an instance of sbp_msg_ecdsa_signature_dep_b_t to wire representation
  *
  * This function encodes the given instance in to the user provided buffer. The
  * buffer provided to this function must be large enough to store the encoded
@@ -123,37 +131,39 @@ static inline size_t sbp_msg_ecdsa_signature_dep_encoded_len(
  * @param len Length of \p buf
  * @param n_written If not null, on success will be set to the number of bytes
  * written to \p buf
- * @param msg Instance of sbp_msg_ecdsa_signature_dep_t to encode
+ * @param msg Instance of sbp_msg_ecdsa_signature_dep_b_t to encode
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_encode(
+SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_b_encode(
     uint8_t *buf, uint8_t len, uint8_t *n_written,
-    const sbp_msg_ecdsa_signature_dep_t *msg);
+    const sbp_msg_ecdsa_signature_dep_b_t *msg);
 
 /**
- * Decode an instance of sbp_msg_ecdsa_signature_dep_t from wire representation
+ * Decode an instance of sbp_msg_ecdsa_signature_dep_b_t from wire
+ * representation
  *
  * This function decodes the wire representation of a
- * sbp_msg_ecdsa_signature_dep_t message to the given instance. The caller must
- * specify the length of the buffer in the \p len parameter. If non-null the
- * number of bytes read from the buffer will be returned in \p n_read.
+ * sbp_msg_ecdsa_signature_dep_b_t message to the given instance. The caller
+ * must specify the length of the buffer in the \p len parameter. If non-null
+ * the number of bytes read from the buffer will be returned in \p n_read.
  *
- * @param buf Wire representation of the sbp_msg_ecdsa_signature_dep_t instance
+ * @param buf Wire representation of the sbp_msg_ecdsa_signature_dep_b_t
+ * instance
  * @param len Length of \p buf
  * @param n_read If not null, on success will be set to the number of bytes read
  * from \p buf
  * @param msg Destination
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_decode(
+SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_b_decode(
     const uint8_t *buf, uint8_t len, uint8_t *n_read,
-    sbp_msg_ecdsa_signature_dep_t *msg);
+    sbp_msg_ecdsa_signature_dep_b_t *msg);
 /**
- * Send an instance of sbp_msg_ecdsa_signature_dep_t with the given write
+ * Send an instance of sbp_msg_ecdsa_signature_dep_b_t with the given write
  * function
  *
  * An equivalent of #sbp_message_send which operates specifically on
- * sbp_msg_ecdsa_signature_dep_t
+ * sbp_msg_ecdsa_signature_dep_b_t
  *
  * The given message will be encoded to wire representation and passed in to the
  * given write function callback. The write callback will be called several
@@ -165,12 +175,12 @@ SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_decode(
  * @param write Write function
  * @return SBP_OK on success, or other libsbp error code
  */
-SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_send(
-    sbp_state_t *s, u16 sender_id, const sbp_msg_ecdsa_signature_dep_t *msg,
+SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_b_send(
+    sbp_state_t *s, u16 sender_id, const sbp_msg_ecdsa_signature_dep_b_t *msg,
     sbp_write_fn_t write);
 
 /**
- * Compare two instances of sbp_msg_ecdsa_signature_dep_t
+ * Compare two instances of sbp_msg_ecdsa_signature_dep_b_t
  *
  * The two instances will be compared and a value returned consistent with the
  * return codes of comparison functions from the C standard library
@@ -180,47 +190,47 @@ SBP_EXPORT s8 sbp_msg_ecdsa_signature_dep_send(
  * b A value greater than 0 will be returned if \p b is considered to be greater
  * than \p b
  *
- * @param a sbp_msg_ecdsa_signature_dep_t instance
- * @param b sbp_msg_ecdsa_signature_dep_t instance
+ * @param a sbp_msg_ecdsa_signature_dep_b_t instance
+ * @param b sbp_msg_ecdsa_signature_dep_b_t instance
  * @return 0, <0, >0
  */
-SBP_EXPORT int sbp_msg_ecdsa_signature_dep_cmp(
-    const sbp_msg_ecdsa_signature_dep_t *a,
-    const sbp_msg_ecdsa_signature_dep_t *b);
+SBP_EXPORT int sbp_msg_ecdsa_signature_dep_b_cmp(
+    const sbp_msg_ecdsa_signature_dep_b_t *a,
+    const sbp_msg_ecdsa_signature_dep_b_t *b);
 
 #ifdef __cplusplus
 }
 
-static inline bool operator==(const sbp_msg_ecdsa_signature_dep_t &lhs,
-                              const sbp_msg_ecdsa_signature_dep_t &rhs) {
-  return sbp_msg_ecdsa_signature_dep_cmp(&lhs, &rhs) == 0;
+static inline bool operator==(const sbp_msg_ecdsa_signature_dep_b_t &lhs,
+                              const sbp_msg_ecdsa_signature_dep_b_t &rhs) {
+  return sbp_msg_ecdsa_signature_dep_b_cmp(&lhs, &rhs) == 0;
 }
 
-static inline bool operator!=(const sbp_msg_ecdsa_signature_dep_t &lhs,
-                              const sbp_msg_ecdsa_signature_dep_t &rhs) {
-  return sbp_msg_ecdsa_signature_dep_cmp(&lhs, &rhs) != 0;
+static inline bool operator!=(const sbp_msg_ecdsa_signature_dep_b_t &lhs,
+                              const sbp_msg_ecdsa_signature_dep_b_t &rhs) {
+  return sbp_msg_ecdsa_signature_dep_b_cmp(&lhs, &rhs) != 0;
 }
 
-static inline bool operator<(const sbp_msg_ecdsa_signature_dep_t &lhs,
-                             const sbp_msg_ecdsa_signature_dep_t &rhs) {
-  return sbp_msg_ecdsa_signature_dep_cmp(&lhs, &rhs) < 0;
+static inline bool operator<(const sbp_msg_ecdsa_signature_dep_b_t &lhs,
+                             const sbp_msg_ecdsa_signature_dep_b_t &rhs) {
+  return sbp_msg_ecdsa_signature_dep_b_cmp(&lhs, &rhs) < 0;
 }
 
-static inline bool operator<=(const sbp_msg_ecdsa_signature_dep_t &lhs,
-                              const sbp_msg_ecdsa_signature_dep_t &rhs) {
-  return sbp_msg_ecdsa_signature_dep_cmp(&lhs, &rhs) <= 0;
+static inline bool operator<=(const sbp_msg_ecdsa_signature_dep_b_t &lhs,
+                              const sbp_msg_ecdsa_signature_dep_b_t &rhs) {
+  return sbp_msg_ecdsa_signature_dep_b_cmp(&lhs, &rhs) <= 0;
 }
 
-static inline bool operator>(const sbp_msg_ecdsa_signature_dep_t &lhs,
-                             const sbp_msg_ecdsa_signature_dep_t &rhs) {
-  return sbp_msg_ecdsa_signature_dep_cmp(&lhs, &rhs) > 0;
+static inline bool operator>(const sbp_msg_ecdsa_signature_dep_b_t &lhs,
+                             const sbp_msg_ecdsa_signature_dep_b_t &rhs) {
+  return sbp_msg_ecdsa_signature_dep_b_cmp(&lhs, &rhs) > 0;
 }
 
-static inline bool operator>=(const sbp_msg_ecdsa_signature_dep_t &lhs,
-                              const sbp_msg_ecdsa_signature_dep_t &rhs) {
-  return sbp_msg_ecdsa_signature_dep_cmp(&lhs, &rhs) >= 0;
+static inline bool operator>=(const sbp_msg_ecdsa_signature_dep_b_t &lhs,
+                              const sbp_msg_ecdsa_signature_dep_b_t &rhs) {
+  return sbp_msg_ecdsa_signature_dep_b_cmp(&lhs, &rhs) >= 0;
 }
 
 #endif  // ifdef __cplusplus
 
-#endif /* LIBSBP_V4_SIGNING_MSG_ECDSA_SIGNATURE_DEP_H */
+#endif /* LIBSBP_V4_SIGNING_MSG_ECDSA_SIGNATURE_DEP_B_H */

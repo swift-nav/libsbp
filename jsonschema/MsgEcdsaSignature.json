@@ -20,8 +20,7 @@
     "stream_counter": {"type": "integer"},
     "on_demand_counter": {"type": "integer"},
     "certificate_id": {"type": "array", "items": {"type": "integer"}},
-    "n_signature_bytes": {"type": "integer"},
-    "signature": {"type": "array", "items": {"type": "integer"}},
+    "signature": {"$ref": "ECDSASignature.json"},
     "signed_messages": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
@@ -29,7 +28,6 @@
     "stream_counter",
     "on_demand_counter",
     "certificate_id",
-    "n_signature_bytes",
     "signature",
     "signed_messages"
   ]

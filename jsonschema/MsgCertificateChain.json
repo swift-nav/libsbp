@@ -20,7 +20,7 @@
     "intermediate_certificate": {"type": "array", "items": {"type": "integer"}},
     "corrections_certificate": {"type": "array", "items": {"type": "integer"}},
     "expiration": {"$ref": "UtcTime.json"},
-    "signature": {"type": "array", "items": {"type": "integer"}}
+    "signature": {"$ref": "ECDSASignature.json"}
   },
   "required": [
     "root_certificate",
