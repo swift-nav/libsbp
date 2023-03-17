@@ -255,8 +255,10 @@ class MsgCertificateChain(SBP):
   corrections_certificate : array
     SHA-1 fingerprint of the corrections certificate
   expiration : UtcTime
-    The certificate chain comprised of three fingerprints: root certificate,
-    intermediate certificate and corrections certificate.
+    The time after which the signature given is no longer valid. Implementors
+    should consult a time source (such as GNSS) to check if the current time
+    is later than the expiration time, if the condition is true, signatures in
+    the stream should not be considered valid.
   signature : ECDSASignature
     Signature (created by the root certificate) over the concatenation of the
     SBP payload bytes preceding this field. That is, the concatenation of

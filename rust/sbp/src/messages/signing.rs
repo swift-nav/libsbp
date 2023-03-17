@@ -86,8 +86,10 @@ pub mod msg_certificate_chain {
         /// SHA-1 fingerprint of the corrections certificate
         #[cfg_attr(feature = "serde", serde(rename = "corrections_certificate"))]
         pub corrections_certificate: [u8; 20],
-        /// The certificate chain comprised of three fingerprints: root certificate,
-        /// intermediate certificate and corrections certificate.
+        /// The time after which the signature given is no longer valid.
+        /// Implementors should consult a time source (such as GNSS) to check if the
+        /// current time is later than the expiration time, if the condition is
+        /// true, signatures in the stream should not be considered valid.
         #[cfg_attr(feature = "serde", serde(rename = "expiration"))]
         pub expiration: UtcTime,
         /// Signature (created by the root certificate) over the concatenation of

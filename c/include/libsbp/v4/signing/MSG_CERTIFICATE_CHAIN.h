@@ -59,8 +59,10 @@ typedef struct {
       [SBP_MSG_CERTIFICATE_CHAIN_CORRECTIONS_CERTIFICATE_MAX];
 
   /**
-   * The certificate chain comprised of three fingerprints: root certificate,
-   * intermediate certificate and corrections certificate.
+   * The time after which the signature given is no longer valid. Implementors
+   * should consult a time source (such as GNSS) to check if the current time is
+   * later than the expiration time, if the condition is true, signatures in the
+   * stream should not be considered valid.
    */
   sbp_utc_time_t expiration;
 

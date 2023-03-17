@@ -71,11 +71,16 @@ typedef struct SBP_ATTR_PACKED {
                                         certificate */
   u8 corrections_certificate[20];  /**< SHA-1 fingerprint of the corrections
                                         certificate */
-  utc_time_t expiration;           /**< The certificate chain comprised
-                                        of three fingerprints: root
-                                        certificate, intermediate
-                                        certificate and corrections
-                                        certificate. */
+  utc_time_t expiration;           /**< The time after which the
+                                        signature given is no longer
+                                        valid. Implementors should
+                                        consult a time source (such as
+                                        GNSS) to check if the current
+                                        time is later than the
+                                        expiration time, if the
+                                        condition is true, signatures
+                                        in the stream should not be
+                                        considered valid. */
   ecdsa_signature_t signature;     /**< Signature (created by
                                         the root certificate)
                                         over the concatenation
