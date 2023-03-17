@@ -316,9 +316,9 @@ class MsgCertificateChain(SBP):
     d.update(j)
     return d
     
-SBP_MSG_ECDSA_SIGNATURE = 0x0C06
+SBP_MSG_ECDSA_SIGNATURE = 0x0C07
 class MsgEcdsaSignature(SBP):
-  """SBP class for message MSG_ECDSA_SIGNATURE (0x0C06).
+  """SBP class for message MSG_ECDSA_SIGNATURE (0x0C07).
 
   You can have MSG_ECDSA_SIGNATURE inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -346,8 +346,13 @@ class MsgEcdsaSignature(SBP):
     counter may not initially be zero.
   certificate_id : array
     The last 4 bytes of the certificate's SHA-1 fingerprint
+  n_signature_bytes : int
+    Number of bytes to use of the signature field.  The DER encoded signature
+    has a maximum size of 72 bytes but can vary between 70 and 72 bytes in
+    length.
   signature : array
-    ECDSA signature for the messages using SHA-256 as the digest algorithm.
+    DER encoded ECDSA signature for the messages using SHA-256 as the digest
+    algorithm.
   signed_messages : array
     CRCs of the messages covered by this signature.  For Skylark, which
     delivers SBP messages wrapped in Swift's proprietary RTCM message, these
@@ -363,13 +368,15 @@ class MsgEcdsaSignature(SBP):
                    'stream_counter' / construct.Int8ul,
                    'on_demand_counter' / construct.Int8ul,
                    'certificate_id' / construct.Array(4, construct.Int8ul),
-                   'signature' / construct.Array(64, construct.Int8ul),
+                   'n_signature_bytes' / construct.Int8ul,
+                   'signature' / construct.Array(72, construct.Int8ul),
                    'signed_messages' / construct.GreedyRange(construct.Int8ul),)
   __slots__ = [
                'flags',
                'stream_counter',
                'on_demand_counter',
                'certificate_id',
+               'n_signature_bytes',
                'signature',
                'signed_messages',
               ]
@@ -388,6 +395,7 @@ class MsgEcdsaSignature(SBP):
       self.stream_counter = kwargs.pop('stream_counter')
       self.on_demand_counter = kwargs.pop('on_demand_counter')
       self.certificate_id = kwargs.pop('certificate_id')
+      self.n_signature_bytes = kwargs.pop('n_signature_bytes')
       self.signature = kwargs.pop('signature')
       self.signed_messages = kwargs.pop('signed_messages')
 
@@ -443,6 +451,137 @@ class MsgEcdsaSignature(SBP):
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgEcdsaSignature, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_ECDSA_SIGNATURE_DEP = 0x0C06
+class MsgEcdsaSignatureDep(SBP):
+  """SBP class for message MSG_ECDSA_SIGNATURE_DEP (0x0C06).
+
+  You can have MSG_ECDSA_SIGNATURE_DEP inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  flags : int
+    Describes the format of the `signed\_messages` field below.
+  stream_counter : int
+    Signature message counter. Zero indexed and incremented with each
+    signature message.  The counter will not increment if this message was in
+    response to an on demand request.  The counter will roll over after 256
+    messages. Upon connection, the value of the counter may not initially be
+    zero.
+  on_demand_counter : int
+    On demand message counter. Zero indexed and incremented with each
+    signature message sent in response to an on demand message. The counter
+    will roll over after 256 messages.  Upon connection, the value of the
+    counter may not initially be zero.
+  certificate_id : array
+    The last 4 bytes of the certificate's SHA-1 fingerprint
+  signature : array
+    ECDSA signature for the messages using SHA-256 as the digest algorithm.
+  signed_messages : array
+    CRCs of the messages covered by this signature.  For Skylark, which
+    delivers SBP messages wrapped in Swift's proprietary RTCM message, these
+    are the 24-bit CRCs from the RTCM message framing. For SBP only streams,
+    this will be 16-bit CRCs from the SBP framing.  See the `flags` field to
+    determine the type of CRCs covered.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'flags' / construct.Int8ul,
+                   'stream_counter' / construct.Int8ul,
+                   'on_demand_counter' / construct.Int8ul,
+                   'certificate_id' / construct.Array(4, construct.Int8ul),
+                   'signature' / construct.Array(64, construct.Int8ul),
+                   'signed_messages' / construct.GreedyRange(construct.Int8ul),)
+  __slots__ = [
+               'flags',
+               'stream_counter',
+               'on_demand_counter',
+               'certificate_id',
+               'signature',
+               'signed_messages',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgEcdsaSignatureDep,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgEcdsaSignatureDep, self).__init__()
+      self.msg_type = SBP_MSG_ECDSA_SIGNATURE_DEP
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.flags = kwargs.pop('flags')
+      self.stream_counter = kwargs.pop('stream_counter')
+      self.on_demand_counter = kwargs.pop('on_demand_counter')
+      self.certificate_id = kwargs.pop('certificate_id')
+      self.signature = kwargs.pop('signature')
+      self.signed_messages = kwargs.pop('signed_messages')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgEcdsaSignatureDep.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgEcdsaSignatureDep(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgEcdsaSignatureDep._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgEcdsaSignatureDep._parser.build(c)
+    return self.pack()
+
+  def friendly_name(self):
+    """Produces friendly human-readable name for this message
+
+    """
+    return "ECDSA SIGNATURE DEP"
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgEcdsaSignatureDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgEcdsaSignatureDep, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -782,7 +921,8 @@ class MsgEd25519SignatureDepB(SBP):
 msg_classes = {
   0x0C04: MsgEcdsaCertificate,
   0x0C05: MsgCertificateChain,
-  0x0C06: MsgEcdsaSignature,
+  0x0C07: MsgEcdsaSignature,
+  0x0C06: MsgEcdsaSignatureDep,
   0x0C02: MsgEd25519CertificateDep,
   0x0C01: MsgEd25519SignatureDepA,
   0x0C03: MsgEd25519SignatureDepB,
