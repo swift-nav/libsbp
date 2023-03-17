@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDep.yaml by
+// spec/tests/yaml/swiftnav/sbp/signing/test_MsgEcdsaSignatureDepA.yaml by
 // generate.py. Do not modify by hand!
 
 #include <check.h>
@@ -93,7 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
-START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep) {
+START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepA) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -148,8 +148,8 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_ecdsa_signature_dep_t *test_msg =
-        (msg_ecdsa_signature_dep_t *)test_msg_storage;
+    msg_ecdsa_signature_dep_a_t *test_msg =
+        (msg_ecdsa_signature_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     if (sizeof(test_msg->certificate_id) == 0) {
       // Cope with variable length arrays
@@ -1465,8 +1465,8 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_ecdsa_signature_dep_t *check_msg =
-        (msg_ecdsa_signature_dep_t *)((void *)last_msg.msg);
+    msg_ecdsa_signature_dep_a_t *check_msg =
+        (msg_ecdsa_signature_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->certificate_id[0] == 1,
@@ -2363,14 +2363,14 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep) {
 }
 END_TEST
 
-Suite *legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep_suite(void) {
+Suite *legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepA_suite(void) {
   Suite *s = suite_create(
       "SBP generated test suite: "
-      "legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep");
+      "legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepA");
   TCase *tc_acq = tcase_create(
-      "Automated_Suite_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep");
+      "Automated_Suite_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepA");
   tcase_add_test(tc_acq,
-                 test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDep);
+                 test_legacy_auto_check_sbp_signing_MsgEcdsaSignatureDepA);
   suite_add_tcase(s, tc_acq);
   return s;
 }

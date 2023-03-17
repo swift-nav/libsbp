@@ -11,24 +11,16 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgEcdsaSignature",
-  "title":"MsgEcdsaSignature",
-  "description":"An ECDSA-256 signature using SHA-256 as the message digest algorithm.\n",
+  "$id": "#ECDSASignature",
+  "title":"ECDSASignature",
+  "description":"",
   "type": "object",
   "properties": {
-    "flags": {"type": "integer"},
-    "stream_counter": {"type": "integer"},
-    "on_demand_counter": {"type": "integer"},
-    "certificate_id": {"type": "array", "items": {"type": "integer"}},
-    "signature": {"$ref": "ECDSASignature.json"},
-    "signed_messages": {"type": "array", "items": {"type": "integer"}}
+    "len": {"type": "integer"},
+    "data": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
-    "flags",
-    "stream_counter",
-    "on_demand_counter",
-    "certificate_id",
-    "signature",
-    "signed_messages"
+    "len",
+    "data"
   ]
 }

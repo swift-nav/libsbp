@@ -20,14 +20,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * SBP class for message MSG_ECDSA_SIGNATURE_DEP (0x0C06).
+ * SBP class for message MSG_ECDSA_SIGNATURE_DEP_A (0x0C06).
  *
- * <p>You can have MSG_ECDSA_SIGNATURE_DEP inherent its fields directly from an inherited SBP
+ * <p>You can have MSG_ECDSA_SIGNATURE_DEP_A inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
  * <p>An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  */
-public class MsgEcdsaSignatureDep extends SBPMessage {
+public class MsgEcdsaSignatureDepA extends SBPMessage {
     public static final int TYPE = 0x0C06;
 
     /** Describes the format of the `signed\_messages` field below. */
@@ -62,19 +62,19 @@ public class MsgEcdsaSignatureDep extends SBPMessage {
      */
     public int[] signed_messages;
 
-    public MsgEcdsaSignatureDep(int sender) {
+    public MsgEcdsaSignatureDepA(int sender) {
         super(sender, TYPE);
     }
 
-    public MsgEcdsaSignatureDep() {
+    public MsgEcdsaSignatureDepA() {
         super(TYPE);
     }
 
-    public MsgEcdsaSignatureDep(SBPMessage msg) throws SBPBinaryException {
+    public MsgEcdsaSignatureDepA(SBPMessage msg) throws SBPBinaryException {
         super(msg);
         if (msg.type != TYPE)
             throw new SBPBinaryException(
-                    "Type mismatch for MsgEcdsaSignatureDep, expected 3078, actual " + msg.type);
+                    "Type mismatch for MsgEcdsaSignatureDepA, expected 3078, actual " + msg.type);
     }
 
     @Override
@@ -112,6 +112,6 @@ public class MsgEcdsaSignatureDep extends SBPMessage {
 
     @Override
     public String getFriendlyName() {
-        return "ECDSA SIGNATURE DEP";
+        return "ECDSA SIGNATURE DEP A";
     }
 }

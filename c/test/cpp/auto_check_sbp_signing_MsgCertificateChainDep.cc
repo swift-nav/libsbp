@@ -11,7 +11,7 @@
  */
 
 // This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/signing/test_MsgCertificateChain.yaml by
+// spec/tests/yaml/swiftnav/sbp/signing/test_MsgCertificateChainDep.yaml by
 // generate.py. Do not modify by hand!
 
 #include <gtest/gtest.h>
@@ -19,19 +19,19 @@
 #include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
 #include <cstring>
-class Test_auto_check_sbp_signing_MsgCertificateChain0
+class Test_auto_check_sbp_signing_MsgCertificateChainDep0
     : public ::testing::Test,
       public sbp::State,
       public sbp::IReader,
       public sbp::IWriter,
-      sbp::MessageHandler<sbp_msg_certificate_chain_t> {
+      sbp::MessageHandler<sbp_msg_certificate_chain_dep_t> {
  public:
-  Test_auto_check_sbp_signing_MsgCertificateChain0()
+  Test_auto_check_sbp_signing_MsgCertificateChainDep0()
       : ::testing::Test(),
         sbp::State(),
         sbp::IReader(),
         sbp::IWriter(),
-        sbp::MessageHandler<sbp_msg_certificate_chain_t>(this),
+        sbp::MessageHandler<sbp_msg_certificate_chain_dep_t>(this),
         last_msg_(),
         last_msg_len_(),
         last_sender_id_(),
@@ -59,13 +59,13 @@ class Test_auto_check_sbp_signing_MsgCertificateChain0
 
  protected:
   void handle_sbp_msg(uint16_t sender_id,
-                      const sbp_msg_certificate_chain_t &msg) override {
+                      const sbp_msg_certificate_chain_dep_t &msg) override {
     last_msg_ = msg;
     last_sender_id_ = sender_id;
     n_callbacks_logged_++;
   }
 
-  sbp_msg_certificate_chain_t last_msg_;
+  sbp_msg_certificate_chain_dep_t last_msg_;
   uint8_t last_msg_len_;
   uint16_t last_sender_id_;
   size_t n_callbacks_logged_;
@@ -74,20 +74,20 @@ class Test_auto_check_sbp_signing_MsgCertificateChain0
   uint8_t dummy_buff_[1024];
 };
 
-TEST_F(Test_auto_check_sbp_signing_MsgCertificateChain0, Test) {
+TEST_F(Test_auto_check_sbp_signing_MsgCertificateChainDep0, Test) {
   uint8_t encoded_frame[] = {
-      85, 9,  12, 66, 0,  144, 0,   1,  2,  3,  4,  5,  6,  7,  8,   9,   10,
-      11, 12, 13, 14, 15, 16,  17,  18, 19, 10, 11, 12, 13, 14, 15,  16,  17,
-      18, 19, 0,  1,  2,  3,   4,   5,  6,  7,  8,  9,  20, 21, 22,  23,  24,
-      25, 26, 27, 28, 29, 10,  11,  12, 13, 14, 15, 16, 17, 18, 19,  232, 7,
-      3,  30, 12, 34, 59, 21,  205, 91, 7,  72, 0,  1,  2,  3,  4,   5,   6,
-      7,  8,  9,  10, 11, 12,  13,  14, 15, 16, 17, 18, 19, 20, 21,  22,  23,
-      24, 25, 26, 27, 28, 29,  30,  31, 32, 33, 34, 35, 36, 37, 38,  39,  40,
-      41, 42, 43, 44, 45, 46,  47,  48, 49, 50, 51, 52, 53, 54, 55,  56,  57,
-      58, 59, 60, 61, 62, 63,  64,  65, 66, 67, 68, 69, 70, 71, 227, 224,
+      85, 5,  12,  66, 0,  135, 0,  1,  2,  3,  4,   5,  6,  7,   8,   9,
+      10, 11, 12,  13, 14, 15,  16, 17, 18, 19, 10,  11, 12, 13,  14,  15,
+      16, 17, 18,  19, 0,  1,   2,  3,  4,  5,  6,   7,  8,  9,   20,  21,
+      22, 23, 24,  25, 26, 27,  28, 29, 10, 11, 12,  13, 14, 15,  16,  17,
+      18, 19, 232, 7,  3,  30,  12, 34, 59, 21, 205, 91, 7,  0,   1,   2,
+      3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  0,   1,   2,
+      3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  0,   1,   2,
+      3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  0,   1,   2,
+      3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  112, 100,
   };
 
-  sbp_msg_certificate_chain_t test_msg{};
+  sbp_msg_certificate_chain_dep_t test_msg{};
 
   test_msg.corrections_certificate[0] = 20;
 
@@ -216,150 +216,133 @@ TEST_F(Test_auto_check_sbp_signing_MsgCertificateChain0, Test) {
 
   test_msg.root_certificate[19] = 19;
 
-  test_msg.signature.data[0] = 0;
+  test_msg.signature[0] = 0;
 
-  test_msg.signature.data[1] = 1;
+  test_msg.signature[1] = 1;
 
-  test_msg.signature.data[2] = 2;
+  test_msg.signature[2] = 2;
 
-  test_msg.signature.data[3] = 3;
+  test_msg.signature[3] = 3;
 
-  test_msg.signature.data[4] = 4;
+  test_msg.signature[4] = 4;
 
-  test_msg.signature.data[5] = 5;
+  test_msg.signature[5] = 5;
 
-  test_msg.signature.data[6] = 6;
+  test_msg.signature[6] = 6;
 
-  test_msg.signature.data[7] = 7;
+  test_msg.signature[7] = 7;
 
-  test_msg.signature.data[8] = 8;
+  test_msg.signature[8] = 0;
 
-  test_msg.signature.data[9] = 9;
+  test_msg.signature[9] = 1;
 
-  test_msg.signature.data[10] = 10;
+  test_msg.signature[10] = 2;
 
-  test_msg.signature.data[11] = 11;
+  test_msg.signature[11] = 3;
 
-  test_msg.signature.data[12] = 12;
+  test_msg.signature[12] = 4;
 
-  test_msg.signature.data[13] = 13;
+  test_msg.signature[13] = 5;
 
-  test_msg.signature.data[14] = 14;
+  test_msg.signature[14] = 6;
 
-  test_msg.signature.data[15] = 15;
+  test_msg.signature[15] = 7;
 
-  test_msg.signature.data[16] = 16;
+  test_msg.signature[16] = 0;
 
-  test_msg.signature.data[17] = 17;
+  test_msg.signature[17] = 1;
 
-  test_msg.signature.data[18] = 18;
+  test_msg.signature[18] = 2;
 
-  test_msg.signature.data[19] = 19;
+  test_msg.signature[19] = 3;
 
-  test_msg.signature.data[20] = 20;
+  test_msg.signature[20] = 4;
 
-  test_msg.signature.data[21] = 21;
+  test_msg.signature[21] = 5;
 
-  test_msg.signature.data[22] = 22;
+  test_msg.signature[22] = 6;
 
-  test_msg.signature.data[23] = 23;
+  test_msg.signature[23] = 7;
 
-  test_msg.signature.data[24] = 24;
+  test_msg.signature[24] = 0;
 
-  test_msg.signature.data[25] = 25;
+  test_msg.signature[25] = 1;
 
-  test_msg.signature.data[26] = 26;
+  test_msg.signature[26] = 2;
 
-  test_msg.signature.data[27] = 27;
+  test_msg.signature[27] = 3;
 
-  test_msg.signature.data[28] = 28;
+  test_msg.signature[28] = 4;
 
-  test_msg.signature.data[29] = 29;
+  test_msg.signature[29] = 5;
 
-  test_msg.signature.data[30] = 30;
+  test_msg.signature[30] = 6;
 
-  test_msg.signature.data[31] = 31;
+  test_msg.signature[31] = 7;
 
-  test_msg.signature.data[32] = 32;
+  test_msg.signature[32] = 0;
 
-  test_msg.signature.data[33] = 33;
+  test_msg.signature[33] = 1;
 
-  test_msg.signature.data[34] = 34;
+  test_msg.signature[34] = 2;
 
-  test_msg.signature.data[35] = 35;
+  test_msg.signature[35] = 3;
 
-  test_msg.signature.data[36] = 36;
+  test_msg.signature[36] = 4;
 
-  test_msg.signature.data[37] = 37;
+  test_msg.signature[37] = 5;
 
-  test_msg.signature.data[38] = 38;
+  test_msg.signature[38] = 6;
 
-  test_msg.signature.data[39] = 39;
+  test_msg.signature[39] = 7;
 
-  test_msg.signature.data[40] = 40;
+  test_msg.signature[40] = 0;
 
-  test_msg.signature.data[41] = 41;
+  test_msg.signature[41] = 1;
 
-  test_msg.signature.data[42] = 42;
+  test_msg.signature[42] = 2;
 
-  test_msg.signature.data[43] = 43;
+  test_msg.signature[43] = 3;
 
-  test_msg.signature.data[44] = 44;
+  test_msg.signature[44] = 4;
 
-  test_msg.signature.data[45] = 45;
+  test_msg.signature[45] = 5;
 
-  test_msg.signature.data[46] = 46;
+  test_msg.signature[46] = 6;
 
-  test_msg.signature.data[47] = 47;
+  test_msg.signature[47] = 7;
 
-  test_msg.signature.data[48] = 48;
+  test_msg.signature[48] = 0;
 
-  test_msg.signature.data[49] = 49;
+  test_msg.signature[49] = 1;
 
-  test_msg.signature.data[50] = 50;
+  test_msg.signature[50] = 2;
 
-  test_msg.signature.data[51] = 51;
+  test_msg.signature[51] = 3;
 
-  test_msg.signature.data[52] = 52;
+  test_msg.signature[52] = 4;
 
-  test_msg.signature.data[53] = 53;
+  test_msg.signature[53] = 5;
 
-  test_msg.signature.data[54] = 54;
+  test_msg.signature[54] = 6;
 
-  test_msg.signature.data[55] = 55;
+  test_msg.signature[55] = 7;
 
-  test_msg.signature.data[56] = 56;
+  test_msg.signature[56] = 0;
 
-  test_msg.signature.data[57] = 57;
+  test_msg.signature[57] = 1;
 
-  test_msg.signature.data[58] = 58;
+  test_msg.signature[58] = 2;
 
-  test_msg.signature.data[59] = 59;
+  test_msg.signature[59] = 3;
 
-  test_msg.signature.data[60] = 60;
+  test_msg.signature[60] = 4;
 
-  test_msg.signature.data[61] = 61;
+  test_msg.signature[61] = 5;
 
-  test_msg.signature.data[62] = 62;
+  test_msg.signature[62] = 6;
 
-  test_msg.signature.data[63] = 63;
-
-  test_msg.signature.data[64] = 64;
-
-  test_msg.signature.data[65] = 65;
-
-  test_msg.signature.data[66] = 66;
-
-  test_msg.signature.data[67] = 67;
-
-  test_msg.signature.data[68] = 68;
-
-  test_msg.signature.data[69] = 69;
-
-  test_msg.signature.data[70] = 70;
-
-  test_msg.signature.data[71] = 71;
-  test_msg.signature.len = 72;
+  test_msg.signature[63] = 7;
 
   EXPECT_EQ(send_message(66, test_msg), SBP_OK);
 
@@ -614,223 +597,196 @@ TEST_F(Test_auto_check_sbp_signing_MsgCertificateChain0, Test) {
   EXPECT_EQ(last_msg_.root_certificate[19], 19)
       << "incorrect value for last_msg_.root_certificate[19], expected 19, is "
       << last_msg_.root_certificate[19];
-  EXPECT_EQ(last_msg_.signature.data[0], 0)
-      << "incorrect value for last_msg_.signature.data[0], expected 0, is "
-      << last_msg_.signature.data[0];
-  EXPECT_EQ(last_msg_.signature.data[1], 1)
-      << "incorrect value for last_msg_.signature.data[1], expected 1, is "
-      << last_msg_.signature.data[1];
-  EXPECT_EQ(last_msg_.signature.data[2], 2)
-      << "incorrect value for last_msg_.signature.data[2], expected 2, is "
-      << last_msg_.signature.data[2];
-  EXPECT_EQ(last_msg_.signature.data[3], 3)
-      << "incorrect value for last_msg_.signature.data[3], expected 3, is "
-      << last_msg_.signature.data[3];
-  EXPECT_EQ(last_msg_.signature.data[4], 4)
-      << "incorrect value for last_msg_.signature.data[4], expected 4, is "
-      << last_msg_.signature.data[4];
-  EXPECT_EQ(last_msg_.signature.data[5], 5)
-      << "incorrect value for last_msg_.signature.data[5], expected 5, is "
-      << last_msg_.signature.data[5];
-  EXPECT_EQ(last_msg_.signature.data[6], 6)
-      << "incorrect value for last_msg_.signature.data[6], expected 6, is "
-      << last_msg_.signature.data[6];
-  EXPECT_EQ(last_msg_.signature.data[7], 7)
-      << "incorrect value for last_msg_.signature.data[7], expected 7, is "
-      << last_msg_.signature.data[7];
-  EXPECT_EQ(last_msg_.signature.data[8], 8)
-      << "incorrect value for last_msg_.signature.data[8], expected 8, is "
-      << last_msg_.signature.data[8];
-  EXPECT_EQ(last_msg_.signature.data[9], 9)
-      << "incorrect value for last_msg_.signature.data[9], expected 9, is "
-      << last_msg_.signature.data[9];
-  EXPECT_EQ(last_msg_.signature.data[10], 10)
-      << "incorrect value for last_msg_.signature.data[10], expected 10, is "
-      << last_msg_.signature.data[10];
-  EXPECT_EQ(last_msg_.signature.data[11], 11)
-      << "incorrect value for last_msg_.signature.data[11], expected 11, is "
-      << last_msg_.signature.data[11];
-  EXPECT_EQ(last_msg_.signature.data[12], 12)
-      << "incorrect value for last_msg_.signature.data[12], expected 12, is "
-      << last_msg_.signature.data[12];
-  EXPECT_EQ(last_msg_.signature.data[13], 13)
-      << "incorrect value for last_msg_.signature.data[13], expected 13, is "
-      << last_msg_.signature.data[13];
-  EXPECT_EQ(last_msg_.signature.data[14], 14)
-      << "incorrect value for last_msg_.signature.data[14], expected 14, is "
-      << last_msg_.signature.data[14];
-  EXPECT_EQ(last_msg_.signature.data[15], 15)
-      << "incorrect value for last_msg_.signature.data[15], expected 15, is "
-      << last_msg_.signature.data[15];
-  EXPECT_EQ(last_msg_.signature.data[16], 16)
-      << "incorrect value for last_msg_.signature.data[16], expected 16, is "
-      << last_msg_.signature.data[16];
-  EXPECT_EQ(last_msg_.signature.data[17], 17)
-      << "incorrect value for last_msg_.signature.data[17], expected 17, is "
-      << last_msg_.signature.data[17];
-  EXPECT_EQ(last_msg_.signature.data[18], 18)
-      << "incorrect value for last_msg_.signature.data[18], expected 18, is "
-      << last_msg_.signature.data[18];
-  EXPECT_EQ(last_msg_.signature.data[19], 19)
-      << "incorrect value for last_msg_.signature.data[19], expected 19, is "
-      << last_msg_.signature.data[19];
-  EXPECT_EQ(last_msg_.signature.data[20], 20)
-      << "incorrect value for last_msg_.signature.data[20], expected 20, is "
-      << last_msg_.signature.data[20];
-  EXPECT_EQ(last_msg_.signature.data[21], 21)
-      << "incorrect value for last_msg_.signature.data[21], expected 21, is "
-      << last_msg_.signature.data[21];
-  EXPECT_EQ(last_msg_.signature.data[22], 22)
-      << "incorrect value for last_msg_.signature.data[22], expected 22, is "
-      << last_msg_.signature.data[22];
-  EXPECT_EQ(last_msg_.signature.data[23], 23)
-      << "incorrect value for last_msg_.signature.data[23], expected 23, is "
-      << last_msg_.signature.data[23];
-  EXPECT_EQ(last_msg_.signature.data[24], 24)
-      << "incorrect value for last_msg_.signature.data[24], expected 24, is "
-      << last_msg_.signature.data[24];
-  EXPECT_EQ(last_msg_.signature.data[25], 25)
-      << "incorrect value for last_msg_.signature.data[25], expected 25, is "
-      << last_msg_.signature.data[25];
-  EXPECT_EQ(last_msg_.signature.data[26], 26)
-      << "incorrect value for last_msg_.signature.data[26], expected 26, is "
-      << last_msg_.signature.data[26];
-  EXPECT_EQ(last_msg_.signature.data[27], 27)
-      << "incorrect value for last_msg_.signature.data[27], expected 27, is "
-      << last_msg_.signature.data[27];
-  EXPECT_EQ(last_msg_.signature.data[28], 28)
-      << "incorrect value for last_msg_.signature.data[28], expected 28, is "
-      << last_msg_.signature.data[28];
-  EXPECT_EQ(last_msg_.signature.data[29], 29)
-      << "incorrect value for last_msg_.signature.data[29], expected 29, is "
-      << last_msg_.signature.data[29];
-  EXPECT_EQ(last_msg_.signature.data[30], 30)
-      << "incorrect value for last_msg_.signature.data[30], expected 30, is "
-      << last_msg_.signature.data[30];
-  EXPECT_EQ(last_msg_.signature.data[31], 31)
-      << "incorrect value for last_msg_.signature.data[31], expected 31, is "
-      << last_msg_.signature.data[31];
-  EXPECT_EQ(last_msg_.signature.data[32], 32)
-      << "incorrect value for last_msg_.signature.data[32], expected 32, is "
-      << last_msg_.signature.data[32];
-  EXPECT_EQ(last_msg_.signature.data[33], 33)
-      << "incorrect value for last_msg_.signature.data[33], expected 33, is "
-      << last_msg_.signature.data[33];
-  EXPECT_EQ(last_msg_.signature.data[34], 34)
-      << "incorrect value for last_msg_.signature.data[34], expected 34, is "
-      << last_msg_.signature.data[34];
-  EXPECT_EQ(last_msg_.signature.data[35], 35)
-      << "incorrect value for last_msg_.signature.data[35], expected 35, is "
-      << last_msg_.signature.data[35];
-  EXPECT_EQ(last_msg_.signature.data[36], 36)
-      << "incorrect value for last_msg_.signature.data[36], expected 36, is "
-      << last_msg_.signature.data[36];
-  EXPECT_EQ(last_msg_.signature.data[37], 37)
-      << "incorrect value for last_msg_.signature.data[37], expected 37, is "
-      << last_msg_.signature.data[37];
-  EXPECT_EQ(last_msg_.signature.data[38], 38)
-      << "incorrect value for last_msg_.signature.data[38], expected 38, is "
-      << last_msg_.signature.data[38];
-  EXPECT_EQ(last_msg_.signature.data[39], 39)
-      << "incorrect value for last_msg_.signature.data[39], expected 39, is "
-      << last_msg_.signature.data[39];
-  EXPECT_EQ(last_msg_.signature.data[40], 40)
-      << "incorrect value for last_msg_.signature.data[40], expected 40, is "
-      << last_msg_.signature.data[40];
-  EXPECT_EQ(last_msg_.signature.data[41], 41)
-      << "incorrect value for last_msg_.signature.data[41], expected 41, is "
-      << last_msg_.signature.data[41];
-  EXPECT_EQ(last_msg_.signature.data[42], 42)
-      << "incorrect value for last_msg_.signature.data[42], expected 42, is "
-      << last_msg_.signature.data[42];
-  EXPECT_EQ(last_msg_.signature.data[43], 43)
-      << "incorrect value for last_msg_.signature.data[43], expected 43, is "
-      << last_msg_.signature.data[43];
-  EXPECT_EQ(last_msg_.signature.data[44], 44)
-      << "incorrect value for last_msg_.signature.data[44], expected 44, is "
-      << last_msg_.signature.data[44];
-  EXPECT_EQ(last_msg_.signature.data[45], 45)
-      << "incorrect value for last_msg_.signature.data[45], expected 45, is "
-      << last_msg_.signature.data[45];
-  EXPECT_EQ(last_msg_.signature.data[46], 46)
-      << "incorrect value for last_msg_.signature.data[46], expected 46, is "
-      << last_msg_.signature.data[46];
-  EXPECT_EQ(last_msg_.signature.data[47], 47)
-      << "incorrect value for last_msg_.signature.data[47], expected 47, is "
-      << last_msg_.signature.data[47];
-  EXPECT_EQ(last_msg_.signature.data[48], 48)
-      << "incorrect value for last_msg_.signature.data[48], expected 48, is "
-      << last_msg_.signature.data[48];
-  EXPECT_EQ(last_msg_.signature.data[49], 49)
-      << "incorrect value for last_msg_.signature.data[49], expected 49, is "
-      << last_msg_.signature.data[49];
-  EXPECT_EQ(last_msg_.signature.data[50], 50)
-      << "incorrect value for last_msg_.signature.data[50], expected 50, is "
-      << last_msg_.signature.data[50];
-  EXPECT_EQ(last_msg_.signature.data[51], 51)
-      << "incorrect value for last_msg_.signature.data[51], expected 51, is "
-      << last_msg_.signature.data[51];
-  EXPECT_EQ(last_msg_.signature.data[52], 52)
-      << "incorrect value for last_msg_.signature.data[52], expected 52, is "
-      << last_msg_.signature.data[52];
-  EXPECT_EQ(last_msg_.signature.data[53], 53)
-      << "incorrect value for last_msg_.signature.data[53], expected 53, is "
-      << last_msg_.signature.data[53];
-  EXPECT_EQ(last_msg_.signature.data[54], 54)
-      << "incorrect value for last_msg_.signature.data[54], expected 54, is "
-      << last_msg_.signature.data[54];
-  EXPECT_EQ(last_msg_.signature.data[55], 55)
-      << "incorrect value for last_msg_.signature.data[55], expected 55, is "
-      << last_msg_.signature.data[55];
-  EXPECT_EQ(last_msg_.signature.data[56], 56)
-      << "incorrect value for last_msg_.signature.data[56], expected 56, is "
-      << last_msg_.signature.data[56];
-  EXPECT_EQ(last_msg_.signature.data[57], 57)
-      << "incorrect value for last_msg_.signature.data[57], expected 57, is "
-      << last_msg_.signature.data[57];
-  EXPECT_EQ(last_msg_.signature.data[58], 58)
-      << "incorrect value for last_msg_.signature.data[58], expected 58, is "
-      << last_msg_.signature.data[58];
-  EXPECT_EQ(last_msg_.signature.data[59], 59)
-      << "incorrect value for last_msg_.signature.data[59], expected 59, is "
-      << last_msg_.signature.data[59];
-  EXPECT_EQ(last_msg_.signature.data[60], 60)
-      << "incorrect value for last_msg_.signature.data[60], expected 60, is "
-      << last_msg_.signature.data[60];
-  EXPECT_EQ(last_msg_.signature.data[61], 61)
-      << "incorrect value for last_msg_.signature.data[61], expected 61, is "
-      << last_msg_.signature.data[61];
-  EXPECT_EQ(last_msg_.signature.data[62], 62)
-      << "incorrect value for last_msg_.signature.data[62], expected 62, is "
-      << last_msg_.signature.data[62];
-  EXPECT_EQ(last_msg_.signature.data[63], 63)
-      << "incorrect value for last_msg_.signature.data[63], expected 63, is "
-      << last_msg_.signature.data[63];
-  EXPECT_EQ(last_msg_.signature.data[64], 64)
-      << "incorrect value for last_msg_.signature.data[64], expected 64, is "
-      << last_msg_.signature.data[64];
-  EXPECT_EQ(last_msg_.signature.data[65], 65)
-      << "incorrect value for last_msg_.signature.data[65], expected 65, is "
-      << last_msg_.signature.data[65];
-  EXPECT_EQ(last_msg_.signature.data[66], 66)
-      << "incorrect value for last_msg_.signature.data[66], expected 66, is "
-      << last_msg_.signature.data[66];
-  EXPECT_EQ(last_msg_.signature.data[67], 67)
-      << "incorrect value for last_msg_.signature.data[67], expected 67, is "
-      << last_msg_.signature.data[67];
-  EXPECT_EQ(last_msg_.signature.data[68], 68)
-      << "incorrect value for last_msg_.signature.data[68], expected 68, is "
-      << last_msg_.signature.data[68];
-  EXPECT_EQ(last_msg_.signature.data[69], 69)
-      << "incorrect value for last_msg_.signature.data[69], expected 69, is "
-      << last_msg_.signature.data[69];
-  EXPECT_EQ(last_msg_.signature.data[70], 70)
-      << "incorrect value for last_msg_.signature.data[70], expected 70, is "
-      << last_msg_.signature.data[70];
-  EXPECT_EQ(last_msg_.signature.data[71], 71)
-      << "incorrect value for last_msg_.signature.data[71], expected 71, is "
-      << last_msg_.signature.data[71];
-  EXPECT_EQ(last_msg_.signature.len, 72)
-      << "incorrect value for last_msg_.signature.len, expected 72, is "
-      << last_msg_.signature.len;
+  EXPECT_EQ(last_msg_.signature[0], 0)
+      << "incorrect value for last_msg_.signature[0], expected 0, is "
+      << last_msg_.signature[0];
+  EXPECT_EQ(last_msg_.signature[1], 1)
+      << "incorrect value for last_msg_.signature[1], expected 1, is "
+      << last_msg_.signature[1];
+  EXPECT_EQ(last_msg_.signature[2], 2)
+      << "incorrect value for last_msg_.signature[2], expected 2, is "
+      << last_msg_.signature[2];
+  EXPECT_EQ(last_msg_.signature[3], 3)
+      << "incorrect value for last_msg_.signature[3], expected 3, is "
+      << last_msg_.signature[3];
+  EXPECT_EQ(last_msg_.signature[4], 4)
+      << "incorrect value for last_msg_.signature[4], expected 4, is "
+      << last_msg_.signature[4];
+  EXPECT_EQ(last_msg_.signature[5], 5)
+      << "incorrect value for last_msg_.signature[5], expected 5, is "
+      << last_msg_.signature[5];
+  EXPECT_EQ(last_msg_.signature[6], 6)
+      << "incorrect value for last_msg_.signature[6], expected 6, is "
+      << last_msg_.signature[6];
+  EXPECT_EQ(last_msg_.signature[7], 7)
+      << "incorrect value for last_msg_.signature[7], expected 7, is "
+      << last_msg_.signature[7];
+  EXPECT_EQ(last_msg_.signature[8], 0)
+      << "incorrect value for last_msg_.signature[8], expected 0, is "
+      << last_msg_.signature[8];
+  EXPECT_EQ(last_msg_.signature[9], 1)
+      << "incorrect value for last_msg_.signature[9], expected 1, is "
+      << last_msg_.signature[9];
+  EXPECT_EQ(last_msg_.signature[10], 2)
+      << "incorrect value for last_msg_.signature[10], expected 2, is "
+      << last_msg_.signature[10];
+  EXPECT_EQ(last_msg_.signature[11], 3)
+      << "incorrect value for last_msg_.signature[11], expected 3, is "
+      << last_msg_.signature[11];
+  EXPECT_EQ(last_msg_.signature[12], 4)
+      << "incorrect value for last_msg_.signature[12], expected 4, is "
+      << last_msg_.signature[12];
+  EXPECT_EQ(last_msg_.signature[13], 5)
+      << "incorrect value for last_msg_.signature[13], expected 5, is "
+      << last_msg_.signature[13];
+  EXPECT_EQ(last_msg_.signature[14], 6)
+      << "incorrect value for last_msg_.signature[14], expected 6, is "
+      << last_msg_.signature[14];
+  EXPECT_EQ(last_msg_.signature[15], 7)
+      << "incorrect value for last_msg_.signature[15], expected 7, is "
+      << last_msg_.signature[15];
+  EXPECT_EQ(last_msg_.signature[16], 0)
+      << "incorrect value for last_msg_.signature[16], expected 0, is "
+      << last_msg_.signature[16];
+  EXPECT_EQ(last_msg_.signature[17], 1)
+      << "incorrect value for last_msg_.signature[17], expected 1, is "
+      << last_msg_.signature[17];
+  EXPECT_EQ(last_msg_.signature[18], 2)
+      << "incorrect value for last_msg_.signature[18], expected 2, is "
+      << last_msg_.signature[18];
+  EXPECT_EQ(last_msg_.signature[19], 3)
+      << "incorrect value for last_msg_.signature[19], expected 3, is "
+      << last_msg_.signature[19];
+  EXPECT_EQ(last_msg_.signature[20], 4)
+      << "incorrect value for last_msg_.signature[20], expected 4, is "
+      << last_msg_.signature[20];
+  EXPECT_EQ(last_msg_.signature[21], 5)
+      << "incorrect value for last_msg_.signature[21], expected 5, is "
+      << last_msg_.signature[21];
+  EXPECT_EQ(last_msg_.signature[22], 6)
+      << "incorrect value for last_msg_.signature[22], expected 6, is "
+      << last_msg_.signature[22];
+  EXPECT_EQ(last_msg_.signature[23], 7)
+      << "incorrect value for last_msg_.signature[23], expected 7, is "
+      << last_msg_.signature[23];
+  EXPECT_EQ(last_msg_.signature[24], 0)
+      << "incorrect value for last_msg_.signature[24], expected 0, is "
+      << last_msg_.signature[24];
+  EXPECT_EQ(last_msg_.signature[25], 1)
+      << "incorrect value for last_msg_.signature[25], expected 1, is "
+      << last_msg_.signature[25];
+  EXPECT_EQ(last_msg_.signature[26], 2)
+      << "incorrect value for last_msg_.signature[26], expected 2, is "
+      << last_msg_.signature[26];
+  EXPECT_EQ(last_msg_.signature[27], 3)
+      << "incorrect value for last_msg_.signature[27], expected 3, is "
+      << last_msg_.signature[27];
+  EXPECT_EQ(last_msg_.signature[28], 4)
+      << "incorrect value for last_msg_.signature[28], expected 4, is "
+      << last_msg_.signature[28];
+  EXPECT_EQ(last_msg_.signature[29], 5)
+      << "incorrect value for last_msg_.signature[29], expected 5, is "
+      << last_msg_.signature[29];
+  EXPECT_EQ(last_msg_.signature[30], 6)
+      << "incorrect value for last_msg_.signature[30], expected 6, is "
+      << last_msg_.signature[30];
+  EXPECT_EQ(last_msg_.signature[31], 7)
+      << "incorrect value for last_msg_.signature[31], expected 7, is "
+      << last_msg_.signature[31];
+  EXPECT_EQ(last_msg_.signature[32], 0)
+      << "incorrect value for last_msg_.signature[32], expected 0, is "
+      << last_msg_.signature[32];
+  EXPECT_EQ(last_msg_.signature[33], 1)
+      << "incorrect value for last_msg_.signature[33], expected 1, is "
+      << last_msg_.signature[33];
+  EXPECT_EQ(last_msg_.signature[34], 2)
+      << "incorrect value for last_msg_.signature[34], expected 2, is "
+      << last_msg_.signature[34];
+  EXPECT_EQ(last_msg_.signature[35], 3)
+      << "incorrect value for last_msg_.signature[35], expected 3, is "
+      << last_msg_.signature[35];
+  EXPECT_EQ(last_msg_.signature[36], 4)
+      << "incorrect value for last_msg_.signature[36], expected 4, is "
+      << last_msg_.signature[36];
+  EXPECT_EQ(last_msg_.signature[37], 5)
+      << "incorrect value for last_msg_.signature[37], expected 5, is "
+      << last_msg_.signature[37];
+  EXPECT_EQ(last_msg_.signature[38], 6)
+      << "incorrect value for last_msg_.signature[38], expected 6, is "
+      << last_msg_.signature[38];
+  EXPECT_EQ(last_msg_.signature[39], 7)
+      << "incorrect value for last_msg_.signature[39], expected 7, is "
+      << last_msg_.signature[39];
+  EXPECT_EQ(last_msg_.signature[40], 0)
+      << "incorrect value for last_msg_.signature[40], expected 0, is "
+      << last_msg_.signature[40];
+  EXPECT_EQ(last_msg_.signature[41], 1)
+      << "incorrect value for last_msg_.signature[41], expected 1, is "
+      << last_msg_.signature[41];
+  EXPECT_EQ(last_msg_.signature[42], 2)
+      << "incorrect value for last_msg_.signature[42], expected 2, is "
+      << last_msg_.signature[42];
+  EXPECT_EQ(last_msg_.signature[43], 3)
+      << "incorrect value for last_msg_.signature[43], expected 3, is "
+      << last_msg_.signature[43];
+  EXPECT_EQ(last_msg_.signature[44], 4)
+      << "incorrect value for last_msg_.signature[44], expected 4, is "
+      << last_msg_.signature[44];
+  EXPECT_EQ(last_msg_.signature[45], 5)
+      << "incorrect value for last_msg_.signature[45], expected 5, is "
+      << last_msg_.signature[45];
+  EXPECT_EQ(last_msg_.signature[46], 6)
+      << "incorrect value for last_msg_.signature[46], expected 6, is "
+      << last_msg_.signature[46];
+  EXPECT_EQ(last_msg_.signature[47], 7)
+      << "incorrect value for last_msg_.signature[47], expected 7, is "
+      << last_msg_.signature[47];
+  EXPECT_EQ(last_msg_.signature[48], 0)
+      << "incorrect value for last_msg_.signature[48], expected 0, is "
+      << last_msg_.signature[48];
+  EXPECT_EQ(last_msg_.signature[49], 1)
+      << "incorrect value for last_msg_.signature[49], expected 1, is "
+      << last_msg_.signature[49];
+  EXPECT_EQ(last_msg_.signature[50], 2)
+      << "incorrect value for last_msg_.signature[50], expected 2, is "
+      << last_msg_.signature[50];
+  EXPECT_EQ(last_msg_.signature[51], 3)
+      << "incorrect value for last_msg_.signature[51], expected 3, is "
+      << last_msg_.signature[51];
+  EXPECT_EQ(last_msg_.signature[52], 4)
+      << "incorrect value for last_msg_.signature[52], expected 4, is "
+      << last_msg_.signature[52];
+  EXPECT_EQ(last_msg_.signature[53], 5)
+      << "incorrect value for last_msg_.signature[53], expected 5, is "
+      << last_msg_.signature[53];
+  EXPECT_EQ(last_msg_.signature[54], 6)
+      << "incorrect value for last_msg_.signature[54], expected 6, is "
+      << last_msg_.signature[54];
+  EXPECT_EQ(last_msg_.signature[55], 7)
+      << "incorrect value for last_msg_.signature[55], expected 7, is "
+      << last_msg_.signature[55];
+  EXPECT_EQ(last_msg_.signature[56], 0)
+      << "incorrect value for last_msg_.signature[56], expected 0, is "
+      << last_msg_.signature[56];
+  EXPECT_EQ(last_msg_.signature[57], 1)
+      << "incorrect value for last_msg_.signature[57], expected 1, is "
+      << last_msg_.signature[57];
+  EXPECT_EQ(last_msg_.signature[58], 2)
+      << "incorrect value for last_msg_.signature[58], expected 2, is "
+      << last_msg_.signature[58];
+  EXPECT_EQ(last_msg_.signature[59], 3)
+      << "incorrect value for last_msg_.signature[59], expected 3, is "
+      << last_msg_.signature[59];
+  EXPECT_EQ(last_msg_.signature[60], 4)
+      << "incorrect value for last_msg_.signature[60], expected 4, is "
+      << last_msg_.signature[60];
+  EXPECT_EQ(last_msg_.signature[61], 5)
+      << "incorrect value for last_msg_.signature[61], expected 5, is "
+      << last_msg_.signature[61];
+  EXPECT_EQ(last_msg_.signature[62], 6)
+      << "incorrect value for last_msg_.signature[62], expected 6, is "
+      << last_msg_.signature[62];
+  EXPECT_EQ(last_msg_.signature[63], 7)
+      << "incorrect value for last_msg_.signature[63], expected 7, is "
+      << last_msg_.signature[63];
 }
