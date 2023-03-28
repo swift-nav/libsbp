@@ -1,5 +1,25 @@
 # Changelog
 
+## [v4.13.0](https://github.com/swift-nav/libsbp/tree/v4.13.0) (2023-03-28)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.12.0...v4.13.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Turn SonarCloud duplicate detection off for unit tests \(\#150\) [\#1310](https://github.com/swift-nav/libsbp/pull/1310) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Update bazel to be able to build [\#1309](https://github.com/swift-nav/libsbp/pull/1309) ([RReichert](https://github.com/RReichert))
+- Upgrade google test to 1.11 [\#1308](https://github.com/swift-nav/libsbp/pull/1308) ([RReichert](https://github.com/RReichert))
+- fix signature in MsgCertificateChain \[GV2-193\]  [\#1307](https://github.com/swift-nav/libsbp/pull/1307) ([notoriaga](https://github.com/notoriaga))
+- variable length ecdsa signature \[GV2-193\] [\#1306](https://github.com/swift-nav/libsbp/pull/1306) ([notoriaga](https://github.com/notoriaga))
+- bazel: use c only macros \[BUILD-560\] [\#1305](https://github.com/swift-nav/libsbp/pull/1305) ([isaactorz](https://github.com/isaactorz))
+- Add identifier for TDK IAM-20680HP IMU \[ESD-2563\] [\#1304](https://github.com/swift-nav/libsbp/pull/1304) ([woodfell](https://github.com/woodfell))
+- update MSG\_ACKNOWLEDGE on demand fields [\#1303](https://github.com/swift-nav/libsbp/pull/1303) ([notoriaga](https://github.com/notoriaga))
+- signing: add new ECDSA based signature messages [\#1302](https://github.com/swift-nav/libsbp/pull/1302) ([silverjam](https://github.com/silverjam))
+- Auto submodule update: cmake - Remove pvt-runner-lib from search libraries in starling target \(\#148\) [\#1301](https://github.com/swift-nav/libsbp/pull/1301) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- bazel add gen\_compile\_commands target \[BUILD-547\] [\#1300](https://github.com/swift-nav/libsbp/pull/1300) ([wwieclaw](https://github.com/wwieclaw))
+- enforce setup CI gradle v7.1.1 [\#1298](https://github.com/swift-nav/libsbp/pull/1298) ([adrian-kong](https://github.com/adrian-kong))
+- prep next release \#no\_auto\_pr [\#1297](https://github.com/swift-nav/libsbp/pull/1297) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.12.0](https://github.com/swift-nav/libsbp/tree/v4.12.0) (2023-02-27)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.11.0...v4.12.0)
