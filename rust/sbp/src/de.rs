@@ -9,6 +9,9 @@ use dencode::FramedRead;
 #[cfg(feature = "async")]
 use futures::StreamExt;
 
+use crate::messages::unknown::Unknown;
+use crate::messages::SbpMessage;
+use crate::wire_format::WireFormat;
 use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE};
 
 /// Deserialize the IO stream into an iterator of messages.
@@ -303,11 +306,14 @@ impl Frame {
 
     pub fn to_sbp(&self) -> Result<Sbp, Error> {
         self.check_crc()?;
-        Ok(Sbp::from_parts(
-            self.msg_type(),
-            self.sender_id(),
-            self.payload(),
-        )?)
+        let sender_id = self.sender_id();
+        let mut payload = self.payload();
+        let msg = Sbp::from_parts(self.msg_type(), sender_id, payload).or_else(|_| {
+            let mut unknown = Unknown::parse_unchecked(&mut payload);
+            unknown.set_sender_id(sender_id);
+            Ok::<Sbp, wire_format::PayloadParseError>(Sbp::Unknown(unknown))
+        })?;
+        Ok(msg)
     }
 
     pub fn as_bytes(&self) -> &[u8] {
