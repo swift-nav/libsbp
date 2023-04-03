@@ -4,8 +4,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "rules_swiftnav",
-    strip_prefix = "rules_swiftnav-82e89313fc0c2046a2b19d4a4da5167a88f5da3f",
-    url = "https://github.com/swift-nav/rules_swiftnav/archive/82e89313fc0c2046a2b19d4a4da5167a88f5da3f.tar.gz",
+    strip_prefix = "rules_swiftnav-9a47948601bde966d902f8e218ffd27ca496598e",
+    url = "https://github.com/swift-nav/rules_swiftnav/archive/9a47948601bde966d902f8e218ffd27ca496598e.tar.gz",
 )
 
 http_archive(
@@ -39,5 +39,11 @@ local_repository(
 new_local_repository(
     name = "check",
     build_file = "@rules_swiftnav//third_party:check.BUILD",
+    path = "c/third_party/check",
+)
+
+new_local_repository(
+    name = "check-cmake",
+    build_file = "@rules_swiftnav//third_party:check-cmake.BUILD",
     path = "c/third_party/check",
 )
