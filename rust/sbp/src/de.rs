@@ -9,9 +9,6 @@ use dencode::FramedRead;
 #[cfg(feature = "async")]
 use futures::StreamExt;
 
-use crate::messages::unknown::Unknown;
-use crate::messages::SbpMessage;
-use crate::wire_format::WireFormat;
 use crate::{wire_format, Sbp, CRC_LEN, HEADER_LEN, MAX_FRAME_LEN, PAYLOAD_INDEX, PREAMBLE};
 
 /// Deserialize the IO stream into an iterator of messages.
