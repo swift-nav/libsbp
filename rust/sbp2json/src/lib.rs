@@ -79,24 +79,18 @@ where
     W: Write,
     F: Formatter + Clone,
 {
-    let source = maybe_fatal_errors(sbp::iter_frames(input), fatal_errors);
+    let source = maybe_fatal_errors(sbp::iter_frames(input), fatal_errors).map(|frame| {
+        frame.to_sbp().unwrap_or(Sbp::Unknown(Unknown {
+            msg_id: 0,
+            sender_id: None,
+            payload: frame.payload().to_vec(),
+        }))
+    });
     let mut sink = JsonEncoder::new(output, formatter);
     if buffered {
-        let msgs = source.map(|frame| {
-            frame.to_sbp().unwrap_or(Sbp::Unknown(Unknown {
-                msg_id: 0,
-                sender_id: None,
-                payload: frame.payload().to_vec(),
-            }))
-        });
-        sink.send_all(msgs)?;
+        sink.send_all(source)?;
     } else {
-        for frame in source {
-            let msg = frame.to_sbp().unwrap_or(Sbp::Unknown(Unknown {
-                msg_id: 0,
-                sender_id: None,
-                payload: frame.payload().to_vec(),
-            }));
+        for msg in source {
             sink.send(&msg)?;
         }
     }
