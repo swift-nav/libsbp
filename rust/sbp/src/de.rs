@@ -306,14 +306,11 @@ impl Frame {
 
     pub fn to_sbp(&self) -> Result<Sbp, Error> {
         self.check_crc()?;
-        let sender_id = self.sender_id();
-        let mut payload = self.payload();
-        let msg = Sbp::from_parts(self.msg_type(), sender_id, payload).or_else(|_| {
-            let mut unknown = Unknown::parse_unchecked(&mut payload);
-            unknown.set_sender_id(sender_id);
-            Ok::<Sbp, wire_format::PayloadParseError>(Sbp::Unknown(unknown))
-        })?;
-        Ok(msg)
+        Ok(Sbp::from_parts(
+            self.msg_type(),
+            self.sender_id(),
+            self.payload(),
+        )?)
     }
 
     pub fn as_bytes(&self) -> &[u8] {

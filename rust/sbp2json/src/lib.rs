@@ -1,8 +1,9 @@
 use std::io::{Read, Write};
 
+use sbp::messages::unknown::Unknown;
 use sbp::{
     json::{Json2JsonEncoder, JsonEncoder},
-    SbpEncoder,
+    Sbp, SbpEncoder,
 };
 use serde_json::ser::Formatter;
 
@@ -78,12 +79,17 @@ where
     W: Write,
     F: Formatter + Clone,
 {
-    let source = maybe_fatal_errors(sbp::iter_messages(input), fatal_errors);
+    let source = maybe_fatal_errors(sbp::iter_frames(input), fatal_errors);
     let mut sink = JsonEncoder::new(output, formatter);
     if buffered {
         sink.send_all(source)?;
     } else {
-        for msg in source {
+        for frame in source {
+            let msg = frame.to_sbp().unwrap_or(Sbp::Unknown(Unknown {
+                msg_id: 0,
+                sender_id: None,
+                payload: frame.payload().to_vec(),
+            }));
             sink.send(&msg)?;
         }
     }
