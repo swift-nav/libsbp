@@ -1,6 +1,6 @@
 # DevInfra team is default owner of anything in the repo.
 * @swift-nav/devinfra
-/rust @notoriaga @silverjam @pcrumley @isaactorz
-/c @swift-nav/platform @silverjam @isaactorz
+/rust @notoriaga @silverjam
+/c @swift-nav/platform @silverjam
 
 # Add new codeowners above here
