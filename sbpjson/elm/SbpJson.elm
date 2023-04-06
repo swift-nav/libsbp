@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcknowledge, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCertificateChain, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEcdsaCertificate, msgEcdsaSignature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPoseRelative, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgTelSv, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, telemetrySV, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel, utcTime)
+--     import SbpJson exposing (acqSvProfile, almanacCommonContent, boundsHeader, carrierPhase, codeBiasesContent, codePhaseBiasesSatSig, doppler, ecdsaSignature, ephemerisCommonContent, estimatedHorizontalErrorEllipse, gnssInputType, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, gridElement, gridElementNoStd, griddedCorrectionHeader, imuInputType, integritySSRHeader, latency, measurementState, msgAcknowledge, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCertificateChain, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEcdsaCertificate, msgEcdsaSignature, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGPSTimeGnss, msgGloBiases, msgGnssCapb, msgGnssTimeOffset, msgGroupDelay, msgGroupMeta, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgInsUpdates, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosECEFCovGnss, msgPosECEFGnss, msgPosLLH, msgPosLLHAcc, msgPosLLHCov, msgPosLLHCovGnss, msgPosLLHGnss, msgPoseRelative, msgPpsTime, msgProtectionLevel, msgReferenceFrameParam, msgReset, msgResetFilters, msgSbasRaw, msgSensorAidEvent, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSolnMeta, msgSpecan, msgSsrCodeBiases, msgSsrCodePhaseBiasesBounds, msgSsrFlagHighLevel, msgSsrFlagIonoGridPointSatLos, msgSsrFlagIonoGridPoints, msgSsrFlagIonoTileSatLos, msgSsrFlagSatellites, msgSsrFlagTropoGridPoints, msgSsrGriddedCorrection, msgSsrGriddedCorrectionBounds, msgSsrOrbitClock, msgSsrOrbitClockBounds, msgSsrOrbitClockBoundsDegradation, msgSsrPhaseBiases, msgSsrSatelliteApc, msgSsrStecCorrection, msgSsrTileDefinition, msgStartup, msgStatusJournal, msgStatusReport, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgTelSv, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCLeapSecond, msgUTCTime, msgUTCTimeGnss, msgVelBody, msgVelCog, msgVelECEF, msgVelECEFCov, msgVelECEFCovGnss, msgVelECEFGnss, msgVelNED, msgVelNEDCov, msgVelNEDCovGnss, msgVelNEDGnss, msgWheeltick, networkUsage, observationHeader, odoInputType, orbitClockBound, orbitClockBoundDegradation, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecResidualNoStd, stecSatElement, stecSatElementIntegrity, satelliteAPC, solutionInputType, statusJournalItem, subSystemReport, svAzEl, svID, telemetrySV, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, troposphericDelayCorrectionNoStd, uartChannel, utcTime)
 --
 -- and you're off to the races with
 --
@@ -16,6 +16,7 @@
 --     decodeString codeBiasesContent myJsonString
 --     decodeString codePhaseBiasesSatSig myJsonString
 --     decodeString doppler myJsonString
+--     decodeString ecdsaSignature myJsonString
 --     decodeString ephemerisCommonContent myJsonString
 --     decodeString estimatedHorizontalErrorEllipse myJsonString
 --     decodeString gnssInputType myJsonString
@@ -246,6 +247,9 @@ module SbpJson exposing
     , Doppler
     , dopplerToString
     , doppler
+    , ECDSASignature
+    , ecdsaSignatureToString
+    , ecdsaSignature
     , EphemerisCommonContent
     , ephemerisCommonContentToString
     , ephemerisCommonContent
@@ -1176,7 +1180,7 @@ type alias MsgCertificateChain =
     , expiration : UTCTime
     , intermediateCertificate : Array Int
     , rootCertificate : Array Int
-    , signature : Array Int
+    , signature : ECDSASignature
     }
 
 type alias UTCTime =
@@ -1187,6 +1191,11 @@ type alias UTCTime =
     , ns : Int
     , seconds : Int
     , year : Int
+    }
+
+type alias ECDSASignature =
+    { data : Array Int
+    , len : Int
     }
 
 {-| Returns the standard output and standard error of the command requested by
@@ -1280,7 +1289,7 @@ type alias MsgEcdsaSignature =
     { certificateID : Array Int
     , flags : Int
     , onDemandCounter : Int
-    , signature : Array Int
+    , signature : ECDSASignature
     , signedMessages : Array Int
     , streamCounter : Int
     }
@@ -1765,11 +1774,12 @@ type alias MsgImuAux =
 {-| Raw data from the Inertial Measurement Unit, containing accelerometer and gyroscope
 readings. The sense of the measurements are to be aligned with the indications on the
 device itself. Measurement units, which are specific to the device hardware and settings,
-are communicated via the MSG_IMU_AUX message. If using "time since startup" time tags,
-the receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available
-to synchronise IMU measurements with GNSS. The timestamp must wrap around to zero when
-reaching one week (604800 seconds).,
-,
+are communicated via the MSG_IMU_AUX message. If using "time since startup" local time
+tags, the receiving end will expect a `MSG_PPS_TIME` regardless of GNSS fix state. This
+also requires that the MSG_PPS_TIME message be sent prior to any IMU RAW messages that
+are based on the current (as measured at the PPS edge) local time timestamps. The local
+time (as defined in the MSG_PPS_TIME message) must wrap around to zero when reaching the
+extent of the u64 "Local time in microseconds" parameter.,
 The time-tagging mode should not change throughout a run.
 -}
 type alias MsgImuRaw =
@@ -3415,6 +3425,9 @@ codePhaseBiasesSatSigToString r = Jenc.encode 0 (encodeCodePhaseBiasesSatSig r)
 dopplerToString : Doppler -> String
 dopplerToString r = Jenc.encode 0 (encodeDoppler r)
 
+ecdsaSignatureToString : ECDSASignature -> String
+ecdsaSignatureToString r = Jenc.encode 0 (encodeECDSASignature r)
+
 ephemerisCommonContentToString : EphemerisCommonContent -> String
 ephemerisCommonContentToString r = Jenc.encode 0 (encodeEphemerisCommonContent r)
 
@@ -4541,7 +4554,7 @@ msgCertificateChain =
         |> Jpipe.required "expiration" utcTime
         |> Jpipe.required "intermediate_certificate" (Jdec.array Jdec.int)
         |> Jpipe.required "root_certificate" (Jdec.array Jdec.int)
-        |> Jpipe.required "signature" (Jdec.array Jdec.int)
+        |> Jpipe.required "signature" ecdsaSignature
 
 encodeMsgCertificateChain : MsgCertificateChain -> Jenc.Value
 encodeMsgCertificateChain x =
@@ -4550,7 +4563,7 @@ encodeMsgCertificateChain x =
         , ("expiration", encodeUTCTime x.expiration)
         , ("intermediate_certificate", makeArrayEncoder Jenc.int x.intermediateCertificate)
         , ("root_certificate", makeArrayEncoder Jenc.int x.rootCertificate)
-        , ("signature", makeArrayEncoder Jenc.int x.signature)
+        , ("signature", encodeECDSASignature x.signature)
         ]
 
 utcTime : Jdec.Decoder UTCTime
@@ -4574,6 +4587,19 @@ encodeUTCTime x =
         , ("ns", Jenc.int x.ns)
         , ("seconds", Jenc.int x.seconds)
         , ("year", Jenc.int x.year)
+        ]
+
+ecdsaSignature : Jdec.Decoder ECDSASignature
+ecdsaSignature =
+    Jpipe.decode ECDSASignature
+        |> Jpipe.required "data" (Jdec.array Jdec.int)
+        |> Jpipe.required "len" Jdec.int
+
+encodeECDSASignature : ECDSASignature -> Jenc.Value
+encodeECDSASignature x =
+    Jenc.object
+        [ ("data", makeArrayEncoder Jenc.int x.data)
+        , ("len", Jenc.int x.len)
         ]
 
 msgCommandOutput : Jdec.Decoder MsgCommandOutput
@@ -4723,7 +4749,7 @@ msgEcdsaSignature =
         |> Jpipe.required "certificate_id" (Jdec.array Jdec.int)
         |> Jpipe.required "flags" Jdec.int
         |> Jpipe.required "on_demand_counter" Jdec.int
-        |> Jpipe.required "signature" (Jdec.array Jdec.int)
+        |> Jpipe.required "signature" ecdsaSignature
         |> Jpipe.required "signed_messages" (Jdec.array Jdec.int)
         |> Jpipe.required "stream_counter" Jdec.int
 
@@ -4733,7 +4759,7 @@ encodeMsgEcdsaSignature x =
         [ ("certificate_id", makeArrayEncoder Jenc.int x.certificateID)
         , ("flags", Jenc.int x.flags)
         , ("on_demand_counter", Jenc.int x.onDemandCounter)
-        , ("signature", makeArrayEncoder Jenc.int x.signature)
+        , ("signature", encodeECDSASignature x.signature)
         , ("signed_messages", makeArrayEncoder Jenc.int x.signedMessages)
         , ("stream_counter", Jenc.int x.streamCounter)
         ]

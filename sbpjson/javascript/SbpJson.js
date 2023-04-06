@@ -9,6 +9,7 @@
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
 //   const codePhaseBiasesSatSig = Convert.toCodePhaseBiasesSatSig(json);
 //   const doppler = Convert.toDoppler(json);
+//   const eCDSASignature = Convert.toECDSASignature(json);
 //   const ephemerisCommonContent = Convert.toEphemerisCommonContent(json);
 //   const estimatedHorizontalErrorEllipse = Convert.toEstimatedHorizontalErrorEllipse(json);
 //   const gNSSInputType = Convert.toGNSSInputType(json);
@@ -276,6 +277,14 @@ function toDoppler(json) {
 
 function dopplerToJson(value) {
     return JSON.stringify(uncast(value, r("Doppler")), null, 2);
+}
+
+function toECDSASignature(json) {
+    return cast(JSON.parse(json), r("ECDSASignature"));
+}
+
+function eCDSASignatureToJson(value) {
+    return JSON.stringify(uncast(value, r("ECDSASignature")), null, 2);
 }
 
 function toEphemerisCommonContent(json) {
@@ -2236,7 +2245,7 @@ const typeMap = {
         { json: "expiration", js: "expiration", typ: r("UTCTime") },
         { json: "intermediate_certificate", js: "intermediate_certificate", typ: a(0) },
         { json: "root_certificate", js: "root_certificate", typ: a(0) },
-        { json: "signature", js: "signature", typ: a(0) },
+        { json: "signature", js: "signature", typ: r("ECDSASignature") },
     ], "any"),
     "UTCTime": o([
         { json: "day", js: "day", typ: 0 },
@@ -2246,6 +2255,10 @@ const typeMap = {
         { json: "ns", js: "ns", typ: 0 },
         { json: "seconds", js: "seconds", typ: 0 },
         { json: "year", js: "year", typ: 0 },
+    ], "any"),
+    "ECDSASignature": o([
+        { json: "data", js: "data", typ: a(0) },
+        { json: "len", js: "len", typ: 0 },
     ], "any"),
     "MsgCommandOutput": o([
         { json: "line", js: "line", typ: "" },
@@ -2299,7 +2312,7 @@ const typeMap = {
         { json: "certificate_id", js: "certificate_id", typ: a(0) },
         { json: "flags", js: "flags", typ: 0 },
         { json: "on_demand_counter", js: "on_demand_counter", typ: 0 },
-        { json: "signature", js: "signature", typ: a(0) },
+        { json: "signature", js: "signature", typ: r("ECDSASignature") },
         { json: "signed_messages", js: "signed_messages", typ: a(0) },
         { json: "stream_counter", js: "stream_counter", typ: 0 },
     ], "any"),
@@ -3597,6 +3610,8 @@ module.exports = {
     "toCodePhaseBiasesSatSig": toCodePhaseBiasesSatSig,
     "dopplerToJson": dopplerToJson,
     "toDoppler": toDoppler,
+    "eCDSASignatureToJson": eCDSASignatureToJson,
+    "toECDSASignature": toECDSASignature,
     "ephemerisCommonContentToJson": ephemerisCommonContentToJson,
     "toEphemerisCommonContent": toEphemerisCommonContent,
     "estimatedHorizontalErrorEllipseToJson": estimatedHorizontalErrorEllipseToJson,
