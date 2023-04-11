@@ -7,6 +7,7 @@ use serde_json::{ser::Formatter, Serializer};
 
 use super::{JsonError, JsonOutput};
 
+use crate::messages::unknown::Unknown;
 use crate::{
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
@@ -192,24 +193,63 @@ impl<F: Formatter + Clone> Encoder<Json2JsonInput> for Json2JsonEncoderInner<F> 
 
     fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<(), Self::Error> {
         let formatter = self.formatter.clone();
-        let payload = base64::decode(input.data.payload)?;
-        let msg = Sbp::from_parts(
-            input.data.msg_type,
-            input.data.sender,
-            BytesMut::from(&payload[..]),
-        )?;
-        let output = Json2JsonOutput {
-            data: JsonOutput {
-                common: get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?,
-                msg: &msg,
+        let msg = input_as_msg(&input);
+        let unknown_sbp = get_frame_msg(&input);
+        let output = match msg {
+            Ok(ref msg) => Json2JsonOutput {
+                data: JsonOutput {
+                    common: get_common_fields(&mut self.payload_buf, &mut self.frame_buf, msg)?,
+                    msg,
+                },
+                other: input.other,
             },
-            other: input.other,
+            Err(_) => {
+                let common = get_frame_fields(&input);
+                Json2JsonOutput {
+                    data: JsonOutput {
+                        common,
+                        msg: &unknown_sbp,
+                    },
+                    other: input.other.clone(),
+                }
+            }
         };
         let mut ser = Serializer::with_formatter(dst.writer(), formatter);
         output.serialize(&mut ser)?;
         dst.put_slice(b"\n");
         Ok(())
     }
+}
+
+fn input_as_msg(input: &Json2JsonInput) -> Result<Sbp, JsonError> {
+    let payload = base64::decode(input.data.payload.clone())?;
+    Sbp::from_parts(
+        input.data.msg_type,
+        input.data.sender,
+        BytesMut::from(&payload[..]),
+    ).map_err(|e| e.into())
+}
+
+fn get_frame_fields(input: &Json2JsonInput) -> CommonJson {
+    let data = &input.data;
+    let payload = &data.payload;
+    CommonJson {
+        preamble: data.preamble,
+        sender: data.sender,
+        msg_name: "FRAME",
+        msg_type: data.msg_type,
+        length: data.length,
+        crc: data.crc,
+        payload,
+    }
+}
+
+fn get_frame_msg(input: &Json2JsonInput) -> Sbp {
+    Sbp::Unknown(Unknown {
+        msg_id: input.data.msg_type,
+        sender_id: Some(input.data.sender),
+        payload: input.data.payload.clone().into_bytes(),
+    })
 }
 
 fn get_common_fields<'a, M: SbpMessage>(

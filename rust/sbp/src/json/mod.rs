@@ -6,7 +6,7 @@ mod ser;
 use std::collections::HashMap;
 use std::io;
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_json::{ser::Formatter, Value};
 
 pub use serde_json::ser::CompactFormatter;
@@ -37,6 +37,13 @@ struct CommonJsonInput {
     msg_type: u16,
     payload: String,
     sender: u16,
+    #[serde(deserialize_with = "is_frame", alias = "msg_name")]
+    is_frame: bool,
+}
+
+fn is_frame<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
+    let v: String = Deserialize::deserialize(deserializer)?;
+    Ok(v.eq("FRAME"))
 }
 
 /// 'Compressed' Sbp JSON messages. Unlike normal SBP json these messages

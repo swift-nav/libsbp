@@ -5,11 +5,7 @@ use dencode::{Decoder, FramedRead};
 use serde::de::DeserializeOwned;
 use serde_json::Deserializer;
 
-use crate::{
-    json::{Json2JsonInput, JsonError, JsonInput},
-    messages::Sbp,
-    BUFLEN,
-};
+use crate::{json::{Json2JsonInput, JsonError, JsonInput}, messages::Sbp, BUFLEN, Frame};
 
 /// Deserialize the IO stream into an iterator of messages.
 pub fn iter_messages<R: io::Read>(input: R) -> impl Iterator<Item = Result<Sbp, JsonError>> {
