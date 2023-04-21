@@ -10,7 +10,7 @@ use super::{JsonError, JsonOutput};
 use crate::{
     json::{CommonJson, HaskellishFloatFormatter, Json2JsonInput, Json2JsonOutput},
     messages::Sbp,
-    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, PREAMBLE,
+    SbpMessage, BUFLEN, CRC_LEN, HEADER_LEN, MIN_PAYLOAD_LEN, PREAMBLE,
 };
 
 const BASE64_BUFLEN: usize = BUFLEN * 4;
@@ -216,11 +216,14 @@ fn get_common_fields<'a, M: SbpMessage>(
     payload_buf: &'a mut String,
     frame_buf: &'a mut BytesMut,
     msg: &M,
-) -> Result<CommonJson<'a>, JsonError> {
+) -> Result<Option<CommonJson<'a>>, JsonError> {
     payload_buf.clear();
     frame_buf.clear();
     let size = msg.len();
     crate::ser::to_buffer(frame_buf, msg)?;
+    if frame_buf.len() < MIN_PAYLOAD_LEN {
+        return Ok(None);
+    }
     let crc = {
         let crc_b0 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][0] as u16;
         let crc_b1 = frame_buf[HEADER_LEN + size..HEADER_LEN + size + CRC_LEN][1] as u16;
@@ -231,7 +234,7 @@ fn get_common_fields<'a, M: SbpMessage>(
         base64::STANDARD,
         payload_buf,
     );
-    Ok(CommonJson {
+    Ok(Some(CommonJson {
         preamble: PREAMBLE,
         sender: msg.sender_id().unwrap_or(0),
         msg_name: msg.message_name(),
@@ -239,5 +242,5 @@ fn get_common_fields<'a, M: SbpMessage>(
         length: size as u8,
         payload: payload_buf,
         crc,
-    })
+    }))
 }

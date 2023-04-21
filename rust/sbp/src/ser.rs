@@ -6,7 +6,7 @@ use dencode::{Encoder, FramedWrite, IterSinkExt};
 
 use crate::wire_format::WireFormat;
 use crate::{Sbp, SbpMessage};
-use crate::{BUFLEN, MAX_PAYLOAD_LEN, PREAMBLE};
+use crate::{BUFLEN, MAX_PAYLOAD_LEN, MIN_PAYLOAD_LEN, PREAMBLE};
 
 /// Serialize the given message into the IO stream.
 ///
@@ -71,24 +71,25 @@ pub fn to_vec<M: SbpMessage>(msg: &M) -> Result<Vec<u8>, Error> {
 }
 
 pub fn to_buffer<M: SbpMessage>(buf: &mut BytesMut, msg: &M) -> Result<(), WriteFrameError> {
-    let sender_id = msg.sender_id().ok_or(WriteFrameError::NoSenderId)?;
     let payload_len = msg.len();
+    if payload_len < MIN_PAYLOAD_LEN {
+        // Malformed message, just dump what we have
+        msg.write(buf);
+        return Ok(());
+    }
     if payload_len > MAX_PAYLOAD_LEN {
         return Err(WriteFrameError::TooLarge);
     }
-
     let old_buf = buf.split();
-
     PREAMBLE.write(buf);
     msg.message_type().write(buf);
+    let sender_id = msg.sender_id().ok_or(WriteFrameError::NoSenderId)?;
     sender_id.write(buf);
     (payload_len as u8).write(buf);
     msg.write(buf);
     let crc = crc16::State::<crc16::XMODEM>::calculate(&buf[1..]);
     crc.write(buf);
-
     buf.unsplit(old_buf);
-
     Ok(())
 }
 

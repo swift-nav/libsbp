@@ -175,6 +175,9 @@ pub const PAYLOAD_INDEX: usize = HEADER_LEN - 1;
 pub(crate) const BUFLEN: usize = 128;
 
 /// Max length of the variable-sized payload field.
+pub const MIN_PAYLOAD_LEN: usize = 8;
+
+/// Max length of the variable-sized payload field.
 pub const MAX_PAYLOAD_LEN: usize = 255;
 
 /// Length of the crc of the payload.

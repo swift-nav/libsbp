@@ -80,11 +80,24 @@ where
     F: Formatter + Clone,
 {
     let source = maybe_fatal_errors(sbp::iter_frames(input), fatal_errors).map(|frame| {
-        frame.to_sbp().unwrap_or(Sbp::Unknown(Unknown {
-            msg_id: 0,
-            sender_id: None,
-            payload: frame.payload().to_vec(),
-        }))
+        frame.to_sbp().unwrap_or_else(|_| {
+            let payload = frame.payload().to_vec();
+            let msg_id = if payload.len() >= 3 {
+                Some(((payload[2] as u16) << 8) | payload[1] as u16)
+            } else {
+                None
+            };
+            let sender_id = if payload.len() >= 5 {
+                Some(((payload[4] as u16) << 8) | payload[3] as u16)
+            } else {
+                None
+            };
+            Sbp::Unknown(Unknown {
+                msg_id,
+                sender_id,
+                payload,
+            })
+        })
     });
     let mut sink = JsonEncoder::new(output, formatter);
     if buffered {

@@ -81,7 +81,7 @@ struct CommonJson<'a> {
 #[derive(Debug, Serialize)]
 struct JsonOutput<'a, M> {
     #[serde(flatten)]
-    common: CommonJson<'a>,
+    common: Option<CommonJson<'a>>,
 
     #[serde(flatten)]
     msg: &'a M,
