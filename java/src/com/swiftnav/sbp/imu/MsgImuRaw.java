@@ -27,11 +27,12 @@ import org.json.JSONObject;
  * <p>Raw data from the Inertial Measurement Unit, containing accelerometer and gyroscope readings.
  * The sense of the measurements are to be aligned with the indications on the device itself.
  * Measurement units, which are specific to the device hardware and settings, are communicated via
- * the MSG_IMU_AUX message. If using "time since startup" time tags, the receiving end will expect a
- * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements with
- * GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
- *
- * <p>The time-tagging mode should not change throughout a run.
+ * the MSG_IMU_AUX message. If using "time since startup" local time tags, the receiving end will
+ * expect a `MSG_PPS_TIME` regardless of GNSS fix state. This also requires that the MSG_PPS_TIME
+ * message be sent prior to any IMU RAW messages that are based on the current (as measured at the
+ * PPS edge) local time timestamps. The local time (as defined in the MSG_PPS_TIME message) must
+ * wrap around to zero when reaching the extent of the u64 "Local time in microseconds" parameter.
+ * The time-tagging mode should not change throughout a run.
  */
 public class MsgImuRaw extends SBPMessage {
     public static final int TYPE = 0x0900;

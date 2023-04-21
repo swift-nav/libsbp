@@ -60,6 +60,12 @@ swift_c_library(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "sbp_headers",
+    srcs = SBP_INCLUDE,
+    visibility = ["//visibility:public"],
+)
+
 SBP_LEGACY_C_SOURCES = glob(["test/legacy/auto*.c"])
 
 swift_cc_test(
