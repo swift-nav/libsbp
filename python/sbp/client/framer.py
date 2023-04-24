@@ -38,9 +38,9 @@ class Framer(six.Iterator):
     skip_medata : boolean
       do not add "time" and "session-uuid" metadata
     sender_id_filter_list : list
-      list of integer sender_ids to handle, at the exclusion of all others
+      list of integer sender_ids to handle, at the exclusion of all others. If the list is empty, will handle all senders.
     message_type_filter : list
-      list of integer message types to handle, at the exclusion of all others
+      list of integer message types to handle, at the exclusion of all others. If the list is empty, will handle all senders.
     """
 
     def __init__(self,
