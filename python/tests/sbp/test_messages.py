@@ -55,6 +55,7 @@ def test_message_case_count():
         missing_messages == EXPECTED_MISSING_MESSAGES
     ), "Missing tests for %d out of %d messages" % (missing_messages, total_messages)
 
+
 @pytest.mark.parametrize("case", CASES)
 def test_message(case):
     assert_package(ROOTPATH + "/" + case)
