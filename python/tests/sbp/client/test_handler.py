@@ -16,8 +16,10 @@ import threading
 import gc
 
 from sbp.client import Framer, Handler
+from sbp.client.drivers.file_driver import FileDriver
 from sbp.msg import SBP
 from sbp.logging import MsgLog
+from sbp.navigation import SBP_MSG_VEL_NED_GNSS
 
 class CallbackCounter(object):
   """
@@ -55,6 +57,16 @@ def test_framer_ok():
   assert msg.sender == 1498
   assert msg.length == 13
   assert msg.crc == 0x4feb
+
+def test_framer_filter():
+  with open("./data/filter.bin", "rb") as fp:
+    with FileDriver(fp) as driver:
+      with Framer(driver.read, driver.write, message_type_filter=[SBP_MSG_VEL_NED_GNSS]) as framer:
+        assert sum(1 for _ in framer) == 160
+  with open("./data/filter.bin", "rb") as fp:
+    with FileDriver(fp) as driver:
+      with Framer(driver.read, driver.write) as framer:
+        assert sum(1 for _ in framer) == 7056
 
 def until(p, limit=1000):
   for i in itertools.count():
