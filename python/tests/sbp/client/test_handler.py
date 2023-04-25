@@ -18,6 +18,7 @@ import gc
 from sbp.client import Framer, Handler
 from sbp.msg import SBP
 from sbp.logging import MsgLog
+from sbp.navigation import SBP_MSG_VEL_NED_GNSS
 
 class CallbackCounter(object):
   """
@@ -55,6 +56,13 @@ def test_framer_ok():
   assert msg.sender == 1498
   assert msg.length == 13
   assert msg.crc == 0x4feb
+
+def test_framer_ok():
+  with open("./data/filter.bin", "rb") as source:
+    framer = Framer(source.read, None, messsage_type_filter=[SBP_MSG_VEL_NED_GNSS])
+    assert len(list(iter(framer))) == 160
+    framer = Framer(source.read, None, messsage_type_filter=[SBP_MSG_VEL_NED_GNSS])
+    assert len(list(iter(framer))) == 7056
 
 def until(p, limit=1000):
   for i in itertools.count():
