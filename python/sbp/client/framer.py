@@ -64,6 +64,12 @@ class Framer(six.Iterator):
         self._sender_id_filter_list = sender_id_filter_list
         self._message_type_filter = message_type_filter
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        self.breakiter()
+
     def __iter__(self):
         self._broken = False
         return self
