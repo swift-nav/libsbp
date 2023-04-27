@@ -34,6 +34,15 @@ message UtcTime {
     uint32 ns = 7;
 }
 
+/** ECDSA signature
+ *
+None
+ */
+message ECDSASignature {
+    uint32 len = 1;
+    repeated uint32 data = 2;
+}
+
 /** An ECDSA certificate split over multiple messages
  *
  * A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
@@ -54,7 +63,7 @@ message MsgCertificateChain {
     repeated uint32 intermediate_certificate = 2;
     repeated uint32 corrections_certificate = 3;
     UtcTime expiration = 4;
-    repeated uint32 signature = 5;
+    ECDSASignature signature = 5;
 }
 
 /** An ECDSA signature
@@ -66,6 +75,6 @@ message MsgEcdsaSignature {
     uint32 stream_counter = 2;
     uint32 on_demand_counter = 3;
     repeated uint32 certificate_id = 4;
-    repeated uint32 signature = 5;
+    ECDSASignature signature = 5;
     repeated uint32 signed_messages = 6;
 }

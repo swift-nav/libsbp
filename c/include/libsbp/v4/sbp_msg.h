@@ -86,6 +86,7 @@ typedef union {
   sbp_msg_bootloader_handshake_resp_t bootloader_handshake_resp;
   sbp_msg_bootloader_jump_to_app_t bootloader_jump_to_app;
   sbp_msg_cell_modem_status_t cell_modem_status;
+  sbp_msg_certificate_chain_dep_t certificate_chain_dep;
   sbp_msg_certificate_chain_t certificate_chain;
   sbp_msg_command_output_t command_output;
   sbp_msg_command_req_t command_req;
@@ -99,6 +100,8 @@ typedef union {
   sbp_msg_dops_dep_a_t dops_dep_a;
   sbp_msg_dops_t dops;
   sbp_msg_ecdsa_certificate_t ecdsa_certificate;
+  sbp_msg_ecdsa_signature_dep_a_t ecdsa_signature_dep_a;
+  sbp_msg_ecdsa_signature_dep_b_t ecdsa_signature_dep_b;
   sbp_msg_ecdsa_signature_t ecdsa_signature;
   sbp_msg_ed25519_certificate_dep_t ed25519_certificate_dep;
   sbp_msg_ed25519_signature_dep_a_t ed25519_signature_dep_a;
@@ -385,6 +388,9 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_encode(buf, len, n_written,
                                               &msg->cell_modem_status);
+    case SbpMsgCertificateChainDep:
+      return sbp_msg_certificate_chain_dep_encode(buf, len, n_written,
+                                                  &msg->certificate_chain_dep);
     case SbpMsgCertificateChain:
       return sbp_msg_certificate_chain_encode(buf, len, n_written,
                                               &msg->certificate_chain);
@@ -419,6 +425,12 @@ static inline s8 sbp_message_encode(uint8_t *buf, uint8_t len,
     case SbpMsgEcdsaCertificate:
       return sbp_msg_ecdsa_certificate_encode(buf, len, n_written,
                                               &msg->ecdsa_certificate);
+    case SbpMsgEcdsaSignatureDepA:
+      return sbp_msg_ecdsa_signature_dep_a_encode(buf, len, n_written,
+                                                  &msg->ecdsa_signature_dep_a);
+    case SbpMsgEcdsaSignatureDepB:
+      return sbp_msg_ecdsa_signature_dep_b_encode(buf, len, n_written,
+                                                  &msg->ecdsa_signature_dep_b);
     case SbpMsgEcdsaSignature:
       return sbp_msg_ecdsa_signature_encode(buf, len, n_written,
                                             &msg->ecdsa_signature);
@@ -1033,6 +1045,9 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_decode(buf, len, n_read,
                                               &msg->cell_modem_status);
+    case SbpMsgCertificateChainDep:
+      return sbp_msg_certificate_chain_dep_decode(buf, len, n_read,
+                                                  &msg->certificate_chain_dep);
     case SbpMsgCertificateChain:
       return sbp_msg_certificate_chain_decode(buf, len, n_read,
                                               &msg->certificate_chain);
@@ -1065,6 +1080,12 @@ static inline s8 sbp_message_decode(const uint8_t *buf, uint8_t len,
     case SbpMsgEcdsaCertificate:
       return sbp_msg_ecdsa_certificate_decode(buf, len, n_read,
                                               &msg->ecdsa_certificate);
+    case SbpMsgEcdsaSignatureDepA:
+      return sbp_msg_ecdsa_signature_dep_a_decode(buf, len, n_read,
+                                                  &msg->ecdsa_signature_dep_a);
+    case SbpMsgEcdsaSignatureDepB:
+      return sbp_msg_ecdsa_signature_dep_b_decode(buf, len, n_read,
+                                                  &msg->ecdsa_signature_dep_b);
     case SbpMsgEcdsaSignature:
       return sbp_msg_ecdsa_signature_decode(buf, len, n_read,
                                             &msg->ecdsa_signature);
@@ -1654,6 +1675,9 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
           &msg->bootloader_jump_to_app);
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_encoded_len(&msg->cell_modem_status);
+    case SbpMsgCertificateChainDep:
+      return sbp_msg_certificate_chain_dep_encoded_len(
+          &msg->certificate_chain_dep);
     case SbpMsgCertificateChain:
       return sbp_msg_certificate_chain_encoded_len(&msg->certificate_chain);
     case SbpMsgCommandOutput:
@@ -1681,6 +1705,12 @@ static inline size_t sbp_message_encoded_len(sbp_msg_type_t msg_type,
       return sbp_msg_dops_encoded_len(&msg->dops);
     case SbpMsgEcdsaCertificate:
       return sbp_msg_ecdsa_certificate_encoded_len(&msg->ecdsa_certificate);
+    case SbpMsgEcdsaSignatureDepA:
+      return sbp_msg_ecdsa_signature_dep_a_encoded_len(
+          &msg->ecdsa_signature_dep_a);
+    case SbpMsgEcdsaSignatureDepB:
+      return sbp_msg_ecdsa_signature_dep_b_encoded_len(
+          &msg->ecdsa_signature_dep_b);
     case SbpMsgEcdsaSignature:
       return sbp_msg_ecdsa_signature_encoded_len(&msg->ecdsa_signature);
     case SbpMsgEd25519CertificateDep:
@@ -2197,6 +2227,9 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgCellModemStatus:
       return sbp_msg_cell_modem_status_cmp(&a->cell_modem_status,
                                            &b->cell_modem_status);
+    case SbpMsgCertificateChainDep:
+      return sbp_msg_certificate_chain_dep_cmp(&a->certificate_chain_dep,
+                                               &b->certificate_chain_dep);
     case SbpMsgCertificateChain:
       return sbp_msg_certificate_chain_cmp(&a->certificate_chain,
                                            &b->certificate_chain);
@@ -2226,6 +2259,12 @@ static inline int sbp_message_cmp(sbp_msg_type_t msg_type, const sbp_msg_t *a,
     case SbpMsgEcdsaCertificate:
       return sbp_msg_ecdsa_certificate_cmp(&a->ecdsa_certificate,
                                            &b->ecdsa_certificate);
+    case SbpMsgEcdsaSignatureDepA:
+      return sbp_msg_ecdsa_signature_dep_a_cmp(&a->ecdsa_signature_dep_a,
+                                               &b->ecdsa_signature_dep_a);
+    case SbpMsgEcdsaSignatureDepB:
+      return sbp_msg_ecdsa_signature_dep_b_cmp(&a->ecdsa_signature_dep_b,
+                                               &b->ecdsa_signature_dep_b);
     case SbpMsgEcdsaSignature:
       return sbp_msg_ecdsa_signature_cmp(&a->ecdsa_signature,
                                          &b->ecdsa_signature);

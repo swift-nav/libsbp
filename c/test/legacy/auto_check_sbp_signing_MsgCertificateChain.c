@@ -116,21 +116,21 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgCertificateChain) {
 
     logging_reset();
 
-    sbp_payload_callback_register(&sbp_state, 0xC05, &msg_callback,
+    sbp_payload_callback_register(&sbp_state, 0xC09, &msg_callback,
                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_frame_callback_register(&sbp_state, 0xC05, &frame_callback,
+    sbp_frame_callback_register(&sbp_state, 0xC09, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
     u8 encoded_frame[] = {
-        85, 5,  12,  66, 0,  135, 0,  1,  2,  3,  4,   5,  6,  7,   8,   9,
-        10, 11, 12,  13, 14, 15,  16, 17, 18, 19, 10,  11, 12, 13,  14,  15,
-        16, 17, 18,  19, 0,  1,   2,  3,  4,  5,  6,   7,  8,  9,   20,  21,
-        22, 23, 24,  25, 26, 27,  28, 29, 10, 11, 12,  13, 14, 15,  16,  17,
-        18, 19, 232, 7,  3,  30,  12, 34, 59, 21, 205, 91, 7,  0,   1,   2,
-        3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  0,   1,   2,
-        3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  0,   1,   2,
-        3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  0,   1,   2,
-        3,  4,  5,   6,  7,  0,   1,  2,  3,  4,  5,   6,  7,  112, 100,
+        85, 9,  12, 66, 0,  144, 0,   1,  2,  3,  4,  5,  6,  7,  8,   9,   10,
+        11, 12, 13, 14, 15, 16,  17,  18, 19, 10, 11, 12, 13, 14, 15,  16,  17,
+        18, 19, 0,  1,  2,  3,   4,   5,  6,  7,  8,  9,  20, 21, 22,  23,  24,
+        25, 26, 27, 28, 29, 10,  11,  12, 13, 14, 15, 16, 17, 18, 19,  232, 7,
+        3,  30, 12, 34, 59, 21,  205, 91, 7,  72, 0,  1,  2,  3,  4,   5,   6,
+        7,  8,  9,  10, 11, 12,  13,  14, 15, 16, 17, 18, 19, 20, 21,  22,  23,
+        24, 25, 26, 27, 28, 29,  30,  31, 32, 33, 34, 35, 36, 37, 38,  39,  40,
+        41, 42, 43, 44, 45, 46,  47,  48, 49, 50, 51, 52, 53, 54, 55,  56,  57,
+        58, 59, 60, 61, 62, 63,  64,  65, 66, 67, 68, 69, 70, 71, 227, 224,
     };
 
     dummy_reset();
@@ -448,327 +448,368 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgCertificateChain) {
       test_msg_len += sizeof(test_msg->root_certificate[0]);
     }
     test_msg->root_certificate[19] = 19;
-    if (sizeof(test_msg->signature) == 0) {
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[0] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[0] = 0;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[1] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[1] = 1;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[2] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[2] = 2;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[3] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[3] = 3;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[4] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[4] = 4;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[5] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[5] = 5;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[6] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[6] = 6;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[7] = 7;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[7] = 7;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[8] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[8] = 8;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[9] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[9] = 9;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[10] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[10] = 10;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[11] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[11] = 11;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[12] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[12] = 12;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[13] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[13] = 13;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[14] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[14] = 14;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[15] = 7;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[15] = 15;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[16] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[16] = 16;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[17] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[17] = 17;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[18] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[18] = 18;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[19] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[19] = 19;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[20] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[20] = 20;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[21] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[21] = 21;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[22] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[22] = 22;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[23] = 7;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[23] = 23;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[24] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[24] = 24;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[25] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[25] = 25;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[26] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[26] = 26;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[27] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[27] = 27;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[28] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[28] = 28;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[29] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[29] = 29;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[30] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[30] = 30;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[31] = 7;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[31] = 31;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[32] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[32] = 32;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[33] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[33] = 33;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[34] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[34] = 34;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[35] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[35] = 35;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[36] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[36] = 36;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[37] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[37] = 37;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[38] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[38] = 38;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[39] = 7;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[39] = 39;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[40] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[40] = 40;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[41] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[41] = 41;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[42] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[42] = 42;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[43] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[43] = 43;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[44] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[44] = 44;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[45] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[45] = 45;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[46] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[46] = 46;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[47] = 7;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[47] = 47;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[48] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[48] = 48;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[49] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[49] = 49;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[50] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[50] = 50;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[51] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[51] = 51;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[52] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[52] = 52;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[53] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[53] = 53;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[54] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[54] = 54;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[55] = 7;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[55] = 55;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[56] = 0;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[56] = 56;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[57] = 1;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[57] = 57;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[58] = 2;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[58] = 58;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[59] = 3;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[59] = 59;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[60] = 4;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[60] = 60;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[61] = 5;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[61] = 61;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[62] = 6;
-    if (sizeof(test_msg->signature) == 0) {
+    test_msg->signature.data[62] = 62;
+    if (sizeof(test_msg->signature.data) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->signature[0]);
+      test_msg_len += sizeof(test_msg->signature.data[0]);
     }
-    test_msg->signature[63] = 7;
-    sbp_payload_send(&sbp_state, 0xC05, 66, test_msg_len, test_msg_storage,
+    test_msg->signature.data[63] = 63;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[64] = 64;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[65] = 65;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[66] = 66;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[67] = 67;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[68] = 68;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[69] = 69;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[70] = 70;
+    if (sizeof(test_msg->signature.data) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->signature.data[0]);
+    }
+    test_msg->signature.data[71] = 71;
+    test_msg->signature.len = 72;
+    sbp_payload_send(&sbp_state, 0xC09, 66, test_msg_len, test_msg_storage,
                      &dummy_write);
 
     ck_assert_msg(
@@ -802,7 +843,7 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgCertificateChain) {
                   "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 66,
                   "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xC05,
+    ck_assert_msg(last_frame.msg_type == 0xC09,
                   "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
                   "frame_callback: msg_len decoded incorrectly");
@@ -1075,198 +1116,225 @@ START_TEST(test_legacy_auto_check_sbp_signing_MsgCertificateChain) {
         check_msg->root_certificate[19] == 19,
         "incorrect value for root_certificate[19], expected 19, is %d",
         check_msg->root_certificate[19]);
-    ck_assert_msg(check_msg->signature[0] == 0,
-                  "incorrect value for signature[0], expected 0, is %d",
-                  check_msg->signature[0]);
-    ck_assert_msg(check_msg->signature[1] == 1,
-                  "incorrect value for signature[1], expected 1, is %d",
-                  check_msg->signature[1]);
-    ck_assert_msg(check_msg->signature[2] == 2,
-                  "incorrect value for signature[2], expected 2, is %d",
-                  check_msg->signature[2]);
-    ck_assert_msg(check_msg->signature[3] == 3,
-                  "incorrect value for signature[3], expected 3, is %d",
-                  check_msg->signature[3]);
-    ck_assert_msg(check_msg->signature[4] == 4,
-                  "incorrect value for signature[4], expected 4, is %d",
-                  check_msg->signature[4]);
-    ck_assert_msg(check_msg->signature[5] == 5,
-                  "incorrect value for signature[5], expected 5, is %d",
-                  check_msg->signature[5]);
-    ck_assert_msg(check_msg->signature[6] == 6,
-                  "incorrect value for signature[6], expected 6, is %d",
-                  check_msg->signature[6]);
-    ck_assert_msg(check_msg->signature[7] == 7,
-                  "incorrect value for signature[7], expected 7, is %d",
-                  check_msg->signature[7]);
-    ck_assert_msg(check_msg->signature[8] == 0,
-                  "incorrect value for signature[8], expected 0, is %d",
-                  check_msg->signature[8]);
-    ck_assert_msg(check_msg->signature[9] == 1,
-                  "incorrect value for signature[9], expected 1, is %d",
-                  check_msg->signature[9]);
-    ck_assert_msg(check_msg->signature[10] == 2,
-                  "incorrect value for signature[10], expected 2, is %d",
-                  check_msg->signature[10]);
-    ck_assert_msg(check_msg->signature[11] == 3,
-                  "incorrect value for signature[11], expected 3, is %d",
-                  check_msg->signature[11]);
-    ck_assert_msg(check_msg->signature[12] == 4,
-                  "incorrect value for signature[12], expected 4, is %d",
-                  check_msg->signature[12]);
-    ck_assert_msg(check_msg->signature[13] == 5,
-                  "incorrect value for signature[13], expected 5, is %d",
-                  check_msg->signature[13]);
-    ck_assert_msg(check_msg->signature[14] == 6,
-                  "incorrect value for signature[14], expected 6, is %d",
-                  check_msg->signature[14]);
-    ck_assert_msg(check_msg->signature[15] == 7,
-                  "incorrect value for signature[15], expected 7, is %d",
-                  check_msg->signature[15]);
-    ck_assert_msg(check_msg->signature[16] == 0,
-                  "incorrect value for signature[16], expected 0, is %d",
-                  check_msg->signature[16]);
-    ck_assert_msg(check_msg->signature[17] == 1,
-                  "incorrect value for signature[17], expected 1, is %d",
-                  check_msg->signature[17]);
-    ck_assert_msg(check_msg->signature[18] == 2,
-                  "incorrect value for signature[18], expected 2, is %d",
-                  check_msg->signature[18]);
-    ck_assert_msg(check_msg->signature[19] == 3,
-                  "incorrect value for signature[19], expected 3, is %d",
-                  check_msg->signature[19]);
-    ck_assert_msg(check_msg->signature[20] == 4,
-                  "incorrect value for signature[20], expected 4, is %d",
-                  check_msg->signature[20]);
-    ck_assert_msg(check_msg->signature[21] == 5,
-                  "incorrect value for signature[21], expected 5, is %d",
-                  check_msg->signature[21]);
-    ck_assert_msg(check_msg->signature[22] == 6,
-                  "incorrect value for signature[22], expected 6, is %d",
-                  check_msg->signature[22]);
-    ck_assert_msg(check_msg->signature[23] == 7,
-                  "incorrect value for signature[23], expected 7, is %d",
-                  check_msg->signature[23]);
-    ck_assert_msg(check_msg->signature[24] == 0,
-                  "incorrect value for signature[24], expected 0, is %d",
-                  check_msg->signature[24]);
-    ck_assert_msg(check_msg->signature[25] == 1,
-                  "incorrect value for signature[25], expected 1, is %d",
-                  check_msg->signature[25]);
-    ck_assert_msg(check_msg->signature[26] == 2,
-                  "incorrect value for signature[26], expected 2, is %d",
-                  check_msg->signature[26]);
-    ck_assert_msg(check_msg->signature[27] == 3,
-                  "incorrect value for signature[27], expected 3, is %d",
-                  check_msg->signature[27]);
-    ck_assert_msg(check_msg->signature[28] == 4,
-                  "incorrect value for signature[28], expected 4, is %d",
-                  check_msg->signature[28]);
-    ck_assert_msg(check_msg->signature[29] == 5,
-                  "incorrect value for signature[29], expected 5, is %d",
-                  check_msg->signature[29]);
-    ck_assert_msg(check_msg->signature[30] == 6,
-                  "incorrect value for signature[30], expected 6, is %d",
-                  check_msg->signature[30]);
-    ck_assert_msg(check_msg->signature[31] == 7,
-                  "incorrect value for signature[31], expected 7, is %d",
-                  check_msg->signature[31]);
-    ck_assert_msg(check_msg->signature[32] == 0,
-                  "incorrect value for signature[32], expected 0, is %d",
-                  check_msg->signature[32]);
-    ck_assert_msg(check_msg->signature[33] == 1,
-                  "incorrect value for signature[33], expected 1, is %d",
-                  check_msg->signature[33]);
-    ck_assert_msg(check_msg->signature[34] == 2,
-                  "incorrect value for signature[34], expected 2, is %d",
-                  check_msg->signature[34]);
-    ck_assert_msg(check_msg->signature[35] == 3,
-                  "incorrect value for signature[35], expected 3, is %d",
-                  check_msg->signature[35]);
-    ck_assert_msg(check_msg->signature[36] == 4,
-                  "incorrect value for signature[36], expected 4, is %d",
-                  check_msg->signature[36]);
-    ck_assert_msg(check_msg->signature[37] == 5,
-                  "incorrect value for signature[37], expected 5, is %d",
-                  check_msg->signature[37]);
-    ck_assert_msg(check_msg->signature[38] == 6,
-                  "incorrect value for signature[38], expected 6, is %d",
-                  check_msg->signature[38]);
-    ck_assert_msg(check_msg->signature[39] == 7,
-                  "incorrect value for signature[39], expected 7, is %d",
-                  check_msg->signature[39]);
-    ck_assert_msg(check_msg->signature[40] == 0,
-                  "incorrect value for signature[40], expected 0, is %d",
-                  check_msg->signature[40]);
-    ck_assert_msg(check_msg->signature[41] == 1,
-                  "incorrect value for signature[41], expected 1, is %d",
-                  check_msg->signature[41]);
-    ck_assert_msg(check_msg->signature[42] == 2,
-                  "incorrect value for signature[42], expected 2, is %d",
-                  check_msg->signature[42]);
-    ck_assert_msg(check_msg->signature[43] == 3,
-                  "incorrect value for signature[43], expected 3, is %d",
-                  check_msg->signature[43]);
-    ck_assert_msg(check_msg->signature[44] == 4,
-                  "incorrect value for signature[44], expected 4, is %d",
-                  check_msg->signature[44]);
-    ck_assert_msg(check_msg->signature[45] == 5,
-                  "incorrect value for signature[45], expected 5, is %d",
-                  check_msg->signature[45]);
-    ck_assert_msg(check_msg->signature[46] == 6,
-                  "incorrect value for signature[46], expected 6, is %d",
-                  check_msg->signature[46]);
-    ck_assert_msg(check_msg->signature[47] == 7,
-                  "incorrect value for signature[47], expected 7, is %d",
-                  check_msg->signature[47]);
-    ck_assert_msg(check_msg->signature[48] == 0,
-                  "incorrect value for signature[48], expected 0, is %d",
-                  check_msg->signature[48]);
-    ck_assert_msg(check_msg->signature[49] == 1,
-                  "incorrect value for signature[49], expected 1, is %d",
-                  check_msg->signature[49]);
-    ck_assert_msg(check_msg->signature[50] == 2,
-                  "incorrect value for signature[50], expected 2, is %d",
-                  check_msg->signature[50]);
-    ck_assert_msg(check_msg->signature[51] == 3,
-                  "incorrect value for signature[51], expected 3, is %d",
-                  check_msg->signature[51]);
-    ck_assert_msg(check_msg->signature[52] == 4,
-                  "incorrect value for signature[52], expected 4, is %d",
-                  check_msg->signature[52]);
-    ck_assert_msg(check_msg->signature[53] == 5,
-                  "incorrect value for signature[53], expected 5, is %d",
-                  check_msg->signature[53]);
-    ck_assert_msg(check_msg->signature[54] == 6,
-                  "incorrect value for signature[54], expected 6, is %d",
-                  check_msg->signature[54]);
-    ck_assert_msg(check_msg->signature[55] == 7,
-                  "incorrect value for signature[55], expected 7, is %d",
-                  check_msg->signature[55]);
-    ck_assert_msg(check_msg->signature[56] == 0,
-                  "incorrect value for signature[56], expected 0, is %d",
-                  check_msg->signature[56]);
-    ck_assert_msg(check_msg->signature[57] == 1,
-                  "incorrect value for signature[57], expected 1, is %d",
-                  check_msg->signature[57]);
-    ck_assert_msg(check_msg->signature[58] == 2,
-                  "incorrect value for signature[58], expected 2, is %d",
-                  check_msg->signature[58]);
-    ck_assert_msg(check_msg->signature[59] == 3,
-                  "incorrect value for signature[59], expected 3, is %d",
-                  check_msg->signature[59]);
-    ck_assert_msg(check_msg->signature[60] == 4,
-                  "incorrect value for signature[60], expected 4, is %d",
-                  check_msg->signature[60]);
-    ck_assert_msg(check_msg->signature[61] == 5,
-                  "incorrect value for signature[61], expected 5, is %d",
-                  check_msg->signature[61]);
-    ck_assert_msg(check_msg->signature[62] == 6,
-                  "incorrect value for signature[62], expected 6, is %d",
-                  check_msg->signature[62]);
-    ck_assert_msg(check_msg->signature[63] == 7,
-                  "incorrect value for signature[63], expected 7, is %d",
-                  check_msg->signature[63]);
+    ck_assert_msg(check_msg->signature.data[0] == 0,
+                  "incorrect value for signature.data[0], expected 0, is %d",
+                  check_msg->signature.data[0]);
+    ck_assert_msg(check_msg->signature.data[1] == 1,
+                  "incorrect value for signature.data[1], expected 1, is %d",
+                  check_msg->signature.data[1]);
+    ck_assert_msg(check_msg->signature.data[2] == 2,
+                  "incorrect value for signature.data[2], expected 2, is %d",
+                  check_msg->signature.data[2]);
+    ck_assert_msg(check_msg->signature.data[3] == 3,
+                  "incorrect value for signature.data[3], expected 3, is %d",
+                  check_msg->signature.data[3]);
+    ck_assert_msg(check_msg->signature.data[4] == 4,
+                  "incorrect value for signature.data[4], expected 4, is %d",
+                  check_msg->signature.data[4]);
+    ck_assert_msg(check_msg->signature.data[5] == 5,
+                  "incorrect value for signature.data[5], expected 5, is %d",
+                  check_msg->signature.data[5]);
+    ck_assert_msg(check_msg->signature.data[6] == 6,
+                  "incorrect value for signature.data[6], expected 6, is %d",
+                  check_msg->signature.data[6]);
+    ck_assert_msg(check_msg->signature.data[7] == 7,
+                  "incorrect value for signature.data[7], expected 7, is %d",
+                  check_msg->signature.data[7]);
+    ck_assert_msg(check_msg->signature.data[8] == 8,
+                  "incorrect value for signature.data[8], expected 8, is %d",
+                  check_msg->signature.data[8]);
+    ck_assert_msg(check_msg->signature.data[9] == 9,
+                  "incorrect value for signature.data[9], expected 9, is %d",
+                  check_msg->signature.data[9]);
+    ck_assert_msg(check_msg->signature.data[10] == 10,
+                  "incorrect value for signature.data[10], expected 10, is %d",
+                  check_msg->signature.data[10]);
+    ck_assert_msg(check_msg->signature.data[11] == 11,
+                  "incorrect value for signature.data[11], expected 11, is %d",
+                  check_msg->signature.data[11]);
+    ck_assert_msg(check_msg->signature.data[12] == 12,
+                  "incorrect value for signature.data[12], expected 12, is %d",
+                  check_msg->signature.data[12]);
+    ck_assert_msg(check_msg->signature.data[13] == 13,
+                  "incorrect value for signature.data[13], expected 13, is %d",
+                  check_msg->signature.data[13]);
+    ck_assert_msg(check_msg->signature.data[14] == 14,
+                  "incorrect value for signature.data[14], expected 14, is %d",
+                  check_msg->signature.data[14]);
+    ck_assert_msg(check_msg->signature.data[15] == 15,
+                  "incorrect value for signature.data[15], expected 15, is %d",
+                  check_msg->signature.data[15]);
+    ck_assert_msg(check_msg->signature.data[16] == 16,
+                  "incorrect value for signature.data[16], expected 16, is %d",
+                  check_msg->signature.data[16]);
+    ck_assert_msg(check_msg->signature.data[17] == 17,
+                  "incorrect value for signature.data[17], expected 17, is %d",
+                  check_msg->signature.data[17]);
+    ck_assert_msg(check_msg->signature.data[18] == 18,
+                  "incorrect value for signature.data[18], expected 18, is %d",
+                  check_msg->signature.data[18]);
+    ck_assert_msg(check_msg->signature.data[19] == 19,
+                  "incorrect value for signature.data[19], expected 19, is %d",
+                  check_msg->signature.data[19]);
+    ck_assert_msg(check_msg->signature.data[20] == 20,
+                  "incorrect value for signature.data[20], expected 20, is %d",
+                  check_msg->signature.data[20]);
+    ck_assert_msg(check_msg->signature.data[21] == 21,
+                  "incorrect value for signature.data[21], expected 21, is %d",
+                  check_msg->signature.data[21]);
+    ck_assert_msg(check_msg->signature.data[22] == 22,
+                  "incorrect value for signature.data[22], expected 22, is %d",
+                  check_msg->signature.data[22]);
+    ck_assert_msg(check_msg->signature.data[23] == 23,
+                  "incorrect value for signature.data[23], expected 23, is %d",
+                  check_msg->signature.data[23]);
+    ck_assert_msg(check_msg->signature.data[24] == 24,
+                  "incorrect value for signature.data[24], expected 24, is %d",
+                  check_msg->signature.data[24]);
+    ck_assert_msg(check_msg->signature.data[25] == 25,
+                  "incorrect value for signature.data[25], expected 25, is %d",
+                  check_msg->signature.data[25]);
+    ck_assert_msg(check_msg->signature.data[26] == 26,
+                  "incorrect value for signature.data[26], expected 26, is %d",
+                  check_msg->signature.data[26]);
+    ck_assert_msg(check_msg->signature.data[27] == 27,
+                  "incorrect value for signature.data[27], expected 27, is %d",
+                  check_msg->signature.data[27]);
+    ck_assert_msg(check_msg->signature.data[28] == 28,
+                  "incorrect value for signature.data[28], expected 28, is %d",
+                  check_msg->signature.data[28]);
+    ck_assert_msg(check_msg->signature.data[29] == 29,
+                  "incorrect value for signature.data[29], expected 29, is %d",
+                  check_msg->signature.data[29]);
+    ck_assert_msg(check_msg->signature.data[30] == 30,
+                  "incorrect value for signature.data[30], expected 30, is %d",
+                  check_msg->signature.data[30]);
+    ck_assert_msg(check_msg->signature.data[31] == 31,
+                  "incorrect value for signature.data[31], expected 31, is %d",
+                  check_msg->signature.data[31]);
+    ck_assert_msg(check_msg->signature.data[32] == 32,
+                  "incorrect value for signature.data[32], expected 32, is %d",
+                  check_msg->signature.data[32]);
+    ck_assert_msg(check_msg->signature.data[33] == 33,
+                  "incorrect value for signature.data[33], expected 33, is %d",
+                  check_msg->signature.data[33]);
+    ck_assert_msg(check_msg->signature.data[34] == 34,
+                  "incorrect value for signature.data[34], expected 34, is %d",
+                  check_msg->signature.data[34]);
+    ck_assert_msg(check_msg->signature.data[35] == 35,
+                  "incorrect value for signature.data[35], expected 35, is %d",
+                  check_msg->signature.data[35]);
+    ck_assert_msg(check_msg->signature.data[36] == 36,
+                  "incorrect value for signature.data[36], expected 36, is %d",
+                  check_msg->signature.data[36]);
+    ck_assert_msg(check_msg->signature.data[37] == 37,
+                  "incorrect value for signature.data[37], expected 37, is %d",
+                  check_msg->signature.data[37]);
+    ck_assert_msg(check_msg->signature.data[38] == 38,
+                  "incorrect value for signature.data[38], expected 38, is %d",
+                  check_msg->signature.data[38]);
+    ck_assert_msg(check_msg->signature.data[39] == 39,
+                  "incorrect value for signature.data[39], expected 39, is %d",
+                  check_msg->signature.data[39]);
+    ck_assert_msg(check_msg->signature.data[40] == 40,
+                  "incorrect value for signature.data[40], expected 40, is %d",
+                  check_msg->signature.data[40]);
+    ck_assert_msg(check_msg->signature.data[41] == 41,
+                  "incorrect value for signature.data[41], expected 41, is %d",
+                  check_msg->signature.data[41]);
+    ck_assert_msg(check_msg->signature.data[42] == 42,
+                  "incorrect value for signature.data[42], expected 42, is %d",
+                  check_msg->signature.data[42]);
+    ck_assert_msg(check_msg->signature.data[43] == 43,
+                  "incorrect value for signature.data[43], expected 43, is %d",
+                  check_msg->signature.data[43]);
+    ck_assert_msg(check_msg->signature.data[44] == 44,
+                  "incorrect value for signature.data[44], expected 44, is %d",
+                  check_msg->signature.data[44]);
+    ck_assert_msg(check_msg->signature.data[45] == 45,
+                  "incorrect value for signature.data[45], expected 45, is %d",
+                  check_msg->signature.data[45]);
+    ck_assert_msg(check_msg->signature.data[46] == 46,
+                  "incorrect value for signature.data[46], expected 46, is %d",
+                  check_msg->signature.data[46]);
+    ck_assert_msg(check_msg->signature.data[47] == 47,
+                  "incorrect value for signature.data[47], expected 47, is %d",
+                  check_msg->signature.data[47]);
+    ck_assert_msg(check_msg->signature.data[48] == 48,
+                  "incorrect value for signature.data[48], expected 48, is %d",
+                  check_msg->signature.data[48]);
+    ck_assert_msg(check_msg->signature.data[49] == 49,
+                  "incorrect value for signature.data[49], expected 49, is %d",
+                  check_msg->signature.data[49]);
+    ck_assert_msg(check_msg->signature.data[50] == 50,
+                  "incorrect value for signature.data[50], expected 50, is %d",
+                  check_msg->signature.data[50]);
+    ck_assert_msg(check_msg->signature.data[51] == 51,
+                  "incorrect value for signature.data[51], expected 51, is %d",
+                  check_msg->signature.data[51]);
+    ck_assert_msg(check_msg->signature.data[52] == 52,
+                  "incorrect value for signature.data[52], expected 52, is %d",
+                  check_msg->signature.data[52]);
+    ck_assert_msg(check_msg->signature.data[53] == 53,
+                  "incorrect value for signature.data[53], expected 53, is %d",
+                  check_msg->signature.data[53]);
+    ck_assert_msg(check_msg->signature.data[54] == 54,
+                  "incorrect value for signature.data[54], expected 54, is %d",
+                  check_msg->signature.data[54]);
+    ck_assert_msg(check_msg->signature.data[55] == 55,
+                  "incorrect value for signature.data[55], expected 55, is %d",
+                  check_msg->signature.data[55]);
+    ck_assert_msg(check_msg->signature.data[56] == 56,
+                  "incorrect value for signature.data[56], expected 56, is %d",
+                  check_msg->signature.data[56]);
+    ck_assert_msg(check_msg->signature.data[57] == 57,
+                  "incorrect value for signature.data[57], expected 57, is %d",
+                  check_msg->signature.data[57]);
+    ck_assert_msg(check_msg->signature.data[58] == 58,
+                  "incorrect value for signature.data[58], expected 58, is %d",
+                  check_msg->signature.data[58]);
+    ck_assert_msg(check_msg->signature.data[59] == 59,
+                  "incorrect value for signature.data[59], expected 59, is %d",
+                  check_msg->signature.data[59]);
+    ck_assert_msg(check_msg->signature.data[60] == 60,
+                  "incorrect value for signature.data[60], expected 60, is %d",
+                  check_msg->signature.data[60]);
+    ck_assert_msg(check_msg->signature.data[61] == 61,
+                  "incorrect value for signature.data[61], expected 61, is %d",
+                  check_msg->signature.data[61]);
+    ck_assert_msg(check_msg->signature.data[62] == 62,
+                  "incorrect value for signature.data[62], expected 62, is %d",
+                  check_msg->signature.data[62]);
+    ck_assert_msg(check_msg->signature.data[63] == 63,
+                  "incorrect value for signature.data[63], expected 63, is %d",
+                  check_msg->signature.data[63]);
+    ck_assert_msg(check_msg->signature.data[64] == 64,
+                  "incorrect value for signature.data[64], expected 64, is %d",
+                  check_msg->signature.data[64]);
+    ck_assert_msg(check_msg->signature.data[65] == 65,
+                  "incorrect value for signature.data[65], expected 65, is %d",
+                  check_msg->signature.data[65]);
+    ck_assert_msg(check_msg->signature.data[66] == 66,
+                  "incorrect value for signature.data[66], expected 66, is %d",
+                  check_msg->signature.data[66]);
+    ck_assert_msg(check_msg->signature.data[67] == 67,
+                  "incorrect value for signature.data[67], expected 67, is %d",
+                  check_msg->signature.data[67]);
+    ck_assert_msg(check_msg->signature.data[68] == 68,
+                  "incorrect value for signature.data[68], expected 68, is %d",
+                  check_msg->signature.data[68]);
+    ck_assert_msg(check_msg->signature.data[69] == 69,
+                  "incorrect value for signature.data[69], expected 69, is %d",
+                  check_msg->signature.data[69]);
+    ck_assert_msg(check_msg->signature.data[70] == 70,
+                  "incorrect value for signature.data[70], expected 70, is %d",
+                  check_msg->signature.data[70]);
+    ck_assert_msg(check_msg->signature.data[71] == 71,
+                  "incorrect value for signature.data[71], expected 71, is %d",
+                  check_msg->signature.data[71]);
+    ck_assert_msg(check_msg->signature.len == 72,
+                  "incorrect value for signature.len, expected 72, is %d",
+                  check_msg->signature.len);
   }
 }
 END_TEST

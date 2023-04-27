@@ -86,6 +86,7 @@ data SBPMsg =
    | SBPMsgBootloaderJumpToApp MsgBootloaderJumpToApp Msg
    | SBPMsgCellModemStatus MsgCellModemStatus Msg
    | SBPMsgCertificateChain MsgCertificateChain Msg
+   | SBPMsgCertificateChainDep MsgCertificateChainDep Msg
    | SBPMsgCommandOutput MsgCommandOutput Msg
    | SBPMsgCommandReq MsgCommandReq Msg
    | SBPMsgCommandResp MsgCommandResp Msg
@@ -99,6 +100,8 @@ data SBPMsg =
    | SBPMsgDopsDepA MsgDopsDepA Msg
    | SBPMsgEcdsaCertificate MsgEcdsaCertificate Msg
    | SBPMsgEcdsaSignature MsgEcdsaSignature Msg
+   | SBPMsgEcdsaSignatureDepA MsgEcdsaSignatureDepA Msg
+   | SBPMsgEcdsaSignatureDepB MsgEcdsaSignatureDepB Msg
    | SBPMsgEd25519CertificateDep MsgEd25519CertificateDep Msg
    | SBPMsgEd25519SignatureDepA MsgEd25519SignatureDepA Msg
    | SBPMsgEd25519SignatureDepB MsgEd25519SignatureDepB Msg
@@ -329,6 +332,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCellModemStatus = SBPMsgCellModemStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCertificateChain = SBPMsgCertificateChain (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgCertificateChainDep = SBPMsgCertificateChainDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandOutput = SBPMsgCommandOutput (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandReq = SBPMsgCommandReq (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgCommandResp = SBPMsgCommandResp (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -342,6 +346,8 @@ instance Binary SBPMsg where
           | _msgSBPType == msgDopsDepA = SBPMsgDopsDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEcdsaCertificate = SBPMsgEcdsaCertificate (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEcdsaSignature = SBPMsgEcdsaSignature (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEcdsaSignatureDepA = SBPMsgEcdsaSignatureDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEcdsaSignatureDepB = SBPMsgEcdsaSignatureDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519CertificateDep = SBPMsgEd25519CertificateDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519SignatureDepA = SBPMsgEd25519SignatureDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEd25519SignatureDepB = SBPMsgEd25519SignatureDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -564,6 +570,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgBootloaderJumpToApp _ m) = put m
       encoder (SBPMsgCellModemStatus _ m) = put m
       encoder (SBPMsgCertificateChain _ m) = put m
+      encoder (SBPMsgCertificateChainDep _ m) = put m
       encoder (SBPMsgCommandOutput _ m) = put m
       encoder (SBPMsgCommandReq _ m) = put m
       encoder (SBPMsgCommandResp _ m) = put m
@@ -577,6 +584,8 @@ instance Binary SBPMsg where
       encoder (SBPMsgDopsDepA _ m) = put m
       encoder (SBPMsgEcdsaCertificate _ m) = put m
       encoder (SBPMsgEcdsaSignature _ m) = put m
+      encoder (SBPMsgEcdsaSignatureDepA _ m) = put m
+      encoder (SBPMsgEcdsaSignatureDepB _ m) = put m
       encoder (SBPMsgEd25519CertificateDep _ m) = put m
       encoder (SBPMsgEd25519SignatureDepA _ m) = put m
       encoder (SBPMsgEd25519SignatureDepB _ m) = put m
@@ -803,6 +812,7 @@ instance FromJSON SBPMsg where
         | msgType == msgBootloaderJumpToApp = SBPMsgBootloaderJumpToApp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCellModemStatus = SBPMsgCellModemStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCertificateChain = SBPMsgCertificateChain <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgCertificateChainDep = SBPMsgCertificateChainDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandOutput = SBPMsgCommandOutput <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandReq = SBPMsgCommandReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgCommandResp = SBPMsgCommandResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -816,6 +826,8 @@ instance FromJSON SBPMsg where
         | msgType == msgDopsDepA = SBPMsgDopsDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEcdsaCertificate = SBPMsgEcdsaCertificate <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEcdsaSignature = SBPMsgEcdsaSignature <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEcdsaSignatureDepA = SBPMsgEcdsaSignatureDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEcdsaSignatureDepB = SBPMsgEcdsaSignatureDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519CertificateDep = SBPMsgEd25519CertificateDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519SignatureDepA = SBPMsgEd25519SignatureDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEd25519SignatureDepB = SBPMsgEd25519SignatureDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1043,6 +1055,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgBootloaderJumpToApp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCellModemStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCertificateChain n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgCertificateChainDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandOutput n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandReq n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgCommandResp n m) = toJSON n <<>> toJSON m
@@ -1056,6 +1069,8 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgDopsDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEcdsaCertificate n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEcdsaSignature n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEcdsaSignatureDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEcdsaSignatureDepB n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519CertificateDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519SignatureDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEd25519SignatureDepB n m) = toJSON n <<>> toJSON m
@@ -1277,6 +1292,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgBootloaderJumpToApp n m) = SBPMsgBootloaderJumpToApp n <$> f m
   msg f (SBPMsgCellModemStatus n m) = SBPMsgCellModemStatus n <$> f m
   msg f (SBPMsgCertificateChain n m) = SBPMsgCertificateChain n <$> f m
+  msg f (SBPMsgCertificateChainDep n m) = SBPMsgCertificateChainDep n <$> f m
   msg f (SBPMsgCommandOutput n m) = SBPMsgCommandOutput n <$> f m
   msg f (SBPMsgCommandReq n m) = SBPMsgCommandReq n <$> f m
   msg f (SBPMsgCommandResp n m) = SBPMsgCommandResp n <$> f m
@@ -1290,6 +1306,8 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgDopsDepA n m) = SBPMsgDopsDepA n <$> f m
   msg f (SBPMsgEcdsaCertificate n m) = SBPMsgEcdsaCertificate n <$> f m
   msg f (SBPMsgEcdsaSignature n m) = SBPMsgEcdsaSignature n <$> f m
+  msg f (SBPMsgEcdsaSignatureDepA n m) = SBPMsgEcdsaSignatureDepA n <$> f m
+  msg f (SBPMsgEcdsaSignatureDepB n m) = SBPMsgEcdsaSignatureDepB n <$> f m
   msg f (SBPMsgEd25519CertificateDep n m) = SBPMsgEd25519CertificateDep n <$> f m
   msg f (SBPMsgEd25519SignatureDepA n m) = SBPMsgEd25519SignatureDepA n <$> f m
   msg f (SBPMsgEd25519SignatureDepB n m) = SBPMsgEd25519SignatureDepB n <$> f m

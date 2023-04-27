@@ -20,7 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * SBP class for message MSG_ECDSA_SIGNATURE (0x0C06).
+ * SBP class for message MSG_ECDSA_SIGNATURE (0x0C08).
  *
  * <p>You can have MSG_ECDSA_SIGNATURE inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
@@ -28,7 +28,7 @@ import org.json.JSONObject;
  * <p>An ECDSA-256 signature using SHA-256 as the message digest algorithm.
  */
 public class MsgEcdsaSignature extends SBPMessage {
-    public static final int TYPE = 0x0C06;
+    public static final int TYPE = 0x0C08;
 
     /** Describes the format of the `signed\_messages` field below. */
     public int flags;
@@ -51,8 +51,8 @@ public class MsgEcdsaSignature extends SBPMessage {
     /** The last 4 bytes of the certificate's SHA-1 fingerprint */
     public int[] certificate_id;
 
-    /** ECDSA signature for the messages using SHA-256 as the digest algorithm. */
-    public int[] signature;
+    /** Signature over the frames of this message group. */
+    public ECDSASignature signature;
 
     /**
      * CRCs of the messages covered by this signature. For Skylark, which delivers SBP messages
@@ -74,7 +74,7 @@ public class MsgEcdsaSignature extends SBPMessage {
         super(msg);
         if (msg.type != TYPE)
             throw new SBPBinaryException(
-                    "Type mismatch for MsgEcdsaSignature, expected 3078, actual " + msg.type);
+                    "Type mismatch for MsgEcdsaSignature, expected 3080, actual " + msg.type);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class MsgEcdsaSignature extends SBPMessage {
         stream_counter = parser.getU8();
         on_demand_counter = parser.getU8();
         certificate_id = parser.getArrayofU8(4);
-        signature = parser.getArrayofU8(64);
+        signature = new ECDSASignature().parse(parser);
         signed_messages = parser.getArrayofU8();
     }
 
@@ -94,7 +94,7 @@ public class MsgEcdsaSignature extends SBPMessage {
         builder.putU8(stream_counter);
         builder.putU8(on_demand_counter);
         builder.putArrayofU8(certificate_id, 4);
-        builder.putArrayofU8(signature, 64);
+        signature.build(builder);
         builder.putArrayofU8(signed_messages);
     }
 
@@ -105,7 +105,7 @@ public class MsgEcdsaSignature extends SBPMessage {
         obj.put("stream_counter", stream_counter);
         obj.put("on_demand_counter", on_demand_counter);
         obj.put("certificate_id", new JSONArray(certificate_id));
-        obj.put("signature", new JSONArray(signature));
+        obj.put("signature", signature.toJSON());
         obj.put("signed_messages", new JSONArray(signed_messages));
         return obj;
     }

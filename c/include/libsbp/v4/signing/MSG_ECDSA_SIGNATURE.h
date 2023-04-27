@@ -27,6 +27,7 @@
 
 #include <libsbp/common.h>
 #include <libsbp/signing_macros.h>
+#include <libsbp/v4/signing/ECDSASignature.h>
 #include <libsbp/v4/string/sbp_string.h>
 
 #ifdef __cplusplus
@@ -70,9 +71,9 @@ typedef struct {
   u8 certificate_id[SBP_MSG_ECDSA_SIGNATURE_CERTIFICATE_ID_MAX];
 
   /**
-   * ECDSA signature for the messages using SHA-256 as the digest algorithm.
+   * Signature over the frames of this message group.
    */
-  u8 signature[SBP_MSG_ECDSA_SIGNATURE_SIGNATURE_MAX];
+  sbp_ecdsa_signature_t signature;
 
   /**
    * CRCs of the messages covered by this signature.  For Skylark, which

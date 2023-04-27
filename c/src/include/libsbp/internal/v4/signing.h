@@ -53,6 +53,26 @@ bool sbp_utc_time_decode_internal(sbp_decode_ctx_t *ctx, sbp_utc_time_t *msg);
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
+bool sbp_ecdsa_signature_encode_internal(sbp_encode_ctx_t *ctx,
+                                         const sbp_ecdsa_signature_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_ecdsa_signature_decode_internal(sbp_decode_ctx_t *ctx,
+                                         sbp_ecdsa_signature_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_ecdsa_certificate_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ecdsa_certificate_t *msg);
 
@@ -93,6 +113,26 @@ bool sbp_msg_certificate_chain_decode_internal(
  * @param msg SBP type instance
  * @return true on success, false otherwise
  */
+bool sbp_msg_certificate_chain_dep_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_certificate_chain_dep_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_certificate_chain_dep_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_certificate_chain_dep_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
 bool sbp_msg_ecdsa_signature_encode_internal(
     sbp_encode_ctx_t *ctx, const sbp_msg_ecdsa_signature_t *msg);
 
@@ -105,6 +145,46 @@ bool sbp_msg_ecdsa_signature_encode_internal(
  */
 bool sbp_msg_ecdsa_signature_decode_internal(sbp_decode_ctx_t *ctx,
                                              sbp_msg_ecdsa_signature_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ecdsa_signature_dep_b_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ecdsa_signature_dep_b_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ecdsa_signature_dep_b_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ecdsa_signature_dep_b_t *msg);
+
+/**
+ * Internal function to encode an SBP type to a buffer
+ *
+ * @param ctx Encode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ecdsa_signature_dep_a_encode_internal(
+    sbp_encode_ctx_t *ctx, const sbp_msg_ecdsa_signature_dep_a_t *msg);
+
+/**
+ * Internal function to decode an SBP type from a buffer
+ *
+ * @param ctx Decode context
+ * @param msg SBP type instance
+ * @return true on success, false otherwise
+ */
+bool sbp_msg_ecdsa_signature_dep_a_decode_internal(
+    sbp_decode_ctx_t *ctx, sbp_msg_ecdsa_signature_dep_a_t *msg);
 
 /**
  * Internal function to encode an SBP type to a buffer

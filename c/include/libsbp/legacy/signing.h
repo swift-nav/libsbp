@@ -39,6 +39,14 @@ typedef struct SBP_ATTR_PACKED {
   u32 ns;     /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
 } utc_time_t;
 
+typedef struct SBP_ATTR_PACKED {
+  u8 len;      /**< Number of bytes to use of the signature field.  The DER
+                    encoded signature has a maximum size of 72 bytes but can
+                    vary between 70 and 72 bytes in length. */
+  u8 data[72]; /**< DER encoded ECDSA signature for the messages using SHA-256
+                    as the digest algorithm. */
+} ecdsa_signature_t;
+
 /** An ECDSA certificate split over multiple messages
  *
  * A DER encoded x.509 ECDSA-256 certificate (using curve secp256r1).
@@ -63,6 +71,41 @@ typedef struct SBP_ATTR_PACKED {
                                         certificate */
   u8 corrections_certificate[20];  /**< SHA-1 fingerprint of the corrections
                                         certificate */
+  utc_time_t expiration;           /**< The time after which the
+                                        signature given is no longer
+                                        valid. Implementors should
+                                        consult a time source (such as
+                                        GNSS) to check if the current
+                                        time is later than the
+                                        expiration time, if the
+                                        condition is true, signatures
+                                        in the stream should not be
+                                        considered valid. */
+  ecdsa_signature_t signature;     /**< Signature (created by
+                                        the root certificate)
+                                        over the concatenation
+                                        of the SBP payload bytes
+                                        preceding this field.
+                                        That is, the
+                                        concatenation of
+                                        `root_certificate`,
+                                        `intermediate_certificate`,
+                                        `corrections_certificate`
+                                        and `expiration`.  This
+                                        certificate chain (allow
+                                        list) can also be
+                                        validated by fetching it
+                                        from
+                                        `http(s)://certs.swiftnav.com/chain`. */
+} msg_certificate_chain_t;
+
+typedef struct SBP_ATTR_PACKED {
+  u8 root_certificate[20];         /**< SHA-1 fingerprint of the root
+                                        certificate */
+  u8 intermediate_certificate[20]; /**< SHA-1 fingerprint of the intermediate
+                                        certificate */
+  u8 corrections_certificate[20];  /**< SHA-1 fingerprint of the corrections
+                                        certificate */
   utc_time_t expiration;           /**< The certificate chain comprised
                                         of three fingerprints: root
                                         certificate, intermediate
@@ -79,7 +122,81 @@ typedef struct SBP_ATTR_PACKED {
                                         (allow list) can also be validated by
                                         fetching it from
                                         `http(s)://certs.swiftnav.com/chain`. */
-} msg_certificate_chain_t;
+} msg_certificate_chain_dep_t;
+
+/** An ECDSA signature
+ *
+ * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 flags;             /**< Describes the format of the `signed\_messages`
+                             field below. */
+  u8 stream_counter;    /**< Signature message counter. Zero indexed and
+                             incremented with each signature message.  The
+                             counter will not increment if this message was
+                             in response to an on demand request.  The
+                             counter will roll over after 256 messages.
+                             Upon connection, the value of the counter may
+                             not initially be zero. */
+  u8 on_demand_counter; /**< On demand message counter. Zero indexed and
+                             incremented with each signature message sent
+                             in response to an on demand message. The
+                             counter will roll over after 256 messages.
+                             Upon connection, the value of the counter may
+                             not initially be zero. */
+  u8 certificate_id[4]; /**< The last 4 bytes of the certificate's SHA-1
+                             fingerprint */
+  ecdsa_signature_t signature; /**< Signature over the frames of
+                                    this message group. */
+  u8 signed_messages[0];       /**< CRCs of the messages covered by this
+                                    signature.  For Skylark, which delivers SBP
+                                    messages wrapped in Swift's proprietary RTCM
+                                    message, these are the 24-bit CRCs from the
+                                    RTCM message framing. For SBP only streams,
+                                    this will be 16-bit CRCs from the SBP framing.
+                                    See the `flags` field to determine the type of
+                                    CRCs covered. */
+} msg_ecdsa_signature_t;
+
+/** An ECDSA signature
+ *
+ * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  u8 flags;              /**< Describes the format of the `signed\_messages`
+                              field below. */
+  u8 stream_counter;     /**< Signature message counter. Zero indexed and
+                              incremented with each signature message.  The
+                              counter will not increment if this message was
+                              in response to an on demand request.  The
+                              counter will roll over after 256 messages.
+                              Upon connection, the value of the counter may
+                              not initially be zero. */
+  u8 on_demand_counter;  /**< On demand message counter. Zero indexed and
+                              incremented with each signature message sent
+                              in response to an on demand message. The
+                              counter will roll over after 256 messages.
+                              Upon connection, the value of the counter may
+                              not initially be zero. */
+  u8 certificate_id[4];  /**< The last 4 bytes of the certificate's SHA-1
+                              fingerprint */
+  u8 n_signature_bytes;  /**< Number of bytes to use of the signature field.
+                              The DER encoded signature has a maximum size
+                              of 72 bytes but can vary between 70 and 72
+                              bytes in length. */
+  u8 signature[72];      /**< DER encoded ECDSA signature for the messages
+                              using SHA-256 as the digest algorithm. */
+  u8 signed_messages[0]; /**< CRCs of the messages covered by this
+                              signature.  For Skylark, which delivers SBP
+                              messages wrapped in Swift's proprietary RTCM
+                              message, these are the 24-bit CRCs from the
+                              RTCM message framing. For SBP only streams,
+                              this will be 16-bit CRCs from the SBP framing.
+                              See the `flags` field to determine the type of
+                              CRCs covered. */
+} msg_ecdsa_signature_dep_b_t;
 
 /** An ECDSA signature
  *
@@ -114,7 +231,7 @@ typedef struct SBP_ATTR_PACKED {
                               this will be 16-bit CRCs from the SBP framing.
                               See the `flags` field to determine the type of
                               CRCs covered. */
-} msg_ecdsa_signature_t;
+} msg_ecdsa_signature_dep_a_t;
 
 typedef struct SBP_ATTR_PACKED {
   u8 n_msg;                /**< Total number messages that make up the

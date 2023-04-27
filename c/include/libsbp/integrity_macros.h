@@ -313,22 +313,22 @@
 #define SBP_ACKNOWLEDGE_RESPONSE_CODE_FORBIDDEN (2)
 #define SBP_ACKNOWLEDGE_RESPONSE_CODE_INVALID_REQUEST (3)
 #define SBP_ACKNOWLEDGE_RESPONSE_CODE_INVALID_AREA_ID (4)
-#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK (0x1u)
-#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT (0u)
-#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_GET(flags)                 \
-  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT) & \
-         SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK))
-#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SET(flags, val)                 \
-  do {                                                                     \
-    (flags) =                                                              \
-        (u16)((flags & (~(SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK          \
-                          << SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT))) | \
-              (((val) & (SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_MASK))         \
-               << (SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_SHIFT)));            \
+#define SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_SHIFT (0u)
+#define SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_SHIFT) & \
+         SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_MASK))
+#define SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_SET(flags, val)           \
+  do {                                                                    \
+    (flags) = (u16)(                                                      \
+        (flags & (~(SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_MASK          \
+                    << SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_SHIFT))) | \
+        (((val) & (SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_MASK))         \
+         << (SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_SHIFT)));            \
   } while (0)
 
-#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_NOT_REQUESTED (0)
-#define SBP_ACKNOWLEDGE_PUBLIC_SIGNING_KEY_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_CORRECTIONS_CERTIFICATE_REQUESTED (1)
 #define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_MASK (0x1u)
 #define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_SHIFT (1u)
 #define SBP_ACKNOWLEDGE_LOW_RATE_MESSAGES_GET(flags)                 \
@@ -452,6 +452,38 @@
 
 #define SBP_ACKNOWLEDGE_INTEGRITY_NOT_REQUESTED (0)
 #define SBP_ACKNOWLEDGE_INTEGRITY_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_SHIFT (9u)
+#define SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_SHIFT) & \
+         SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_MASK))
+#define SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_SET(flags, val)           \
+  do {                                                                     \
+    (flags) = (u16)(                                                       \
+        (flags & (~(SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_MASK          \
+                    << SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_SHIFT))) | \
+        (((val) & (SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_MASK))         \
+         << (SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_INTERMEDIATE_CERTIFICATE_REQUESTED (1)
+#define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_MASK (0x1u)
+#define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_SHIFT (10u)
+#define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_GET(flags)                 \
+  ((u16)((u16)((flags) >> SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_SHIFT) & \
+         SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_MASK))
+#define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_SET(flags, val)                 \
+  do {                                                                    \
+    (flags) =                                                             \
+        (u16)((flags & (~(SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_MASK          \
+                          << SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_SHIFT))) | \
+              (((val) & (SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_MASK))         \
+               << (SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_SHIFT)));            \
+  } while (0)
+
+#define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_NOT_REQUESTED (0)
+#define SBP_ACKNOWLEDGE_CERTIFICATE_CHAIN_REQUESTED (1)
 /**
  * Encoded length of sbp_msg_acknowledge_t (V4 API) and
  * msg_acknowledge_t (legacy API)
