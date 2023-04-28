@@ -1,5 +1,19 @@
 # Changelog
 
+## [v4.14.0](https://github.com/swift-nav/libsbp/tree/v4.14.0) (2023-04-28)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.13.0...v4.14.0)
+
+**Merged pull requests:**
+
+- python: add framer msg type filter [\#1321](https://github.com/swift-nav/libsbp/pull/1321) ([silverjam](https://github.com/silverjam))
+- Auto submodule update: cmake - Add TEST\_SRCS property and swift\_add\_test\_srcs\_target macro \[BUILD-657\] \(\#151\) [\#1319](https://github.com/swift-nav/libsbp/pull/1319) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Auto submodule update: cmake - Add official MKL cmake finder. \(\#147\) [\#1318](https://github.com/swift-nav/libsbp/pull/1318) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- docs: correct time source for fast-start use case [\#1316](https://github.com/swift-nav/libsbp/pull/1316) ([silverjam](https://github.com/silverjam))
+- bazel: Export sbp headers \[BUILD-650\] [\#1315](https://github.com/swift-nav/libsbp/pull/1315) ([krisukox](https://github.com/krisukox))
+- Bump cmake submodule \[SEN-798\] [\#1313](https://github.com/swift-nav/libsbp/pull/1313) ([reimerix](https://github.com/reimerix))
+- prep next release \#no\_auto\_pr [\#1311](https://github.com/swift-nav/libsbp/pull/1311) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.13.0](https://github.com/swift-nav/libsbp/tree/v4.13.0) (2023-03-28)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.12.0...v4.13.0)
