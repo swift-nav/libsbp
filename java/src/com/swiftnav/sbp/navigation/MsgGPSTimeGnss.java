@@ -33,6 +33,9 @@ import org.json.JSONObject;
  * offset from UTC. In a message stream, this message precedes a set of other navigation messages
  * referenced to the same time (but lacking the ns field) and indicates a more precise time of these
  * messages.
+ *
+ * <p>This values in this message are from GNSS measurements only. To get values fused with inertial
+ * measurements use MSG_GPS_TIME.
  */
 public class MsgGPSTimeGnss extends SBPMessage {
     public static final int TYPE = 0x0104;

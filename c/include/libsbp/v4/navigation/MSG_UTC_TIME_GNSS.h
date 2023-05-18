@@ -38,10 +38,11 @@ extern "C" {
  * SBP_MSG_UTC_TIME_GNSS
  *
  *****************************************************************************/
-/** UTC Time
+/** GNSS-only UTC Time
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
  * which indicate the source of the UTC offset value and source of the time fix.
+ *
  */
 typedef struct {
   /**

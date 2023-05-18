@@ -48,6 +48,7 @@ extern "C" {
  * covariance terms follow that convention. Thus, covariances are reported
  * against the "downward" measurement and care should be taken with the sign
  * convention.
+ *
  */
 typedef struct {
   /**

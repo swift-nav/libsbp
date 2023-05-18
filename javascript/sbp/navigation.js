@@ -51,7 +51,9 @@ let UInt64 = require('cuint').UINT64;
  * time does not accumulate leap seconds, and as of now, has a small offset from
  * UTC. In a message stream, this message precedes a set of other navigation
  * messages referenced to the same time (but lacking the ns field) and indicates a
- * more precise time of these messages.
+ * more precise time of these messages.  This values in this message are from GNSS
+ * measurements fused with inertial measurements. To get values from GNSS
+ * measurements only use MSG_GPS_TIME_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
@@ -95,7 +97,9 @@ MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * time does not accumulate leap seconds, and as of now, has a small offset from
  * UTC. In a message stream, this message precedes a set of other navigation
  * messages referenced to the same time (but lacking the ns field) and indicates a
- * more precise time of these messages.
+ * more precise time of these messages.  This values in this message are from GNSS
+ * measurements only. To get values fused with inertial measurements use
+ * MSG_GPS_TIME.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
@@ -132,7 +136,9 @@ MsgGpsTimeGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_UTC_TIME (0x0103).
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags which
- * indicate the source of the UTC offset value and source of the time fix.
+ * indicate the source of the UTC offset value and source of the time fix.  This
+ * values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use MSG_UTC_TIME_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field flags number (unsigned 8-bit int, 1 byte) Indicates source and time validity
@@ -184,7 +190,9 @@ MsgUtcTime.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
  * SBP class for message MSG_UTC_TIME_GNSS (0x0105).
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags which
- * indicate the source of the UTC offset value and source of the time fix.
+ * indicate the source of the UTC offset value and source of the time fix.  This
+ * values in this message are from GNSS measurements only. To get values fused with
+ * inertial measurements use MSG_UTC_TIME.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field flags number (unsigned 8-bit int, 1 byte) Indicates source and time validity
@@ -288,6 +296,8 @@ MsgDops.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * and has an RTK solution, this reports a pseudo-absolute position solution using
  * the base station position and the rover's RTK baseline vector. The full GPS time
  * is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use MSG_POS_ECEF_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -339,7 +349,9 @@ MsgPosEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * station and has an RTK solution, this reports a pseudo-absolute position
  * solution using the base station position and the rover's RTK baseline vector.
  * The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-
- * of-week (tow).
+ * of-week (tow).  This values in this message are from GNSS measurements fused
+ * with inertial measurements. To get values from GNSS measurements only use
+ * MSG_POS_ECEF_COV_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -404,7 +416,9 @@ MsgPosEcefCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * rover receiver knows the surveyed position of the base station and has an RTK
  * solution, this reports a pseudo-absolute position solution using the base
  * station position and the rover's RTK baseline vector. The full GPS time is given
- * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).  This values
+ * in this message are from GNSS measurements fused with inertial measurements. To
+ * get values from GNSS measurements only use MSG_POS_LLH_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -458,7 +472,9 @@ MsgPosLlh.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * Fix Mode flags follow the MSG_POS_LLH message.  Since the covariance matrix is
  * computed in the local-level North, East, Down frame, the covariance terms follow
  * that convention. Thus, covariances are reported against the "downward"
- * measurement and care should be taken with the sign convention.
+ * measurement and care should be taken with the sign convention.  This values in
+ * this message are from GNSS measurements fused with inertial measurements. To get
+ * values from GNSS measurements only use MSG_POS_LLH_COV_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -731,7 +747,9 @@ MsgBaselineNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * matching time-of-week (tow).  This values in this message are from GNSS
+ * measurements fused with inertial measurements. To get values from GNSS
+ * measurements only use MSG_VEL_ECEF_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -778,7 +796,9 @@ MsgVelEcef.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * matching time-of-week (tow).  This values in this message are from GNSS
+ * measurements fused with inertial measurements. To get values from GNSS
+ * measurements only use MSG_VEL_ECEF_COV_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -841,7 +861,9 @@ MsgVelEcefCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This message reports the velocity in local North East Down (NED) coordinates.
  * The NED coordinate system is defined as the local WGS84 tangent plane centered
  * at the current position. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * MSG_GPS_TIME with the matching time-of-week (tow).  This values in this message
+ * are from GNSS measurements fused with inertial measurements. To get values from
+ * GNSS measurements only use MSG_VEL_NED_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -894,7 +916,9 @@ MsgVelNed.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * at the current position. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow). This message is similar to
  * the MSG_VEL_NED, but it includes the upper triangular portion of the 3x3
- * covariance matrix.
+ * covariance matrix.  This values in this message are from GNSS measurements fused
+ * with inertial measurements. To get values from GNSS measurements only use
+ * MSG_VEL_NED_COV_GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -959,7 +983,9 @@ MsgVelNedCov.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * solution. If the rover receiver knows the surveyed position of the base station
  * and has an RTK solution, this reports a pseudo-absolute position solution using
  * the base station position and the rover's RTK baseline vector. The full GPS time
- * is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
+ * (tow).  This values in this message are from GNSS measurements only. To get
+ * values fused with inertial measurements use MSG_POS_ECEF.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1010,8 +1036,9 @@ MsgPosEcefGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * covariance matrix. If the receiver knows the surveyed position of the base
  * station and has an RTK solution, this reports a pseudo-absolute position
  * solution using the base station position and the rover's RTK baseline vector.
- * The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-
- * of-week (tow).
+ * The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching
+ * time-of-week (tow).  This values in this message are from GNSS measurements
+ * only. To get values fused with inertial measurements use MSG_POS_ECEF_COV.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1076,7 +1103,9 @@ MsgPosEcefCovGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * rover receiver knows the surveyed position of the base station and has an RTK
  * solution, this reports a pseudo-absolute position solution using the base
  * station position and the rover's RTK baseline vector. The full GPS time is given
- * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).  This
+ * values in this message are from GNSS measurements only. To get values fused with
+ * inertial measurements use MSG_POS_LLH.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1127,10 +1156,12 @@ MsgPosLlhGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This position solution message reports the absolute geodetic coordinates and the
  * status (single point vs pseudo-absolute RTK) of the position solution as well as
  * the upper triangle of the 3x3 covariance matrix.  The position information and
- * Fix Mode flags should follow the MSG_POS_LLH message.  Since the covariance
+ * Fix Mode flags should follow the MSG_POS_LLH_GNSS message.  Since the covariance
  * matrix is computed in the local-level North, East, Down frame, the covariance
  * terms follow with that convention. Thus, covariances are reported against the
- * "downward" measurement and care should be taken with the sign convention.
+ * "downward" measurement and care should be taken with the sign convention.  This
+ * values in this message are from GNSS measurements only. To get values fused with
+ * inertial measurements use MSG_POS_LLH_COV.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1191,8 +1222,10 @@ MsgPosLlhCovGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_VEL_ECEF_GNSS (0x022D).
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with
+ * the matching time-of-week (tow).  This values in this message are from GNSS
+ * measurements only. To get values fused with inertial measurements use
+ * MSG_VEL_ECEF.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1238,8 +1271,10 @@ MsgVelEcefGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * SBP class for message MSG_VEL_ECEF_COV_GNSS (0x0235).
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with
+ * the matching time-of-week (tow).  This values in this message are from GNSS
+ * measurements only. To get values fused with inertial measurements use
+ * MSG_VEL_ECEF_COV.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1302,7 +1337,9 @@ MsgVelEcefCovGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This message reports the velocity in local North East Down (NED) coordinates.
  * The NED coordinate system is defined as the local WGS84 tangent plane centered
  * at the current position. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).  This values in this
+ * message are from GNSS measurements only. To get values fused with inertial
+ * measurements use MSG_VEL_NED.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1353,9 +1390,10 @@ MsgVelNedGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This message reports the velocity in local North East Down (NED) coordinates.
  * The NED coordinate system is defined as the local WGS84 tangent plane centered
  * at the current position. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow). This message is similar to
- * the MSG_VEL_NED, but it includes the upper triangular portion of the 3x3
- * covariance matrix.
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow). This message is similar
+ * to the MSG_VEL_NED_GNSS, but it includes the upper triangular portion of the 3x3
+ * covariance matrix.  This values in this message are from GNSS measurements only.
+ * To get values fused with inertial measurements use MSG_VEL_NED_COV.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -1483,16 +1521,16 @@ MsgVelBody.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_VEL_COG (0x021C).
  *
- * This message reports the receiver course over ground (COG) and speed over
- * ground (SOG) based on the horizontal (N-E) components of the NED velocity
- * vector. It also includes the vertical velocity coordinate. A flag is provided to
- * indicate whether the COG value has been frozen. When  the flag is set to true,
- * the COG field is set to its last valid value until  the system exceeds a minimum
- * velocity threshold. No other fields are  affected by this flag.  The NED
- * coordinate system is defined as the local WGS84 tangent  plane centered at the
- * current position. The full GPS time is given by the  preceding MSG_GPS_TIME with
- * the matching time-of-week (tow). Note: course over ground represents the
- * receiver's direction of travel,  but not necessarily the device heading.
+ * This message reports the receiver course over ground (COG) and speed over ground
+ * (SOG) based on the horizontal (N-E) components of the NED velocity vector. It
+ * also includes the vertical velocity coordinate. A flag is provided to indicate
+ * whether the COG value has been frozen. When the flag is set to true, the COG
+ * field is set to its last valid value until the system exceeds a minimum velocity
+ * threshold. No other fields are affected by this flag. The NED coordinate system
+ * is defined as the local WGS84 tangent plane centered at the current position.
+ * The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-
+ * of-week (tow). Note: course over ground represents the receiver's direction of
+ * travel, but not necessarily the device heading.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
@@ -2275,7 +2313,7 @@ MsgReferenceFrameParam.prototype.fieldSpec.push(['dot_scale', 'writeInt16LE', 2]
  * instances. The relative pose comprises of a rotation and a translation which
  * relates the sensor (e.g. camera) frame at a given time (first keyframe) to the
  * sensor frame at another time (second keyframe). The relative translations is a
- * 3x1 vector described in the first keyframe.  Relative rotation is described by a
+ * 3x1 vector described in the first keyframe. Relative rotation is described by a
  * quaternion from second keyframe to the first keyframe.
  *
  * Fields in the SBP payload (`sbp.payload`):

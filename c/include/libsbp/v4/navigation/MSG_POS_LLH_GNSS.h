@@ -45,7 +45,9 @@ extern "C" {
  * the rover receiver knows the surveyed position of the base station and has an
  * RTK solution, this reports a pseudo-absolute position solution using the base
  * station position and the rover's RTK baseline vector. The full GPS time is
- * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
+ * (tow).
+ *
  */
 typedef struct {
   /**

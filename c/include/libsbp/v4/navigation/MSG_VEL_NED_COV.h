@@ -46,6 +46,7 @@ extern "C" {
  * MSG_GPS_TIME with the matching time-of-week (tow). This message is similar to
  * the MSG_VEL_NED, but it includes the upper triangular portion of the 3x3
  * covariance matrix.
+ *
  */
 typedef struct {
   /**

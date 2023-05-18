@@ -43,7 +43,8 @@ extern "C" {
  * This message reports the velocity in local North East Down (NED) coordinates.
  * The NED coordinate system is defined as the local WGS84 tangent plane
  * centered at the current position. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ *
  */
 typedef struct {
   /**

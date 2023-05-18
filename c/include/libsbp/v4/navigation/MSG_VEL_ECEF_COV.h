@@ -43,6 +43,7 @@ extern "C" {
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
+ *
  */
 typedef struct {
   /**

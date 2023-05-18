@@ -595,13 +595,13 @@ pub enum Sbp {
     MsgGpsTimeDepA(MsgGpsTimeDepA),
     /// Reports timestamped external pin event
     MsgExtEvent(MsgExtEvent),
-    /// GPS Time
+    /// GPS Time (GNSS + inertial)
     MsgGpsTime(MsgGpsTime),
     /// UTC Time
     MsgUtcTime(MsgUtcTime),
-    /// GPS Time
+    /// GNSS-only GPS Time
     MsgGpsTimeGnss(MsgGpsTimeGnss),
-    /// UTC Time
+    /// GNSS-only UTC Time
     MsgUtcTimeGnss(MsgUtcTimeGnss),
     /// Per-signal telemetry
     MsgTelSv(MsgTelSv),

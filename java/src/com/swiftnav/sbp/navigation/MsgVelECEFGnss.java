@@ -25,7 +25,10 @@ import org.json.JSONObject;
  * construct it inline using a dict of its fields.
  *
  * <p>This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ *
+ * <p>This values in this message are from GNSS measurements only. To get values fused with inertial
+ * measurements use MSG_VEL_ECEF.
  */
 public class MsgVelECEFGnss extends SBPMessage {
     public static final int TYPE = 0x022D;

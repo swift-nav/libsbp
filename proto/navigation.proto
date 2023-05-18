@@ -42,7 +42,7 @@ syntax = "proto3";
 package swiftnav.sbp.navigation;
 
 
-/** GPS Time
+/** GPS Time (GNSS + inertial)
  *
  * This message reports the GPS time, representing the time since the GPS
  * epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
@@ -55,6 +55,10 @@ package swiftnav.sbp.navigation;
  * this message precedes a set of other navigation messages referenced to the
  * same time (but lacking the ns field) and indicates a more precise time of
  * these messages.
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_GPS_TIME_GNSS.
  */
 message MsgGpsTime {
     uint32 wn = 1;
@@ -63,7 +67,7 @@ message MsgGpsTime {
     uint32 flags = 4;
 }
 
-/** GPS Time
+/** GNSS-only GPS Time
  *
  * This message reports the GPS time, representing the time since the GPS
  * epoch began on midnight January 6, 1980 UTC. GPS time counts the weeks and
@@ -76,6 +80,9 @@ message MsgGpsTime {
  * this message precedes a set of other navigation messages referenced to the
  * same time (but lacking the ns field) and indicates a more precise time of
  * these messages.
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_GPS_TIME.
  */
 message MsgGpsTimeGnss {
     uint32 wn = 1;
@@ -89,6 +96,10 @@ message MsgGpsTimeGnss {
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
  * which indicate the source of the UTC offset value and source of the time
  * fix.
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_UTC_TIME_GNSS.
  */
 message MsgUtcTime {
     uint32 flags = 1;
@@ -102,11 +113,14 @@ message MsgUtcTime {
     uint32 ns = 9;
 }
 
-/** UTC Time
+/** GNSS-only UTC Time
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
  * which indicate the source of the UTC offset value and source of the time
  * fix.
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_UTC_TIME.
  */
 message MsgUtcTimeGnss {
     uint32 flags = 1;
@@ -146,6 +160,10 @@ message MsgDops {
  * position solution using the base station position and the rover's RTK
  * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_POS_ECEF_GNSS.
  */
 message MsgPosEcef {
     uint32 tow = 1;
@@ -167,6 +185,10 @@ message MsgPosEcef {
  * pseudo-absolute position solution using the base station position and the
  * rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_POS_ECEF_COV_GNSS.
  */
 message MsgPosEcefCov {
     uint32 tow = 1;
@@ -192,6 +214,10 @@ message MsgPosEcefCov {
  * solution using the base station position and the rover's RTK baseline
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_POS_LLH_GNSS.
  */
 message MsgPosLlh {
     uint32 tow = 1;
@@ -214,6 +240,10 @@ message MsgPosLlh {
  * Down frame, the covariance terms follow that convention. Thus, covariances
  * are reported against the "downward" measurement and care should be taken
  * with the sign convention.
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_POS_LLH_COV_GNSS.
  */
 message MsgPosLlhCov {
     uint32 tow = 1;
@@ -311,6 +341,10 @@ message MsgBaselineNed {
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_VEL_ECEF_GNSS.
  */
 message MsgVelEcef {
     uint32 tow = 1;
@@ -327,6 +361,10 @@ message MsgVelEcef {
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_VEL_ECEF_COV_GNSS.
  */
 message MsgVelEcefCov {
     uint32 tow = 1;
@@ -349,6 +387,10 @@ message MsgVelEcefCov {
  * coordinates. The NED coordinate system is defined as the local WGS84
  * tangent plane centered at the current position. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_VEL_NED_GNSS.
  */
 message MsgVelNed {
     uint32 tow = 1;
@@ -369,6 +411,10 @@ message MsgVelNed {
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
  * message is similar to the MSG_VEL_NED, but it includes the upper triangular
  * portion of the 3x3 covariance matrix.
+ *
+ * This values in this message are from GNSS measurements fused with inertial
+ * measurements. To get values from GNSS measurements only use
+ * MSG_VEL_NED_COV_GNSS.
  */
 message MsgVelNedCov {
     uint32 tow = 1;
@@ -392,8 +438,11 @@ message MsgVelNedCov {
  * the position solution. If the rover receiver knows the surveyed position of
  * the base station and has an RTK solution, this reports a pseudo-absolute
  * position solution using the base station position and the rover's RTK
- * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
- * with the matching time-of-week (tow).
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_POS_ECEF.
  */
 message MsgPosEcefGnss {
     uint32 tow = 1;
@@ -414,7 +463,10 @@ message MsgPosEcefGnss {
  * position of the base station and has an RTK solution, this reports a
  * pseudo-absolute position solution using the base station position and the
  * rover's RTK baseline vector. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_POS_ECEF_COV.
  */
 message MsgPosEcefCovGnss {
     uint32 tow = 1;
@@ -438,8 +490,11 @@ message MsgPosEcefCovGnss {
  * solution. If the rover receiver knows the surveyed position of the base
  * station and has an RTK solution, this reports a pseudo-absolute position
  * solution using the base station position and the rover's RTK baseline
- * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with
+ * the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_POS_LLH.
  */
 message MsgPosLlhGnss {
     uint32 tow = 1;
@@ -457,11 +512,14 @@ message MsgPosLlhGnss {
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
  * solution as well as the upper triangle of the 3x3 covariance matrix.  The
- * position information and Fix Mode flags should follow the MSG_POS_LLH
+ * position information and Fix Mode flags should follow the MSG_POS_LLH_GNSS
  * message.  Since the covariance matrix is computed in the local-level North,
  * East, Down frame, the covariance terms follow with that convention. Thus,
  * covariances are reported against the "downward" measurement and care should
  * be taken with the sign convention.
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_POS_LLH_COV.
  */
 message MsgPosLlhCovGnss {
     uint32 tow = 1;
@@ -481,8 +539,11 @@ message MsgPosLlhCovGnss {
 /** GNSS-only Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
- * the matching time-of-week (tow).
+ * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
+ * with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_VEL_ECEF.
  */
 message MsgVelEcefGnss {
     uint32 tow = 1;
@@ -497,8 +558,11 @@ message MsgVelEcefGnss {
 /** GNSS-only Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
- * the matching time-of-week (tow).
+ * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
+ * with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_VEL_ECEF_COV.
  */
 message MsgVelEcefCovGnss {
     uint32 tow = 1;
@@ -520,7 +584,10 @@ message MsgVelEcefCovGnss {
  * This message reports the velocity in local North East Down (NED)
  * coordinates. The NED coordinate system is defined as the local WGS84
  * tangent plane centered at the current position. The full GPS time is given
- * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_VEL_NED.
  */
 message MsgVelNedGnss {
     uint32 tow = 1;
@@ -538,9 +605,12 @@ message MsgVelNedGnss {
  * This message reports the velocity in local North East Down (NED)
  * coordinates. The NED coordinate system is defined as the local WGS84
  * tangent plane centered at the current position. The full GPS time is given
- * by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This
- * message is similar to the MSG_VEL_NED, but it includes the upper triangular
- * portion of the 3x3 covariance matrix.
+ * by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ * This message is similar to the MSG_VEL_NED_GNSS, but it includes the upper
+ * triangular portion of the 3x3 covariance matrix.
+ *
+ * This values in this message are from GNSS measurements only. To get values
+ * fused with inertial measurements use MSG_VEL_NED_COV.
  */
 message MsgVelNedCovGnss {
     uint32 tow = 1;
@@ -589,13 +659,13 @@ message MsgVelBody {
  * This message reports the receiver course over ground (COG) and speed over
  * ground (SOG) based on the horizontal (N-E) components of the NED velocity
  * vector. It also includes the vertical velocity coordinate. A flag is
- * provided to indicate whether the COG value has been frozen. When  the flag
- * is set to true, the COG field is set to its last valid value until  the
- * system exceeds a minimum velocity threshold. No other fields are  affected
- * by this flag.  The NED coordinate system is defined as the local WGS84
- * tangent  plane centered at the current position. The full GPS time is given
- * by the  preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
- * course over ground represents the receiver's direction of travel,  but not
+ * provided to indicate whether the COG value has been frozen. When the flag
+ * is set to true, the COG field is set to its last valid value until the
+ * system exceeds a minimum velocity threshold. No other fields are affected
+ * by this flag. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is given
+ * by the preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
+ * course over ground represents the receiver's direction of travel, but not
  * necessarily the device heading.
  */
 message MsgVelCog {
