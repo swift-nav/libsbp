@@ -286,9 +286,9 @@ gen-rust:
 
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
-	-o $(SWIFTNAV_ROOT)/rust/sbp/tests/ \
-		       -r $(SBP_VERSION_UNPREFIXED) \
-	               --test-rust
+		-o $(SWIFTNAV_ROOT)/rust/sbp/tests/ \
+		-r $(SBP_VERSION_UNPREFIXED) \
+		--test-rust
 
 	$(call announce-end,"Finished generating Rust tests")
 
