@@ -63,7 +63,7 @@ definitions:
               these messages.
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_GPS_TIME_GNSS.
           fields:
@@ -114,7 +114,7 @@ definitions:
               these messages.
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_GPS_TIME.
           fields:
               - wn:
@@ -152,7 +152,7 @@ definitions:
               which indicate the source of the UTC offset value and source of the time fix.
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_UTC_TIME_GNSS.
           fields:
@@ -216,7 +216,7 @@ definitions:
               which indicate the source of the UTC offset value and source of the time fix.
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_UTC_TIME.
           fields:
               - flags:
@@ -337,7 +337,7 @@ definitions:
               MSG_GPS_TIME with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_POS_ECEF_GNSS.
           fields:
@@ -406,7 +406,7 @@ definitions:
               MSG_GPS_TIME with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_POS_ECEF_COV_GNSS.
           fields:
@@ -494,7 +494,7 @@ definitions:
               matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_POS_LLH_GNSS.
           fields:
@@ -566,7 +566,7 @@ definitions:
               measurement and care should be taken with the sign convention.
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_POS_LLH_COV_GNSS.
           fields:
@@ -880,7 +880,7 @@ definitions:
               MSG_GPS_TIME with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_VEL_ECEF_GNSS.
           fields:
@@ -941,7 +941,7 @@ definitions:
               MSG_GPS_TIME with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_VEL_ECEF_COV_GNSS.
           fields:
@@ -1022,7 +1022,7 @@ definitions:
               given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_VEL_NED_GNSS.
           fields:
@@ -1091,7 +1091,7 @@ definitions:
               portion of the 3x3 covariance matrix.
 
 
-              This values in this message are from GNSS measurements fused with
+              The values in this message are from GNSS measurements fused with
               inertial measurements. To get values from GNSS measurements only
               use MSG_VEL_NED_COV_GNSS.
           fields:
@@ -1176,7 +1176,7 @@ definitions:
               MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_POS_ECEF.
           fields:
               - tow:
@@ -1234,7 +1234,7 @@ definitions:
               MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_POS_ECEF_COV.
           fields:
               - tow:
@@ -1311,7 +1311,7 @@ definitions:
               matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_POS_LLH.
           fields:
               - tow:
@@ -1372,7 +1372,7 @@ definitions:
               measurement and care should be taken with the sign convention.
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_POS_LLH_COV.
           fields:
               - tow:
@@ -1444,7 +1444,7 @@ definitions:
               MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_VEL_ECEF.
           fields:
               - tow:
@@ -1494,7 +1494,7 @@ definitions:
               MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_VEL_ECEF_COV.
           fields:
               - tow:
@@ -1564,7 +1564,7 @@ definitions:
               given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_VEL_NED.
           fields:
               - tow:
@@ -1622,7 +1622,7 @@ definitions:
               portion of the 3x3 covariance matrix.
 
 
-              This values in this message are from GNSS measurements only. To
+              The values in this message are from GNSS measurements only. To
               get values fused with inertial measurements use MSG_VEL_NED_COV.
           fields:
               - tow:
