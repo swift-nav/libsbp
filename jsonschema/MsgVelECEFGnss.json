@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgVelECEFGnss",
   "title":"MsgVelECEFGnss",
-  "description":"This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).,\n,\nThis values in this message are from GNSS measurements only. To get values fused with inertial measurements use MSG_VEL_ECEF.\n",
+  "description":"This message reports the velocity in Earth Centered Earth Fixed (ECEF) coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).,\n,\nThe values in this message are from GNSS measurements only. To get values fused with inertial measurements use MSG_VEL_ECEF.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

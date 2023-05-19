@@ -1650,7 +1650,7 @@ small offset from UTC. In a message stream, this message precedes a set of other
 navigation messages referenced to the same time (but lacking the ns field) and indicates
 a more precise time of these messages.,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_GPS_TIME_GNSS.
 -}
 type alias MsgGPSTime =
@@ -1671,7 +1671,7 @@ small offset from UTC. In a message stream, this message precedes a set of other
 navigation messages referenced to the same time (but lacking the ns field) and indicates
 a more precise time of these messages.,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_GPS_TIME.
 -}
 type alias MsgGPSTimeGnss =
@@ -2159,7 +2159,7 @@ an RTK solution, this reports a pseudo-absolute position solution using the base
 position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME with the matching time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_POS_ECEF_GNSS.
 -}
 type alias MsgPosECEF =
@@ -2180,7 +2180,7 @@ solution, this reports a pseudo-absolute position solution using the base statio
 position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME with the matching time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_POS_ECEF_COV_GNSS.
 -}
 type alias MsgPosECEFCov =
@@ -2206,7 +2206,7 @@ solution, this reports a pseudo-absolute position solution using the base statio
 position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME_GNSS with the matching time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_POS_ECEF_COV.
 -}
 type alias MsgPosECEFCovGnss =
@@ -2231,7 +2231,7 @@ an RTK solution, this reports a pseudo-absolute position solution using the base
 position and the rover's RTK baseline vector. The full GPS time is given by the preceding
 MSG_GPS_TIME_GNSS with the matching time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_POS_ECEF.
 -}
 type alias MsgPosECEFGnss =
@@ -2251,7 +2251,7 @@ pseudo-absolute position solution using the base station position and the rover'
 baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 matching time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_POS_LLH_GNSS.
 -}
 type alias MsgPosLLH =
@@ -2305,7 +2305,7 @@ local-level North, East, Down frame, the covariance terms follow that convention
 covariances are reported against the "downward" measurement and care should be taken with
 the sign convention.,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_POS_LLH_COV_GNSS.
 -}
 type alias MsgPosLLHCov =
@@ -2331,7 +2331,7 @@ the local-level North, East, Down frame, the covariance terms follow with that
 convention. Thus, covariances are reported against the "downward" measurement and care
 should be taken with the sign convention.,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_POS_LLH_COV.
 -}
 type alias MsgPosLLHCovGnss =
@@ -2356,7 +2356,7 @@ pseudo-absolute position solution using the base station position and the rover'
 baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the
 matching time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_POS_LLH.
 -}
 type alias MsgPosLLHGnss =
@@ -3186,7 +3186,7 @@ type alias MsgUTCLeapSecond =
 {-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
 the source of the UTC offset value and source of the time fix.,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_UTC_TIME_GNSS.
 -}
 type alias MsgUTCTime =
@@ -3204,7 +3204,7 @@ type alias MsgUTCTime =
 {-| This message reports the Universal Coordinated Time (UTC).  Note the flags which indicate
 the source of the UTC offset value and source of the time fix.,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_UTC_TIME.
 -}
 type alias MsgUTCTimeGnss =
@@ -3268,7 +3268,7 @@ type alias MsgVelCog =
 full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week
 (tow).,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_VEL_ECEF_GNSS.
 -}
 type alias MsgVelECEF =
@@ -3285,7 +3285,7 @@ type alias MsgVelECEF =
 full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week
 (tow).,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_VEL_ECEF_COV_GNSS.
 -}
 type alias MsgVelECEFCov =
@@ -3307,7 +3307,7 @@ type alias MsgVelECEFCov =
 full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
 (tow).,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_VEL_ECEF_COV.
 -}
 type alias MsgVelECEFCovGnss =
@@ -3329,7 +3329,7 @@ type alias MsgVelECEFCovGnss =
 full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week
 (tow).,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_VEL_ECEF.
 -}
 type alias MsgVelECEFGnss =
@@ -3347,7 +3347,7 @@ coordinate system is defined as the local WGS84 tangent plane centered at the cu
 position. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
 time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_VEL_NED_GNSS.
 -}
 type alias MsgVelNED =
@@ -3367,7 +3367,7 @@ position. The full GPS time is given by the preceding MSG_GPS_TIME with the matc
 time-of-week (tow). This message is similar to the MSG_VEL_NED, but it includes the upper
 triangular portion of the 3x3 covariance matrix.,
 ,
-This values in this message are from GNSS measurements fused with inertial measurements.
+The values in this message are from GNSS measurements fused with inertial measurements.
 To get values from GNSS measurements only use MSG_VEL_NED_COV_GNSS.
 -}
 type alias MsgVelNEDCov =
@@ -3391,7 +3391,7 @@ position. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the
 time-of-week (tow). This message is similar to the MSG_VEL_NED_GNSS, but it includes the
 upper triangular portion of the 3x3 covariance matrix.,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_VEL_NED_COV.
 -}
 type alias MsgVelNEDCovGnss =
@@ -3414,7 +3414,7 @@ coordinate system is defined as the local WGS84 tangent plane centered at the cu
 position. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching
 time-of-week (tow).,
 ,
-This values in this message are from GNSS measurements only. To get values fused with
+The values in this message are from GNSS measurements only. To get values fused with
 inertial measurements use MSG_VEL_NED.
 -}
 type alias MsgVelNEDGnss =

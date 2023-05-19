@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgPosECEFCov",
   "title":"MsgPosECEFCov",
-  "description":"The position solution message reports absolute Earth Centered Earth Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of the position solution. The message also reports the upper triangular portion of the 3x3 covariance matrix. If the receiver knows the surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute position solution using the base station position and the rover's RTK baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,\n,\nThis values in this message are from GNSS measurements fused with inertial measurements. To get values from GNSS measurements only use MSG_POS_ECEF_COV_GNSS.\n",
+  "description":"The position solution message reports absolute Earth Centered Earth Fixed (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of the position solution. The message also reports the upper triangular portion of the 3x3 covariance matrix. If the receiver knows the surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute position solution using the base station position and the rover's RTK baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,\n,\nThe values in this message are from GNSS measurements fused with inertial measurements. To get values from GNSS measurements only use MSG_POS_ECEF_COV_GNSS.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

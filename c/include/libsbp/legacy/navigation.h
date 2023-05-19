@@ -65,7 +65,7 @@ SBP_PACK_START
  * same time (but lacking the ns field) and indicates a more precise time of
  * these messages.
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_GPS_TIME_GNSS.
  */
@@ -92,7 +92,7 @@ typedef struct SBP_ATTR_PACKED {
  * same time (but lacking the ns field) and indicates a more precise time of
  * these messages.
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_GPS_TIME.
  */
 
@@ -110,7 +110,7 @@ typedef struct SBP_ATTR_PACKED {
  * which indicate the source of the UTC offset value and source of the time
  * fix.
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_UTC_TIME_GNSS.
  */
@@ -133,7 +133,7 @@ typedef struct SBP_ATTR_PACKED {
  * which indicate the source of the UTC offset value and source of the time
  * fix.
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_UTC_TIME.
  */
 
@@ -178,7 +178,7 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
  * with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_POS_ECEF_GNSS.
  */
@@ -204,7 +204,7 @@ typedef struct SBP_ATTR_PACKED {
  * rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_POS_ECEF_COV_GNSS.
  */
@@ -234,7 +234,7 @@ typedef struct SBP_ATTR_PACKED {
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_POS_LLH_GNSS.
  */
@@ -261,7 +261,7 @@ typedef struct SBP_ATTR_PACKED {
  * are reported against the "downward" measurement and care should be taken
  * with the sign convention.
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_POS_LLH_COV_GNSS.
  */
@@ -392,7 +392,7 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_VEL_ECEF_GNSS.
  */
@@ -413,7 +413,7 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
  * the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_VEL_ECEF_COV_GNSS.
  */
@@ -440,7 +440,7 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_VEL_NED_GNSS.
  */
@@ -466,7 +466,7 @@ typedef struct SBP_ATTR_PACKED {
  * message is similar to the MSG_VEL_NED, but it includes the upper triangular
  * portion of the 3x3 covariance matrix.
  *
- * This values in this message are from GNSS measurements fused with inertial
+ * The values in this message are from GNSS measurements fused with inertial
  * measurements. To get values from GNSS measurements only use
  * MSG_VEL_NED_COV_GNSS.
  */
@@ -496,7 +496,7 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_POS_ECEF.
  */
 
@@ -521,7 +521,7 @@ typedef struct SBP_ATTR_PACKED {
  * rover's RTK baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_POS_ECEF_COV.
  */
 
@@ -550,7 +550,7 @@ typedef struct SBP_ATTR_PACKED {
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with
  * the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_POS_LLH.
  */
 
@@ -576,7 +576,7 @@ typedef struct SBP_ATTR_PACKED {
  * covariances are reported against the "downward" measurement and care should
  * be taken with the sign convention.
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_POS_LLH_COV.
  */
 
@@ -601,7 +601,7 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
  * with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_VEL_ECEF.
  */
 
@@ -621,7 +621,7 @@ typedef struct SBP_ATTR_PACKED {
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
  * with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_VEL_ECEF_COV.
  */
 
@@ -647,7 +647,7 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is given
  * by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_VEL_NED.
  */
 
@@ -672,7 +672,7 @@ typedef struct SBP_ATTR_PACKED {
  * This message is similar to the MSG_VEL_NED_GNSS, but it includes the upper
  * triangular portion of the 3x3 covariance matrix.
  *
- * This values in this message are from GNSS measurements only. To get values
+ * The values in this message are from GNSS measurements only. To get values
  * fused with inertial measurements use MSG_VEL_NED_COV.
  */
 

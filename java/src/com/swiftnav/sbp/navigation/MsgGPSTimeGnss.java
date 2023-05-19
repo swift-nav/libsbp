@@ -34,7 +34,7 @@ import org.json.JSONObject;
  * referenced to the same time (but lacking the ns field) and indicates a more precise time of these
  * messages.
  *
- * <p>This values in this message are from GNSS measurements only. To get values fused with inertial
+ * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
  * measurements use MSG_GPS_TIME.
  */
 public class MsgGPSTimeGnss extends SBPMessage {

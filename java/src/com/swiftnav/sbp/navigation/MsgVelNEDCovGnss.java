@@ -30,7 +30,7 @@ import org.json.JSONObject;
  * (tow). This message is similar to the MSG_VEL_NED_GNSS, but it includes the upper triangular
  * portion of the 3x3 covariance matrix.
  *
- * <p>This values in this message are from GNSS measurements only. To get values fused with inertial
+ * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
  * measurements use MSG_VEL_NED_COV.
  */
 public class MsgVelNEDCovGnss extends SBPMessage {

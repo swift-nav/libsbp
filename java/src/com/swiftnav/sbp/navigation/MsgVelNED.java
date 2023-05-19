@@ -28,8 +28,8 @@ import org.json.JSONObject;
  * coordinate system is defined as the local WGS84 tangent plane centered at the current position.
  * The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  *
- * <p>This values in this message are from GNSS measurements fused with inertial measurements. To
- * get values from GNSS measurements only use MSG_VEL_NED_GNSS.
+ * <p>The values in this message are from GNSS measurements fused with inertial measurements. To get
+ * values from GNSS measurements only use MSG_VEL_NED_GNSS.
  */
 public class MsgVelNED extends SBPMessage {
     public static final int TYPE = 0x020E;

@@ -31,7 +31,7 @@ import org.json.JSONObject;
  * Down frame, the covariance terms follow with that convention. Thus, covariances are reported
  * against the "downward" measurement and care should be taken with the sign convention.
  *
- * <p>This values in this message are from GNSS measurements only. To get values fused with inertial
+ * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
  * measurements use MSG_POS_LLH_COV.
  */
 public class MsgPosLLHCovGnss extends SBPMessage {

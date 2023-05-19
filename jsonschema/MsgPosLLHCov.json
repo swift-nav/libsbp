@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgPosLLHCov",
   "title":"MsgPosLLHCov",
-  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution as well as the upper triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the local-level North, East, Down frame, the covariance terms follow that convention. Thus, covariances are reported against the \"downward\" measurement and care should be taken with the sign convention.,\n,\nThis values in this message are from GNSS measurements fused with inertial measurements. To get values from GNSS measurements only use MSG_POS_LLH_COV_GNSS.\n",
+  "description":"This position solution message reports the absolute geodetic coordinates and the status (single point vs pseudo-absolute RTK) of the position solution as well as the upper triangle of the 3x3 covariance matrix.  The position information and Fix Mode flags follow the MSG_POS_LLH message.  Since the covariance matrix is computed in the local-level North, East, Down frame, the covariance terms follow that convention. Thus, covariances are reported against the \"downward\" measurement and care should be taken with the sign convention.,\n,\nThe values in this message are from GNSS measurements fused with inertial measurements. To get values from GNSS measurements only use MSG_POS_LLH_COV_GNSS.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

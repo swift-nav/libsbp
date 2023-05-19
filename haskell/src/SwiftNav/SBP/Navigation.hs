@@ -74,7 +74,7 @@ msgGpsTime = 0x0102
 -- same time (but lacking the ns field) and indicates a more precise time of
 -- these messages.
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_GPS_TIME_GNSS.
 data MsgGpsTime = MsgGpsTime
@@ -124,7 +124,7 @@ msgGpsTimeGnss = 0x0104
 -- same time (but lacking the ns field) and indicates a more precise time of
 -- these messages.
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_GPS_TIME.
 data MsgGpsTimeGnss = MsgGpsTimeGnss
   { _msgGpsTimeGnss_wn        :: !Word16
@@ -165,7 +165,7 @@ msgUtcTime = 0x0103
 -- which indicate the source of the UTC offset value and source of the time
 -- fix.
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_UTC_TIME_GNSS.
 data MsgUtcTime = MsgUtcTime
@@ -226,7 +226,7 @@ msgUtcTimeGnss = 0x0105
 -- which indicate the source of the UTC offset value and source of the time
 -- fix.
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_UTC_TIME.
 data MsgUtcTimeGnss = MsgUtcTimeGnss
   { _msgUtcTimeGnss_flags :: !Word8
@@ -340,7 +340,7 @@ msgPosEcef = 0x0209
 -- baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
 -- with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_POS_ECEF_GNSS.
 data MsgPosEcef = MsgPosEcef
@@ -398,7 +398,7 @@ msgPosEcefCov = 0x0214
 -- rover's RTK baseline vector. The full GPS time is given by the preceding
 -- MSG_GPS_TIME with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_POS_ECEF_COV_GNSS.
 data MsgPosEcefCov = MsgPosEcefCov
@@ -475,7 +475,7 @@ msgPosLlh = 0x020A
 -- vector. The full GPS time is given by the preceding MSG_GPS_TIME with the
 -- matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_POS_LLH_GNSS.
 data MsgPosLlh = MsgPosLlh
@@ -537,7 +537,7 @@ msgPosLlhCov = 0x0211
 -- are reported against the "downward" measurement and care should be taken
 -- with the sign convention.
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_POS_LLH_COV_GNSS.
 data MsgPosLlhCov = MsgPosLlhCov
@@ -831,7 +831,7 @@ msgVelEcef = 0x020D
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_VEL_ECEF_GNSS.
 data MsgVelEcef = MsgVelEcef
@@ -884,7 +884,7 @@ msgVelEcefCov = 0x0215
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
 -- the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_VEL_ECEF_COV_GNSS.
 data MsgVelEcefCov = MsgVelEcefCov
@@ -958,7 +958,7 @@ msgVelNed = 0x020E
 -- tangent plane centered at the current position. The full GPS time is given
 -- by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_VEL_NED_GNSS.
 data MsgVelNed = MsgVelNed
@@ -1018,7 +1018,7 @@ msgVelNedCov = 0x0212
 -- message is similar to the MSG_VEL_NED, but it includes the upper triangular
 -- portion of the 3x3 covariance matrix.
 --
--- This values in this message are from GNSS measurements fused with inertial
+-- The values in this message are from GNSS measurements fused with inertial
 -- measurements. To get values from GNSS measurements only use
 -- MSG_VEL_NED_COV_GNSS.
 data MsgVelNedCov = MsgVelNedCov
@@ -1095,7 +1095,7 @@ msgPosEcefGnss = 0x0229
 -- baseline vector. The full GPS time is given by the preceding
 -- MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_POS_ECEF.
 data MsgPosEcefGnss = MsgPosEcefGnss
   { _msgPosEcefGnss_tow    :: !Word32
@@ -1152,7 +1152,7 @@ msgPosEcefCovGnss = 0x0234
 -- rover's RTK baseline vector. The full GPS time is given by the preceding
 -- MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_POS_ECEF_COV.
 data MsgPosEcefCovGnss = MsgPosEcefCovGnss
   { _msgPosEcefCovGnss_tow   :: !Word32
@@ -1228,7 +1228,7 @@ msgPosLlhGnss = 0x022A
 -- vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with
 -- the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_POS_LLH.
 data MsgPosLlhGnss = MsgPosLlhGnss
   { _msgPosLlhGnss_tow      :: !Word32
@@ -1289,7 +1289,7 @@ msgPosLlhCovGnss = 0x0231
 -- covariances are reported against the "downward" measurement and care should
 -- be taken with the sign convention.
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_POS_LLH_COV.
 data MsgPosLlhCovGnss = MsgPosLlhCovGnss
   { _msgPosLlhCovGnss_tow   :: !Word32
@@ -1361,7 +1361,7 @@ msgVelEcefGnss = 0x022D
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
 -- with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_VEL_ECEF.
 data MsgVelEcefGnss = MsgVelEcefGnss
   { _msgVelEcefGnss_tow    :: !Word32
@@ -1413,7 +1413,7 @@ msgVelEcefCovGnss = 0x0235
 -- coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
 -- with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_VEL_ECEF_COV.
 data MsgVelEcefCovGnss = MsgVelEcefCovGnss
   { _msgVelEcefCovGnss_tow   :: !Word32
@@ -1486,7 +1486,7 @@ msgVelNedGnss = 0x022E
 -- tangent plane centered at the current position. The full GPS time is given
 -- by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_VEL_NED.
 data MsgVelNedGnss = MsgVelNedGnss
   { _msgVelNedGnss_tow      :: !Word32
@@ -1545,7 +1545,7 @@ msgVelNedCovGnss = 0x0232
 -- This message is similar to the MSG_VEL_NED_GNSS, but it includes the upper
 -- triangular portion of the 3x3 covariance matrix.
 --
--- This values in this message are from GNSS measurements only. To get values
+-- The values in this message are from GNSS measurements only. To get values
 -- fused with inertial measurements use MSG_VEL_NED_COV.
 data MsgVelNedCovGnss = MsgVelNedCovGnss
   { _msgVelNedCovGnss_tow   :: !Word32

@@ -27,7 +27,7 @@ import org.json.JSONObject;
  * <p>This message reports the Universal Coordinated Time (UTC). Note the flags which indicate the
  * source of the UTC offset value and source of the time fix.
  *
- * <p>This values in this message are from GNSS measurements only. To get values fused with inertial
+ * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
  * measurements use MSG_UTC_TIME.
  */
 public class MsgUtcTimeGnss extends SBPMessage {

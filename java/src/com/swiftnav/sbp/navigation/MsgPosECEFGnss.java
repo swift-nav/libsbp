@@ -31,7 +31,7 @@ import org.json.JSONObject;
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching
  * time-of-week (tow).
  *
- * <p>This values in this message are from GNSS measurements only. To get values fused with inertial
+ * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
  * measurements use MSG_POS_ECEF.
  */
 public class MsgPosECEFGnss extends SBPMessage {
