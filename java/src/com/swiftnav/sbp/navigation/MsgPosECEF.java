@@ -30,6 +30,9 @@ import org.json.JSONObject;
  * pseudo-absolute position solution using the base station position and the rover's RTK baseline
  * vector. The full GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week
  * (tow).
+ *
+ * <p>The values in this message are from GNSS measurements fused with inertial measurements. To get
+ * values from GNSS measurements only use MSG_POS_ECEF_GNSS.
  */
 public class MsgPosECEF extends SBPMessage {
     public static final int TYPE = 0x0209;

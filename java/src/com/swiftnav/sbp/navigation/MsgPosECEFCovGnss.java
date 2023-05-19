@@ -29,7 +29,10 @@ import org.json.JSONObject;
  * reports the upper triangular portion of the 3x3 covariance matrix. If the receiver knows the
  * surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute
  * position solution using the base station position and the rover's RTK baseline vector. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * GPS time is given by the preceding MSG_GPS_TIME_GNSS with the matching time-of-week (tow).
+ *
+ * <p>The values in this message are from GNSS measurements only. To get values fused with inertial
+ * measurements use MSG_POS_ECEF_COV.
  */
 public class MsgPosECEFCovGnss extends SBPMessage {
     public static final int TYPE = 0x0234;
