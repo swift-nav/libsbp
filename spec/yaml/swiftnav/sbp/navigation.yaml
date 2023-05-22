@@ -273,12 +273,15 @@ definitions:
 
     - MSG_DOPS:
           id: 0x0208
-          short_desc: Dilution of Precision
+          short_desc: GNSS-only Dilution of Precision
           desc: >
               This dilution of precision (DOP) message describes the effect of
               navigation satellite geometry on positional measurement
               precision.  The flags field indicated whether the DOP reported
               corresponds to differential or SPP solution.
+
+
+              The values in this message are from GNSS measurements only.
           fields:
               - tow:
                     type: u32
@@ -677,6 +680,10 @@ definitions:
 
               The estimated errors are reported at a user-configurable confidence level.
               The user-configured percentile is encoded in the percentile field.
+
+
+              The values in this message are from GNSS measurements fused with
+              inertial measurements.
           fields:
               - tow:
                     type: u32
@@ -768,13 +775,16 @@ definitions:
 
     - MSG_BASELINE_ECEF:
           id: 0x020B
-          short_desc: Baseline Position in ECEF
+          short_desc: GNSS-only Baseline Position in ECEF
           desc: >
               This message reports the baseline solution in Earth Centered
               Earth Fixed (ECEF) coordinates. This baseline is the relative
               vector distance from the base station to the rover receiver. The
               full GPS time is given by the preceding MSG_GPS_TIME with the
               matching time-of-week (tow).
+
+
+              The values in this message are from GNSS measurements only.
           fields:
               - tow:
                     type: u32
@@ -818,7 +828,7 @@ definitions:
 
     - MSG_BASELINE_NED:
           id: 0x020C
-          short_desc: Baseline in NED
+          short_desc: GNSS-only Baseline in NED
           desc: >
               This message reports the baseline solution in North East Down
               (NED) coordinates. This baseline is the relative vector distance
@@ -826,6 +836,9 @@ definitions:
               system is defined at the local WGS84 tangent plane centered at the
               base station position.  The full GPS time is given by the
               preceding MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+              The values in this message are from GNSS measurements only.
           fields:
               - tow:
                     type: u32
@@ -1694,6 +1707,10 @@ definitions:
               The full GPS time is given by the preceding MSG_GPS_TIME with the
               matching time-of-week (tow). This message is only produced by inertial versions of Swift
               products and is not available from Piksi Multi or Duro.
+
+
+              The values in this message are from GNSS measurements fused with
+              inertial measurements.
           fields:
               - tow:
                     type: u32
@@ -1773,6 +1790,10 @@ definitions:
               preceding MSG_GPS_TIME with the matching time-of-week (tow).
               Note: course over ground represents the receiver's direction of travel,
               but not necessarily the device heading.
+
+
+              The values in this message are from GNSS measurements fused with
+              inertial measurements.
           fields:
               - tow:
                     type: u32
