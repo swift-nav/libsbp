@@ -325,7 +325,7 @@ definitions:
 
     - MSG_POS_ECEF:
           id: 0x0209
-          short_desc: Single-point position in ECEF
+          short_desc: Position in ECEF
           desc: >
               The position solution message reports absolute Earth Centered
               Earth Fixed (ECEF) coordinates and the status (single point vs
@@ -393,7 +393,7 @@ definitions:
 
     - MSG_POS_ECEF_COV:
           id: 0x0214
-          short_desc: Single-point position in ECEF
+          short_desc: Position in ECEF with Covariances
           desc: >
               The position solution message reports absolute Earth Centered
               Earth Fixed (ECEF) coordinates and the status (single point vs
@@ -554,7 +554,7 @@ definitions:
 
     - MSG_POS_LLH_COV:
           id: 0x0211
-          short_desc: Geodetic Position
+          short_desc: Geodetic Position with Covariances
           desc: >
               This position solution message reports the absolute geodetic
               coordinates and the status (single point vs pseudo-absolute RTK)
@@ -934,7 +934,7 @@ definitions:
 
     - MSG_VEL_ECEF_COV:
           id: 0x0215
-          short_desc: Velocity in ECEF
+          short_desc: Velocity in ECEF with Covariances
           desc: >
               This message reports the velocity in Earth Centered Earth Fixed
               (ECEF) coordinates. The full GPS time is given by the preceding
@@ -1081,7 +1081,7 @@ definitions:
 
     - MSG_VEL_NED_COV:
           id: 0x0212
-          short_desc: Velocity in NED
+          short_desc: Velocity in NED with Covariances
           desc: >
               This message reports the velocity in local North East Down (NED)
               coordinates. The NED coordinate system is defined as the local WGS84
@@ -1221,7 +1221,7 @@ definitions:
 
     - MSG_POS_ECEF_COV_GNSS:
           id: 0x0234
-          short_desc: GNSS-only Position in ECEF
+          short_desc: GNSS-only Position in ECEF with Covariances
           desc: >
               The position solution message reports absolute Earth Centered
               Earth Fixed (ECEF) coordinates and the status (single point vs
@@ -1360,7 +1360,7 @@ definitions:
 
     - MSG_POS_LLH_COV_GNSS:
           id: 0x0231
-          short_desc: GNSS-only Geodetic Position
+          short_desc: GNSS-only Geodetic Position with Covariances
           desc: >
               This position solution message reports the absolute geodetic
               coordinates and the status (single point vs pseudo-absolute RTK)
@@ -1487,7 +1487,7 @@ definitions:
 
     - MSG_VEL_ECEF_COV_GNSS:
           id: 0x0235
-          short_desc: GNSS-only Velocity in ECEF
+          short_desc: GNSS-only Velocity in ECEF with Covariances
           desc: >
               This message reports the velocity in Earth Centered Earth Fixed
               (ECEF) coordinates. The full GPS time is given by the preceding
@@ -1612,7 +1612,7 @@ definitions:
 
     - MSG_VEL_NED_COV_GNSS:
           id: 0x0232
-          short_desc: GNSS-only Velocity in NED
+          short_desc: GNSS-only Velocity in NED with Covariances
           desc: >
               This message reports the velocity in local North East Down (NED)
               coordinates. The NED coordinate system is defined as the local WGS84
@@ -1941,7 +1941,7 @@ definitions:
     - MSG_POS_ECEF_DEP_A:
           id: 0x0200
           public: false
-          short_desc: Single-point position in ECEF
+          short_desc: Position in ECEF
           desc: >
               The position solution message reports absolute Earth Centered
               Earth Fixed (ECEF) coordinates and the status (single point vs
