@@ -366,15 +366,9 @@ definitions:
 
  - MSG_SSR_STEC_CORRECTION_DEP:
     id: 0x05FB
-    short_desc: STEC correction polynomial coefficients
-    desc: >
-      The Slant Total Electron Content per space vehicle, given as polynomial
-      approximation for a given tile. This should be combined with the
-      MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-      of the atmospheric delay.
-
-
-      It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_SSR_STEC_CORRECTION
     fields:
@@ -539,17 +533,9 @@ definitions:
 
  - MSG_SSR_TILE_DEFINITION_DEP_A:
     id: 0x05F6
-    short_desc: >
-      Definition of a SSR atmospheric correction tile.
-    desc: >
-      Provides the correction point coordinates for the atmospheric correction
-      values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-      messages.
-
-
-      Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-      element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-      correction points, not lists of points.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_SSR_TILE_DEFINITION
     fields:
@@ -647,17 +633,9 @@ definitions:
 
  - MSG_SSR_TILE_DEFINITION_DEP_B:
      id: 0x05F7
-     short_desc: >
-       Definition of a SSR atmospheric correction tile.
-     desc: >
-       Provides the correction point coordinates for the atmospheric correction
-       values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-       messages.
-       
-       
-       Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-       element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-       correction points, not lists of points.
+     short_desc: Deprecated
+     desc: Deprecated.
+     public: false
      replaced_by:
        - MSG_SSR_TILE_DEFINITION
      fields:
@@ -671,88 +649,88 @@ definitions:
            type: u16
            desc: >
              Unique identifier of this tile in the tile set.
-             
+
              See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
        - corner_nw_lat:
            type: s16
            units: encoded degrees
            desc: >
              North-West corner correction point latitude.
-             
-             
+
+
              The relation between the latitude X in the range [-90, 90] and
              the coded number N is:
-             
-             
+
+
              N = floor((X / 90) * 2^14)
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
        - corner_nw_lon:
            type: s16
            units: encoded degrees
            desc: >
              North-West corner correction point longitude.
-             
-             
+
+
              The relation between the longitude X in the range [-180, 180]
              and the coded number N is:
-             
-             
+
+
              N = floor((X / 180) * 2^15)
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
        - spacing_lat:
            type: u16
            units: 0.01 degrees
            desc: >
              Spacing of the correction points in the latitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
        - spacing_lon:
            type: u16
            units: 0.01 degrees
            desc: >
              Spacing of the correction points in the longitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
        - rows:
            type: u16
            desc: >
              Number of steps in the latitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
        - cols:
            type: u16
            desc: >
              Number of steps in the longitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
        - bitmask:
            type: u64
            desc: >
              Specifies the availability of correction data at the
              correction points in the array.
-             
-             
+
+
              If a specific bit is enabled (set to 1), the correction is not
              available. Only the first rows * cols bits are used, the remainder
              are set to 0. If there are more then 64 correction points the
              remaining corrections are always available.
-             
-             
+
+
              Starting with the northwest corner of the array (top left on a
              north oriented map) the correction points are enumerated with row
              precedence - first row west to east, second row west to east,
              until last row west to east - ending with the southeast corner of
              the array.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
              note the definition of the bits is inverted.
 
@@ -764,8 +742,8 @@ definitions:
        Provides the correction point coordinates for the atmospheric correction
        values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
        messages.
-       
-       
+
+
        Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
        element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
        correction points, not lists of points.
@@ -792,83 +770,83 @@ definitions:
            type: u16
            desc: >
              Unique identifier of this tile in the tile set.
-             
+
              See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
        - corner_nw_lat:
            type: s16
            units: encoded degrees
            desc: >
              North-West corner correction point latitude.
-             
-             
+
+
              The relation between the latitude X in the range [-90, 90] and
              the coded number N is:  N = floor((X / 90) * 2^14)
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
        - corner_nw_lon:
            type: s16
            units: encoded degrees
            desc: >
              North-West corner correction point longitude.
-             
-             
+
+
              The relation between the longitude X in the range [-180, 180]
              and the coded number N is: N = floor((X / 180) * 2^15)
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
        - spacing_lat:
            type: u16
            units: 0.01 degrees
            desc: >
              Spacing of the correction points in the latitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
        - spacing_lon:
            type: u16
            units: 0.01 degrees
            desc: >
              Spacing of the correction points in the longitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongitude.
        - rows:
            type: u16
            desc: >
              Number of steps in the latitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
        - cols:
            type: u16
            desc: >
              Number of steps in the longitude direction.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongitude.
        - bitmask:
            type: u64
            desc: >
              Specifies the absence of correction data at
              the correction points in the array (grid).
-             
-             
+
+
              Only the first rows * cols bits are used,
              and if a specific bit is enabled (set to 1),
              the correction is not available. If there
              are more than 64 correction points the
              remaining corrections are always available.
-             
-             
+
+
              The correction points are packed by rows,
              starting with the northwest corner of the
              array (top-left on a north oriented map),
              with each row spanning west to east, ending
              with the southeast corner of the array.
-             
-             
+
+
              See GNSS-SSR-ArrayOfCorrectionPoints
              field bitmaskOfGrids but note the definition
              of the bits is inverted.
@@ -934,7 +912,9 @@ definitions:
 
  - MSG_SSR_SATELLITE_APC_DEP:
      id: 0x0604
-     short_desc: Satellite antenna phase center corrections
+     short_desc: Deprecated
+     desc: Deprecated.
+     public: false
      replaced_by:
        - MSG_SSR_SATELLITE_APC
      fields:
@@ -972,7 +952,8 @@ definitions:
  - MSG_SSR_ORBIT_CLOCK_DEP_A:
     id: 0x05DC
     short_desc: Deprecated
-    public: False
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_SSR_ORBIT_CLOCK
     fields:
@@ -1123,7 +1104,8 @@ definitions:
  - MSG_SSR_STEC_CORRECTION_DEP_A:
     id: 0x05EB
     short_desc: Deprecated
-    public: False
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_SSR_STEC_CORRECTION
     fields:
@@ -1138,7 +1120,8 @@ definitions:
  - MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A:
     id: 0x05F0
     short_desc: Deprecated
-    public: False
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_SSR_STEC_CORRECTION_DEP
     fields:
@@ -1159,7 +1142,8 @@ definitions:
  - MSG_SSR_GRIDDED_CORRECTION_DEP_A:
     id: 0x05FA
     short_desc: Deprecated
-    public: False
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_SSR_GRIDDED_CORRECTION
     fields:
@@ -1180,7 +1164,8 @@ definitions:
  - MSG_SSR_GRID_DEFINITION_DEP_A:
     id: 0x05F5
     short_desc: Deprecated
-    public: False
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_SSR_TILE_DEFINITION_DEP
     fields:
@@ -1261,8 +1246,8 @@ definitions:
        i<=200, mean=0.01i;
        200<i<=230, mean=2+0.1(i-200);
        i>230, mean=5+0.5(i-230).
-       
-       
+
+
        Note 2: Range: 0-17.5 m.
        i<=200, std=0.01i;
        200<i<=230, std=2+0.1(i-200)
@@ -1310,7 +1295,7 @@ definitions:
            type: u8
            units: 0.005 m
            desc: >
-             Code Bias Standard Deviation. 
+             Code Bias Standard Deviation.
              Range: 0-1.275 m
        - phase_bias_bound_mu:
            type: u8
@@ -1322,7 +1307,7 @@ definitions:
            type: u8
            units: 0.005 m
            desc: >
-             Phase Bias Standard Deviation. 
+             Phase Bias Standard Deviation.
              Range: 0-1.275 m
 
  - MSG_SSR_CODE_PHASE_BIASES_BOUNDS:

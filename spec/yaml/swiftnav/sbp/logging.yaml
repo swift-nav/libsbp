@@ -75,7 +75,7 @@ definitions:
     id: 0x0010
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
       - MSG_LOG
     fields:

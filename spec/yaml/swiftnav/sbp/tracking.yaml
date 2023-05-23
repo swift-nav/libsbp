@@ -575,10 +575,11 @@ definitions:
 
  - MSG_TRACKING_IQ_DEP_B:
     id: 0x002C
-    short_desc: Tracking channel correlations
-    desc: >
-      When enabled, a tracking channel can output the correlations at each
-      update interval.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
+    replaced_by:
+      - MSG_TRACKING_IQ
     fields:
       - channel:
           type: u8
@@ -596,7 +597,7 @@ definitions:
     id: 0x001C
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
       - MSG_TRACKING_IQ
     fields:
@@ -641,7 +642,7 @@ definitions:
     id: 0x0016
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
       - MSG_TRACKING_STATE
     fields:
@@ -679,7 +680,7 @@ definitions:
     id: 0x0013
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
       - MSG_TRACKING_STATE
     fields:

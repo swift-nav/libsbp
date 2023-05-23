@@ -126,7 +126,7 @@ definitions:
               Implementors should consult a time source (such as GNSS) to
               check if the current time is later than the expiration time,
               if the condition is true, signatures in the stream should not
-              be considered valid.              
+              be considered valid.
         - signature:
             type: ECDSASignature
             desc: >
@@ -139,7 +139,11 @@ definitions:
 
   - MSG_CERTIFICATE_CHAIN_DEP:
       id: 0x0C05
-      short_desc: The certificate chain
+      short_desc: Deprecated
+      desc: Deprecated.
+      public: false
+      replaced_by:
+        - MSG_CERTIFICATE_CHAIN
       fields:
        - root_certificate:
            type: array
@@ -225,9 +229,11 @@ definitions:
 
   - MSG_ECDSA_SIGNATURE_DEP_B:
       id: 0x0C07
-      short_desc: An ECDSA signature
-      desc: >
-        An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+      short_desc: Deprecated
+      desc: Deprecated.
+      public: false
+      replaced_by:
+        - MSG_ECDSA_SIGNATURE
       fields:
         - flags:
             type: u8
@@ -284,9 +290,11 @@ definitions:
 
   - MSG_ECDSA_SIGNATURE_DEP_A:
       id: 0x0C06
-      short_desc: An ECDSA signature
-      desc: >
-        An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+      short_desc: Deprecated
+      desc: Deprecated.
+      public: false
+      replaced_by:
+        - MSG_ECDSA_SIGNATURE
       fields:
         - flags:
             type: u8
@@ -337,9 +345,11 @@ definitions:
 
   - MSG_ED25519_CERTIFICATE_DEP:
       id: 0x0C02
-      public: False
+      short_desc: Deprecated
+      desc: Deprecated.
+      public: false
       replaced_by:
-        - MSG_ECDSA_CERTIFICATE
+        - MSG_ED25519_CERTIFICATE
       fields:
         - n_msg:
             type: u8
@@ -359,10 +369,11 @@ definitions:
 
   - MSG_ED25519_SIGNATURE_DEP_A:
       id: 0x0C01
-      public: False
-      replaced_by:
-        - MSG_ECDSA_SIGNATURE
       short_desc: Deprecated
+      desc: Deprecated.
+      public: false
+      replaced_by:
+        - MSG_ED25519_CERTIFICATE
       fields:
         - signature:
             type: array
@@ -381,9 +392,11 @@ definitions:
 
   - MSG_ED25519_SIGNATURE_DEP_B:
       id: 0x0C03
-      public: False
+      short_desc: Deprecated
+      desc: Deprecated.
+      public: false
       replaced_by:
-        - MSG_ECDSA_SIGNATURE
+        - MSG_ED25519_CERTIFICATE
       fields:
         - stream_counter:
             type: u8

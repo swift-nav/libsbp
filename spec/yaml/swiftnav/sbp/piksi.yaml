@@ -56,10 +56,11 @@ definitions:
 
  - MSG_RESET_DEP:
     id: 0x00B2
-    short_desc: Reset the device (host => Piksi)
-    desc: >
-      This message from the host resets the Piksi back into the
-      bootloader.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
+    replaced_by:
+      - MSG_RESET
 
  - MSG_CW_RESULTS:
     id: 0x00C0
@@ -100,7 +101,8 @@ definitions:
  - MSG_INIT_BASE_DEP:
     id: 0x0023
     short_desc: Deprecated
-    desc: Deprecated
+    desc: Deprecated.
+    public: false
 
  - MSG_THREAD_STATE:
     id: 0x0017
@@ -243,7 +245,10 @@ definitions:
  - MSG_UART_STATE_DEPA:
     id: 0x0018
     short_desc: Deprecated
-    desc: Deprecated
+    desc: Deprecated.
+    public: false
+    replaced_by:
+      - MSG_UART_STATE
     fields:
         - uart_a:
             type: UARTChannel
@@ -302,7 +307,7 @@ definitions:
     id: 0x001B
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
       - MSG_MASK_SATELLITE
     fields:
@@ -543,7 +548,7 @@ definitions:
     id: 0x0050
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
       - MSG_SPECAN
     fields:

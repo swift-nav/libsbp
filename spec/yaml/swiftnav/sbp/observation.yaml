@@ -354,15 +354,11 @@ definitions:
 
  - MSG_EPHEMERIS_GPS_DEP_E:
     id: 0x0081
-    short_desc: Satellite broadcast ephemeris for GPS
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
-      - MSG_EPHEMERIS
-    desc: >
-      The ephemeris message returns a set of satellite orbit
-      parameters that is used to calculate GPS satellite position,
-      velocity, and clock offset. Please see the Navstar GPS
-      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-      20-III) for more details.
+      - MSG_EPHEMERIS_GPS
     fields:
       - common:
           type: EphemerisCommonContentDepA
@@ -455,11 +451,10 @@ definitions:
  - MSG_EPHEMERIS_GPS_DEP_F:
     id: 0x0086
     short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_GPS
-    desc: >
-      This observation message has been deprecated in favor of
-      ephemeris message using floats for size reduction.
     fields:
       - common:
           type: EphemerisCommonContentDepB
@@ -855,11 +850,10 @@ definitions:
  - MSG_EPHEMERIS_GAL_DEP_A:
     id: 0x0095
     short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_GAL
-    desc: >
-      This observation message has been deprecated in favor of
-      an ephemeris message with explicit source of NAV data.
     fields:
       - common:
           type: EphemerisCommonContent
@@ -1059,7 +1053,9 @@ definitions:
 
  - MSG_EPHEMERIS_SBAS_DEP_A:
     id: 0x0082
-    short_desc: Satellite broadcast ephemeris for SBAS
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_SBAS
     fields:
@@ -1098,15 +1094,11 @@ definitions:
 
  - MSG_EPHEMERIS_GLO_DEP_A:
     id: 0x0083
-    short_desc: Satellite broadcast ephemeris for GLO
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_GLO
-    desc: >
-      The ephemeris message returns a set of satellite orbit
-      parameters that is used to calculate GLO satellite position,
-      velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-      Characteristics of words of immediate information (ephemeris parameters)"
-      for more details.
     fields:
       - common:
           type: EphemerisCommonContentDepA
@@ -1143,11 +1135,10 @@ definitions:
  - MSG_EPHEMERIS_SBAS_DEP_B:
     id: 0x0084
     short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_SBAS
-    desc: >
-      This observation message has been deprecated in favor of
-      ephemeris message using floats for size reduction.
     fields:
       - common:
           type: EphemerisCommonContentDepB
@@ -1221,15 +1212,11 @@ definitions:
 
  - MSG_EPHEMERIS_GLO_DEP_B:
     id: 0x0085
-    short_desc: Satellite broadcast ephemeris for GLO
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_GLO
-    desc: >
-      The ephemeris message returns a set of satellite orbit
-      parameters that is used to calculate GLO satellite position,
-      velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-      Characteristics of words of immediate information (ephemeris parameters)"
-      for more details.
     fields:
       - common:
           type: EphemerisCommonContentDepB
@@ -1265,7 +1252,9 @@ definitions:
 
  - MSG_EPHEMERIS_GLO_DEP_C:
     id: 0x0087
-    short_desc: Satellite broadcast ephemeris for GLO
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_GLO
     desc: >
@@ -1317,6 +1306,8 @@ definitions:
  - MSG_EPHEMERIS_GLO_DEP_D:
     id: 0x0088
     short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_EPHEMERIS_GLO
     desc: >
@@ -1419,14 +1410,11 @@ definitions:
 
  - MSG_EPHEMERIS_DEP_D:
     id: 0x0080
-    short_desc: Satellite broadcast ephemeris
-    public: False
-    desc: >
-      The ephemeris message returns a set of satellite orbit
-      parameters that is used to calculate GPS satellite position,
-      velocity, and clock offset. Please see the Navstar GPS
-      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-      20-III) for more details.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
+    replaced_by:
+      - MSG_EPHEMERIS_GPS
     fields:
       - tgd:
           type: double
@@ -1542,9 +1530,9 @@ definitions:
     id: 0x001A
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
-      - MSG_EPHEMERIS
+      - MSG_EPHEMERIS_GPS
     fields:
       - tgd:
           type: double
@@ -1651,9 +1639,9 @@ definitions:
     id: 0x0046
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
-      - MSG_EPHEMERIS
+      - MSG_EPHEMERIS_GPS
     fields:
       - tgd:
           type: double
@@ -1761,14 +1749,11 @@ definitions:
 
  - MSG_EPHEMERIS_DEP_C:
     id: 0x0047
-    short_desc: Satellite broadcast ephemeris
-    public: False
-    desc: >
-      The ephemeris message returns a set of satellite orbit
-      parameters that is used to calculate GPS satellite position,
-      velocity, and clock offset. Please see the Navstar GPS
-      Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-      20-III) for more details.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
+    replaced_by:
+      - MSG_EPHEMERIS_GPS
     fields:
       - tgd:
           type: double
@@ -1997,7 +1982,7 @@ definitions:
     id: 0x0045
     short_desc: Deprecated
     desc: Deprecated.
-    public: False
+    public: false
     replaced_by:
       - MSG_OBS
     fields:
@@ -2015,14 +2000,8 @@ definitions:
  - MSG_OBS_DEP_B:
     id: 0x0043
     short_desc: Deprecated
-    desc: >
-      This observation message has been deprecated in favor of
-      observations that are more interoperable. This message
-      should be used for observations referenced to
-      a nominal pseudorange which are not interoperable with
-      most 3rd party GNSS receivers or typical RTCMv3
-      observations.
-    public: False
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_OBS
     fields:
@@ -2040,15 +2019,8 @@ definitions:
  - MSG_OBS_DEP_C:
     id: 0x0049
     short_desc: Deprecated
-    desc: >
-      The GPS observations message reports all the raw pseudorange and
-      carrier phase observations for the satellites being tracked by
-      the device. Carrier phase observation here is represented as a
-      40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-      whole cycles and 8-bits of fractional cycles). The observations
-      are interoperable with 3rd party receivers and conform
-      with typical RTCMv3 GNSS observations.
-    public: False
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_OBS
     fields:
@@ -2101,9 +2073,11 @@ definitions:
 
  - MSG_SV_CONFIGURATION_GPS_DEP:
     id: 0x0091
-    short_desc: L2C capability mask
-    desc: >
-      Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
+    replaced_by:
+      - MSG_GNSS_CAPB
     fields:
       - t_nmct:
           type: GPSTimeSec
@@ -2167,7 +2141,9 @@ definitions:
 
  - MSG_GNSS_CAPB:
     id: 0x0096
-    short_desc: GNSS capabilities
+    short_desc: GNSS capabilities masks
+    desc:
+      Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
     fields:
       - t_nmct:
           type: GPSTimeSec
@@ -2178,8 +2154,9 @@ definitions:
 
  - MSG_GROUP_DELAY_DEP_A:
     id: 0x0092
-    short_desc: Group Delay
-    desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_GROUP_DELAY
     fields:
@@ -2207,8 +2184,9 @@ definitions:
 
  - MSG_GROUP_DELAY_DEP_B:
     id: 0x0093
-    short_desc: Group Delay
-    desc: Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_GROUP_DELAY
     fields:
@@ -2339,13 +2317,9 @@ definitions:
 
  - MSG_ALMANAC_GPS_DEP:
     id: 0x0070
-    short_desc: Satellite broadcast ephemeris for GPS
-    desc: >
-      The almanac message returns a set of satellite orbit parameters. Almanac
-      data is not very precise and is considered valid for up to several months.
-      Please see the Navstar GPS Space Segment/Navigation user interfaces
-      (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
-    public: False
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_ALMANAC_GPS
     fields:
@@ -2390,7 +2364,7 @@ definitions:
 
  - MSG_ALMANAC_GPS:
     id: 0x0072
-    short_desc: Satellite broadcast ephemeris for GPS
+    short_desc: Satellite broadcast almanac for GPS
     desc: >
       The almanac message returns a set of satellite orbit parameters. Almanac
       data is not very precise and is considered valid for up to several months.
@@ -2438,13 +2412,9 @@ definitions:
 
  - MSG_ALMANAC_GLO_DEP:
     id: 0x0071
-    short_desc: Satellite broadcast ephemeris for GLO
-    desc: >
-      The almanac message returns a set of satellite orbit parameters. Almanac
-      data is not very precise and is considered valid for up to several months.
-      Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
-      almanac" for details.
-    public: False
+    short_desc: Deprecated
+    desc: Deprecated.
+    public: false
     replaced_by:
       - MSG_ALMANAC_GPS
     fields:
@@ -2483,7 +2453,7 @@ definitions:
 
  - MSG_ALMANAC_GLO:
     id: 0x0073
-    short_desc: Satellite broadcast ephemeris for GLO
+    short_desc: Satellite broadcast almanac for GLO
     desc: >
       The almanac message returns a set of satellite orbit parameters. Almanac
       data is not very precise and is considered valid for up to several months.
