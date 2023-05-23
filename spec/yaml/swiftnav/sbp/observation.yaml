@@ -2143,6 +2143,8 @@ definitions:
     id: 0x0096
     short_desc: GNSS capabilities masks
     desc:
+      Bit masks of signal capabilities for each GNSS satellite PRN.
+
       Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
     fields:
       - t_nmct:
