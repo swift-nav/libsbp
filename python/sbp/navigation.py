@@ -634,6 +634,8 @@ class MsgDops(SBP):
   indicated whether the DOP reported corresponds to differential or SPP
   solution.
 
+  The values in this message are from GNSS measurements only.
+
   Parameters
   ----------
   sbp : SBP
@@ -1364,6 +1366,9 @@ class MsgPosLLHAcc(SBP):
   The estimated errors are reported at a user-configurable confidence level.
   The user-configured percentile is encoded in the percentile field.
 
+  The values in this message are from GNSS measurements fused with inertial
+  measurements.
+
   Parameters
   ----------
   sbp : SBP
@@ -1530,6 +1535,8 @@ class MsgBaselineECEF(SBP):
   base station to the rover receiver. The full GPS time is given by the
   preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
+  The values in this message are from GNSS measurements only.
+
   Parameters
   ----------
   sbp : SBP
@@ -1659,6 +1666,8 @@ class MsgBaselineNED(SBP):
   local WGS84 tangent plane centered at the base station position.  The full
   GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
   week (tow).
+
+  The values in this message are from GNSS measurements only.
 
   Parameters
   ----------
@@ -3553,6 +3562,9 @@ class MsgVelBody(SBP):
   only produced by inertial versions of Swift products and is not available
   from Piksi Multi or Duro.
 
+  The values in this message are from GNSS measurements fused with inertial
+  measurements.
+
   Parameters
   ----------
   sbp : SBP
@@ -3712,6 +3724,9 @@ class MsgVelCog(SBP):
   preceding MSG_GPS_TIME with the matching time-of-week (tow). Note: course
   over ground represents the receiver's direction of travel, but not
   necessarily the device heading.
+
+  The values in this message are from GNSS measurements fused with inertial
+  measurements.
 
   Parameters
   ----------
@@ -3942,17 +3957,7 @@ class MsgGPSTimeDepA(SBP):
   of its fields.
 
   
-  This message reports the GPS time, representing the time since the GPS epoch
-  began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds
-  of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0
-  began at the beginning of the GPS time scale.
-
-  Within each week number, the GPS time of the week is between between 0 and
-  604800 seconds (=60*60*24*7). Note that GPS time does not accumulate leap
-  seconds, and as of now, has a small offset from UTC. In a message stream,
-  this message precedes a set of other navigation messages referenced to the
-  same time (but lacking the ns field) and indicates a more precise time of
-  these messages.
+  Deprecated.
 
   Parameters
   ----------
@@ -4063,8 +4068,7 @@ class MsgDopsDepA(SBP):
   of its fields.
 
   
-  This dilution of precision (DOP) message describes the effect of navigation
-  satellite geometry on positional measurement precision.
+  Deprecated.
 
   Parameters
   ----------
@@ -4184,13 +4188,7 @@ class MsgPosECEFDepA(SBP):
   of its fields.
 
   
-  The position solution message reports absolute Earth Centered Earth Fixed
-  (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
-  the position solution. If the rover receiver knows the surveyed position of
-  the base station and has an RTK solution, this reports a pseudo-absolute
-  position solution using the base station position and the rover's RTK
-  baseline vector. The full GPS time is given by the preceding MSG_GPS_TIME
-  with the matching time-of-week (tow).
+  Deprecated.
 
   Parameters
   ----------
@@ -4315,13 +4313,7 @@ class MsgPosLLHDepA(SBP):
   of its fields.
 
   
-  This position solution message reports the absolute geodetic coordinates and
-  the status (single point vs pseudo-absolute RTK) of the position solution.
-  If the rover receiver knows the surveyed position of the base station and
-  has an RTK solution, this reports a pseudo-absolute position solution using
-  the base station position and the rover's RTK baseline vector. The full GPS
-  time is given by the preceding MSG_GPS_TIME with the matching time-of-week
-  (tow).
+  Deprecated.
 
   Parameters
   ----------
@@ -4451,10 +4443,7 @@ class MsgBaselineECEFDepA(SBP):
   of its fields.
 
   
-  This message reports the baseline solution in Earth Centered Earth Fixed
-  (ECEF) coordinates. This baseline is the relative vector distance from the
-  base station to the rover receiver. The full GPS time is given by the
-  preceding MSG_GPS_TIME with the matching time-of-week (tow).
+  Deprecated.
 
   Parameters
   ----------
@@ -4579,12 +4568,7 @@ class MsgBaselineNEDDepA(SBP):
   of its fields.
 
   
-  This message reports the baseline solution in North East Down (NED)
-  coordinates. This baseline is the relative vector distance from the base
-  station to the rover receiver, and NED coordinate system is defined at the
-  local WGS84 tangent plane centered at the base station position.  The full
-  GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
-  week (tow).
+  Deprecated.
 
   Parameters
   ----------
@@ -4714,9 +4698,7 @@ class MsgVelECEFDepA(SBP):
   of its fields.
 
   
-  This message reports the velocity in Earth Centered Earth Fixed (ECEF)
-  coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
-  the matching time-of-week (tow).
+  Deprecated.
 
   Parameters
   ----------
@@ -4841,10 +4823,7 @@ class MsgVelNEDDepA(SBP):
   of its fields.
 
   
-  This message reports the velocity in local North East Down (NED)
-  coordinates. The NED coordinate system is defined as the local WGS84 tangent
-  plane centered at the current position. The full GPS time is given by the
-  preceding MSG_GPS_TIME with the matching time-of-week (tow).
+  Deprecated.
 
   Parameters
   ----------
@@ -4974,9 +4953,7 @@ class MsgBaselineHeadingDepA(SBP):
   of its fields.
 
   
-  This message reports the baseline heading pointing from the base station to
-  the rover relative to True North. The full GPS time is given by the
-  preceding MSG_GPS_TIME with the matching time-of-week (tow).
+  Deprecated.
 
   Parameters
   ----------
@@ -5086,9 +5063,7 @@ class MsgProtectionLevelDepA(SBP):
   of its fields.
 
   
-  This message reports the local vertical and horizontal protection levels
-  associated with a given LLH position solution. The full GPS time is given by
-  the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+  Deprecated.
 
   Parameters
   ----------

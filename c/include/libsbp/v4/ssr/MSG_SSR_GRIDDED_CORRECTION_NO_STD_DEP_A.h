@@ -41,6 +41,10 @@ extern "C" {
  * SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * Header of a Gridded Correction message

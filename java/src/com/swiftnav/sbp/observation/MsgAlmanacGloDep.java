@@ -25,9 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_ALMANAC_GLO_DEP inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>The almanac message returns a set of satellite orbit parameters. Almanac data is not very
- * precise and is considered valid for up to several months. Please see the GLO ICD 5.1 "Chapter 4.5
- * Non-immediate information and almanac" for details.
+ * <p>Deprecated.
  */
 public class MsgAlmanacGloDep extends SBPMessage {
     public static final int TYPE = 0x0071;

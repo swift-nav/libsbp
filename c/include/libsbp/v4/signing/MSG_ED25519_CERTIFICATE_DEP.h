@@ -38,6 +38,10 @@ extern "C" {
  * SBP_MSG_ED25519_CERTIFICATE_DEP
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * Total number messages that make up the certificate. First nibble is the

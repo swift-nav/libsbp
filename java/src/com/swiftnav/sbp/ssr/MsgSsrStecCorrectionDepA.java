@@ -20,6 +20,14 @@ import com.swiftnav.sbp.SBPStruct;
 import com.swiftnav.sbp.gnss.*;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
+ *
+ * <p>You can have MSG_SSR_STEC_CORRECTION_DEP_A inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
+ *
+ * <p>Deprecated.
+ */
 public class MsgSsrStecCorrectionDepA extends SBPMessage {
     public static final int TYPE = 0x05EB;
 

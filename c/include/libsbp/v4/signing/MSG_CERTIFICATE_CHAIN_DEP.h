@@ -39,6 +39,10 @@ extern "C" {
  * SBP_MSG_CERTIFICATE_CHAIN_DEP
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * SHA-1 fingerprint of the root certificate

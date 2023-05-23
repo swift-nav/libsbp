@@ -966,7 +966,7 @@ pub mod msg_init_base_dep {
 
     /// Deprecated
     ///
-    /// Deprecated
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2019,9 +2019,9 @@ pub mod msg_reset_dep {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// Reset the device (host => Piksi)
+    /// Deprecated
     ///
-    /// This message from the host resets the Piksi back into the bootloader.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2750,7 +2750,7 @@ pub mod msg_uart_state_depa {
 
     /// Deprecated
     ///
-    /// Deprecated
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]

@@ -38,10 +38,9 @@ extern "C" {
  * SBP_MSG_DOPS_DEP_A
  *
  *****************************************************************************/
-/** Dilution of Precision
+/** Deprecated
  *
- * This dilution of precision (DOP) message describes the effect of navigation
- * satellite geometry on positional measurement precision.
+ * Deprecated.
  */
 typedef struct {
   /**

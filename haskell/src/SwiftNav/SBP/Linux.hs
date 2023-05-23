@@ -40,8 +40,7 @@ msgLinuxCpuStateDepA = 0x7F00
 
 -- | SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
 --
--- This message indicates the process state of the top 10 heaviest consumers
--- of CPU on the system.
+-- Deprecated.
 data MsgLinuxCpuStateDepA = MsgLinuxCpuStateDepA
   { _msgLinuxCpuStateDepA_index :: !Word8
     -- ^ sequence of this status message, values from 0-9
@@ -80,8 +79,7 @@ msgLinuxMemStateDepA = 0x7F01
 
 -- | SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
 --
--- This message indicates the process state of the top 10 heaviest consumers
--- of memory on the system.
+-- Deprecated.
 data MsgLinuxMemStateDepA = MsgLinuxMemStateDepA
   { _msgLinuxMemStateDepA_index :: !Word8
     -- ^ sequence of this status message, values from 0-9
@@ -120,7 +118,7 @@ msgLinuxSysStateDepA = 0x7F02
 
 -- | SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
 --
--- This presents a summary of CPU and memory utilization.
+-- Deprecated.
 data MsgLinuxSysStateDepA = MsgLinuxSysStateDepA
   { _msgLinuxSysStateDepA_mem_total    :: !Word16
     -- ^ total system memory

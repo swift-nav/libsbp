@@ -1112,7 +1112,9 @@ type alias MsgBasePosLLH =
 {-| This message reports the baseline solution in Earth Centered Earth Fixed (ECEF)
 coordinates. This baseline is the relative vector distance from the base station to the
 rover receiver. The full GPS time is given by the preceding MSG_GPS_TIME with the
-matching time-of-week (tow).
+matching time-of-week (tow).,
+,
+The values in this message are from GNSS measurements only.
 -}
 type alias MsgBaselineECEF =
     { accuracy : Int
@@ -1140,7 +1142,9 @@ type alias MsgBaselineHeading =
 baseline is the relative vector distance from the base station to the rover receiver, and
 NED coordinate system is defined at the local WGS84 tangent plane centered at the base
 station position.  The full GPS time is given by the preceding MSG_GPS_TIME with the
-matching time-of-week (tow).
+matching time-of-week (tow).,
+,
+The values in this message are from GNSS measurements only.
 -}
 type alias MsgBaselineNED =
     { d : Int
@@ -1264,7 +1268,9 @@ type alias MsgDgnssStatus =
 
 {-| This dilution of precision (DOP) message describes the effect of navigation satellite
 geometry on positional measurement precision.  The flags field indicated whether the DOP
-reported corresponds to differential or SPP solution.
+reported corresponds to differential or SPP solution.,
+,
+The values in this message are from GNSS measurements only.
 -}
 type alias MsgDops =
     { flags : Int
@@ -1693,6 +1699,9 @@ type alias MsgGloBiases =
     , mask : Int
     }
 
+{-| Bit masks of signal capabilities for each GNSS satellite PRN.,
+Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+-}
 type alias MsgGnssCapb =
     { gc : GnssCapb
     , tNmct : GpsTimeSEC
@@ -2273,7 +2282,9 @@ in the local-level North, East, Down frame, the estimated error terms follow tha
 convention.,
 ,
 The estimated errors are reported at a user-configurable confidence level. The
-user-configured percentile is encoded in the percentile field.
+user-configured percentile is encoded in the percentile field.,
+,
+The values in this message are from GNSS measurements fused with inertial measurements.
 -}
 type alias MsgPosLLHAcc =
     { atAccuracy : Float
@@ -3226,7 +3237,9 @@ handed system, z should point out the bottom of the vehicle. The orientation and
 of the Vehicle Body Frame are specified via the device settings. The full GPS time is
 given by the preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
 only produced by inertial versions of Swift products and is not available from Piksi
-Multi or Duro.
+Multi or Duro.,
+,
+The values in this message are from GNSS measurements fused with inertial measurements.
 -}
 type alias MsgVelBody =
     { covXX : Float
@@ -3251,7 +3264,9 @@ until the system exceeds a minimum velocity threshold. No other fields are affec
 this flag. The NED coordinate system is defined as the local WGS84 tangent plane centered
 at the current position. The full GPS time is given by the preceding MSG_GPS_TIME with
 the matching time-of-week (tow). Note: course over ground represents the receiver's
-direction of travel, but not necessarily the device heading.
+direction of travel, but not necessarily the device heading.,
+,
+The values in this message are from GNSS measurements fused with inertial measurements.
 -}
 type alias MsgVelCog =
     { cog : Int

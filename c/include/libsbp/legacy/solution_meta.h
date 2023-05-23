@@ -49,10 +49,6 @@ typedef struct SBP_ATTR_PACKED {
 /** Deprecated
  *
  * Deprecated.
- *
- * This message contains all metadata about the sensors received and/or used
- * in computing the Fuzed Solution. It focuses primarily, but not only, on
- * GNSS metadata.
  */
 
 typedef struct SBP_ATTR_PACKED {

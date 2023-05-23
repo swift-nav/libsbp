@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_SV_CONFIGURATION_GPS_DEP inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ * <p>Deprecated.
  */
 public class MsgSvConfigurationGPSDep extends SBPMessage {
     public static final int TYPE = 0x0091;

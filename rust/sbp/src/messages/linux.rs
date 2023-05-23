@@ -198,10 +198,9 @@ pub mod msg_linux_cpu_state_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// List CPU state on the system. DEPRECATED
+    /// Deprecated
     ///
-    /// This message indicates the process state of the top 10 heaviest consumers
-    /// of CPU on the system.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -472,10 +471,9 @@ pub mod msg_linux_mem_state_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// List memory state on the system. DEPRECATED
+    /// Deprecated
     ///
-    /// This message indicates the process state of the top 10 heaviest consumers
-    /// of memory on the system.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1292,9 +1290,9 @@ pub mod msg_linux_sys_state_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// CPU, Memory and Process Starts/Stops. DEPRECATED
+    /// Deprecated
     ///
-    /// This presents a summary of CPU and memory utilization.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]

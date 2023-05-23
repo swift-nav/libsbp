@@ -1267,10 +1267,7 @@ class MsgEphemerisGPSDepE(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit parameters that is
-  used to calculate GPS satellite position, velocity, and clock offset. Please
-  see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
-  Table 20-III) for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -1477,8 +1474,7 @@ class MsgEphemerisGPSDepF(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of ephemeris message
-  using floats for size reduction.
+  Deprecated.
 
   Parameters
   ----------
@@ -2322,8 +2318,7 @@ class MsgEphemerisGalDepA(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of an ephemeris
-  message with explicit source of NAV data.
+  Deprecated.
 
   Parameters
   ----------
@@ -2755,6 +2750,7 @@ class MsgEphemerisSbasDepA(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -2874,10 +2870,7 @@ class MsgEphemerisGloDepA(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit parameters that is
-  used to calculate GLO satellite position, velocity, and clock offset. Please
-  see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
-  information (ephemeris parameters)" for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -2997,8 +2990,7 @@ class MsgEphemerisSbasDepB(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of ephemeris message
-  using floats for size reduction.
+  Deprecated.
 
   Parameters
   ----------
@@ -3237,10 +3229,7 @@ class MsgEphemerisGloDepB(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit parameters that is
-  used to calculate GLO satellite position, velocity, and clock offset. Please
-  see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
-  information (ephemeris parameters)" for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -3767,10 +3756,7 @@ class MsgEphemerisDepD(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit parameters that is
-  used to calculate GPS satellite position, velocity, and clock offset. Please
-  see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
-  Table 20-III) for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -4456,10 +4442,7 @@ class MsgEphemerisDepC(SBP):
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit parameters that is
-  used to calculate GPS satellite position, velocity, and clock offset. Please
-  see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
-  Table 20-III) for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -4796,10 +4779,7 @@ class MsgObsDepB(SBP):
   of its fields.
 
   
-  This observation message has been deprecated in favor of observations that
-  are more interoperable. This message should be used for observations
-  referenced to a nominal pseudorange which are not interoperable with most
-  3rd party GNSS receivers or typical RTCMv3 observations.
+  Deprecated.
 
   Parameters
   ----------
@@ -4899,12 +4879,7 @@ class MsgObsDepC(SBP):
   of its fields.
 
   
-  The GPS observations message reports all the raw pseudorange and carrier
-  phase observations for the satellites being tracked by the device. Carrier
-  phase observation here is represented as a 40-bit fixed point number with
-  Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional cycles).
-  The observations are interoperable with 3rd party receivers and conform with
-  typical RTCMv3 GNSS observations.
+  Deprecated.
 
   Parameters
   ----------
@@ -5133,7 +5108,7 @@ class MsgSvConfigurationGPSDep(SBP):
   of its fields.
 
   
-  Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -5233,6 +5208,8 @@ class MsgGnssCapb(SBP):
   of its fields.
 
   
+  Bit masks of signal capabilities for each GNSS satellite PRN.
+  Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 
   Parameters
   ----------
@@ -5332,7 +5309,7 @@ class MsgGroupDelayDepA(SBP):
   of its fields.
 
   
-  Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -5450,7 +5427,7 @@ class MsgGroupDelayDepB(SBP):
   of its fields.
 
   
-  Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -5686,10 +5663,7 @@ class MsgAlmanacGPSDep(SBP):
   of its fields.
 
   
-  The almanac message returns a set of satellite orbit parameters. Almanac
-  data is not very precise and is considered valid for up to several months.
-  Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
-  GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+  Deprecated.
 
   Parameters
   ----------
@@ -5972,10 +5946,7 @@ class MsgAlmanacGloDep(SBP):
   of its fields.
 
   
-  The almanac message returns a set of satellite orbit parameters. Almanac
-  data is not very precise and is considered valid for up to several months.
-  Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
-  almanac" for details.
+  Deprecated.
 
   Parameters
   ----------

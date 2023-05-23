@@ -40,6 +40,10 @@ extern "C" {
  * SBP_MSG_SSR_ORBIT_CLOCK_DEP_A
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * GNSS reference time of the correction

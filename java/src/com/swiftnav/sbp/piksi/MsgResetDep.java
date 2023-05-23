@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_RESET_DEP inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>This message from the host resets the Piksi back into the bootloader.
+ * <p>Deprecated.
  */
 public class MsgResetDep extends SBPMessage {
     public static final int TYPE = 0x00B2;

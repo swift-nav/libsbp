@@ -38,6 +38,10 @@ extern "C" {
  * SBP_MSG_ED25519_SIGNATURE_DEP_A
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * ED25519 signature for messages.

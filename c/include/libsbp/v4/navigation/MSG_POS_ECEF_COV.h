@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_POS_ECEF_COV
  *
  *****************************************************************************/
-/** Single-point position in ECEF
+/** Position in ECEF with Covariances
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
  * (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of

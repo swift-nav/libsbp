@@ -25,8 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_EPHEMERIS_GPS_DEP_F inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>This observation message has been deprecated in favor of ephemeris message using floats for
- * size reduction.
+ * <p>Deprecated.
  */
 public class MsgEphemerisGPSDepF extends SBPMessage {
     public static final int TYPE = 0x0086;

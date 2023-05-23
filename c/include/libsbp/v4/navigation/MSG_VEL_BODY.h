@@ -49,6 +49,7 @@ extern "C" {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow). This message is
  * only produced by inertial versions of Swift products and is not available
  * from Piksi Multi or Duro.
+ *
  */
 typedef struct {
   /**

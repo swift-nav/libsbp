@@ -177,13 +177,13 @@ pub mod code_phase_biases_sat_sig {
         /// Code Bias Mean. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename = "code_bias_bound_mu"))]
         pub code_bias_bound_mu: u8,
-        /// Code Bias Standard Deviation.  Range: 0-1.275 m
+        /// Code Bias Standard Deviation. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename = "code_bias_bound_sig"))]
         pub code_bias_bound_sig: u8,
         /// Phase Bias Mean. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename = "phase_bias_bound_mu"))]
         pub phase_bias_bound_mu: u8,
-        /// Phase Bias Standard Deviation.  Range: 0-1.275 m
+        /// Phase Bias Standard Deviation. Range: 0-1.275 m
         #[cfg_attr(feature = "serde", serde(rename = "phase_bias_bound_sig"))]
         pub phase_bias_bound_sig: u8,
     }
@@ -947,7 +947,11 @@ pub mod msg_ssr_gridded_correction_dep_a {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
+
     /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -1043,7 +1047,11 @@ pub mod msg_ssr_gridded_correction_no_std_dep_a {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
+
     /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -1139,7 +1147,11 @@ pub mod msg_ssr_grid_definition_dep_a {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
+
     /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -1613,7 +1625,11 @@ pub mod msg_ssr_orbit_clock_dep_a {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
+
     /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -2027,7 +2043,11 @@ pub mod msg_ssr_satellite_apc_dep {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
-    /// Satellite antenna phase center corrections
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -2213,14 +2233,9 @@ pub mod msg_ssr_stec_correction_dep {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// STEC correction polynomial coefficients
+    /// Deprecated
     ///
-    /// The Slant Total Electron Content per space vehicle, given as polynomial
-    /// approximation for a given tile. This should be combined with the
-    /// MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
-    /// of the atmospheric delay.
-    ///
-    /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2302,7 +2317,11 @@ pub mod msg_ssr_stec_correction_dep_a {
     use super::*;
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
+
     /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -2587,16 +2606,9 @@ pub mod msg_ssr_tile_definition_dep_a {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// Definition of a SSR atmospheric correction tile.
-
+    /// Deprecated
     ///
-    /// Provides the correction point coordinates for the atmospheric correction
-    /// values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-    /// messages.
-    ///
-    /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-    /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-    /// correction points, not lists of points.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -2766,16 +2778,9 @@ pub mod msg_ssr_tile_definition_dep_b {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// Definition of a SSR atmospheric correction tile.
-
+    /// Deprecated
     ///
-    /// Provides the correction point coordinates for the atmospheric correction
-    /// values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-    /// messages.
-    ///
-    /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-    /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-    /// correction points, not lists of points.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]

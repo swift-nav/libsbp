@@ -134,12 +134,14 @@ message MsgUtcTimeGnss {
     uint32 ns = 9;
 }
 
-/** Dilution of Precision
+/** GNSS-only Dilution of Precision
  *
  * This dilution of precision (DOP) message describes the effect of navigation
  * satellite geometry on positional measurement precision.  The flags field
  * indicated whether the DOP reported corresponds to differential or SPP
  * solution.
+ *
+ * The values in this message are from GNSS measurements only.
  */
 message MsgDops {
     uint32 tow = 1;
@@ -151,7 +153,7 @@ message MsgDops {
     uint32 flags = 7;
 }
 
-/** Single-point position in ECEF
+/** Position in ECEF
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
  * (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
@@ -175,7 +177,7 @@ message MsgPosEcef {
     uint32 flags = 7;
 }
 
-/** Single-point position in ECEF
+/** Position in ECEF with Covariances
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
  * (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
@@ -230,7 +232,7 @@ message MsgPosLlh {
     uint32 flags = 8;
 }
 
-/** Geodetic Position
+/** Geodetic Position with Covariances
  *
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
@@ -282,6 +284,9 @@ message EstimatedHorizontalErrorEllipse {
  *
  * The estimated errors are reported at a user-configurable confidence level.
  * The user-configured percentile is encoded in the percentile field.
+ *
+ * The values in this message are from GNSS measurements fused with inertial
+ * measurements.
  */
 message MsgPosLlhAcc {
     uint32 tow = 1;
@@ -299,12 +304,14 @@ message MsgPosLlhAcc {
     uint32 flags = 13;
 }
 
-/** Baseline Position in ECEF
+/** GNSS-only Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered Earth Fixed
  * (ECEF) coordinates. This baseline is the relative vector distance from the
  * base station to the rover receiver. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ *
+ * The values in this message are from GNSS measurements only.
  */
 message MsgBaselineEcef {
     uint32 tow = 1;
@@ -316,7 +323,7 @@ message MsgBaselineEcef {
     uint32 flags = 7;
 }
 
-/** Baseline in NED
+/** GNSS-only Baseline in NED
  *
  * This message reports the baseline solution in North East Down (NED)
  * coordinates. This baseline is the relative vector distance from the base
@@ -324,6 +331,8 @@ message MsgBaselineEcef {
  * local WGS84 tangent plane centered at the base station position.  The full
  * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-
  * week (tow).
+ *
+ * The values in this message are from GNSS measurements only.
  */
 message MsgBaselineNed {
     uint32 tow = 1;
@@ -356,7 +365,7 @@ message MsgVelEcef {
     uint32 flags = 7;
 }
 
-/** Velocity in ECEF
+/** Velocity in ECEF with Covariances
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
@@ -403,7 +412,7 @@ message MsgVelNed {
     uint32 flags = 8;
 }
 
-/** Velocity in NED
+/** Velocity in NED with Covariances
  *
  * This message reports the velocity in local North East Down (NED)
  * coordinates. The NED coordinate system is defined as the local WGS84
@@ -454,7 +463,7 @@ message MsgPosEcefGnss {
     uint32 flags = 7;
 }
 
-/** GNSS-only Position in ECEF
+/** GNSS-only Position in ECEF with Covariances
  *
  * The position solution message reports absolute Earth Centered Earth Fixed
  * (ECEF) coordinates and the status (single point vs pseudo-absolute RTK) of
@@ -507,7 +516,7 @@ message MsgPosLlhGnss {
     uint32 flags = 8;
 }
 
-/** GNSS-only Geodetic Position
+/** GNSS-only Geodetic Position with Covariances
  *
  * This position solution message reports the absolute geodetic coordinates
  * and the status (single point vs pseudo-absolute RTK) of the position
@@ -555,7 +564,7 @@ message MsgVelEcefGnss {
     uint32 flags = 7;
 }
 
-/** GNSS-only Velocity in ECEF
+/** GNSS-only Velocity in ECEF with Covariances
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS
@@ -600,7 +609,7 @@ message MsgVelNedGnss {
     uint32 flags = 8;
 }
 
-/** GNSS-only Velocity in NED
+/** GNSS-only Velocity in NED with Covariances
  *
  * This message reports the velocity in local North East Down (NED)
  * coordinates. The NED coordinate system is defined as the local WGS84
@@ -638,6 +647,9 @@ message MsgVelNedCovGnss {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow). This message
  * is only produced by inertial versions of Swift products and is not
  * available from Piksi Multi or Duro.
+ *
+ * The values in this message are from GNSS measurements fused with inertial
+ * measurements.
  */
 message MsgVelBody {
     uint32 tow = 1;
@@ -667,6 +679,9 @@ message MsgVelBody {
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow). Note:
  * course over ground represents the receiver's direction of travel, but not
  * necessarily the device heading.
+ *
+ * The values in this message are from GNSS measurements fused with inertial
+ * measurements.
  */
 message MsgVelCog {
     uint32 tow = 1;

@@ -39,7 +39,7 @@ extern "C" {
  * SBP_MSG_EPHEMERIS_GLO_DEP_C
  *
  *****************************************************************************/
-/** Satellite broadcast ephemeris for GLO
+/** Deprecated
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
  * used to calculate GLO satellite position, velocity, and clock offset. Please

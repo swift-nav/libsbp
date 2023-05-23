@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_VEL_NED_COV_GNSS
  *
  *****************************************************************************/
-/** GNSS-only Velocity in NED
+/** GNSS-only Velocity in NED with Covariances
  *
  * This message reports the velocity in local North East Down (NED) coordinates.
  * The NED coordinate system is defined as the local WGS84 tangent plane

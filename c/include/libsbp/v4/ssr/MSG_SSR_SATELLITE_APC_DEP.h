@@ -39,6 +39,10 @@ extern "C" {
  * SBP_MSG_SSR_SATELLITE_APC_DEP
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * Satellite antenna phase center corrections

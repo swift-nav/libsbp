@@ -29,10 +29,9 @@
 
 SBP_PACK_START
 
-/** List CPU state on the system. DEPRECATED
+/** Deprecated
  *
- * This message indicates the process state of the top 10 heaviest consumers
- * of CPU on the system.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -44,10 +43,9 @@ typedef struct SBP_ATTR_PACKED {
                         packet) */
 } msg_linux_cpu_state_dep_a_t;
 
-/** List memory state on the system. DEPRECATED
+/** Deprecated
  *
- * This message indicates the process state of the top 10 heaviest consumers
- * of memory on the system.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -59,9 +57,9 @@ typedef struct SBP_ATTR_PACKED {
                         packet) */
 } msg_linux_mem_state_dep_a_t;
 
-/** CPU, Memory and Process Starts/Stops. DEPRECATED
+/** Deprecated
  *
- * This presents a summary of CPU and memory utilization.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {

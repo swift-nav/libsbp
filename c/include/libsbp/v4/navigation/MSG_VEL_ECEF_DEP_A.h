@@ -38,11 +38,9 @@ extern "C" {
  * SBP_MSG_VEL_ECEF_DEP_A
  *
  *****************************************************************************/
-/** Velocity in ECEF
+/** Deprecated
  *
- * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
- * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME with
- * the matching time-of-week (tow).
+ * Deprecated.
  */
 typedef struct {
   /**

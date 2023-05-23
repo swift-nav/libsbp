@@ -107,7 +107,7 @@ MsgReset.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 /**
  * SBP class for message MSG_RESET_DEP (0x00B2).
  *
- * This message from the host resets the Piksi back into the bootloader.
+ * Deprecated.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -203,7 +203,7 @@ MsgResetFilters.prototype.fieldSpec.push(['filter', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_INIT_BASE_DEP (0x0023).
  *
- * Deprecated
+ * Deprecated.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -425,7 +425,7 @@ MsgUartState.prototype.fieldSpec.push(['obs_period', Period.prototype.fieldSpec]
 /**
  * SBP class for message MSG_UART_STATE_DEPA (0x0018).
  *
- * Deprecated
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field uart_a UARTChannel State of UART A

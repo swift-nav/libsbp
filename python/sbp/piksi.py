@@ -433,7 +433,7 @@ class MsgResetDep(SBP):
   of its fields.
 
   
-  This message from the host resets the Piksi back into the bootloader.
+  Deprecated.
 
   """
   __slots__ = []
@@ -665,7 +665,7 @@ class MsgInitBaseDep(SBP):
   of its fields.
 
   
-  Deprecated
+  Deprecated.
 
   """
   __slots__ = []
@@ -939,7 +939,7 @@ class MsgUartStateDepa(SBP):
   of its fields.
 
   
-  Deprecated
+  Deprecated.
 
   Parameters
   ----------

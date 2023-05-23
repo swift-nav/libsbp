@@ -193,12 +193,9 @@ typedef struct SBP_ATTR_PACKED {
                               GLO: 0 = valid, non-zero = invalid */
 } ephemeris_common_content_dep_a_t;
 
-/** Satellite broadcast ephemeris for GPS
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GPS satellite position, velocity, and clock offset.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
- * GPS-200, Table 20-III) for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -240,8 +237,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Deprecated
  *
- * This observation message has been deprecated in favor of ephemeris message
- * using floats for size reduction.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -419,8 +415,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Deprecated
  *
- * This observation message has been deprecated in favor of an ephemeris
- * message with explicit source of NAV data.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -508,6 +503,11 @@ typedef struct SBP_ATTR_PACKED {
   u8 source;          /**< 0=I/NAV, 1=F/NAV */
 } msg_ephemeris_gal_t;
 
+/** Deprecated
+ *
+ * Deprecated.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_a_t common; /**< Values common for all
                                                 ephemeris types */
@@ -519,12 +519,9 @@ typedef struct SBP_ATTR_PACKED {
   double a_gf1; /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
 } msg_ephemeris_sbas_dep_a_t;
 
-/** Satellite broadcast ephemeris for GLO
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GLO satellite position, velocity, and clock offset.
- * Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
- * information (ephemeris parameters)" for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -543,8 +540,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Deprecated
  *
- * This observation message has been deprecated in favor of ephemeris message
- * using floats for size reduction.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -568,12 +564,9 @@ typedef struct SBP_ATTR_PACKED {
   float a_gf1; /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
 } msg_ephemeris_sbas_t;
 
-/** Satellite broadcast ephemeris for GLO
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GLO satellite position, velocity, and clock offset.
- * Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
- * information (ephemeris parameters)" for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -590,7 +583,7 @@ typedef struct SBP_ATTR_PACKED {
                       coordinates sys [m/s^2] */
 } msg_ephemeris_glo_dep_b_t;
 
-/** Satellite broadcast ephemeris for GLO
+/** Deprecated
  *
  * The ephemeris message returns a set of satellite orbit parameters that is
  * used to calculate GLO satellite position, velocity, and clock offset.
@@ -667,12 +660,9 @@ typedef struct SBP_ATTR_PACKED {
                       word t_b */
 } msg_ephemeris_glo_t;
 
-/** Satellite broadcast ephemeris
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GPS satellite position, velocity, and clock offset.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
- * GPS-200, Table 20-III) for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -806,12 +796,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 iode;         /**< Issue of ephemeris data */
 } msg_ephemeris_dep_b_t;
 
-/** Satellite broadcast ephemeris
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GPS satellite position, velocity, and clock offset.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
- * GPS-200, Table 20-III) for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -946,10 +933,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Deprecated
  *
- * This observation message has been deprecated in favor of observations that
- * are more interoperable. This message should be used for observations
- * referenced to a nominal pseudorange which are not interoperable with most
- * 3rd party GNSS receivers or typical RTCMv3 observations.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -961,12 +945,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Deprecated
  *
- * The GPS observations message reports all the raw pseudorange and carrier
- * phase observations for the satellites being tracked by the device. Carrier
- * phase observation here is represented as a 40-bit fixed point number with
- * Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
- * cycles). The observations are interoperable with 3rd party receivers and
- * conform with typical RTCMv3 GNSS observations.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -996,9 +975,9 @@ typedef struct SBP_ATTR_PACKED {
   double b3;
 } msg_iono_t;
 
-/** L2C capability mask
+/** Deprecated
  *
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -1032,15 +1011,21 @@ typedef struct SBP_ATTR_PACKED {
   u64 gal_e5;      /**< GAL E5 active mask */
 } gnss_capb_t;
 
+/** GNSS capabilities masks
+ *
+ * Bit masks of signal capabilities for each GNSS satellite PRN.
+ * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ */
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_nmct; /**< Navigation Message Correction Table Validity
                               Time */
   gnss_capb_t gc;        /**< GNSS capabilities masks */
 } msg_gnss_capb_t;
 
-/** Group Delay
+/** Deprecated
  *
- * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -1054,9 +1039,9 @@ typedef struct SBP_ATTR_PACKED {
   s16 isc_l2c;
 } msg_group_delay_dep_a_t;
 
-/** Group Delay
+/** Deprecated
  *
- * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -1140,12 +1125,9 @@ typedef struct SBP_ATTR_PACKED {
                                   and suitable for navigation. */
 } almanac_common_content_dep_t;
 
-/** Satellite broadcast ephemeris for GPS
+/** Deprecated
  *
- * The almanac message returns a set of satellite orbit parameters. Almanac
- * data is not very precise and is considered valid for up to several months.
- * Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
- * GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -1165,7 +1147,7 @@ typedef struct SBP_ATTR_PACKED {
                         drift) [s/s] */
 } msg_almanac_gps_dep_t;
 
-/** Satellite broadcast ephemeris for GPS
+/** Satellite broadcast almanac for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
  * data is not very precise and is considered valid for up to several months.
@@ -1190,12 +1172,9 @@ typedef struct SBP_ATTR_PACKED {
                         drift) [s/s] */
 } msg_almanac_gps_t;
 
-/** Satellite broadcast ephemeris for GLO
+/** Deprecated
  *
- * The almanac message returns a set of satellite orbit parameters. Almanac
- * data is not very precise and is considered valid for up to several months.
- * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
- * almanac" for details.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {
@@ -1213,7 +1192,7 @@ typedef struct SBP_ATTR_PACKED {
   double omega;   /**< Argument of perigee at instant of t_lambda [rad] */
 } msg_almanac_glo_dep_t;
 
-/** Satellite broadcast ephemeris for GLO
+/** Satellite broadcast almanac for GLO
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
  * data is not very precise and is considered valid for up to several months.

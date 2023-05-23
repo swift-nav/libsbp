@@ -38,11 +38,9 @@ extern "C" {
  * SBP_MSG_BASELINE_HEADING_DEP_A
  *
  *****************************************************************************/
-/** Heading relative to True North
+/** Deprecated
  *
- * This message reports the baseline heading pointing from the base station to
- * the rover relative to True North. The full GPS time is given by the preceding
- * MSG_GPS_TIME with the matching time-of-week (tow).
+ * Deprecated.
  */
 typedef struct {
   /**

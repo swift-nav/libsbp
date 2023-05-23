@@ -106,7 +106,7 @@ msgResetDep = 0x00B2
 
 -- | SBP class for message MSG_RESET_DEP (0x00B2).
 --
--- This message from the host resets the Piksi back into the bootloader.
+-- Deprecated.
 data MsgResetDep = MsgResetDep
   deriving ( Show, Read, Eq )
 
@@ -191,7 +191,7 @@ msgInitBaseDep = 0x0023
 
 -- | SBP class for message MSG_INIT_BASE_DEP (0x0023).
 --
--- Deprecated
+-- Deprecated.
 data MsgInitBaseDep = MsgInitBaseDep
   deriving ( Show, Read, Eq )
 
@@ -399,7 +399,7 @@ msgUartStateDepa = 0x0018
 
 -- | SBP class for message MSG_UART_STATE_DEPA (0x0018).
 --
--- Deprecated
+-- Deprecated.
 data MsgUartStateDepa = MsgUartStateDepa
   { _msgUartStateDepa_uart_a  :: !UARTChannel
     -- ^ State of UART A

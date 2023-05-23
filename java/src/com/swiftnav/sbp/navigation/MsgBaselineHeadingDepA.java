@@ -24,9 +24,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_BASELINE_HEADING_DEP_A inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>This message reports the baseline heading pointing from the base station to the rover relative
- * to True North. The full GPS time is given by the preceding MSG_GPS_TIME with the matching
- * time-of-week (tow).
+ * <p>Deprecated.
  */
 public class MsgBaselineHeadingDepA extends SBPMessage {
     public static final int TYPE = 0x0207;

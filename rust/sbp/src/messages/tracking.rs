@@ -304,10 +304,9 @@ pub mod msg_tracking_iq_dep_b {
     use crate::messages::gnss::*;
     use crate::messages::lib::*;
 
-    /// Tracking channel correlations
+    /// Deprecated
     ///
-    /// When enabled, a tracking channel can output the correlations at each
-    /// update interval.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]

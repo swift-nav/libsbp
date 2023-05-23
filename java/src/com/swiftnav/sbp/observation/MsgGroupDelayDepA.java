@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_GROUP_DELAY_DEP_A inherent its fields directly from an inherited SBP object,
  * or construct it inline using a dict of its fields.
  *
- * <p>Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * <p>Deprecated.
  */
 public class MsgGroupDelayDepA extends SBPMessage {
     public static final int TYPE = 0x0092;
