@@ -38,12 +38,13 @@ extern "C" {
  * SBP_MSG_DOPS
  *
  *****************************************************************************/
-/** Dilution of Precision
+/** GNSS-only Dilution of Precision
  *
  * This dilution of precision (DOP) message describes the effect of navigation
  * satellite geometry on positional measurement precision.  The flags field
  * indicated whether the DOP reported corresponds to differential or SPP
  * solution.
+ *
  */
 typedef struct {
   /**

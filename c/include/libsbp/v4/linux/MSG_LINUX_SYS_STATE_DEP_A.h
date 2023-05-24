@@ -38,9 +38,9 @@ extern "C" {
  * SBP_MSG_LINUX_SYS_STATE_DEP_A
  *
  *****************************************************************************/
-/** CPU, Memory and Process Starts/Stops. DEPRECATED
+/** Deprecated
  *
- * This presents a summary of CPU and memory utilization.
+ * Deprecated.
  */
 typedef struct {
   /**

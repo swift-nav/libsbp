@@ -864,11 +864,11 @@ class CodePhaseBiasesSatSig(object):
   code_bias_bound_mu : int
     Code Bias Mean. Range: 0-1.275 m
   code_bias_bound_sig : int
-    Code Bias Standard Deviation.  Range: 0-1.275 m
+    Code Bias Standard Deviation. Range: 0-1.275 m
   phase_bias_bound_mu : int
     Phase Bias Mean. Range: 0-1.275 m
   phase_bias_bound_sig : int
-    Phase Bias Standard Deviation.  Range: 0-1.275 m
+    Phase Bias Standard Deviation. Range: 0-1.275 m
 
   """
   _parser = construct.Struct(
@@ -1407,12 +1407,7 @@ class MsgSsrStecCorrectionDep(SBP):
   of its fields.
 
   
-  The Slant Total Electron Content per space vehicle, given as polynomial
-  approximation for a given tile. This should be combined with the
-  MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of
-  the atmospheric delay.
-
-  It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+  Deprecated.
 
   Parameters
   ----------
@@ -1900,13 +1895,7 @@ class MsgSsrTileDefinitionDepA(SBP):
   of its fields.
 
   
-  Provides the correction point coordinates for the atmospheric correction
-  values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
-  messages.
-
-  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-  element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-  correction points, not lists of points.
+  Deprecated.
 
   Parameters
   ----------
@@ -2078,13 +2067,7 @@ class MsgSsrTileDefinitionDepB(SBP):
   of its fields.
 
   
-  Provides the correction point coordinates for the atmospheric correction
-  values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
-  messages.
-
-  Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
-  element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
-  correction points, not lists of points.
+  Deprecated.
 
   Parameters
   ----------
@@ -2454,6 +2437,7 @@ class MsgSsrSatelliteApcDep(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -2664,6 +2648,7 @@ class MsgSsrOrbitClockDepA(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -2825,6 +2810,7 @@ class MsgSsrStecCorrectionDepA(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -2924,6 +2910,7 @@ class MsgSsrGriddedCorrectionNoStdDepA(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -3033,6 +3020,7 @@ class MsgSsrGriddedCorrectionDepA(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -3142,6 +3130,7 @@ class MsgSsrGridDefinitionDepA(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------

@@ -432,10 +432,7 @@ EphemerisCommonContentDepA.prototype.fieldSpec.push(['health_bits', 'writeUInt8'
 /**
  * SBP class for message MSG_EPHEMERIS_GPS_DEP_E (0x0081).
  *
- * The ephemeris message returns a set of satellite orbit parameters that is used
- * to calculate GPS satellite position, velocity, and clock offset. Please see the
- * Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III)
- * for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContentDepA Values common for all ephemeris types
@@ -528,8 +525,7 @@ MsgEphemerisGpsDepE.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 /**
  * SBP class for message MSG_EPHEMERIS_GPS_DEP_F (0x0086).
  *
- * This observation message has been deprecated in favor of ephemeris message using
- * floats for size reduction.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContentDepB Values common for all ephemeris types
@@ -913,8 +909,7 @@ MsgEphemerisBds.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
 /**
  * SBP class for message MSG_EPHEMERIS_GAL_DEP_A (0x0095).
  *
- * This observation message has been deprecated in favor of an ephemeris message
- * with explicit source of NAV data.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContent Values common for all ephemeris types
@@ -1111,7 +1106,8 @@ MsgEphemerisGal.prototype.fieldSpec.push(['source', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_EPHEMERIS_SBAS_DEP_A (0x0082).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContentDepA Values common for all ephemeris types
  * @field pos array Position of the GEO at time toe
@@ -1152,10 +1148,7 @@ MsgEphemerisSbasDepA.prototype.fieldSpec.push(['a_gf1', 'writeDoubleLE', 8]);
 /**
  * SBP class for message MSG_EPHEMERIS_GLO_DEP_A (0x0083).
  *
- * The ephemeris message returns a set of satellite orbit parameters that is used
- * to calculate GLO satellite position, velocity, and clock offset. Please see the
- * GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate information
- * (ephemeris parameters)" for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContentDepA Values common for all ephemeris types
@@ -1197,8 +1190,7 @@ MsgEphemerisGloDepA.prototype.fieldSpec.push(['acc', 'array', 'writeDoubleLE', f
 /**
  * SBP class for message MSG_EPHEMERIS_SBAS_DEP_B (0x0084).
  *
- * This observation message has been deprecated in favor of ephemeris message using
- * floats for size reduction.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContentDepB Values common for all ephemeris types
@@ -1281,10 +1273,7 @@ MsgEphemerisSbas.prototype.fieldSpec.push(['a_gf1', 'writeFloatLE', 4]);
 /**
  * SBP class for message MSG_EPHEMERIS_GLO_DEP_B (0x0085).
  *
- * The ephemeris message returns a set of satellite orbit parameters that is used
- * to calculate GLO satellite position, velocity, and clock offset. Please see the
- * GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate information
- * (ephemeris parameters)" for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common EphemerisCommonContentDepB Values common for all ephemeris types
@@ -1483,10 +1472,7 @@ MsgEphemerisGlo.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
  *
- * The ephemeris message returns a set of satellite orbit parameters that is used
- * to calculate GPS satellite position, velocity, and clock offset. Please see the
- * Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III)
- * for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tgd number (float, 8 bytes) Group delay differential between L1 and L2
@@ -1804,10 +1790,7 @@ MsgEphemerisDepB.prototype.fieldSpec.push(['iode', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_EPHEMERIS_DEP_C (0x0047).
  *
- * The ephemeris message returns a set of satellite orbit parameters that is used
- * to calculate GPS satellite position, velocity, and clock offset. Please see the
- * Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Table 20-III)
- * for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tgd number (float, 8 bytes) Group delay differential between L1 and L2
@@ -2130,10 +2113,7 @@ MsgObsDepA.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepA.protot
 /**
  * SBP class for message MSG_OBS_DEP_B (0x0043).
  *
- * This observation message has been deprecated in favor of observations that are
- * more interoperable. This message should be used for observations referenced to a
- * nominal pseudorange which are not interoperable with most 3rd party GNSS
- * receivers or typical RTCMv3 observations.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeaderDep Header of a GPS observation message
@@ -2163,12 +2143,7 @@ MsgObsDepB.prototype.fieldSpec.push(['obs', 'array', PackedObsContentDepB.protot
 /**
  * SBP class for message MSG_OBS_DEP_C (0x0049).
  *
- * The GPS observations message reports all the raw pseudorange and carrier phase
- * observations for the satellites being tracked by the device. Carrier phase
- * observation here is represented as a 40-bit fixed point number with Q32.8 layout
- * (i.e. 32-bits of whole cycles and 8-bits of fractional cycles). The observations
- * are interoperable with 3rd party receivers and conform with typical RTCMv3 GNSS
- * observations.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header ObservationHeaderDep Header of a GPS observation message
@@ -2251,7 +2226,7 @@ MsgIono.prototype.fieldSpec.push(['b3', 'writeDoubleLE', 8]);
 /**
  * SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
  *
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field t_nmct GPSTimeSec Navigation Message Correction Table Validity Time
@@ -2350,7 +2325,9 @@ GnssCapb.prototype.fieldSpec.push(['gal_e5', 'writeUInt64LE', 8]);
 /**
  * SBP class for message MSG_GNSS_CAPB (0x0096).
  *
- 
+ * Bit masks of signal capabilities for each GNSS satellite PRN. Please see ICD-
+ * GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field t_nmct GPSTimeSec Navigation Message Correction Table Validity Time
  * @field gc GnssCapb GNSS capabilities masks
@@ -2379,7 +2356,7 @@ MsgGnssCapb.prototype.fieldSpec.push(['gc', GnssCapb.prototype.fieldSpec]);
 /**
  * SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
  *
- * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field t_op GPSTimeDep Data Predict Time of Week
@@ -2422,7 +2399,7 @@ MsgGroupDelayDepA.prototype.fieldSpec.push(['isc_l2c', 'writeInt16LE', 2]);
 /**
  * SBP class for message MSG_GROUP_DELAY_DEP_B (0x0093).
  *
- * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field t_op GPSTimeSec Data Predict Time of Week
@@ -2604,10 +2581,7 @@ AlmanacCommonContentDep.prototype.fieldSpec.push(['health_bits', 'writeUInt8', 1
 /**
  * SBP class for message MSG_ALMANAC_GPS_DEP (0x0070).
  *
- * The almanac message returns a set of satellite orbit parameters. Almanac data is
- * not very precise and is considered valid for up to several months. Please see
- * the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200, Chapter
- * 20.3.3.5.1.2 Almanac Data) for more details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common AlmanacCommonContentDep Values common for all almanac types
@@ -2718,9 +2692,7 @@ MsgAlmanacGps.prototype.fieldSpec.push(['af1', 'writeDoubleLE', 8]);
 /**
  * SBP class for message MSG_ALMANAC_GLO_DEP (0x0071).
  *
- * The almanac message returns a set of satellite orbit parameters. Almanac data is
- * not very precise and is considered valid for up to several months. Please see
- * the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and almanac" for details.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field common AlmanacCommonContentDep Values common for all almanac types

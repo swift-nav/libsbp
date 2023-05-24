@@ -364,6 +364,7 @@ class MsgCertificateChainDep(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -615,7 +616,7 @@ class MsgEcdsaSignatureDepB(SBP):
   of its fields.
 
   
-  An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+  Deprecated.
 
   Parameters
   ----------
@@ -754,7 +755,7 @@ class MsgEcdsaSignatureDepA(SBP):
   of its fields.
 
   
-  An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+  Deprecated.
 
   Parameters
   ----------
@@ -885,6 +886,7 @@ class MsgEd25519CertificateDep(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -991,6 +993,7 @@ class MsgEd25519SignatureDepA(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------
@@ -1095,6 +1098,7 @@ class MsgEd25519SignatureDepB(SBP):
   of its fields.
 
   
+  Deprecated.
 
   Parameters
   ----------

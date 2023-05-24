@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgGnssCapb",
   "title":"MsgGnssCapb",
-  "description":"",
+  "description":"Bit masks of signal capabilities for each GNSS satellite PRN.,\nPlease see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.\n",
   "type": "object",
   "properties": {
     "t_nmct": {"$ref": "GpsTimeSec.json"},

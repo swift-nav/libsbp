@@ -26,11 +26,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_SSR_STEC_CORRECTION_DEP inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>The Slant Total Electron Content per space vehicle, given as polynomial approximation for a
- * given tile. This should be combined with the MSG_SSR_GRIDDED_CORRECTION message to get the state
- * space representation of the atmospheric delay.
- *
- * <p>It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
+ * <p>Deprecated.
  */
 public class MsgSsrStecCorrectionDep extends SBPMessage {
     public static final int TYPE = 0x05FB;

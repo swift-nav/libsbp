@@ -39,6 +39,10 @@ extern "C" {
  * SBP_MSG_EPHEMERIS_SBAS_DEP_A
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * Values common for all ephemeris types

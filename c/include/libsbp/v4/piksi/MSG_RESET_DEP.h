@@ -38,9 +38,9 @@ extern "C" {
  * SBP_MSG_RESET_DEP
  *
  *****************************************************************************/
-/** Reset the device (host => Piksi)
+/** Deprecated
  *
- * This message from the host resets the Piksi back into the bootloader.
+ * Deprecated.
  */
 typedef struct {
   /**

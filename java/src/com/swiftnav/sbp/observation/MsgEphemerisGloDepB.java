@@ -26,9 +26,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_EPHEMERIS_GLO_DEP_B inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>The ephemeris message returns a set of satellite orbit parameters that is used to calculate
- * GLO satellite position, velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
- * Characteristics of words of immediate information (ephemeris parameters)" for more details.
+ * <p>Deprecated.
  */
 public class MsgEphemerisGloDepB extends SBPMessage {
     public static final int TYPE = 0x0085;

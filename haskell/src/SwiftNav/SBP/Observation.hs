@@ -418,10 +418,7 @@ msgEphemerisGpsDepE = 0x0081
 
 -- | SBP class for message MSG_EPHEMERIS_GPS_DEP_E (0x0081).
 --
--- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GPS satellite position, velocity, and clock offset.
--- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
--- GPS-200, Table 20-III) for more details.
+-- Deprecated.
 data MsgEphemerisGpsDepE = MsgEphemerisGpsDepE
   { _msgEphemerisGpsDepE_common :: !EphemerisCommonContentDepA
     -- ^ Values common for all ephemeris types
@@ -536,8 +533,7 @@ msgEphemerisGpsDepF = 0x0086
 
 -- | SBP class for message MSG_EPHEMERIS_GPS_DEP_F (0x0086).
 --
--- This observation message has been deprecated in favor of ephemeris message
--- using floats for size reduction.
+-- Deprecated.
 data MsgEphemerisGpsDepF = MsgEphemerisGpsDepF
   { _msgEphemerisGpsDepF_common :: !EphemerisCommonContentDepB
     -- ^ Values common for all ephemeris types
@@ -1012,8 +1008,7 @@ msgEphemerisGalDepA = 0x0095
 
 -- | SBP class for message MSG_EPHEMERIS_GAL_DEP_A (0x0095).
 --
--- This observation message has been deprecated in favor of an ephemeris
--- message with explicit source of NAV data.
+-- Deprecated.
 data MsgEphemerisGalDepA = MsgEphemerisGalDepA
   { _msgEphemerisGalDepA_common  :: !EphemerisCommonContent
     -- ^ Values common for all ephemeris types
@@ -1256,6 +1251,9 @@ $(makeLenses ''MsgEphemerisGal)
 msgEphemerisSbasDepA :: Word16
 msgEphemerisSbasDepA = 0x0082
 
+-- | SBP class for message MSG_EPHEMERIS_SBAS_DEP_A (0x0082).
+--
+-- Deprecated.
 data MsgEphemerisSbasDepA = MsgEphemerisSbasDepA
   { _msgEphemerisSbasDepA_common :: !EphemerisCommonContentDepA
     -- ^ Values common for all ephemeris types
@@ -1298,10 +1296,7 @@ msgEphemerisGloDepA = 0x0083
 
 -- | SBP class for message MSG_EPHEMERIS_GLO_DEP_A (0x0083).
 --
--- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GLO satellite position, velocity, and clock offset.
--- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
--- information (ephemeris parameters)" for more details.
+-- Deprecated.
 data MsgEphemerisGloDepA = MsgEphemerisGloDepA
   { _msgEphemerisGloDepA_common :: !EphemerisCommonContentDepA
     -- ^ Values common for all ephemeris types
@@ -1344,8 +1339,7 @@ msgEphemerisSbasDepB = 0x0084
 
 -- | SBP class for message MSG_EPHEMERIS_SBAS_DEP_B (0x0084).
 --
--- This observation message has been deprecated in favor of ephemeris message
--- using floats for size reduction.
+-- Deprecated.
 data MsgEphemerisSbasDepB = MsgEphemerisSbasDepB
   { _msgEphemerisSbasDepB_common :: !EphemerisCommonContentDepB
     -- ^ Values common for all ephemeris types
@@ -1428,10 +1422,7 @@ msgEphemerisGloDepB = 0x0085
 
 -- | SBP class for message MSG_EPHEMERIS_GLO_DEP_B (0x0085).
 --
--- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GLO satellite position, velocity, and clock offset.
--- Please see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
--- information (ephemeris parameters)" for more details.
+-- Deprecated.
 data MsgEphemerisGloDepB = MsgEphemerisGloDepB
   { _msgEphemerisGloDepB_common :: !EphemerisCommonContentDepB
     -- ^ Values common for all ephemeris types
@@ -1642,10 +1633,7 @@ msgEphemerisDepD = 0x0080
 
 -- | SBP class for message MSG_EPHEMERIS_DEP_D (0x0080).
 --
--- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GPS satellite position, velocity, and clock offset.
--- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
--- GPS-200, Table 20-III) for more details.
+-- Deprecated.
 data MsgEphemerisDepD = MsgEphemerisDepD
   { _msgEphemerisDepD_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
@@ -2042,10 +2030,7 @@ msgEphemerisDepC = 0x0047
 
 -- | SBP class for message MSG_EPHEMERIS_DEP_C (0x0047).
 --
--- The ephemeris message returns a set of satellite orbit parameters that is
--- used to calculate GPS satellite position, velocity, and clock offset.
--- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
--- GPS-200, Table 20-III) for more details.
+-- Deprecated.
 data MsgEphemerisDepC = MsgEphemerisDepC
   { _msgEphemerisDepC_tgd    :: !Double
     -- ^ Group delay differential between L1 and L2
@@ -2376,10 +2361,7 @@ msgObsDepB = 0x0043
 
 -- | SBP class for message MSG_OBS_DEP_B (0x0043).
 --
--- This observation message has been deprecated in favor of observations that
--- are more interoperable. This message should be used for observations
--- referenced to a nominal pseudorange which are not interoperable with most
--- 3rd party GNSS receivers or typical RTCMv3 observations.
+-- Deprecated.
 data MsgObsDepB = MsgObsDepB
   { _msgObsDepB_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
@@ -2407,12 +2389,7 @@ msgObsDepC = 0x0049
 
 -- | SBP class for message MSG_OBS_DEP_C (0x0049).
 --
--- The GPS observations message reports all the raw pseudorange and carrier
--- phase observations for the satellites being tracked by the device. Carrier
--- phase observation here is represented as a 40-bit fixed point number with
--- Q32.8 layout (i.e. 32-bits of whole cycles and 8-bits of fractional
--- cycles). The observations are interoperable with 3rd party receivers and
--- conform with typical RTCMv3 GNSS observations.
+-- Deprecated.
 data MsgObsDepC = MsgObsDepC
   { _msgObsDepC_header :: !ObservationHeaderDep
     -- ^ Header of a GPS observation message
@@ -2489,7 +2466,7 @@ msgSvConfigurationGpsDep = 0x0091
 
 -- | SBP class for message MSG_SV_CONFIGURATION_GPS_DEP (0x0091).
 --
--- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+-- Deprecated.
 data MsgSvConfigurationGpsDep = MsgSvConfigurationGpsDep
   { _msgSvConfigurationGpsDep_t_nmct :: !GpsTimeSec
     -- ^ Navigation Message Correction Table Validity Time
@@ -2588,6 +2565,10 @@ $(makeLenses ''GnssCapb)
 msgGnssCapb :: Word16
 msgGnssCapb = 0x0096
 
+-- | SBP class for message MSG_GNSS_CAPB (0x0096).
+--
+-- Bit masks of signal capabilities for each GNSS satellite PRN.
+-- Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 data MsgGnssCapb = MsgGnssCapb
   { _msgGnssCapb_t_nmct :: !GpsTimeSec
     -- ^ Navigation Message Correction Table Validity Time
@@ -2614,7 +2595,7 @@ msgGroupDelayDepA = 0x0092
 
 -- | SBP class for message MSG_GROUP_DELAY_DEP_A (0x0092).
 --
--- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+-- Deprecated.
 data MsgGroupDelayDepA = MsgGroupDelayDepA
   { _msgGroupDelayDepA_t_op   :: !GpsTimeDep
     -- ^ Data Predict Time of Week
@@ -2655,7 +2636,7 @@ msgGroupDelayDepB = 0x0093
 
 -- | SBP class for message MSG_GROUP_DELAY_DEP_B (0x0093).
 --
--- Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+-- Deprecated.
 data MsgGroupDelayDepB = MsgGroupDelayDepB
   { _msgGroupDelayDepB_t_op   :: !GpsTimeSec
     -- ^ Data Predict Time of Week
@@ -2837,10 +2818,7 @@ msgAlmanacGpsDep = 0x0070
 
 -- | SBP class for message MSG_ALMANAC_GPS_DEP (0x0070).
 --
--- The almanac message returns a set of satellite orbit parameters. Almanac
--- data is not very precise and is considered valid for up to several months.
--- Please see the Navstar GPS Space Segment/Navigation user interfaces (ICD-
--- GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+-- Deprecated.
 data MsgAlmanacGpsDep = MsgAlmanacGpsDep
   { _msgAlmanacGpsDep_common :: !AlmanacCommonContentDep
     -- ^ Values common for all almanac types
@@ -2961,10 +2939,7 @@ msgAlmanacGloDep = 0x0071
 
 -- | SBP class for message MSG_ALMANAC_GLO_DEP (0x0071).
 --
--- The almanac message returns a set of satellite orbit parameters. Almanac
--- data is not very precise and is considered valid for up to several months.
--- Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
--- almanac" for details.
+-- Deprecated.
 data MsgAlmanacGloDep = MsgAlmanacGloDep
   { _msgAlmanacGloDep_common    :: !AlmanacCommonContentDep
     -- ^ Values common for all almanac types

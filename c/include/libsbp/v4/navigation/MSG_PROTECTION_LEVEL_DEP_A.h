@@ -38,11 +38,9 @@ extern "C" {
  * SBP_MSG_PROTECTION_LEVEL_DEP_A
  *
  *****************************************************************************/
-/** Computed Position and Protection Level
+/** Deprecated
  *
- * This message reports the local vertical and horizontal protection levels
- * associated with a given LLH position solution. The full GPS time is given by
- * the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * Deprecated.
  */
 typedef struct {
   /**

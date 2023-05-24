@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_VEL_ECEF_COV_GNSS
  *
  *****************************************************************************/
-/** GNSS-only Velocity in ECEF
+/** GNSS-only Velocity in ECEF with Covariances
  *
  * This message reports the velocity in Earth Centered Earth Fixed (ECEF)
  * coordinates. The full GPS time is given by the preceding MSG_GPS_TIME_GNSS

@@ -25,9 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_EPHEMERIS_DEP_C inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>The ephemeris message returns a set of satellite orbit parameters that is used to calculate
- * GPS satellite position, velocity, and clock offset. Please see the Navstar GPS Space
- * Segment/Navigation user interfaces (ICD- GPS-200, Table 20-III) for more details.
+ * <p>Deprecated.
  */
 public class MsgEphemerisDepC extends SBPMessage {
     public static final int TYPE = 0x0047;

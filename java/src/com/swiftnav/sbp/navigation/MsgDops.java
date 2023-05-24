@@ -27,6 +27,8 @@ import org.json.JSONObject;
  * <p>This dilution of precision (DOP) message describes the effect of navigation satellite geometry
  * on positional measurement precision. The flags field indicated whether the DOP reported
  * corresponds to differential or SPP solution.
+ *
+ * <p>The values in this message are from GNSS measurements only.
  */
 public class MsgDops extends SBPMessage {
     public static final int TYPE = 0x0208;

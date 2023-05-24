@@ -42,8 +42,7 @@ extern "C" {
  *****************************************************************************/
 /** Deprecated
  *
- * This observation message has been deprecated in favor of an ephemeris message
- * with explicit source of NAV data.
+ * Deprecated.
  */
 typedef struct {
   /**

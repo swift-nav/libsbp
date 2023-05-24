@@ -38,13 +38,9 @@ extern "C" {
  * SBP_MSG_SSR_TILE_DEFINITION_DEP_A
  *
  *****************************************************************************/
-/** Definition of a SSR atmospheric correction tile.
-
+/** Deprecated
  *
- * Provides the correction point coordinates for the atmospheric correction
- values in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION
- messages.
- *
+ * Deprecated.
  */
 typedef struct {
   /**

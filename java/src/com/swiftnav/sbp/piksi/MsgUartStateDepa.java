@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_UART_STATE_DEPA inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>Deprecated
+ * <p>Deprecated.
  */
 public class MsgUartStateDepa extends SBPMessage {
     public static final int TYPE = 0x0018;

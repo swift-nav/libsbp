@@ -38,10 +38,9 @@ extern "C" {
  * SBP_MSG_LINUX_CPU_STATE_DEP_A
  *
  *****************************************************************************/
-/** List CPU state on the system. DEPRECATED
+/** Deprecated
  *
- * This message indicates the process state of the top 10 heaviest consumers of
- * CPU on the system.
+ * Deprecated.
  */
 typedef struct {
   /**

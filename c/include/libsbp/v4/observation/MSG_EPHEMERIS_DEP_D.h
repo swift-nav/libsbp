@@ -39,12 +39,9 @@ extern "C" {
  * SBP_MSG_EPHEMERIS_DEP_D
  *
  *****************************************************************************/
-/** Satellite broadcast ephemeris
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GPS satellite position, velocity, and clock offset. Please
- * see the Navstar GPS Space Segment/Navigation user interfaces (ICD-GPS-200,
- * Table 20-III) for more details.
+ * Deprecated.
  */
 typedef struct {
   /**

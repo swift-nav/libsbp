@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_INIT_BASE_DEP inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>Deprecated
+ * <p>Deprecated.
  */
 public class MsgInitBaseDep extends SBPMessage {
     public static final int TYPE = 0x0023;

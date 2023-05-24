@@ -19,6 +19,14 @@ import com.swiftnav.sbp.SBPMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_ED25519_SIGNATURE_DEP_A (0x0C01).
+ *
+ * <p>You can have MSG_ED25519_SIGNATURE_DEP_A inherent its fields directly from an inherited SBP
+ * object, or construct it inline using a dict of its fields.
+ *
+ * <p>Deprecated.
+ */
 public class MsgEd25519SignatureDepA extends SBPMessage {
     public static final int TYPE = 0x0C01;
 

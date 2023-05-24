@@ -526,11 +526,7 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesConten
 /**
  * SBP class for message MSG_SSR_STEC_CORRECTION_DEP (0x05FB).
  *
- * The Slant Total Electron Content per space vehicle, given as polynomial
- * approximation for a given tile. This should be combined with the
- * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation of the
- * atmospheric delay.  It is typically equivalent to the QZSS CLAS Sub Type 8
- * messages.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header STECHeader Header of a STEC polynomial coefficient message.
@@ -777,11 +773,7 @@ MsgSsrGriddedCorrectionBounds.prototype.fieldSpec.push(['stec_sat_list', 'array'
 /**
  * SBP class for message MSG_SSR_TILE_DEFINITION_DEP_A (0x05F6).
  *
- * Provides the correction point coordinates for the atmospheric correction values
- * in the MSG_SSR_STEC_CORRECTION_DEP and MSG_SSR_GRIDDED_CORRECTION messages.
- * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element
- * GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of correction
- * points, not lists of points.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
@@ -850,11 +842,7 @@ MsgSsrTileDefinitionDepA.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8
 /**
  * SBP class for message MSG_SSR_TILE_DEFINITION_DEP_B (0x05F7).
  *
- * Provides the correction point coordinates for the atmospheric correction values
- * in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION messages.  Based
- * on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information element GNSS-
- * SSR-CorrectionPoints. SBP only supports gridded arrays of correction points, not
- * lists of points.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field ssr_sol_id number (unsigned 8-bit int, 1 byte) SSR Solution ID.
@@ -1054,7 +1042,8 @@ SatelliteAPC.prototype.fieldSpec.push(['pcv', 'array', 'writeInt8', function () 
 /**
  * SBP class for message MSG_SSR_SATELLITE_APC_DEP (0x0604).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field apc array Satellite antenna phase center corrections
  *
@@ -1120,7 +1109,8 @@ MsgSsrSatelliteApc.prototype.fieldSpec.push(['apc', 'array', SatelliteAPC.protot
 /**
  * SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field sid GnssSignal GNSS signal identifier (16 bit)
@@ -1315,7 +1305,8 @@ GridDefinitionHeaderDepA.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
 /**
  * SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header STECHeaderDepA Header of a STEC message
  * @field stec_sat_list array Array of STEC information for each space vehicle
@@ -1344,7 +1335,8 @@ MsgSsrStecCorrectionDepA.prototype.fieldSpec.push(['stec_sat_list', 'array', STE
 /**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A (0x05F0).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeaderDepA Header of a Gridded Correction message
  * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
@@ -1379,7 +1371,8 @@ MsgSsrGriddedCorrectionNoStdDepA.prototype.fieldSpec.push(['stec_residuals', 'ar
 /**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05FA).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeaderDepA Header of a Gridded Correction message
  * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
@@ -1414,7 +1407,8 @@ MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['stec_residuals', 'array',
 /**
  * SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GridDefinitionHeaderDepA Header of a Gridded Correction message
  * @field rle_list array Run Length Encode list of quadrants that contain valid data. The spec describes
@@ -1545,9 +1539,9 @@ MsgSsrOrbitClockBounds.prototype.fieldSpec.push(['orbit_clock_bounds', 'array', 
  * @field signal_id number (unsigned 8-bit int, 1 byte) Signal and Tracking Mode Identifier. Similar to either RTCM DF380 (GPS), DF382
  *   (Galileo) or DF467 (BDS) depending on the constellation.
  * @field code_bias_bound_mu number (unsigned 8-bit int, 1 byte) Code Bias Mean. Range: 0-1.275 m
- * @field code_bias_bound_sig number (unsigned 8-bit int, 1 byte) Code Bias Standard Deviation.  Range: 0-1.275 m
+ * @field code_bias_bound_sig number (unsigned 8-bit int, 1 byte) Code Bias Standard Deviation. Range: 0-1.275 m
  * @field phase_bias_bound_mu number (unsigned 8-bit int, 1 byte) Phase Bias Mean. Range: 0-1.275 m
- * @field phase_bias_bound_sig number (unsigned 8-bit int, 1 byte) Phase Bias Standard Deviation.  Range: 0-1.275 m
+ * @field phase_bias_bound_sig number (unsigned 8-bit int, 1 byte) Phase Bias Standard Deviation. Range: 0-1.275 m
  *
  * @param sbp An SBP object with a payload to be decoded.
  */

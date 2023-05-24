@@ -71,10 +71,6 @@ msgSolnMetaDepA = 0xFF0F
 -- | SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
 --
 -- Deprecated.
---
--- This message contains all metadata about the sensors received and/or used
--- in computing the Fuzed Solution. It focuses primarily, but not only, on
--- GNSS metadata.
 data MsgSolnMetaDepA = MsgSolnMetaDepA
   { _msgSolnMetaDepA_pdop                 :: !Word16
     -- ^ Position Dilution of Precision as per last available DOPS from PVT

@@ -53,9 +53,9 @@ typedef struct SBP_ATTR_PACKED {
   u32 flags; /**< Reset flags */
 } msg_reset_t;
 
-/** Reset the device (host => Piksi)
+/** Deprecated
  *
- * This message from the host resets the Piksi back into the bootloader.
+ * Deprecated.
  */
 
 /** Legacy message for CW interference channel (Piksi => host)
@@ -84,7 +84,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Deprecated
  *
- * Deprecated
+ * Deprecated.
  */
 
 /** State of an RTOS thread
@@ -171,7 +171,7 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Deprecated
  *
- * Deprecated
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {

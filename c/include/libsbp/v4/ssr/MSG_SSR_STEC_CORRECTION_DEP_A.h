@@ -40,6 +40,10 @@ extern "C" {
  * SBP_MSG_SSR_STEC_CORRECTION_DEP_A
  *
  *****************************************************************************/
+/** Deprecated
+ *
+ * Deprecated.
+ */
 typedef struct {
   /**
    * Header of a STEC message

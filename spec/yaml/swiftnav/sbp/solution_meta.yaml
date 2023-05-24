@@ -59,13 +59,10 @@ definitions:
  - MSG_SOLN_META_DEP_A:
      id: 0xFF0F
      short_desc: Deprecated
-     public: False
-     desc: >
-       Deprecated.
-
-
-       This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
-       It focuses primarily, but not only, on GNSS metadata.
+     desc: Deprecated.
+     public: false
+     replaced_by:
+       - MSG_SOLN_META
      fields:
        - pdop:
            type: u16

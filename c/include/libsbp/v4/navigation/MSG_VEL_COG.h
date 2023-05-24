@@ -51,6 +51,7 @@ extern "C" {
  * MSG_GPS_TIME with the matching time-of-week (tow). Note: course over ground
  * represents the receiver's direction of travel, but not necessarily the device
  * heading.
+ *
  */
 typedef struct {
   /**

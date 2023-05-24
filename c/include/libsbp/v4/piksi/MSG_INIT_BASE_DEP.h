@@ -40,7 +40,7 @@ extern "C" {
  *****************************************************************************/
 /** Deprecated
  *
- * Deprecated
+ * Deprecated.
  */
 typedef struct {
   /**

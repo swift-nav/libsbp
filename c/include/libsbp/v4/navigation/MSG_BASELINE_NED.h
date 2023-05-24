@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_BASELINE_NED
  *
  *****************************************************************************/
-/** Baseline in NED
+/** GNSS-only Baseline in NED
  *
  * This message reports the baseline solution in North East Down (NED)
  * coordinates. This baseline is the relative vector distance from the base
@@ -46,6 +46,7 @@ extern "C" {
  * local WGS84 tangent plane centered at the base station position.  The full
  * GPS time is given by the preceding MSG_GPS_TIME with the matching
  * time-of-week (tow).
+ *
  */
 typedef struct {
   /**

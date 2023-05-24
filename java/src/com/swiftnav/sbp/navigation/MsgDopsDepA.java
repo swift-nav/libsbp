@@ -24,8 +24,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_DOPS_DEP_A inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>This dilution of precision (DOP) message describes the effect of navigation satellite geometry
- * on positional measurement precision.
+ * <p>Deprecated.
  */
 public class MsgDopsDepA extends SBPMessage {
     public static final int TYPE = 0x0206;

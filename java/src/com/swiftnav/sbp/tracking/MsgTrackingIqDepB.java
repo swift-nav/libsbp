@@ -26,7 +26,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_TRACKING_IQ_DEP_B inherent its fields directly from an inherited SBP object,
  * or construct it inline using a dict of its fields.
  *
- * <p>When enabled, a tracking channel can output the correlations at each update interval.
+ * <p>Deprecated.
  */
 public class MsgTrackingIqDepB extends SBPMessage {
     public static final int TYPE = 0x002C;

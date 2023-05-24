@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_ECDSA_SIGNATURE_DEP_B inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ * <p>Deprecated.
  */
 public class MsgEcdsaSignatureDepB extends SBPMessage {
     public static final int TYPE = 0x0C07;

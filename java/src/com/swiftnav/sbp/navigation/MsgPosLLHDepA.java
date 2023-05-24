@@ -24,11 +24,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_POS_LLH_DEP_A inherent its fields directly from an inherited SBP object, or
  * construct it inline using a dict of its fields.
  *
- * <p>This position solution message reports the absolute geodetic coordinates and the status
- * (single point vs pseudo-absolute RTK) of the position solution. If the rover receiver knows the
- * surveyed position of the base station and has an RTK solution, this reports a pseudo-absolute
- * position solution using the base station position and the rover's RTK baseline vector. The full
- * GPS time is given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * <p>Deprecated.
  */
 public class MsgPosLLHDepA extends SBPMessage {
     public static final int TYPE = 0x0201;

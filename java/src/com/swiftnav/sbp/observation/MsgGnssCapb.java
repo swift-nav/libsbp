@@ -19,6 +19,15 @@ import com.swiftnav.sbp.SBPMessage;
 import com.swiftnav.sbp.gnss.*;
 import org.json.JSONObject;
 
+/**
+ * SBP class for message MSG_GNSS_CAPB (0x0096).
+ *
+ * <p>You can have MSG_GNSS_CAPB inherent its fields directly from an inherited SBP object, or
+ * construct it inline using a dict of its fields.
+ *
+ * <p>Bit masks of signal capabilities for each GNSS satellite PRN. Please see ICD-GPS-200 (Chapter
+ * 20.3.3.5.1.4) for more details.
+ */
 public class MsgGnssCapb extends SBPMessage {
     public static final int TYPE = 0x0096;
 

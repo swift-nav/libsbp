@@ -32,6 +32,8 @@ import org.json.JSONObject;
  *
  * <p>The estimated errors are reported at a user-configurable confidence level. The user-configured
  * percentile is encoded in the percentile field.
+ *
+ * <p>The values in this message are from GNSS measurements fused with inertial measurements.
  */
 public class MsgPosLLHAcc extends SBPMessage {
     public static final int TYPE = 0x0218;

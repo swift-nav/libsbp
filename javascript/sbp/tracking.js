@@ -433,8 +433,7 @@ TrackingChannelCorrelationDep.prototype.fieldSpec.push(['Q', 'writeInt32LE', 4])
 /**
  * SBP class for message MSG_TRACKING_IQ_DEP_B (0x002C).
  *
- * When enabled, a tracking channel can output the correlations at each update
- * interval.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field channel number (unsigned 8-bit int, 1 byte) Tracking channel of origin

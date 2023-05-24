@@ -25,8 +25,7 @@ import org.json.JSONObject;
  * <p>You can have MSG_EPHEMERIS_GAL_DEP_A inherent its fields directly from an inherited SBP
  * object, or construct it inline using a dict of its fields.
  *
- * <p>This observation message has been deprecated in favor of an ephemeris message with explicit
- * source of NAV data.
+ * <p>Deprecated.
  */
 public class MsgEphemerisGalDepA extends SBPMessage {
     public static final int TYPE = 0x0095;

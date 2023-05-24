@@ -38,10 +38,9 @@ extern "C" {
  * SBP_MSG_LINUX_MEM_STATE_DEP_A
  *
  *****************************************************************************/
-/** List memory state on the system. DEPRECATED
+/** Deprecated
  *
- * This message indicates the process state of the top 10 heaviest consumers of
- * memory on the system.
+ * Deprecated.
  */
 typedef struct {
   /**

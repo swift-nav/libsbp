@@ -48,6 +48,9 @@ extern "C" {
  * message. Since the covariance matrix is computed in the local-level North,
  * East, Down frame, the estimated error terms follow that convention.
  *
+ * The estimated errors are reported at a user-configurable confidence level.
+ * The user-configured percentile is encoded in the percentile field.
+ *
  */
 typedef struct {
   /**

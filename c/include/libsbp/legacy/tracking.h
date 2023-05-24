@@ -206,10 +206,9 @@ typedef struct SBP_ATTR_PACKED {
   s32 Q; /**< Quadrature correlation */
 } tracking_channel_correlation_dep_t;
 
-/** Tracking channel correlations
+/** Deprecated
  *
- * When enabled, a tracking channel can output the correlations at each update
- * interval.
+ * Deprecated.
  */
 
 typedef struct SBP_ATTR_PACKED {

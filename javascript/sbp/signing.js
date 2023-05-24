@@ -182,7 +182,8 @@ MsgCertificateChain.prototype.fieldSpec.push(['signature', ECDSASignature.protot
 /**
  * SBP class for message MSG_CERTIFICATE_CHAIN_DEP (0x0C05).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field root_certificate array SHA-1 fingerprint of the root certificate
  * @field intermediate_certificate array SHA-1 fingerprint of the intermediate certificate
@@ -277,7 +278,7 @@ MsgEcdsaSignature.prototype.fieldSpec.push(['signed_messages', 'array', 'writeUI
 /**
  * SBP class for message MSG_ECDSA_SIGNATURE_DEP_B (0x0C07).
  *
- * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the `signed\_messages` field below.
@@ -334,7 +335,7 @@ MsgEcdsaSignatureDepB.prototype.fieldSpec.push(['signed_messages', 'array', 'wri
 /**
  * SBP class for message MSG_ECDSA_SIGNATURE_DEP_A (0x0C06).
  *
- * An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+ * Deprecated.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field flags number (unsigned 8-bit int, 1 byte) Describes the format of the `signed\_messages` field below.
@@ -386,7 +387,8 @@ MsgEcdsaSignatureDepA.prototype.fieldSpec.push(['signed_messages', 'array', 'wri
 /**
  * SBP class for message MSG_ED25519_CERTIFICATE_DEP (0x0C02).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field n_msg number (unsigned 8-bit int, 1 byte) Total number messages that make up the certificate. First nibble is the size of
  *   the sequence (n), second nibble is the zero-indexed counter (ith packet of n)
@@ -419,7 +421,8 @@ MsgEd25519CertificateDep.prototype.fieldSpec.push(['certificate_bytes', 'array',
 /**
  * SBP class for message MSG_ED25519_SIGNATURE_DEP_A (0x0C01).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field signature array ED25519 signature for messages.
  * @field fingerprint array SHA-1 fingerprint of the associated certificate.
@@ -451,7 +454,8 @@ MsgEd25519SignatureDepA.prototype.fieldSpec.push(['signed_messages', 'array', 'w
 /**
  * SBP class for message MSG_ED25519_SIGNATURE_DEP_B (0x0C03).
  *
- 
+ * Deprecated.
+ *
  * Fields in the SBP payload (`sbp.payload`):
  * @field stream_counter number (unsigned 8-bit int, 1 byte) Signature message counter. Zero indexed and incremented with each signature
  *   message.  The counter will not increment if this message was in response to an

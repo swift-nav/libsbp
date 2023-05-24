@@ -179,7 +179,11 @@ pub mod msg_certificate_chain_dep {
 
     use super::*;
     use crate::messages::lib::*;
-    /// The certificate chain
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -609,9 +613,9 @@ pub mod msg_ecdsa_signature_dep_a {
     use super::*;
     use crate::messages::lib::*;
 
-    /// An ECDSA signature
+    /// Deprecated
     ///
-    /// An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -779,9 +783,9 @@ pub mod msg_ecdsa_signature_dep_b {
     use super::*;
     use crate::messages::lib::*;
 
-    /// An ECDSA signature
+    /// Deprecated
     ///
-    /// An ECDSA-256 signature using SHA-256 as the message digest algorithm.
+    /// Deprecated.
     ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
@@ -958,6 +962,11 @@ pub mod msg_ed25519_certificate_dep {
 
     use super::*;
     use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -1047,7 +1056,11 @@ pub mod msg_ed25519_signature_dep_a {
 
     use super::*;
     use crate::messages::lib::*;
+
     /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]
@@ -1135,6 +1148,11 @@ pub mod msg_ed25519_signature_dep_b {
 
     use super::*;
     use crate::messages::lib::*;
+
+    /// Deprecated
+    ///
+    /// Deprecated.
+    ///
     #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Debug, PartialEq, Clone)]

@@ -31,6 +31,8 @@ import org.json.JSONObject;
  * via the device settings. The full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow). This message is only produced by inertial versions of Swift products
  * and is not available from Piksi Multi or Duro.
+ *
+ * <p>The values in this message are from GNSS measurements fused with inertial measurements.
  */
 public class MsgVelBody extends SBPMessage {
     public static final int TYPE = 0x0213;

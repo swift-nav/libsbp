@@ -38,7 +38,7 @@ extern "C" {
  * SBP_MSG_POS_LLH_COV_GNSS
  *
  *****************************************************************************/
-/** GNSS-only Geodetic Position
+/** GNSS-only Geodetic Position with Covariances
  *
  * This position solution message reports the absolute geodetic coordinates and
  * the status (single point vs pseudo-absolute RTK) of the position solution as

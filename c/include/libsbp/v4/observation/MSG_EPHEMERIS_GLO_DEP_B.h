@@ -39,12 +39,9 @@ extern "C" {
  * SBP_MSG_EPHEMERIS_GLO_DEP_B
  *
  *****************************************************************************/
-/** Satellite broadcast ephemeris for GLO
+/** Deprecated
  *
- * The ephemeris message returns a set of satellite orbit parameters that is
- * used to calculate GLO satellite position, velocity, and clock offset. Please
- * see the GLO ICD 5.1 "Table 4.5 Characteristics of words of immediate
- * information (ephemeris parameters)" for more details.
+ * Deprecated.
  */
 typedef struct {
   /**
