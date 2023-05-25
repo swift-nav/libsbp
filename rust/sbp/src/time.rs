@@ -89,10 +89,13 @@ impl From<f64> for RoverTime {
 /// Time received via a message from a base station, like
 /// [MsgObs](crate::messages::observation::MsgObs).
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
-pub struct BaseTime(pub GpsTime);
+#[non_exhaustive]
+pub enum BaseTime {
+    GpsTime(GpsTime),
+}
 
 impl From<GpsTime> for BaseTime {
     fn from(gps_time: GpsTime) -> Self {
-        BaseTime(gps_time)
+        BaseTime::GpsTime(gps_time)
     }
 }
