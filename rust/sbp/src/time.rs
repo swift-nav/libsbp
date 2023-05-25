@@ -89,7 +89,7 @@ impl From<f64> for RoverTime {
 /// Time received via a message from a base station, like
 /// [MsgObs](crate::messages::observation::MsgObs).
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
-pub BaseTime(pub GpsTime);
+pub struct BaseTime(pub GpsTime);
 
 impl From<GpsTime> for BaseTime {
     fn from(gps_time: GpsTime) -> Self {
