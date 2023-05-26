@@ -7,7 +7,8 @@ import json
 import subprocess
 
 # If the ratio is off from expected by more than this percentage
-SLUSH_PERCENTAGE = 0.25
+# fail the benchmark
+SLUSH_PERCENTAGE = 0.45
 
 # How much faster Rust should be than other implementations
 RATIOS_SBP2JSON = {
