@@ -1,9 +1,9 @@
-#######################################################################
-###                                                                 ###
-### WARNING: This file is generated, please update the template at: ###
-###            generator/sbpg/targets/resources/sbp-cargo.toml      ###
-###                                                                 ###
-#######################################################################
+#########################################################################
+###                                                                   ###
+### WARNING: This file is generated, please update the template at:   ###
+###            generator/sbpg/targets/resources/rust/sbp-cargo.toml   ###
+###                                                                   ###
+#########################################################################
 
 [package]
 name = "sbp"
@@ -68,3 +68,7 @@ default-features = false
 
 [dev-dependencies]
 serialport = "2.1.0"
+
+[package.metadata.docs.rs]
+# Whether to pass `--all-features` to Cargo when building docs for docs.rs
+all-features = true
