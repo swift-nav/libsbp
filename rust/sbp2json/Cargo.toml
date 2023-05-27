@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp2json"
-version = "4.14.1-unreleased"
+version = "4.14.2-alpha"
 repository = "https://github.com/swift-nav/libsbp"
 description = "Rust native implementation of SBP (Swift Binary Protocol) to JSON conversion tools"
 authors = ["Swift Navigation <dev@swiftnav.com>"]

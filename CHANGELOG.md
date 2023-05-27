@@ -1,5 +1,26 @@
 # Changelog
 
+## [v4.14.1](https://github.com/swift-nav/libsbp/tree/v4.14.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.14.0...v4.14.1)
+
+**Closed issues:**
+
+- Cannot access `GPSTime` inside `BaseTime` [\#1331](https://github.com/swift-nav/libsbp/issues/1331)
+
+**Merged pull requests:**
+
+- pass all features to docs.rs build [\#1333](https://github.com/swift-nav/libsbp/pull/1333) ([pcrumley](https://github.com/pcrumley))
+- Make the BaseTime inner public [\#1332](https://github.com/swift-nav/libsbp/pull/1332) ([pcrumley](https://github.com/pcrumley))
+- Auto submodule update: cmake - Fix TEST\_SRCS property - use CMAKE\_SOURCE\_DIR \(\#154\) [\#1330](https://github.com/swift-nav/libsbp/pull/1330) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Make MSG\_INS\_UPDATES public \[DEVINFRA-1066\] [\#1329](https://github.com/swift-nav/libsbp/pull/1329) ([ljbade](https://github.com/ljbade))
+- Miscellaneous SBP doc updates \[DEVINFRA-1065\] [\#1328](https://github.com/swift-nav/libsbp/pull/1328) ([ljbade](https://github.com/ljbade))
+- docker: pin key python tools \(tox, sphinx\) [\#1327](https://github.com/swift-nav/libsbp/pull/1327) ([silverjam](https://github.com/silverjam))
+- Add description of difference between \_GNSS messages and fused messages \[DEVINFRA-566\] [\#1326](https://github.com/swift-nav/libsbp/pull/1326) ([ljbade](https://github.com/ljbade))
+- pin rust test deps [\#1325](https://github.com/swift-nav/libsbp/pull/1325) ([silverjam](https://github.com/silverjam))
+- Auto submodule update: cmake - add FindBoringSSL.cmake \(\#152\) [\#1324](https://github.com/swift-nav/libsbp/pull/1324) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- prep next release \#no\_auto\_pr [\#1323](https://github.com/swift-nav/libsbp/pull/1323) ([adrian-kong](https://github.com/adrian-kong))
+
 ## [v4.14.0](https://github.com/swift-nav/libsbp/tree/v4.14.0) (2023-04-28)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v4.13.0...v4.14.0)
