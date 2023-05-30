@@ -126,7 +126,7 @@ class Linux < Kaitai::Struct::Struct
       @index = @_io.read_u1
       @pid = @_io.read_u2le
       @pcpu = @_io.read_u1
-      @tname = (@_io.read_bytes_full).force_encoding("ascii")
+      @tname = (@_io.read_bytes(15)).force_encoding("ascii")
       @cmdline = (@_io.read_bytes_full).force_encoding("ascii")
       self
     end
@@ -167,7 +167,7 @@ class Linux < Kaitai::Struct::Struct
       @pmem = @_io.read_u1
       @time = @_io.read_u4le
       @flags = @_io.read_u1
-      @tname = (@_io.read_bytes_full).force_encoding("ascii")
+      @tname = (@_io.read_bytes(15)).force_encoding("ascii")
       @cmdline = (@_io.read_bytes_full).force_encoding("ascii")
       self
     end
@@ -247,7 +247,7 @@ class Linux < Kaitai::Struct::Struct
       @index = @_io.read_u1
       @pid = @_io.read_u2le
       @pmem = @_io.read_u1
-      @tname = (@_io.read_bytes_full).force_encoding("ascii")
+      @tname = (@_io.read_bytes(15)).force_encoding("ascii")
       @cmdline = (@_io.read_bytes_full).force_encoding("ascii")
       self
     end
@@ -288,7 +288,7 @@ class Linux < Kaitai::Struct::Struct
       @send_queued = @_io.read_u2le
       @socket_types = @_io.read_u2le
       @socket_states = @_io.read_u2le
-      @address_of_largest = (@_io.read_bytes_full).force_encoding("ascii")
+      @address_of_largest = (@_io.read_bytes(64)).force_encoding("ascii")
       @cmdline = (@_io.read_bytes_full).force_encoding("ascii")
       self
     end
@@ -418,7 +418,7 @@ class Linux < Kaitai::Struct::Struct
       @pcpu = @_io.read_u1
       @time = @_io.read_u4le
       @flags = @_io.read_u1
-      @tname = (@_io.read_bytes_full).force_encoding("ascii")
+      @tname = (@_io.read_bytes(15)).force_encoding("ascii")
       @cmdline = (@_io.read_bytes_full).force_encoding("ascii")
       self
     end

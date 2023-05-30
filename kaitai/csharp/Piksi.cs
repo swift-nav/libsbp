@@ -54,7 +54,7 @@ namespace Kaitai
                 _ipv6MaskSize = m_io.ReadU1();
                 _rxBytes = m_io.ReadU4le();
                 _txBytes = m_io.ReadU4le();
-                _interfaceName = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _interfaceName = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(16));
                 _flags = m_io.ReadU4le();
             }
             private List<byte> _ipv4Address;
@@ -137,7 +137,7 @@ namespace Kaitai
                 _totalBytes = m_io.ReadU8le();
                 _rxBytes = m_io.ReadU4le();
                 _txBytes = m_io.ReadU4le();
-                _interfaceName = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _interfaceName = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(16));
             }
             private ulong _duration;
             private ulong _totalBytes;
@@ -333,7 +333,7 @@ namespace Kaitai
             }
             private void _read()
             {
-                _name = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _name = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(20));
                 _cpu = m_io.ReadU2le();
                 _stackFree = m_io.ReadU4le();
             }

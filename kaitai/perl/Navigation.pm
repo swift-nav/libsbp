@@ -1038,8 +1038,8 @@ sub _read {
     my ($self) = @_;
 
     $self->{ssr_iod} = $self->{_io}->read_u1();
-    $self->{sn} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
-    $self->{tn} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{sn} = Encode::decode("ascii", $self->{_io}->read_bytes(32));
+    $self->{tn} = Encode::decode("ascii", $self->{_io}->read_bytes(32));
     $self->{sin} = $self->{_io}->read_u1();
     $self->{utn} = $self->{_io}->read_u2le();
     $self->{re_t0} = $self->{_io}->read_u2le();

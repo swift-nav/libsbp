@@ -1798,13 +1798,13 @@ types:
           Name of source coordinate-system.
         type: str
         encoding: ascii
-        size-eos: true
+        size: 32
       - id: tn
         doc: |
           Name of target coordinate-system.
         type: str
         encoding: ascii
-        size-eos: true
+        size: 32
       - id: sin
         doc: |
           System Identification Number.

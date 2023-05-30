@@ -1088,8 +1088,8 @@ namespace Kaitai
             private void _read()
             {
                 _ssrIod = m_io.ReadU1();
-                _sn = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
-                _tn = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _sn = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(32));
+                _tn = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(32));
                 _sin = m_io.ReadU1();
                 _utn = m_io.ReadU2le();
                 _reT0 = m_io.ReadU2le();

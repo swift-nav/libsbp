@@ -41,7 +41,7 @@ class Piksi(KaitaiStruct):
             self.ipv6_mask_size = self._io.read_u1()
             self.rx_bytes = self._io.read_u4le()
             self.tx_bytes = self._io.read_u4le()
-            self.interface_name = (self._io.read_bytes_full()).decode(u"ascii")
+            self.interface_name = (self._io.read_bytes(16)).decode(u"ascii")
             self.flags = self._io.read_u4le()
 
 
@@ -63,7 +63,7 @@ class Piksi(KaitaiStruct):
             self.total_bytes = self._io.read_u8le()
             self.rx_bytes = self._io.read_u4le()
             self.tx_bytes = self._io.read_u4le()
-            self.interface_name = (self._io.read_bytes_full()).decode(u"ascii")
+            self.interface_name = (self._io.read_bytes(16)).decode(u"ascii")
 
 
     class MsgCommandResp(KaitaiStruct):
@@ -129,7 +129,7 @@ class Piksi(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.name = (self._io.read_bytes_full()).decode(u"ascii")
+            self.name = (self._io.read_bytes(20)).decode(u"ascii")
             self.cpu = self._io.read_u2le()
             self.stack_free = self._io.read_u4le()
 

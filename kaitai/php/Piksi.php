@@ -40,7 +40,7 @@ namespace Piksi {
             $this->_m_ipv6MaskSize = $this->_io->readU1();
             $this->_m_rxBytes = $this->_io->readU4le();
             $this->_m_txBytes = $this->_io->readU4le();
-            $this->_m_interfaceName = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_interfaceName = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(16), "ascii");
             $this->_m_flags = $this->_io->readU4le();
         }
         protected $_m_ipv4Address;
@@ -114,7 +114,7 @@ namespace Piksi {
             $this->_m_totalBytes = $this->_io->readU8le();
             $this->_m_rxBytes = $this->_io->readU4le();
             $this->_m_txBytes = $this->_io->readU4le();
-            $this->_m_interfaceName = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_interfaceName = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(16), "ascii");
         }
         protected $_m_duration;
         protected $_m_totalBytes;
@@ -274,7 +274,7 @@ namespace Piksi {
         }
 
         private function _read() {
-            $this->_m_name = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_name = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(20), "ascii");
             $this->_m_cpu = $this->_io->readU2le();
             $this->_m_stackFree = $this->_io->readU4le();
         }

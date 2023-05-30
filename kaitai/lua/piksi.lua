@@ -44,7 +44,7 @@ function Piksi.MsgNetworkStateResp:_read()
   self.ipv6_mask_size = self._io:read_u1()
   self.rx_bytes = self._io:read_u4le()
   self.tx_bytes = self._io:read_u4le()
-  self.interface_name = str_decode.decode(self._io:read_bytes_full(), "ascii")
+  self.interface_name = str_decode.decode(self._io:read_bytes(16), "ascii")
   self.flags = self._io:read_u4le()
 end
 
@@ -85,7 +85,7 @@ function Piksi.NetworkUsage:_read()
   self.total_bytes = self._io:read_u8le()
   self.rx_bytes = self._io:read_u4le()
   self.tx_bytes = self._io:read_u4le()
-  self.interface_name = str_decode.decode(self._io:read_bytes_full(), "ascii")
+  self.interface_name = str_decode.decode(self._io:read_bytes(16), "ascii")
 end
 
 -- 
@@ -189,7 +189,7 @@ function Piksi.MsgThreadState:_init(io, parent, root)
 end
 
 function Piksi.MsgThreadState:_read()
-  self.name = str_decode.decode(self._io:read_bytes_full(), "ascii")
+  self.name = str_decode.decode(self._io:read_bytes(20), "ascii")
   self.cpu = self._io:read_u2le()
   self.stack_free = self._io:read_u4le()
 end

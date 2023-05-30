@@ -232,7 +232,7 @@ func (this *Linux_MsgLinuxCpuStateDepA) Read(io *kaitai.Stream, parent *Sbp_Mess
 		return err
 	}
 	this.Pcpu = tmp15
-	tmp16, err := this._io.ReadBytesFull()
+	tmp16, err := this._io.ReadBytes(int(15))
 	if err != nil {
 		return err
 	}
@@ -318,7 +318,7 @@ func (this *Linux_MsgLinuxMemState) Read(io *kaitai.Stream, parent *Sbp_Message,
 		return err
 	}
 	this.Flags = tmp22
-	tmp23, err := this._io.ReadBytesFull()
+	tmp23, err := this._io.ReadBytes(int(15))
 	if err != nil {
 		return err
 	}
@@ -462,7 +462,7 @@ func (this *Linux_MsgLinuxMemStateDepA) Read(io *kaitai.Stream, parent *Sbp_Mess
 		return err
 	}
 	this.Pmem = tmp31
-	tmp32, err := this._io.ReadBytesFull()
+	tmp32, err := this._io.ReadBytes(int(15))
 	if err != nil {
 		return err
 	}
@@ -553,7 +553,7 @@ func (this *Linux_MsgLinuxProcessSocketQueues) Read(io *kaitai.Stream, parent *S
 		return err
 	}
 	this.SocketStates = uint16(tmp39)
-	tmp40, err := this._io.ReadBytesFull()
+	tmp40, err := this._io.ReadBytes(int(64))
 	if err != nil {
 		return err
 	}
@@ -785,7 +785,7 @@ func (this *Linux_MsgLinuxCpuState) Read(io *kaitai.Stream, parent *Sbp_Message,
 		return err
 	}
 	this.Flags = tmp54
-	tmp55, err := this._io.ReadBytesFull()
+	tmp55, err := this._io.ReadBytes(int(15))
 	if err != nil {
 		return err
 	}

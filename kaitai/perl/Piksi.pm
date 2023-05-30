@@ -81,7 +81,7 @@ sub _read {
     $self->{ipv6_mask_size} = $self->{_io}->read_u1();
     $self->{rx_bytes} = $self->{_io}->read_u4le();
     $self->{tx_bytes} = $self->{_io}->read_u4le();
-    $self->{interface_name} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{interface_name} = Encode::decode("ascii", $self->{_io}->read_bytes(16));
     $self->{flags} = $self->{_io}->read_u4le();
 }
 
@@ -159,7 +159,7 @@ sub _read {
     $self->{total_bytes} = $self->{_io}->read_u8le();
     $self->{rx_bytes} = $self->{_io}->read_u4le();
     $self->{tx_bytes} = $self->{_io}->read_u4le();
-    $self->{interface_name} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{interface_name} = Encode::decode("ascii", $self->{_io}->read_bytes(16));
 }
 
 sub duration {
@@ -361,7 +361,7 @@ sub new {
 sub _read {
     my ($self) = @_;
 
-    $self->{name} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{name} = Encode::decode("ascii", $self->{_io}->read_bytes(20));
     $self->{cpu} = $self->{_io}->read_u2le();
     $self->{stack_free} = $self->{_io}->read_u4le();
 }

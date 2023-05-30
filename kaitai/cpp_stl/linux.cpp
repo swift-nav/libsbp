@@ -112,7 +112,7 @@ void linux_t::msg_linux_cpu_state_dep_a_t::_read() {
     m_index = m__io->read_u1();
     m_pid = m__io->read_u2le();
     m_pcpu = m__io->read_u1();
-    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes(15), std::string("ascii"));
     m_cmdline = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
 }
 
@@ -141,7 +141,7 @@ void linux_t::msg_linux_mem_state_t::_read() {
     m_pmem = m__io->read_u1();
     m_time = m__io->read_u4le();
     m_flags = m__io->read_u1();
-    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes(15), std::string("ascii"));
     m_cmdline = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
 }
 
@@ -194,7 +194,7 @@ void linux_t::msg_linux_mem_state_dep_a_t::_read() {
     m_index = m__io->read_u1();
     m_pid = m__io->read_u2le();
     m_pmem = m__io->read_u1();
-    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes(15), std::string("ascii"));
     m_cmdline = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
 }
 
@@ -224,7 +224,7 @@ void linux_t::msg_linux_process_socket_queues_t::_read() {
     m_send_queued = m__io->read_u2le();
     m_socket_types = m__io->read_u2le();
     m_socket_states = m__io->read_u2le();
-    m_address_of_largest = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_address_of_largest = kaitai::kstream::bytes_to_str(m__io->read_bytes(64), std::string("ascii"));
     m_cmdline = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
 }
 
@@ -305,7 +305,7 @@ void linux_t::msg_linux_cpu_state_t::_read() {
     m_pcpu = m__io->read_u1();
     m_time = m__io->read_u4le();
     m_flags = m__io->read_u1();
-    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_tname = kaitai::kstream::bytes_to_str(m__io->read_bytes(15), std::string("ascii"));
     m_cmdline = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
 }
 

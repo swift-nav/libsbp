@@ -280,7 +280,7 @@ proc read*(_: typedesc[Linux_MsgLinuxCpuStateDepA], io: KaitaiStream, root: Kait
   fixed length string representing the thread name
 
   ]##
-  let tnameExpr = encode(this.io.readBytesFull(), "ascii")
+  let tnameExpr = encode(this.io.readBytes(int(15)), "ascii")
   this.tname = tnameExpr
 
   ##[
@@ -347,7 +347,7 @@ proc read*(_: typedesc[Linux_MsgLinuxMemState], io: KaitaiStream, root: KaitaiSt
   fixed length string representing the thread name
 
   ]##
-  let tnameExpr = encode(this.io.readBytesFull(), "ascii")
+  let tnameExpr = encode(this.io.readBytes(int(15)), "ascii")
   this.tname = tnameExpr
 
   ##[
@@ -445,7 +445,7 @@ proc read*(_: typedesc[Linux_MsgLinuxMemStateDepA], io: KaitaiStream, root: Kait
   fixed length string representing the thread name
 
   ]##
-  let tnameExpr = encode(this.io.readBytesFull(), "ascii")
+  let tnameExpr = encode(this.io.readBytes(int(15)), "ascii")
   this.tname = tnameExpr
 
   ##[
@@ -525,7 +525,7 @@ ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected), and
 directionality of the connection.
 
   ]##
-  let addressOfLargestExpr = encode(this.io.readBytesFull(), "ascii")
+  let addressOfLargestExpr = encode(this.io.readBytes(int(64)), "ascii")
   this.addressOfLargest = addressOfLargestExpr
 
   ##[
@@ -686,7 +686,7 @@ proc read*(_: typedesc[Linux_MsgLinuxCpuState], io: KaitaiStream, root: KaitaiSt
   fixed length string representing the thread name
 
   ]##
-  let tnameExpr = encode(this.io.readBytesFull(), "ascii")
+  let tnameExpr = encode(this.io.readBytes(int(15)), "ascii")
   this.tname = tnameExpr
 
   ##[

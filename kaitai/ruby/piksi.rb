@@ -38,7 +38,7 @@ class Piksi < Kaitai::Struct::Struct
       @ipv6_mask_size = @_io.read_u1
       @rx_bytes = @_io.read_u4le
       @tx_bytes = @_io.read_u4le
-      @interface_name = (@_io.read_bytes_full).force_encoding("ascii")
+      @interface_name = (@_io.read_bytes(16)).force_encoding("ascii")
       @flags = @_io.read_u4le
       self
     end
@@ -93,7 +93,7 @@ class Piksi < Kaitai::Struct::Struct
       @total_bytes = @_io.read_u8le
       @rx_bytes = @_io.read_u4le
       @tx_bytes = @_io.read_u4le
-      @interface_name = (@_io.read_bytes_full).force_encoding("ascii")
+      @interface_name = (@_io.read_bytes(16)).force_encoding("ascii")
       self
     end
 
@@ -215,7 +215,7 @@ class Piksi < Kaitai::Struct::Struct
     end
 
     def _read
-      @name = (@_io.read_bytes_full).force_encoding("ascii")
+      @name = (@_io.read_bytes(20)).force_encoding("ascii")
       @cpu = @_io.read_u2le
       @stack_free = @_io.read_u4le
       self

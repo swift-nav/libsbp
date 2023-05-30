@@ -1510,14 +1510,14 @@ proc read*(_: typedesc[Navigation_MsgReferenceFrameParam], io: KaitaiStream, roo
   Name of source coordinate-system.
 
   ]##
-  let snExpr = encode(this.io.readBytesFull(), "ascii")
+  let snExpr = encode(this.io.readBytes(int(32)), "ascii")
   this.sn = snExpr
 
   ##[
   Name of target coordinate-system.
 
   ]##
-  let tnExpr = encode(this.io.readBytesFull(), "ascii")
+  let tnExpr = encode(this.io.readBytes(int(32)), "ascii")
   this.tn = tnExpr
 
   ##[

@@ -32,7 +32,7 @@ types:
           fixed length string representing the thread name
         type: str
         encoding: ascii
-        size-eos: true
+        size: 15
       - id: cmdline
         doc: |
           the command line (as much as it fits in the remaining packet)
@@ -62,7 +62,7 @@ types:
           fixed length string representing the thread name
         type: str
         encoding: ascii
-        size-eos: true
+        size: 15
       - id: cmdline
         doc: |
           the command line (as much as it fits in the remaining packet)
@@ -176,7 +176,7 @@ types:
           directionality of the connection.
         type: str
         encoding: ascii
-        size-eos: true
+        size: 64
       - id: cmdline
         doc: |
           the command line of the process in question
@@ -285,7 +285,7 @@ types:
           fixed length string representing the thread name
         type: str
         encoding: ascii
-        size-eos: true
+        size: 15
       - id: cmdline
         doc: |
           the command line (as much as it fits in the remaining packet)
@@ -323,7 +323,7 @@ types:
           fixed length string representing the thread name
         type: str
         encoding: ascii
-        size-eos: true
+        size: 15
       - id: cmdline
         doc: |
           the command line (as much as it fits in the remaining packet)

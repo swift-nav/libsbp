@@ -975,8 +975,8 @@ namespace Navigation {
 
         private function _read() {
             $this->_m_ssrIod = $this->_io->readU1();
-            $this->_m_sn = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
-            $this->_m_tn = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_sn = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(32), "ascii");
+            $this->_m_tn = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(32), "ascii");
             $this->_m_sin = $this->_io->readU1();
             $this->_m_utn = $this->_io->readU2le();
             $this->_m_reT0 = $this->_io->readU2le();

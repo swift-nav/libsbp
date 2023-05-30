@@ -560,8 +560,8 @@ end
 
 function Navigation.MsgReferenceFrameParam:_read()
   self.ssr_iod = self._io:read_u1()
-  self.sn = str_decode.decode(self._io:read_bytes_full(), "ascii")
-  self.tn = str_decode.decode(self._io:read_bytes_full(), "ascii")
+  self.sn = str_decode.decode(self._io:read_bytes(32), "ascii")
+  self.tn = str_decode.decode(self._io:read_bytes(32), "ascii")
   self.sin = self._io:read_u1()
   self.utn = self._io:read_u2le()
   self.re_t0 = self._io:read_u2le()

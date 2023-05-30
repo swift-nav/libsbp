@@ -311,8 +311,8 @@ class Navigation(KaitaiStruct):
 
         def _read(self):
             self.ssr_iod = self._io.read_u1()
-            self.sn = (self._io.read_bytes_full()).decode(u"ascii")
-            self.tn = (self._io.read_bytes_full()).decode(u"ascii")
+            self.sn = (self._io.read_bytes(32)).decode(u"ascii")
+            self.tn = (self._io.read_bytes(32)).decode(u"ascii")
             self.sin = self._io.read_u1()
             self.utn = self._io.read_u2le()
             self.re_t0 = self._io.read_u2le()

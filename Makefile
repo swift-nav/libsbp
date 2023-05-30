@@ -413,6 +413,7 @@ test-protobuf:
 
 test-kaitai:
 	$(call announce-begin,"Running Kaitai Struct tests")
+	cd $(SWIFTNAV_ROOT) && PYTHONPATH=.:python pytest -s kaitai/python/tests/test_*.py
 	$(call announce-end,"Finished running Kaitai Struct tests")
 
 test-jsonschema:

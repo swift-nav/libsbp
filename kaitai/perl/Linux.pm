@@ -214,7 +214,7 @@ sub _read {
     $self->{index} = $self->{_io}->read_u1();
     $self->{pid} = $self->{_io}->read_u2le();
     $self->{pcpu} = $self->{_io}->read_u1();
-    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes(15));
     $self->{cmdline} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
 }
 
@@ -278,7 +278,7 @@ sub _read {
     $self->{pmem} = $self->{_io}->read_u1();
     $self->{time} = $self->{_io}->read_u4le();
     $self->{flags} = $self->{_io}->read_u1();
-    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes(15));
     $self->{cmdline} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
 }
 
@@ -406,7 +406,7 @@ sub _read {
     $self->{index} = $self->{_io}->read_u1();
     $self->{pid} = $self->{_io}->read_u2le();
     $self->{pmem} = $self->{_io}->read_u1();
-    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes(15));
     $self->{cmdline} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
 }
 
@@ -471,7 +471,7 @@ sub _read {
     $self->{send_queued} = $self->{_io}->read_u2le();
     $self->{socket_types} = $self->{_io}->read_u2le();
     $self->{socket_states} = $self->{_io}->read_u2le();
-    $self->{address_of_largest} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{address_of_largest} = Encode::decode("ascii", $self->{_io}->read_bytes(64));
     $self->{cmdline} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
 }
 
@@ -662,7 +662,7 @@ sub _read {
     $self->{pcpu} = $self->{_io}->read_u1();
     $self->{time} = $self->{_io}->read_u4le();
     $self->{flags} = $self->{_io}->read_u1();
-    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
+    $self->{tname} = Encode::decode("ascii", $self->{_io}->read_bytes(15));
     $self->{cmdline} = Encode::decode("ascii", $self->{_io}->read_bytes_full());
 }
 

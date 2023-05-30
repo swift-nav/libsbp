@@ -1376,13 +1376,13 @@ func (this *Navigation_MsgReferenceFrameParam) Read(io *kaitai.Stream, parent *S
 		return err
 	}
 	this.SsrIod = tmp104
-	tmp105, err := this._io.ReadBytesFull()
+	tmp105, err := this._io.ReadBytes(int(32))
 	if err != nil {
 		return err
 	}
 	tmp105 = tmp105
 	this.Sn = string(tmp105)
-	tmp106, err := this._io.ReadBytesFull()
+	tmp106, err := this._io.ReadBytes(int(32))
 	if err != nil {
 		return err
 	}

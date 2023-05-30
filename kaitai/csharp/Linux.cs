@@ -190,7 +190,7 @@ namespace Kaitai
                 _index = m_io.ReadU1();
                 _pid = m_io.ReadU2le();
                 _pcpu = m_io.ReadU1();
-                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(15));
                 _cmdline = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
             }
             private byte _index;
@@ -253,7 +253,7 @@ namespace Kaitai
                 _pmem = m_io.ReadU1();
                 _time = m_io.ReadU4le();
                 _flags = m_io.ReadU1();
-                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(15));
                 _cmdline = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
             }
             private byte _index;
@@ -379,7 +379,7 @@ namespace Kaitai
                 _index = m_io.ReadU1();
                 _pid = m_io.ReadU2le();
                 _pmem = m_io.ReadU1();
-                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(15));
                 _cmdline = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
             }
             private byte _index;
@@ -442,7 +442,7 @@ namespace Kaitai
                 _sendQueued = m_io.ReadU2le();
                 _socketTypes = m_io.ReadU2le();
                 _socketStates = m_io.ReadU2le();
-                _addressOfLargest = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _addressOfLargest = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(64));
                 _cmdline = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
             }
             private byte _index;
@@ -640,7 +640,7 @@ namespace Kaitai
                 _pcpu = m_io.ReadU1();
                 _time = m_io.ReadU4le();
                 _flags = m_io.ReadU1();
-                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
+                _tname = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytes(15));
                 _cmdline = System.Text.Encoding.GetEncoding("ascii").GetString(m_io.ReadBytesFull());
             }
             private byte _index;

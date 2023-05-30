@@ -248,7 +248,7 @@ proc read*(_: typedesc[Piksi_MsgNetworkStateResp], io: KaitaiStream, root: Kaita
   Interface Name
 
   ]##
-  let interfaceNameExpr = encode(this.io.readBytesFull(), "ascii")
+  let interfaceNameExpr = encode(this.io.readBytes(int(16)), "ascii")
   this.interfaceName = interfaceNameExpr
 
   ##[
@@ -311,7 +311,7 @@ proc read*(_: typedesc[Piksi_NetworkUsage], io: KaitaiStream, root: KaitaiStruct
   Interface Name
 
   ]##
-  let interfaceNameExpr = encode(this.io.readBytesFull(), "ascii")
+  let interfaceNameExpr = encode(this.io.readBytes(int(16)), "ascii")
   this.interfaceName = interfaceNameExpr
 
 proc fromFile*(_: typedesc[Piksi_NetworkUsage], filename: string): Piksi_NetworkUsage =
@@ -451,7 +451,7 @@ proc read*(_: typedesc[Piksi_MsgThreadState], io: KaitaiStream, root: KaitaiStru
   Thread name (NULL terminated)
 
   ]##
-  let nameExpr = encode(this.io.readBytesFull(), "ascii")
+  let nameExpr = encode(this.io.readBytes(int(20)), "ascii")
   this.name = nameExpr
 
   ##[

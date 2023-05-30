@@ -9,10 +9,11 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-"""Generator for Kaitai Struct target.
+"""
+Generator for Kaitai Struct target.
 
-This module consumes the YAML spec and generates some message class
-files.
+This module consumes the YAML spec and generates message class files plus
+a top-level main file.
 
 """
 
@@ -78,25 +79,31 @@ def get_custom_type(type_id):
 
 def get_type(f, type_map=KAITAI_CODE):
   """
-  Formats for binary-parser library
+  Formats for Kaitai Struct description file
   """
   if f.type_id in type_map:
     return type_map[f.type_id]
   elif f.type_id == 'string':
-      return """str
-        encoding: ascii
+      ret = """str
+        encoding: ascii"""
+      if 'size' in f.options:
+        ret += """
+        size: {}""".format(f.options['size'].value)
+      else:
+        ret += """
         size-eos: true"""
-  elif f.type_id == 'array' and f.options.get('size', None):
-    fill = f.options['fill'].value
-    f_ = copy.copy(f)
-    f_.type_id = fill
-    s = f.options.get('size', None).value
-    return """{}
-        repeat: expr
-        repeat-expr: {}""".format(type_map.get(f_.type_id, 'u8'), s)
+      return ret
   elif f.type_id == 'array':
     fill = f.options['fill'].value
-    return """{}
+    if 'size' in f.options:
+      f_ = copy.copy(f)
+      f_.type_id = fill
+      s = f.options['size'].value
+      return """{}
+        repeat: expr
+        repeat-expr: {}""".format(type_map.get(f_.type_id, 'u8'), s)
+    else:
+      return """{}
         repeat: eos""".format(type_map.get(fill, get_custom_type(fill)))
   else:
     return get_custom_type(f.type_id)
@@ -182,7 +189,7 @@ def fix_python_output(specs):
 
 def render_source(output_dir, package_spec, jenv=JENV):
   """
-  Render and output KSY file containing types
+  Render and output a KSY file containing types
   """
   path, name = package_spec.filepath
   destination_filename = "{}/ksy/{}.ksy".format(output_dir, name)
@@ -200,7 +207,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
 
 def render_main(output_dir, all_package_specs, release: ReleaseVersion, jenv=JENV):
   """
-  Render and output top-level KSY file, then run kaitai-struct-compiler
+  Render and output the top-level KSY file, then run kaitai-struct-compiler
   """
   directory = output_dir
   destination_filename = "{}/ksy/sbp.ksy".format(output_dir)
@@ -211,8 +218,7 @@ def render_main(output_dir, all_package_specs, release: ReleaseVersion, jenv=JEN
     f.write(ksy_template.render(specs=specs,
                                version=release.full_version))
 
-  # run kaitai-struct-compiler to generate parsing code for all suported
-  # languages
+  # run kaitai-struct-compiler to generate parsing code for all desired targets
   os.chdir(output_dir)
   targets = [x for y in [[ "--target", lang ] for lang in OUTPUT_LANGUAGES] for x in y]
   subprocess.check_call(["kaitai-struct-compiler", "ksy/sbp.ksy"] + targets)

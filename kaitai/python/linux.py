@@ -74,7 +74,7 @@ class Linux(KaitaiStruct):
             self.index = self._io.read_u1()
             self.pid = self._io.read_u2le()
             self.pcpu = self._io.read_u1()
-            self.tname = (self._io.read_bytes_full()).decode(u"ascii")
+            self.tname = (self._io.read_bytes(15)).decode(u"ascii")
             self.cmdline = (self._io.read_bytes_full()).decode(u"ascii")
 
 
@@ -94,7 +94,7 @@ class Linux(KaitaiStruct):
             self.pmem = self._io.read_u1()
             self.time = self._io.read_u4le()
             self.flags = self._io.read_u1()
-            self.tname = (self._io.read_bytes_full()).decode(u"ascii")
+            self.tname = (self._io.read_bytes(15)).decode(u"ascii")
             self.cmdline = (self._io.read_bytes_full()).decode(u"ascii")
 
 
@@ -128,7 +128,7 @@ class Linux(KaitaiStruct):
             self.index = self._io.read_u1()
             self.pid = self._io.read_u2le()
             self.pmem = self._io.read_u1()
-            self.tname = (self._io.read_bytes_full()).decode(u"ascii")
+            self.tname = (self._io.read_bytes(15)).decode(u"ascii")
             self.cmdline = (self._io.read_bytes_full()).decode(u"ascii")
 
 
@@ -148,7 +148,7 @@ class Linux(KaitaiStruct):
             self.send_queued = self._io.read_u2le()
             self.socket_types = self._io.read_u2le()
             self.socket_states = self._io.read_u2le()
-            self.address_of_largest = (self._io.read_bytes_full()).decode(u"ascii")
+            self.address_of_largest = (self._io.read_bytes(64)).decode(u"ascii")
             self.cmdline = (self._io.read_bytes_full()).decode(u"ascii")
 
 
@@ -200,7 +200,7 @@ class Linux(KaitaiStruct):
             self.pcpu = self._io.read_u1()
             self.time = self._io.read_u4le()
             self.flags = self._io.read_u1()
-            self.tname = (self._io.read_bytes_full()).decode(u"ascii")
+            self.tname = (self._io.read_bytes(15)).decode(u"ascii")
             self.cmdline = (self._io.read_bytes_full()).decode(u"ascii")
 
 

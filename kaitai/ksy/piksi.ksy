@@ -77,7 +77,7 @@ types:
           Thread name (NULL terminated)
         type: str
         encoding: ascii
-        size-eos: true
+        size: 20
       - id: cpu
         doc: |
           Percentage cpu use for this thread. Values range from 0 - 1000 and
@@ -379,7 +379,7 @@ types:
           Interface Name
         type: str
         encoding: ascii
-        size-eos: true
+        size: 16
       - id: flags
         doc: |
           Interface flags from SIOCGIFFLAGS
@@ -414,7 +414,7 @@ types:
           Interface Name
         type: str
         encoding: ascii
-        size-eos: true
+        size: 16
   
   msg_network_bandwidth_usage:
     doc: |

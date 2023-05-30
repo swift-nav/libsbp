@@ -158,7 +158,7 @@ namespace Linux {
             $this->_m_index = $this->_io->readU1();
             $this->_m_pid = $this->_io->readU2le();
             $this->_m_pcpu = $this->_io->readU1();
-            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(15), "ascii");
             $this->_m_cmdline = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
         }
         protected $_m_index;
@@ -212,7 +212,7 @@ namespace Linux {
             $this->_m_pmem = $this->_io->readU1();
             $this->_m_time = $this->_io->readU4le();
             $this->_m_flags = $this->_io->readU1();
-            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(15), "ascii");
             $this->_m_cmdline = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
         }
         protected $_m_index;
@@ -320,7 +320,7 @@ namespace Linux {
             $this->_m_index = $this->_io->readU1();
             $this->_m_pid = $this->_io->readU2le();
             $this->_m_pmem = $this->_io->readU1();
-            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(15), "ascii");
             $this->_m_cmdline = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
         }
         protected $_m_index;
@@ -374,7 +374,7 @@ namespace Linux {
             $this->_m_sendQueued = $this->_io->readU2le();
             $this->_m_socketTypes = $this->_io->readU2le();
             $this->_m_socketStates = $this->_io->readU2le();
-            $this->_m_addressOfLargest = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_addressOfLargest = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(64), "ascii");
             $this->_m_cmdline = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
         }
         protected $_m_index;
@@ -545,7 +545,7 @@ namespace Linux {
             $this->_m_pcpu = $this->_io->readU1();
             $this->_m_time = $this->_io->readU4le();
             $this->_m_flags = $this->_io->readU1();
-            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
+            $this->_m_tname = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytes(15), "ascii");
             $this->_m_cmdline = \Kaitai\Struct\Stream::bytesToStr($this->_io->readBytesFull(), "ascii");
         }
         protected $_m_index;

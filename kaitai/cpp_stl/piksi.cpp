@@ -53,7 +53,7 @@ void piksi_t::msg_network_state_resp_t::_read() {
     m_ipv6_mask_size = m__io->read_u1();
     m_rx_bytes = m__io->read_u4le();
     m_tx_bytes = m__io->read_u4le();
-    m_interface_name = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_interface_name = kaitai::kstream::bytes_to_str(m__io->read_bytes(16), std::string("ascii"));
     m_flags = m__io->read_u4le();
 }
 
@@ -87,7 +87,7 @@ void piksi_t::network_usage_t::_read() {
     m_total_bytes = m__io->read_u8le();
     m_rx_bytes = m__io->read_u4le();
     m_tx_bytes = m__io->read_u4le();
-    m_interface_name = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_interface_name = kaitai::kstream::bytes_to_str(m__io->read_bytes(16), std::string("ascii"));
 }
 
 piksi_t::network_usage_t::~network_usage_t() {
@@ -184,7 +184,7 @@ piksi_t::msg_thread_state_t::msg_thread_state_t(kaitai::kstream* p__io, sbp_t::m
 }
 
 void piksi_t::msg_thread_state_t::_read() {
-    m_name = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_name = kaitai::kstream::bytes_to_str(m__io->read_bytes(20), std::string("ascii"));
     m_cpu = m__io->read_u2le();
     m_stack_free = m__io->read_u4le();
 }

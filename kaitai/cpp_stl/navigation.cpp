@@ -383,8 +383,8 @@ navigation_t::msg_reference_frame_param_t::msg_reference_frame_param_t(kaitai::k
 
 void navigation_t::msg_reference_frame_param_t::_read() {
     m_ssr_iod = m__io->read_u1();
-    m_sn = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
-    m_tn = kaitai::kstream::bytes_to_str(m__io->read_bytes_full(), std::string("ascii"));
+    m_sn = kaitai::kstream::bytes_to_str(m__io->read_bytes(32), std::string("ascii"));
+    m_tn = kaitai::kstream::bytes_to_str(m__io->read_bytes(32), std::string("ascii"));
     m_sin = m__io->read_u1();
     m_utn = m__io->read_u2le();
     m_re_t0 = m__io->read_u2le();

@@ -83,7 +83,7 @@ func (this *Piksi_MsgNetworkStateResp) Read(io *kaitai.Stream, parent *Sbp_Messa
 		return err
 	}
 	this.TxBytes = uint32(tmp6)
-	tmp7, err := this._io.ReadBytesFull()
+	tmp7, err := this._io.ReadBytes(int(16))
 	if err != nil {
 		return err
 	}
@@ -176,7 +176,7 @@ func (this *Piksi_NetworkUsage) Read(io *kaitai.Stream, parent *Piksi_MsgNetwork
 		return err
 	}
 	this.TxBytes = uint32(tmp12)
-	tmp13, err := this._io.ReadBytesFull()
+	tmp13, err := this._io.ReadBytes(int(16))
 	if err != nil {
 		return err
 	}
@@ -379,7 +379,7 @@ func (this *Piksi_MsgThreadState) Read(io *kaitai.Stream, parent *Sbp_Message, r
 	this._parent = parent
 	this._root = root
 
-	tmp22, err := this._io.ReadBytesFull()
+	tmp22, err := this._io.ReadBytes(int(20))
 	if err != nil {
 		return err
 	}

@@ -737,8 +737,8 @@ class Navigation < Kaitai::Struct::Struct
 
     def _read
       @ssr_iod = @_io.read_u1
-      @sn = (@_io.read_bytes_full).force_encoding("ascii")
-      @tn = (@_io.read_bytes_full).force_encoding("ascii")
+      @sn = (@_io.read_bytes(32)).force_encoding("ascii")
+      @tn = (@_io.read_bytes(32)).force_encoding("ascii")
       @sin = @_io.read_u1
       @utn = @_io.read_u2le
       @re_t0 = @_io.read_u2le
